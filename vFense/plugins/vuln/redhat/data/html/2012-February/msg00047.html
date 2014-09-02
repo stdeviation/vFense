@@ -1,0 +1,233 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0309&#45;03] Low: sudo security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Feb 2012 23:52:41 &#45;0500 -->
+<!--X-Message-Id: 201202210452.q1L4qYpo017943@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0309-03] Low: sudo security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00046.html">Date Prev</a>][<a href="msg00048.html">Date Next</a>] &nbsp; [<a href="msg00046.html">Thread Prev</a>][<a href="msg00048.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00047">Thread Index</A>]
+[<A HREF="date.html#00047">Date Index</A>]
+[<A HREF="author.html#00047">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0309-03] Low: sudo security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0309-03] Low: sudo security and bug fix update</li>
+<li><em>Date</em>: Tue, 21 Feb 2012 04:52:33 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: sudo security and bug fix update
+Advisory ID:       RHSA-2012:0309-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0309.html">https://rhn.redhat.com/errata/RHSA-2012-0309.html</a>
+Issue date:        2012-02-21
+CVE Names:         CVE-2011-0010 
+=====================================================================
+
+1. Summary:
+
+An updated sudo package that fixes one security issue and various bugs is
+now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The sudo (superuser do) utility allows system administrators to give
+certain users the ability to run commands as root.
+
+A flaw was found in the sudo password checking logic. In configurations
+where the sudoers settings allowed a user to run a command using sudo
+with only the group ID changed, sudo failed to prompt for the user's
+password before running the specified command with the elevated group
+privileges. (CVE-2011-0010)
+
+In addition, this update fixes the following bugs:
+
+* A NULL pointer dereference bug caused the sudo utility to terminate
+unexpectedly with a segmentation fault. This happened if the utility was
+run with the -g option and configured not to demand the password from the
+user who ran the sudo utility. With this update, the code has been modified
+and the problem no longer occurs. (BZ#673072)
+
+* The sudo utility failed to load sudoers from an LDAP (Lightweight
+Directory Access Protocol) server after the sudo tool was upgraded. This
+happened because the upgraded nsswitch.conf file did not contain the
+instruction to search for sudoers on the LDAP server. This update adds the
+lost instruction to /etc/nsswitch.conf and the system searches for sources
+of sudoers on the local file system and then on LDAP, if applicable.
+(BZ#617061)
+
+* The sudo tool interpreted a Runas alias specifying a group incorrectly as
+a user alias and the alias seemed to be ignored. With this update, the code
+for interpreting such aliases has been modified and the Runas group aliases
+are honored as expected. (BZ#627543)
+
+* Prior to this update, sudo did not parse comment characters (#) in the
+ldap.conf file correctly and could fail to work. With this update, parsing
+of the LDAP configuration file has been modified and the comment characters
+are parsed correctly. (BZ#750318)
+
+* The sudo utility formats its output to fit the width of the terminal
+window. However, this behavior is undesirable if the output is redirected
+through a pipeline. With this update, the output formatting is not applied
+in the scenario described. (BZ#697111)
+
+* Previously, the sudo utility performed Security-Enhanced Linux (SELinux)
+related initialization after switching to an unprivileged user. This
+prevented the correct setup of the SELinux environment before executing the
+specified command and could potentially cause an access denial. The bug has
+been fixed by backporting the SELinux related code and the execution model
+from a newer version of sudo. (BZ#477185)
+
+* On execv(3) function failure, the sudo tool executed an auditing call
+before reporting the failure. The call reset the error state and,
+consequently, the tool incorrectly reported that the command succeeded.
+With this update, the code has been modified and the problem no longer
+occurs. (BZ#673157)
+
+All users of sudo are advised to upgrade to this updated package, which
+resolves these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+477185 - sudo changes uid before calling SELInux calls, preventing it from setting terminal context when using non priv account
+627543 - The Runas_Spec are ignored in sudoers file
+668879 - CVE-2011-0010 sudo: does not ask for password on GID changes
+673072 - sudo segfault
+673157 - sudo fails to report error correctly when execv(3) fails
+697111 - sudo -l inserts new lines based on terminal width, causing errors when output is piped.
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sudo-1.7.2p1-13.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sudo-1.7.2p1-13.el5.src.rpm</a>
+
+i386:
+sudo-1.7.2p1-13.el5.i386.rpm
+sudo-debuginfo-1.7.2p1-13.el5.i386.rpm
+
+x86_64:
+sudo-1.7.2p1-13.el5.x86_64.rpm
+sudo-debuginfo-1.7.2p1-13.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/sudo-1.7.2p1-13.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/sudo-1.7.2p1-13.el5.src.rpm</a>
+
+i386:
+sudo-1.7.2p1-13.el5.i386.rpm
+sudo-debuginfo-1.7.2p1-13.el5.i386.rpm
+
+ia64:
+sudo-1.7.2p1-13.el5.ia64.rpm
+sudo-debuginfo-1.7.2p1-13.el5.ia64.rpm
+
+ppc:
+sudo-1.7.2p1-13.el5.ppc.rpm
+sudo-debuginfo-1.7.2p1-13.el5.ppc.rpm
+
+s390x:
+sudo-1.7.2p1-13.el5.s390x.rpm
+sudo-debuginfo-1.7.2p1-13.el5.s390x.rpm
+
+x86_64:
+sudo-1.7.2p1-13.el5.x86_64.rpm
+sudo-debuginfo-1.7.2p1-13.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0010.html">https://www.redhat.com/security/data/cve/CVE-2011-0010.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPQyMDXlSAg2UNWIIRAn42AKCtVY7KQJSk2HpwSOuZfu9PjSRqvACgt3n2
+HmtBMRhdgnVA/HlM2stOxd8=
+=AyyQ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00046.html">Date Prev</a>][<a href="msg00048.html">Date Next</a>] &nbsp; [<a href="msg00046.html">Thread Prev</a>][<a href="msg00048.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00047">Thread Index</A>]
+[<A HREF="date.html#00047">Date Index</A>]
+[<A HREF="author.html#00047">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

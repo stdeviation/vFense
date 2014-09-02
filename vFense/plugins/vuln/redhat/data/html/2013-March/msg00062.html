@@ -1,0 +1,411 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0669&#45;01] Moderate: qt security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Mar 2013 14:32:26 &#45;0400 -->
+<!--X-Message-Id: 201303211832.r2LIWPMW000697@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0669-01] Moderate: qt security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00061.html">Date Prev</a>][<a href="msg00063.html">Date Next</a>] &nbsp; [<a href="msg00061.html">Thread Prev</a>][<a href="msg00063.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00062">Thread Index</A>]
+[<A HREF="date.html#00062">Date Index</A>]
+[<A HREF="author.html#00062">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0669-01] Moderate: qt security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0669-01] Moderate: qt security update</li>
+<li><em>Date</em>: Thu, 21 Mar 2013 18:32:25 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: qt security update
+Advisory ID:       RHSA-2013:0669-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0669.html">https://rhn.redhat.com/errata/RHSA-2013-0669.html</a>
+Issue date:        2013-03-21
+CVE Names:         CVE-2013-0254 
+=====================================================================
+
+1. Summary:
+
+Updated qt packages that fix one security issue are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Qt is a software toolkit that simplifies the task of writing and
+maintaining GUI (Graphical User Interface) applications for the X Window
+System.
+
+It was discovered that the QSharedMemory class implementation of the Qt
+toolkit created shared memory segments with insecure permissions. A local
+attacker could use this flaw to read or alter the contents of a particular
+shared memory segment, possibly leading to their ability to obtain
+sensitive information or influence the behavior of a process that is using
+the shared memory segment. (CVE-2013-0254)
+
+Red Hat would like to thank the Qt project for reporting this issue.
+Upstream acknowledges Tim Brown and Mark Lowe of Portcullis Computer
+Security Ltd. as the original reporters.
+
+Users of Qt should upgrade to these updated packages, which contain a
+backported patch to correct this issue. All running applications linked
+against Qt libraries must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+907425 - CVE-2013-0254 qt: QSharedMemory class created shared memory segments with insecure permissions
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm</a>
+
+i386:
+phonon-backend-gstreamer-4.6.2-26.el6_4.i686.rpm
+qt-4.6.2-26.el6_4.i686.rpm
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-mysql-4.6.2-26.el6_4.i686.rpm
+qt-odbc-4.6.2-26.el6_4.i686.rpm
+qt-postgresql-4.6.2-26.el6_4.i686.rpm
+qt-sqlite-4.6.2-26.el6_4.i686.rpm
+qt-x11-4.6.2-26.el6_4.i686.rpm
+
+x86_64:
+phonon-backend-gstreamer-4.6.2-26.el6_4.i686.rpm
+phonon-backend-gstreamer-4.6.2-26.el6_4.x86_64.rpm
+qt-4.6.2-26.el6_4.i686.rpm
+qt-4.6.2-26.el6_4.x86_64.rpm
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-debuginfo-4.6.2-26.el6_4.x86_64.rpm
+qt-mysql-4.6.2-26.el6_4.i686.rpm
+qt-mysql-4.6.2-26.el6_4.x86_64.rpm
+qt-odbc-4.6.2-26.el6_4.i686.rpm
+qt-odbc-4.6.2-26.el6_4.x86_64.rpm
+qt-postgresql-4.6.2-26.el6_4.i686.rpm
+qt-postgresql-4.6.2-26.el6_4.x86_64.rpm
+qt-sqlite-4.6.2-26.el6_4.i686.rpm
+qt-sqlite-4.6.2-26.el6_4.x86_64.rpm
+qt-x11-4.6.2-26.el6_4.i686.rpm
+qt-x11-4.6.2-26.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm</a>
+
+i386:
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-demos-4.6.2-26.el6_4.i686.rpm
+qt-devel-4.6.2-26.el6_4.i686.rpm
+qt-examples-4.6.2-26.el6_4.i686.rpm
+
+noarch:
+qt-doc-4.6.2-26.el6_4.noarch.rpm
+
+x86_64:
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-debuginfo-4.6.2-26.el6_4.x86_64.rpm
+qt-demos-4.6.2-26.el6_4.x86_64.rpm
+qt-devel-4.6.2-26.el6_4.i686.rpm
+qt-devel-4.6.2-26.el6_4.x86_64.rpm
+qt-examples-4.6.2-26.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm</a>
+
+x86_64:
+phonon-backend-gstreamer-4.6.2-26.el6_4.i686.rpm
+phonon-backend-gstreamer-4.6.2-26.el6_4.x86_64.rpm
+qt-4.6.2-26.el6_4.i686.rpm
+qt-4.6.2-26.el6_4.x86_64.rpm
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-debuginfo-4.6.2-26.el6_4.x86_64.rpm
+qt-sqlite-4.6.2-26.el6_4.i686.rpm
+qt-sqlite-4.6.2-26.el6_4.x86_64.rpm
+qt-x11-4.6.2-26.el6_4.i686.rpm
+qt-x11-4.6.2-26.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm</a>
+
+noarch:
+qt-doc-4.6.2-26.el6_4.noarch.rpm
+
+x86_64:
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-debuginfo-4.6.2-26.el6_4.x86_64.rpm
+qt-demos-4.6.2-26.el6_4.x86_64.rpm
+qt-devel-4.6.2-26.el6_4.i686.rpm
+qt-devel-4.6.2-26.el6_4.x86_64.rpm
+qt-examples-4.6.2-26.el6_4.x86_64.rpm
+qt-mysql-4.6.2-26.el6_4.i686.rpm
+qt-mysql-4.6.2-26.el6_4.x86_64.rpm
+qt-odbc-4.6.2-26.el6_4.i686.rpm
+qt-odbc-4.6.2-26.el6_4.x86_64.rpm
+qt-postgresql-4.6.2-26.el6_4.i686.rpm
+qt-postgresql-4.6.2-26.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm</a>
+
+i386:
+phonon-backend-gstreamer-4.6.2-26.el6_4.i686.rpm
+qt-4.6.2-26.el6_4.i686.rpm
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-devel-4.6.2-26.el6_4.i686.rpm
+qt-mysql-4.6.2-26.el6_4.i686.rpm
+qt-odbc-4.6.2-26.el6_4.i686.rpm
+qt-postgresql-4.6.2-26.el6_4.i686.rpm
+qt-sqlite-4.6.2-26.el6_4.i686.rpm
+qt-x11-4.6.2-26.el6_4.i686.rpm
+
+noarch:
+qt-doc-4.6.2-26.el6_4.noarch.rpm
+
+ppc64:
+phonon-backend-gstreamer-4.6.2-26.el6_4.ppc.rpm
+phonon-backend-gstreamer-4.6.2-26.el6_4.ppc64.rpm
+qt-4.6.2-26.el6_4.ppc.rpm
+qt-4.6.2-26.el6_4.ppc64.rpm
+qt-debuginfo-4.6.2-26.el6_4.ppc.rpm
+qt-debuginfo-4.6.2-26.el6_4.ppc64.rpm
+qt-devel-4.6.2-26.el6_4.ppc.rpm
+qt-devel-4.6.2-26.el6_4.ppc64.rpm
+qt-mysql-4.6.2-26.el6_4.ppc.rpm
+qt-mysql-4.6.2-26.el6_4.ppc64.rpm
+qt-odbc-4.6.2-26.el6_4.ppc.rpm
+qt-odbc-4.6.2-26.el6_4.ppc64.rpm
+qt-postgresql-4.6.2-26.el6_4.ppc.rpm
+qt-postgresql-4.6.2-26.el6_4.ppc64.rpm
+qt-sqlite-4.6.2-26.el6_4.ppc.rpm
+qt-sqlite-4.6.2-26.el6_4.ppc64.rpm
+qt-x11-4.6.2-26.el6_4.ppc.rpm
+qt-x11-4.6.2-26.el6_4.ppc64.rpm
+
+s390x:
+phonon-backend-gstreamer-4.6.2-26.el6_4.s390.rpm
+phonon-backend-gstreamer-4.6.2-26.el6_4.s390x.rpm
+qt-4.6.2-26.el6_4.s390.rpm
+qt-4.6.2-26.el6_4.s390x.rpm
+qt-debuginfo-4.6.2-26.el6_4.s390.rpm
+qt-debuginfo-4.6.2-26.el6_4.s390x.rpm
+qt-devel-4.6.2-26.el6_4.s390.rpm
+qt-devel-4.6.2-26.el6_4.s390x.rpm
+qt-mysql-4.6.2-26.el6_4.s390.rpm
+qt-mysql-4.6.2-26.el6_4.s390x.rpm
+qt-odbc-4.6.2-26.el6_4.s390.rpm
+qt-odbc-4.6.2-26.el6_4.s390x.rpm
+qt-postgresql-4.6.2-26.el6_4.s390.rpm
+qt-postgresql-4.6.2-26.el6_4.s390x.rpm
+qt-sqlite-4.6.2-26.el6_4.s390.rpm
+qt-sqlite-4.6.2-26.el6_4.s390x.rpm
+qt-x11-4.6.2-26.el6_4.s390.rpm
+qt-x11-4.6.2-26.el6_4.s390x.rpm
+
+x86_64:
+phonon-backend-gstreamer-4.6.2-26.el6_4.i686.rpm
+phonon-backend-gstreamer-4.6.2-26.el6_4.x86_64.rpm
+qt-4.6.2-26.el6_4.i686.rpm
+qt-4.6.2-26.el6_4.x86_64.rpm
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-debuginfo-4.6.2-26.el6_4.x86_64.rpm
+qt-devel-4.6.2-26.el6_4.i686.rpm
+qt-devel-4.6.2-26.el6_4.x86_64.rpm
+qt-mysql-4.6.2-26.el6_4.i686.rpm
+qt-mysql-4.6.2-26.el6_4.x86_64.rpm
+qt-odbc-4.6.2-26.el6_4.i686.rpm
+qt-odbc-4.6.2-26.el6_4.x86_64.rpm
+qt-postgresql-4.6.2-26.el6_4.i686.rpm
+qt-postgresql-4.6.2-26.el6_4.x86_64.rpm
+qt-sqlite-4.6.2-26.el6_4.i686.rpm
+qt-sqlite-4.6.2-26.el6_4.x86_64.rpm
+qt-x11-4.6.2-26.el6_4.i686.rpm
+qt-x11-4.6.2-26.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm</a>
+
+i386:
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-demos-4.6.2-26.el6_4.i686.rpm
+qt-examples-4.6.2-26.el6_4.i686.rpm
+
+ppc64:
+qt-debuginfo-4.6.2-26.el6_4.ppc64.rpm
+qt-demos-4.6.2-26.el6_4.ppc64.rpm
+qt-examples-4.6.2-26.el6_4.ppc64.rpm
+
+s390x:
+qt-debuginfo-4.6.2-26.el6_4.s390x.rpm
+qt-demos-4.6.2-26.el6_4.s390x.rpm
+qt-examples-4.6.2-26.el6_4.s390x.rpm
+
+x86_64:
+qt-debuginfo-4.6.2-26.el6_4.x86_64.rpm
+qt-demos-4.6.2-26.el6_4.x86_64.rpm
+qt-examples-4.6.2-26.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm</a>
+
+i386:
+phonon-backend-gstreamer-4.6.2-26.el6_4.i686.rpm
+qt-4.6.2-26.el6_4.i686.rpm
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-devel-4.6.2-26.el6_4.i686.rpm
+qt-mysql-4.6.2-26.el6_4.i686.rpm
+qt-odbc-4.6.2-26.el6_4.i686.rpm
+qt-postgresql-4.6.2-26.el6_4.i686.rpm
+qt-sqlite-4.6.2-26.el6_4.i686.rpm
+qt-x11-4.6.2-26.el6_4.i686.rpm
+
+noarch:
+qt-doc-4.6.2-26.el6_4.noarch.rpm
+
+x86_64:
+phonon-backend-gstreamer-4.6.2-26.el6_4.i686.rpm
+phonon-backend-gstreamer-4.6.2-26.el6_4.x86_64.rpm
+qt-4.6.2-26.el6_4.i686.rpm
+qt-4.6.2-26.el6_4.x86_64.rpm
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-debuginfo-4.6.2-26.el6_4.x86_64.rpm
+qt-devel-4.6.2-26.el6_4.i686.rpm
+qt-devel-4.6.2-26.el6_4.x86_64.rpm
+qt-mysql-4.6.2-26.el6_4.i686.rpm
+qt-mysql-4.6.2-26.el6_4.x86_64.rpm
+qt-odbc-4.6.2-26.el6_4.i686.rpm
+qt-odbc-4.6.2-26.el6_4.x86_64.rpm
+qt-postgresql-4.6.2-26.el6_4.i686.rpm
+qt-postgresql-4.6.2-26.el6_4.x86_64.rpm
+qt-sqlite-4.6.2-26.el6_4.i686.rpm
+qt-sqlite-4.6.2-26.el6_4.x86_64.rpm
+qt-x11-4.6.2-26.el6_4.i686.rpm
+qt-x11-4.6.2-26.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/qt-4.6.2-26.el6_4.src.rpm</a>
+
+i386:
+qt-debuginfo-4.6.2-26.el6_4.i686.rpm
+qt-demos-4.6.2-26.el6_4.i686.rpm
+qt-examples-4.6.2-26.el6_4.i686.rpm
+
+x86_64:
+qt-debuginfo-4.6.2-26.el6_4.x86_64.rpm
+qt-demos-4.6.2-26.el6_4.x86_64.rpm
+qt-examples-4.6.2-26.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0254.html">https://www.redhat.com/security/data/cve/CVE-2013-0254.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRS1H/XlSAg2UNWIIRAn6yAJ9rXT13qERuhJmU6SRjkd5rrhOqmwCghwSb
+dtk5/2MkxSqQndrD4qk3Xxg=
+=XpWe
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00061.html">Date Prev</a>][<a href="msg00063.html">Date Next</a>] &nbsp; [<a href="msg00061.html">Thread Prev</a>][<a href="msg00063.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00062">Thread Index</A>]
+[<A HREF="date.html#00062">Date Index</A>]
+[<A HREF="author.html#00062">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

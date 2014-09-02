@@ -1,0 +1,293 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0790&#45;01] Moderate: dovecot security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 25 Jun 2014 13:36:55 &#45;0400 -->
+<!--X-Message-Id: 201406251736.s5PHassU005617@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0790-01] Moderate: dovecot security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0790-01] Moderate: dovecot security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0790-01] Moderate: dovecot security update</li>
+<li><em>Date</em>: Wed, 25 Jun 2014 17:36:54 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: dovecot security update
+Advisory ID:       RHSA-2014:0790-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0790.html">https://rhn.redhat.com/errata/RHSA-2014-0790.html</a>
+Issue date:        2014-06-25
+CVE Names:         CVE-2014-3430 
+=====================================================================
+
+1. Summary:
+
+Updated dovecot packages that fix one security issue are now available for
+Red Hat Enterprise Linux 6 and 7.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Dovecot is an IMAP server, written with security primarily in mind, for
+Linux and other UNIX-like systems. It also contains a small POP3 server.
+It supports mail in both the maildir or mbox format. The SQL drivers and
+authentication plug-ins are provided as subpackages.
+
+It was discovered that Dovecot did not properly discard connections trapped
+in the SSL/TLS handshake phase. A remote attacker could use this flaw to
+cause a denial of service on an IMAP/POP3 server by exhausting the pool of
+available connections and preventing further, legitimate connections to the
+IMAP/POP3 server to be made. (CVE-2014-3430)
+
+All dovecot users are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue. After installing the
+updated packages, the dovecot service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1096402 - CVE-2014-3430 dovecot: denial of service through maxxing out SSL connections
+
+6. Package List:
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+dovecot-2.0.9-7.el6_5.1.src.rpm
+
+i386:
+dovecot-2.0.9-7.el6_5.1.i686.rpm
+dovecot-debuginfo-2.0.9-7.el6_5.1.i686.rpm
+dovecot-mysql-2.0.9-7.el6_5.1.i686.rpm
+dovecot-pgsql-2.0.9-7.el6_5.1.i686.rpm
+dovecot-pigeonhole-2.0.9-7.el6_5.1.i686.rpm
+
+ppc64:
+dovecot-2.0.9-7.el6_5.1.ppc.rpm
+dovecot-2.0.9-7.el6_5.1.ppc64.rpm
+dovecot-debuginfo-2.0.9-7.el6_5.1.ppc.rpm
+dovecot-debuginfo-2.0.9-7.el6_5.1.ppc64.rpm
+dovecot-mysql-2.0.9-7.el6_5.1.ppc64.rpm
+dovecot-pgsql-2.0.9-7.el6_5.1.ppc64.rpm
+dovecot-pigeonhole-2.0.9-7.el6_5.1.ppc64.rpm
+
+s390x:
+dovecot-2.0.9-7.el6_5.1.s390.rpm
+dovecot-2.0.9-7.el6_5.1.s390x.rpm
+dovecot-debuginfo-2.0.9-7.el6_5.1.s390.rpm
+dovecot-debuginfo-2.0.9-7.el6_5.1.s390x.rpm
+dovecot-mysql-2.0.9-7.el6_5.1.s390x.rpm
+dovecot-pgsql-2.0.9-7.el6_5.1.s390x.rpm
+dovecot-pigeonhole-2.0.9-7.el6_5.1.s390x.rpm
+
+x86_64:
+dovecot-2.0.9-7.el6_5.1.i686.rpm
+dovecot-2.0.9-7.el6_5.1.x86_64.rpm
+dovecot-debuginfo-2.0.9-7.el6_5.1.i686.rpm
+dovecot-debuginfo-2.0.9-7.el6_5.1.x86_64.rpm
+dovecot-mysql-2.0.9-7.el6_5.1.x86_64.rpm
+dovecot-pgsql-2.0.9-7.el6_5.1.x86_64.rpm
+dovecot-pigeonhole-2.0.9-7.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+dovecot-2.0.9-7.el6_5.1.src.rpm
+
+i386:
+dovecot-debuginfo-2.0.9-7.el6_5.1.i686.rpm
+dovecot-devel-2.0.9-7.el6_5.1.i686.rpm
+
+ppc64:
+dovecot-debuginfo-2.0.9-7.el6_5.1.ppc64.rpm
+dovecot-devel-2.0.9-7.el6_5.1.ppc64.rpm
+
+s390x:
+dovecot-debuginfo-2.0.9-7.el6_5.1.s390x.rpm
+dovecot-devel-2.0.9-7.el6_5.1.s390x.rpm
+
+x86_64:
+dovecot-debuginfo-2.0.9-7.el6_5.1.x86_64.rpm
+dovecot-devel-2.0.9-7.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+dovecot-2.0.9-7.el6_5.1.src.rpm
+
+i386:
+dovecot-2.0.9-7.el6_5.1.i686.rpm
+dovecot-debuginfo-2.0.9-7.el6_5.1.i686.rpm
+dovecot-mysql-2.0.9-7.el6_5.1.i686.rpm
+dovecot-pgsql-2.0.9-7.el6_5.1.i686.rpm
+dovecot-pigeonhole-2.0.9-7.el6_5.1.i686.rpm
+
+x86_64:
+dovecot-2.0.9-7.el6_5.1.i686.rpm
+dovecot-2.0.9-7.el6_5.1.x86_64.rpm
+dovecot-debuginfo-2.0.9-7.el6_5.1.i686.rpm
+dovecot-debuginfo-2.0.9-7.el6_5.1.x86_64.rpm
+dovecot-mysql-2.0.9-7.el6_5.1.x86_64.rpm
+dovecot-pgsql-2.0.9-7.el6_5.1.x86_64.rpm
+dovecot-pigeonhole-2.0.9-7.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+dovecot-2.0.9-7.el6_5.1.src.rpm
+
+i386:
+dovecot-debuginfo-2.0.9-7.el6_5.1.i686.rpm
+dovecot-devel-2.0.9-7.el6_5.1.i686.rpm
+
+x86_64:
+dovecot-debuginfo-2.0.9-7.el6_5.1.x86_64.rpm
+dovecot-devel-2.0.9-7.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+dovecot-2.2.10-4.el7_0.1.src.rpm
+
+ppc64:
+dovecot-2.2.10-4.el7_0.1.ppc.rpm
+dovecot-2.2.10-4.el7_0.1.ppc64.rpm
+dovecot-debuginfo-2.2.10-4.el7_0.1.ppc.rpm
+dovecot-debuginfo-2.2.10-4.el7_0.1.ppc64.rpm
+dovecot-mysql-2.2.10-4.el7_0.1.ppc64.rpm
+dovecot-pgsql-2.2.10-4.el7_0.1.ppc64.rpm
+dovecot-pigeonhole-2.2.10-4.el7_0.1.ppc64.rpm
+
+s390x:
+dovecot-2.2.10-4.el7_0.1.s390.rpm
+dovecot-2.2.10-4.el7_0.1.s390x.rpm
+dovecot-debuginfo-2.2.10-4.el7_0.1.s390.rpm
+dovecot-debuginfo-2.2.10-4.el7_0.1.s390x.rpm
+dovecot-mysql-2.2.10-4.el7_0.1.s390x.rpm
+dovecot-pgsql-2.2.10-4.el7_0.1.s390x.rpm
+dovecot-pigeonhole-2.2.10-4.el7_0.1.s390x.rpm
+
+x86_64:
+dovecot-2.2.10-4.el7_0.1.i686.rpm
+dovecot-2.2.10-4.el7_0.1.x86_64.rpm
+dovecot-debuginfo-2.2.10-4.el7_0.1.i686.rpm
+dovecot-debuginfo-2.2.10-4.el7_0.1.x86_64.rpm
+dovecot-mysql-2.2.10-4.el7_0.1.x86_64.rpm
+dovecot-pgsql-2.2.10-4.el7_0.1.x86_64.rpm
+dovecot-pigeonhole-2.2.10-4.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+dovecot-2.2.10-4.el7_0.1.src.rpm
+
+x86_64:
+dovecot-2.2.10-4.el7_0.1.i686.rpm
+dovecot-2.2.10-4.el7_0.1.x86_64.rpm
+dovecot-debuginfo-2.2.10-4.el7_0.1.i686.rpm
+dovecot-debuginfo-2.2.10-4.el7_0.1.x86_64.rpm
+dovecot-mysql-2.2.10-4.el7_0.1.x86_64.rpm
+dovecot-pgsql-2.2.10-4.el7_0.1.x86_64.rpm
+dovecot-pigeonhole-2.2.10-4.el7_0.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3430.html">https://www.redhat.com/security/data/cve/CVE-2014-3430.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTqwigXlSAg2UNWIIRAuuRAKCKt3nLkx0FWlkjQhi0x6nMNCLlvwCeNZCl
+LNmR03Ziexvz765kvDYPb9Y=
+=KnU0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

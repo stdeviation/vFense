@@ -1,0 +1,267 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0043&#45;01] Low: Red Hat Network Satellite Server IBM Java	Runtime security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 14 Jan 2010 11:55:23 &#45;0500 -->
+<!--X-Message-Id: 201001141655.o0EGtHQ5026996@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0043-01] Low: Red Hat Network Satellite Server IBM Java	Runti</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0043-01] Low: Red Hat Network Satellite Server IBM Java	Runtime security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2010:0043-01] Low: Red Hat Network Satellite Server IBM Java	Runtime security update</li>
+<li><em>Date</em>: Thu, 14 Jan 2010 11:55:12 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat Network Satellite Server IBM Java Runtime security update
+Advisory ID:       RHSA-2010:0043-01
+Product:           Red Hat Network Satellite Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0043.html">https://rhn.redhat.com/errata/RHSA-2010-0043.html</a>
+Issue date:        2010-01-14
+CVE Names:         CVE-2009-0217 CVE-2009-1093 CVE-2009-1094 
+                   CVE-2009-1095 CVE-2009-1096 CVE-2009-1097 
+                   CVE-2009-1098 CVE-2009-1099 CVE-2009-1100 
+                   CVE-2009-1101 CVE-2009-1103 CVE-2009-1104 
+                   CVE-2009-1105 CVE-2009-1106 CVE-2009-1107 
+                   CVE-2009-2625 CVE-2009-2670 CVE-2009-2671 
+                   CVE-2009-2672 CVE-2009-2673 CVE-2009-2674 
+                   CVE-2009-2675 CVE-2009-2676 CVE-2009-3865 
+                   CVE-2009-3866 CVE-2009-3867 CVE-2009-3868 
+                   CVE-2009-3869 CVE-2009-3871 CVE-2009-3872 
+                   CVE-2009-3873 CVE-2009-3874 CVE-2009-3875 
+                   CVE-2009-3876 CVE-2009-3877 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.6.0-ibm packages that fix several security issues are now
+available for Red Hat Network Satellite Server 5.3.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+4AS-RHNSAT5.3 - i386, s390, s390x, x86_64
+5Server-Satellite53 - i386, s390x, x86_64
+
+3. Description:
+
+This update corrects several security vulnerabilities in the IBM Java
+Runtime Environment shipped as part of Red Hat Network Satellite Server
+5.3. In a typical operating environment, these are of low security risk as
+the runtime is not used on untrusted applets.
+
+Several flaws were fixed in the IBM Java 2 Runtime Environment.
+(CVE-2009-0217, CVE-2009-1093, CVE-2009-1094, CVE-2009-1095, CVE-2009-1096,
+CVE-2009-1097, CVE-2009-1098, CVE-2009-1099, CVE-2009-1100, CVE-2009-1101,
+CVE-2009-1103, CVE-2009-1104, CVE-2009-1105, CVE-2009-1106, CVE-2009-1107,
+CVE-2009-2625, CVE-2009-2670, CVE-2009-2671, CVE-2009-2672, CVE-2009-2673,
+CVE-2009-2674, CVE-2009-2675, CVE-2009-2676, CVE-2009-3865, CVE-2009-3866,
+CVE-2009-3867, CVE-2009-3868, CVE-2009-3869, CVE-2009-3871, CVE-2009-3872,
+CVE-2009-3873, CVE-2009-3874, CVE-2009-3875, CVE-2009-3876, CVE-2009-3877)
+
+Users of Red Hat Network Satellite Server 5.3 are advised to upgrade to
+these updated java-1.6.0-ibm packages, which resolve these issues. For this
+update to take effect, Red Hat Network Satellite Server must be restarted
+(&quot;/usr/sbin/rhn-satellite restart&quot;), as well as all running instances of
+IBM Java.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+490166 - CVE-2009-1101 OpenJDK JAX-WS service endpoint remote Denial-of-Service (6630639)
+490167 - CVE-2009-1093 OpenJDK remote LDAP Denial-Of-Service (6717680)
+490168 - CVE-2009-1094 OpenJDK  LDAP client remote code execution (6737315)
+490169 - CVE-2009-1095 CVE-2009-1096 OpenJDK Pack200 Buffer overflow vulnerability (6792554)
+490174 - CVE-2009-1097 OpenJDK PNG processing buffer overflow vulnerability (6804996)
+490178 - CVE-2009-1098 OpenJDK GIF processing buffer overflow vulnerability (6804998)
+492302 - CVE-2009-1099 OpenJDK: Type1 font processing buffer overflow vulnerability
+492305 - CVE-2009-1100 OpenJDK: DoS (disk consumption) via handling of temporary font files
+492306 - CVE-2009-1103 OpenJDK: Files disclosure, arbitrary code execution via &quot;deserializing applets&quot; (6646860)
+492308 - CVE-2009-1104 OpenJDK: Intended access restrictions bypass via LiveConnect (6724331)
+492309 - CVE-2009-1105 OpenJDK: Possibility of trusted applet run in older, vulnerable version of JRE (6706490)
+492310 - CVE-2009-1106 OpenJDK: Improper parsing of crossdomain.xml files (intended access restriction bypass) (6798948)
+492312 - CVE-2009-1107 OpenJDK: Signed applet remote misuse possibility (6782871)
+511915 - CVE-2009-0217 xmlsec1, mono, xml-security-c, xml-security-1.3.0-1jpp.ep1.*: XMLDsig HMAC-based signatures spoofing and authentication bypass
+512896 - CVE-2009-2670 OpenJDK Untrusted applet System properties access (6738524)
+512907 - CVE-2009-2671 CVE-2009-2672 OpenJDK Proxy mechanism information leaks  (6801071)
+512914 - CVE-2009-2673 OpenJDK proxy mechanism allows non-authorized socket connections  (6801497)
+512915 - CVE-2009-2674 Java Web Start Buffer JPEG processing integer overflow (6823373)
+512920 - CVE-2009-2675 Java Web Start Buffer unpack200 processing integer overflow (6830335)
+512921 - CVE-2009-2625 OpenJDK: XML parsing Denial-Of-Service (6845701)
+515890 - CVE-2009-2676 JRE applet launcher vulnerability
+530053 - CVE-2009-3873 OpenJDK JPEG Image Writer quantization problem (6862968)
+530057 - CVE-2009-3875 OpenJDK MessageDigest.isEqual introduces timing attack vulnerabilities  (6863503)
+530061 - CVE-2009-3876 OpenJDK ASN.1/DER input stream parser denial of service (6864911) CVE-2009-3877
+530062 - CVE-2009-3869 OpenJDK JRE AWT setDifflCM stack overflow (6872357)
+530063 - CVE-2009-3871 OpenJDK JRE AWT setBytePixels heap overflow (6872358)
+530067 - CVE-2009-3874 OpenJDK ImageI/O JPEG heap overflow  (6874643)
+532906 - CVE-2009-3872 JRE JPEG JFIF Decoder issue (6862969)
+533211 - CVE-2009-3865 java-1.6.0-sun: ACE in JRE Deployment Toolkit (6869752)
+533212 - CVE-2009-3866 java-1.6.0-sun: Privilege escalation in the Java Web Start Installer  (6872824)
+533214 - CVE-2009-3867 java-1.5.0-sun, java-1.6.0-sun: Stack-based buffer overflow via a long file: URL argument (6854303)
+533215 - CVE-2009-3868 java-1.5.0-sun, java-1.6.0-sun: Privilege escalation via crafted image file due improper color profiles parsing (6862970)
+
+6. Package List:
+
+4AS-RHNSAT5.3:
+
+Source:
+java-1.6.0-ibm-1.6.0.7-1jpp.3.el4.src.rpm
+
+i386:
+java-1.6.0-ibm-1.6.0.7-1jpp.3.el4.i386.rpm
+java-1.6.0-ibm-devel-1.6.0.7-1jpp.3.el4.i386.rpm
+
+s390:
+java-1.6.0-ibm-1.6.0.7-1jpp.3.el4.s390.rpm
+java-1.6.0-ibm-devel-1.6.0.7-1jpp.3.el4.s390.rpm
+
+s390x:
+java-1.6.0-ibm-1.6.0.7-1jpp.3.el4.s390x.rpm
+java-1.6.0-ibm-devel-1.6.0.7-1jpp.3.el4.s390x.rpm
+
+x86_64:
+java-1.6.0-ibm-1.6.0.7-1jpp.3.el4.x86_64.rpm
+java-1.6.0-ibm-devel-1.6.0.7-1jpp.3.el4.x86_64.rpm
+
+5Server-Satellite53:
+
+Source:
+java-1.6.0-ibm-1.6.0.7-1jpp.2.el5.src.rpm
+
+i386:
+java-1.6.0-ibm-1.6.0.7-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-devel-1.6.0.7-1jpp.2.el5.i386.rpm
+
+s390x:
+java-1.6.0-ibm-1.6.0.7-1jpp.2.el5.s390x.rpm
+java-1.6.0-ibm-devel-1.6.0.7-1jpp.2.el5.s390x.rpm
+
+x86_64:
+java-1.6.0-ibm-1.6.0.7-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-devel-1.6.0.7-1jpp.2.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-0217.html">https://www.redhat.com/security/data/cve/CVE-2009-0217.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1093.html">https://www.redhat.com/security/data/cve/CVE-2009-1093.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1094.html">https://www.redhat.com/security/data/cve/CVE-2009-1094.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1095.html">https://www.redhat.com/security/data/cve/CVE-2009-1095.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1096.html">https://www.redhat.com/security/data/cve/CVE-2009-1096.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1097.html">https://www.redhat.com/security/data/cve/CVE-2009-1097.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1098.html">https://www.redhat.com/security/data/cve/CVE-2009-1098.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1099.html">https://www.redhat.com/security/data/cve/CVE-2009-1099.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1100.html">https://www.redhat.com/security/data/cve/CVE-2009-1100.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1101.html">https://www.redhat.com/security/data/cve/CVE-2009-1101.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1103.html">https://www.redhat.com/security/data/cve/CVE-2009-1103.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1104.html">https://www.redhat.com/security/data/cve/CVE-2009-1104.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1105.html">https://www.redhat.com/security/data/cve/CVE-2009-1105.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1106.html">https://www.redhat.com/security/data/cve/CVE-2009-1106.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1107.html">https://www.redhat.com/security/data/cve/CVE-2009-1107.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2625.html">https://www.redhat.com/security/data/cve/CVE-2009-2625.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2670.html">https://www.redhat.com/security/data/cve/CVE-2009-2670.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2671.html">https://www.redhat.com/security/data/cve/CVE-2009-2671.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2672.html">https://www.redhat.com/security/data/cve/CVE-2009-2672.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2673.html">https://www.redhat.com/security/data/cve/CVE-2009-2673.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2674.html">https://www.redhat.com/security/data/cve/CVE-2009-2674.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2675.html">https://www.redhat.com/security/data/cve/CVE-2009-2675.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2676.html">https://www.redhat.com/security/data/cve/CVE-2009-2676.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3865.html">https://www.redhat.com/security/data/cve/CVE-2009-3865.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3866.html">https://www.redhat.com/security/data/cve/CVE-2009-3866.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3867.html">https://www.redhat.com/security/data/cve/CVE-2009-3867.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3868.html">https://www.redhat.com/security/data/cve/CVE-2009-3868.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3869.html">https://www.redhat.com/security/data/cve/CVE-2009-3869.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3871.html">https://www.redhat.com/security/data/cve/CVE-2009-3871.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3872.html">https://www.redhat.com/security/data/cve/CVE-2009-3872.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3873.html">https://www.redhat.com/security/data/cve/CVE-2009-3873.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3874.html">https://www.redhat.com/security/data/cve/CVE-2009-3874.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3875.html">https://www.redhat.com/security/data/cve/CVE-2009-3875.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3876.html">https://www.redhat.com/security/data/cve/CVE-2009-3876.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3877.html">https://www.redhat.com/security/data/cve/CVE-2009-3877.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLT0xeXlSAg2UNWIIRAum2AJ9rerbCKUEbWpOm9rp0K5+t325t7gCfQVeh
+v9vIkFCs6XN8mKieT7mqOhw=
+=wzBZ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

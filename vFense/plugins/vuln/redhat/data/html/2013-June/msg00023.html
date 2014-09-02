@@ -1,0 +1,340 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0983&#45;01] Moderate: curl security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 25 Jun 2013 16:14:53 &#45;0400 -->
+<!--X-Message-Id: 201306252014.r5PKEqPE000365@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0983-01] Moderate: curl security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0983-01] Moderate: curl security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0983-01] Moderate: curl security update</li>
+<li><em>Date</em>: Tue, 25 Jun 2013 20:14:52 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: curl security update
+Advisory ID:       RHSA-2013:0983-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0983.html">https://rhn.redhat.com/errata/RHSA-2013-0983.html</a>
+Issue date:        2013-06-25
+CVE Names:         CVE-2013-2174 
+=====================================================================
+
+1. Summary:
+
+Updated curl packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+cURL provides the libcurl library and a command line tool for downloading
+files from servers using various protocols, including HTTP, FTP, and LDAP.
+
+A heap-based buffer overflow flaw was found in the way libcurl unescaped
+URLs. A remote attacker could provide a specially-crafted URL that, when
+processed by an application using libcurl that handles untrusted URLs,
+would possibly cause it to crash or, potentially, execute arbitrary code.
+(CVE-2013-2174)
+
+Red Hat would like to thank the cURL project for reporting this issue.
+Upstream acknowledges Timo Sirainen as the original reporter.
+
+Users of curl should upgrade to these updated packages, which contain a
+backported patch to correct this issue. All running applications using
+libcurl must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+965640 - CVE-2013-2174 curl: Loop counter error, leading to heap-based buffer overflow when decoding certain URLs
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/curl-7.15.5-17.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/curl-7.15.5-17.el5_9.src.rpm</a>
+
+i386:
+curl-7.15.5-17.el5_9.i386.rpm
+curl-debuginfo-7.15.5-17.el5_9.i386.rpm
+
+x86_64:
+curl-7.15.5-17.el5_9.i386.rpm
+curl-7.15.5-17.el5_9.x86_64.rpm
+curl-debuginfo-7.15.5-17.el5_9.i386.rpm
+curl-debuginfo-7.15.5-17.el5_9.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/curl-7.15.5-17.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/curl-7.15.5-17.el5_9.src.rpm</a>
+
+i386:
+curl-debuginfo-7.15.5-17.el5_9.i386.rpm
+curl-devel-7.15.5-17.el5_9.i386.rpm
+
+x86_64:
+curl-debuginfo-7.15.5-17.el5_9.i386.rpm
+curl-debuginfo-7.15.5-17.el5_9.x86_64.rpm
+curl-devel-7.15.5-17.el5_9.i386.rpm
+curl-devel-7.15.5-17.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/curl-7.15.5-17.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/curl-7.15.5-17.el5_9.src.rpm</a>
+
+i386:
+curl-7.15.5-17.el5_9.i386.rpm
+curl-debuginfo-7.15.5-17.el5_9.i386.rpm
+curl-devel-7.15.5-17.el5_9.i386.rpm
+
+ia64:
+curl-7.15.5-17.el5_9.ia64.rpm
+curl-debuginfo-7.15.5-17.el5_9.ia64.rpm
+curl-devel-7.15.5-17.el5_9.ia64.rpm
+
+ppc:
+curl-7.15.5-17.el5_9.ppc.rpm
+curl-7.15.5-17.el5_9.ppc64.rpm
+curl-debuginfo-7.15.5-17.el5_9.ppc.rpm
+curl-debuginfo-7.15.5-17.el5_9.ppc64.rpm
+curl-devel-7.15.5-17.el5_9.ppc.rpm
+curl-devel-7.15.5-17.el5_9.ppc64.rpm
+
+s390x:
+curl-7.15.5-17.el5_9.s390.rpm
+curl-7.15.5-17.el5_9.s390x.rpm
+curl-debuginfo-7.15.5-17.el5_9.s390.rpm
+curl-debuginfo-7.15.5-17.el5_9.s390x.rpm
+curl-devel-7.15.5-17.el5_9.s390.rpm
+curl-devel-7.15.5-17.el5_9.s390x.rpm
+
+x86_64:
+curl-7.15.5-17.el5_9.i386.rpm
+curl-7.15.5-17.el5_9.x86_64.rpm
+curl-debuginfo-7.15.5-17.el5_9.i386.rpm
+curl-debuginfo-7.15.5-17.el5_9.x86_64.rpm
+curl-devel-7.15.5-17.el5_9.i386.rpm
+curl-devel-7.15.5-17.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm</a>
+
+i386:
+curl-7.19.7-37.el6_4.i686.rpm
+curl-debuginfo-7.19.7-37.el6_4.i686.rpm
+libcurl-7.19.7-37.el6_4.i686.rpm
+
+x86_64:
+curl-7.19.7-37.el6_4.x86_64.rpm
+curl-debuginfo-7.19.7-37.el6_4.i686.rpm
+curl-debuginfo-7.19.7-37.el6_4.x86_64.rpm
+libcurl-7.19.7-37.el6_4.i686.rpm
+libcurl-7.19.7-37.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm</a>
+
+i386:
+curl-debuginfo-7.19.7-37.el6_4.i686.rpm
+libcurl-devel-7.19.7-37.el6_4.i686.rpm
+
+x86_64:
+curl-debuginfo-7.19.7-37.el6_4.i686.rpm
+curl-debuginfo-7.19.7-37.el6_4.x86_64.rpm
+libcurl-devel-7.19.7-37.el6_4.i686.rpm
+libcurl-devel-7.19.7-37.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm</a>
+
+x86_64:
+curl-7.19.7-37.el6_4.x86_64.rpm
+curl-debuginfo-7.19.7-37.el6_4.i686.rpm
+curl-debuginfo-7.19.7-37.el6_4.x86_64.rpm
+libcurl-7.19.7-37.el6_4.i686.rpm
+libcurl-7.19.7-37.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm</a>
+
+x86_64:
+curl-debuginfo-7.19.7-37.el6_4.i686.rpm
+curl-debuginfo-7.19.7-37.el6_4.x86_64.rpm
+libcurl-devel-7.19.7-37.el6_4.i686.rpm
+libcurl-devel-7.19.7-37.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm</a>
+
+i386:
+curl-7.19.7-37.el6_4.i686.rpm
+curl-debuginfo-7.19.7-37.el6_4.i686.rpm
+libcurl-7.19.7-37.el6_4.i686.rpm
+libcurl-devel-7.19.7-37.el6_4.i686.rpm
+
+ppc64:
+curl-7.19.7-37.el6_4.ppc64.rpm
+curl-debuginfo-7.19.7-37.el6_4.ppc.rpm
+curl-debuginfo-7.19.7-37.el6_4.ppc64.rpm
+libcurl-7.19.7-37.el6_4.ppc.rpm
+libcurl-7.19.7-37.el6_4.ppc64.rpm
+libcurl-devel-7.19.7-37.el6_4.ppc.rpm
+libcurl-devel-7.19.7-37.el6_4.ppc64.rpm
+
+s390x:
+curl-7.19.7-37.el6_4.s390x.rpm
+curl-debuginfo-7.19.7-37.el6_4.s390.rpm
+curl-debuginfo-7.19.7-37.el6_4.s390x.rpm
+libcurl-7.19.7-37.el6_4.s390.rpm
+libcurl-7.19.7-37.el6_4.s390x.rpm
+libcurl-devel-7.19.7-37.el6_4.s390.rpm
+libcurl-devel-7.19.7-37.el6_4.s390x.rpm
+
+x86_64:
+curl-7.19.7-37.el6_4.x86_64.rpm
+curl-debuginfo-7.19.7-37.el6_4.i686.rpm
+curl-debuginfo-7.19.7-37.el6_4.x86_64.rpm
+libcurl-7.19.7-37.el6_4.i686.rpm
+libcurl-7.19.7-37.el6_4.x86_64.rpm
+libcurl-devel-7.19.7-37.el6_4.i686.rpm
+libcurl-devel-7.19.7-37.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/curl-7.19.7-37.el6_4.src.rpm</a>
+
+i386:
+curl-7.19.7-37.el6_4.i686.rpm
+curl-debuginfo-7.19.7-37.el6_4.i686.rpm
+libcurl-7.19.7-37.el6_4.i686.rpm
+libcurl-devel-7.19.7-37.el6_4.i686.rpm
+
+x86_64:
+curl-7.19.7-37.el6_4.x86_64.rpm
+curl-debuginfo-7.19.7-37.el6_4.i686.rpm
+curl-debuginfo-7.19.7-37.el6_4.x86_64.rpm
+libcurl-7.19.7-37.el6_4.i686.rpm
+libcurl-7.19.7-37.el6_4.x86_64.rpm
+libcurl-devel-7.19.7-37.el6_4.i686.rpm
+libcurl-devel-7.19.7-37.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2174.html">https://www.redhat.com/security/data/cve/CVE-2013-2174.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://curl.haxx.se/docs/adv_20130622.html">http://curl.haxx.se/docs/adv_20130622.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRyfovXlSAg2UNWIIRApOqAKC0fXUq/HqdyF9Um25Ri+e3NVKkcQCfThf3
+kUOajsFhep3iDPXLtl2YP38=
+=e+b1
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

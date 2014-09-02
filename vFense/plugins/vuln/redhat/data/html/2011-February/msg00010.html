@@ -1,0 +1,149 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0213&#45;01] Important: jbossweb security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 10 Feb 2011 14:51:00 &#45;0500 -->
+<!--X-Message-Id: 201102101950.p1AJotFR008381@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0213-01] Important: jbossweb security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0213-01] Important: jbossweb security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0213-01] Important: jbossweb security update</li>
+<li><em>Date</em>: Thu, 10 Feb 2011 12:50:54 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: jbossweb security update
+Advisory ID:       RHSA-2011:0213-01
+Product:           JBoss Enterprise Web Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0213.html">https://rhn.redhat.com/errata/RHSA-2011-0213.html</a>
+Issue date:        2011-02-10
+CVE Names:         CVE-2010-4476 
+=====================================================================
+
+1. Summary:
+
+Updated jbossweb packages that fix one security issue are now available for
+JBoss Enterprise Web Platform 5 from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+JBoss Web Server is a web container based on Apache Tomcat. It provides a
+single deployment platform for the JavaServer Pages (JSP) and Java Servlet
+technologies.
+
+A denial of service flaw was found in the way certain strings were
+converted to Double objects. A remote attacker could use this flaw to cause
+JBoss Web Server to hang via a specially-crafted HTTP request.
+(CVE-2010-4476)
+
+All users of JBoss Enterprise Web Platform 5 as provided from the Red Hat
+Customer Portal are advised to apply this patch. Refer to the Solution
+section of this erratum for patch download instructions. The JBoss server
+process must be restarted for this update to take effect.
+
+3. Solution:
+
+A patch to correct CVE-2010-4476 for JBoss Enterprise Web Platform 5.1 is
+available from the Red Hat Customer Portal. To download this patch:
+
+1) Backup your existing JBoss Enterprise Web Platform installation
+(including all applications and configuration files).
+
+2) Log into the Customer Portal: <a  rel="nofollow" href="https://access.redhat.com/login">https://access.redhat.com/login</a>
+
+3) Navigate to
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html</a>
+
+4) On the left-hand side menu, under &quot;JBoss Enterprise Platforms&quot; click
+&quot;Enterprise Web Platform&quot;. Then, use the &quot;Version:&quot; drop down menu to
+select &quot;5.1.0&quot;.
+
+5) The patch is available from the &quot;Security Advisories&quot; link. After
+applying the patch, the JBoss server process must be restarted for the
+update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+674336 - CVE-2010-4476 JDK Double.parseDouble Denial-Of-Service
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4476.html">https://www.redhat.com/security/data/cve/CVE-2010-4476.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNVEDpXlSAg2UNWIIRAuWEAJoD2v3bW0ioAVJUyvBS+UNDzP1FAACeIVuR
+XyES5rd2dcuFo22hQj0ixS4=
+=Ezpl
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

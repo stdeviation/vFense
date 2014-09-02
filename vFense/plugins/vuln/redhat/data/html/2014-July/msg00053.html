@@ -1,0 +1,335 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0927&#45;01] Moderate: qemu&#45;kvm security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 23 Jul 2014 13:33:27 &#45;0400 -->
+<!--X-Message-Id: 201407231733.s6NHXQ3k019955@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0927-01] Moderate: qemu-kvm security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0927-01] Moderate: qemu-kvm security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0927-01] Moderate: qemu-kvm security and bug fix update</li>
+<li><em>Date</em>: Wed, 23 Jul 2014 17:33:26 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: qemu-kvm security and bug fix update
+Advisory ID:       RHSA-2014:0927-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0927.html">https://rhn.redhat.com/errata/RHSA-2014-0927.html</a>
+Issue date:        2014-07-23
+CVE Names:         CVE-2013-4148 CVE-2013-4149 CVE-2013-4150 
+                   CVE-2013-4151 CVE-2013-4527 CVE-2013-4529 
+                   CVE-2013-4535 CVE-2013-4536 CVE-2013-4541 
+                   CVE-2013-4542 CVE-2013-6399 CVE-2014-0182 
+                   CVE-2014-0222 CVE-2014-0223 CVE-2014-3461 
+=====================================================================
+
+1. Summary:
+
+Updated qemu-kvm packages that fix multiple security issues and various
+bugs are now available for Red Hat Enterprise Linux 7.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. The qemu-kvm package provides the
+user-space component for running virtual machines using KVM.
+
+Two integer overflow flaws were found in the QEMU block driver for QCOW
+version 1 disk images. A user able to alter the QEMU disk image files
+loaded by a guest could use either of these flaws to corrupt QEMU process
+memory on the host, which could potentially result in arbitrary code
+execution on the host with the privileges of the QEMU process.
+(CVE-2014-0222, CVE-2014-0223)
+
+Multiple buffer overflow, input validation, and out-of-bounds write flaws
+were found in the way virtio, virtio-net, virtio-scsi, usb, and hpet
+drivers of QEMU handled state loading after migration. A user able to alter
+the savevm data (either on the disk or over the wire during migration)
+could use either of these flaws to corrupt QEMU process memory on the
+(destination) host, which could potentially result in arbitrary code
+execution on the host with the privileges of the QEMU process.
+(CVE-2013-4148, CVE-2013-4149, CVE-2013-4150, CVE-2013-4151, CVE-2013-4527,
+CVE-2013-4529, CVE-2013-4535, CVE-2013-4536, CVE-2013-4541, CVE-2013-4542,
+CVE-2013-6399, CVE-2014-0182, CVE-2014-3461)
+
+These issues were discovered by Michael S. Tsirkin, Anthony Liguori and
+Michael Roth of Red Hat: CVE-2013-4148, CVE-2013-4149, CVE-2013-4150,
+CVE-2013-4151, CVE-2013-4527, CVE-2013-4529, CVE-2013-4535, CVE-2013-4536,
+CVE-2013-4541, CVE-2013-4542, CVE-2013-6399, CVE-2014-0182, and
+CVE-2014-3461.
+
+This update also fixes the following bugs:
+
+* Previously, QEMU did not free pre-allocated zero clusters correctly and
+the clusters under some circumstances leaked. With this update,
+pre-allocated zero clusters are freed appropriately and the cluster leaks
+no longer occur. (BZ#1110188)
+
+* Prior to this update, the QEMU command interface did not properly handle
+resizing of cache memory during guest migration, causing QEMU to terminate
+unexpectedly with a segmentation fault and QEMU to fail. This update fixes
+the related code and QEMU no longer crashes in the described situation.
+(BZ#1110191)
+
+* Previously, when a guest device was hot unplugged, QEMU correctly removed
+the corresponding file descriptor watch but did not re-create it after the
+device was re-connected. As a consequence, the guest became unable to
+receive any data from the host over this device. With this update, the file
+descriptor's watch is re-created and the guest in the above scenario can
+communicate with the host as expected. (BZ#1110219)
+
+* Previously, the QEMU migration code did not account for the gaps caused
+by hot unplugged devices and thus expected more memory to be transferred
+during migrations. As a consequence, guest migration failed to complete
+after multiple devices were hot unplugged. In addition, the migration info
+text displayed erroneous values for the &quot;remaining ram&quot; item. With this
+update, QEMU calculates memory after a device has been unplugged correctly,
+and any subsequent guest migrations proceed as expected. (BZ#1110189)
+
+All qemu-kvm users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing this
+update, shut down all running virtual machines. Once all virtual machines
+have shut down, start them again for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1066334 - CVE-2013-4148 qemu: virtio-net: buffer overflow on invalid state load
+1066337 - CVE-2013-4149 qemu: virtio-net: out-of-bounds buffer write on load
+1066340 - CVE-2013-4150 qemu: virtio-net: out-of-bounds buffer write on invalid state load
+1066342 - CVE-2013-4151 qemu: virtio: out-of-bounds buffer write on invalid state load
+1066347 - CVE-2013-4527 qemu: hpet: buffer overrun on invalid state load
+1066353 - CVE-2013-4529 qemu: hw/pci/pcie_aer.c: buffer overrun on invalid state load
+1066361 - CVE-2013-6399 qemu: virtio: buffer overrun on incoming migration
+1066382 - CVE-2013-4542 qemu: virtio-scsi: buffer overrun on invalid state load
+1066384 - CVE-2013-4541 qemu: usb: insufficient sanity checking of setup_index+setup_len in post_load
+1066401 - CVE-2013-4535 CVE-2013-4536 qemu: virtio: insufficient validation of num_sg when mapping
+1088986 - CVE-2014-0182 qemu: virtio: out-of-bounds buffer write on state load with invalid config_len
+1096821 - CVE-2014-3461 Qemu: usb: fix up post load checks
+1097216 - CVE-2014-0222 Qemu: qcow1: validate L2 table size to avoid integer overflows
+1097222 - CVE-2014-0223 Qemu: qcow1: validate image size to avoid out-of-bounds memory access
+1110188 - qcow2 corruptions (leaked clusters after installing a rhel7 guest using virtio_scsi)
+1110189 - migration can not finish with 1024k 'remaining ram' left after hotunplug 4 nics
+1110191 - Reduce the migrate cache size during migration causes qemu segment fault
+1110219 - Guest can't receive any character transmitted from host after hot unplugging virtserialport then hot plugging again
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+qemu-kvm-1.5.3-60.el7_0.5.src.rpm
+
+x86_64:
+libcacard-1.5.3-60.el7_0.5.i686.rpm
+libcacard-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-guest-agent-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-img-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-common-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.i686.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-tools-1.5.3-60.el7_0.5.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+libcacard-devel-1.5.3-60.el7_0.5.i686.rpm
+libcacard-devel-1.5.3-60.el7_0.5.x86_64.rpm
+libcacard-tools-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.i686.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+qemu-kvm-1.5.3-60.el7_0.5.src.rpm
+
+x86_64:
+qemu-guest-agent-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+libcacard-1.5.3-60.el7_0.5.i686.rpm
+libcacard-1.5.3-60.el7_0.5.x86_64.rpm
+libcacard-devel-1.5.3-60.el7_0.5.i686.rpm
+libcacard-devel-1.5.3-60.el7_0.5.x86_64.rpm
+libcacard-tools-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-img-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-common-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.i686.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-tools-1.5.3-60.el7_0.5.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+qemu-kvm-1.5.3-60.el7_0.5.src.rpm
+
+x86_64:
+libcacard-1.5.3-60.el7_0.5.i686.rpm
+libcacard-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-guest-agent-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-img-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-common-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.i686.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-tools-1.5.3-60.el7_0.5.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+x86_64:
+libcacard-devel-1.5.3-60.el7_0.5.i686.rpm
+libcacard-devel-1.5.3-60.el7_0.5.x86_64.rpm
+libcacard-tools-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.i686.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+qemu-kvm-1.5.3-60.el7_0.5.src.rpm
+
+x86_64:
+libcacard-1.5.3-60.el7_0.5.i686.rpm
+libcacard-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-guest-agent-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-img-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-common-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.i686.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-tools-1.5.3-60.el7_0.5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+libcacard-devel-1.5.3-60.el7_0.5.i686.rpm
+libcacard-devel-1.5.3-60.el7_0.5.x86_64.rpm
+libcacard-tools-1.5.3-60.el7_0.5.x86_64.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.i686.rpm
+qemu-kvm-debuginfo-1.5.3-60.el7_0.5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4148.html">https://www.redhat.com/security/data/cve/CVE-2013-4148.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4149.html">https://www.redhat.com/security/data/cve/CVE-2013-4149.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4150.html">https://www.redhat.com/security/data/cve/CVE-2013-4150.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4151.html">https://www.redhat.com/security/data/cve/CVE-2013-4151.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4527.html">https://www.redhat.com/security/data/cve/CVE-2013-4527.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4529.html">https://www.redhat.com/security/data/cve/CVE-2013-4529.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4535.html">https://www.redhat.com/security/data/cve/CVE-2013-4535.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4536.html">https://www.redhat.com/security/data/cve/CVE-2013-4536.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4541.html">https://www.redhat.com/security/data/cve/CVE-2013-4541.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4542.html">https://www.redhat.com/security/data/cve/CVE-2013-4542.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6399.html">https://www.redhat.com/security/data/cve/CVE-2013-6399.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0182.html">https://www.redhat.com/security/data/cve/CVE-2014-0182.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0222.html">https://www.redhat.com/security/data/cve/CVE-2014-0222.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0223.html">https://www.redhat.com/security/data/cve/CVE-2014-0223.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3461.html">https://www.redhat.com/security/data/cve/CVE-2014-3461.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTz/HcXlSAg2UNWIIRAg3JAJ9hdSQpwiCcWGcnAnciDZgsVGTW5gCfRAMV
+3uH1H6+IOWo4TpNLXNxvUlg=
+=vcBq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

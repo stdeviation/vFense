@@ -1,0 +1,400 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1265&#45;01] Important: libxslt security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 13 Sep 2012 13:59:30 &#45;0400 -->
+<!--X-Message-Id: 201209131759.q8DHxOcI012017@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1265-01] Important: libxslt security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1265-01] Important: libxslt security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1265-01] Important: libxslt security update</li>
+<li><em>Date</em>: Thu, 13 Sep 2012 17:59:24 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: libxslt security update
+Advisory ID:       RHSA-2012:1265-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1265.html">https://rhn.redhat.com/errata/RHSA-2012-1265.html</a>
+Issue date:        2012-09-13
+CVE Names:         CVE-2011-1202 CVE-2011-3970 CVE-2012-2825 
+                   CVE-2012-2870 CVE-2012-2871 
+=====================================================================
+
+1. Summary:
+
+Updated libxslt packages that fix several security issues are now available
+for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+libxslt is a library for transforming XML files into other textual formats
+(including HTML, plain text, and other XML representations of the
+underlying data) using the standard XSLT stylesheet transformation
+mechanism.
+
+A heap-based buffer overflow flaw was found in the way libxslt applied
+templates to nodes selected by certain namespaces. An attacker could use
+this flaw to create a malicious XSL file that, when used by an application
+linked against libxslt to perform an XSL transformation, could cause the
+application to crash or, possibly, execute arbitrary code with the
+privileges of the user running the application. (CVE-2012-2871)
+
+Several denial of service flaws were found in libxslt. An attacker could
+use these flaws to create a malicious XSL file that, when used by an
+application linked against libxslt to perform an XSL transformation, could
+cause the application to crash. (CVE-2012-2825, CVE-2012-2870,
+CVE-2011-3970)
+
+An information leak could occur if an application using libxslt processed
+an untrusted XPath expression, or used a malicious XSL file to perform an
+XSL transformation. If combined with other flaws, this leak could possibly
+help an attacker bypass intended memory corruption protections.
+(CVE-2011-1202)
+
+All libxslt users are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues. All running
+applications linked against libxslt must be restarted for this update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+684386 - CVE-2011-1202 libxslt: Heap address leak in XLST
+788826 - CVE-2011-3970 libxslt: Out-of-bounds read when parsing certain patterns
+835982 - CVE-2012-2825 libxslt: DoS when reading unexpected DTD nodes in XSLT
+852935 - CVE-2012-2871 libxslt: Heap-buffer overflow caused by bad cast in XSL transforms
+852937 - CVE-2012-2870 libxslt: Use-after-free when processing an invalid XPath expression
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxslt-1.1.17-4.el5_8.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxslt-1.1.17-4.el5_8.3.src.rpm</a>
+
+i386:
+libxslt-1.1.17-4.el5_8.3.i386.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.i386.rpm
+libxslt-python-1.1.17-4.el5_8.3.i386.rpm
+
+x86_64:
+libxslt-1.1.17-4.el5_8.3.i386.rpm
+libxslt-1.1.17-4.el5_8.3.x86_64.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.i386.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.x86_64.rpm
+libxslt-python-1.1.17-4.el5_8.3.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxslt-1.1.17-4.el5_8.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxslt-1.1.17-4.el5_8.3.src.rpm</a>
+
+i386:
+libxslt-debuginfo-1.1.17-4.el5_8.3.i386.rpm
+libxslt-devel-1.1.17-4.el5_8.3.i386.rpm
+
+x86_64:
+libxslt-debuginfo-1.1.17-4.el5_8.3.i386.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.x86_64.rpm
+libxslt-devel-1.1.17-4.el5_8.3.i386.rpm
+libxslt-devel-1.1.17-4.el5_8.3.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libxslt-1.1.17-4.el5_8.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libxslt-1.1.17-4.el5_8.3.src.rpm</a>
+
+i386:
+libxslt-1.1.17-4.el5_8.3.i386.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.i386.rpm
+libxslt-devel-1.1.17-4.el5_8.3.i386.rpm
+libxslt-python-1.1.17-4.el5_8.3.i386.rpm
+
+ia64:
+libxslt-1.1.17-4.el5_8.3.i386.rpm
+libxslt-1.1.17-4.el5_8.3.ia64.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.i386.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.ia64.rpm
+libxslt-devel-1.1.17-4.el5_8.3.ia64.rpm
+libxslt-python-1.1.17-4.el5_8.3.ia64.rpm
+
+ppc:
+libxslt-1.1.17-4.el5_8.3.ppc.rpm
+libxslt-1.1.17-4.el5_8.3.ppc64.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.ppc.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.ppc64.rpm
+libxslt-devel-1.1.17-4.el5_8.3.ppc.rpm
+libxslt-devel-1.1.17-4.el5_8.3.ppc64.rpm
+libxslt-python-1.1.17-4.el5_8.3.ppc.rpm
+
+s390x:
+libxslt-1.1.17-4.el5_8.3.s390.rpm
+libxslt-1.1.17-4.el5_8.3.s390x.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.s390.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.s390x.rpm
+libxslt-devel-1.1.17-4.el5_8.3.s390.rpm
+libxslt-devel-1.1.17-4.el5_8.3.s390x.rpm
+libxslt-python-1.1.17-4.el5_8.3.s390x.rpm
+
+x86_64:
+libxslt-1.1.17-4.el5_8.3.i386.rpm
+libxslt-1.1.17-4.el5_8.3.x86_64.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.i386.rpm
+libxslt-debuginfo-1.1.17-4.el5_8.3.x86_64.rpm
+libxslt-devel-1.1.17-4.el5_8.3.i386.rpm
+libxslt-devel-1.1.17-4.el5_8.3.x86_64.rpm
+libxslt-python-1.1.17-4.el5_8.3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm</a>
+
+i386:
+libxslt-1.1.26-2.el6_3.1.i686.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+
+x86_64:
+libxslt-1.1.26-2.el6_3.1.i686.rpm
+libxslt-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm</a>
+
+i386:
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-devel-1.1.26-2.el6_3.1.i686.rpm
+libxslt-python-1.1.26-2.el6_3.1.i686.rpm
+
+x86_64:
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-devel-1.1.26-2.el6_3.1.i686.rpm
+libxslt-devel-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-python-1.1.26-2.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm</a>
+
+x86_64:
+libxslt-1.1.26-2.el6_3.1.i686.rpm
+libxslt-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm</a>
+
+x86_64:
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-devel-1.1.26-2.el6_3.1.i686.rpm
+libxslt-devel-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-python-1.1.26-2.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm</a>
+
+i386:
+libxslt-1.1.26-2.el6_3.1.i686.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-devel-1.1.26-2.el6_3.1.i686.rpm
+
+ppc64:
+libxslt-1.1.26-2.el6_3.1.ppc.rpm
+libxslt-1.1.26-2.el6_3.1.ppc64.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.ppc.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.ppc64.rpm
+libxslt-devel-1.1.26-2.el6_3.1.ppc.rpm
+libxslt-devel-1.1.26-2.el6_3.1.ppc64.rpm
+
+s390x:
+libxslt-1.1.26-2.el6_3.1.s390.rpm
+libxslt-1.1.26-2.el6_3.1.s390x.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.s390.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.s390x.rpm
+libxslt-devel-1.1.26-2.el6_3.1.s390.rpm
+libxslt-devel-1.1.26-2.el6_3.1.s390x.rpm
+
+x86_64:
+libxslt-1.1.26-2.el6_3.1.i686.rpm
+libxslt-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-devel-1.1.26-2.el6_3.1.i686.rpm
+libxslt-devel-1.1.26-2.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm</a>
+
+i386:
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-python-1.1.26-2.el6_3.1.i686.rpm
+
+ppc64:
+libxslt-debuginfo-1.1.26-2.el6_3.1.ppc64.rpm
+libxslt-python-1.1.26-2.el6_3.1.ppc64.rpm
+
+s390x:
+libxslt-debuginfo-1.1.26-2.el6_3.1.s390x.rpm
+libxslt-python-1.1.26-2.el6_3.1.s390x.rpm
+
+x86_64:
+libxslt-debuginfo-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-python-1.1.26-2.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm</a>
+
+i386:
+libxslt-1.1.26-2.el6_3.1.i686.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-devel-1.1.26-2.el6_3.1.i686.rpm
+
+x86_64:
+libxslt-1.1.26-2.el6_3.1.i686.rpm
+libxslt-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-debuginfo-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-devel-1.1.26-2.el6_3.1.i686.rpm
+libxslt-devel-1.1.26-2.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libxslt-1.1.26-2.el6_3.1.src.rpm</a>
+
+i386:
+libxslt-debuginfo-1.1.26-2.el6_3.1.i686.rpm
+libxslt-python-1.1.26-2.el6_3.1.i686.rpm
+
+x86_64:
+libxslt-debuginfo-1.1.26-2.el6_3.1.x86_64.rpm
+libxslt-python-1.1.26-2.el6_3.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1202.html">https://www.redhat.com/security/data/cve/CVE-2011-1202.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3970.html">https://www.redhat.com/security/data/cve/CVE-2011-3970.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2825.html">https://www.redhat.com/security/data/cve/CVE-2012-2825.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2870.html">https://www.redhat.com/security/data/cve/CVE-2012-2870.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2871.html">https://www.redhat.com/security/data/cve/CVE-2012-2871.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQUh7JXlSAg2UNWIIRAsJmAJ9pVP2vkhEuIh3hhi9lyVfa/cnCmwCgtTiS
+bhFgk6Ez9OXi3ibu0HSzdxg=
+=c8UZ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

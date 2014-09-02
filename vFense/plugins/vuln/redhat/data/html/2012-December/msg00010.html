@@ -1,0 +1,278 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1542&#45;01] Moderate: CloudForms Commons 1.1 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Dec 2012 15:56:09 &#45;0500 -->
+<!--X-Message-Id: 201212042056.qB4Ku47j015487@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1542-01] Moderate: CloudForms Commons 1.1 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1542-01] Moderate: CloudForms Commons 1.1 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2012:1542-01] Moderate: CloudForms Commons 1.1 security update</li>
+<li><em>Date</em>: Tue, 4 Dec 2012 20:56:03 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: CloudForms Commons 1.1 security update
+Advisory ID:       RHSA-2012:1542-01
+Product:           Red Hat CloudForms
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1542.html">https://rhn.redhat.com/errata/RHSA-2012-1542.html</a>
+Issue date:        2012-12-04
+CVE Names:         CVE-2012-1986 CVE-2012-1987 CVE-2012-1988 
+                   CVE-2012-2139 CVE-2012-2140 CVE-2012-2660 
+                   CVE-2012-2661 CVE-2012-2694 CVE-2012-2695 
+                   CVE-2012-3424 CVE-2012-3463 CVE-2012-3464 
+                   CVE-2012-3465 CVE-2012-3864 CVE-2012-3865 
+                   CVE-2012-3867 
+=====================================================================
+
+1. Summary:
+
+Updated CloudForms Commons packages that fix several security issues are
+now available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Cloud Engine for RHEL 6 Server - noarch
+System Engine for RHEL 6 Server - noarch
+
+3. Description:
+
+Red Hat CloudForms is an on-premise hybrid cloud
+Infrastructure-as-a-Service (IaaS) product that lets you create and manage
+private and public clouds.
+
+Multiple input validation vulnerabilities were discovered in
+rubygem-activerecored. A remote attacker could possibly use these flaws
+to perform an SQL injection attack against an application using
+rubygem-activerecord. (CVE-2012-2660, CVE-2012-2661, CVE-2012-2694,
+CVE-2012-2695)
+
+Multiple cross-site scripting (XSS) flaws were found in rubygem-actionpack.
+A remote attacker could use these flaws to conduct XSS attacks against
+users of an application using rubygem-actionpack. (CVE-2012-3463,
+CVE-2012-3464, CVE-2012-3465)
+
+A flaw was found in the HTTP digest authentication implementation in
+rubygem-actionpack. A remote attacker could use this flaw to cause a
+denial of service of an application using rubygem-actionpack and digest
+authentication. (CVE-2012-3424)
+
+An input validation flaw was found in rubygem-mail's Exim and Sendmail
+delivery methods. A remote attacker could use this flaw to execute
+arbitrary commands with the privileges of an application using
+rubygem-mail. (CVE-2012-2140)
+
+A directory traversal flaw was found in rubygem-mail's file delivery
+method. A remote attacker could use this flaw to send a mail with a
+specially crafted To: header and write to files with the privileges of
+an application using rubygem-mail. (CVE-2012-2139)
+
+Puppet was updated to version 2.6.17, which fixes multiple security
+issues. These issues are not exposed by CloudForms. (CVE-2012-1986,
+CVE-2012-1987, CVE-2012-1988, CVE-2012-3864, CVE-2012-3865, CVE-2012-3867)
+
+Red Hat would like to thank Puppet Labs for reporting CVE-2012-1988,
+CVE-2012-1986, CVE-2012-1987, CVE-2012-3864, CVE-2012-3865, and
+CVE-2012-3867.
+
+Users are advised to upgrade to these CloudForms Commons packages, which
+resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+810069 - CVE-2012-1986 puppet: Filebucket arbitrary file read
+810070 - CVE-2012-1987 puppet: Filebucket denial of service
+810071 - CVE-2012-1988 puppet: Filebucket arbitrary code execution
+816352 - CVE-2012-2139 CVE-2012-2140 rubygem-mail: arbitrary command execution when using exim or sendmail from commandline, file system traversal flaw
+827353 - CVE-2012-2660 rubygem-actionpack: Unsafe query generation
+827363 - CVE-2012-2661 rubygem-activerecord: SQL injection when processing nested query paramaters
+831573 - CVE-2012-2695 rubygem-activerecord: SQL injection when processing nested query paramaters (a different flaw than CVE-2012-2661)
+831581 - CVE-2012-2694 rubygem-actionpack: Unsafe query generation (a different flaw than CVE-2012-2660)
+839130 - CVE-2012-3864 puppet: authenticated clients allowed to read arbitrary files from the puppet master
+839131 - CVE-2012-3865 puppet: authenticated clients allowed to delete arbitrary files on the puppet master
+839158 - CVE-2012-3867 puppet: insufficient validation of agent names in CN of SSL certificate requests
+843711 - CVE-2012-3424 rubygem-actionpack: DoS vulnerability in authenticate_or_request_with_http_digest
+847196 - CVE-2012-3463 rubygem-actionpack: potential XSS vulnerability in select_tag prompt
+847199 - CVE-2012-3464 rubygem-actionpack: potential XSS vulnerability
+847200 - CVE-2012-3465 rubygem-actionpack: XSS Vulnerability in strip_tags
+
+6. Package List:
+
+Cloud Engine for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/converge-ui-devel-1.0.4-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/converge-ui-devel-1.0.4-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/puppet-2.6.17-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/puppet-2.6.17-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-actionpack-3.0.10-10.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-actionpack-3.0.10-10.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-activerecord-3.0.10-6.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-activerecord-3.0.10-6.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-activesupport-3.0.10-4.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-activesupport-3.0.10-4.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-chunky_png-1.2.0-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-chunky_png-1.2.0-3.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-compass-0.11.5-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-compass-0.11.5-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-compass-960-plugin-0.10.4-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-compass-960-plugin-0.10.4-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-delayed_job-2.1.4-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-delayed_job-2.1.4-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-ldap_fluff-0.1.3-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-ldap_fluff-0.1.3-1.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-mail-2.3.0-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-mail-2.3.0-3.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-net-ldap-0.1.1-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-net-ldap-0.1.1-3.el6cf.src.rpm</a>
+
+noarch:
+converge-ui-devel-1.0.4-1.el6cf.noarch.rpm
+puppet-2.6.17-2.el6cf.noarch.rpm
+puppet-server-2.6.17-2.el6cf.noarch.rpm
+rubygem-actionpack-3.0.10-10.el6cf.noarch.rpm
+rubygem-activerecord-3.0.10-6.el6cf.noarch.rpm
+rubygem-activesupport-3.0.10-4.el6cf.noarch.rpm
+rubygem-chunky_png-1.2.0-3.el6cf.noarch.rpm
+rubygem-compass-0.11.5-2.el6cf.noarch.rpm
+rubygem-compass-960-plugin-0.10.4-2.el6cf.noarch.rpm
+rubygem-compass-960-plugin-doc-0.10.4-2.el6cf.noarch.rpm
+rubygem-delayed_job-2.1.4-2.el6cf.noarch.rpm
+rubygem-delayed_job-doc-2.1.4-2.el6cf.noarch.rpm
+rubygem-ldap_fluff-0.1.3-1.el6_3.noarch.rpm
+rubygem-mail-2.3.0-3.el6cf.noarch.rpm
+rubygem-mail-doc-2.3.0-3.el6cf.noarch.rpm
+rubygem-net-ldap-0.1.1-3.el6cf.noarch.rpm
+
+System Engine for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/converge-ui-devel-1.0.4-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/converge-ui-devel-1.0.4-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/puppet-2.6.17-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/puppet-2.6.17-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-actionpack-3.0.10-10.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-actionpack-3.0.10-10.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-activerecord-3.0.10-6.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-activerecord-3.0.10-6.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-activesupport-3.0.10-4.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-activesupport-3.0.10-4.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-chunky_png-1.2.0-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-chunky_png-1.2.0-3.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-compass-0.11.5-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-compass-0.11.5-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-compass-960-plugin-0.10.4-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-compass-960-plugin-0.10.4-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-delayed_job-2.1.4-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-delayed_job-2.1.4-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-ldap_fluff-0.1.3-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-ldap_fluff-0.1.3-1.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-mail-2.3.0-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-mail-2.3.0-3.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-net-ldap-0.1.1-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-net-ldap-0.1.1-3.el6cf.src.rpm</a>
+
+noarch:
+converge-ui-devel-1.0.4-1.el6cf.noarch.rpm
+puppet-2.6.17-2.el6cf.noarch.rpm
+puppet-server-2.6.17-2.el6cf.noarch.rpm
+rubygem-actionpack-3.0.10-10.el6cf.noarch.rpm
+rubygem-activerecord-3.0.10-6.el6cf.noarch.rpm
+rubygem-activesupport-3.0.10-4.el6cf.noarch.rpm
+rubygem-chunky_png-1.2.0-3.el6cf.noarch.rpm
+rubygem-compass-0.11.5-2.el6cf.noarch.rpm
+rubygem-compass-960-plugin-0.10.4-2.el6cf.noarch.rpm
+rubygem-compass-960-plugin-doc-0.10.4-2.el6cf.noarch.rpm
+rubygem-delayed_job-2.1.4-2.el6cf.noarch.rpm
+rubygem-delayed_job-doc-2.1.4-2.el6cf.noarch.rpm
+rubygem-ldap_fluff-0.1.3-1.el6_3.noarch.rpm
+rubygem-mail-2.3.0-3.el6cf.noarch.rpm
+rubygem-mail-doc-2.3.0-3.el6cf.noarch.rpm
+rubygem-net-ldap-0.1.1-3.el6cf.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1986.html">https://www.redhat.com/security/data/cve/CVE-2012-1986.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1987.html">https://www.redhat.com/security/data/cve/CVE-2012-1987.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1988.html">https://www.redhat.com/security/data/cve/CVE-2012-1988.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2139.html">https://www.redhat.com/security/data/cve/CVE-2012-2139.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2140.html">https://www.redhat.com/security/data/cve/CVE-2012-2140.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2660.html">https://www.redhat.com/security/data/cve/CVE-2012-2660.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2661.html">https://www.redhat.com/security/data/cve/CVE-2012-2661.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2694.html">https://www.redhat.com/security/data/cve/CVE-2012-2694.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2695.html">https://www.redhat.com/security/data/cve/CVE-2012-2695.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3424.html">https://www.redhat.com/security/data/cve/CVE-2012-3424.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3463.html">https://www.redhat.com/security/data/cve/CVE-2012-3463.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3464.html">https://www.redhat.com/security/data/cve/CVE-2012-3464.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3465.html">https://www.redhat.com/security/data/cve/CVE-2012-3465.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3864.html">https://www.redhat.com/security/data/cve/CVE-2012-3864.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3865.html">https://www.redhat.com/security/data/cve/CVE-2012-3865.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3867.html">https://www.redhat.com/security/data/cve/CVE-2012-3867.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQvmNDXlSAg2UNWIIRAsT1AKC0njSJM+mT6sXBY2tY9K7a7wa2zwCfd6dz
+7/ckq62GY//PjJhueUGO298=
+=nIh2
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

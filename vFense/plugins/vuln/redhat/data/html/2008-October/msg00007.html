@@ -1,0 +1,223 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0911&#45;01] Moderate: condor security,	bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 7 Oct 2008 15:48:17 &#45;0400 -->
+<!--X-Message-Id: 200810071948.m97JmGRQ007873@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0911-01] Moderate: condor security,	bug fix and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0911-01] Moderate: condor security,	bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0911-01] Moderate: condor security,	bug fix and enhancement update</li>
+<li><em>Date</em>: Tue, 7 Oct 2008 15:48:16 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: condor security, bug fix and enhancement update
+Advisory ID:       RHSA-2008:0911-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0911.html">https://rhn.redhat.com/errata/RHSA-2008-0911.html</a>
+Issue date:        2008-10-07
+CVE Names:         CVE-2008-3826 CVE-2008-3828 CVE-2008-3829 
+                   CVE-2008-3830 
+=====================================================================
+
+1. Summary:
+
+Updated condor packages that address multiple security issues, fix several
+bugs, and introduce feature enhancements are now available for Red Hat
+Enterprise MRG 1.0 for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Grid for RHEL 5 Server - i386, x86_64
+
+3. Description:
+
+Condor is a specialized workload management system for compute-intensive
+jobs. It provides a job queuing mechanism, scheduling policy, priority
+scheme, and resource monitoring and management.
+
+A flaw was found in the way Condor processed user submitted jobs. It was
+possible for a user to submit a job in a way that could cause that job to
+run as a different user with access to the pool. (CVE-2008-3826)
+
+A stack based buffer overflow flaw was found in Condor's condor_schedd
+daemon. A user who had permissions to submit a job could do so in a manner
+that could cause condor_schedd to crash or, potentially, execute arbitrary
+code with the permissions of condor_schedd. (CVE-2008-3828)
+
+A denial-of-service flaw was found in Condor's condor_schedd daemon. A user
+who had permissions to submit a job could do so in a manner that would
+cause condor_schedd to crash. (CVE-2008-3829)
+
+A flaw was found in the way Condor processes allowed and denied netmasks
+for access control. If a configuration file contained an overlapping
+netmask in the allow or deny rules, it could cause that rule to be ignored,
+allowing unintended access. (CVE-2008-3830)
+
+
+This update also fixes the following bugs:
+
+* the &quot;amazon_gahp -m&quot; command sets the AMAZON_GAHP_WORKER_MAX_NUM
+configuration option, fixing the maximum number of processes contacting EC2
+at any given time. Previously, Condor did not honor this option, leaving
+the maximum number of created threads unbounded. This has been corrected:
+values set with the &quot;-m&quot; argument are now properly understood.
+
+* the gridmanager constructed KeyPairs for all outstanding EC2 jobs before
+any jobs are started. When there were many (&gt;10,000) EC2 jobs in the queue,
+significant delays occurred. With this update, KeyPairs are no longer 
+constructed up-front.
+
+* an error in condor_negotiator caused intialization code to re-run
+whenever condor_reconfig was run. The flag which noted if the
+initialization code should run was always set to &quot;true&quot;. This error has
+been corrected: the initialization code now executes only at startup.
+
+
+As well, this update adds the following enhancements:
+
+* this release introduces Concurrency Limits. These allow Condor to account
+for resources not directly under its control, such as software licenses.
+
+* this update includes the latest stable upstream release of Condor:
+version 7.0.5. Information on the features and fixes included with this
+release are in the Condor Release Notes, available via the link in the
+References section below.
+
+* base support for low-latency scheduling and transparent translation of
+EC2 jobs has also been added in this update. Note: implementation of these
+two features depends on separate packages which are yet to be released.
+
+All Red Hat Enterprise MRG 1.0 users are advised to upgrade to these
+updated packages which address these vulnerabilities, fix these bugs and
+add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+451069 - gSOAP amazon-gahp needs max to worker pool
+451799 - upfront construction of ec2 KeyPairs is time consuming
+462662 - SetAttribute does not check validity of attribute's name
+463987 - CVE-2008-3826 condor: users can run jobs with arbitrary owners
+463990 - CVE-2008-3828 condor: buffer overflow in lookup_macro
+463995 - CVE-2008-3829 condor: denial of service attack on Schedd via corrupt logfile
+463997 - CVE-2008-3830 condor: allow or deny with overlapping netmasks may be ignored
+
+6. Package List:
+
+MRG Grid for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.0.5-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.0.5-2.el5.src.rpm</a>
+
+i386:
+condor-7.0.5-2.el5.i386.rpm
+condor-debuginfo-7.0.5-2.el5.i386.rpm
+condor-static-7.0.5-2.el5.i386.rpm
+
+x86_64:
+condor-7.0.5-2.el5.x86_64.rpm
+condor-debuginfo-7.0.5-2.el5.x86_64.rpm
+condor-static-7.0.5-2.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3826">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3826</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3828">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3828</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3829">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3829</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3830">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3830</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+<a  rel="nofollow" href="http://cs.wisc.edu/condor/manual/v7.0/8_3Stable_Release.html">http://cs.wisc.edu/condor/manual/v7.0/8_3Stable_Release.html</a>
+
+
+
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFI67z2XlSAg2UNWIIRApoDAJ4/oiPtABadtVkcFDNyRnlFSHQsNQCbBp8w
+QC7iTbm8AdtLW+/d9FxIXTk=
+=DoS4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

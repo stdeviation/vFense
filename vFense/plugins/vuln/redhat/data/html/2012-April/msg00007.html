@@ -1,0 +1,290 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0474&#45;01] Moderate: tomcat5 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 11 Apr 2012 14:20:09 &#45;0400 -->
+<!--X-Message-Id: 201204111820.q3BIK3Ec012528@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0474-01] Moderate: tomcat5 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0474-01] Moderate: tomcat5 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0474-01] Moderate: tomcat5 security update</li>
+<li><em>Date</em>: Wed, 11 Apr 2012 18:20:02 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: tomcat5 security update
+Advisory ID:       RHSA-2012:0474-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0474.html">https://rhn.redhat.com/errata/RHSA-2012-0474.html</a>
+Issue date:        2012-04-11
+CVE Names:         CVE-2011-4858 CVE-2012-0022 
+=====================================================================
+
+1. Summary:
+
+Updated tomcat5 packages that fix two security issues are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Apache Tomcat is a servlet container for the Java Servlet and JavaServer
+Pages (JSP) technologies.
+
+It was found that the Java hashCode() method implementation was susceptible
+to predictable hash collisions. A remote attacker could use this flaw to
+cause Tomcat to use an excessive amount of CPU time by sending an HTTP
+request with a large number of parameters whose names map to the same hash
+value. This update introduces a limit on the number of parameters processed
+per request to mitigate this issue. The default limit is 512 for
+parameters and 128 for headers. These defaults can be changed by setting
+the org.apache.tomcat.util.http.Parameters.MAX_COUNT and
+org.apache.tomcat.util.http.MimeHeaders.MAX_COUNT system properties.
+(CVE-2011-4858)
+
+It was found that Tomcat did not handle large numbers of parameters and
+large parameter values efficiently. A remote attacker could make Tomcat
+use an excessive amount of CPU time by sending an HTTP request containing a
+large number of parameters or large parameter values. This update
+introduces limits on the number of parameters and headers processed per
+request to address this issue. Refer to the CVE-2011-4858 description for
+information about the org.apache.tomcat.util.http.Parameters.MAX_COUNT and
+org.apache.tomcat.util.http.MimeHeaders.MAX_COUNT system properties.
+(CVE-2012-0022) 
+
+Red Hat would like to thank oCERT for reporting CVE-2011-4858. oCERT
+acknowledges Julian Wälde and Alexander Klink as the original reporters of
+CVE-2011-4858.
+
+Users of Tomcat should upgrade to these updated packages, which correct
+these issues. Tomcat must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+750521 - CVE-2011-4858 tomcat: hash table collisions CPU usage DoS (oCERT-2011-003)
+783359 - CVE-2012-0022 tomcat: large number of parameters DoS
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/tomcat5-5.5.23-0jpp.31.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/tomcat5-5.5.23-0jpp.31.el5_8.src.rpm</a>
+
+i386:
+tomcat5-debuginfo-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.31.el5_8.i386.rpm
+
+x86_64:
+tomcat5-debuginfo-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.31.el5_8.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/tomcat5-5.5.23-0jpp.31.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/tomcat5-5.5.23-0jpp.31.el5_8.src.rpm</a>
+
+i386:
+tomcat5-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-common-lib-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-debuginfo-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-jasper-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-server-lib-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-webapps-5.5.23-0jpp.31.el5_8.i386.rpm
+
+x86_64:
+tomcat5-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-common-lib-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-debuginfo-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-jasper-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-server-lib-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-webapps-5.5.23-0jpp.31.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/tomcat5-5.5.23-0jpp.31.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/tomcat5-5.5.23-0jpp.31.el5_8.src.rpm</a>
+
+i386:
+tomcat5-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-common-lib-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-debuginfo-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-jasper-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-server-lib-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.31.el5_8.i386.rpm
+tomcat5-webapps-5.5.23-0jpp.31.el5_8.i386.rpm
+
+ia64:
+tomcat5-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-common-lib-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-debuginfo-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-jasper-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-server-lib-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.31.el5_8.ia64.rpm
+tomcat5-webapps-5.5.23-0jpp.31.el5_8.ia64.rpm
+
+ppc:
+tomcat5-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-5.5.23-0jpp.31.el5_8.ppc64.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-common-lib-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-debuginfo-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-debuginfo-5.5.23-0jpp.31.el5_8.ppc64.rpm
+tomcat5-jasper-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-server-lib-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.31.el5_8.ppc.rpm
+tomcat5-webapps-5.5.23-0jpp.31.el5_8.ppc.rpm
+
+s390x:
+tomcat5-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-common-lib-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-debuginfo-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-jasper-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-server-lib-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.31.el5_8.s390x.rpm
+tomcat5-webapps-5.5.23-0jpp.31.el5_8.s390x.rpm
+
+x86_64:
+tomcat5-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-common-lib-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-debuginfo-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-jasper-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-server-lib-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.31.el5_8.x86_64.rpm
+tomcat5-webapps-5.5.23-0jpp.31.el5_8.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4858.html">https://www.redhat.com/security/data/cve/CVE-2011-4858.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0022.html">https://www.redhat.com/security/data/cve/CVE-2012-0022.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://tomcat.apache.org/security-5.html">http://tomcat.apache.org/security-5.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPhctDXlSAg2UNWIIRAnmwAKCG8ANIA6BMLPlUE4o+l6DV8EXkOgCgopJx
+Iouhu7nObQ+2gvPAV+Vvp7o=
+=WA/1
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

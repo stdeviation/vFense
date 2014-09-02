@@ -1,0 +1,312 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0528&#45;01] Moderate: Red Hat Enterprise MRG Messaging 2.1	security and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 30 Apr 2012 14:00:36 &#45;0400 -->
+<!--X-Message-Id: 201204301800.q3UI0U7Q004887@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0528-01] Moderate: Red Hat Enterprise MRG Messaging 2.1	secur</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0528-01] Moderate: Red Hat Enterprise MRG Messaging 2.1	security and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0528-01] Moderate: Red Hat Enterprise MRG Messaging 2.1	security and enhancement update</li>
+<li><em>Date</em>: Mon, 30 Apr 2012 18:00:29 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Enterprise MRG Messaging 2.1 security and enhancement update
+Advisory ID:       RHSA-2012:0528-01
+Product:           Red Hat Enterprise MRG for RHEL-6
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0528.html">https://rhn.redhat.com/errata/RHSA-2012-0528.html</a>
+Issue date:        2012-04-30
+CVE Names:         CVE-2011-3620 
+=====================================================================
+
+1. Summary:
+
+Updated Messaging packages that resolve one security issue, fix multiple
+bugs, and add various enhancements are now available for Red Hat Enterprise
+MRG 2.1 for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+MRG Grid Execute Node for RHEL 6 ComputeNode v.2 - x86_64
+MRG Grid Execute Node for RHEL 6 Server v.2 - i386, x86_64
+MRG Grid for RHEL 6 Server v.2 - i386, x86_64
+MRG Management for RHEL 6 ComputeNode v.2 - x86_64
+MRG Management for RHEL 6 Server v.2 - i386, x86_64
+Red Hat MRG Messaging for RHEL 6 Server v.2 - i386, noarch, x86_64
+
+3. Description:
+
+Red Hat Enterprise MRG (Messaging, Realtime, and Grid) is a next-generation
+IT infrastructure for enterprise computing. MRG offers increased
+performance, reliability, interoperability, and faster computing for
+enterprise customers.
+
+MRG Messaging is a high-speed reliable messaging distribution for Linux
+based on AMQP (Advanced Message Queuing Protocol), an open protocol
+standard for enterprise messaging that is designed to make mission critical
+messaging widely available as a standard service, and to make enterprise
+messaging interoperable across platforms, programming languages, and
+vendors. MRG Messaging includes an AMQP 0-10 messaging broker; AMQP 0-10
+client libraries for C++, Java JMS, and Python; as well as persistence
+libraries and management tools.
+
+It was found that Qpid accepted any password or SASL mechanism, provided
+the remote user knew a valid cluster username. This could give a remote
+attacker unauthorized access to the cluster, exposing cluster messages and
+internal Qpid/MRG configurations. (CVE-2011-3620)
+
+Note: If you are using an ACL, the cluster-username must be allowed to
+publish to the qpid.cluster-credentials exchange. For example, if your
+cluster-username is &quot;foo&quot;, in your ACL file:
+
+acl allow foo QPID publish exchange name=qpid.cluster-credentials
+
+The CVE-2011-3620 fix changes the cluster initialization protocol. As such,
+the cluster with all new version brokers must be restarted for the changes
+to take effect. Refer below for details.
+
+These updated packages provide numerous enhancements and bug fixes for the
+Messaging component of MRG. Space precludes documenting all of these
+changes in this advisory. Documentation for these changes will be available
+shortly in the Technical Notes document linked to in the References
+section.
+
+All users of the Messaging capabilities of Red Hat Enterprise MRG 2.1 are
+advised to upgrade to these updated packages, which resolve the issues and
+add the enhancements noted in the Red Hat Enterprise MRG 2 Technical Notes.
+After installing the updated packages, stop the cluster by either running
+&quot;service qpidd stop&quot; on all nodes, or &quot;qpid-cluster --all-stop&quot; on any one
+of the cluster nodes. Once stopped, restart the cluster with
+&quot;service qpidd start&quot; on all nodes for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+747078 - CVE-2011-3620 qpid-cpp: cluster authentication ignores cluster-* settings
+
+6. Package List:
+
+MRG Grid Execute Node for RHEL 6 ComputeNode v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/RHEMRG-RHEL6/SRPMS/condor-7.6.5-0.14.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/RHEMRG-RHEL6/SRPMS/condor-7.6.5-0.14.el6.src.rpm</a>
+
+x86_64:
+condor-7.6.5-0.14.el6.x86_64.rpm
+condor-classads-7.6.5-0.14.el6.x86_64.rpm
+condor-debuginfo-7.6.5-0.14.el6.x86_64.rpm
+condor-kbdd-7.6.5-0.14.el6.x86_64.rpm
+condor-qmf-7.6.5-0.14.el6.x86_64.rpm
+condor-vm-gahp-7.6.5-0.14.el6.x86_64.rpm
+
+MRG Management for RHEL 6 ComputeNode v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/RHEMRG-RHEL6/SRPMS/sesame-1.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/RHEMRG-RHEL6/SRPMS/sesame-1.0-5.el6.src.rpm</a>
+
+x86_64:
+sesame-1.0-5.el6.x86_64.rpm
+sesame-debuginfo-1.0-5.el6.x86_64.rpm
+
+MRG Grid for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-7.6.5-0.14.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-7.6.5-0.14.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/sesame-1.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/sesame-1.0-5.el6.src.rpm</a>
+
+i386:
+condor-7.6.5-0.14.el6.i686.rpm
+condor-aviary-7.6.5-0.14.el6.i686.rpm
+condor-classads-7.6.5-0.14.el6.i686.rpm
+condor-debuginfo-7.6.5-0.14.el6.i686.rpm
+condor-kbdd-7.6.5-0.14.el6.i686.rpm
+condor-plumage-7.6.5-0.14.el6.i686.rpm
+condor-qmf-7.6.5-0.14.el6.i686.rpm
+sesame-1.0-5.el6.i686.rpm
+sesame-debuginfo-1.0-5.el6.i686.rpm
+
+x86_64:
+condor-7.6.5-0.14.el6.x86_64.rpm
+condor-aviary-7.6.5-0.14.el6.x86_64.rpm
+condor-classads-7.6.5-0.14.el6.x86_64.rpm
+condor-debuginfo-7.6.5-0.14.el6.x86_64.rpm
+condor-kbdd-7.6.5-0.14.el6.x86_64.rpm
+condor-plumage-7.6.5-0.14.el6.x86_64.rpm
+condor-qmf-7.6.5-0.14.el6.x86_64.rpm
+condor-vm-gahp-7.6.5-0.14.el6.x86_64.rpm
+sesame-1.0-5.el6.x86_64.rpm
+sesame-debuginfo-1.0-5.el6.x86_64.rpm
+
+MRG Grid Execute Node for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-7.6.5-0.14.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-7.6.5-0.14.el6.src.rpm</a>
+
+i386:
+condor-7.6.5-0.14.el6.i686.rpm
+condor-classads-7.6.5-0.14.el6.i686.rpm
+condor-debuginfo-7.6.5-0.14.el6.i686.rpm
+condor-kbdd-7.6.5-0.14.el6.i686.rpm
+condor-qmf-7.6.5-0.14.el6.i686.rpm
+
+x86_64:
+condor-7.6.5-0.14.el6.x86_64.rpm
+condor-classads-7.6.5-0.14.el6.x86_64.rpm
+condor-debuginfo-7.6.5-0.14.el6.x86_64.rpm
+condor-kbdd-7.6.5-0.14.el6.x86_64.rpm
+condor-qmf-7.6.5-0.14.el6.x86_64.rpm
+condor-vm-gahp-7.6.5-0.14.el6.x86_64.rpm
+
+MRG Management for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/sesame-1.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/sesame-1.0-5.el6.src.rpm</a>
+
+i386:
+sesame-1.0-5.el6.i686.rpm
+sesame-debuginfo-1.0-5.el6.i686.rpm
+
+x86_64:
+sesame-1.0-5.el6.x86_64.rpm
+sesame-debuginfo-1.0-5.el6.x86_64.rpm
+
+Red Hat MRG Messaging for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/qpid-cpp-0.14-14.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/qpid-cpp-0.14-14.el6_2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/qpid-java-0.14-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/qpid-java-0.14-3.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/qpid-jca-0.14-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/qpid-jca-0.14-9.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/qpid-qmf-0.14-7.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/qpid-qmf-0.14-7.el6_2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/sesame-1.0-5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/sesame-1.0-5.el6.src.rpm</a>
+
+i386:
+qpid-cpp-client-devel-0.14-14.el6_2.i686.rpm
+qpid-cpp-client-rdma-0.14-14.el6_2.i686.rpm
+qpid-cpp-debuginfo-0.14-14.el6_2.i686.rpm
+qpid-cpp-server-cluster-0.14-14.el6_2.i686.rpm
+qpid-cpp-server-devel-0.14-14.el6_2.i686.rpm
+qpid-cpp-server-rdma-0.14-14.el6_2.i686.rpm
+qpid-cpp-server-store-0.14-14.el6_2.i686.rpm
+qpid-cpp-server-xml-0.14-14.el6_2.i686.rpm
+qpid-qmf-debuginfo-0.14-7.el6_2.i686.rpm
+qpid-qmf-devel-0.14-7.el6_2.i686.rpm
+sesame-1.0-5.el6.i686.rpm
+sesame-debuginfo-1.0-5.el6.i686.rpm
+
+noarch:
+qpid-cpp-client-devel-docs-0.14-14.el6_2.noarch.rpm
+qpid-java-client-0.14-3.el6.noarch.rpm
+qpid-java-common-0.14-3.el6.noarch.rpm
+qpid-java-example-0.14-3.el6.noarch.rpm
+qpid-jca-0.14-9.el6.noarch.rpm
+qpid-jca-xarecovery-0.14-9.el6.noarch.rpm
+
+x86_64:
+qpid-cpp-client-devel-0.14-14.el6_2.x86_64.rpm
+qpid-cpp-client-rdma-0.14-14.el6_2.x86_64.rpm
+qpid-cpp-debuginfo-0.14-14.el6_2.x86_64.rpm
+qpid-cpp-server-cluster-0.14-14.el6_2.x86_64.rpm
+qpid-cpp-server-devel-0.14-14.el6_2.x86_64.rpm
+qpid-cpp-server-rdma-0.14-14.el6_2.x86_64.rpm
+qpid-cpp-server-store-0.14-14.el6_2.x86_64.rpm
+qpid-cpp-server-xml-0.14-14.el6_2.x86_64.rpm
+qpid-qmf-debuginfo-0.14-7.el6_2.x86_64.rpm
+qpid-qmf-devel-0.14-7.el6_2.x86_64.rpm
+sesame-1.0-5.el6.x86_64.rpm
+sesame-debuginfo-1.0-5.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3620.html">https://www.redhat.com/security/data/cve/CVE-2011-3620.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/2/html-single/Technical_Notes/index.html#RHSA-2012-0528">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/2/html-single/Technical_Notes/index.html#RHSA-2012-0528</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPntMkXlSAg2UNWIIRAulIAKChC049f+WjkpwXSbJ6o7l7L+g4KACeOYpu
+ruj60K9EwFohDOKbYsq/N8I=
+=jIKp
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

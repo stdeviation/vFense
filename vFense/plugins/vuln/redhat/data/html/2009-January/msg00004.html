@@ -1,0 +1,339 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0018&#45;01] Important: xterm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 7 Jan 2009 06:33:16 &#45;0500 -->
+<!--X-Message-Id: 200901071133.n07BXG4F009068@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0018-01] Important: xterm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0018-01] Important: xterm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0018-01] Important: xterm security update</li>
+<li><em>Date</em>: Wed, 7 Jan 2009 06:33:15 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: xterm security update
+Advisory ID:       RHSA-2009:0018-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0018.html">https://rhn.redhat.com/errata/RHSA-2009-0018.html</a>
+Issue date:        2009-01-07
+CVE Names:         CVE-2008-2383 
+=====================================================================
+
+1. Summary:
+
+An updated xterm package to correct a security issue is now available for
+Red Hat Enterprise Linux 3, 4, and 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 3 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Desktop version 3 - i386, x86_64
+Red Hat Enterprise Linux ES version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The xterm program is a terminal emulator for the X Window System.
+
+A flaw was found in the xterm handling of Device Control Request Status
+String (DECRQSS) escape sequences. An attacker could create a malicious
+text file (or log entry, if unfiltered) that could run arbitrary commands
+if read by a victim inside an xterm window. (CVE-2008-2383)
+
+All xterm users are advised to upgrade to the updated package, which
+contains a backported patch to resolve this issue. All running instances of
+xterm must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Package List:
+
+Red Hat Enterprise Linux AS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/xterm-179-11.EL3.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/xterm-179-11.EL3.src.rpm</a>
+
+i386:
+xterm-179-11.EL3.i386.rpm
+xterm-debuginfo-179-11.EL3.i386.rpm
+
+ia64:
+xterm-179-11.EL3.ia64.rpm
+xterm-debuginfo-179-11.EL3.ia64.rpm
+
+ppc:
+xterm-179-11.EL3.ppc.rpm
+xterm-debuginfo-179-11.EL3.ppc.rpm
+
+s390:
+xterm-179-11.EL3.s390.rpm
+xterm-debuginfo-179-11.EL3.s390.rpm
+
+s390x:
+xterm-179-11.EL3.s390x.rpm
+xterm-debuginfo-179-11.EL3.s390x.rpm
+
+x86_64:
+xterm-179-11.EL3.x86_64.rpm
+xterm-debuginfo-179-11.EL3.x86_64.rpm
+
+Red Hat Desktop version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/xterm-179-11.EL3.src.rpm">ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/xterm-179-11.EL3.src.rpm</a>
+
+i386:
+xterm-179-11.EL3.i386.rpm
+xterm-debuginfo-179-11.EL3.i386.rpm
+
+x86_64:
+xterm-179-11.EL3.x86_64.rpm
+xterm-debuginfo-179-11.EL3.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/xterm-179-11.EL3.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/xterm-179-11.EL3.src.rpm</a>
+
+i386:
+xterm-179-11.EL3.i386.rpm
+xterm-debuginfo-179-11.EL3.i386.rpm
+
+ia64:
+xterm-179-11.EL3.ia64.rpm
+xterm-debuginfo-179-11.EL3.ia64.rpm
+
+x86_64:
+xterm-179-11.EL3.x86_64.rpm
+xterm-debuginfo-179-11.EL3.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/xterm-179-11.EL3.src.rpm">ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/xterm-179-11.EL3.src.rpm</a>
+
+i386:
+xterm-179-11.EL3.i386.rpm
+xterm-debuginfo-179-11.EL3.i386.rpm
+
+ia64:
+xterm-179-11.EL3.ia64.rpm
+xterm-debuginfo-179-11.EL3.ia64.rpm
+
+x86_64:
+xterm-179-11.EL3.x86_64.rpm
+xterm-debuginfo-179-11.EL3.x86_64.rpm
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/xterm-192-8.el4_7.2.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/xterm-192-8.el4_7.2.src.rpm</a>
+
+i386:
+xterm-192-8.el4_7.2.i386.rpm
+xterm-debuginfo-192-8.el4_7.2.i386.rpm
+
+ia64:
+xterm-192-8.el4_7.2.ia64.rpm
+xterm-debuginfo-192-8.el4_7.2.ia64.rpm
+
+ppc:
+xterm-192-8.el4_7.2.ppc.rpm
+xterm-debuginfo-192-8.el4_7.2.ppc.rpm
+
+s390:
+xterm-192-8.el4_7.2.s390.rpm
+xterm-debuginfo-192-8.el4_7.2.s390.rpm
+
+s390x:
+xterm-192-8.el4_7.2.s390x.rpm
+xterm-debuginfo-192-8.el4_7.2.s390x.rpm
+
+x86_64:
+xterm-192-8.el4_7.2.x86_64.rpm
+xterm-debuginfo-192-8.el4_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/xterm-192-8.el4_7.2.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/xterm-192-8.el4_7.2.src.rpm</a>
+
+i386:
+xterm-192-8.el4_7.2.i386.rpm
+xterm-debuginfo-192-8.el4_7.2.i386.rpm
+
+x86_64:
+xterm-192-8.el4_7.2.x86_64.rpm
+xterm-debuginfo-192-8.el4_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/xterm-192-8.el4_7.2.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/xterm-192-8.el4_7.2.src.rpm</a>
+
+i386:
+xterm-192-8.el4_7.2.i386.rpm
+xterm-debuginfo-192-8.el4_7.2.i386.rpm
+
+ia64:
+xterm-192-8.el4_7.2.ia64.rpm
+xterm-debuginfo-192-8.el4_7.2.ia64.rpm
+
+x86_64:
+xterm-192-8.el4_7.2.x86_64.rpm
+xterm-debuginfo-192-8.el4_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/xterm-192-8.el4_7.2.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/xterm-192-8.el4_7.2.src.rpm</a>
+
+i386:
+xterm-192-8.el4_7.2.i386.rpm
+xterm-debuginfo-192-8.el4_7.2.i386.rpm
+
+ia64:
+xterm-192-8.el4_7.2.ia64.rpm
+xterm-debuginfo-192-8.el4_7.2.ia64.rpm
+
+x86_64:
+xterm-192-8.el4_7.2.x86_64.rpm
+xterm-debuginfo-192-8.el4_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xterm-215-5.el5_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xterm-215-5.el5_2.2.src.rpm</a>
+
+i386:
+xterm-215-5.el5_2.2.i386.rpm
+xterm-debuginfo-215-5.el5_2.2.i386.rpm
+
+x86_64:
+xterm-215-5.el5_2.2.x86_64.rpm
+xterm-debuginfo-215-5.el5_2.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xterm-215-5.el5_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xterm-215-5.el5_2.2.src.rpm</a>
+
+i386:
+xterm-215-5.el5_2.2.i386.rpm
+xterm-debuginfo-215-5.el5_2.2.i386.rpm
+
+ia64:
+xterm-215-5.el5_2.2.ia64.rpm
+xterm-debuginfo-215-5.el5_2.2.ia64.rpm
+
+ppc:
+xterm-215-5.el5_2.2.ppc.rpm
+xterm-debuginfo-215-5.el5_2.2.ppc.rpm
+
+s390x:
+xterm-215-5.el5_2.2.s390x.rpm
+xterm-debuginfo-215-5.el5_2.2.s390x.rpm
+
+x86_64:
+xterm-215-5.el5_2.2.x86_64.rpm
+xterm-debuginfo-215-5.el5_2.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+6. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2383">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2383</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+7. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJZJL6XlSAg2UNWIIRAqykAKCqpekyUANP10B+kFTzZLq+qWe0rgCgtDPO
+E/eWAR1EB/yr7XaR05aXIgY=
+=qxbZ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

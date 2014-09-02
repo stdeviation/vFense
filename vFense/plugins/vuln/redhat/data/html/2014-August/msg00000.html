@@ -1,0 +1,170 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1002&#45;01] Moderate: rhevm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 4 Aug 2014 10:19:54 &#45;0400 -->
+<!--X-Message-Id: 201408041419.s74EJqhk030533@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1002-01] Moderate: rhevm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1002-01] Moderate: rhevm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1002-01] Moderate: rhevm security update</li>
+<li><em>Date</em>: Mon, 4 Aug 2014 14:19:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhevm security update
+Advisory ID:       RHSA-2014:1002-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1002.html">https://rhn.redhat.com/errata/RHSA-2014-1002.html</a>
+Issue date:        2014-08-04
+CVE Names:         CVE-2014-3559 
+=====================================================================
+
+1. Summary:
+
+Updated rhevm packages that fix one security issue are now available.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.4 - noarch
+
+3. Description:
+
+Red Hat Enterprise Virtualization is a feature-rich server virtualization
+management system that provides advanced capabilities for managing Red Hat
+virtualization infrastructure for Servers and Desktops.
+
+It was found that the oVirt storage back end did not wipe memory snapshots
+when VMs were deleted, even if wipe-after-delete (WAD) was enabled for the
+VM's disks. A remote attacker with credentials to create a new VM could use
+this flaw to potentially access the contents of memory snapshots in an
+uninitialized storage volume, possibly leading to the disclosure of
+sensitive information. (CVE-2014-3559)
+
+This issue was discovered by Idan Shaby and Allon Mureinik of Red Hat.
+
+All rhevm users are advised to upgrade to these updated packages, which
+correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1121925 - CVE-2014-3559 ovirt-engine-backend: memory snapshots not wiped when deleting a VM with wipe-after-delete (WAD) enabled for its disks
+
+6. Package List:
+
+RHEV-M 3.4:
+
+Source:
+rhevm-3.4.1-0.31.el6ev.src.rpm
+
+noarch:
+rhevm-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-backend-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-dbscripts-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-lib-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-restapi-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-setup-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-setup-base-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-setup-plugin-allinone-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-setup-plugin-ovirt-engine-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-setup-plugin-ovirt-engine-common-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-setup-plugin-websocket-proxy-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-tools-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-userportal-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-webadmin-portal-3.4.1-0.31.el6ev.noarch.rpm
+rhevm-websocket-proxy-3.4.1-0.31.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3559.html">https://www.redhat.com/security/data/cve/CVE-2014-3559.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFT35ZSXlSAg2UNWIIRAlLQAKCEA6k07SnvMJJT1x3LLIcVllAzWwCeNWsv
+a5n/ywivVDu+xktPFsLG/os=
+=huUt
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0896&#45;01] Moderate: ruby security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 21 Oct 2008 11:04:47 &#45;0400 -->
+<!--X-Message-Id: 200810211504.m9LF4lBn018778@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0896-01] Moderate: ruby security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0896-01] Moderate: ruby security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0896-01] Moderate: ruby security update</li>
+<li><em>Date</em>: Tue, 21 Oct 2008 11:04:47 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ruby security update
+Advisory ID:       RHSA-2008:0896-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0896.html">https://rhn.redhat.com/errata/RHSA-2008-0896.html</a>
+Issue date:        2008-10-21
+CVE Names:         CVE-2008-3443 CVE-2008-3655 CVE-2008-3905 
+=====================================================================
+
+1. Summary:
+
+Updated ruby packages that fix several security issues are now available
+for Red Hat Enterprise Linux 3.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 3 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Desktop version 3 - i386, x86_64
+Red Hat Enterprise Linux ES version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 3 - i386, ia64, x86_64
+
+3. Description:
+
+Ruby is an interpreted scripting language for quick and easy
+object-oriented programming.
+
+The Ruby DNS resolver library, resolv.rb, used predictable transaction IDs
+and a fixed source port when sending DNS requests. A remote attacker could
+use this flaw to spoof a malicious reply to a DNS query. (CVE-2008-3905)
+
+A number of flaws were found in the safe-level restrictions in Ruby. It
+was possible for an attacker to create a carefully crafted malicious script
+that can allow the bypass of certain safe-level restrictions. (CVE-2008-3655)
+
+A denial of service flaw was found in Ruby's regular expression engine. If
+a Ruby script tried to process a large amount of data via a regular
+expression, it could cause Ruby to enter an infinite-loop and crash.
+(CVE-2008-3443)
+
+Users of ruby should upgrade to these updated packages, which contain
+backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+458948 - CVE-2008-3655 ruby: multiple insufficient safe mode restrictions
+459266 - CVE-2008-3443 ruby: Memory allocation failure in Ruby regex engine (remotely exploitable DoS)
+461495 - CVE-2008-3905 ruby: use of predictable source port and transaction id in DNS requests done by resolv.rb module
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/ruby-1.6.8-13.el3.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/ruby-1.6.8-13.el3.src.rpm</a>
+
+i386:
+irb-1.6.8-13.el3.i386.rpm
+ruby-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-devel-1.6.8-13.el3.i386.rpm
+ruby-docs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-mode-1.6.8-13.el3.i386.rpm
+ruby-tcltk-1.6.8-13.el3.i386.rpm
+
+ia64:
+irb-1.6.8-13.el3.ia64.rpm
+ruby-1.6.8-13.el3.ia64.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.ia64.rpm
+ruby-devel-1.6.8-13.el3.ia64.rpm
+ruby-docs-1.6.8-13.el3.ia64.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.ia64.rpm
+ruby-mode-1.6.8-13.el3.ia64.rpm
+ruby-tcltk-1.6.8-13.el3.ia64.rpm
+
+ppc:
+irb-1.6.8-13.el3.ppc.rpm
+ruby-1.6.8-13.el3.ppc.rpm
+ruby-debuginfo-1.6.8-13.el3.ppc.rpm
+ruby-debuginfo-1.6.8-13.el3.ppc64.rpm
+ruby-devel-1.6.8-13.el3.ppc.rpm
+ruby-docs-1.6.8-13.el3.ppc.rpm
+ruby-libs-1.6.8-13.el3.ppc.rpm
+ruby-libs-1.6.8-13.el3.ppc64.rpm
+ruby-mode-1.6.8-13.el3.ppc.rpm
+ruby-tcltk-1.6.8-13.el3.ppc.rpm
+
+s390:
+irb-1.6.8-13.el3.s390.rpm
+ruby-1.6.8-13.el3.s390.rpm
+ruby-debuginfo-1.6.8-13.el3.s390.rpm
+ruby-devel-1.6.8-13.el3.s390.rpm
+ruby-docs-1.6.8-13.el3.s390.rpm
+ruby-libs-1.6.8-13.el3.s390.rpm
+ruby-mode-1.6.8-13.el3.s390.rpm
+ruby-tcltk-1.6.8-13.el3.s390.rpm
+
+s390x:
+irb-1.6.8-13.el3.s390x.rpm
+ruby-1.6.8-13.el3.s390x.rpm
+ruby-debuginfo-1.6.8-13.el3.s390.rpm
+ruby-debuginfo-1.6.8-13.el3.s390x.rpm
+ruby-devel-1.6.8-13.el3.s390x.rpm
+ruby-docs-1.6.8-13.el3.s390x.rpm
+ruby-libs-1.6.8-13.el3.s390.rpm
+ruby-libs-1.6.8-13.el3.s390x.rpm
+ruby-mode-1.6.8-13.el3.s390x.rpm
+ruby-tcltk-1.6.8-13.el3.s390x.rpm
+
+x86_64:
+irb-1.6.8-13.el3.x86_64.rpm
+ruby-1.6.8-13.el3.x86_64.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.x86_64.rpm
+ruby-devel-1.6.8-13.el3.x86_64.rpm
+ruby-docs-1.6.8-13.el3.x86_64.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.x86_64.rpm
+ruby-mode-1.6.8-13.el3.x86_64.rpm
+ruby-tcltk-1.6.8-13.el3.x86_64.rpm
+
+Red Hat Desktop version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/ruby-1.6.8-13.el3.src.rpm">ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/ruby-1.6.8-13.el3.src.rpm</a>
+
+i386:
+irb-1.6.8-13.el3.i386.rpm
+ruby-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-devel-1.6.8-13.el3.i386.rpm
+ruby-docs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-mode-1.6.8-13.el3.i386.rpm
+ruby-tcltk-1.6.8-13.el3.i386.rpm
+
+x86_64:
+irb-1.6.8-13.el3.x86_64.rpm
+ruby-1.6.8-13.el3.x86_64.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.x86_64.rpm
+ruby-devel-1.6.8-13.el3.x86_64.rpm
+ruby-docs-1.6.8-13.el3.x86_64.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.x86_64.rpm
+ruby-mode-1.6.8-13.el3.x86_64.rpm
+ruby-tcltk-1.6.8-13.el3.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/ruby-1.6.8-13.el3.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/ruby-1.6.8-13.el3.src.rpm</a>
+
+i386:
+irb-1.6.8-13.el3.i386.rpm
+ruby-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-devel-1.6.8-13.el3.i386.rpm
+ruby-docs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-mode-1.6.8-13.el3.i386.rpm
+ruby-tcltk-1.6.8-13.el3.i386.rpm
+
+ia64:
+irb-1.6.8-13.el3.ia64.rpm
+ruby-1.6.8-13.el3.ia64.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.ia64.rpm
+ruby-devel-1.6.8-13.el3.ia64.rpm
+ruby-docs-1.6.8-13.el3.ia64.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.ia64.rpm
+ruby-mode-1.6.8-13.el3.ia64.rpm
+ruby-tcltk-1.6.8-13.el3.ia64.rpm
+
+x86_64:
+irb-1.6.8-13.el3.x86_64.rpm
+ruby-1.6.8-13.el3.x86_64.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.x86_64.rpm
+ruby-devel-1.6.8-13.el3.x86_64.rpm
+ruby-docs-1.6.8-13.el3.x86_64.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.x86_64.rpm
+ruby-mode-1.6.8-13.el3.x86_64.rpm
+ruby-tcltk-1.6.8-13.el3.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/ruby-1.6.8-13.el3.src.rpm">ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/ruby-1.6.8-13.el3.src.rpm</a>
+
+i386:
+irb-1.6.8-13.el3.i386.rpm
+ruby-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-devel-1.6.8-13.el3.i386.rpm
+ruby-docs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-mode-1.6.8-13.el3.i386.rpm
+ruby-tcltk-1.6.8-13.el3.i386.rpm
+
+ia64:
+irb-1.6.8-13.el3.ia64.rpm
+ruby-1.6.8-13.el3.ia64.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.ia64.rpm
+ruby-devel-1.6.8-13.el3.ia64.rpm
+ruby-docs-1.6.8-13.el3.ia64.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.ia64.rpm
+ruby-mode-1.6.8-13.el3.ia64.rpm
+ruby-tcltk-1.6.8-13.el3.ia64.rpm
+
+x86_64:
+irb-1.6.8-13.el3.x86_64.rpm
+ruby-1.6.8-13.el3.x86_64.rpm
+ruby-debuginfo-1.6.8-13.el3.i386.rpm
+ruby-debuginfo-1.6.8-13.el3.x86_64.rpm
+ruby-devel-1.6.8-13.el3.x86_64.rpm
+ruby-docs-1.6.8-13.el3.x86_64.rpm
+ruby-libs-1.6.8-13.el3.i386.rpm
+ruby-libs-1.6.8-13.el3.x86_64.rpm
+ruby-mode-1.6.8-13.el3.x86_64.rpm
+ruby-tcltk-1.6.8-13.el3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3443">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3443</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3655">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3655</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3905">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3905</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFI/e+AXlSAg2UNWIIRAkaaAKCxokgMmvl7L7wJQsgl2yXL98mSugCeNIyp
+l9NIsTL8kJUDtAf/I/HbAsQ=
+=U+FD
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

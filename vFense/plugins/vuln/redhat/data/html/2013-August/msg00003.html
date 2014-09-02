@@ -1,0 +1,243 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1136&#45;01] Moderate: rubygem&#45;passenger security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 5 Aug 2013 12:23:11 &#45;0400 -->
+<!--X-Message-Id: 201308051623.r75GNAhW025571@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1136-01] Moderate: rubygem-passenger security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1136-01] Moderate: rubygem-passenger security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1136-01] Moderate: rubygem-passenger security update</li>
+<li><em>Date</em>: Mon, 5 Aug 2013 16:23:10 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rubygem-passenger security update
+Advisory ID:       RHSA-2013:1136-01
+Product:           Red Hat OpenShift Enterprise
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1136.html">https://rhn.redhat.com/errata/RHSA-2013-1136.html</a>
+Issue date:        2013-08-05
+CVE Names:         CVE-2013-2119 CVE-2013-4136 
+=====================================================================
+
+1. Summary:
+
+Updated rubygem-passenger packages that fix two security issues are now
+available for Red Hat OpenShift Enterprise 1.2.2.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHOSE Infrastructure 2.1 - noarch, x86_64
+RHOSE Node 1.2 - noarch, x86_64
+
+3. Description:
+
+rubygem-passenger is a web server for Ruby, Python and Node.js
+applications.
+
+The rubygem-passenger gem created and re-used temporary directories and
+files in an insecure fashion. A local attacker could use these flaws to
+conduct a denial of service attack, take over the operation of the
+application or, potentially, execute arbitrary code with the privileges of
+the user running rubygem-passenger. (CVE-2013-2119, CVE-2013-4136)
+
+Note: By default, OpenShift Enterprise uses polyinstantiation (per user)
+for the /tmp/ directory, thereby minimizing the risk and impact of
+exploitation by local attackers of both CVE-2013-2119 and CVE-2013-4136.
+
+The CVE-2013-2119 issue was discovered by Michael Scherer of the Red Hat
+Regional IT team.
+
+The following packages are included with this update as dependencies of the
+updated Ruby 1.8 passenger packages:
+
+rubygem-spruz-0.2.5-4.el6op
+rubygem-file-tail-1.0.5-4.el6op
+
+Users of Red Hat OpenShift Enterprise 1.2.2 are advised to upgrade to
+these updated packages, which correct these issues. After installing the
+updated packages, manual action is required before the update takes effect.
+Refer to the Solution section for details.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+Manual action is required for this update to take effect. In order for the
+updated passenger packages to be loaded by Ruby applications in the PaaS,
+the applications must be restarted with oo-admin-ctl-gears. One way to
+accomplish this is by running the following command, as a single line
+without the line break, on all OpenShift Nodes:
+
+for rubyapp in `ls -d /var/lib/openshift/*/ruby |
+cut -f5 -d/`; do oo-admin-ctl-gears restartgear $rubyapp; done
+
+If there are no Ruby applications on a Node it will simply fail with the
+message &quot;No such file or directory&quot;. Another option is to run the
+following on all OpenShift Nodes; however, it will result in non-Ruby
+applications also being restarted:
+
+oo-admin-ctl-gears restartall
+
+(Note that without the manual action, if a user attempts to restart their
+Ruby application via the rhc command line, it will fail to start with a
+&quot;Passenger could not be initialized...&quot; error.)
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+892813 - CVE-2013-2119 rubygem-passenger: incorrect temporary file usage
+985633 - CVE-2013-4136 rubygem-passenger: insecure temporary directory usage due to reuse of existing server instance directories
+
+6. Package List:
+
+RHOSE Infrastructure 2.1:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-passenger-3.0.21-3.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-passenger-3.0.21-3.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-file-tail-1.0.5-4.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-file-tail-1.0.5-4.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-passenger-3.0.21-3.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-passenger-3.0.21-3.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-spruz-0.2.5-4.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-spruz-0.2.5-4.el6op.src.rpm</a>
+
+noarch:
+rubygem-file-tail-1.0.5-4.el6op.noarch.rpm
+rubygem-file-tail-doc-1.0.5-4.el6op.noarch.rpm
+rubygem-spruz-0.2.5-4.el6op.noarch.rpm
+rubygem-spruz-doc-0.2.5-4.el6op.noarch.rpm
+
+x86_64:
+mod_passenger-3.0.21-3.el6op.x86_64.rpm
+ruby193-mod_passenger-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-debuginfo-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-devel-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-doc-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-native-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-native-libs-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-debuginfo-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-devel-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-doc-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-native-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-native-libs-3.0.21-3.el6op.x86_64.rpm
+
+RHOSE Node 1.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-passenger-3.0.21-3.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-passenger-3.0.21-3.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-file-tail-1.0.5-4.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-file-tail-1.0.5-4.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-passenger-3.0.21-3.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-passenger-3.0.21-3.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-spruz-0.2.5-4.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-spruz-0.2.5-4.el6op.src.rpm</a>
+
+noarch:
+rubygem-file-tail-1.0.5-4.el6op.noarch.rpm
+rubygem-file-tail-doc-1.0.5-4.el6op.noarch.rpm
+rubygem-spruz-0.2.5-4.el6op.noarch.rpm
+rubygem-spruz-doc-0.2.5-4.el6op.noarch.rpm
+
+x86_64:
+mod_passenger-3.0.21-3.el6op.x86_64.rpm
+ruby193-mod_passenger-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-debuginfo-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-devel-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-doc-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-native-3.0.21-3.el6op.x86_64.rpm
+ruby193-rubygem-passenger-native-libs-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-debuginfo-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-devel-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-doc-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-native-3.0.21-3.el6op.x86_64.rpm
+rubygem-passenger-native-libs-3.0.21-3.el6op.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2119.html">https://www.redhat.com/security/data/cve/CVE-2013-2119.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4136.html">https://www.redhat.com/security/data/cve/CVE-2013-4136.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR/9FWXlSAg2UNWIIRAjAlAJ9HkqI05eg3Y/cUnx2XdFoyb+mjCwCeNORH
+gqfvObO/JKHc3PWnidY3UVM=
+=Eq2G
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

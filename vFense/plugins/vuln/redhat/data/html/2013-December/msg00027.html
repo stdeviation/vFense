@@ -1,0 +1,442 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1840&#45;01] Important: nss security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 16 Dec 2013 13:46:29 &#45;0500 -->
+<!--X-Message-Id: 201312161846.rBGIkSB9002709@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1840-01] Important: nss security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1840-01] Important: nss security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1840-01] Important: nss security update</li>
+<li><em>Date</em>: Mon, 16 Dec 2013 18:46:28 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: nss security update
+Advisory ID:       RHSA-2013:1840-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1840.html">https://rhn.redhat.com/errata/RHSA-2013-1840.html</a>
+Issue date:        2013-12-16
+CVE Names:         CVE-2013-5605 
+=====================================================================
+
+1. Summary:
+
+Updated nss packages that fix one security issue are now available for Red
+Hat Enterprise Linux 6.2, 6.3, and 6.4 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Compute Node EUS (v. 6.2) - x86_64
+Red Hat Enterprise Linux Compute Node EUS (v. 6.3) - x86_64
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.2) - x86_64
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.3) - x86_64
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.4) - x86_64
+Red Hat Enterprise Linux HPC Node EUS (v. 6.4) - x86_64
+Red Hat Enterprise Linux Server EUS (v. 6.2) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server EUS (v. 6.3) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server EUS (v. 6.4) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.2) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.3) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.4) - i386, ppc64, s390x, x86_64
+
+3. Description:
+
+Network Security Services (NSS) is a set of libraries designed to support
+the cross-platform development of security-enabled client and server
+applications.
+
+A flaw was found in the way NSS handled invalid handshake packets. A remote
+attacker could use this flaw to cause a TLS/SSL client using NSS to crash
+or, possibly, execute arbitrary code with the privileges of the user
+running the application. (CVE-2013-5605)
+
+All NSS users should upgrade to these updated packages, which contain a
+backported patch to correct this issue. After installing this update,
+applications using NSS must be restarted for the changes to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1030807 - CVE-2013-5605 nss: Null_Cipher() does not respect maxOutputLen  (MFSA 2013-103)
+
+6. Package List:
+
+Red Hat Enterprise Linux Compute Node EUS (v. 6.2):
+
+Source:
+nss-3.13.1-9.el6_2.src.rpm
+
+x86_64:
+nss-3.13.1-9.el6_2.i686.rpm
+nss-3.13.1-9.el6_2.x86_64.rpm
+nss-debuginfo-3.13.1-9.el6_2.i686.rpm
+nss-debuginfo-3.13.1-9.el6_2.x86_64.rpm
+nss-sysinit-3.13.1-9.el6_2.x86_64.rpm
+nss-tools-3.13.1-9.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Compute Node EUS (v. 6.3):
+
+Source:
+nss-3.13.6-3.el6_3.src.rpm
+
+x86_64:
+nss-3.13.6-3.el6_3.i686.rpm
+nss-3.13.6-3.el6_3.x86_64.rpm
+nss-debuginfo-3.13.6-3.el6_3.i686.rpm
+nss-debuginfo-3.13.6-3.el6_3.x86_64.rpm
+nss-sysinit-3.13.6-3.el6_3.x86_64.rpm
+nss-tools-3.13.6-3.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node EUS (v. 6.4):
+
+Source:
+nss-3.14.3-5.el6_4.src.rpm
+
+x86_64:
+nss-3.14.3-5.el6_4.i686.rpm
+nss-3.14.3-5.el6_4.x86_64.rpm
+nss-debuginfo-3.14.3-5.el6_4.i686.rpm
+nss-debuginfo-3.14.3-5.el6_4.x86_64.rpm
+nss-sysinit-3.14.3-5.el6_4.x86_64.rpm
+nss-tools-3.14.3-5.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.2):
+
+Source:
+nss-3.13.1-9.el6_2.src.rpm
+
+x86_64:
+nss-debuginfo-3.13.1-9.el6_2.i686.rpm
+nss-debuginfo-3.13.1-9.el6_2.x86_64.rpm
+nss-devel-3.13.1-9.el6_2.i686.rpm
+nss-devel-3.13.1-9.el6_2.x86_64.rpm
+nss-pkcs11-devel-3.13.1-9.el6_2.i686.rpm
+nss-pkcs11-devel-3.13.1-9.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.3):
+
+Source:
+nss-3.13.6-3.el6_3.src.rpm
+
+x86_64:
+nss-debuginfo-3.13.6-3.el6_3.i686.rpm
+nss-debuginfo-3.13.6-3.el6_3.x86_64.rpm
+nss-devel-3.13.6-3.el6_3.i686.rpm
+nss-devel-3.13.6-3.el6_3.x86_64.rpm
+nss-pkcs11-devel-3.13.6-3.el6_3.i686.rpm
+nss-pkcs11-devel-3.13.6-3.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.4):
+
+Source:
+nss-3.14.3-5.el6_4.src.rpm
+
+x86_64:
+nss-debuginfo-3.14.3-5.el6_4.i686.rpm
+nss-debuginfo-3.14.3-5.el6_4.x86_64.rpm
+nss-devel-3.14.3-5.el6_4.i686.rpm
+nss-devel-3.14.3-5.el6_4.x86_64.rpm
+nss-pkcs11-devel-3.14.3-5.el6_4.i686.rpm
+nss-pkcs11-devel-3.14.3-5.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server EUS (v. 6.2):
+
+Source:
+nss-3.13.1-9.el6_2.src.rpm
+
+i386:
+nss-3.13.1-9.el6_2.i686.rpm
+nss-debuginfo-3.13.1-9.el6_2.i686.rpm
+nss-devel-3.13.1-9.el6_2.i686.rpm
+nss-sysinit-3.13.1-9.el6_2.i686.rpm
+nss-tools-3.13.1-9.el6_2.i686.rpm
+
+ppc64:
+nss-3.13.1-9.el6_2.ppc.rpm
+nss-3.13.1-9.el6_2.ppc64.rpm
+nss-debuginfo-3.13.1-9.el6_2.ppc.rpm
+nss-debuginfo-3.13.1-9.el6_2.ppc64.rpm
+nss-devel-3.13.1-9.el6_2.ppc.rpm
+nss-devel-3.13.1-9.el6_2.ppc64.rpm
+nss-sysinit-3.13.1-9.el6_2.ppc64.rpm
+nss-tools-3.13.1-9.el6_2.ppc64.rpm
+
+s390x:
+nss-3.13.1-9.el6_2.s390.rpm
+nss-3.13.1-9.el6_2.s390x.rpm
+nss-debuginfo-3.13.1-9.el6_2.s390.rpm
+nss-debuginfo-3.13.1-9.el6_2.s390x.rpm
+nss-devel-3.13.1-9.el6_2.s390.rpm
+nss-devel-3.13.1-9.el6_2.s390x.rpm
+nss-sysinit-3.13.1-9.el6_2.s390x.rpm
+nss-tools-3.13.1-9.el6_2.s390x.rpm
+
+x86_64:
+nss-3.13.1-9.el6_2.i686.rpm
+nss-3.13.1-9.el6_2.x86_64.rpm
+nss-debuginfo-3.13.1-9.el6_2.i686.rpm
+nss-debuginfo-3.13.1-9.el6_2.x86_64.rpm
+nss-devel-3.13.1-9.el6_2.i686.rpm
+nss-devel-3.13.1-9.el6_2.x86_64.rpm
+nss-sysinit-3.13.1-9.el6_2.x86_64.rpm
+nss-tools-3.13.1-9.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Server EUS (v. 6.3):
+
+Source:
+nss-3.13.6-3.el6_3.src.rpm
+
+i386:
+nss-3.13.6-3.el6_3.i686.rpm
+nss-debuginfo-3.13.6-3.el6_3.i686.rpm
+nss-devel-3.13.6-3.el6_3.i686.rpm
+nss-sysinit-3.13.6-3.el6_3.i686.rpm
+nss-tools-3.13.6-3.el6_3.i686.rpm
+
+ppc64:
+nss-3.13.6-3.el6_3.ppc.rpm
+nss-3.13.6-3.el6_3.ppc64.rpm
+nss-debuginfo-3.13.6-3.el6_3.ppc.rpm
+nss-debuginfo-3.13.6-3.el6_3.ppc64.rpm
+nss-devel-3.13.6-3.el6_3.ppc.rpm
+nss-devel-3.13.6-3.el6_3.ppc64.rpm
+nss-sysinit-3.13.6-3.el6_3.ppc64.rpm
+nss-tools-3.13.6-3.el6_3.ppc64.rpm
+
+s390x:
+nss-3.13.6-3.el6_3.s390.rpm
+nss-3.13.6-3.el6_3.s390x.rpm
+nss-debuginfo-3.13.6-3.el6_3.s390.rpm
+nss-debuginfo-3.13.6-3.el6_3.s390x.rpm
+nss-devel-3.13.6-3.el6_3.s390.rpm
+nss-devel-3.13.6-3.el6_3.s390x.rpm
+nss-sysinit-3.13.6-3.el6_3.s390x.rpm
+nss-tools-3.13.6-3.el6_3.s390x.rpm
+
+x86_64:
+nss-3.13.6-3.el6_3.i686.rpm
+nss-3.13.6-3.el6_3.x86_64.rpm
+nss-debuginfo-3.13.6-3.el6_3.i686.rpm
+nss-debuginfo-3.13.6-3.el6_3.x86_64.rpm
+nss-devel-3.13.6-3.el6_3.i686.rpm
+nss-devel-3.13.6-3.el6_3.x86_64.rpm
+nss-sysinit-3.13.6-3.el6_3.x86_64.rpm
+nss-tools-3.13.6-3.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server EUS (v. 6.4):
+
+Source:
+nss-3.14.3-5.el6_4.src.rpm
+
+i386:
+nss-3.14.3-5.el6_4.i686.rpm
+nss-debuginfo-3.14.3-5.el6_4.i686.rpm
+nss-devel-3.14.3-5.el6_4.i686.rpm
+nss-sysinit-3.14.3-5.el6_4.i686.rpm
+nss-tools-3.14.3-5.el6_4.i686.rpm
+
+ppc64:
+nss-3.14.3-5.el6_4.ppc.rpm
+nss-3.14.3-5.el6_4.ppc64.rpm
+nss-debuginfo-3.14.3-5.el6_4.ppc.rpm
+nss-debuginfo-3.14.3-5.el6_4.ppc64.rpm
+nss-devel-3.14.3-5.el6_4.ppc.rpm
+nss-devel-3.14.3-5.el6_4.ppc64.rpm
+nss-sysinit-3.14.3-5.el6_4.ppc64.rpm
+nss-tools-3.14.3-5.el6_4.ppc64.rpm
+
+s390x:
+nss-3.14.3-5.el6_4.s390.rpm
+nss-3.14.3-5.el6_4.s390x.rpm
+nss-debuginfo-3.14.3-5.el6_4.s390.rpm
+nss-debuginfo-3.14.3-5.el6_4.s390x.rpm
+nss-devel-3.14.3-5.el6_4.s390.rpm
+nss-devel-3.14.3-5.el6_4.s390x.rpm
+nss-sysinit-3.14.3-5.el6_4.s390x.rpm
+nss-tools-3.14.3-5.el6_4.s390x.rpm
+
+x86_64:
+nss-3.14.3-5.el6_4.i686.rpm
+nss-3.14.3-5.el6_4.x86_64.rpm
+nss-debuginfo-3.14.3-5.el6_4.i686.rpm
+nss-debuginfo-3.14.3-5.el6_4.x86_64.rpm
+nss-devel-3.14.3-5.el6_4.i686.rpm
+nss-devel-3.14.3-5.el6_4.x86_64.rpm
+nss-sysinit-3.14.3-5.el6_4.x86_64.rpm
+nss-tools-3.14.3-5.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.2):
+
+Source:
+nss-3.13.1-9.el6_2.src.rpm
+
+i386:
+nss-debuginfo-3.13.1-9.el6_2.i686.rpm
+nss-pkcs11-devel-3.13.1-9.el6_2.i686.rpm
+
+ppc64:
+nss-debuginfo-3.13.1-9.el6_2.ppc.rpm
+nss-debuginfo-3.13.1-9.el6_2.ppc64.rpm
+nss-pkcs11-devel-3.13.1-9.el6_2.ppc.rpm
+nss-pkcs11-devel-3.13.1-9.el6_2.ppc64.rpm
+
+s390x:
+nss-debuginfo-3.13.1-9.el6_2.s390.rpm
+nss-debuginfo-3.13.1-9.el6_2.s390x.rpm
+nss-pkcs11-devel-3.13.1-9.el6_2.s390.rpm
+nss-pkcs11-devel-3.13.1-9.el6_2.s390x.rpm
+
+x86_64:
+nss-debuginfo-3.13.1-9.el6_2.i686.rpm
+nss-debuginfo-3.13.1-9.el6_2.x86_64.rpm
+nss-pkcs11-devel-3.13.1-9.el6_2.i686.rpm
+nss-pkcs11-devel-3.13.1-9.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.3):
+
+Source:
+nss-3.13.6-3.el6_3.src.rpm
+
+i386:
+nss-debuginfo-3.13.6-3.el6_3.i686.rpm
+nss-pkcs11-devel-3.13.6-3.el6_3.i686.rpm
+
+ppc64:
+nss-debuginfo-3.13.6-3.el6_3.ppc.rpm
+nss-debuginfo-3.13.6-3.el6_3.ppc64.rpm
+nss-pkcs11-devel-3.13.6-3.el6_3.ppc.rpm
+nss-pkcs11-devel-3.13.6-3.el6_3.ppc64.rpm
+
+s390x:
+nss-debuginfo-3.13.6-3.el6_3.s390.rpm
+nss-debuginfo-3.13.6-3.el6_3.s390x.rpm
+nss-pkcs11-devel-3.13.6-3.el6_3.s390.rpm
+nss-pkcs11-devel-3.13.6-3.el6_3.s390x.rpm
+
+x86_64:
+nss-debuginfo-3.13.6-3.el6_3.i686.rpm
+nss-debuginfo-3.13.6-3.el6_3.x86_64.rpm
+nss-pkcs11-devel-3.13.6-3.el6_3.i686.rpm
+nss-pkcs11-devel-3.13.6-3.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.4):
+
+Source:
+nss-3.14.3-5.el6_4.src.rpm
+
+i386:
+nss-debuginfo-3.14.3-5.el6_4.i686.rpm
+nss-pkcs11-devel-3.14.3-5.el6_4.i686.rpm
+
+ppc64:
+nss-debuginfo-3.14.3-5.el6_4.ppc.rpm
+nss-debuginfo-3.14.3-5.el6_4.ppc64.rpm
+nss-pkcs11-devel-3.14.3-5.el6_4.ppc.rpm
+nss-pkcs11-devel-3.14.3-5.el6_4.ppc64.rpm
+
+s390x:
+nss-debuginfo-3.14.3-5.el6_4.s390.rpm
+nss-debuginfo-3.14.3-5.el6_4.s390x.rpm
+nss-pkcs11-devel-3.14.3-5.el6_4.s390.rpm
+nss-pkcs11-devel-3.14.3-5.el6_4.s390x.rpm
+
+x86_64:
+nss-debuginfo-3.14.3-5.el6_4.i686.rpm
+nss-debuginfo-3.14.3-5.el6_4.x86_64.rpm
+nss-pkcs11-devel-3.14.3-5.el6_4.i686.rpm
+nss-pkcs11-devel-3.14.3-5.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5605.html">https://www.redhat.com/security/data/cve/CVE-2013-5605.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSr0p2XlSAg2UNWIIRAlwEAKCY390rBP4fijrl+Gsfz2gYj5v+FgCePInv
+mNipf2UBj+3C3vtLjtgqULI=
+=NV/x
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

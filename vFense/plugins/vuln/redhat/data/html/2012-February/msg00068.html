@@ -1,0 +1,193 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0343&#45;01] Moderate: java&#45;1.4.2&#45;ibm&#45;sap security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 29 Feb 2012 10:03:58 &#45;0500 -->
+<!--X-Message-Id: 201202291503.q1TF3qdc009786@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0343-01] Moderate: java-1.4.2-ibm-sap security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00067.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00067.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00068">Thread Index</A>]
+[<A HREF="date.html#00068">Date Index</A>]
+[<A HREF="author.html#00068">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0343-01] Moderate: java-1.4.2-ibm-sap security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2012:0343-01] Moderate: java-1.4.2-ibm-sap security update</li>
+<li><em>Date</em>: Wed, 29 Feb 2012 15:03:52 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: java-1.4.2-ibm-sap security update
+Advisory ID:       RHSA-2012:0343-01
+Product:           RHEL for SAP
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0343.html">https://rhn.redhat.com/errata/RHSA-2012-0343.html</a>
+Issue date:        2012-02-29
+CVE Names:         CVE-2011-3389 CVE-2011-3545 CVE-2011-3547 
+                   CVE-2011-3548 CVE-2011-3549 CVE-2011-3552 
+                   CVE-2011-3556 CVE-2011-3557 CVE-2011-3560 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.4.2-ibm-sap packages that fix several security issues are
+now available for Red Hat Enterprise Linux 4, 5 and 6 for SAP.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL 4 AS for SAP - x86_64
+RHEL 5 Server for SAP - x86_64
+Red Hat Enterprise Linux SAP (v. 6) - x86_64
+
+3. Description:
+
+The IBM 1.4.2 SR13-FP11 Java release includes the IBM Java 1.4.2 Runtime
+Environment and the IBM Java 1.4.2 Software Development Kit.
+
+This update fixes several vulnerabilities in the IBM Java 1.4.2 Runtime
+Environment and the IBM Java 1.4.2 Software Development Kit. Detailed
+vulnerability descriptions are linked from the IBM &quot;Security alerts&quot; page,
+listed in the References section. (CVE-2011-3389, CVE-2011-3545,
+CVE-2011-3547, CVE-2011-3548, CVE-2011-3549, CVE-2011-3552, CVE-2011-3556,
+CVE-2011-3557, CVE-2011-3560)
+
+All users of java-1.4.2-ibm-sap are advised to upgrade to these updated
+packages, which contain the IBM 1.4.2 SR13-FP11 Java release. All running
+instances of IBM Java must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+737506 - CVE-2011-3389 HTTPS: block-wise chosen-plaintext attack against SSL/TLS (BEAST)
+745379 - CVE-2011-3560 OpenJDK: missing checkSetFactory calls in HttpsURLConnection (JSSE, 7096936)
+745387 - CVE-2011-3547 OpenJDK: InputStream skip() information leak (Networking/IO, 7000600)
+745397 - CVE-2011-3552 OpenJDK: excessive default UDP socket limit under SecurityManager (Networking, 7032417)
+745459 - CVE-2011-3556 OpenJDK: RMI DGC server remote code execution (RMI, 7077466)
+745464 - CVE-2011-3557 OpenJDK: RMI registry privileged code execution (RMI, 7083012)
+745473 - CVE-2011-3548 OpenJDK: mutable static AWTKeyStroke.ctor (AWT, 7019773)
+747191 - CVE-2011-3545 Oracle/IBM JDK: unspecified vulnerability fixed in 6u29 (Sound)
+747198 - CVE-2011-3549 Oracle/IBM JDK: unspecified vulnerability fixed in 6u29 (Swing)
+
+6. Package List:
+
+RHEL 4 AS for SAP:
+
+x86_64:
+java-1.4.2-ibm-sap-1.4.2.13.11.sap-1jpp.1.el4.x86_64.rpm
+java-1.4.2-ibm-sap-demo-1.4.2.13.11.sap-1jpp.1.el4.x86_64.rpm
+java-1.4.2-ibm-sap-devel-1.4.2.13.11.sap-1jpp.1.el4.x86_64.rpm
+java-1.4.2-ibm-sap-javacomm-1.4.2.13.11.sap-1jpp.1.el4.x86_64.rpm
+java-1.4.2-ibm-sap-src-1.4.2.13.11.sap-1jpp.1.el4.x86_64.rpm
+
+RHEL 5 Server for SAP:
+
+x86_64:
+java-1.4.2-ibm-sap-1.4.2.13.11.sap-1jpp.1.el5.x86_64.rpm
+java-1.4.2-ibm-sap-demo-1.4.2.13.11.sap-1jpp.1.el5.x86_64.rpm
+java-1.4.2-ibm-sap-devel-1.4.2.13.11.sap-1jpp.1.el5.x86_64.rpm
+java-1.4.2-ibm-sap-javacomm-1.4.2.13.11.sap-1jpp.1.el5.x86_64.rpm
+java-1.4.2-ibm-sap-src-1.4.2.13.11.sap-1jpp.1.el5.x86_64.rpm
+
+Red Hat Enterprise Linux SAP (v. 6):
+
+x86_64:
+java-1.4.2-ibm-sap-1.4.2.13.11.sap-1jpp.1.el6.x86_64.rpm
+java-1.4.2-ibm-sap-devel-1.4.2.13.11.sap-1jpp.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3389.html">https://www.redhat.com/security/data/cve/CVE-2011-3389.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3545.html">https://www.redhat.com/security/data/cve/CVE-2011-3545.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3547.html">https://www.redhat.com/security/data/cve/CVE-2011-3547.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3548.html">https://www.redhat.com/security/data/cve/CVE-2011-3548.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3549.html">https://www.redhat.com/security/data/cve/CVE-2011-3549.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3552.html">https://www.redhat.com/security/data/cve/CVE-2011-3552.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3556.html">https://www.redhat.com/security/data/cve/CVE-2011-3556.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3557.html">https://www.redhat.com/security/data/cve/CVE-2011-3557.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3560.html">https://www.redhat.com/security/data/cve/CVE-2011-3560.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.ibm.com/developerworks/java/jdk/alerts/">http://www.ibm.com/developerworks/java/jdk/alerts/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPTj4oXlSAg2UNWIIRAmy9AJwKvmHOAO0/rJOgCwY7VrUqJ2/YuACfalWM
+j21YfyRqgQ4/SpWtyeSBlac=
+=6DqX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00067.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00067.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00068">Thread Index</A>]
+[<A HREF="date.html#00068">Date Index</A>]
+[<A HREF="author.html#00068">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

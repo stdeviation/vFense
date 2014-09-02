@@ -1,0 +1,449 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1625&#45;01] Moderate: expat security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 7 Dec 2009 14:13:54 &#45;0500 -->
+<!--X-Message-Id: 200912071913.nB7JDr1L021008@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1625-01] Moderate: expat security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1625-01] Moderate: expat security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1625-01] Moderate: expat security update</li>
+<li><em>Date</em>: Mon, 7 Dec 2009 14:13:53 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: expat security update
+Advisory ID:       RHSA-2009:1625-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1625.html">https://rhn.redhat.com/errata/RHSA-2009-1625.html</a>
+Issue date:        2009-12-07
+CVE Names:         CVE-2009-3560 CVE-2009-3720 
+=====================================================================
+
+1. Summary:
+
+Updated expat packages that fix two security issues are now available for
+Red Hat Enterprise Linux 3, 4, and 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Desktop version 3 - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 3 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+Expat is a C library written by James Clark for parsing XML documents.
+
+Two buffer over-read flaws were found in the way Expat handled malformed
+UTF-8 sequences when processing XML files. A specially-crafted XML file
+could cause applications using Expat to crash while parsing the file.
+(CVE-2009-3560, CVE-2009-3720)
+
+All expat users should upgrade to these updated packages, which contain
+backported patches to correct these issues. After installing the updated
+packages, applications using the Expat library must be restarted for the
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+531697 - CVE-2009-3720 expat: buffer over-read and crash on XML with malformed UTF-8 sequences
+533174 - CVE-2009-3560 expat: buffer over-read and crash in big2_toUtf8() on XML with malformed UTF-8 sequences
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/expat-1.95.5-6.2.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/expat-1.95.5-6.2.src.rpm</a>
+
+i386:
+expat-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-devel-1.95.5-6.2.i386.rpm
+
+ia64:
+expat-1.95.5-6.2.i386.rpm
+expat-1.95.5-6.2.ia64.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.ia64.rpm
+expat-devel-1.95.5-6.2.ia64.rpm
+
+ppc:
+expat-1.95.5-6.2.ppc.rpm
+expat-1.95.5-6.2.ppc64.rpm
+expat-debuginfo-1.95.5-6.2.ppc.rpm
+expat-debuginfo-1.95.5-6.2.ppc64.rpm
+expat-devel-1.95.5-6.2.ppc.rpm
+
+s390:
+expat-1.95.5-6.2.s390.rpm
+expat-debuginfo-1.95.5-6.2.s390.rpm
+expat-devel-1.95.5-6.2.s390.rpm
+
+s390x:
+expat-1.95.5-6.2.s390.rpm
+expat-1.95.5-6.2.s390x.rpm
+expat-debuginfo-1.95.5-6.2.s390.rpm
+expat-debuginfo-1.95.5-6.2.s390x.rpm
+expat-devel-1.95.5-6.2.s390x.rpm
+
+x86_64:
+expat-1.95.5-6.2.i386.rpm
+expat-1.95.5-6.2.x86_64.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.x86_64.rpm
+expat-devel-1.95.5-6.2.x86_64.rpm
+
+Red Hat Desktop version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/expat-1.95.5-6.2.src.rpm">ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/expat-1.95.5-6.2.src.rpm</a>
+
+i386:
+expat-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-devel-1.95.5-6.2.i386.rpm
+
+x86_64:
+expat-1.95.5-6.2.i386.rpm
+expat-1.95.5-6.2.x86_64.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.x86_64.rpm
+expat-devel-1.95.5-6.2.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/expat-1.95.5-6.2.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/expat-1.95.5-6.2.src.rpm</a>
+
+i386:
+expat-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-devel-1.95.5-6.2.i386.rpm
+
+ia64:
+expat-1.95.5-6.2.i386.rpm
+expat-1.95.5-6.2.ia64.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.ia64.rpm
+expat-devel-1.95.5-6.2.ia64.rpm
+
+x86_64:
+expat-1.95.5-6.2.i386.rpm
+expat-1.95.5-6.2.x86_64.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.x86_64.rpm
+expat-devel-1.95.5-6.2.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/expat-1.95.5-6.2.src.rpm">ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/expat-1.95.5-6.2.src.rpm</a>
+
+i386:
+expat-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-devel-1.95.5-6.2.i386.rpm
+
+ia64:
+expat-1.95.5-6.2.i386.rpm
+expat-1.95.5-6.2.ia64.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.ia64.rpm
+expat-devel-1.95.5-6.2.ia64.rpm
+
+x86_64:
+expat-1.95.5-6.2.i386.rpm
+expat-1.95.5-6.2.x86_64.rpm
+expat-debuginfo-1.95.5-6.2.i386.rpm
+expat-debuginfo-1.95.5-6.2.x86_64.rpm
+expat-devel-1.95.5-6.2.x86_64.rpm
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/expat-1.95.7-4.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/expat-1.95.7-4.el4_8.2.src.rpm</a>
+
+i386:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-devel-1.95.7-4.el4_8.2.i386.rpm
+
+ia64:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-1.95.7-4.el4_8.2.ia64.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.ia64.rpm
+expat-devel-1.95.7-4.el4_8.2.ia64.rpm
+
+ppc:
+expat-1.95.7-4.el4_8.2.ppc.rpm
+expat-1.95.7-4.el4_8.2.ppc64.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.ppc.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.ppc64.rpm
+expat-devel-1.95.7-4.el4_8.2.ppc.rpm
+expat-devel-1.95.7-4.el4_8.2.ppc64.rpm
+
+s390:
+expat-1.95.7-4.el4_8.2.s390.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.s390.rpm
+expat-devel-1.95.7-4.el4_8.2.s390.rpm
+
+s390x:
+expat-1.95.7-4.el4_8.2.s390.rpm
+expat-1.95.7-4.el4_8.2.s390x.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.s390.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.s390x.rpm
+expat-devel-1.95.7-4.el4_8.2.s390.rpm
+expat-devel-1.95.7-4.el4_8.2.s390x.rpm
+
+x86_64:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-1.95.7-4.el4_8.2.x86_64.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.x86_64.rpm
+expat-devel-1.95.7-4.el4_8.2.i386.rpm
+expat-devel-1.95.7-4.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/expat-1.95.7-4.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/expat-1.95.7-4.el4_8.2.src.rpm</a>
+
+i386:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-devel-1.95.7-4.el4_8.2.i386.rpm
+
+x86_64:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-1.95.7-4.el4_8.2.x86_64.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.x86_64.rpm
+expat-devel-1.95.7-4.el4_8.2.i386.rpm
+expat-devel-1.95.7-4.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/expat-1.95.7-4.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/expat-1.95.7-4.el4_8.2.src.rpm</a>
+
+i386:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-devel-1.95.7-4.el4_8.2.i386.rpm
+
+ia64:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-1.95.7-4.el4_8.2.ia64.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.ia64.rpm
+expat-devel-1.95.7-4.el4_8.2.ia64.rpm
+
+x86_64:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-1.95.7-4.el4_8.2.x86_64.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.x86_64.rpm
+expat-devel-1.95.7-4.el4_8.2.i386.rpm
+expat-devel-1.95.7-4.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/expat-1.95.7-4.el4_8.2.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/expat-1.95.7-4.el4_8.2.src.rpm</a>
+
+i386:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-devel-1.95.7-4.el4_8.2.i386.rpm
+
+ia64:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-1.95.7-4.el4_8.2.ia64.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.ia64.rpm
+expat-devel-1.95.7-4.el4_8.2.ia64.rpm
+
+x86_64:
+expat-1.95.7-4.el4_8.2.i386.rpm
+expat-1.95.7-4.el4_8.2.x86_64.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.i386.rpm
+expat-debuginfo-1.95.7-4.el4_8.2.x86_64.rpm
+expat-devel-1.95.7-4.el4_8.2.i386.rpm
+expat-devel-1.95.7-4.el4_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/expat-1.95.8-8.3.el5_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/expat-1.95.8-8.3.el5_4.2.src.rpm</a>
+
+i386:
+expat-1.95.8-8.3.el5_4.2.i386.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.i386.rpm
+
+x86_64:
+expat-1.95.8-8.3.el5_4.2.i386.rpm
+expat-1.95.8-8.3.el5_4.2.x86_64.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.i386.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/expat-1.95.8-8.3.el5_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/expat-1.95.8-8.3.el5_4.2.src.rpm</a>
+
+i386:
+expat-debuginfo-1.95.8-8.3.el5_4.2.i386.rpm
+expat-devel-1.95.8-8.3.el5_4.2.i386.rpm
+
+x86_64:
+expat-debuginfo-1.95.8-8.3.el5_4.2.i386.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.x86_64.rpm
+expat-devel-1.95.8-8.3.el5_4.2.i386.rpm
+expat-devel-1.95.8-8.3.el5_4.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/expat-1.95.8-8.3.el5_4.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/expat-1.95.8-8.3.el5_4.2.src.rpm</a>
+
+i386:
+expat-1.95.8-8.3.el5_4.2.i386.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.i386.rpm
+expat-devel-1.95.8-8.3.el5_4.2.i386.rpm
+
+ia64:
+expat-1.95.8-8.3.el5_4.2.i386.rpm
+expat-1.95.8-8.3.el5_4.2.ia64.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.i386.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.ia64.rpm
+expat-devel-1.95.8-8.3.el5_4.2.ia64.rpm
+
+ppc:
+expat-1.95.8-8.3.el5_4.2.ppc.rpm
+expat-1.95.8-8.3.el5_4.2.ppc64.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.ppc.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.ppc64.rpm
+expat-devel-1.95.8-8.3.el5_4.2.ppc.rpm
+expat-devel-1.95.8-8.3.el5_4.2.ppc64.rpm
+
+s390x:
+expat-1.95.8-8.3.el5_4.2.s390.rpm
+expat-1.95.8-8.3.el5_4.2.s390x.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.s390.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.s390x.rpm
+expat-devel-1.95.8-8.3.el5_4.2.s390.rpm
+expat-devel-1.95.8-8.3.el5_4.2.s390x.rpm
+
+x86_64:
+expat-1.95.8-8.3.el5_4.2.i386.rpm
+expat-1.95.8-8.3.el5_4.2.x86_64.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.i386.rpm
+expat-debuginfo-1.95.8-8.3.el5_4.2.x86_64.rpm
+expat-devel-1.95.8-8.3.el5_4.2.i386.rpm
+expat-devel-1.95.8-8.3.el5_4.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3560">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3560</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3720">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3720</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLHVOoXlSAg2UNWIIRAtwBAJ9rIzZRJMIODDkto71oTqOr1Rj8QACeLfVe
+xVrlsoGzitM0I4Kk59cJVGk=
+=eezz
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

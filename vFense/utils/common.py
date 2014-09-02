@@ -1,6 +1,7 @@
 from __future__ import with_statement
 import re
 import os
+import sys
 import hashlib
 from json import loads
 from datetime import datetime
@@ -416,3 +417,20 @@ def md5sum(file_path, blocksize=65536):
         for block in iter(lambda: f.read(blocksize), ""):
             hasher.update(block)
     return hasher.hexdigest()
+
+
+def decoder(string):
+    try:
+        #string = unicode(string).encode(sys.stdout.encoding, 'replace')
+        if isinstance(string, unicode):
+            string = string.decode('utf-8')
+
+        if isinstance(string, basestring):
+            string = unicode(string.decode('utf-8', 'ignore'))
+
+    except Exception as e:
+        logger.exception(e)
+        #string = string.encode('utf-8').decode('utf-8')
+
+    return(string)
+

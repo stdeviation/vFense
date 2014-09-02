@@ -1,0 +1,371 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0544&#45;01] Moderate: ImageMagick security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 7 May 2012 14:45:09 &#45;0400 -->
+<!--X-Message-Id: 201205071845.q47Ij42H025885@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0544-01] Moderate: ImageMagick security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0544-01] Moderate: ImageMagick security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0544-01] Moderate: ImageMagick security update</li>
+<li><em>Date</em>: Mon, 7 May 2012 18:45:02 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ImageMagick security update
+Advisory ID:       RHSA-2012:0544-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0544.html">https://rhn.redhat.com/errata/RHSA-2012-0544.html</a>
+Issue date:        2012-05-07
+CVE Names:         CVE-2010-4167 CVE-2012-0247 CVE-2012-0248 
+                   CVE-2012-0259 CVE-2012-0260 CVE-2012-1798 
+=====================================================================
+
+1. Summary:
+
+Updated ImageMagick packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+ImageMagick is an image display and manipulation tool for the X Window
+System that can read and write multiple image formats.
+
+A flaw was found in the way ImageMagick processed images with malformed
+Exchangeable image file format (Exif) metadata. An attacker could create a
+specially-crafted image file that, when opened by a victim, would cause
+ImageMagick to crash or, potentially, execute arbitrary code.
+(CVE-2012-0247)
+
+A denial of service flaw was found in the way ImageMagick processed images
+with malformed Exif metadata. An attacker could create a specially-crafted
+image file that, when opened by a victim, could cause ImageMagick to enter
+an infinite loop. (CVE-2012-0248)
+
+It was found that ImageMagick utilities tried to load ImageMagick
+configuration files from the current working directory. If a user ran an
+ImageMagick utility in an attacker-controlled directory containing a
+specially-crafted ImageMagick configuration file, it could cause the
+utility to execute arbitrary code. (CVE-2010-4167)
+
+An integer overflow flaw was found in the way ImageMagick processed
+certain Exif tags with a large components count. An attacker could create
+a specially-crafted image file that, when opened by a victim, could cause
+ImageMagick to access invalid memory and crash. (CVE-2012-0259)
+
+A denial of service flaw was found in the way ImageMagick decoded certain
+JPEG images. A remote attacker could provide a JPEG image with
+specially-crafted sequences of RST0 up to RST7 restart markers (used to
+indicate the input stream to be corrupted), which once processed by
+ImageMagick, would cause it to consume excessive amounts of memory and CPU
+time. (CVE-2012-0260)
+
+An out-of-bounds buffer read flaw was found in the way ImageMagick
+processed certain TIFF image files. A remote attacker could provide a TIFF
+image with a specially-crafted Exif IFD value (the set of tags for
+recording Exif-specific attribute information), which once opened by
+ImageMagick, would cause it to crash. (CVE-2012-1798)
+
+Red Hat would like to thank CERT-FI for reporting CVE-2012-0259,
+CVE-2012-0260, and CVE-2012-1798. CERT-FI acknowledges Aleksis Kauppinen,
+Joonas Kuorilehto, Tuomas Parttimaa and Lasse Ylivainio of Codenomicon's
+CROSS project as the original reporters.
+
+Users of ImageMagick are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. All running
+instances of ImageMagick must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+652860 - CVE-2010-4167 ImageMagick: configuration files read from $CWD may allow arbitrary code execution
+789443 - CVE-2012-0247 CVE-2012-0248 ImageMagick: invalid validation of images denial of service
+807993 - CVE-2012-0259 ImageMagick: Out-of heap-based buffer read by processing crafted JPEG EXIF header tag value
+807994 - CVE-2012-0260 ImageMagick: excessive CPU use DoS by processing JPEG images with crafted restart markers
+807997 - CVE-2012-1798 ImageMagick: Out-of-bounds buffer read by copying image bytes for TIFF images with crafted TIFF EXIF IFD value
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm</a>
+
+i386:
+ImageMagick-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+
+x86_64:
+ImageMagick-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-c++-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm</a>
+
+i386:
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-doc-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-perl-6.5.4.7-6.el6_2.i686.rpm
+
+x86_64:
+ImageMagick-c++-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-doc-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-perl-6.5.4.7-6.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm</a>
+
+x86_64:
+ImageMagick-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-c++-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-doc-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-perl-6.5.4.7-6.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm</a>
+
+i386:
+ImageMagick-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+
+ppc64:
+ImageMagick-6.5.4.7-6.el6_2.ppc.rpm
+ImageMagick-6.5.4.7-6.el6_2.ppc64.rpm
+ImageMagick-c++-6.5.4.7-6.el6_2.ppc64.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.ppc.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.ppc64.rpm
+
+s390x:
+ImageMagick-6.5.4.7-6.el6_2.s390.rpm
+ImageMagick-6.5.4.7-6.el6_2.s390x.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.s390.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.s390x.rpm
+
+x86_64:
+ImageMagick-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-c++-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm</a>
+
+i386:
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-doc-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-perl-6.5.4.7-6.el6_2.i686.rpm
+
+ppc64:
+ImageMagick-c++-6.5.4.7-6.el6_2.ppc.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.ppc.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.ppc64.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.ppc.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.ppc64.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.ppc.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.ppc64.rpm
+ImageMagick-doc-6.5.4.7-6.el6_2.ppc64.rpm
+ImageMagick-perl-6.5.4.7-6.el6_2.ppc64.rpm
+
+s390x:
+ImageMagick-c++-6.5.4.7-6.el6_2.s390.rpm
+ImageMagick-c++-6.5.4.7-6.el6_2.s390x.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.s390.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.s390x.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.s390.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.s390x.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.s390.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.s390x.rpm
+ImageMagick-doc-6.5.4.7-6.el6_2.s390x.rpm
+ImageMagick-perl-6.5.4.7-6.el6_2.s390x.rpm
+
+x86_64:
+ImageMagick-c++-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-doc-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-perl-6.5.4.7-6.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm</a>
+
+i386:
+ImageMagick-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+
+x86_64:
+ImageMagick-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-c++-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ImageMagick-6.5.4.7-6.el6_2.src.rpm</a>
+
+i386:
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-doc-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-perl-6.5.4.7-6.el6_2.i686.rpm
+
+x86_64:
+ImageMagick-c++-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-c++-devel-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-debuginfo-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.i686.rpm
+ImageMagick-devel-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-doc-6.5.4.7-6.el6_2.x86_64.rpm
+ImageMagick-perl-6.5.4.7-6.el6_2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4167.html">https://www.redhat.com/security/data/cve/CVE-2010-4167.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0247.html">https://www.redhat.com/security/data/cve/CVE-2012-0247.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0248.html">https://www.redhat.com/security/data/cve/CVE-2012-0248.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0259.html">https://www.redhat.com/security/data/cve/CVE-2012-0259.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0260.html">https://www.redhat.com/security/data/cve/CVE-2012-0260.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1798.html">https://www.redhat.com/security/data/cve/CVE-2012-1798.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPqBgaXlSAg2UNWIIRAj3EAKCT6DikA5ehziybioSMrQwiCj4qegCbBSht
+4OA2DaIiiVFPn01anIk1VFM=
+=2hVr
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0542&#45;01] Moderate: httpd security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 7 May 2012 14:43:19 &#45;0400 -->
+<!--X-Message-Id: 201205071843.q47IhEX9026421@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0542-01] Moderate: httpd security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0542-01] Moderate: httpd security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0542-01] Moderate: httpd security and bug fix update</li>
+<li><em>Date</em>: Mon, 7 May 2012 18:43:12 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: httpd security and bug fix update
+Advisory ID:       RHSA-2012:0542-01
+Product:           JBoss Enterprise Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0542.html">https://rhn.redhat.com/errata/RHSA-2012-0542.html</a>
+Issue date:        2012-05-07
+CVE Names:         CVE-2011-3348 CVE-2011-3368 CVE-2011-3607 
+                   CVE-2012-0021 CVE-2012-0031 CVE-2012-0053 
+=====================================================================
+
+1. Summary:
+
+Updated httpd packages that fix multiple security issues and one bug are
+now available for JBoss Enterprise Web Server 1.0.2 for Red Hat Enterprise
+Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Web Server 1.0 for RHEL 5 Server - i386, x86_64
+JBoss Enterprise Web Server 1.0 for RHEL 6 Server - i386, x86_64
+
+3. Description:
+
+The Apache HTTP Server (&quot;httpd&quot;) is the namesake project of The Apache
+Software Foundation.
+
+It was discovered that the Apache HTTP Server did not properly validate the
+request URI for proxied requests. In certain configurations, if a reverse
+proxy used the ProxyPassMatch directive, or if it used the RewriteRule
+directive with the proxy flag, a remote attacker could make the proxy
+connect to an arbitrary server, possibly disclosing sensitive information
+from internal web servers not directly accessible to the attacker.
+(CVE-2011-3368)
+
+It was discovered that mod_proxy_ajp incorrectly returned an &quot;Internal
+Server Error&quot; response when processing certain malformed HTTP requests,
+which caused the back-end server to be marked as failed in configurations
+where mod_proxy was used in load balancer mode. A remote attacker could
+cause mod_proxy to not send requests to back-end AJP (Apache JServ
+Protocol) servers for the retry timeout period or until all back-end
+servers were marked as failed. (CVE-2011-3348)
+
+The httpd server included the full HTTP header line in the default error
+page generated when receiving an excessively long or malformed header.
+Malicious JavaScript running in the server's domain context could use this
+flaw to gain access to httpOnly cookies. (CVE-2012-0053)
+
+An integer overflow flaw, leading to a heap-based buffer overflow, was
+found in the way httpd performed substitutions in regular expressions. An
+attacker able to set certain httpd settings, such as a user permitted to
+override the httpd configuration for a specific directory using a
+&quot;.htaccess&quot; file, could use this flaw to crash the httpd child process or,
+possibly, execute arbitrary code with the privileges of the &quot;apache&quot; user.
+(CVE-2011-3607)
+
+A NULL pointer dereference flaw was found in the httpd mod_log_config
+module. In configurations where cookie logging is enabled, a remote
+attacker could use this flaw to crash the httpd child process via an HTTP
+request with a malformed Cookie header. (CVE-2012-0021)
+
+A flaw was found in the way httpd handled child process status information.
+A malicious program running with httpd child process privileges (such as a
+PHP or CGI script) could use this flaw to cause the parent httpd process to
+crash during httpd service shutdown. (CVE-2012-0031)
+
+Red Hat would like to thank Context Information Security for reporting the
+CVE-2011-3368 issue.
+
+This update also fixes the following bug:
+
+* The fix for CVE-2011-3192 provided by the RHSA-2011:1329 update
+introduced a regression in the way httpd handled certain Range HTTP header
+values. This update corrects this regression. (BZ#749071)
+
+All users of JBoss Enterprise Web Server 1.0.2 should upgrade to these
+updated packages, which contain backported patches to correct these issues.
+After installing the updated packages, users must restart the httpd
+service for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+736690 - CVE-2011-3348 httpd: mod_proxy_ajp remote temporary DoS
+740045 - CVE-2011-3368 httpd: reverse web proxy vulnerability
+749071 - httpd: RHSA-2011:1329 and RHSA-2011:1330 range 0- handling regression
+769844 - CVE-2011-3607 httpd: ap_pregsub Integer overflow to buffer overflow
+773744 - CVE-2012-0031 httpd: possible crash on shutdown due to flaw in scoreboard handling
+785065 - CVE-2012-0021 httpd: NULL pointer dereference crash in mod_log_config
+785069 - CVE-2012-0053 httpd: cookie exposure due to error responses
+
+6. Package List:
+
+JBoss Enterprise Web Server 1.0 for RHEL 5 Server:
+
+Source:
+httpd-2.2.17-15.4.ep5.el5.src.rpm
+
+i386:
+httpd-2.2.17-15.4.ep5.el5.i386.rpm
+httpd-debuginfo-2.2.17-15.4.ep5.el5.i386.rpm
+httpd-devel-2.2.17-15.4.ep5.el5.i386.rpm
+httpd-manual-2.2.17-15.4.ep5.el5.i386.rpm
+mod_ssl-2.2.17-15.4.ep5.el5.i386.rpm
+
+x86_64:
+httpd-2.2.17-15.4.ep5.el5.x86_64.rpm
+httpd-debuginfo-2.2.17-15.4.ep5.el5.x86_64.rpm
+httpd-devel-2.2.17-15.4.ep5.el5.x86_64.rpm
+httpd-manual-2.2.17-15.4.ep5.el5.x86_64.rpm
+mod_ssl-2.2.17-15.4.ep5.el5.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0 for RHEL 6 Server:
+
+Source:
+httpd-2.2.17-15.4.ep5.el6.src.rpm
+
+i386:
+httpd-2.2.17-15.4.ep5.el6.i386.rpm
+httpd-debuginfo-2.2.17-15.4.ep5.el6.i386.rpm
+httpd-devel-2.2.17-15.4.ep5.el6.i386.rpm
+httpd-manual-2.2.17-15.4.ep5.el6.i386.rpm
+httpd-tools-2.2.17-15.4.ep5.el6.i386.rpm
+mod_ssl-2.2.17-15.4.ep5.el6.i386.rpm
+
+x86_64:
+httpd-2.2.17-15.4.ep5.el6.x86_64.rpm
+httpd-debuginfo-2.2.17-15.4.ep5.el6.x86_64.rpm
+httpd-devel-2.2.17-15.4.ep5.el6.x86_64.rpm
+httpd-manual-2.2.17-15.4.ep5.el6.x86_64.rpm
+httpd-tools-2.2.17-15.4.ep5.el6.x86_64.rpm
+mod_ssl-2.2.17-15.4.ep5.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3348.html">https://www.redhat.com/security/data/cve/CVE-2011-3348.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3368.html">https://www.redhat.com/security/data/cve/CVE-2011-3368.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3607.html">https://www.redhat.com/security/data/cve/CVE-2011-3607.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0021.html">https://www.redhat.com/security/data/cve/CVE-2012-0021.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0031.html">https://www.redhat.com/security/data/cve/CVE-2012-0031.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0053.html">https://www.redhat.com/security/data/cve/CVE-2012-0053.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1329.html">https://rhn.redhat.com/errata/RHSA-2011-1329.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPqBeyXlSAg2UNWIIRAmTKAJ44emO1s64Xspc3U/w6p+K90wRnOQCeNjvx
+WPZtDBYcd45Z7zYelZj059Q=
+=YJ1B
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

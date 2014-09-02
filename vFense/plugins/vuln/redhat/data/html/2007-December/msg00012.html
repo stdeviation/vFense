@@ -1,0 +1,396 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1155&#45;01] Important: mysql security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 18 Dec 2007 11:41:21 &#45;0500 -->
+<!--X-Message-Id: 200712181641.lBIGfKld018044@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1155-01] Important: mysql security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1155-01] Important: mysql security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1155-01] Important: mysql security update</li>
+<li><em>Date</em>: Tue, 18 Dec 2007 11:41:20 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Important: mysql security update
+Advisory ID:       RHSA-2007:1155-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1155.html">https://rhn.redhat.com/errata/RHSA-2007-1155.html</a>
+Issue date:        2007-12-18
+Updated on:        2007-12-18
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-5969 CVE-2007-5925 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated mysql packages that fix several security issues are now available
+for Red Hat Enterprise Linux 4 and 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Problem description:
+
+MySQL is a multi-user, multi-threaded SQL database server. MySQL is a
+client/server implementation consisting of a server daemon (mysqld), and
+many different client programs and libraries.
+
+A flaw was found in a way MySQL handled symbolic links when database tables
+were created with explicit &quot;DATA&quot; and &quot;INDEX DIRECTORY&quot; options. An
+authenticated user could create a table that would overwrite tables in
+other databases, causing destruction of data or allowing the user to
+elevate privileges. (CVE-2007-5969)
+
+A flaw was found in a way MySQL's InnoDB engine handled spatial indexes. An
+authenticated user could create a table with spatial indexes, which are not
+supported by the InnoDB engine, that would cause the mysql daemon to crash
+when used. This issue only causes a temporary denial of service, as the
+mysql daemon will be automatically restarted after the crash.
+(CVE-2007-5925)
+
+All mysql users are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+377451 - CVE-2007-5925 mysql DoS in the InnoDB Engine
+397071 - CVE-2007-5969 mysql: possible system table information overwrite using symlinks
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm</a>
+1854535e652c2293f7c74d2d7a81b2bf  mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm
+
+i386:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+7f3ffede94c61972847e43795a8a7319  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+2b1bd8db5655be3a64d454b0bbb14465  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+b7ea46af22ef0ef8090c13d86c9e30b7  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+
+ia64:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+27dfcb1cf5ef0286bf05d71f0cfc147d  mysql-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+533ffa791ddbd3da1d9226b7b417ec5c  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+8d02af73dbd2952382b614030ef17a12  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+d13ec7721c0d38a23bafa2b21e0cedcd  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+963b668c8c77e2055a563b32a8f4ca80  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+
+ppc:
+bdbf7956d4992b3ea8d29a9fdce21b8f  mysql-4.1.20-3.RHEL4.1.el4_6.1.ppc.rpm
+9c9c631bde64bfdbb053e135f78ccca4  mysql-4.1.20-3.RHEL4.1.el4_6.1.ppc64.rpm
+c113c36a612342bed0edd1c6ceb4e593  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.ppc.rpm
+f76fa77fac4a2b7cc66fd4c60e86d7f0  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.ppc.rpm
+1ba6e35143550d27c06a15dbd37142ce  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.ppc64.rpm
+a10ef5cfd2753f58c603a646341b1bea  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.ppc.rpm
+c0c2a9547931f8400357b23eddd24947  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.ppc.rpm
+
+s390:
+09a3d3d6b69e90a6b62ff4da87a846e5  mysql-4.1.20-3.RHEL4.1.el4_6.1.s390.rpm
+ad8385135ccb4aeb02892d7c06acb406  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.s390.rpm
+939d122ba75e80cbbc8fce8d70613373  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.s390.rpm
+77fc7f7db4c9a03205782c2ea232c5c8  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.s390.rpm
+760d3f7e8539ec7608ae5fd4cf1fa157  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.s390.rpm
+
+s390x:
+09a3d3d6b69e90a6b62ff4da87a846e5  mysql-4.1.20-3.RHEL4.1.el4_6.1.s390.rpm
+443a9b2259455d82b262ccd04ddd3535  mysql-4.1.20-3.RHEL4.1.el4_6.1.s390x.rpm
+7ca3b643358dde0288d1a00db4efb1df  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.s390x.rpm
+939d122ba75e80cbbc8fce8d70613373  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.s390.rpm
+3a053e0f9602b60c0590304aa687140b  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.s390x.rpm
+664bfe9b424bf2669e138f070531716e  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.s390x.rpm
+46acae1f2d6083957e45f3f1c1943faa  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.s390x.rpm
+
+x86_64:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+d5dcfe0b48fa140264a125a1b1c26f3a  mysql-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+3e3b031841c62189290af3480373fba0  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+875b214811f6e0fa570419b5ba5f6a4b  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+ccde316f14672eda04fc25eefac3d7fa  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+498a0c429f46de530e50309d921b63a7  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm</a>
+1854535e652c2293f7c74d2d7a81b2bf  mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm
+
+i386:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+7f3ffede94c61972847e43795a8a7319  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+2b1bd8db5655be3a64d454b0bbb14465  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+b7ea46af22ef0ef8090c13d86c9e30b7  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+
+x86_64:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+d5dcfe0b48fa140264a125a1b1c26f3a  mysql-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+3e3b031841c62189290af3480373fba0  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+875b214811f6e0fa570419b5ba5f6a4b  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+ccde316f14672eda04fc25eefac3d7fa  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+498a0c429f46de530e50309d921b63a7  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm</a>
+1854535e652c2293f7c74d2d7a81b2bf  mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm
+
+i386:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+7f3ffede94c61972847e43795a8a7319  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+2b1bd8db5655be3a64d454b0bbb14465  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+b7ea46af22ef0ef8090c13d86c9e30b7  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+
+ia64:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+27dfcb1cf5ef0286bf05d71f0cfc147d  mysql-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+533ffa791ddbd3da1d9226b7b417ec5c  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+8d02af73dbd2952382b614030ef17a12  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+d13ec7721c0d38a23bafa2b21e0cedcd  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+963b668c8c77e2055a563b32a8f4ca80  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+
+x86_64:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+d5dcfe0b48fa140264a125a1b1c26f3a  mysql-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+3e3b031841c62189290af3480373fba0  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+875b214811f6e0fa570419b5ba5f6a4b  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+ccde316f14672eda04fc25eefac3d7fa  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+498a0c429f46de530e50309d921b63a7  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm</a>
+1854535e652c2293f7c74d2d7a81b2bf  mysql-4.1.20-3.RHEL4.1.el4_6.1.src.rpm
+
+i386:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+7f3ffede94c61972847e43795a8a7319  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+2b1bd8db5655be3a64d454b0bbb14465  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+b7ea46af22ef0ef8090c13d86c9e30b7  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+
+ia64:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+27dfcb1cf5ef0286bf05d71f0cfc147d  mysql-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+533ffa791ddbd3da1d9226b7b417ec5c  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+8d02af73dbd2952382b614030ef17a12  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+d13ec7721c0d38a23bafa2b21e0cedcd  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+963b668c8c77e2055a563b32a8f4ca80  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.ia64.rpm
+
+x86_64:
+531fbbccb4ec6db747d64b9457741e6e  mysql-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+d5dcfe0b48fa140264a125a1b1c26f3a  mysql-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+3e3b031841c62189290af3480373fba0  mysql-bench-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+370f6dd7adee75092debb54b07352538  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.i386.rpm
+875b214811f6e0fa570419b5ba5f6a4b  mysql-debuginfo-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+ccde316f14672eda04fc25eefac3d7fa  mysql-devel-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+498a0c429f46de530e50309d921b63a7  mysql-server-4.1.20-3.RHEL4.1.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.22-2.2.el5_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.22-2.2.el5_1.1.src.rpm</a>
+1e9aab3d2dad0c5e18704a1310577655  mysql-5.0.22-2.2.el5_1.1.src.rpm
+
+i386:
+c75889dc568cb7ca5f91672cec4d2c72  mysql-5.0.22-2.2.el5_1.1.i386.rpm
+767a563f605343da4399ec3d66eb5e2b  mysql-debuginfo-5.0.22-2.2.el5_1.1.i386.rpm
+
+x86_64:
+c75889dc568cb7ca5f91672cec4d2c72  mysql-5.0.22-2.2.el5_1.1.i386.rpm
+f99bf6ee7efbca43fd93ff705dafc906  mysql-5.0.22-2.2.el5_1.1.x86_64.rpm
+767a563f605343da4399ec3d66eb5e2b  mysql-debuginfo-5.0.22-2.2.el5_1.1.i386.rpm
+bcc234f327d4e6c5f16ad8be2f2b4aba  mysql-debuginfo-5.0.22-2.2.el5_1.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.22-2.2.el5_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mysql-5.0.22-2.2.el5_1.1.src.rpm</a>
+1e9aab3d2dad0c5e18704a1310577655  mysql-5.0.22-2.2.el5_1.1.src.rpm
+
+i386:
+c97e5b3c925352660affdb28cfdac1fb  mysql-bench-5.0.22-2.2.el5_1.1.i386.rpm
+767a563f605343da4399ec3d66eb5e2b  mysql-debuginfo-5.0.22-2.2.el5_1.1.i386.rpm
+e64dbc1b3a3bdb53d7a8e53952a0c6c0  mysql-devel-5.0.22-2.2.el5_1.1.i386.rpm
+02235ad2df88bdb6d8d17c0019bac3dd  mysql-server-5.0.22-2.2.el5_1.1.i386.rpm
+6e59b90929d818b26a441304c1853eaa  mysql-test-5.0.22-2.2.el5_1.1.i386.rpm
+
+x86_64:
+38487f1a2d8deeba984038448eb172ae  mysql-bench-5.0.22-2.2.el5_1.1.x86_64.rpm
+767a563f605343da4399ec3d66eb5e2b  mysql-debuginfo-5.0.22-2.2.el5_1.1.i386.rpm
+bcc234f327d4e6c5f16ad8be2f2b4aba  mysql-debuginfo-5.0.22-2.2.el5_1.1.x86_64.rpm
+e64dbc1b3a3bdb53d7a8e53952a0c6c0  mysql-devel-5.0.22-2.2.el5_1.1.i386.rpm
+eb90903e4ae7a2fbe8357fde6ec3c357  mysql-devel-5.0.22-2.2.el5_1.1.x86_64.rpm
+1ba9dd9f34b5b1ecb7ccc8167cd459a5  mysql-server-5.0.22-2.2.el5_1.1.x86_64.rpm
+995d71b15bdef4b4c6f84fab8b5d869e  mysql-test-5.0.22-2.2.el5_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/mysql-5.0.22-2.2.el5_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/mysql-5.0.22-2.2.el5_1.1.src.rpm</a>
+1e9aab3d2dad0c5e18704a1310577655  mysql-5.0.22-2.2.el5_1.1.src.rpm
+
+i386:
+c75889dc568cb7ca5f91672cec4d2c72  mysql-5.0.22-2.2.el5_1.1.i386.rpm
+c97e5b3c925352660affdb28cfdac1fb  mysql-bench-5.0.22-2.2.el5_1.1.i386.rpm
+767a563f605343da4399ec3d66eb5e2b  mysql-debuginfo-5.0.22-2.2.el5_1.1.i386.rpm
+e64dbc1b3a3bdb53d7a8e53952a0c6c0  mysql-devel-5.0.22-2.2.el5_1.1.i386.rpm
+02235ad2df88bdb6d8d17c0019bac3dd  mysql-server-5.0.22-2.2.el5_1.1.i386.rpm
+6e59b90929d818b26a441304c1853eaa  mysql-test-5.0.22-2.2.el5_1.1.i386.rpm
+
+ia64:
+c75889dc568cb7ca5f91672cec4d2c72  mysql-5.0.22-2.2.el5_1.1.i386.rpm
+5d1e675a949114820147f10cba548876  mysql-5.0.22-2.2.el5_1.1.ia64.rpm
+e0611ab43c83ceb3e142b811c6488871  mysql-bench-5.0.22-2.2.el5_1.1.ia64.rpm
+767a563f605343da4399ec3d66eb5e2b  mysql-debuginfo-5.0.22-2.2.el5_1.1.i386.rpm
+f7669d46ae7a770f2974d93d8bce20d1  mysql-debuginfo-5.0.22-2.2.el5_1.1.ia64.rpm
+2c1f29afba6f48914a721f8ebc7baec3  mysql-devel-5.0.22-2.2.el5_1.1.ia64.rpm
+9d8240d6d4949e94929ff23cbc7601cd  mysql-server-5.0.22-2.2.el5_1.1.ia64.rpm
+9279d9b01a6fa1c62beb4c1a52f6613b  mysql-test-5.0.22-2.2.el5_1.1.ia64.rpm
+
+ppc:
+6b8463bca11bcc572300a24cb35d6fdc  mysql-5.0.22-2.2.el5_1.1.ppc.rpm
+e48ac3b1dce1bec353ba3f6e2e5fe231  mysql-5.0.22-2.2.el5_1.1.ppc64.rpm
+51d3b7ff981374ea4b9340f6fdbc27d7  mysql-bench-5.0.22-2.2.el5_1.1.ppc.rpm
+95a855afe95c54d035226489773d7c3d  mysql-debuginfo-5.0.22-2.2.el5_1.1.ppc.rpm
+2c42589945da0aa836fdd0bd6d30b47e  mysql-debuginfo-5.0.22-2.2.el5_1.1.ppc64.rpm
+e8f7fc31923cfb4d19276fa76afecdec  mysql-devel-5.0.22-2.2.el5_1.1.ppc.rpm
+3c77a3843eed86046574103b896d3e9e  mysql-devel-5.0.22-2.2.el5_1.1.ppc64.rpm
+2573b0bc68ef343b80259caa32671207  mysql-server-5.0.22-2.2.el5_1.1.ppc.rpm
+d40e7b9e1695d2b6ae655ed8e77c76f3  mysql-test-5.0.22-2.2.el5_1.1.ppc.rpm
+
+s390x:
+e91967507a4b2ad8b549f3c793b5db0f  mysql-5.0.22-2.2.el5_1.1.s390.rpm
+a49e1879d5e41ba677aa212398ff6c96  mysql-5.0.22-2.2.el5_1.1.s390x.rpm
+f52f0eec9ee6fdac6014cbf696d85bef  mysql-bench-5.0.22-2.2.el5_1.1.s390x.rpm
+5485a4a3cceb3368f4b395e68bceea38  mysql-debuginfo-5.0.22-2.2.el5_1.1.s390.rpm
+a3e342a9cb73f0c4d129eaeabc15defb  mysql-debuginfo-5.0.22-2.2.el5_1.1.s390x.rpm
+07ecfba53a429d586c9be5ba683b1143  mysql-devel-5.0.22-2.2.el5_1.1.s390.rpm
+bdb7d8b4d8d6356e33ec79a081b604a3  mysql-devel-5.0.22-2.2.el5_1.1.s390x.rpm
+fa5fcdc0ebcbb3c1672863917a2420a9  mysql-server-5.0.22-2.2.el5_1.1.s390x.rpm
+33481d82c53cdf4bddf31b4308896d36  mysql-test-5.0.22-2.2.el5_1.1.s390x.rpm
+
+x86_64:
+c75889dc568cb7ca5f91672cec4d2c72  mysql-5.0.22-2.2.el5_1.1.i386.rpm
+f99bf6ee7efbca43fd93ff705dafc906  mysql-5.0.22-2.2.el5_1.1.x86_64.rpm
+38487f1a2d8deeba984038448eb172ae  mysql-bench-5.0.22-2.2.el5_1.1.x86_64.rpm
+767a563f605343da4399ec3d66eb5e2b  mysql-debuginfo-5.0.22-2.2.el5_1.1.i386.rpm
+bcc234f327d4e6c5f16ad8be2f2b4aba  mysql-debuginfo-5.0.22-2.2.el5_1.1.x86_64.rpm
+e64dbc1b3a3bdb53d7a8e53952a0c6c0  mysql-devel-5.0.22-2.2.el5_1.1.i386.rpm
+eb90903e4ae7a2fbe8357fde6ec3c357  mysql-devel-5.0.22-2.2.el5_1.1.x86_64.rpm
+1ba9dd9f34b5b1ecb7ccc8167cd459a5  mysql-server-5.0.22-2.2.el5_1.1.x86_64.rpm
+995d71b15bdef4b4c6f84fab8b5d869e  mysql-test-5.0.22-2.2.el5_1.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5969">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5969</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5925">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5925</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHZ/gGXlSAg2UNWIIRAuooAKCporko2Nd3cKQhABYrJJVD54QzsACeNA6Q
+NWHeSLyUxslva/x0D4Jdhe0=
+=Tsfw
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0245&#45;01] Important: activemq security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 3 Mar 2014 13:35:44 &#45;0500 -->
+<!--X-Message-Id: 201403031835.s23IZhVi001040@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0245-01] Important: activemq security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0245-01] Important: activemq security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0245-01] Important: activemq security update</li>
+<li><em>Date</em>: Mon, 3 Mar 2014 18:35:42 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: activemq security update
+Advisory ID:       RHSA-2014:0245-01
+Product:           Red Hat OpenShift Enterprise
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0245.html">https://rhn.redhat.com/errata/RHSA-2014-0245.html</a>
+Issue date:        2014-03-03
+CVE Names:         CVE-2013-2035 CVE-2013-4152 CVE-2013-4330 
+                   CVE-2014-0003 
+=====================================================================
+
+1. Summary:
+
+An updated activemq package that fixes multiple security issues is now
+available for Red Hat OpenShift Enterprise 2.0.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHOSE Infrastructure 2.0 - x86_64
+RHOSE Node 2.0 - x86_64
+
+3. Description:
+
+Apache ActiveMQ provides a SOA infrastructure to connect processes across
+heterogeneous systems.
+
+A flaw was found in Apache Camel's parsing of the FILE_NAME header.
+A remote attacker able to submit messages to a Camel route, which would
+write the provided message to a file, could provide expression language
+(EL) expressions in the FILE_NAME header, which would be evaluated on the
+server. This could lead to arbitrary remote code execution in the context
+of the Camel server process. (CVE-2013-4330)
+
+It was found that the Apache Camel XSLT component allowed XSL stylesheets
+to call external Java methods. A remote attacker able to submit messages to
+a Camel route could use this flaw to perform arbitrary remote code
+execution in the context of the Camel server process. (CVE-2014-0003)
+
+It was discovered that the Spring OXM wrapper did not expose any property
+for disabling entity resolution when using the JAXB unmarshaller. A remote
+attacker could use this flaw to conduct XML External Entity (XXE) attacks
+on web sites, and read files in the context of the user running the
+application server. The patch for this flaw disables external entity
+processing by default, and provides a configuration directive to re-enable
+it. (CVE-2013-4152)
+
+The HawtJNI Library class wrote native libraries to a predictable file name
+in /tmp/ when the native libraries were bundled in a JAR file, and no
+custom library path was specified. A local attacker could overwrite these
+native libraries with malicious versions during the window between when
+HawtJNI writes them and when they are executed. (CVE-2013-2035)
+
+The CVE-2013-2035 issue was discovered by Florian Weimer of the Red Hat
+Product Security Team, and the CVE-2014-0003 issue was discovered by David
+Jorm of the Red Hat Security Response Team.
+
+All users of Red Hat OpenShift Enterprise 2.0 are advised to upgrade to
+this updated package, which corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+958618 - CVE-2013-2035 HawtJNI: predictable temporary file name leading to local arbitrary code execution
+1000186 - CVE-2013-4152 Spring Framework: XML External Entity (XXE) injection flaw
+1011726 - CVE-2013-4330 Camel: remote code execution via header field manipulation
+1049692 - CVE-2014-0003 Camel: remote code execution via XSL
+
+6. Package List:
+
+RHOSE Infrastructure 2.0:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/activemq-5.9.0-4.redhat.610328.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/activemq-5.9.0-4.redhat.610328.el6op.src.rpm</a>
+
+x86_64:
+activemq-5.9.0-4.redhat.610328.el6op.x86_64.rpm
+activemq-client-5.9.0-4.redhat.610328.el6op.x86_64.rpm
+
+RHOSE Node 2.0:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/activemq-5.9.0-4.redhat.610328.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/activemq-5.9.0-4.redhat.610328.el6op.src.rpm</a>
+
+x86_64:
+activemq-client-5.9.0-4.redhat.610328.el6op.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2035.html">https://www.redhat.com/security/data/cve/CVE-2013-2035.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4152.html">https://www.redhat.com/security/data/cve/CVE-2013-4152.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4330.html">https://www.redhat.com/security/data/cve/CVE-2013-4330.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0003.html">https://www.redhat.com/security/data/cve/CVE-2014-0003.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTFMqtXlSAg2UNWIIRAmxlAJ4hgdBGo9LDYXKLTLPcR3eeoTFkpgCfYyo6
+/weZeuqSRiJHTL3hliZydtk=
+=xAkl
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

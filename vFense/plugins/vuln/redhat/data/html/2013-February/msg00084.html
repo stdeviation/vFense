@@ -1,0 +1,411 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0582&#45;01] Moderate: Red Hat OpenShift Enterprise 1.1.1	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 28 Feb 2013 14:14:40 &#45;0500 -->
+<!--X-Message-Id: 201302281914.r1SJEdNo005372@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0582-01] Moderate: Red Hat OpenShift Enterprise 1.1.1	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00083.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00083.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00084">Thread Index</A>]
+[<A HREF="date.html#00084">Date Index</A>]
+[<A HREF="author.html#00084">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0582-01] Moderate: Red Hat OpenShift Enterprise 1.1.1	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0582-01] Moderate: Red Hat OpenShift Enterprise 1.1.1	update</li>
+<li><em>Date</em>: Thu, 28 Feb 2013 19:14:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat OpenShift Enterprise 1.1.1 update
+Advisory ID:       RHSA-2013:0582-01
+Product:           Red Hat OpenShift Enterprise
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0582.html">https://rhn.redhat.com/errata/RHSA-2013-0582.html</a>
+Issue date:        2013-02-28
+CVE Names:         CVE-2012-2660 CVE-2012-2661 CVE-2012-2694 
+                   CVE-2012-2695 CVE-2012-3424 CVE-2012-3463 
+                   CVE-2012-3464 CVE-2012-3465 CVE-2012-4464 
+                   CVE-2012-4466 CVE-2012-4522 CVE-2012-5371 
+                   CVE-2013-0155 CVE-2013-0162 
+=====================================================================
+
+1. Summary:
+
+Red Hat OpenShift Enterprise 1.1.1 is now available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat OpenShift Enterprise Infrastructure - noarch, x86_64
+Red Hat OpenShift Enterprise JBoss EAP add-on - noarch
+Red Hat OpenShift Enterprise Node - noarch, x86_64
+
+3. Description:
+
+OpenShift Enterprise is a cloud computing Platform-as-a-Service (PaaS)
+solution from Red Hat, and is designed for on-premise or private cloud
+deployments.
+
+Installing the updated packages and restarting the OpenShift services are
+the only requirements for this update. However, if you are updating your
+system to Red Hat Enterprise Linux 6.4 while applying OpenShift Enterprise
+1.1.1 updates, it is recommended that you restart your system.
+
+For further information about this release, refer to the OpenShift
+Enterprise 1.1.1 Technical Notes, available shortly from
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+
+This update also fixes the following security issues:
+
+Multiple cross-site scripting (XSS) flaws were found in rubygem-actionpack.
+A remote attacker could use these flaws to conduct XSS attacks against
+users of an application using rubygem-actionpack. (CVE-2012-3463,
+CVE-2012-3464, CVE-2012-3465)
+
+It was found that certain methods did not sanitize file names before
+passing them to lower layer routines in Ruby. If a Ruby application created
+files with names based on untrusted input, it could result in the creation
+of files with different names than expected. (CVE-2012-4522)
+
+A denial of service flaw was found in the implementation of associative
+arrays (hashes) in Ruby. An attacker able to supply a large number of
+inputs to a Ruby application (such as HTTP POST request parameters sent to
+a web application) that are used as keys when inserting data into an array
+could trigger multiple hash function collisions, making array operations
+take an excessive amount of CPU time. To mitigate this issue, a new, more
+collision resistant algorithm has been used to reduce the chance of an
+attacker successfully causing intentional collisions. (CVE-2012-5371)
+
+Input validation vulnerabilities were discovered in rubygem-activerecord.
+A remote attacker could possibly use these flaws to perform an SQL
+injection attack against an application using rubygem-activerecord.
+(CVE-2012-2661, CVE-2012-2695, CVE-2013-0155)
+
+Input validation vulnerabilities were discovered in rubygem-actionpack. A
+remote attacker could possibly use these flaws to perform an SQL injection
+attack against an application using rubygem-actionpack and
+rubygem-activerecord. (CVE-2012-2660, CVE-2012-2694)
+
+A flaw was found in the HTTP digest authentication implementation in
+rubygem-actionpack. A remote attacker could use this flaw to cause a
+denial of service of an application using rubygem-actionpack and digest
+authentication. (CVE-2012-3424)
+
+A flaw was found in the handling of strings in Ruby safe level 4. A remote
+attacker can use Exception#to_s to destructively modify an untainted string
+so that it is tainted, the string can then be arbitrarily modified.
+(CVE-2012-4466)
+
+A flaw was found in the method for translating an exception message into a
+string in the Ruby Exception class. A remote attacker could use this flaw
+to bypass safe level 4 restrictions, allowing untrusted (tainted) code to
+modify arbitrary, trusted (untainted) strings, which safe level 4
+restrictions would otherwise prevent. (CVE-2012-4464)
+
+It was found that ruby_parser from rubygem-ruby_parser created a temporary
+file in an insecure way. A local attacker could use this flaw to perform a
+symbolic link attack, overwriting arbitrary files accessible to the
+application using ruby_parser. (CVE-2013-0162)
+
+The CVE-2013-0162 issue was discovered by Michael Scherer of the Red Hat
+Regional IT team.
+
+Users are advised to upgrade to Red Hat OpenShift Enterprise 1.1.1.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+827353 - CVE-2012-2660 rubygem-actionpack: Unsafe query generation
+827363 - CVE-2012-2661 rubygem-activerecord: SQL injection when processing nested query paramaters
+831573 - CVE-2012-2695 rubygem-activerecord: SQL injection when processing nested query paramaters (a different flaw than CVE-2012-2661)
+831581 - CVE-2012-2694 rubygem-actionpack: Unsafe query generation (a different flaw than CVE-2012-2660)
+843711 - CVE-2012-3424 rubygem-actionpack: DoS vulnerability in authenticate_or_request_with_http_digest
+847196 - CVE-2012-3463 rubygem-actionpack: potential XSS vulnerability in select_tag prompt
+847199 - CVE-2012-3464 rubygem-actionpack: potential XSS vulnerability
+847200 - CVE-2012-3465 rubygem-actionpack: XSS Vulnerability in strip_tags
+862598 - CVE-2012-4464 ruby 1.9.3: Possibility to bypass Ruby's $SAFE (level 4) semantics
+862614 - CVE-2012-4466 ruby: safe level bypass via name_err_mesg_to_str()
+865940 - CVE-2012-4522 ruby: unintentional file creation caused by inserting an illegal NUL character
+875236 - CVE-2012-5371 ruby: Murmur hash-flooding DoS flaw in ruby 1.9 (oCERT-2012-001)
+887353 - [Cartridge] Removing a cartridge leaves its info directory in place
+889426 - The &quot;scale your application&quot; page for scalable app displayed not well
+892806 - CVE-2013-0162 rubygem-ruby_parser: incorrect temporary file usage
+892866 - CVE-2013-0155 rubygem-actionpack, rubygem-activerecord: Unsafe Query Generation Risk in Ruby on Rails
+895347 - Should delete all the mongodb cartridge pages and the links about mongodb
+895355 - Lack of a dot in domain create and update page
+902412 - Warning message is seen when update rubygem-openshift-origin-auth-remote-user package.
+902630 - Failed to reload openshift-broker service
+903526 - Display overlaps when adding sshkey using long name in IE 9
+903546 - Links to ruby-lang.org redirects to wrong url
+905021 - Can not get environment variables from scalable php local gear.
+905656 - [broker-util] oo-accept-broker doesn't summarize errors and set return code
+906227 - The &quot;Follow these steps to install the client&quot; link on get started page of application will redirect to a page which has no expected content.
+906845 - create default resource settings for AS/EAP/EWS carts
+
+6. Package List:
+
+Red Hat OpenShift Enterprise Infrastructure:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/graphviz-2.26.0-10.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/graphviz-2.26.0-10.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-console-0.0.16-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-console-0.0.16-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-broker-1.0.11-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-broker-1.0.11-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-broker-util-1.0.15-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-broker-util-1.0.15-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-ruby-1.9.3.327-25.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-ruby-1.9.3.327-25.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-actionpack-3.2.8-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-actionpack-3.2.8-3.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-activemodel-3.2.8-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-activemodel-3.2.8-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-activerecord-3.2.8-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-activerecord-3.2.8-3.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-railties-3.2.8-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-railties-3.2.8-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-ruby_parser-2.3.1-3.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-ruby_parser-2.3.1-3.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-actionpack-3.0.13-4.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-actionpack-3.0.13-4.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-activemodel-3.0.13-3.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-activemodel-3.0.13-3.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-activerecord-3.0.13-5.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-activerecord-3.0.13-5.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-bson-1.8.1-2.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-bson-1.8.1-2.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-mongo-1.8.1-2.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-mongo-1.8.1-2.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-openshift-origin-auth-remote-user-1.0.5-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-openshift-origin-auth-remote-user-1.0.5-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-openshift-origin-console-1.0.10-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-openshift-origin-console-1.0.10-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-openshift-origin-controller-1.0.12-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-openshift-origin-controller-1.0.12-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-ruby_parser-2.0.4-6.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-ruby_parser-2.0.4-6.el6op.src.rpm</a>
+
+noarch:
+openshift-console-0.0.16-1.el6op.noarch.rpm
+openshift-origin-broker-1.0.11-1.el6op.noarch.rpm
+openshift-origin-broker-util-1.0.15-1.el6op.noarch.rpm
+ruby193-ruby-irb-1.9.3.327-25.el6.noarch.rpm
+ruby193-rubygem-actionpack-3.2.8-3.el6.noarch.rpm
+ruby193-rubygem-actionpack-doc-3.2.8-3.el6.noarch.rpm
+ruby193-rubygem-activemodel-3.2.8-2.el6.noarch.rpm
+ruby193-rubygem-activemodel-doc-3.2.8-2.el6.noarch.rpm
+ruby193-rubygem-activerecord-3.2.8-3.el6.noarch.rpm
+ruby193-rubygem-activerecord-doc-3.2.8-3.el6.noarch.rpm
+ruby193-rubygem-minitest-2.5.1-25.el6.noarch.rpm
+ruby193-rubygem-railties-3.2.8-2.el6.noarch.rpm
+ruby193-rubygem-railties-doc-3.2.8-2.el6.noarch.rpm
+ruby193-rubygem-rake-0.9.2.2-25.el6.noarch.rpm
+ruby193-rubygem-ruby_parser-2.3.1-3.el6op.noarch.rpm
+ruby193-rubygem-ruby_parser-doc-2.3.1-3.el6op.noarch.rpm
+ruby193-rubygems-1.8.23-25.el6.noarch.rpm
+ruby193-rubygems-devel-1.8.23-25.el6.noarch.rpm
+rubygem-actionpack-3.0.13-4.el6op.noarch.rpm
+rubygem-activemodel-3.0.13-3.el6op.noarch.rpm
+rubygem-activemodel-doc-3.0.13-3.el6op.noarch.rpm
+rubygem-activerecord-3.0.13-5.el6op.noarch.rpm
+rubygem-bson-1.8.1-2.el6op.noarch.rpm
+rubygem-mongo-1.8.1-2.el6op.noarch.rpm
+rubygem-mongo-doc-1.8.1-2.el6op.noarch.rpm
+rubygem-openshift-origin-auth-remote-user-1.0.5-1.el6op.noarch.rpm
+rubygem-openshift-origin-console-1.0.10-1.el6op.noarch.rpm
+rubygem-openshift-origin-console-doc-1.0.10-1.el6op.noarch.rpm
+rubygem-openshift-origin-controller-1.0.12-1.el6op.noarch.rpm
+rubygem-ruby_parser-2.0.4-6.el6op.noarch.rpm
+rubygem-ruby_parser-doc-2.0.4-6.el6op.noarch.rpm
+
+x86_64:
+graphviz-2.26.0-10.el6.x86_64.rpm
+graphviz-debuginfo-2.26.0-10.el6.x86_64.rpm
+graphviz-devel-2.26.0-10.el6.x86_64.rpm
+graphviz-doc-2.26.0-10.el6.x86_64.rpm
+graphviz-gd-2.26.0-10.el6.x86_64.rpm
+graphviz-ruby-2.26.0-10.el6.x86_64.rpm
+ruby193-ruby-1.9.3.327-25.el6.x86_64.rpm
+ruby193-ruby-debuginfo-1.9.3.327-25.el6.x86_64.rpm
+ruby193-ruby-devel-1.9.3.327-25.el6.x86_64.rpm
+ruby193-ruby-doc-1.9.3.327-25.el6.x86_64.rpm
+ruby193-ruby-libs-1.9.3.327-25.el6.x86_64.rpm
+ruby193-ruby-tcltk-1.9.3.327-25.el6.x86_64.rpm
+ruby193-rubygem-bigdecimal-1.1.0-25.el6.x86_64.rpm
+ruby193-rubygem-io-console-0.3-25.el6.x86_64.rpm
+ruby193-rubygem-json-1.5.4-25.el6.x86_64.rpm
+ruby193-rubygem-rdoc-3.9.4-25.el6.x86_64.rpm
+
+Red Hat OpenShift Enterprise JBoss EAP add-on:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-jbosseap-6.0-1.0.4-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-jbosseap-6.0-1.0.4-1.el6op.src.rpm</a>
+
+noarch:
+openshift-origin-cartridge-jbosseap-6.0-1.0.4-1.el6op.noarch.rpm
+
+Red Hat OpenShift Enterprise Node:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-cron-1.4-1.0.3-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-cron-1.4-1.0.3-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-diy-0.1-1.0.3-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-diy-0.1-1.0.3-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-haproxy-1.4-1.0.4-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-haproxy-1.4-1.0.4-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-jbossews-1.0-1.0.13-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-jbossews-1.0-1.0.13-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-jenkins-1.4-1.0.2-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-jenkins-1.4-1.0.2-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-jenkins-client-1.4-1.0.2-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-jenkins-client-1.4-1.0.2-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-mysql-5.1-1.0.5-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-mysql-5.1-1.0.5-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-perl-5.10-1.0.3-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-perl-5.10-1.0.3-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-php-5.3-1.0.5-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-php-5.3-1.0.5-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-postgresql-8.4-1.0.3-2.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-postgresql-8.4-1.0.3-2.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-ruby-1.8-1.0.7-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-ruby-1.8-1.0.7-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-ruby-1.9-scl-1.0.8-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-cartridge-ruby-1.9-scl-1.0.8-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-msg-node-mcollective-1.0.3-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/openshift-origin-msg-node-mcollective-1.0.3-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/php-5.3.3-22.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/php-5.3.3-22.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-ruby-1.9.3.327-25.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-ruby-1.9.3.327-25.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-actionpack-3.2.8-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-actionpack-3.2.8-3.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-activemodel-3.2.8-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-activemodel-3.2.8-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-activerecord-3.2.8-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-activerecord-3.2.8-3.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-railties-3.2.8-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-railties-3.2.8-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-ruby_parser-2.3.1-3.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/ruby193-rubygem-ruby_parser-2.3.1-3.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-activemodel-3.0.13-3.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-activemodel-3.0.13-3.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-bson-1.8.1-2.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-bson-1.8.1-2.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-openshift-origin-node-1.0.11-1.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-openshift-origin-node-1.0.11-1.el6op.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-ruby_parser-2.0.4-6.el6op.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOSE/SRPMS/rubygem-ruby_parser-2.0.4-6.el6op.src.rpm</a>
+
+noarch:
+openshift-origin-cartridge-cron-1.4-1.0.3-1.el6op.noarch.rpm
+openshift-origin-cartridge-diy-0.1-1.0.3-1.el6op.noarch.rpm
+openshift-origin-cartridge-haproxy-1.4-1.0.4-1.el6op.noarch.rpm
+openshift-origin-cartridge-jbossews-1.0-1.0.13-1.el6op.noarch.rpm
+openshift-origin-cartridge-jenkins-1.4-1.0.2-1.el6op.noarch.rpm
+openshift-origin-cartridge-jenkins-client-1.4-1.0.2-1.el6op.noarch.rpm
+openshift-origin-cartridge-mysql-5.1-1.0.5-1.el6op.noarch.rpm
+openshift-origin-cartridge-perl-5.10-1.0.3-1.el6op.noarch.rpm
+openshift-origin-cartridge-php-5.3-1.0.5-1.el6op.noarch.rpm
+openshift-origin-cartridge-postgresql-8.4-1.0.3-2.el6op.noarch.rpm
+openshift-origin-cartridge-ruby-1.8-1.0.7-1.el6op.noarch.rpm
+openshift-origin-cartridge-ruby-1.9-scl-1.0.8-1.el6op.noarch.rpm
+openshift-origin-msg-node-mcollective-1.0.3-1.el6op.noarch.rpm
+ruby193-ruby-irb-1.9.3.327-25.el6.noarch.rpm
+ruby193-rubygem-actionpack-3.2.8-3.el6.noarch.rpm
+ruby193-rubygem-actionpack-doc-3.2.8-3.el6.noarch.rpm
+ruby193-rubygem-activemodel-3.2.8-2.el6.noarch.rpm
+ruby193-rubygem-activemodel-doc-3.2.8-2.el6.noarch.rpm
+ruby193-rubygem-activerecord-3.2.8-3.el6.noarch.rpm
+ruby193-rubygem-activerecord-doc-3.2.8-3.el6.noarch.rpm
+ruby193-rubygem-minitest-2.5.1-25.el6.noarch.rpm
+ruby193-rubygem-railties-3.2.8-2.el6.noarch.rpm
+ruby193-rubygem-railties-doc-3.2.8-2.el6.noarch.rpm
+ruby193-rubygem-rake-0.9.2.2-25.el6.noarch.rpm
+ruby193-rubygem-ruby_parser-2.3.1-3.el6op.noarch.rpm
+ruby193-rubygem-ruby_parser-doc-2.3.1-3.el6op.noarch.rpm
+ruby193-rubygems-1.8.23-25.el6.noarch.rpm
+ruby193-rubygems-devel-1.8.23-25.el6.noarch.rpm
+rubygem-activemodel-3.0.13-3.el6op.noarch.rpm
+rubygem-activemodel-doc-3.0.13-3.el6op.noarch.rpm
+rubygem-bson-1.8.1-2.el6op.noarch.rpm
+rubygem-openshift-origin-node-1.0.11-1.el6op.noarch.rpm
+rubygem-ruby_parser-2.0.4-6.el6op.noarch.rpm
+rubygem-ruby_parser-doc-2.0.4-6.el6op.noarch.rpm
+
+x86_64:
+php-bcmath-5.3.3-22.el6.x86_64.rpm
+php-debuginfo-5.3.3-22.el6.x86_64.rpm
+php-devel-5.3.3-22.el6.x86_64.rpm
+php-imap-5.3.3-22.el6.x86_64.rpm
+php-mbstring-5.3.3-22.el6.x86_64.rpm
+php-process-5.3.3-22.el6.x86_64.rpm
+ruby193-ruby-1.9.3.327-25.el6.x86_64.rpm
+ruby193-ruby-debuginfo-1.9.3.327-25.el6.x86_64.rpm
+ruby193-ruby-devel-1.9.3.327-25.el6.x86_64.rpm
+ruby193-ruby-doc-1.9.3.327-25.el6.x86_64.rpm
+ruby193-ruby-libs-1.9.3.327-25.el6.x86_64.rpm
+ruby193-ruby-tcltk-1.9.3.327-25.el6.x86_64.rpm
+ruby193-rubygem-bigdecimal-1.1.0-25.el6.x86_64.rpm
+ruby193-rubygem-io-console-0.3-25.el6.x86_64.rpm
+ruby193-rubygem-json-1.5.4-25.el6.x86_64.rpm
+ruby193-rubygem-rdoc-3.9.4-25.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2660.html">https://www.redhat.com/security/data/cve/CVE-2012-2660.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2661.html">https://www.redhat.com/security/data/cve/CVE-2012-2661.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2694.html">https://www.redhat.com/security/data/cve/CVE-2012-2694.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2695.html">https://www.redhat.com/security/data/cve/CVE-2012-2695.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3424.html">https://www.redhat.com/security/data/cve/CVE-2012-3424.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3463.html">https://www.redhat.com/security/data/cve/CVE-2012-3463.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3464.html">https://www.redhat.com/security/data/cve/CVE-2012-3464.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3465.html">https://www.redhat.com/security/data/cve/CVE-2012-3465.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4464.html">https://www.redhat.com/security/data/cve/CVE-2012-4464.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4466.html">https://www.redhat.com/security/data/cve/CVE-2012-4466.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4522.html">https://www.redhat.com/security/data/cve/CVE-2012-4522.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5371.html">https://www.redhat.com/security/data/cve/CVE-2012-5371.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0155.html">https://www.redhat.com/security/data/cve/CVE-2013-0155.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0162.html">https://www.redhat.com/security/data/cve/CVE-2013-0162.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRL6xiXlSAg2UNWIIRAlVbAKCigkNkfk2yzOLF5xlEoTc8ZcNkEACeOed6
+Rti8t8cYCZRqOc9fSRHReJc=
+=kVS7
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00083.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00083.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00084">Thread Index</A>]
+[<A HREF="date.html#00084">Date Index</A>]
+[<A HREF="author.html#00084">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

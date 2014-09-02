@@ -1,0 +1,244 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1329&#45;01] Important: httpd and httpd22 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 21 Sep 2011 16:18:39 &#45;0400 -->
+<!--X-Message-Id: 201109212018.p8LKIXiO005902@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1329-01] Important: httpd and httpd22 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1329-01] Important: httpd and httpd22 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1329-01] Important: httpd and httpd22 security update</li>
+<li><em>Date</em>: Wed, 21 Sep 2011 20:18:33 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: httpd and httpd22 security update
+Advisory ID:       RHSA-2011:1329-01
+Product:           JBoss Enterprise Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1329.html">https://rhn.redhat.com/errata/RHSA-2011-1329.html</a>
+Issue date:        2011-09-21
+CVE Names:         CVE-2011-3192 
+=====================================================================
+
+1. Summary:
+
+Updated httpd and httpd22 packages that fix one security issue are now
+available for JBoss Enterprise Web Server 1.0.2 for Red Hat Enterprise
+Linux 4, 5, and 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Web Server 1.0 for RHEL 4 AS - i386, x86_64
+JBoss Enterprise Web Server 1.0 for RHEL 4 ES - i386, x86_64
+JBoss Enterprise Web Server 1.0 for RHEL 5 Server - i386, x86_64
+JBoss Enterprise Web Server 1.0 for RHEL 6 Server - i386, x86_64
+
+3. Description:
+
+The Apache HTTP Server is a popular web server.
+
+A flaw was found in the way the Apache HTTP Server handled Range HTTP
+headers. A remote attacker could use this flaw to cause the Apache HTTP
+Server to use an excessive amount of memory and CPU time via HTTP requests
+with a specially-crafted Range header. (CVE-2011-3192)
+
+All users of JBoss Enterprise Web Server 1.0.2 should upgrade to these
+updated packages, which contain a backported patch to correct this issue.
+After installing the updated packages, Red Hat Enterprise Linux 4 users
+must restart the httpd22 service, and Red Hat Enterprise Linux 5 and 6
+users must restart the httpd service, for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+732928 - CVE-2011-3192 httpd: multiple ranges DoS
+
+6. Package List:
+
+JBoss Enterprise Web Server 1.0 for RHEL 4 AS:
+
+Source:
+httpd22-2.2.17-16.ep5.el4.src.rpm
+
+i386:
+httpd22-2.2.17-16.ep5.el4.i386.rpm
+httpd22-apr-2.2.17-16.ep5.el4.i386.rpm
+httpd22-apr-devel-2.2.17-16.ep5.el4.i386.rpm
+httpd22-apr-util-2.2.17-16.ep5.el4.i386.rpm
+httpd22-apr-util-devel-2.2.17-16.ep5.el4.i386.rpm
+httpd22-debuginfo-2.2.17-16.ep5.el4.i386.rpm
+httpd22-devel-2.2.17-16.ep5.el4.i386.rpm
+httpd22-manual-2.2.17-16.ep5.el4.i386.rpm
+mod_ssl22-2.2.17-16.ep5.el4.i386.rpm
+
+x86_64:
+httpd22-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-apr-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-apr-devel-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-apr-util-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-apr-util-devel-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-debuginfo-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-devel-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-manual-2.2.17-16.ep5.el4.x86_64.rpm
+mod_ssl22-2.2.17-16.ep5.el4.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0 for RHEL 4 ES:
+
+Source:
+httpd22-2.2.17-16.ep5.el4.src.rpm
+
+i386:
+httpd22-2.2.17-16.ep5.el4.i386.rpm
+httpd22-apr-2.2.17-16.ep5.el4.i386.rpm
+httpd22-apr-devel-2.2.17-16.ep5.el4.i386.rpm
+httpd22-apr-util-2.2.17-16.ep5.el4.i386.rpm
+httpd22-apr-util-devel-2.2.17-16.ep5.el4.i386.rpm
+httpd22-debuginfo-2.2.17-16.ep5.el4.i386.rpm
+httpd22-devel-2.2.17-16.ep5.el4.i386.rpm
+httpd22-manual-2.2.17-16.ep5.el4.i386.rpm
+mod_ssl22-2.2.17-16.ep5.el4.i386.rpm
+
+x86_64:
+httpd22-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-apr-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-apr-devel-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-apr-util-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-apr-util-devel-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-debuginfo-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-devel-2.2.17-16.ep5.el4.x86_64.rpm
+httpd22-manual-2.2.17-16.ep5.el4.x86_64.rpm
+mod_ssl22-2.2.17-16.ep5.el4.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0 for RHEL 5 Server:
+
+Source:
+httpd-2.2.17-14.1.ep5.el5.src.rpm
+
+i386:
+httpd-2.2.17-14.1.ep5.el5.i386.rpm
+httpd-debuginfo-2.2.17-14.1.ep5.el5.i386.rpm
+httpd-devel-2.2.17-14.1.ep5.el5.i386.rpm
+httpd-manual-2.2.17-14.1.ep5.el5.i386.rpm
+mod_ssl-2.2.17-14.1.ep5.el5.i386.rpm
+
+x86_64:
+httpd-2.2.17-14.1.ep5.el5.x86_64.rpm
+httpd-debuginfo-2.2.17-14.1.ep5.el5.x86_64.rpm
+httpd-devel-2.2.17-14.1.ep5.el5.x86_64.rpm
+httpd-manual-2.2.17-14.1.ep5.el5.x86_64.rpm
+mod_ssl-2.2.17-14.1.ep5.el5.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0 for RHEL 6 Server:
+
+Source:
+httpd-2.2.17-13.2.ep5.el6.src.rpm
+
+i386:
+httpd-2.2.17-13.2.ep5.el6.i386.rpm
+httpd-debuginfo-2.2.17-13.2.ep5.el6.i386.rpm
+httpd-devel-2.2.17-13.2.ep5.el6.i386.rpm
+httpd-manual-2.2.17-13.2.ep5.el6.i386.rpm
+httpd-tools-2.2.17-13.2.ep5.el6.i386.rpm
+mod_ssl-2.2.17-13.2.ep5.el6.i386.rpm
+
+x86_64:
+httpd-2.2.17-13.2.ep5.el6.x86_64.rpm
+httpd-debuginfo-2.2.17-13.2.ep5.el6.x86_64.rpm
+httpd-devel-2.2.17-13.2.ep5.el6.x86_64.rpm
+httpd-manual-2.2.17-13.2.ep5.el6.x86_64.rpm
+httpd-tools-2.2.17-13.2.ep5.el6.x86_64.rpm
+mod_ssl-2.2.17-13.2.ep5.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3192.html">https://www.redhat.com/security/data/cve/CVE-2011-3192.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOekaMXlSAg2UNWIIRAjSxAKCZH/yYj9NdJwlTOHWuN+C/li62DwCePwXY
+zSAyot6r+exynOrSOrawoJ0=
+=GQ1w
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

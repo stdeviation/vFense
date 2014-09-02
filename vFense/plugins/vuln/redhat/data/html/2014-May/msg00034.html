@@ -1,0 +1,330 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0560&#45;01] Moderate: libvirt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 27 May 2014 12:38:01 &#45;0400 -->
+<!--X-Message-Id: 201405271638.s4RGc0YN016039@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0560-01] Moderate: libvirt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0560-01] Moderate: libvirt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0560-01] Moderate: libvirt security and bug fix update</li>
+<li><em>Date</em>: Tue, 27 May 2014 16:38:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libvirt security and bug fix update
+Advisory ID:       RHSA-2014:0560-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0560.html">https://rhn.redhat.com/errata/RHSA-2014-0560.html</a>
+Issue date:        2014-05-27
+CVE Names:         CVE-2014-0179 
+=====================================================================
+
+1. Summary:
+
+Updated libvirt packages that fix one security issue and three bugs are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - x86_64
+
+3. Description:
+
+The libvirt library is a C API for managing and interacting with the
+virtualization capabilities of Linux and other operating systems. In 
+addition, libvirt provides tools for remote management of virtualized
+systems. 
+
+It was found that libvirt passes the XML_PARSE_NOENT flag when parsing XML
+documents using the libxml2 library, in which case all XML entities in the
+parsed documents are expanded. A user able to force libvirtd to parse an
+XML document with an entity pointing to a special file that blocks on read
+access could use this flaw to cause libvirtd to hang indefinitely,
+resulting in a denial of service on the system. (CVE-2014-0179)
+
+Red Hat would like to thank the upstream Libvirt project for reporting this
+issue. Upstream acknowledges Daniel P. Berrange and Richard Jones as the
+original reporters.
+
+This update also fixes the following bugs:
+
+* When hot unplugging a virtual CPU (vCPU), libvirt kept a pointer to
+already freed memory if the vCPU was pinned to a host CPU. Consequently,
+when reading the CPU pinning information, libvirt terminated unexpectedly
+due to an attempt to access this memory. This update ensures that libvirt
+releases the pointer to the previously allocated memory when a vCPU is
+being hot unplugged, and it no longer crashes in this situation.
+(BZ#1091206)
+
+* Previously, libvirt passed an incorrect argument to the &quot;tc&quot; command when
+setting quality of service (QoS) on a network interface controller (NIC).
+As a consequence, QoS was applied only to IP traffic. With this update,
+libvirt constructs the &quot;tc&quot; command correctly so that QoS is applied to all
+traffic as expected. (BZ#1096806)
+
+* When using the sanlock daemon for managing access to shared storage,
+libvirt expected all QEMU domains to be registered with sanlock. However,
+if a QEMU domain was started prior to enabling sanlock, the domain was not
+registered with sanlock. Consequently, migration of a virtual machine (VM)
+from such a QEMU domain failed with a libvirt error. With this update,
+libvirt verifies whether a QEMU domain process is registered with sanlock
+before it starts working with the domain, ensuring that migration of
+virtual machines works as expected. (BZ#1097227)
+
+All libvirt users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, libvirtd will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1088290 - CVE-2014-0179 libvirt: unsafe parsing of XML documents allows libvirt DoS and/or arbitrary file read
+1091206 - libvirtd crashed after hot-unplug the vcpus which is pinned to host cpus
+1096806 - [BUG] Quality of service does just apply to protocol &quot;ip&quot; instead of the device
+1097227 - VM migration in RHEV environment failed due to libvirt error &quot;Failed to inquire lock: No such process&quot;
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm</a>
+
+i386:
+libvirt-0.10.2-29.el6_5.8.i686.rpm
+libvirt-client-0.10.2-29.el6_5.8.i686.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.i686.rpm
+libvirt-python-0.10.2-29.el6_5.8.i686.rpm
+
+x86_64:
+libvirt-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-client-0.10.2-29.el6_5.8.i686.rpm
+libvirt-client-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.i686.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-python-0.10.2-29.el6_5.8.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm</a>
+
+i386:
+libvirt-debuginfo-0.10.2-29.el6_5.8.i686.rpm
+libvirt-devel-0.10.2-29.el6_5.8.i686.rpm
+
+x86_64:
+libvirt-debuginfo-0.10.2-29.el6_5.8.i686.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-devel-0.10.2-29.el6_5.8.i686.rpm
+libvirt-devel-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-29.el6_5.8.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm</a>
+
+x86_64:
+libvirt-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-client-0.10.2-29.el6_5.8.i686.rpm
+libvirt-client-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.i686.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-python-0.10.2-29.el6_5.8.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.10.2-29.el6_5.8.i686.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-devel-0.10.2-29.el6_5.8.i686.rpm
+libvirt-devel-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-29.el6_5.8.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm</a>
+
+i386:
+libvirt-0.10.2-29.el6_5.8.i686.rpm
+libvirt-client-0.10.2-29.el6_5.8.i686.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.i686.rpm
+libvirt-devel-0.10.2-29.el6_5.8.i686.rpm
+libvirt-python-0.10.2-29.el6_5.8.i686.rpm
+
+ppc64:
+libvirt-0.10.2-29.el6_5.8.ppc64.rpm
+libvirt-client-0.10.2-29.el6_5.8.ppc.rpm
+libvirt-client-0.10.2-29.el6_5.8.ppc64.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.ppc.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.ppc64.rpm
+libvirt-devel-0.10.2-29.el6_5.8.ppc.rpm
+libvirt-devel-0.10.2-29.el6_5.8.ppc64.rpm
+libvirt-python-0.10.2-29.el6_5.8.ppc64.rpm
+
+s390x:
+libvirt-0.10.2-29.el6_5.8.s390x.rpm
+libvirt-client-0.10.2-29.el6_5.8.s390.rpm
+libvirt-client-0.10.2-29.el6_5.8.s390x.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.s390.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.s390x.rpm
+libvirt-devel-0.10.2-29.el6_5.8.s390.rpm
+libvirt-devel-0.10.2-29.el6_5.8.s390x.rpm
+libvirt-python-0.10.2-29.el6_5.8.s390x.rpm
+
+x86_64:
+libvirt-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-client-0.10.2-29.el6_5.8.i686.rpm
+libvirt-client-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.i686.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-devel-0.10.2-29.el6_5.8.i686.rpm
+libvirt-devel-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-python-0.10.2-29.el6_5.8.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-29.el6_5.8.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm</a>
+
+i386:
+libvirt-0.10.2-29.el6_5.8.i686.rpm
+libvirt-client-0.10.2-29.el6_5.8.i686.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.i686.rpm
+libvirt-devel-0.10.2-29.el6_5.8.i686.rpm
+libvirt-python-0.10.2-29.el6_5.8.i686.rpm
+
+x86_64:
+libvirt-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-client-0.10.2-29.el6_5.8.i686.rpm
+libvirt-client-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.i686.rpm
+libvirt-debuginfo-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-devel-0.10.2-29.el6_5.8.i686.rpm
+libvirt-devel-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-python-0.10.2-29.el6_5.8.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.10.2-29.el6_5.8.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.10.2-29.el6_5.8.x86_64.rpm
+libvirt-lock-sanlock-0.10.2-29.el6_5.8.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0179.html">https://www.redhat.com/security/data/cve/CVE-2014-0179.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFThL9VXlSAg2UNWIIRAhMDAKCJzAmos8PKFZCoT8oEXQqqFtMlVgCeMI7u
+McdhSsbPVddS/kc/Gcg3f2E=
+=q8wr
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0818&#45;02] Moderate: hplip security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 12 Aug 2008 16:33:24 &#45;0400 -->
+<!--X-Message-Id: 200808122033.m7CKXLre017827@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0818-02] Moderate: hplip security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0818-02] Moderate: hplip security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0818-02] Moderate: hplip security update</li>
+<li><em>Date</em>: Tue, 12 Aug 2008 16:33:21 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: hplip security update
+Advisory ID:       RHSA-2008:0818-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0818.html">https://rhn.redhat.com/errata/RHSA-2008-0818.html</a>
+Issue date:        2008-08-12
+CVE Names:         CVE-2008-2940 CVE-2008-2941 
+=====================================================================
+
+1. Summary:
+
+Updated hplip packages that fix various security issues are now available
+for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, x86_64
+
+3. Description:
+
+The hplip (Hewlett-Packard Linux Imaging and Printing) packages provide
+drivers for Hewlett-Packard printers and multifunction peripherals.
+
+A flaw was discovered in the hplip alert-mailing functionality. A local
+attacker could elevate their privileges by using specially-crafted packets
+to trigger alert mails, which are sent by the root account. (CVE-2008-2940)
+
+A flaw was discovered in the hpssd message parser. By sending
+specially-crafted packets, a local attacker could cause a denial of
+service, stopping the hpssd process. (CVE-2008-2941)
+
+Users of hplip should upgrade to these updated packages, which contain
+backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+455235 - CVE-2008-2940 hpssd of hplip allows unprivileged user to trigger alert mail
+457052 - CVE-2008-2941 hplip hpssd.py Denial-Of-Service parsing vulnerability
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/hplip-1.6.7-4.1.el5_2.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/hplip-1.6.7-4.1.el5_2.4.src.rpm</a>
+
+i386:
+hpijs-1.6.7-4.1.el5_2.4.i386.rpm
+hplip-1.6.7-4.1.el5_2.4.i386.rpm
+hplip-debuginfo-1.6.7-4.1.el5_2.4.i386.rpm
+libsane-hpaio-1.6.7-4.1.el5_2.4.i386.rpm
+
+x86_64:
+hpijs-1.6.7-4.1.el5_2.4.x86_64.rpm
+hplip-1.6.7-4.1.el5_2.4.x86_64.rpm
+hplip-debuginfo-1.6.7-4.1.el5_2.4.x86_64.rpm
+libsane-hpaio-1.6.7-4.1.el5_2.4.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/hplip-1.6.7-4.1.el5_2.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/hplip-1.6.7-4.1.el5_2.4.src.rpm</a>
+
+i386:
+hpijs-1.6.7-4.1.el5_2.4.i386.rpm
+hplip-1.6.7-4.1.el5_2.4.i386.rpm
+hplip-debuginfo-1.6.7-4.1.el5_2.4.i386.rpm
+libsane-hpaio-1.6.7-4.1.el5_2.4.i386.rpm
+
+ia64:
+hpijs-1.6.7-4.1.el5_2.4.ia64.rpm
+hplip-1.6.7-4.1.el5_2.4.ia64.rpm
+hplip-debuginfo-1.6.7-4.1.el5_2.4.ia64.rpm
+libsane-hpaio-1.6.7-4.1.el5_2.4.ia64.rpm
+
+ppc:
+hpijs-1.6.7-4.1.el5_2.4.ppc.rpm
+hplip-1.6.7-4.1.el5_2.4.ppc.rpm
+hplip-debuginfo-1.6.7-4.1.el5_2.4.ppc.rpm
+libsane-hpaio-1.6.7-4.1.el5_2.4.ppc.rpm
+
+x86_64:
+hpijs-1.6.7-4.1.el5_2.4.x86_64.rpm
+hplip-1.6.7-4.1.el5_2.4.x86_64.rpm
+hplip-debuginfo-1.6.7-4.1.el5_2.4.x86_64.rpm
+libsane-hpaio-1.6.7-4.1.el5_2.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2940">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2940</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2941">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2941</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIofOQXlSAg2UNWIIRAqXKAJ4iigauXU0ZjPYqPCqADyWPTSvTZACeMaZR
+8jPq/RtcvqiyLAFJV1UgCVY=
+=1TTR
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

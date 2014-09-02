@@ -1,0 +1,260 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1456&#45;01] Low: Red Hat Storage 2.0 security, bug fix,	and enhancement update #3 -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 12 Nov 2012 13:54:48 &#45;0500 -->
+<!--X-Message-Id: 201211121854.qACIsfOK031002@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1456-01] Low: Red Hat Storage 2.0 security, bug fix,	and enha</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1456-01] Low: Red Hat Storage 2.0 security, bug fix,	and enhancement update #3</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2012:1456-01] Low: Red Hat Storage 2.0 security, bug fix,	and enhancement update #3</li>
+<li><em>Date</em>: Mon, 12 Nov 2012 18:54:41 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat Storage 2.0 security, bug fix, and enhancement update #3
+Advisory ID:       RHSA-2012:1456-01
+Product:           Red Hat Storage
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1456.html">https://rhn.redhat.com/errata/RHSA-2012-1456.html</a>
+Issue date:        2012-11-12
+CVE Names:         CVE-2012-4417 
+=====================================================================
+
+1. Summary:
+
+Updated glusterfs packages that fix multiple security issues, several bugs,
+and contain enhancements are now available for Red Hat Storage 2.0.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Storage Native Client for Red Hat Enterprise Linux 5 - x86_64
+Red Hat Storage Native Client for Red Hat Enterprise Linux 6 - x86_64
+Red Hat Storage Server 2.0 - noarch, x86_64
+
+3. Description:
+
+Red Hat Storage is software only, scale-out storage that provides flexible
+and affordable unstructured data storage for the enterprise. GlusterFS, a
+key building block of Red Hat Storage, is based on a stackable user-space
+design and can deliver exceptional performance for diverse workloads.
+GlusterFS aggregates various storage servers over network interconnects
+into one large, parallel network file system.
+
+Multiple insecure temporary file creation flaws were found in Red Hat
+Storage. A local user on the Red Hat Storage server could use these flaws
+to cause arbitrary files to be overwritten as the root user via a symbolic
+link attack. (CVE-2012-4417)
+
+These issues were discovered by Kurt Seifried of Red Hat, and Jim Meyering.
+
+This update also fixes the following bugs:
+
+* If geo-replication is started with a large number of small static files,
+E2BIG error is displayed. This is due to the way the rsync was invoked by
+geo-replication. This issue has been fixed and geo-replication works fine
+for large number of files. (BZ#859173)
+
+* RHS automatically modifies the smb.conf file and starts/restarts the SMB
+service when a new volume is created, regardless of the chkconfig status of
+the service. This results in an improper SMB configuration and errors are
+logged. This issue has been fixed by performing a &quot;condrestart&quot; instead of
+an unconditional &quot;start&quot;. (BZ#863907)
+
+* Issuing &quot;gluster peer probe&quot; command on an Fully Qualified Domain Name
+(FQDN) that contains a number as the first character in the domain name
+resulted in the command failing. This issue has been fixed by allowing
+digits as the first character in the FQDN. (BZ#863908)
+
+* In a replicated configuration, rebooting one of the servers during active
+I/O have resulted in stale locks and caused some glusterfs commands to
+fail. This issue has been fixed by adjusting the timeout value. (BZ#866758)
+
+* In a replicated volume, when a file was in split-brain state, reads were
+still permitted on that file from the NFS mount. This issue has been fixed
+by reporting an I/O Error. (BZ#855913)
+
+* After an upgrade, Geo-replication status is &quot;N/A&quot; if the checkpoint
+service is not functional. This is due to the change of the location of
+unix domain sockets that are used for inter-component communication. This
+issue has been fixed by having glusterd specify the socket location to
+gsyncd. (BZ#873380)
+
+* On a replicate volume, when one of the brick is offline and from NFS
+mount when ln command is executed, the command fails. This is because
+getattr calls lookup with a NULL parent. This issue has been fixed by
+properly populating the parent information. (BZ#874051)
+
+In addition, this update adds the following enhancements:
+
+* This errata includes a replication enhancement called Server-side Quorum
+enforcement, which is a means to reduce the chances of split-brains. Quorum
+enforcement is at the glusterd level and each volume can choose whether or
+not to enforce quorum by setting the relevant volume options and the quorum
+default ratio is &gt;50%. A ratio of &gt;50% means that at any point in time,
+more than half the number of nodes in the trusted storage pool need to be
+started and connected to each other. If network disconnects and outages
+happen in such a way that a smaller portion of the storage pool is offline,
+bricks running in those nodes are taken down preventing further writes from
+happening to the minority. For a two node cluster, quorum enforcement will
+require an arbitrator in the trusted storage pool which does not have
+bricks participating in that quorum enforcing volume. (BZ#840122)
+
+* sosreport is a tool which generates debugging information for the system
+it is run on. This tool has been packaged in the Red Hat Storage channel.
+This will enable further Red Hat Storage specific tweaks and enhancements
+and improve debugability. (BZ#856673)
+
+All users of Red Hat Storage are advised to upgrade to these updated
+packages, which fix these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+840122 - Implement a server side quorum in glusterd
+855913 - NFS Mount doesn't report &quot;I/0 Error&quot; when a file is in split-brain state
+856341 - CVE-2012-4417 GlusterFS: insecure temporary file creation
+856673 - Add sos to Red Hat Storage
+859173 - geo-replication with large number of small static files will have E2BIG errors in logs.
+863907 - GlusterFS automatically starts smb service when it is disabled w/ chkconfig
+866758 - gluster volume status all &quot;Failed to get names of volumes&quot; when peer in volume is restarted during transaction
+873380 - [3.3.0.4rhs-34.el6rhs.x86_64.rpm] geo-rep status gives N/A.
+874051 - ln command execution fails on files with &quot;invalid argument&quot; error when executed the command from nfs mount
+
+6. Package List:
+
+Red Hat Storage Native Client for Red Hat Enterprise Linux 5:
+
+Source:
+glusterfs-3.3.0.5rhs-37.el5.src.rpm
+
+x86_64:
+glusterfs-3.3.0.5rhs-37.el5.x86_64.rpm
+glusterfs-debuginfo-3.3.0.5rhs-37.el5.x86_64.rpm
+glusterfs-devel-3.3.0.5rhs-37.el5.x86_64.rpm
+glusterfs-fuse-3.3.0.5rhs-37.el5.x86_64.rpm
+glusterfs-rdma-3.3.0.5rhs-37.el5.x86_64.rpm
+
+Red Hat Storage Server 2.0:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/glusterfs-3.3.0.5rhs-37.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/glusterfs-3.3.0.5rhs-37.el6rhs.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/sos-2.2-17.1.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/sos-2.2-17.1.el6rhs.src.rpm</a>
+
+noarch:
+sos-2.2-17.1.el6rhs.noarch.rpm
+
+x86_64:
+glusterfs-3.3.0.5rhs-37.el6rhs.x86_64.rpm
+glusterfs-debuginfo-3.3.0.5rhs-37.el6rhs.x86_64.rpm
+glusterfs-devel-3.3.0.5rhs-37.el6rhs.x86_64.rpm
+glusterfs-fuse-3.3.0.5rhs-37.el6rhs.x86_64.rpm
+glusterfs-geo-replication-3.3.0.5rhs-37.el6rhs.x86_64.rpm
+glusterfs-rdma-3.3.0.5rhs-37.el6rhs.x86_64.rpm
+glusterfs-server-3.3.0.5rhs-37.el6rhs.x86_64.rpm
+
+Red Hat Storage Native Client for Red Hat Enterprise Linux 6:
+
+Source:
+glusterfs-3.3.0.5rhs-37.el6.src.rpm
+
+x86_64:
+glusterfs-3.3.0.5rhs-37.el6.x86_64.rpm
+glusterfs-debuginfo-3.3.0.5rhs-37.el6.x86_64.rpm
+glusterfs-devel-3.3.0.5rhs-37.el6.x86_64.rpm
+glusterfs-fuse-3.3.0.5rhs-37.el6.x86_64.rpm
+glusterfs-rdma-3.3.0.5rhs-37.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4417.html">https://www.redhat.com/security/data/cve/CVE-2012-4417.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQoUWaXlSAg2UNWIIRAlbRAKCkci33i7FSiMm0gHV/CgMROK0bvQCdHyC8
+uN34WX2IHwVfVCdzh49fgqQ=
+=RlLe
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0810&#45;04] Low: busybox security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jun 2012 04:32:56 &#45;0400 -->
+<!--X-Message-Id: 201206200832.q5K8Wno9030525@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0810-04] Low: busybox security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0810-04] Low: busybox security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0810-04] Low: busybox security and bug fix update</li>
+<li><em>Date</em>: Wed, 20 Jun 2012 08:28:44 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: busybox security and bug fix update
+Advisory ID:       RHSA-2012:0810-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0810.html">https://rhn.redhat.com/errata/RHSA-2012-0810.html</a>
+Issue date:        2012-06-20
+CVE Names:         CVE-2006-1168 CVE-2011-2716 
+=====================================================================
+
+1. Summary:
+
+Updated busybox packages that fix two security issues and several bugs are
+now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+BusyBox provides a single binary that includes versions of a large number
+of system commands, including a shell. This can be very useful for
+recovering from certain types of system failures, particularly those
+involving broken shared libraries.
+
+A buffer underflow flaw was found in the way the uncompress utility of
+BusyBox expanded certain archive files compressed using Lempel-Ziv
+compression. If a user were tricked into expanding a specially-crafted
+archive file with uncompress, it could cause BusyBox to crash or,
+potentially, execute arbitrary code with the privileges of the user
+running BusyBox. (CVE-2006-1168)
+
+The BusyBox DHCP client, udhcpc, did not sufficiently sanitize certain
+options provided in DHCP server replies, such as the client hostname. A
+malicious DHCP server could send such an option with a specially-crafted
+value to a DHCP client. If this option's value was saved on the client
+system, and then later insecurely evaluated by a process that assumes the
+option is trusted, it could lead to arbitrary code execution with the
+privileges of that process. Note: udhcpc is not used on Red Hat Enterprise
+Linux by default, and no DHCP client script is provided with the busybox
+packages. (CVE-2011-2716)
+
+This update also fixes the following bugs:
+
+* Prior to this update, the &quot;findfs&quot; command did not recognize Btrfs
+partitions. As a consequence, an error message could occur when dumping a
+core file. This update adds support for recognizing such partitions so
+the problem no longer occurs. (BZ#751927)
+
+* If the &quot;grep&quot; command was used with the &quot;-F&quot; and &quot;-i&quot; options at the
+same time, the &quot;-i&quot; option was ignored. As a consequence, the &quot;grep -iF&quot;
+command incorrectly performed a case-sensitive search instead of an
+insensitive search. A patch has been applied to ensure that the combination
+of the &quot;-F&quot; and &quot;-i&quot; options works as expected. (BZ#752134)
+
+* Prior to this update, the msh shell did not support the &quot;set -o pipefail&quot;
+command. This update adds support for this command. (BZ#782018)
+
+* Previously, the msh shell could terminate unexpectedly with a
+segmentation fault when attempting to execute an empty command as a result
+of variable substitution (for example msh -c '$nonexistent_variable').
+With this update, msh has been modified to correctly interpret such
+commands and no longer crashes in this scenario. (BZ#809092)
+
+* Previously, the msh shell incorrectly executed empty loops. As a
+consequence, msh never exited such a loop even if the loop condition was
+false, which could cause scripts using the loop to become unresponsive.
+With this update, msh has been modified to execute and exit empty loops
+correctly, so that hangs no longer occur. (BZ#752132)
+
+All users of busybox are advised to upgrade to these updated packages,
+which contain backported patches to fix these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+201919 - CVE-2006-1168 ncompress: .bss buffer underflow in decompression
+725364 - CVE-2011-2716 busybox: udhcpc insufficient checking of DHCP options
+752134 - &quot;busybox grep -Fi&quot; doesn't work as expected
+809092 - msh crasher bug
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm</a>
+
+i386:
+busybox-1.15.1-15.el6.i686.rpm
+
+x86_64:
+busybox-1.15.1-15.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm</a>
+
+i386:
+busybox-petitboot-1.15.1-15.el6.i686.rpm
+
+x86_64:
+busybox-petitboot-1.15.1-15.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm</a>
+
+x86_64:
+busybox-1.15.1-15.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm</a>
+
+x86_64:
+busybox-petitboot-1.15.1-15.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm</a>
+
+i386:
+busybox-1.15.1-15.el6.i686.rpm
+
+ppc64:
+busybox-1.15.1-15.el6.ppc64.rpm
+
+s390x:
+busybox-1.15.1-15.el6.s390x.rpm
+
+x86_64:
+busybox-1.15.1-15.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm</a>
+
+i386:
+busybox-petitboot-1.15.1-15.el6.i686.rpm
+
+ppc64:
+busybox-petitboot-1.15.1-15.el6.ppc64.rpm
+
+s390x:
+busybox-petitboot-1.15.1-15.el6.s390x.rpm
+
+x86_64:
+busybox-petitboot-1.15.1-15.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm</a>
+
+i386:
+busybox-1.15.1-15.el6.i686.rpm
+
+x86_64:
+busybox-1.15.1-15.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/busybox-1.15.1-15.el6.src.rpm</a>
+
+i386:
+busybox-petitboot-1.15.1-15.el6.i686.rpm
+
+x86_64:
+busybox-petitboot-1.15.1-15.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2006-1168.html">https://www.redhat.com/security/data/cve/CVE-2006-1168.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2716.html">https://www.redhat.com/security/data/cve/CVE-2011-2716.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4YqqXlSAg2UNWIIRAjdVAJ96VHA7n7IOhYAWL7vwHeOPTn3YJQCdFRUW
+bt1lqoyrBL1/TH4AmucaKNs=
+=dzKG
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

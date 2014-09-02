@@ -1,0 +1,276 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0598&#45;02] Critical: firefox security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 16 Jul 2008 13:12:46 &#45;0400 -->
+<!--X-Message-Id: 200807161712.m6GHCjGv007699@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0598-02] Critical: firefox security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0598-02] Critical: firefox security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0598-02] Critical: firefox security update</li>
+<li><em>Date</em>: Wed, 16 Jul 2008 13:12:45 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: firefox security update
+Advisory ID:       RHSA-2008:0598-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0598.html">https://rhn.redhat.com/errata/RHSA-2008-0598.html</a>
+Issue date:        2008-07-16
+CVE Names:         CVE-2008-2785 CVE-2008-2933 
+=====================================================================
+
+1. Summary:
+
+An updated firefox package that fixes various security issues is now
+available for Red Hat Enterprise Linux 4.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux AS version 4.5.z - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux ES version 4.5.z - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+Mozilla Firefox is an open source Web browser.
+
+An integer overflow flaw was found in the way Firefox displayed certain web
+content. A malicious web site could cause Firefox to crash, or execute
+arbitrary code with the permissions of the user running Firefox.
+(CVE-2008-2785)
+
+A flaw was found in the way Firefox handled certain command line URLs. If
+another application passed Firefox a malformed URL, it could result in
+Firefox executing local malicious content with chrome privileges.
+(CVE-2008-2933)
+
+All firefox users should upgrade to this updated package, which contains
+backported patches that correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+452204 - CVE-2008-2785 mozilla: CSS reference counter overflow (ZDI-CAN-349)
+454697 - CVE-2008-2933 Firefox command line URL launches multi-tabs
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm</a>
+
+i386:
+firefox-1.5.0.12-0.21.el4.i386.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.i386.rpm
+
+ia64:
+firefox-1.5.0.12-0.21.el4.ia64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.ia64.rpm
+
+ppc:
+firefox-1.5.0.12-0.21.el4.ppc.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.ppc.rpm
+
+s390:
+firefox-1.5.0.12-0.21.el4.s390.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.s390.rpm
+
+s390x:
+firefox-1.5.0.12-0.21.el4.s390x.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.s390x.rpm
+
+x86_64:
+firefox-1.5.0.12-0.21.el4.x86_64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.x86_64.rpm
+
+Red Hat Enterprise Linux AS version 4.5.z:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/4AS-4.5.z/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/4AS-4.5.z/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm</a>
+
+i386:
+firefox-1.5.0.12-0.21.el4.i386.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.i386.rpm
+
+ia64:
+firefox-1.5.0.12-0.21.el4.ia64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.ia64.rpm
+
+ppc:
+firefox-1.5.0.12-0.21.el4.ppc.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.ppc.rpm
+
+s390:
+firefox-1.5.0.12-0.21.el4.s390.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.s390.rpm
+
+s390x:
+firefox-1.5.0.12-0.21.el4.s390x.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.s390x.rpm
+
+x86_64:
+firefox-1.5.0.12-0.21.el4.x86_64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm</a>
+
+i386:
+firefox-1.5.0.12-0.21.el4.i386.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.i386.rpm
+
+x86_64:
+firefox-1.5.0.12-0.21.el4.x86_64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm</a>
+
+i386:
+firefox-1.5.0.12-0.21.el4.i386.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.i386.rpm
+
+ia64:
+firefox-1.5.0.12-0.21.el4.ia64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.ia64.rpm
+
+x86_64:
+firefox-1.5.0.12-0.21.el4.x86_64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4.5.z:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/4ES-4.5.z/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/4ES-4.5.z/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm</a>
+
+i386:
+firefox-1.5.0.12-0.21.el4.i386.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.i386.rpm
+
+ia64:
+firefox-1.5.0.12-0.21.el4.ia64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.ia64.rpm
+
+x86_64:
+firefox-1.5.0.12-0.21.el4.x86_64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/firefox-1.5.0.12-0.21.el4.src.rpm</a>
+
+i386:
+firefox-1.5.0.12-0.21.el4.i386.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.i386.rpm
+
+ia64:
+firefox-1.5.0.12-0.21.el4.ia64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.ia64.rpm
+
+x86_64:
+firefox-1.5.0.12-0.21.el4.x86_64.rpm
+firefox-debuginfo-1.5.0.12-0.21.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2785">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2785</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2933">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2933</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIfiwLXlSAg2UNWIIRAuzDAJ9/hIL1wH8Rx8Yrj5ewIaqUE76ZnwCePjlL
+Hc1vcRZGG9iZHbGcrn+qmMc=
+=CvOl
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

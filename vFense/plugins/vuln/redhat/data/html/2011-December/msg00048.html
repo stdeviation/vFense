@@ -1,0 +1,281 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1853&#45;01] Critical: krb5 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 28 Dec 2011 14:36:46 &#45;0500 -->
+<!--X-Message-Id: 201112281936.pBSJaegN016343@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1853-01] Critical: krb5 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00047.html">Date Prev</a>][<a href="msg00049.html">Date Next</a>] &nbsp; [<a href="msg00047.html">Thread Prev</a>][<a href="msg00049.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00048">Thread Index</A>]
+[<A HREF="date.html#00048">Date Index</A>]
+[<A HREF="author.html#00048">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1853-01] Critical: krb5 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1853-01] Critical: krb5 security update</li>
+<li><em>Date</em>: Wed, 28 Dec 2011 19:36:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: krb5 security update
+Advisory ID:       RHSA-2011:1853-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1853.html">https://rhn.redhat.com/errata/RHSA-2011-1853.html</a>
+Issue date:        2011-12-28
+CVE Names:         CVE-2011-4862 
+=====================================================================
+
+1. Summary:
+
+Updated krb5 packages that fix one security issue are now available for
+Red Hat Enterprise Linux 3 Extended Life Cycle Support, 5.3 Long Life and
+5.6 Extended Update Support
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS (v. 3 ELS) - i386
+Red Hat Enterprise Linux ES (v. 3 ELS) - i386
+Red Hat Enterprise Linux EUS (v. 5.6 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Long Life (v. 5.3 server) - i386, ia64, x86_64
+
+3. Description:
+
+Kerberos is a network authentication system which allows clients and
+servers to authenticate to each other using symmetric encryption and a
+trusted third-party, the Key Distribution Center (KDC).
+
+A buffer overflow flaw was found in the MIT krb5 telnet daemon (telnetd).
+A remote attacker who can access the telnet port of a target machine could
+use this flaw to execute arbitrary code as root. (CVE-2011-4862) 
+
+Note that the krb5 telnet daemon is not enabled by default in any version
+of Red Hat Enterprise Linux. In addition, the default firewall rules block
+remote access to the telnet port. This flaw does not affect the telnet
+daemon distributed in the telnet-server package.
+
+For users who have installed the krb5-workstation package, have enabled the
+telnet daemon, and have it accessible remotely, this update should be
+applied immediately.
+
+All krb5-workstation users should upgrade to these updated packages, which 
+contain a backported patch to correct this issue.
+
+4. Solution:
+
+The krb5 telnet daemon is an xinetd service. You can determine if krb5
+telnetd is enabled with the commands: 
+
+/sbin/chkconfig --list krb5-telnet 
+/sbin/chkconfig --list ekrb5-telnet 
+
+The output of these commands will display &quot;on&quot; if krb5 telnet is enabled.
+krb5 telnet daemon can be immediately disabled with the commands: 
+
+/sbin/chkconfig krb5-telnet off
+/sbin/chkconfig ekrb5-telnet off
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+770325 - CVE-2011-4862 krb5: remote buffer overflow in kerberized telnet daemon
+
+6. Package List:
+
+Red Hat Enterprise Linux AS (v. 3 ELS):
+
+Source:
+krb5-1.2.7-73.src.rpm
+
+i386:
+krb5-debuginfo-1.2.7-73.i386.rpm
+krb5-devel-1.2.7-73.i386.rpm
+krb5-libs-1.2.7-73.i386.rpm
+krb5-server-1.2.7-73.i386.rpm
+krb5-workstation-1.2.7-73.i386.rpm
+
+Red Hat Enterprise Linux ES (v. 3 ELS):
+
+Source:
+krb5-1.2.7-73.src.rpm
+
+i386:
+krb5-debuginfo-1.2.7-73.i386.rpm
+krb5-devel-1.2.7-73.i386.rpm
+krb5-libs-1.2.7-73.i386.rpm
+krb5-server-1.2.7-73.i386.rpm
+krb5-workstation-1.2.7-73.i386.rpm
+
+Red Hat Enterprise Linux Long Life (v. 5.3 server):
+
+Source:
+krb5-1.6.1-31.el5_3.5.src.rpm
+
+i386:
+krb5-debuginfo-1.6.1-31.el5_3.5.i386.rpm
+krb5-devel-1.6.1-31.el5_3.5.i386.rpm
+krb5-libs-1.6.1-31.el5_3.5.i386.rpm
+krb5-server-1.6.1-31.el5_3.5.i386.rpm
+krb5-workstation-1.6.1-31.el5_3.5.i386.rpm
+
+ia64:
+krb5-debuginfo-1.6.1-31.el5_3.5.i386.rpm
+krb5-debuginfo-1.6.1-31.el5_3.5.ia64.rpm
+krb5-devel-1.6.1-31.el5_3.5.ia64.rpm
+krb5-libs-1.6.1-31.el5_3.5.i386.rpm
+krb5-libs-1.6.1-31.el5_3.5.ia64.rpm
+krb5-server-1.6.1-31.el5_3.5.ia64.rpm
+krb5-workstation-1.6.1-31.el5_3.5.ia64.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-31.el5_3.5.i386.rpm
+krb5-debuginfo-1.6.1-31.el5_3.5.x86_64.rpm
+krb5-devel-1.6.1-31.el5_3.5.i386.rpm
+krb5-devel-1.6.1-31.el5_3.5.x86_64.rpm
+krb5-libs-1.6.1-31.el5_3.5.i386.rpm
+krb5-libs-1.6.1-31.el5_3.5.x86_64.rpm
+krb5-server-1.6.1-31.el5_3.5.x86_64.rpm
+krb5-workstation-1.6.1-31.el5_3.5.x86_64.rpm
+
+Red Hat Enterprise Linux EUS (v. 5.6 server):
+
+Source:
+krb5-1.6.1-55.el5_6.3.src.rpm
+
+i386:
+krb5-debuginfo-1.6.1-55.el5_6.3.i386.rpm
+krb5-devel-1.6.1-55.el5_6.3.i386.rpm
+krb5-libs-1.6.1-55.el5_6.3.i386.rpm
+krb5-server-1.6.1-55.el5_6.3.i386.rpm
+krb5-server-ldap-1.6.1-55.el5_6.3.i386.rpm
+krb5-workstation-1.6.1-55.el5_6.3.i386.rpm
+
+ia64:
+krb5-debuginfo-1.6.1-55.el5_6.3.i386.rpm
+krb5-debuginfo-1.6.1-55.el5_6.3.ia64.rpm
+krb5-devel-1.6.1-55.el5_6.3.ia64.rpm
+krb5-libs-1.6.1-55.el5_6.3.i386.rpm
+krb5-libs-1.6.1-55.el5_6.3.ia64.rpm
+krb5-server-1.6.1-55.el5_6.3.ia64.rpm
+krb5-server-ldap-1.6.1-55.el5_6.3.ia64.rpm
+krb5-workstation-1.6.1-55.el5_6.3.ia64.rpm
+
+ppc:
+krb5-debuginfo-1.6.1-55.el5_6.3.ppc.rpm
+krb5-debuginfo-1.6.1-55.el5_6.3.ppc64.rpm
+krb5-devel-1.6.1-55.el5_6.3.ppc.rpm
+krb5-devel-1.6.1-55.el5_6.3.ppc64.rpm
+krb5-libs-1.6.1-55.el5_6.3.ppc.rpm
+krb5-libs-1.6.1-55.el5_6.3.ppc64.rpm
+krb5-server-1.6.1-55.el5_6.3.ppc.rpm
+krb5-server-ldap-1.6.1-55.el5_6.3.ppc.rpm
+krb5-workstation-1.6.1-55.el5_6.3.ppc.rpm
+
+s390x:
+krb5-debuginfo-1.6.1-55.el5_6.3.s390.rpm
+krb5-debuginfo-1.6.1-55.el5_6.3.s390x.rpm
+krb5-devel-1.6.1-55.el5_6.3.s390.rpm
+krb5-devel-1.6.1-55.el5_6.3.s390x.rpm
+krb5-libs-1.6.1-55.el5_6.3.s390.rpm
+krb5-libs-1.6.1-55.el5_6.3.s390x.rpm
+krb5-server-1.6.1-55.el5_6.3.s390x.rpm
+krb5-server-ldap-1.6.1-55.el5_6.3.s390x.rpm
+krb5-workstation-1.6.1-55.el5_6.3.s390x.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-55.el5_6.3.i386.rpm
+krb5-debuginfo-1.6.1-55.el5_6.3.x86_64.rpm
+krb5-devel-1.6.1-55.el5_6.3.i386.rpm
+krb5-devel-1.6.1-55.el5_6.3.x86_64.rpm
+krb5-libs-1.6.1-55.el5_6.3.i386.rpm
+krb5-libs-1.6.1-55.el5_6.3.x86_64.rpm
+krb5-server-1.6.1-55.el5_6.3.x86_64.rpm
+krb5-server-ldap-1.6.1-55.el5_6.3.x86_64.rpm
+krb5-workstation-1.6.1-55.el5_6.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4862.html">https://www.redhat.com/security/data/cve/CVE-2011-4862.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://web.mit.edu/kerberos/advisories/MITKRB5-SA-2011-008.txt">http://web.mit.edu/kerberos/advisories/MITKRB5-SA-2011-008.txt</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFO+28cXlSAg2UNWIIRAp2qAKCs1Vdu43t+9MczKyyRZp0v/OxnbACgoC5m
+ayoBOPeIIvWXfbjm6PcJz8w=
+=MfeX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00047.html">Date Prev</a>][<a href="msg00049.html">Date Next</a>] &nbsp; [<a href="msg00047.html">Thread Prev</a>][<a href="msg00049.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00048">Thread Index</A>]
+[<A HREF="date.html#00048">Date Index</A>]
+[<A HREF="author.html#00048">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

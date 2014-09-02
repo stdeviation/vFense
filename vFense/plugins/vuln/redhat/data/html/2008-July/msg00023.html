@@ -1,0 +1,208 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0566&#45;01] Moderate: rhpki&#45;util, rhpki&#45;common,	and rhpki&#45;ca security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 21 Jul 2008 15:19:35 &#45;0400 -->
+<!--X-Message-Id: 200807211919.m6LJJY4t026924@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0566-01] Moderate: rhpki-util, rhpki-common,	and rhpki-ca sec</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0566-01] Moderate: rhpki-util, rhpki-common,	and rhpki-ca security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0566-01] Moderate: rhpki-util, rhpki-common,	and rhpki-ca security and bug fix update</li>
+<li><em>Date</em>: Mon, 21 Jul 2008 15:19:34 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhpki-util, rhpki-common, and rhpki-ca security and bug fix update
+Advisory ID:       RHSA-2008:0566-01
+Product:           Red Hat Certificate System
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0566.html">https://rhn.redhat.com/errata/RHSA-2008-0566.html</a>
+Issue date:        2008-07-21
+CVE Names:         CVE-2007-4994 
+=====================================================================
+
+1. Summary:
+
+Updated rhpki-util, rhpki-common, and rhpki-ca packages that fix a security
+issue and several bugs are now available for Red Hat Certificate System
+7.3.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Certificate System 7.3 for 4AS - noarch
+Red Hat Certificate System 7.3 for 4ES - noarch
+
+3. Description:
+
+Red Hat Certificate System (RHCS) is an enterprise software system designed
+to manage enterprise Public Key Infrastructure (PKI) deployments.
+
+It was discovered that new revocations, performed while a Certificate
+Revocation List (CRL) was being generated, could potentially cause revoked
+certificates at the upper end of the serial number range to not appear on
+the CRL for a period of time. A user who has a revoked but otherwise valid
+certificate could take advantage of this issue and bypass the revocation
+list; however, in practice, they would have no way of influencing which
+revoked certificate entries were missing or the time period.
+(CVE-2007-4994)
+
+As well, these updated packages fix the following bugs:
+
+* due to a regression, signing a CRL with approximately 150,000 records may
+have taken up to five minutes. In these updated packages, signing such CRLs
+takes approximately twenty seconds.
+
+* a bug, which resulted in a 404 error, due to servers not handling Online
+Certificate Status Protocol (OCSP) requests in the GET method, has been
+resolved. This issue may have caused a system to use 100% CPU. As well,
+OCSP requests are now logged to the debug log file.
+
+* it was possible for a CRL update to run at the same time as a certificate
+status update. Now, CRL updating locks out the certificate status update
+thread.
+
+* inefficient LDAP search methods caused LDAP searches for a large number
+of revoked certificates to take up to twenty minutes or more for 100,000
+certificates during CRL generation. The LDAP search method has been
+modified to greatly improve LDAP search times.
+
+* the default OCSP verification path has changed since RHCS 7.1. These
+updated packages add support for certificates that use the old
+AuthorityInfoAccess (AIA) URL.
+
+* an OCSP client submitting an OCSP request via the GET method may have
+caused a &quot;NullPointerException&quot;.
+
+* if an agent automatically approved a certificate signing request (CSR),
+using AgentCertAuth, the resultant certificate contained blank Subject Alt
+Name extension fields. A manual enrollment by the same agent produced a
+certificate with the correct number of Subject Alt Names and no blank
+entries. With this update, automated enrollments via AgentCertAuth do not
+have blank fields in issued certificates.
+
+Users of Red Hat Certificate System should upgrade to these updated
+packages, which resolve these issues.
+
+4. Solution:
+
+Users running Red Hat Certificate System on Red Hat Enterprise Linux:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+Users running Red Hat Certificate System on Sun Solaris:
+
+Updated Solaris packages in .pkg format are available in the Red Hat
+Certificate System Solaris channels on the Red Hat Network. These packages
+should be installed/upgraded using Solaris native package management tools.
+
+Refer to the Red Hat Certificate System Administration Guide for
+installation instructions: <a  rel="nofollow" href="http://www.redhat.com/docs/manuals/cert-system/">http://www.redhat.com/docs/manuals/cert-system/</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+304571 - CVE-2007-4994 rhcs CRL can get corrupted
+
+6. Package List:
+
+Red Hat Certificate System 7.3 for 4AS:
+
+noarch:
+rhpki-ca-7.3.0-11.el4.noarch.rpm
+rhpki-common-7.3.0-34.el4.noarch.rpm
+rhpki-util-7.3.0-18.el4.noarch.rpm
+
+Red Hat Certificate System 7.3 for 4ES:
+
+noarch:
+rhpki-ca-7.3.0-11.el4.noarch.rpm
+rhpki-common-7.3.0-34.el4.noarch.rpm
+rhpki-util-7.3.0-18.el4.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4994">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4994</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIhOEpXlSAg2UNWIIRAjVZAJ9LfNpsdqLxli0CU8UjpV+vrB2djQCeJsNw
+ZjchJ0OYiKkdcxCi4s7THHo=
+=4Q2/
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

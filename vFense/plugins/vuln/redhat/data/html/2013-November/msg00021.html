@@ -1,0 +1,304 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1553&#45;02] Important: qemu&#45;kvm security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Nov 2013 23:22:07 &#45;0500 -->
+<!--X-Message-Id: 201311210422.rAL4M43J008745@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1553-02] Important: qemu-kvm security, bug fix,	and enhanceme</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1553-02] Important: qemu-kvm security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1553-02] Important: qemu-kvm security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Nov 2013 04:25:36 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: qemu-kvm security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:1553-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1553.html">https://rhn.redhat.com/errata/RHSA-2013-1553.html</a>
+Issue date:        2013-11-21
+CVE Names:         CVE-2013-4344 
+=====================================================================
+
+1. Summary:
+
+Updated qemu-kvm packages that fix one security issue, several bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems that is built into the standard Red Hat
+Enterprise Linux kernel. The qemu-kvm packages form the user-space
+component for running virtual machines using KVM.
+
+A buffer overflow flaw was found in the way QEMU processed the SCSI &quot;REPORT
+LUNS&quot; command when more than 256 LUNs were specified for a single SCSI
+target. A privileged guest user could use this flaw to corrupt QEMU process
+memory on the host, which could potentially result in arbitrary code
+execution on the host with the privileges of the QEMU process.
+(CVE-2013-4344)
+
+This issue was discovered by Asias He of Red Hat.
+
+These updated qemu-kvm packages include numerous bug fixes and various
+enhancements. Space precludes documenting all of these changes in this
+advisory. Users are directed to the Red Hat Enterprise Linux 6.5 Technical
+Notes, linked to in the References, for information on the most significant
+of these changes.
+
+All qemu-kvm users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements. After installing this update, shut down all running virtual
+machines. Once all virtual machines have shut down, start them again for
+this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+670162 - [RFE] Removing the backing file using qemu-img re-base
+796011 - Prompt error of trigger blkdebug: BLKDBG_CLUSTER_FREE event is not the same as expected
+817066 - QEMU should disable VNC password auth when in FIPS 140-2 mode
+821741 - (re-)enable SEP flag on CPU models
+843797 - qemu-kvm core dumps when virtio-net(w/ tx=timer and vhost=on) RHEL.6(w/ msi-x enabled) guest shutting down
+848070 - [RHEL 6.5] Add glusterfs support to qemu
+856505 - Missing error message in bdrv_commit to read-only backing file
+864378 - qemu-img convert fails with Floating Point Exception with zero length source image
+869496 - screendump wont save PPM image file if qemu-kvm booted with '-S'
+869586 - core dump happens when quitting qemu via monitor
+879096 - qemu should disable hot-unplug usb-ehci controller and give a prompt if not support
+882834 - no warning while check the lacked cpuid_7_0_ebx_feature_name flag
+884590 - ovs-ifup affect but ovs-ifdown not affect when run a guest with a wrong netdriver(e.g. ... -device virtio-pci-net,...)
+886080 - Qemu segmentation fault when resume VM from stop at rebooting process after do some hot-plug/unplug and S3
+886878 - atapi: tray statuses (locked and open) are not reset on boot/reboot of guest
+888008 - RFE: qemu-img should be able to report the amount of space used by a qcow2 image stored on a block device
+888297 - qemu-ga should be enabled right after installation
+889135 - core trace/dump if specify the value of physical_block_size/logical_block_size is not multiple of 512 bytes
+889255 - Monitor command acl_remove messes up the ACL
+890011 - flooding with 'scsi-generic: execute_command: read failed !' error if eject the pass-through SCSI CD-ROM
+890265 - change the mac of virtio_net device temporary but will effect forever after reboot guest
+892996 - qemu-ga leaks fds to exec()ed processes [TestOnly]
+893344 - &quot;info qtree&quot; output for qxl-vga does not match between rhel6.0 host and rhel6.4 host with -M rhel6.0.0
+895399 - Fail to boot win7 guest with x-data-plane=on for the system disk
+895402 - Fail to install windows guest with 'Setup was unable to create a new system partiotion or locate an existing system partition' error
+902688 - incorrect committed_memory if set_process_name=1
+903123 - The value of steal time in &quot;top&quot; command always is &quot;0.0% st&quot; after guest migration
+903204 - don't boot from un-selected devices (add a boot option 'strict' to qemu)
+903454 - kvm guest crash after long stop/cont cycle
+905851 - Fail to start  guest which contains more than 51 usbs disk with multifunction
+907397 - Patch &quot;e1000: no need auto-negotiation if link was down&quot; may break e1000 guest
+907716 - use set_link  to change rtl8139 and e1000 network card's status but fail to make effectively after reboot guest
+909059 - Switch to upstream solution for chardev flow control
+914802 - Support backup vendors in qemu to access qcow disk readonly (qemu-img metadata dump)
+917860 - Smartcard emulation with Windows guest fails
+924165 - qemu-img convert -s is silently ignored
+925170 - MSI routing for 1553 card to guest stops working
+927336 - QMP event shows incorrect balloon value when balloon size is grater than or equal to 4G
+947416 - fail to specify the serial number for usb storage device
+952240 - hot-plugging multi-func devices caused: qemu: hardware error: register_ioport_write: invalid opaque
+952873 - [RH Engineering 6.5 FEAT] Synchronize qemu guest agent with upstream
+953108 - qemu-img man page still mentions host_device
+956929 - /usr/libexec/qemu-kvm was killed by signal 6 (SIGABRT) when SCSI inquiry is sent to unsupported page inside the KVM guest
+957319 - Guest w/ vhost=on over virtio-net-pci, under hmp, 'set_link $id_of_netdev off', then migrate, migrate failed, src qemu-kvm process core dumped
+961850 - RFE: add -spice disable-agent-file-transfer cmdline option
+962669 - Windows guest agent service failed to be started
+963420 - [RHEL-6.5] Backport support for vhd(x) image format
+963773 - scsi-cd: tray statuses (locked and open) are not reset on boot/reboot of guest
+970159 - qemu-kvm-rhevm [race]: vm pauses with 'block I/O error in device '': No medium found (123)' when hounplug a disk and cannot be resumed
+970516 - Monitor command acl_add can't insert before last list element
+972314 - Every upgrade starts 'ksmd' due to broken initscript 'status' function
+974617 - qcow2 corruption bug in cluster allocation code
+977760 - fail to boot guest attaching with vmdk format data disk(virito/virtio-scsi interface)
+977767 - there is wrong backing file specified for making external snapshot with vmdk format disk
+981235 - RFE: Request detail migration statistics output for live migration on RHEL6.5
+983635 - QMP: bad input crashes QEMU
+985205 - QEMU core dumped when do hot-unplug virtio serial port during transfer file between host to guest with virtio serial through TCP socket
+985334 - query mem info from monitor would cause qemu-kvm hang [RHEL-6.5]
+987025 - enable MSI-X for virtio-scsi
+989585 - crash command can not read the dump-guest-memory file when paging=false [RHEL-6]
+990225 - [RHEV/RHEL] Integrate dynamic offloads into virtio-net device
+990237 - qemu-kvm exits when hotplugging a cpu with --no-acpi
+990316 - QMP: possible memory leaks on commands failure
+994374 - boot up guest failed, hung in &quot;booting from hard disk&quot;
+994804 - qemu-kvm should verify image header fields before opening VMDK
+994891 - duplicate chardev reported after chardev-remove
+995341 - hot-unplug chardev with pty backend caused qemu Segmentation fault
+995530 - dataplane: refuse to start if device is already in use
+996814 - boot image with gluster native mode cant work with attach another device from local file system
+996829 - qemu-kvm segmentation fault while boot guest from glusterfs with wrong host name
+997220 - Race in gluster_finish_aiocb
+999358 - do live migration with used VMDK format disk should fail with a friendly message prompt
+999779 - Add vpc file format support in qemu-kvm
+999788 - qemu should give a more friendly prompt when didn't specify read-only for VMDK format disk
+1002888 - usb hub doesn't work properly (win2012 sees downstream port #1 only)
+1003232 - qemu-kvm core dumped when hot plug virtio-serial and transfer character [TestOnly]
+1007224 - Introduce bs-&gt;zero_beyond_eof
+1007330 - CVE-2013-4344 qemu: buffer overflow in scsi_target_emulate_report_luns
+1010610 - Backport  option &quot;--output=json|human&quot; to qemu-img info command
+1013478 - -device usb-storage,serial=... crashes with SCSI generic drive
+1016736 - CPU migration data has version_id 12 but version 11 format
+1022821 - live-migration from RHEL6.5 to RHEL6.4.z fails with &quot;error while loading state for instance 0x0 of device 'cpu'&quot;
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/qemu-kvm-0.12.1.2-2.415.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/qemu-kvm-0.12.1.2-2.415.el6.src.rpm</a>
+
+i386:
+qemu-guest-agent-0.12.1.2-2.415.el6.i686.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.415.el6.i686.rpm
+
+x86_64:
+qemu-guest-agent-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-img-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-tools-0.12.1.2-2.415.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/qemu-kvm-0.12.1.2-2.415.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/qemu-kvm-0.12.1.2-2.415.el6.src.rpm</a>
+
+x86_64:
+qemu-guest-agent-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-img-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-tools-0.12.1.2-2.415.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/qemu-kvm-0.12.1.2-2.415.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/qemu-kvm-0.12.1.2-2.415.el6.src.rpm</a>
+
+i386:
+qemu-guest-agent-0.12.1.2-2.415.el6.i686.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.415.el6.i686.rpm
+
+x86_64:
+qemu-guest-agent-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-img-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-tools-0.12.1.2-2.415.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/qemu-kvm-0.12.1.2-2.415.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/qemu-kvm-0.12.1.2-2.415.el6.src.rpm</a>
+
+i386:
+qemu-guest-agent-0.12.1.2-2.415.el6.i686.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.415.el6.i686.rpm
+
+x86_64:
+qemu-guest-agent-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-img-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-debuginfo-0.12.1.2-2.415.el6.x86_64.rpm
+qemu-kvm-tools-0.12.1.2-2.415.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4344.html">https://www.redhat.com/security/data/cve/CVE-2013-4344.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.5_Technical_Notes/qemu-kvm.html##RHSA-2013-1553">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.5_Technical_Notes/qemu-kvm.html##RHSA-2013-1553</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSjYplXlSAg2UNWIIRAp2ZAJ0WINaMFY3RYJmCEuKB5WPauCVtBwCfYcT1
+QHUWIxcg3Y7agrOM5Ua+j3Q=
+=xA/6
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

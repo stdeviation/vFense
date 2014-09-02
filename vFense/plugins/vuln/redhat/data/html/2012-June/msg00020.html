@@ -1,0 +1,146 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1014&#45;01] Moderate: jbossas security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 19 Jun 2012 15:46:11 &#45;0400 -->
+<!--X-Message-Id: 201206191946.q5JJk6YY006237@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1014-01] Moderate: jbossas security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1014-01] Moderate: jbossas security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1014-01] Moderate: jbossas security update</li>
+<li><em>Date</em>: Tue, 19 Jun 2012 19:46:04 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: jbossas security update
+Advisory ID:       RHSA-2012:1014-01
+Product:           JBoss Enterprise Web Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1014.html">https://rhn.redhat.com/errata/RHSA-2012-1014.html</a>
+Issue date:        2012-06-19
+CVE Names:         CVE-2012-1167 
+=====================================================================
+
+1. Summary:
+
+An update for JBoss Enterprise Web Platform 5.1.2 that fixes one security
+issue is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Description:
+
+The Java Authorization Contract for Containers (Java ACC) specification
+defines Permission classes and the binding of container access decisions to
+operations on instances of these permission classes. JaccAuthorizationRealm
+performs authorization based on Java ACC permissions and a Policy
+implementation.
+
+When a JBoss server is configured to use JaccAuthorizationRealm, the
+WebPermissionMapping class creates permissions that are not checked and can
+permit access to users without checking their roles. If the
+ignoreBaseDecision property is set to true on JBossWebRealm, the web
+authorization process is handled exclusively by JBossAuthorizationEngine,
+without any input from JBoss Web. This allows any valid user to access an
+application, without needing to be assigned the role specified in the
+application's web.xml &quot;security-constraint&quot; tag. (CVE-2012-1167)
+
+Warning: Before applying this update, back up your JBoss Enterprise Web
+Platform's &quot;jboss-as-web/server/[PROFILE]/deploy/&quot; directory and any other
+customized configuration files.
+
+All users of JBoss Enterprise Web Platform 5.1.2 as provided from the Red
+Hat Customer Portal are advised to install this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise Web Platform installation (including all
+applications and configuration files).
+
+The JBoss server process must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+802622 - CVE-2012-1167 JBoss: authentication bypass when running under JACC with ignoreBaseDecision on JBossWebRealm
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1167.html">https://www.redhat.com/security/data/cve/CVE-2012-1167.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=enterpriseweb.platform&amp;downloadType=securityPatches&amp;version=5.1.2">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=enterpriseweb.platform&amp;downloadType=securityPatches&amp;version=5.1.2</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4NbuXlSAg2UNWIIRAg7iAKCwDtDIZA8GkcXOsc6qP8puSMybrACcDlVO
+YyQu73YOtvqchEcf3ywKdkw=
+=PEk4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

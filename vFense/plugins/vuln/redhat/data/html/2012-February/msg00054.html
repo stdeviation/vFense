@@ -1,0 +1,249 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0305&#45;03] Low: boost security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Feb 2012 23:58:30 &#45;0500 -->
+<!--X-Message-Id: 201202210458.q1L4wNpX015643@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0305-03] Low: boost security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00053.html">Date Prev</a>][<a href="msg00055.html">Date Next</a>] &nbsp; [<a href="msg00053.html">Thread Prev</a>][<a href="msg00055.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00054">Thread Index</A>]
+[<A HREF="date.html#00054">Date Index</A>]
+[<A HREF="author.html#00054">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0305-03] Low: boost security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0305-03] Low: boost security and bug fix update</li>
+<li><em>Date</em>: Tue, 21 Feb 2012 04:58:22 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: boost security and bug fix update
+Advisory ID:       RHSA-2012:0305-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0305.html">https://rhn.redhat.com/errata/RHSA-2012-0305.html</a>
+Issue date:        2012-02-21
+CVE Names:         CVE-2008-0171 CVE-2008-0172 
+=====================================================================
+
+1. Summary:
+
+Updated boost packages that fix two security issues and two bugs are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The boost packages provide free, peer-reviewed, portable C++ source
+libraries with emphasis on libraries which work well with the C++ Standard
+Library.
+
+Invalid pointer dereference flaws were found in the way the Boost regular
+expression library processed certain, invalid expressions. An attacker able
+to make an application using the Boost library process a specially-crafted
+regular expression could cause that application to crash or, potentially,
+execute arbitrary code with the privileges of the user running the
+application. (CVE-2008-0171)
+
+NULL pointer dereference flaws were found in the way the Boost regular
+expression library processed certain, invalid expressions. An attacker able
+to make an application using the Boost library process a specially-crafted
+regular expression could cause that application to crash. (CVE-2008-0172)
+
+Red Hat would like to thank Will Drewry for reporting these issues.
+
+This update also fixes the following bugs:
+
+* Prior to this update, the construction of a regular expression object
+could fail when several regular expression objects were created
+simultaneously, such as in a multi-threaded program. With this update, the
+object variables have been moved from the shared memory to the stack. Now,
+the constructing function is thread safe. (BZ#472384)
+
+* Prior to this update, header files in several Boost libraries contained
+preprocessor directives that the GNU Compiler Collection (GCC) 4.4 could
+not handle. This update instead uses equivalent constructs that are
+standard C. (BZ#567722)
+
+All users of boost are advised to upgrade to these updated packages, which
+fix these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+428316 - CVE-2008-0171 boost regular expression memory corruption flaws
+428320 - CVE-2008-0172 boost regular expression NULL dereference flaw
+472384 - Thread-safety bug in Boost.Regex-1.33.x
+567722 - g++4.4 incompatible with numeric/ublas/matrix_sparse.hpp
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/boost-1.33.1-15.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/boost-1.33.1-15.el5.src.rpm</a>
+
+i386:
+boost-1.33.1-15.el5.i386.rpm
+boost-debuginfo-1.33.1-15.el5.i386.rpm
+boost-doc-1.33.1-15.el5.i386.rpm
+
+x86_64:
+boost-1.33.1-15.el5.i386.rpm
+boost-1.33.1-15.el5.x86_64.rpm
+boost-debuginfo-1.33.1-15.el5.i386.rpm
+boost-debuginfo-1.33.1-15.el5.x86_64.rpm
+boost-doc-1.33.1-15.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/boost-1.33.1-15.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/boost-1.33.1-15.el5.src.rpm</a>
+
+i386:
+boost-debuginfo-1.33.1-15.el5.i386.rpm
+boost-devel-1.33.1-15.el5.i386.rpm
+
+x86_64:
+boost-debuginfo-1.33.1-15.el5.i386.rpm
+boost-debuginfo-1.33.1-15.el5.x86_64.rpm
+boost-devel-1.33.1-15.el5.i386.rpm
+boost-devel-1.33.1-15.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/boost-1.33.1-15.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/boost-1.33.1-15.el5.src.rpm</a>
+
+i386:
+boost-1.33.1-15.el5.i386.rpm
+boost-debuginfo-1.33.1-15.el5.i386.rpm
+boost-devel-1.33.1-15.el5.i386.rpm
+boost-doc-1.33.1-15.el5.i386.rpm
+
+ia64:
+boost-1.33.1-15.el5.ia64.rpm
+boost-debuginfo-1.33.1-15.el5.ia64.rpm
+boost-devel-1.33.1-15.el5.ia64.rpm
+boost-doc-1.33.1-15.el5.ia64.rpm
+
+ppc:
+boost-1.33.1-15.el5.ppc.rpm
+boost-1.33.1-15.el5.ppc64.rpm
+boost-debuginfo-1.33.1-15.el5.ppc.rpm
+boost-debuginfo-1.33.1-15.el5.ppc64.rpm
+boost-devel-1.33.1-15.el5.ppc.rpm
+boost-devel-1.33.1-15.el5.ppc64.rpm
+boost-doc-1.33.1-15.el5.ppc.rpm
+
+s390x:
+boost-1.33.1-15.el5.s390.rpm
+boost-1.33.1-15.el5.s390x.rpm
+boost-debuginfo-1.33.1-15.el5.s390.rpm
+boost-debuginfo-1.33.1-15.el5.s390x.rpm
+boost-devel-1.33.1-15.el5.s390.rpm
+boost-devel-1.33.1-15.el5.s390x.rpm
+boost-doc-1.33.1-15.el5.s390x.rpm
+
+x86_64:
+boost-1.33.1-15.el5.i386.rpm
+boost-1.33.1-15.el5.x86_64.rpm
+boost-debuginfo-1.33.1-15.el5.i386.rpm
+boost-debuginfo-1.33.1-15.el5.x86_64.rpm
+boost-devel-1.33.1-15.el5.i386.rpm
+boost-devel-1.33.1-15.el5.x86_64.rpm
+boost-doc-1.33.1-15.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-0171.html">https://www.redhat.com/security/data/cve/CVE-2008-0171.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-0172.html">https://www.redhat.com/security/data/cve/CVE-2008-0172.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPQyRkXlSAg2UNWIIRAroBAKCGEZXW23BE8E+qdfRmVpWrNWAzSwCfeKtZ
+/sGenut9thSZYPwT80Z7El8=
+=bh8D
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00053.html">Date Prev</a>][<a href="msg00055.html">Date Next</a>] &nbsp; [<a href="msg00053.html">Thread Prev</a>][<a href="msg00055.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00054">Thread Index</A>]
+[<A HREF="date.html#00054">Date Index</A>]
+[<A HREF="author.html#00054">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

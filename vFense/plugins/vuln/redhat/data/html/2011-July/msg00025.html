@@ -1,0 +1,444 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1065&#45;01] Important: Red Hat Enterprise Linux 5.7 kernel	security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Jul 2011 09:39:15 &#45;0400 -->
+<!--X-Message-Id: 201107211339.p6LDd88D016028@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1065-01] Important: Red Hat Enterprise Linux 5.7 kernel	secur</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1065-01] Important: Red Hat Enterprise Linux 5.7 kernel	security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1065-01] Important: Red Hat Enterprise Linux 5.7 kernel	security and bug fix update</li>
+<li><em>Date</em>: Thu, 21 Jul 2011 13:39:08 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Enterprise Linux 5.7 kernel security and bug fix update
+Advisory ID:       RHSA-2011:1065-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1065.html">https://rhn.redhat.com/errata/RHSA-2011-1065.html</a>
+Issue date:        2011-07-21
+CVE Names:         CVE-2011-1780 CVE-2011-2525 CVE-2011-2689 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues, address several
+hundred bugs, and add numerous enhancements are now available as part of
+the ongoing support and maintenance of Red Hat Enterprise Linux version 5.
+This is the seventh regular update.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* A flaw was found in the way the Xen hypervisor implementation handled
+instruction emulation during virtual machine exits. A malicious user-space
+process running in an SMP guest could trick the emulator into reading a
+different instruction than the one that caused the virtual machine to exit.
+An unprivileged guest user could trigger this flaw to crash the host. This
+only affects systems with both an AMD x86 processor and the AMD
+Virtualization (AMD-V) extensions enabled. (CVE-2011-1780, Important)
+
+* A flaw allowed the tc_fill_qdisc() function in the Linux kernel's packet
+scheduler API implementation to be called on built-in qdisc structures. A
+local, unprivileged user could use this flaw to trigger a NULL pointer
+dereference, resulting in a denial of service. (CVE-2011-2525, Moderate)
+
+* A flaw was found in the way space was allocated in the Linux kernel's
+Global File System 2 (GFS2) implementation. If the file system was almost
+full, and a local, unprivileged user made an fallocate() request, it could
+result in a denial of service. Note: Setting quotas to prevent users from
+using all available disk space would prevent exploitation of this flaw.
+(CVE-2011-2689, Moderate)
+
+These updated kernel packages include a number of bug fixes and
+enhancements. Space precludes documenting all of these changes in this
+advisory. Refer to the Red Hat Enterprise Linux 5.7 Technical Notes for
+information about the most significant bug fixes and enhancements included
+in this update:
+
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.7_Tech">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.7_Tech</a>
+nical_Notes/kernel.html#RHSA-2011-1065
+
+All Red Hat Enterprise Linux 5 users are advised to install these updated
+packages, which correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+390451 - Pick up paging performance improvements from upstream Xen
+431738 - lsattr doesn't show attributes of ext3 quota files
+441730 - [rhts] connectathon nfsidem test failing
+452650 - [RHEL5.2]: Blktap is limited to 100 disks total
+460821 - pv-on-hvm: disk shows up twice.
+465876 - NMI Watchdog detected LOCKUP in :sctp:sctp_copy_local_addr_list
+477032 - kdump hang on HP xw9400
+481546 - HTB qdisc miscalculates bandwidth with TSO enabled
+481629 - update myri10g driver from 1.3.2 to 1.5.2
+491740 - export of an NFSV3 file system via kerberos requires AUTH_SYS as well
+491786 - s2io should check inputs for rx_ring_sz
+494927 - Read-only filesystem after 'ext3_free_blocks_sb: bit already cleared for block' errors
+501314 - No beep when running xen kernel
+511901 - [NFS]: silly renamed .nfs0000* files can be left on fs forever
+517629 - Sequence id issue with nfs4/kerberos between RHEL kernel and Fedora 11
+525898 - soft lockups with kswapd in RHEL 5.4 kernel 2.6.18-164.el5 x86_64
+537277 - KERNEL: QLA2XXX 0000:0E:00.0: RISC PAUSED -- HCCR=0, DUMPING FIRMWARE!
+553411 - xts crypto module missing from RHEL5 installer runtime
+553803 - GFS2: recovery stuck on transaction lock
+567449 - RHEL5.6: iw_cxgb4 driver inclusion
+567540 - unregister_netdevice: waiting for veth5 to become free when I remove netloop
+579000 - [RFE] Support L2 packets under bonding layer
+579858 - Wrong RX bytes/packet count on vlan interface with igb driver
+589512 - slab corruption after seeing some nfs-related BUG: warning
+603345 - i5k_amb does not work for Intel 5000 Chipset (kernel)
+607114 - System panic in pskb_expand_head When arp_validate option is specified in bonding ARP monitor mode
+611407 - kvm guest unable to kdump without noapic
+621916 - Host panic on cross-vendor migration (RHEL 5.5 guest)
+622542 - Xorg failures on machines using intel video card driver
+622647 - Reading /proc/locks yelds corrupt data
+623979 - synch arch/i386/pci/irq-xen.c
+626585 - GFS2: [RFE] fallocate support for GFS2
+626974 - nfs: too many GETATTR and ACCESS calls after direct i/o
+626977 - [nfs] make close(2) asynchronous when closing nfs o_direct files
+627496 - Fix shrinking windows with window scaling
+631950 - remove FS-Cache code from NFS
+632399 - Misleading message from fs/nfs/file.c:do_vfs_lock()
+633196 - testing NMI watchdog ... &lt;4&gt;WARNING: CPU#0: NMI appears to be stuck (62-&gt;62)!
+635992 - Areca driver, arcmsr,  update
+637970 - GFS2: Not enough space reserved in gfs2_write_begin and possibly elsewhere.
+642388 - ip_nat_ftp not working if ack for &quot;227 Enter Passive mode&quot; packet is lost
+643292 - [netfront] ethtool -i should return proper information for netfront device
+643872 - [netback] ethtool -i should return proper information for netback device
+645343 - ISCSI/multipath hang - must propagate SCSI device deletion to DM mpath
+645528 - SIGPROF keeps a large task from ever completing a fork()
+645646 - RFE: Virtio nic should be support &quot;ethtool -i virtio nic&quot;
+646513 - HP_GETHOSTINFO ioctl always causes mpt controller reset
+648572 - virtio GSO makes IPv6 very slow
+648657 - fseek()/NFS performance regression between RHEL4 and RHEL5
+648854 - linux-2.6.18: netback: take net_schedule_list_lock when removing entry from net_schedule_list
+651333 - RHEL5.6: EHCI: AMD periodic frame list table quirk
+651409 - BAD SEQID error messages returned by the NFS server
+651512 - e1000 driver tracebacks when running under VMware ESX4
+652321 - jbd2_stats_proc_init has wrong location.
+652369 - temporary loss of path to SAN results in persistent EIO with msync
+653286 - [5.6][REG]for some uses of 'nfsservctl' system call, the kernel crashes.
+653828 - bonding failover in every monitor interval with virtio-net driver
+654293 - sunrpc: need a better way to set tcp_slot_table_entries in RHEL 5
+656836 - Memory leak in virtio-console driver if driver probe routine fails
+657166 - XFS causes kernel panic due to double free of log tickets
+658012 - NMI panic during xfs forced shutdown
+658418 - Kernel warning at boot:  i7core_edac: probe of 0000:80:14.0 failed with error -22
+659594 - Kernel panic when restart network on vlan with bonding
+659715 - cifs: ia64 kernel unaligned access
+659816 - Performance counters don't work on HP Magnycours machines
+660368 - dm-crypt: backport changes to support xts crypto mode
+660661 - fsck.gfs2 reported statfs error after gfs2_grow
+660728 - [LSI 5.7 feat] Update megaraid_sas to 5.34 and Include &quot;Thunderbolt&quot; support
+660871 - mpctl module doesn't release fasync_struct at file close
+661300 - xfstest 222: filesystem on /dev/loop0 is inconsistent
+661306 - [Cisco 5.7 FEAT] Update enic driver to version 2.1.1.9
+661904 - GFS2: Kernel changes necessary to allow growing completely full filesystems.
+663041 - gfs2 FIEMAP oops
+663123 - /proc/partitions not updating after creating LUNs via hpacucli
+663563 - [ext4/xfstests] 011 caused filesystem corruption after running many times in a loop
+664592 - a test unit ready causes a panic on 5.6 (CCISS driver)
+664931 - COW corruption using popen(3).
+665197 - WARNING: APIC timer calibration may be wrong
+665972 - ISVM bit (ECX:31) for CPUID 0x00000001 is missing for HVM on AMD
+666080 - GFS2: Blocks not marked free on delete
+666304 - scsi_dh_emc gives &quot;error attaching hardware handler&quot; for EMC active-active SANs
+666866 - Heavy load on ath5k wireless device makes system unresponsive
+667327 - lib: fix vscnprintf() if @size is == 0
+667660 - [NetApp 5.7 Bug] Include new NetApp PID entry to the alua_dev_list array in the ALUA hardware handler
+667810 - &quot;modprobe ip_conntrack hashsize=NNNN&quot; panics kernel if /etc/modprobe.conf has hashsize=MMMM
+668934 - UDP transmit under VLAN causes guest freeze
+669603 - incomplete local port reservation
+669961 - [NetApp 5.6 Bug] Erroneous TPG ID check in SCSI ALUA Handler
+670367 - scsi_dh_emc get_req function should set REQ_FAILFAST flags same as upstream and other modules
+670373 - panic in kfree() due to race condition in acpi_bus_receive_event()
+671238 - [bonding]  crash when adding/removing slaves with master interface down
+671595 - Flapping errors (and panic) with bonding and arp_interval while using be2net included in 2.6.18-238
+672619 - transmission stops when tap does not consume
+672724 - mmapping a read only file on a gfs2 filesystem incorrectly acquires an exclusive glock
+672981 - lseek() over NFS is returning an incorrect file length under some circumstances
+673058 - kernel panic in pg_init_done - pgpath already deleted
+673242 - Time runs too fast in a VM on processors with &gt; 4GHZ freq
+673459 - virtio_console driver never returns from selecting for write when the queue is full
+673616 - vdso gettimeofday causes a segmentation fault
+674175 - Impossible to load sctp module with ipv6 disable=1
+674226 - Panic in selinux_bprm_post_apply_creds() due to an empty tty_files list
+674298 - [NetApp 5.6 Bug] QLogic 8G FC firmware dumps seen during IO
+674514 - xenctx shows nonsensical values for 32-on-64 and HVM domains
+675727 - vdso: missing wall_to_monotomic export
+675986 - Fix block based fiemap
+677703 - [RHEL5.5] Panic in iscsi_sw_tcp_data_ready()
+677893 - [TestOnly] gfs regression testing for 5.7 beta
+677902 - Incorrect &quot;Speed&quot; is recorded in the file &quot;/proc/net/bonding/bondX&quot;
+678073 - qeth: allow channel path changes in recovery
+678074 - [usb-audio] unable to set capture mixer levels
+678359 - online disk resizing may cause data corruption
+678571 - hap_gva_to_gfn_* do not preserve domain context
+678618 - gdbsx hypervisor part backport
+679120 - qeth: remove needless IPA-commands in offline
+679407 - [5.7] niu: Fix races between up/down and get_stats.
+679487 - [5.7] net: Fix netdev_run_todo serialization
+680329 - sunrpc: reconnect race can lead to socket read corruption
+681303 - backport vzalloc and vzalloc_node in support of drivers needing these functions
+681586 - Out of vmalloc space
+683155 - gfs2: creating large files suddenly slow to a crawl
+683978 - need to backport common vpd infrastructure to rhel 5
+684795 - missed unlock_page() in gfs2_write_begin()
+688646 - intel_iommu domain id exhaustion
+688989 - [5.6] sysctl tcp_syn_retries is not honored
+689860 - guest with passthrough nic got kernel panic when send system_reset signal in QEMU monitor
+689943 - GFS2 causes kernel panic in spectator mode
+690555 - GFS2: resource group bitmap corruption resulting in panics and withdraws
+692946 - need to backport debugfs_remove_recursive functionality
+695357 - dasd: fix race between open and offline
+696411 - Missing patch for full use of tcp_rto_min parameter
+698432 - [Emulex 5.7] Update lpfc driver to version 8.2.0.96.1p
+698879 - The pci resource for vf is not released after hot-removing Intel 82576 NIC
+700546 - RHEL5: apparent file system corruption of snapshot fs with qla2xxx driver
+702355 - NFS: Fix build break with CONFIG_NFS_V4=n
+702652 - provide option to disable HPET
+702657 - CVE-2011-1780 kernel: xen: svm: insufficiencies in handling emulated instructions during vm exits
+703213 - GFS2: Add &quot;dlm callback owed&quot; glock flag
+703416 - host kernel panic while guest running  on 10G public bridge.
+704497 - VT-d: Fix resource leaks on error paths in intremap code
+705324 - cifs: regression in unicode conversion routines when mounting with -o mapchars
+705455 - intel-iommu: missing flush prior to removing domains + avoid broken vm/si domain unlinking
+705725 - hvm guest time may go backwards on some hosts
+706414 - Adding slave to balance-tlb bond device results in soft lockup
+709224 - setfacl does not update ctime when changing file permission on ext3/4
+711450 - 12% degradation running IOzone with Outcache testing
+717068 - Kernel panics during Veritas SF testing.
+717742 - [RHEL5.7][kernel-xen] HVM guests hang during installation on AMD systems
+720552 - CVE-2011-2525 kernel: kernel: net_sched: fix qdisc_notify()
+720861 - CVE-2011-2689 kernel: gfs2: make sure fallocate bytes is a multiple of blksize
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-274.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-274.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-274.el5.i686.rpm
+kernel-PAE-2.6.18-274.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-274.el5.i686.rpm
+kernel-PAE-devel-2.6.18-274.el5.i686.rpm
+kernel-debug-2.6.18-274.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-274.el5.i686.rpm
+kernel-debug-devel-2.6.18-274.el5.i686.rpm
+kernel-debuginfo-2.6.18-274.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-274.el5.i686.rpm
+kernel-devel-2.6.18-274.el5.i686.rpm
+kernel-headers-2.6.18-274.el5.i386.rpm
+kernel-xen-2.6.18-274.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-274.el5.i686.rpm
+kernel-xen-devel-2.6.18-274.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-274.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-274.el5.x86_64.rpm
+kernel-debug-2.6.18-274.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-274.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-274.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-274.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-274.el5.x86_64.rpm
+kernel-devel-2.6.18-274.el5.x86_64.rpm
+kernel-headers-2.6.18-274.el5.x86_64.rpm
+kernel-xen-2.6.18-274.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-274.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-274.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-274.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-274.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-274.el5.i686.rpm
+kernel-PAE-2.6.18-274.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-274.el5.i686.rpm
+kernel-PAE-devel-2.6.18-274.el5.i686.rpm
+kernel-debug-2.6.18-274.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-274.el5.i686.rpm
+kernel-debug-devel-2.6.18-274.el5.i686.rpm
+kernel-debuginfo-2.6.18-274.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-274.el5.i686.rpm
+kernel-devel-2.6.18-274.el5.i686.rpm
+kernel-headers-2.6.18-274.el5.i386.rpm
+kernel-xen-2.6.18-274.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-274.el5.i686.rpm
+kernel-xen-devel-2.6.18-274.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-274.el5.ia64.rpm
+kernel-debug-2.6.18-274.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-274.el5.ia64.rpm
+kernel-debug-devel-2.6.18-274.el5.ia64.rpm
+kernel-debuginfo-2.6.18-274.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-274.el5.ia64.rpm
+kernel-devel-2.6.18-274.el5.ia64.rpm
+kernel-headers-2.6.18-274.el5.ia64.rpm
+kernel-xen-2.6.18-274.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-274.el5.ia64.rpm
+kernel-xen-devel-2.6.18-274.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-274.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-274.el5.ppc64.rpm
+kernel-debug-2.6.18-274.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-274.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-274.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-274.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-274.el5.ppc64.rpm
+kernel-devel-2.6.18-274.el5.ppc64.rpm
+kernel-headers-2.6.18-274.el5.ppc.rpm
+kernel-headers-2.6.18-274.el5.ppc64.rpm
+kernel-kdump-2.6.18-274.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-274.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-274.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-274.el5.s390x.rpm
+kernel-debug-2.6.18-274.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-274.el5.s390x.rpm
+kernel-debug-devel-2.6.18-274.el5.s390x.rpm
+kernel-debuginfo-2.6.18-274.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-274.el5.s390x.rpm
+kernel-devel-2.6.18-274.el5.s390x.rpm
+kernel-headers-2.6.18-274.el5.s390x.rpm
+kernel-kdump-2.6.18-274.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-274.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-274.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-274.el5.x86_64.rpm
+kernel-debug-2.6.18-274.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-274.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-274.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-274.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-274.el5.x86_64.rpm
+kernel-devel-2.6.18-274.el5.x86_64.rpm
+kernel-headers-2.6.18-274.el5.x86_64.rpm
+kernel-xen-2.6.18-274.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-274.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-274.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1780.html">https://www.redhat.com/security/data/cve/CVE-2011-1780.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2525.html">https://www.redhat.com/security/data/cve/CVE-2011-2525.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2689.html">https://www.redhat.com/security/data/cve/CVE-2011-2689.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.7_Technical_Notes/kernel.html#RHSA-2011-1065">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.7_Technical_Notes/kernel.html#RHSA-2011-1065</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOKCu+XlSAg2UNWIIRAlAlAKCexozp0JFw4oInZXECEooQ5LGSggCgsJSp
+H4PN5YvOuAZr/FuANb2zgN8=
+=OupS
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

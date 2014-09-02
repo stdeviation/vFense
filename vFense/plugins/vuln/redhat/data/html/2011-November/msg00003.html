@@ -1,0 +1,707 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1423&#45;01] Moderate: php53 and php security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 2 Nov 2011 18:32:45 &#45;0400 -->
+<!--X-Message-Id: 201111022232.pA2MWdC1024223@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1423-01] Moderate: php53 and php security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1423-01] Moderate: php53 and php security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1423-01] Moderate: php53 and php security update</li>
+<li><em>Date</em>: Wed, 2 Nov 2011 22:32:38 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: php53 and php security update
+Advisory ID:       RHSA-2011:1423-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1423.html">https://rhn.redhat.com/errata/RHSA-2011-1423.html</a>
+Issue date:        2011-11-02
+CVE Names:         CVE-2011-0708 CVE-2011-1148 CVE-2011-1466 
+                   CVE-2011-1468 CVE-2011-1469 CVE-2011-1471 
+                   CVE-2011-1938 CVE-2011-2202 CVE-2011-2483 
+=====================================================================
+
+1. Summary:
+
+Updated php53 and php packages that fix several security issues are now
+available for Red Hat Enterprise Linux 5 and 6 respectively.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+PHP is an HTML-embedded scripting language commonly used with the Apache
+HTTP Server.
+
+A signedness issue was found in the way the PHP crypt() function handled
+8-bit characters in passwords when using Blowfish hashing. Up to three
+characters immediately preceding a non-ASCII character (one with the high
+bit set) had no effect on the hash result, thus shortening the effective
+password length. This made brute-force guessing more efficient as several
+different passwords were hashed to the same value. (CVE-2011-2483)
+
+Note: Due to the CVE-2011-2483 fix, after installing this update some users
+may not be able to log in to PHP applications that hash passwords with
+Blowfish using the PHP crypt() function. Refer to the upstream
+&quot;CRYPT_BLOWFISH security fix details&quot; document, linked to in the
+References, for details.
+
+An insufficient input validation flaw, leading to a buffer over-read, was
+found in the PHP exif extension. A specially-crafted image file could cause
+the PHP interpreter to crash when a PHP script tries to extract
+Exchangeable image file format (Exif) metadata from the image file.
+(CVE-2011-0708)
+
+An integer overflow flaw was found in the PHP calendar extension. A remote
+attacker able to make a PHP script call SdnToJulian() with a large value
+could cause the PHP interpreter to crash. (CVE-2011-1466)
+
+Multiple memory leak flaws were found in the PHP OpenSSL extension. A
+remote attacker able to make a PHP script use openssl_encrypt() or
+openssl_decrypt() repeatedly could cause the PHP interpreter to use an
+excessive amount of memory. (CVE-2011-1468)
+
+A use-after-free flaw was found in the PHP substr_replace() function. If a
+PHP script used the same variable as multiple function arguments, a remote
+attacker could possibly use this to crash the PHP interpreter or, possibly,
+execute arbitrary code. (CVE-2011-1148)
+
+A bug in the PHP Streams component caused the PHP interpreter to crash if
+an FTP wrapper connection was made through an HTTP proxy. A remote attacker
+could possibly trigger this issue if a PHP script accepted an untrusted URL
+to connect to. (CVE-2011-1469)
+
+An integer signedness issue was found in the PHP zip extension. An attacker
+could use a specially-crafted ZIP archive to cause the PHP interpreter to
+use an excessive amount of CPU time until the script execution time limit
+is reached. (CVE-2011-1471)
+
+A stack-based buffer overflow flaw was found in the way the PHP socket
+extension handled long AF_UNIX socket addresses. An attacker able to make a
+PHP script connect to a long AF_UNIX socket address could use this flaw to
+crash the PHP interpreter. (CVE-2011-1938)
+
+An off-by-one flaw was found in PHP. If an attacker uploaded a file with a
+specially-crafted file name it could cause a PHP script to attempt to write
+a file to the root (/) directory. By default, PHP runs as the &quot;apache&quot;
+user, preventing it from writing to the root directory. (CVE-2011-2202)
+
+All php53 and php users should upgrade to these updated packages, which
+contain backported patches to resolve these issues. After installing the
+updated packages, the httpd daemon must be restarted for the update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+680972 - CVE-2011-0708 php: buffer over-read in Exif extension
+688958 - CVE-2011-1148 php: use-after-free vulnerability in substr_replace()
+689386 - CVE-2011-1466 php: Crash by converting serial day numbers (SDN) into Julian calendar
+690899 - CVE-2011-1468 php: Multiple memory leaks in the OpenSSL extension
+690905 - CVE-2011-1469 php: DoS when using HTTP proxy with the FTP wrapper
+690915 - CVE-2011-1471 php: DoS (excessive CPU consumption) by processing certain Zip archive files
+709067 - CVE-2011-1938 php: stack-based buffer overflow in socket_connect()
+713194 - CVE-2011-2202 php: file path injection vulnerability in RFC1867 file upload filename
+715025 - CVE-2011-2483 crypt_blowfish: 8-bit character mishandling allows different password pairs to produce the same hash
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/php53-5.3.3-1.el5_7.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/php53-5.3.3-1.el5_7.3.src.rpm</a>
+
+i386:
+php53-5.3.3-1.el5_7.3.i386.rpm
+php53-bcmath-5.3.3-1.el5_7.3.i386.rpm
+php53-cli-5.3.3-1.el5_7.3.i386.rpm
+php53-common-5.3.3-1.el5_7.3.i386.rpm
+php53-dba-5.3.3-1.el5_7.3.i386.rpm
+php53-debuginfo-5.3.3-1.el5_7.3.i386.rpm
+php53-devel-5.3.3-1.el5_7.3.i386.rpm
+php53-gd-5.3.3-1.el5_7.3.i386.rpm
+php53-imap-5.3.3-1.el5_7.3.i386.rpm
+php53-intl-5.3.3-1.el5_7.3.i386.rpm
+php53-ldap-5.3.3-1.el5_7.3.i386.rpm
+php53-mbstring-5.3.3-1.el5_7.3.i386.rpm
+php53-mysql-5.3.3-1.el5_7.3.i386.rpm
+php53-odbc-5.3.3-1.el5_7.3.i386.rpm
+php53-pdo-5.3.3-1.el5_7.3.i386.rpm
+php53-pgsql-5.3.3-1.el5_7.3.i386.rpm
+php53-process-5.3.3-1.el5_7.3.i386.rpm
+php53-pspell-5.3.3-1.el5_7.3.i386.rpm
+php53-snmp-5.3.3-1.el5_7.3.i386.rpm
+php53-soap-5.3.3-1.el5_7.3.i386.rpm
+php53-xml-5.3.3-1.el5_7.3.i386.rpm
+php53-xmlrpc-5.3.3-1.el5_7.3.i386.rpm
+
+x86_64:
+php53-5.3.3-1.el5_7.3.x86_64.rpm
+php53-bcmath-5.3.3-1.el5_7.3.x86_64.rpm
+php53-cli-5.3.3-1.el5_7.3.x86_64.rpm
+php53-common-5.3.3-1.el5_7.3.x86_64.rpm
+php53-dba-5.3.3-1.el5_7.3.x86_64.rpm
+php53-debuginfo-5.3.3-1.el5_7.3.x86_64.rpm
+php53-devel-5.3.3-1.el5_7.3.x86_64.rpm
+php53-gd-5.3.3-1.el5_7.3.x86_64.rpm
+php53-imap-5.3.3-1.el5_7.3.x86_64.rpm
+php53-intl-5.3.3-1.el5_7.3.x86_64.rpm
+php53-ldap-5.3.3-1.el5_7.3.x86_64.rpm
+php53-mbstring-5.3.3-1.el5_7.3.x86_64.rpm
+php53-mysql-5.3.3-1.el5_7.3.x86_64.rpm
+php53-odbc-5.3.3-1.el5_7.3.x86_64.rpm
+php53-pdo-5.3.3-1.el5_7.3.x86_64.rpm
+php53-pgsql-5.3.3-1.el5_7.3.x86_64.rpm
+php53-process-5.3.3-1.el5_7.3.x86_64.rpm
+php53-pspell-5.3.3-1.el5_7.3.x86_64.rpm
+php53-snmp-5.3.3-1.el5_7.3.x86_64.rpm
+php53-soap-5.3.3-1.el5_7.3.x86_64.rpm
+php53-xml-5.3.3-1.el5_7.3.x86_64.rpm
+php53-xmlrpc-5.3.3-1.el5_7.3.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/php53-5.3.3-1.el5_7.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/php53-5.3.3-1.el5_7.3.src.rpm</a>
+
+i386:
+php53-5.3.3-1.el5_7.3.i386.rpm
+php53-bcmath-5.3.3-1.el5_7.3.i386.rpm
+php53-cli-5.3.3-1.el5_7.3.i386.rpm
+php53-common-5.3.3-1.el5_7.3.i386.rpm
+php53-dba-5.3.3-1.el5_7.3.i386.rpm
+php53-debuginfo-5.3.3-1.el5_7.3.i386.rpm
+php53-devel-5.3.3-1.el5_7.3.i386.rpm
+php53-gd-5.3.3-1.el5_7.3.i386.rpm
+php53-imap-5.3.3-1.el5_7.3.i386.rpm
+php53-intl-5.3.3-1.el5_7.3.i386.rpm
+php53-ldap-5.3.3-1.el5_7.3.i386.rpm
+php53-mbstring-5.3.3-1.el5_7.3.i386.rpm
+php53-mysql-5.3.3-1.el5_7.3.i386.rpm
+php53-odbc-5.3.3-1.el5_7.3.i386.rpm
+php53-pdo-5.3.3-1.el5_7.3.i386.rpm
+php53-pgsql-5.3.3-1.el5_7.3.i386.rpm
+php53-process-5.3.3-1.el5_7.3.i386.rpm
+php53-pspell-5.3.3-1.el5_7.3.i386.rpm
+php53-snmp-5.3.3-1.el5_7.3.i386.rpm
+php53-soap-5.3.3-1.el5_7.3.i386.rpm
+php53-xml-5.3.3-1.el5_7.3.i386.rpm
+php53-xmlrpc-5.3.3-1.el5_7.3.i386.rpm
+
+ia64:
+php53-5.3.3-1.el5_7.3.ia64.rpm
+php53-bcmath-5.3.3-1.el5_7.3.ia64.rpm
+php53-cli-5.3.3-1.el5_7.3.ia64.rpm
+php53-common-5.3.3-1.el5_7.3.ia64.rpm
+php53-dba-5.3.3-1.el5_7.3.ia64.rpm
+php53-debuginfo-5.3.3-1.el5_7.3.ia64.rpm
+php53-devel-5.3.3-1.el5_7.3.ia64.rpm
+php53-gd-5.3.3-1.el5_7.3.ia64.rpm
+php53-imap-5.3.3-1.el5_7.3.ia64.rpm
+php53-intl-5.3.3-1.el5_7.3.ia64.rpm
+php53-ldap-5.3.3-1.el5_7.3.ia64.rpm
+php53-mbstring-5.3.3-1.el5_7.3.ia64.rpm
+php53-mysql-5.3.3-1.el5_7.3.ia64.rpm
+php53-odbc-5.3.3-1.el5_7.3.ia64.rpm
+php53-pdo-5.3.3-1.el5_7.3.ia64.rpm
+php53-pgsql-5.3.3-1.el5_7.3.ia64.rpm
+php53-process-5.3.3-1.el5_7.3.ia64.rpm
+php53-pspell-5.3.3-1.el5_7.3.ia64.rpm
+php53-snmp-5.3.3-1.el5_7.3.ia64.rpm
+php53-soap-5.3.3-1.el5_7.3.ia64.rpm
+php53-xml-5.3.3-1.el5_7.3.ia64.rpm
+php53-xmlrpc-5.3.3-1.el5_7.3.ia64.rpm
+
+ppc:
+php53-5.3.3-1.el5_7.3.ppc.rpm
+php53-bcmath-5.3.3-1.el5_7.3.ppc.rpm
+php53-cli-5.3.3-1.el5_7.3.ppc.rpm
+php53-common-5.3.3-1.el5_7.3.ppc.rpm
+php53-dba-5.3.3-1.el5_7.3.ppc.rpm
+php53-debuginfo-5.3.3-1.el5_7.3.ppc.rpm
+php53-devel-5.3.3-1.el5_7.3.ppc.rpm
+php53-gd-5.3.3-1.el5_7.3.ppc.rpm
+php53-imap-5.3.3-1.el5_7.3.ppc.rpm
+php53-intl-5.3.3-1.el5_7.3.ppc.rpm
+php53-ldap-5.3.3-1.el5_7.3.ppc.rpm
+php53-mbstring-5.3.3-1.el5_7.3.ppc.rpm
+php53-mysql-5.3.3-1.el5_7.3.ppc.rpm
+php53-odbc-5.3.3-1.el5_7.3.ppc.rpm
+php53-pdo-5.3.3-1.el5_7.3.ppc.rpm
+php53-pgsql-5.3.3-1.el5_7.3.ppc.rpm
+php53-process-5.3.3-1.el5_7.3.ppc.rpm
+php53-pspell-5.3.3-1.el5_7.3.ppc.rpm
+php53-snmp-5.3.3-1.el5_7.3.ppc.rpm
+php53-soap-5.3.3-1.el5_7.3.ppc.rpm
+php53-xml-5.3.3-1.el5_7.3.ppc.rpm
+php53-xmlrpc-5.3.3-1.el5_7.3.ppc.rpm
+
+s390x:
+php53-5.3.3-1.el5_7.3.s390x.rpm
+php53-bcmath-5.3.3-1.el5_7.3.s390x.rpm
+php53-cli-5.3.3-1.el5_7.3.s390x.rpm
+php53-common-5.3.3-1.el5_7.3.s390x.rpm
+php53-dba-5.3.3-1.el5_7.3.s390x.rpm
+php53-debuginfo-5.3.3-1.el5_7.3.s390x.rpm
+php53-devel-5.3.3-1.el5_7.3.s390x.rpm
+php53-gd-5.3.3-1.el5_7.3.s390x.rpm
+php53-imap-5.3.3-1.el5_7.3.s390x.rpm
+php53-intl-5.3.3-1.el5_7.3.s390x.rpm
+php53-ldap-5.3.3-1.el5_7.3.s390x.rpm
+php53-mbstring-5.3.3-1.el5_7.3.s390x.rpm
+php53-mysql-5.3.3-1.el5_7.3.s390x.rpm
+php53-odbc-5.3.3-1.el5_7.3.s390x.rpm
+php53-pdo-5.3.3-1.el5_7.3.s390x.rpm
+php53-pgsql-5.3.3-1.el5_7.3.s390x.rpm
+php53-process-5.3.3-1.el5_7.3.s390x.rpm
+php53-pspell-5.3.3-1.el5_7.3.s390x.rpm
+php53-snmp-5.3.3-1.el5_7.3.s390x.rpm
+php53-soap-5.3.3-1.el5_7.3.s390x.rpm
+php53-xml-5.3.3-1.el5_7.3.s390x.rpm
+php53-xmlrpc-5.3.3-1.el5_7.3.s390x.rpm
+
+x86_64:
+php53-5.3.3-1.el5_7.3.x86_64.rpm
+php53-bcmath-5.3.3-1.el5_7.3.x86_64.rpm
+php53-cli-5.3.3-1.el5_7.3.x86_64.rpm
+php53-common-5.3.3-1.el5_7.3.x86_64.rpm
+php53-dba-5.3.3-1.el5_7.3.x86_64.rpm
+php53-debuginfo-5.3.3-1.el5_7.3.x86_64.rpm
+php53-devel-5.3.3-1.el5_7.3.x86_64.rpm
+php53-gd-5.3.3-1.el5_7.3.x86_64.rpm
+php53-imap-5.3.3-1.el5_7.3.x86_64.rpm
+php53-intl-5.3.3-1.el5_7.3.x86_64.rpm
+php53-ldap-5.3.3-1.el5_7.3.x86_64.rpm
+php53-mbstring-5.3.3-1.el5_7.3.x86_64.rpm
+php53-mysql-5.3.3-1.el5_7.3.x86_64.rpm
+php53-odbc-5.3.3-1.el5_7.3.x86_64.rpm
+php53-pdo-5.3.3-1.el5_7.3.x86_64.rpm
+php53-pgsql-5.3.3-1.el5_7.3.x86_64.rpm
+php53-process-5.3.3-1.el5_7.3.x86_64.rpm
+php53-pspell-5.3.3-1.el5_7.3.x86_64.rpm
+php53-snmp-5.3.3-1.el5_7.3.x86_64.rpm
+php53-soap-5.3.3-1.el5_7.3.x86_64.rpm
+php53-xml-5.3.3-1.el5_7.3.x86_64.rpm
+php53-xmlrpc-5.3.3-1.el5_7.3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm</a>
+
+i386:
+php-5.3.3-3.el6_1.3.i686.rpm
+php-bcmath-5.3.3-3.el6_1.3.i686.rpm
+php-cli-5.3.3-3.el6_1.3.i686.rpm
+php-common-5.3.3-3.el6_1.3.i686.rpm
+php-dba-5.3.3-3.el6_1.3.i686.rpm
+php-debuginfo-5.3.3-3.el6_1.3.i686.rpm
+php-devel-5.3.3-3.el6_1.3.i686.rpm
+php-embedded-5.3.3-3.el6_1.3.i686.rpm
+php-enchant-5.3.3-3.el6_1.3.i686.rpm
+php-gd-5.3.3-3.el6_1.3.i686.rpm
+php-imap-5.3.3-3.el6_1.3.i686.rpm
+php-intl-5.3.3-3.el6_1.3.i686.rpm
+php-ldap-5.3.3-3.el6_1.3.i686.rpm
+php-mbstring-5.3.3-3.el6_1.3.i686.rpm
+php-mysql-5.3.3-3.el6_1.3.i686.rpm
+php-odbc-5.3.3-3.el6_1.3.i686.rpm
+php-pdo-5.3.3-3.el6_1.3.i686.rpm
+php-pgsql-5.3.3-3.el6_1.3.i686.rpm
+php-process-5.3.3-3.el6_1.3.i686.rpm
+php-pspell-5.3.3-3.el6_1.3.i686.rpm
+php-recode-5.3.3-3.el6_1.3.i686.rpm
+php-snmp-5.3.3-3.el6_1.3.i686.rpm
+php-soap-5.3.3-3.el6_1.3.i686.rpm
+php-tidy-5.3.3-3.el6_1.3.i686.rpm
+php-xml-5.3.3-3.el6_1.3.i686.rpm
+php-xmlrpc-5.3.3-3.el6_1.3.i686.rpm
+php-zts-5.3.3-3.el6_1.3.i686.rpm
+
+x86_64:
+php-5.3.3-3.el6_1.3.x86_64.rpm
+php-bcmath-5.3.3-3.el6_1.3.x86_64.rpm
+php-cli-5.3.3-3.el6_1.3.x86_64.rpm
+php-common-5.3.3-3.el6_1.3.x86_64.rpm
+php-dba-5.3.3-3.el6_1.3.x86_64.rpm
+php-debuginfo-5.3.3-3.el6_1.3.x86_64.rpm
+php-devel-5.3.3-3.el6_1.3.x86_64.rpm
+php-embedded-5.3.3-3.el6_1.3.x86_64.rpm
+php-enchant-5.3.3-3.el6_1.3.x86_64.rpm
+php-gd-5.3.3-3.el6_1.3.x86_64.rpm
+php-imap-5.3.3-3.el6_1.3.x86_64.rpm
+php-intl-5.3.3-3.el6_1.3.x86_64.rpm
+php-ldap-5.3.3-3.el6_1.3.x86_64.rpm
+php-mbstring-5.3.3-3.el6_1.3.x86_64.rpm
+php-mysql-5.3.3-3.el6_1.3.x86_64.rpm
+php-odbc-5.3.3-3.el6_1.3.x86_64.rpm
+php-pdo-5.3.3-3.el6_1.3.x86_64.rpm
+php-pgsql-5.3.3-3.el6_1.3.x86_64.rpm
+php-process-5.3.3-3.el6_1.3.x86_64.rpm
+php-pspell-5.3.3-3.el6_1.3.x86_64.rpm
+php-recode-5.3.3-3.el6_1.3.x86_64.rpm
+php-snmp-5.3.3-3.el6_1.3.x86_64.rpm
+php-soap-5.3.3-3.el6_1.3.x86_64.rpm
+php-tidy-5.3.3-3.el6_1.3.x86_64.rpm
+php-xml-5.3.3-3.el6_1.3.x86_64.rpm
+php-xmlrpc-5.3.3-3.el6_1.3.x86_64.rpm
+php-zts-5.3.3-3.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm</a>
+
+x86_64:
+php-5.3.3-3.el6_1.3.x86_64.rpm
+php-bcmath-5.3.3-3.el6_1.3.x86_64.rpm
+php-cli-5.3.3-3.el6_1.3.x86_64.rpm
+php-common-5.3.3-3.el6_1.3.x86_64.rpm
+php-dba-5.3.3-3.el6_1.3.x86_64.rpm
+php-debuginfo-5.3.3-3.el6_1.3.x86_64.rpm
+php-devel-5.3.3-3.el6_1.3.x86_64.rpm
+php-embedded-5.3.3-3.el6_1.3.x86_64.rpm
+php-enchant-5.3.3-3.el6_1.3.x86_64.rpm
+php-gd-5.3.3-3.el6_1.3.x86_64.rpm
+php-imap-5.3.3-3.el6_1.3.x86_64.rpm
+php-intl-5.3.3-3.el6_1.3.x86_64.rpm
+php-ldap-5.3.3-3.el6_1.3.x86_64.rpm
+php-mbstring-5.3.3-3.el6_1.3.x86_64.rpm
+php-mysql-5.3.3-3.el6_1.3.x86_64.rpm
+php-odbc-5.3.3-3.el6_1.3.x86_64.rpm
+php-pdo-5.3.3-3.el6_1.3.x86_64.rpm
+php-pgsql-5.3.3-3.el6_1.3.x86_64.rpm
+php-process-5.3.3-3.el6_1.3.x86_64.rpm
+php-pspell-5.3.3-3.el6_1.3.x86_64.rpm
+php-recode-5.3.3-3.el6_1.3.x86_64.rpm
+php-snmp-5.3.3-3.el6_1.3.x86_64.rpm
+php-soap-5.3.3-3.el6_1.3.x86_64.rpm
+php-tidy-5.3.3-3.el6_1.3.x86_64.rpm
+php-xml-5.3.3-3.el6_1.3.x86_64.rpm
+php-xmlrpc-5.3.3-3.el6_1.3.x86_64.rpm
+php-zts-5.3.3-3.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm</a>
+
+i386:
+php-5.3.3-3.el6_1.3.i686.rpm
+php-cli-5.3.3-3.el6_1.3.i686.rpm
+php-common-5.3.3-3.el6_1.3.i686.rpm
+php-debuginfo-5.3.3-3.el6_1.3.i686.rpm
+php-gd-5.3.3-3.el6_1.3.i686.rpm
+php-ldap-5.3.3-3.el6_1.3.i686.rpm
+php-mysql-5.3.3-3.el6_1.3.i686.rpm
+php-odbc-5.3.3-3.el6_1.3.i686.rpm
+php-pdo-5.3.3-3.el6_1.3.i686.rpm
+php-pgsql-5.3.3-3.el6_1.3.i686.rpm
+php-soap-5.3.3-3.el6_1.3.i686.rpm
+php-xml-5.3.3-3.el6_1.3.i686.rpm
+php-xmlrpc-5.3.3-3.el6_1.3.i686.rpm
+
+ppc64:
+php-5.3.3-3.el6_1.3.ppc64.rpm
+php-cli-5.3.3-3.el6_1.3.ppc64.rpm
+php-common-5.3.3-3.el6_1.3.ppc64.rpm
+php-debuginfo-5.3.3-3.el6_1.3.ppc64.rpm
+php-gd-5.3.3-3.el6_1.3.ppc64.rpm
+php-ldap-5.3.3-3.el6_1.3.ppc64.rpm
+php-mysql-5.3.3-3.el6_1.3.ppc64.rpm
+php-odbc-5.3.3-3.el6_1.3.ppc64.rpm
+php-pdo-5.3.3-3.el6_1.3.ppc64.rpm
+php-pgsql-5.3.3-3.el6_1.3.ppc64.rpm
+php-soap-5.3.3-3.el6_1.3.ppc64.rpm
+php-xml-5.3.3-3.el6_1.3.ppc64.rpm
+php-xmlrpc-5.3.3-3.el6_1.3.ppc64.rpm
+
+s390x:
+php-5.3.3-3.el6_1.3.s390x.rpm
+php-cli-5.3.3-3.el6_1.3.s390x.rpm
+php-common-5.3.3-3.el6_1.3.s390x.rpm
+php-debuginfo-5.3.3-3.el6_1.3.s390x.rpm
+php-gd-5.3.3-3.el6_1.3.s390x.rpm
+php-ldap-5.3.3-3.el6_1.3.s390x.rpm
+php-mysql-5.3.3-3.el6_1.3.s390x.rpm
+php-odbc-5.3.3-3.el6_1.3.s390x.rpm
+php-pdo-5.3.3-3.el6_1.3.s390x.rpm
+php-pgsql-5.3.3-3.el6_1.3.s390x.rpm
+php-soap-5.3.3-3.el6_1.3.s390x.rpm
+php-xml-5.3.3-3.el6_1.3.s390x.rpm
+php-xmlrpc-5.3.3-3.el6_1.3.s390x.rpm
+
+x86_64:
+php-5.3.3-3.el6_1.3.x86_64.rpm
+php-cli-5.3.3-3.el6_1.3.x86_64.rpm
+php-common-5.3.3-3.el6_1.3.x86_64.rpm
+php-debuginfo-5.3.3-3.el6_1.3.x86_64.rpm
+php-gd-5.3.3-3.el6_1.3.x86_64.rpm
+php-ldap-5.3.3-3.el6_1.3.x86_64.rpm
+php-mysql-5.3.3-3.el6_1.3.x86_64.rpm
+php-odbc-5.3.3-3.el6_1.3.x86_64.rpm
+php-pdo-5.3.3-3.el6_1.3.x86_64.rpm
+php-pgsql-5.3.3-3.el6_1.3.x86_64.rpm
+php-soap-5.3.3-3.el6_1.3.x86_64.rpm
+php-xml-5.3.3-3.el6_1.3.x86_64.rpm
+php-xmlrpc-5.3.3-3.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm</a>
+
+i386:
+php-bcmath-5.3.3-3.el6_1.3.i686.rpm
+php-dba-5.3.3-3.el6_1.3.i686.rpm
+php-debuginfo-5.3.3-3.el6_1.3.i686.rpm
+php-devel-5.3.3-3.el6_1.3.i686.rpm
+php-embedded-5.3.3-3.el6_1.3.i686.rpm
+php-enchant-5.3.3-3.el6_1.3.i686.rpm
+php-imap-5.3.3-3.el6_1.3.i686.rpm
+php-intl-5.3.3-3.el6_1.3.i686.rpm
+php-mbstring-5.3.3-3.el6_1.3.i686.rpm
+php-process-5.3.3-3.el6_1.3.i686.rpm
+php-pspell-5.3.3-3.el6_1.3.i686.rpm
+php-recode-5.3.3-3.el6_1.3.i686.rpm
+php-snmp-5.3.3-3.el6_1.3.i686.rpm
+php-tidy-5.3.3-3.el6_1.3.i686.rpm
+php-zts-5.3.3-3.el6_1.3.i686.rpm
+
+ppc64:
+php-bcmath-5.3.3-3.el6_1.3.ppc64.rpm
+php-dba-5.3.3-3.el6_1.3.ppc64.rpm
+php-debuginfo-5.3.3-3.el6_1.3.ppc64.rpm
+php-devel-5.3.3-3.el6_1.3.ppc64.rpm
+php-embedded-5.3.3-3.el6_1.3.ppc64.rpm
+php-enchant-5.3.3-3.el6_1.3.ppc64.rpm
+php-imap-5.3.3-3.el6_1.3.ppc64.rpm
+php-intl-5.3.3-3.el6_1.3.ppc64.rpm
+php-mbstring-5.3.3-3.el6_1.3.ppc64.rpm
+php-process-5.3.3-3.el6_1.3.ppc64.rpm
+php-pspell-5.3.3-3.el6_1.3.ppc64.rpm
+php-recode-5.3.3-3.el6_1.3.ppc64.rpm
+php-snmp-5.3.3-3.el6_1.3.ppc64.rpm
+php-tidy-5.3.3-3.el6_1.3.ppc64.rpm
+php-zts-5.3.3-3.el6_1.3.ppc64.rpm
+
+s390x:
+php-bcmath-5.3.3-3.el6_1.3.s390x.rpm
+php-dba-5.3.3-3.el6_1.3.s390x.rpm
+php-debuginfo-5.3.3-3.el6_1.3.s390x.rpm
+php-devel-5.3.3-3.el6_1.3.s390x.rpm
+php-embedded-5.3.3-3.el6_1.3.s390x.rpm
+php-enchant-5.3.3-3.el6_1.3.s390x.rpm
+php-imap-5.3.3-3.el6_1.3.s390x.rpm
+php-intl-5.3.3-3.el6_1.3.s390x.rpm
+php-mbstring-5.3.3-3.el6_1.3.s390x.rpm
+php-process-5.3.3-3.el6_1.3.s390x.rpm
+php-pspell-5.3.3-3.el6_1.3.s390x.rpm
+php-recode-5.3.3-3.el6_1.3.s390x.rpm
+php-snmp-5.3.3-3.el6_1.3.s390x.rpm
+php-tidy-5.3.3-3.el6_1.3.s390x.rpm
+php-zts-5.3.3-3.el6_1.3.s390x.rpm
+
+x86_64:
+php-bcmath-5.3.3-3.el6_1.3.x86_64.rpm
+php-dba-5.3.3-3.el6_1.3.x86_64.rpm
+php-debuginfo-5.3.3-3.el6_1.3.x86_64.rpm
+php-devel-5.3.3-3.el6_1.3.x86_64.rpm
+php-embedded-5.3.3-3.el6_1.3.x86_64.rpm
+php-enchant-5.3.3-3.el6_1.3.x86_64.rpm
+php-imap-5.3.3-3.el6_1.3.x86_64.rpm
+php-intl-5.3.3-3.el6_1.3.x86_64.rpm
+php-mbstring-5.3.3-3.el6_1.3.x86_64.rpm
+php-process-5.3.3-3.el6_1.3.x86_64.rpm
+php-pspell-5.3.3-3.el6_1.3.x86_64.rpm
+php-recode-5.3.3-3.el6_1.3.x86_64.rpm
+php-snmp-5.3.3-3.el6_1.3.x86_64.rpm
+php-tidy-5.3.3-3.el6_1.3.x86_64.rpm
+php-zts-5.3.3-3.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm</a>
+
+i386:
+php-5.3.3-3.el6_1.3.i686.rpm
+php-cli-5.3.3-3.el6_1.3.i686.rpm
+php-common-5.3.3-3.el6_1.3.i686.rpm
+php-debuginfo-5.3.3-3.el6_1.3.i686.rpm
+php-gd-5.3.3-3.el6_1.3.i686.rpm
+php-ldap-5.3.3-3.el6_1.3.i686.rpm
+php-mysql-5.3.3-3.el6_1.3.i686.rpm
+php-odbc-5.3.3-3.el6_1.3.i686.rpm
+php-pdo-5.3.3-3.el6_1.3.i686.rpm
+php-pgsql-5.3.3-3.el6_1.3.i686.rpm
+php-soap-5.3.3-3.el6_1.3.i686.rpm
+php-xml-5.3.3-3.el6_1.3.i686.rpm
+php-xmlrpc-5.3.3-3.el6_1.3.i686.rpm
+
+x86_64:
+php-5.3.3-3.el6_1.3.x86_64.rpm
+php-cli-5.3.3-3.el6_1.3.x86_64.rpm
+php-common-5.3.3-3.el6_1.3.x86_64.rpm
+php-debuginfo-5.3.3-3.el6_1.3.x86_64.rpm
+php-gd-5.3.3-3.el6_1.3.x86_64.rpm
+php-ldap-5.3.3-3.el6_1.3.x86_64.rpm
+php-mysql-5.3.3-3.el6_1.3.x86_64.rpm
+php-odbc-5.3.3-3.el6_1.3.x86_64.rpm
+php-pdo-5.3.3-3.el6_1.3.x86_64.rpm
+php-pgsql-5.3.3-3.el6_1.3.x86_64.rpm
+php-soap-5.3.3-3.el6_1.3.x86_64.rpm
+php-xml-5.3.3-3.el6_1.3.x86_64.rpm
+php-xmlrpc-5.3.3-3.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/php-5.3.3-3.el6_1.3.src.rpm</a>
+
+i386:
+php-bcmath-5.3.3-3.el6_1.3.i686.rpm
+php-dba-5.3.3-3.el6_1.3.i686.rpm
+php-debuginfo-5.3.3-3.el6_1.3.i686.rpm
+php-devel-5.3.3-3.el6_1.3.i686.rpm
+php-embedded-5.3.3-3.el6_1.3.i686.rpm
+php-enchant-5.3.3-3.el6_1.3.i686.rpm
+php-imap-5.3.3-3.el6_1.3.i686.rpm
+php-intl-5.3.3-3.el6_1.3.i686.rpm
+php-mbstring-5.3.3-3.el6_1.3.i686.rpm
+php-process-5.3.3-3.el6_1.3.i686.rpm
+php-pspell-5.3.3-3.el6_1.3.i686.rpm
+php-recode-5.3.3-3.el6_1.3.i686.rpm
+php-snmp-5.3.3-3.el6_1.3.i686.rpm
+php-tidy-5.3.3-3.el6_1.3.i686.rpm
+php-zts-5.3.3-3.el6_1.3.i686.rpm
+
+x86_64:
+php-bcmath-5.3.3-3.el6_1.3.x86_64.rpm
+php-dba-5.3.3-3.el6_1.3.x86_64.rpm
+php-debuginfo-5.3.3-3.el6_1.3.x86_64.rpm
+php-devel-5.3.3-3.el6_1.3.x86_64.rpm
+php-embedded-5.3.3-3.el6_1.3.x86_64.rpm
+php-enchant-5.3.3-3.el6_1.3.x86_64.rpm
+php-imap-5.3.3-3.el6_1.3.x86_64.rpm
+php-intl-5.3.3-3.el6_1.3.x86_64.rpm
+php-mbstring-5.3.3-3.el6_1.3.x86_64.rpm
+php-process-5.3.3-3.el6_1.3.x86_64.rpm
+php-pspell-5.3.3-3.el6_1.3.x86_64.rpm
+php-recode-5.3.3-3.el6_1.3.x86_64.rpm
+php-snmp-5.3.3-3.el6_1.3.x86_64.rpm
+php-tidy-5.3.3-3.el6_1.3.x86_64.rpm
+php-zts-5.3.3-3.el6_1.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0708.html">https://www.redhat.com/security/data/cve/CVE-2011-0708.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1148.html">https://www.redhat.com/security/data/cve/CVE-2011-1148.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1466.html">https://www.redhat.com/security/data/cve/CVE-2011-1466.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1468.html">https://www.redhat.com/security/data/cve/CVE-2011-1468.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1469.html">https://www.redhat.com/security/data/cve/CVE-2011-1469.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1471.html">https://www.redhat.com/security/data/cve/CVE-2011-1471.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1938.html">https://www.redhat.com/security/data/cve/CVE-2011-1938.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2202.html">https://www.redhat.com/security/data/cve/CVE-2011-2202.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2483.html">https://www.redhat.com/security/data/cve/CVE-2011-2483.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.php.net/security/crypt_blowfish.php">http://www.php.net/security/crypt_blowfish.php</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOscTUXlSAg2UNWIIRAkIPAJsEMWxUI6mFj6t3oRWjGQlSz+KESACgtxNR
+NR2UwknaLOAh3fVYTwIjfjY=
+=5M+u
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

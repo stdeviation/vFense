@@ -1,0 +1,302 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0863&#45;01] Important: libtiff security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 28 Aug 2008 18:33:00 &#45;0400 -->
+<!--X-Message-Id: 200808282232.m7SMWxkE019232@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0863-01] Important: libtiff security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00026.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0863-01] Important: libtiff security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0863-01] Important: libtiff security update</li>
+<li><em>Date</em>: Thu, 28 Aug 2008 18:32:59 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: libtiff security update
+Advisory ID:       RHSA-2008:0863-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0863.html">https://rhn.redhat.com/errata/RHSA-2008-0863.html</a>
+Issue date:        2008-08-28
+CVE Names:         CVE-2008-2327 
+=====================================================================
+
+1. Summary:
+
+Updated libtiff packages that fix a security issue are now available for
+Red Hat Enterprise Linux 2.1 and 3.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS (Advanced Server) version 2.1  - i386, ia64
+Red Hat Linux Advanced Workstation 2.1 - ia64
+Red Hat Enterprise Linux ES version 2.1 - i386
+Red Hat Enterprise Linux WS version 2.1 - i386
+Red Hat Enterprise Linux AS version 3 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Desktop version 3 - i386, x86_64
+Red Hat Enterprise Linux ES version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 3 - i386, ia64, x86_64
+
+3. Description:
+
+The libtiff packages contain a library of functions for manipulating Tagged
+Image File Format (TIFF) files.
+
+Multiple uses of uninitialized values were discovered in libtiff's
+Lempel-Ziv-Welch (LZW) compression algorithm decoder. An attacker could
+create a carefully crafted LZW-encoded TIFF file that would cause an
+application linked with libtiff to crash or, possibly, execute arbitrary
+code. (CVE-2008-2327)
+
+Red Hat would like to thank Drew Yao of the Apple Product Security team for
+reporting this issue.
+
+All libtiff users are advised to upgrade to these updated packages, which
+contain backported patches to resolve this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+458674 - CVE-2008-2327 libtiff: use of uninitialized memory in LZW decoder
+
+6. Package List:
+
+Red Hat Enterprise Linux AS (Advanced Server) version 2.1 :
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1AS/en/os/SRPMS/libtiff-3.5.7-31.el2.src.rpm">ftp://updates.redhat.com/enterprise/2.1AS/en/os/SRPMS/libtiff-3.5.7-31.el2.src.rpm</a>
+
+i386:
+libtiff-3.5.7-31.el2.i386.rpm
+libtiff-devel-3.5.7-31.el2.i386.rpm
+
+ia64:
+libtiff-3.5.7-31.el2.ia64.rpm
+libtiff-devel-3.5.7-31.el2.ia64.rpm
+
+Red Hat Linux Advanced Workstation 2.1:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1AW/en/os/SRPMS/libtiff-3.5.7-31.el2.src.rpm">ftp://updates.redhat.com/enterprise/2.1AW/en/os/SRPMS/libtiff-3.5.7-31.el2.src.rpm</a>
+
+ia64:
+libtiff-3.5.7-31.el2.ia64.rpm
+libtiff-devel-3.5.7-31.el2.ia64.rpm
+
+Red Hat Enterprise Linux ES version 2.1:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1ES/en/os/SRPMS/libtiff-3.5.7-31.el2.src.rpm">ftp://updates.redhat.com/enterprise/2.1ES/en/os/SRPMS/libtiff-3.5.7-31.el2.src.rpm</a>
+
+i386:
+libtiff-3.5.7-31.el2.i386.rpm
+libtiff-devel-3.5.7-31.el2.i386.rpm
+
+Red Hat Enterprise Linux WS version 2.1:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1WS/en/os/SRPMS/libtiff-3.5.7-31.el2.src.rpm">ftp://updates.redhat.com/enterprise/2.1WS/en/os/SRPMS/libtiff-3.5.7-31.el2.src.rpm</a>
+
+i386:
+libtiff-3.5.7-31.el2.i386.rpm
+libtiff-devel-3.5.7-31.el2.i386.rpm
+
+Red Hat Enterprise Linux AS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/libtiff-3.5.7-31.el3.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/libtiff-3.5.7-31.el3.src.rpm</a>
+
+i386:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-devel-3.5.7-31.el3.i386.rpm
+
+ia64:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-3.5.7-31.el3.ia64.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.ia64.rpm
+libtiff-devel-3.5.7-31.el3.ia64.rpm
+
+ppc:
+libtiff-3.5.7-31.el3.ppc.rpm
+libtiff-3.5.7-31.el3.ppc64.rpm
+libtiff-debuginfo-3.5.7-31.el3.ppc.rpm
+libtiff-debuginfo-3.5.7-31.el3.ppc64.rpm
+libtiff-devel-3.5.7-31.el3.ppc.rpm
+
+s390:
+libtiff-3.5.7-31.el3.s390.rpm
+libtiff-debuginfo-3.5.7-31.el3.s390.rpm
+libtiff-devel-3.5.7-31.el3.s390.rpm
+
+s390x:
+libtiff-3.5.7-31.el3.s390.rpm
+libtiff-3.5.7-31.el3.s390x.rpm
+libtiff-debuginfo-3.5.7-31.el3.s390.rpm
+libtiff-debuginfo-3.5.7-31.el3.s390x.rpm
+libtiff-devel-3.5.7-31.el3.s390x.rpm
+
+x86_64:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-3.5.7-31.el3.x86_64.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.x86_64.rpm
+libtiff-devel-3.5.7-31.el3.x86_64.rpm
+
+Red Hat Desktop version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/libtiff-3.5.7-31.el3.src.rpm">ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/libtiff-3.5.7-31.el3.src.rpm</a>
+
+i386:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-devel-3.5.7-31.el3.i386.rpm
+
+x86_64:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-3.5.7-31.el3.x86_64.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.x86_64.rpm
+libtiff-devel-3.5.7-31.el3.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/libtiff-3.5.7-31.el3.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/libtiff-3.5.7-31.el3.src.rpm</a>
+
+i386:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-devel-3.5.7-31.el3.i386.rpm
+
+ia64:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-3.5.7-31.el3.ia64.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.ia64.rpm
+libtiff-devel-3.5.7-31.el3.ia64.rpm
+
+x86_64:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-3.5.7-31.el3.x86_64.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.x86_64.rpm
+libtiff-devel-3.5.7-31.el3.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/libtiff-3.5.7-31.el3.src.rpm">ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/libtiff-3.5.7-31.el3.src.rpm</a>
+
+i386:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-devel-3.5.7-31.el3.i386.rpm
+
+ia64:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-3.5.7-31.el3.ia64.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.ia64.rpm
+libtiff-devel-3.5.7-31.el3.ia64.rpm
+
+x86_64:
+libtiff-3.5.7-31.el3.i386.rpm
+libtiff-3.5.7-31.el3.x86_64.rpm
+libtiff-debuginfo-3.5.7-31.el3.i386.rpm
+libtiff-debuginfo-3.5.7-31.el3.x86_64.rpm
+libtiff-devel-3.5.7-31.el3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2327">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2327</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFItyd/XlSAg2UNWIIRAlcpAKCRV4zWDewE9e4LeyWl3/OluHqg3QCfWwIc
+D7OoU/txGOcQn0R2yeGp34U=
+=t0yk
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00026.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

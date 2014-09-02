@@ -1,0 +1,272 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0009&#45;02] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 22 Jan 2009 06:21:15 &#45;0500 -->
+<!--X-Message-Id: 200901221121.n0MBLGgK024585@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0009-02] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0009-02] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0009-02] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Thu, 22 Jan 2009 06:21:16 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2009:0009-02
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0009.html">https://rhn.redhat.com/errata/RHSA-2009-0009.html</a>
+Issue date:        2009-01-22
+CVE Names:         CVE-2008-0598 CVE-2008-3528 CVE-2008-3831 
+                   CVE-2008-4554 CVE-2008-4576 CVE-2008-4618 
+                   CVE-2008-5029 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix several security issues and several bugs
+are now available for Red Hat Enterprise MRG 1.0.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+These updated packages address the following security issues:
+
+* Tavis Ormandy discovered a deficiency in the Linux kernel 32-bit and
+64-bit emulation. This could allow a local, unprivileged user to prepare
+and run a specially-crafted binary which would use this deficiency to leak
+uninitialized and potentially sensitive data. (CVE-2008-0598, Important)
+
+* Olaf Kirch reported a flaw in the i915 kernel driver that only affects
+the Intel G33 series and newer. This flaw could, potentially, lead to local
+privilege escalation. (CVE-2008-3831, Important)
+
+* Miklos Szeredi reported a missing check for files opened with O_APPEND in
+sys_splice(). This could allow a local, unprivileged user to bypass the
+append-only file restrictions. (CVE-2008-4554, Important)
+
+* a deficiency was found in the Linux kernel Stream Control Transmission
+Protocol (SCTP) implementation. This could lead to a possible denial of
+service if one end of a SCTP connection did not support the AUTH extension.
+(CVE-2008-4576, Important)
+
+* Wei Yongjun reported a flaw in the Linux kernel SCTP implementation. In
+certain code paths, sctp_sf_violation_paramlen() could be called with a
+wrong parameter data type. This could lead to a possible denial of service.
+(CVE-2008-4618, Important)
+
+* when fput() was called to close a socket, the __scm_destroy() function in
+the Linux kernel could make indirect recursive calls to itself. This could,
+potentially, lead to a denial of service issue. (CVE-2008-5029, Important)
+
+* the ext2 and ext3 filesystem code failed to properly handle corrupted
+data structures, leading to a possible local denial of service issue when
+read or write operations were performed. (CVE-2008-3528, Low)
+
+These updated packages also address numerous bugs, including the following:
+
+* several System on Chip (SoC) audio drivers allocated memory in the
+platform device probe function but did not free this memory in the event of
+an error. Instead, the memory was freed in the device probe function's
+error path. This could result in a 'double free' error. With this update,
+errors cause memory to be freed correctly.
+
+* when a check was made to see if the netlink attribute fitted into
+available memory, the value returned, &quot;remaining&quot;, could become negative
+due to alignment in nla_next(). GCC set &quot;remaining&quot; to unsigned when
+testing against the sizeof(*nla), however. As a consequence, the test would
+always succeed and the function nla_for_each_attr() could, potentially,
+access memory outside the received buffer. With this update, sizeof is cast
+to an integer, ensuring sizeof(*nla) does a signed test and prevents an
+illegal memory de-reference.
+
+* if a user-space process used a SIGIO notification and did not disable it
+before closing the file descriptor, a stale pointer was left in the
+async_queue of the real-time clock. When a different user-space process
+subsequently used a SIGIO notification, the kernel de-referenced this
+pointer and crashed. With this updated kernel, SIGIO notifications are
+disabled when the file descriptor is closed, preventing this.
+
+* the real-time kernel included with Red Hat Enterprise Linux MRG did not
+randomize exec, heap or libc addresses. This update corrects this omission:
+exec, heap and libc addresses are now randomized.
+
+Numerous other bug fixes included with this update are noted in the Red Hat
+Enterprise MRG 1.0 Real Time Security Update Release Note, available at the
+location noted in the References section below.
+
+All Red Hat Enterprise MRG users should install this update which addresses
+these vulnerabilities and fixes these bugs.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released errata
+relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+433938 - CVE-2008-0598 kernel: linux x86_64 ia32 emulation leaks uninitialized data
+455095 - event trace syscall on i386 has bogus parameters
+459577 - CVE-2008-3528 Linux kernel ext[234] directory corruption denial of service
+460102 - kernel: alsa: asoc: fix double free and memory leak in many codec drivers [mrg-1]
+461330 - Update realtime kernel's lpfc version to 8.2.0.29
+462281 - kernel: netlink: fix overrun in attribute iteration
+464502 - CVE-2008-3831 kernel: i915 kernel drm driver arbitrary ioremap
+465730 - CVE-2008-4618 kernel: sctp: Fix kernel panic while process protocol violation parameter
+465744 - kernel: rtc: fix kernel panic on second use of SIGIO notification
+465862 - Warning from rt_mutex code while testing infiniband
+466079 - CVE-2008-4576 kernel: sctp: Fix oops when INIT-ACK indicates that peer doesn't support AUTH
+466153 - [Broadcom 5.3 feat] Update bnx2 to version 1.7.4+
+466341 - RT kernel fails to boot on Intel Canelands processors (16 and 24 cores)
+466554 - Update qla2xxx driver with RHEL5.3 + upstream fixes
+466557 - Update the e1000e driver with RHEL5.3 and upstream fixes
+466558 - Update the tg3 driver with RHEL5.3 and upstream fixes
+466707 - CVE-2008-4554 kernel: don't allow splice() to files opened with O_APPEND
+467739 - Add amd64_edac driver from IBM
+467781 - MRG kernel has the e1000e bug
+467783 - SAN Patchset needs merging into MRG
+468205 - Turn off building of ocfs2 filesystem module in MRG RT kernel
+469186 - [FOCUS] Lockdep fixes cause latency regression
+470201 - CVE-2008-5029 kernel: Unix sockets kernel panic
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-93.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-93.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-93.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-93.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-93.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-93.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-93.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0598">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0598</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3528">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3528</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3831">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3831</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4554">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4554</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4576">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4576</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4618">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4618</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5029">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5029</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/">http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJeFalXlSAg2UNWIIRAuBvAJ9qKI3i3PrKt0RBPUmaNQlzFCLIKwCgnAKj
+YtQrwhczrzLowEwS2cfdgn8=
+=THNU
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

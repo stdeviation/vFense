@@ -1,0 +1,206 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0835&#45;01] Moderate: Red Hat JBoss Web Server 2.0.1 tomcat7	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 3 Jul 2014 14:43:46 &#45;0400 -->
+<!--X-Message-Id: 201407031843.s63IhjD8005342@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0835-01] Moderate: Red Hat JBoss Web Server 2.0.1 tomcat7	sec</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0835-01] Moderate: Red Hat JBoss Web Server 2.0.1 tomcat7	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0835-01] Moderate: Red Hat JBoss Web Server 2.0.1 tomcat7	security update</li>
+<li><em>Date</em>: Thu, 3 Jul 2014 18:43:45 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Web Server 2.0.1 tomcat7 security update
+Advisory ID:       RHSA-2014:0835-01
+Product:           Red Hat JBoss Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0835.html">https://rhn.redhat.com/errata/RHSA-2014-0835.html</a>
+Issue date:        2014-07-03
+CVE Names:         CVE-2014-0075 CVE-2014-0096 CVE-2014-0099 
+=====================================================================
+
+1. Summary:
+
+Updated tomcat7 packages that fix three security issues are now available
+for Red Hat JBoss Web Server 2.0.1 on Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat JBoss Web Server 2 for RHEL 5 Server - noarch
+Red Hat JBoss Web Server 2 for RHEL 6 Server - noarch
+
+3. Description:
+
+Red Hat JBoss Web Server is a fully integrated and certified set of
+components for hosting Java web applications. It is comprised of the Apache
+HTTP Server, the Apache Tomcat Servlet container, Apache Tomcat Connector
+(mod_jk), JBoss HTTP Connector (mod_cluster), Hibernate, and the Tomcat
+Native library.
+
+It was discovered that Apache Tomcat did not limit the length of chunk
+sizes when using chunked transfer encoding. A remote attacker could use
+this flaw to perform a denial of service attack against Tomcat by streaming
+an unlimited quantity of data, leading to excessive consumption of server
+resources. (CVE-2014-0075)
+
+It was found that Apache Tomcat did not check for overflowing values when
+parsing request content length headers. A remote attacker could use this
+flaw to perform an HTTP request smuggling attack on a Tomcat server located
+behind a reverse proxy that processed the content length header correctly.
+(CVE-2014-0099)
+
+It was found that the org.apache.catalina.servlets.DefaultServlet
+implementation in Apache Tomcat allowed the definition of XML External
+Entities (XXEs) in provided XSLTs. A malicious application could use this
+to circumvent intended security restrictions to disclose sensitive
+information. (CVE-2014-0096)
+
+The CVE-2014-0075 issue was discovered by David Jorm of Red Hat Product
+Security.
+
+All users of Red Hat JBoss Web Server 2.0.1 are advised to upgrade to these
+updated tomcat7 packages, which contain backported patches to correct these
+issues. The Red Hat JBoss Web Server process must be restarted for the
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied, and back up your existing Red
+Hat JBoss Web Server installation (including all applications and
+configuration files).
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1072776 - CVE-2014-0075 Tomcat/JBossWeb: Limited DoS in chunked transfer encoding input filter
+1088342 - CVE-2014-0096 Tomcat/JBossWeb: XXE vulnerability via user supplied XSLTs
+1102030 - CVE-2014-0099 Tomcat/JBossWeb: Request smuggling via malicious content length header
+
+6. Package List:
+
+Red Hat JBoss Web Server 2 for RHEL 5 Server:
+
+Source:
+tomcat7-7.0.40-14_patch_03.ep6.el5.src.rpm
+
+noarch:
+tomcat7-7.0.40-14_patch_03.ep6.el5.noarch.rpm
+tomcat7-admin-webapps-7.0.40-14_patch_03.ep6.el5.noarch.rpm
+tomcat7-docs-webapp-7.0.40-14_patch_03.ep6.el5.noarch.rpm
+tomcat7-el-2.2-api-7.0.40-14_patch_03.ep6.el5.noarch.rpm
+tomcat7-javadoc-7.0.40-14_patch_03.ep6.el5.noarch.rpm
+tomcat7-jsp-2.2-api-7.0.40-14_patch_03.ep6.el5.noarch.rpm
+tomcat7-lib-7.0.40-14_patch_03.ep6.el5.noarch.rpm
+tomcat7-log4j-7.0.40-14_patch_03.ep6.el5.noarch.rpm
+tomcat7-servlet-3.0-api-7.0.40-14_patch_03.ep6.el5.noarch.rpm
+tomcat7-webapps-7.0.40-14_patch_03.ep6.el5.noarch.rpm
+
+Red Hat JBoss Web Server 2 for RHEL 6 Server:
+
+Source:
+tomcat7-7.0.40-11_patch_03.ep6.el6.src.rpm
+
+noarch:
+tomcat7-7.0.40-11_patch_03.ep6.el6.noarch.rpm
+tomcat7-admin-webapps-7.0.40-11_patch_03.ep6.el6.noarch.rpm
+tomcat7-docs-webapp-7.0.40-11_patch_03.ep6.el6.noarch.rpm
+tomcat7-el-2.2-api-7.0.40-11_patch_03.ep6.el6.noarch.rpm
+tomcat7-javadoc-7.0.40-11_patch_03.ep6.el6.noarch.rpm
+tomcat7-jsp-2.2-api-7.0.40-11_patch_03.ep6.el6.noarch.rpm
+tomcat7-lib-7.0.40-11_patch_03.ep6.el6.noarch.rpm
+tomcat7-log4j-7.0.40-11_patch_03.ep6.el6.noarch.rpm
+tomcat7-servlet-3.0-api-7.0.40-11_patch_03.ep6.el6.noarch.rpm
+tomcat7-webapps-7.0.40-11_patch_03.ep6.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0075.html">https://www.redhat.com/security/data/cve/CVE-2014-0075.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0096.html">https://www.redhat.com/security/data/cve/CVE-2014-0096.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0099.html">https://www.redhat.com/security/data/cve/CVE-2014-0099.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTtaRIXlSAg2UNWIIRAmT4AKC340y2M9XbcI44HOdYrOLa/iJPmACfWWoo
+boP4qbJluv76igNl9mj0cJE=
+=mW1i
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

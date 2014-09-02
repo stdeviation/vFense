@@ -1,0 +1,489 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1543&#45;01] Important: CloudForms System Engine 1.1 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Dec 2012 15:57:42 &#45;0500 -->
+<!--X-Message-Id: 201212042057.qB4KvaGp015823@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1543-01] Important: CloudForms System Engine 1.1 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1543-01] Important: CloudForms System Engine 1.1 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2012:1543-01] Important: CloudForms System Engine 1.1 update</li>
+<li><em>Date</em>: Tue, 4 Dec 2012 20:57:36 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: CloudForms System Engine 1.1 update
+Advisory ID:       RHSA-2012:1543-01
+Product:           Red Hat CloudForms
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1543.html">https://rhn.redhat.com/errata/RHSA-2012-1543.html</a>
+Issue date:        2012-12-04
+CVE Names:         CVE-2012-3538 CVE-2012-4574 CVE-2012-5603 
+                   CVE-2012-5605 
+=====================================================================
+
+1. Summary:
+
+Updated CloudForms System Engine packages that fix multiple security
+issues, several bugs, and add enhancements are now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+CloudForms Tools for RHEL 5 Server - noarch
+CloudForms Tools for RHEL 6 Server - noarch
+System Engine for RHEL 6 Server - noarch
+
+3. Description:
+
+Red Hat CloudForms is an on-premise hybrid cloud
+Infrastructure-as-a-Service (IaaS) product that lets you create and manage
+private and public clouds.
+
+This update fixes bugs in and adds enhancements to the System Engine
+packages, and upgrades the system to CloudForms 1.1.
+
+This update also fixes the following security issues:
+
+It was discovered that Katello did not properly check user permissions when
+handling certain requests. An authenticated remote attacker could use this
+flaw to download consumer certificates or change settings of other users'
+systems if they knew the target system's UUID. (CVE-2012-5603)
+
+It was discovered that Pulp logged administrative passwords to a world
+readable log file. A local attacker could use this flaw to control systems
+deployed and managed by CloudForms. (CVE-2012-3538)
+
+It was discovered that the Pulp configuration file pulp.conf was installed
+as world readable. A local attacker could use this flaw to view the
+administrative password, allowing them to control systems deployed and
+managed by CloudForms. (CVE-2012-4574)
+
+It was discovered that grinder used insecure permissions for its cache
+directory. A local attacker could use this flaw to access or modify files
+in the cache. (CVE-2012-5605)
+
+The CVE-2012-5603 issue was discovered by Lukas Zapletal of Red Hat;
+CVE-2012-3538 was discovered by James Laska of Red Hat; CVE-2012-4574 was
+discovered by Kurt Seifried of Red Hat; and CVE-2012-5605 was discovered by
+James Labocki of Red Hat.
+
+After upgrading to these new packages, follow the instructions in the &quot;4.1.
+Upgrading CloudForms System Engine&quot; section of the CloudForms 1.1
+Installation Guide:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/index.html">https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/index.html</a>
+
+To view the full list of changes in this update, view the CloudForms
+Technical Notes:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Technical_Notes/index.html">https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Technical_Notes/index.html</a>
+
+Users are advised to upgrade to these updated CloudForms System Engine
+packages, which resolve these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+746765 - Systems are locked out of katello and cannot re-register
+753128 - Sync status remains in &quot;error syncing&quot; state even after successful sync of repo.
+760180 - Notifications should note the appropriate Org for org-specific actions.
+766694 - UI should show virtual child pools as &quot;children&quot; of the parent.
+769559 - Subscribe system ignores &quot;facts -&gt; cpu.cpu_socket(s)&quot;
+782954 - Unable to register systems with i18nized names
+786176 - (Some) duplicitous notifications produced in multiple langs when using other locales
+786226 - List of product repositories not sorted alphabetically
+787184 - Devise a disaster recovery plan (or process)
+787305 - Notices with details breaking the &quot;Notice List&quot; page
+789139 - Unmet dependencies for some packages
+789535 - Systems: Cannot add Package Groups
+790138 - Systems: hand-rolled systems cannot be initially created with a multibyte name.
+790342 - Error in async task is not returned
+796047 - SecurityViolation error while accessing gpg key details with read only user
+796972 - translatable strings broken up, causing translation to sound wrong
+797299 - Display which environment a system is subscribed to in its Details tab
+797321 - Gigantic footer
+797412 - katello permission not working as expected
+799538 - promotions -&gt; errata -&gt; packages filter causes page reload on click
+800529 - RFE:  As a sysadmin I would like to manage a user's org from the CLI
+801454 - Out of place/non-contextual error messages in prod log when creating new orgs
+801580 - Updating sync plan does not update associated product's (repo's) sync schedule
+802925 - Tool tip in activation key Details screen has markup visible
+803548 - Async success notifications pop up from syncs in other orgs
+803702 - Synchronizing a repo with i18n characters in name fails for second time
+803728 - rpmdiff failure for build gofer-0.66-1.el6
+803761 - rpmdiff failure for build katello-selinux-0.1.8-1.el6
+804127 - [RFE] no logging property for Katello
+804555 - Orgs with international chars in name provide broken urls in redhat.repo
+804610 - Can't promote packages from repos with international chars in name
+804685 - System Details/Packages, unclear what Packages/PackageGroups radio button does
+805027 - Inaccurate system count
+805412 - improper message - dot &quot;.&quot; in org name being created
+805627 - While create a new user, unable to select &quot;Save User&quot;
+805709 - Package filter name is unique to entire system
+805956 - SE doesn't provide a way how to refresh imported repositories
+806076 - Promotion - viewing system template doesn't show the repos in that template
+806078 - Changeset History - changing name of a set does not update left panel
+806083 - Users - Environments tab is missing the 'Remove User' link
+806353 - Sync Plans: Manually entering a time can cause time selector to get stuck on screen
+806879 - Apparent discrepancy between Dashboard &gt; System Subscription Status  and Systems &gt; All for hypervisors
+806940 - RHEL 6.2 not completing sync
+806969 - sync_plan creation is setting time 1 hour behind the chosen time
+807288 - Selecting changeset from 'changeset history' tab raising &quot;undefined method `find_repos' for #&quot;
+807291 - Adding a &quot;bonus pool&quot; to an activation key, then removing parent pool, causes errors
+807468 - Only one manifest/product can be imported per system
+807804 - Hidden user can be added to a role.
+808172 - There should be some implementation of &quot;katello --version&quot;
+808437 - [RFE] Don't make notifications for CLI actions performed (and pop them up in UI)
+809259 - System not registering with activation key.
+810378 - RFE - Search needed on repository selection during promotion
+810945 - Unable to delete pools referenced by activation keys
+811556 - Displaced 'save' button while editing the changeset description under &quot;changeset history&quot; tab
+811564 - Switch default to false for &quot;match system&quot; when listing available subscriptions
+812417 - System Properties for registered system lists &quot;Arch&quot; as blank
+813675 - on &quot;-v&quot; rework seems `user list` lost the &quot;Disabled&quot; field
+815308 - package filter: search for package starting &quot;^&quot; - traceback
+815802 - Description on package filter does not save properly
+816935 - RFE: Provide possibility to encrypt/obfuscate plaintext passwords
+817123 - deleted system template not removed from activation key
+818204 - Sync silently &quot;cancels&quot; on some (very large?) repos
+818261 - candlepin-cert-consumer rpm not installable on RHEL5 - rpmlib(PayloadIsXz) &lt;= 5.2-1 is needed
+818370 - Changeset Fails to Promote with Candlepin RPM
+819593 - RFE: Redirect /subscriptions/* to /katello/api/*
+819941 - missing dependencies in katello-common
+820373 - [RFE] Remove one of the two logout buttons in System Engine interface
+820385 - [RFE] Make pulp aware of local/remote syncs
+820624 - [RFE] Have PostgreSQL only listen on 127.0.0.1 instead of 127.0.0.1 and 0.0.0.0
+820626 - Hide password and email creation fields at user creation time if LDAP auth is enabled in CFSE
+820630 - String Updates
+821345 - Promotions changeset of system template does not solve dependency of product
+821644 - Create new CLI command admin crl_regen for recovery process
+821929 - Typo: You -&gt; Your
+822119 - [cli] repo create without &quot;<a  rel="nofollow" href="http://&quot">http://&quot</a>; in url - python traceback
+822484 - [cli] sync_plan list traceback
+823688 - mouse cursor no longer turns to 'working' icon during ajax requests
+824069 - katello CLI 'product list' should show marketing and engineering product relationships
+824581 - GPG Key added to product/repo not added to existing instances which are subscribed to that product/repo
+826581 - Hovering mouse from one top-level nav item to the next does not update 2nd level nav
+827087 - Package sisu-cglib should not be built for RHEL6.x with a dependency on ant &gt; 1.7.1
+827108 - CLI reads &quot;activation key&quot; instead of &quot;gpg key&quot; for update in help.
+828447 - CVE-2012-5605 Cloudforms grinder: /var/lib/pulp/cache/grinder directory is world-writeable.
+828533 - katello agent AMQP port does not match /etc/services
+829208 - Manifest import fail after creating a custom product
+829437 - Hitting enter with blank field for GPG name returns JSON content
+829794 - Trying to access many top-level menu items as a user w/ no rights throws ISEs rather than permission denied.
+830176 - New System tooltip not localized
+831664 - Repository sync failures not displaying detailed error in Notices
+834006 - Templates: Package Listing in &quot;Eligible Content&quot; (sometimes) hangs/never renders
+834013 - SAM is hiding the releaseVer variable from json causing subscription-manager-gui to disable the Release dropdown.
+834242 - After user creation, the user name is not appearing in left pane.
+834646 - IP Address for subscribed 6Server (6.3) system not displayed
+834697 - Error in sasl_client_start when installing packages to subscribed client via web ui
+835586 - UnicodeDecodeError: 'utf8' codec can't decode byte 0xe9 in position 270: invalid continuation byte
+835591 - activation-key --limit not working
+835875 - Runtime Error Could not execute JDBC batch update at org.postgresql.jdbc2.AbstractJdbc2Statement$BatchResultHandler.handleError:2,573
+836339 - Total count of users is incorrect when looking at one's user profile page
+836575 - 'ascii' codec error while assigning role to user
+837000 - [RFE] when updating sync plan by CLI, it resets the interval.
+839005 - remove the &quot;force&quot; checkbox from importing manifest
+840616 - katello-configure --help optparse.rb:395:in `+': can't convert nil into String (TypeError)
+840624 - Post creating new environment in headpin, webui returns row:NotFound error
+840625 - Post 'import manifest' subscriptions return row:NotFound
+841000 - Auto-complete field displaying json traceback if elasticsearch text is entered
+841289 - inconsistency on system info: Katello-Candlepin: unresponsive &quot;Systems&quot; page
+841300 - Zoom out on 2-Pane page causes rendering error
+841310 - /api/pools does not work with admin
+841686 - Selecting an organization from the Orgs selector shifts the org name to the left
+841691 - Systems page always shows lo interface IP on list
+841984 - Creating new user displays confusing/misleading notification
+841998 - Login: Attempting to login w/o selecting org throws error
+842003 - Content Search - Errata: Hitting submit on a blank search in the &quot;Repos&quot; div throws error
+842005 - Content Search - Products: Hitting &quot;Add&quot; makes button bounce to next line
+842010 - Content Search - Packages: Entering a string in Repos field and hitting enter returns error
+842252 - [Content Search] When all packages/errata loaded, the link to 'show 25 more' should be removed/disabled from UI
+842256 - [Content Search] The 'Show' drop down shows 'errata' as default selection even if user click on packages link to list
+842271 - CLI: list the &quot;bugfix&quot; errata for system group shows empty result
+842569 - UI - &quot;Symbol as array index (TypeError)&quot; Error when clicking on errata install result status &quot;Install Finished&quot; link for system groups.
+842838 - Content Search: Compare - No way to remove packages/repos from compare, after adding them.
+842858 - lock icon missing for promotions in review state
+843059 - Content Search - Packages:  Auto Complete widget should provide only refined content depending on Repos
+843061 - Creating repo no longer works when Product name has multibyte text
+843064 - Content Search - Products:  Not required unless searching for Products itself, it's misleading when searching for Repos, Packages and Errata
+843161 - Content Search: Compare - need tooltips or other methods to extend long lines in fields.
+843165 - Content Search: Compare - Repo compare UI inexplicably expands to all/multiple environments upon return from Compare
+843462 - system unregister should remove itself from the associated system groups too
+843529 - UI - Error is displayed when clicking on system group event when system is missing.
+843845 - Katello Webui dashboard does not render the pie chart (graph) in the appropriate location
+844414 - Interstitial org selector leaves user with no permissions with no options
+844417 - User roles selector missing Plus/Minus signs
+844678 - &quot;Multi-entitlement not supported for pool with id&quot; with activation key and custom product
+844796 - async import manifest import progress causing errors
+844806 - katello incorrectly prevents products with the same name in an organization
+845060 - UI - Errata search by empty type in content search loads endless.
+845096 - Some types of notifications don't go away on their own
+845198 - Locale cannot be switched
+845224 - Pulp can't connect to qpid on RHEL 6.2
+845576 - Subscription quantity button does not align with text
+845580 - Subscription quantity button does not have caption
+845613 - System status discrepancy between Systems list and selected system panel
+845668 - Spinner never stops after adding system to system group on FF3.6
+845995 - CLI: wrong error when activation key name or system group name is wrong.
+846251 - CLI: message issue when creating system group with existing name.
+846482 - Bunch of icons showing up in duplicate alongside changetset history details
+846719 - &quot;Disclaimer&quot; and &quot;Terms of Use&quot; links go nowhere
+847002 - Web pages fail to render all elements and colors correctly in IE8 and IE9
+847115 - Extend scroll bug on content tab, with &gt; 50 subscriptions only the first 50 will populate.
+847858 - Blind Rescue causes Activation Key Pools to be Removed when an Exception is thrown
+848038 - Locale files for CLI are not installed
+849224 - The thin server on sam installations will listen on all ip addresses, should listen on localhost only.
+850342 - As a user I would like the organization selector at login to provide feedback once I have selected the org I wish to login to.
+850790 - Content promotion from CLI no longer works
+851080 - CLI: product promote shows strange error
+851142 - CLI: changeset update shows strange error
+851512 - Selinux issue on /etc/candlepin/certs/* files preventing httpd to start
+852006 - 'Type' field shouldn't be empty under 'changeset  list' command and should show the changeset type e.g. (deletion/promotion)
+852119 - Setting initial environment on org create no longer works
+852167 - Alignment off in content search result tree
+852199 - CVE-2012-3538 pulp: admin password logged in plaintext in world-readable katello/production.log
+852316 - CLI: wrong query error is shown for &quot;system tasks&quot; command
+852388 - [apidoc] No documentation for &quot;remote&quot; actions in katello/apidoc/
+852791 - Button without label in Content search
+852804 - Content search does not show results due to a JS error
+853056 - Cli command &quot;system register&quot; without an environment returns &quot;not found&quot;
+853229 - Regression in error notification when sync plan time is left blank
+853356 - Syncronization raises an exception when package have a different name structure
+853445 - trace-back upon adding ERRATA to deletion changeset
+853995 - Error is incorrect for non-existing systems
+854697 - After manifest upload fails with bad repo url, manifest can no longer be uploaded at all, even after url is fixed
+855184 - Using --add_package gives undefined method `empty?' for nil:NilClass error
+855267 - [RFE] in &quot;product&quot; CLI commands add new option &quot;product_id&quot;
+855406 - rubygem-redcarpet should not be needed in runtime
+856220 - Katello installer fails because Tomcat 6 is not up during seed
+857078 - `yum update katello` fails: unpacking of archive failed on file /usr/share/katello/public/fonts: cpio: rename
+857230 - [Content Search] Mouse over errata item displays error message in the web ui
+857274 - Promotion stuck in &quot;applying&quot; status
+857499 - When logging in user which has no permissions, user is told to choose an org, but obviously cannot.
+857539 - Clicking the &quot;contract&quot; arrow in the org selector on the main UI does not contract the picker
+857550 - ReST calls appear to be failing on Environment specific requests with 'NoneType' object has no attribute '__getitem__'
+857574 - German locale seems to have been switched to Russian in the web interface and another language for the cli
+857720 - Javascript error if selecting Org in Providers page
+857727 - Uploading GPG key on multiple Orgs leaves web ui in bad state
+857842 - CLI: &quot;/usr/share/katello/script/katello-debug --notar&quot; does not generate packages dir
+858011 - CFSE tracker bug for object-labeling
+858013 - katello-configure config option for KATELLO_JOB_WORKERS
+858038 - Installer sets 2 thin processes no matter what
+858193 - After uploading manifest, javascript error:  TypeError: P.data(&quot;jsp&quot;) is undefined
+858277 - Installer (tomcat6) fails due to bad dependency
+858358 - [RFE] Hide password creation and Email fields at user creation time if LDAP auth is enabled in CFSE
+858360 - [RFE] katello-upgrade should take care of stopping and starting services
+858363 - katello-cli and katello-cli-headpin should now how to handle upgrading to prevent file conflicts over client.conf.
+858661 - impossible to remove not promoted repo: &quot;Repository cannot be deleted since it has already been promoted.&quot;
+858678 - rhsm registering for duplicate name fails: ERROR:  duplicate key value violates unique constraint &quot;index_systems_on_name_and_environment_id&quot;
+858682 - Cancelling a sync shows success  in the dashboard
+858706 - Configuration breaks badly if certain AD variables are missing
+858960 - [ALL LANG][CFSE CLI] Run 'kateloo --help' with no en_US.UTF-8 locale produced traceback: 'ascii' codec can't encode characters in position.
+859329 - [CFSE GUI] Unexpected code is displayed in the error message when uploading an empty file or no gpg file to GPG Key.
+859407 - Puppet exec timeout not honored during configuration
+859415 - Simple org creation not usable
+859442 - System Panel - System Group dropdown menu does not contain system groups
+859604 - [CFSE GUI] Upexpected code is displayed in the 'undefined method...Click here for more details' message.
+859784 - [GFSE GUI] Unexpected code is displayed in the message when exporting a system template.
+859963 - Systems&gt; $system &gt; Content &gt; Packages: Improperly encoded section header reads &quot;&amp;#9650&quot;
+860251 - CloudForms System Engine not using branded Red Hat favicon
+860421 - subscription-manager refresh throws LdapFluff::FreeIPA::MemberService::UIDNotFoundException
+860702 - Only systems belonging to Organization's groups will be shown on Systems page, if at least one system group is defined.
+860709 - After upgrading CFSE Pulp is not working correctly
+862441 - Answering 'N' to stopping services question during upgrade needs to provide correct information
+862997 - navigate &quot;content search --&gt; Repository comparison&quot;, spinner doesn't stop when user click 'show 25 more'
+863187 - failed to sync: ('Package [%s] does not exist', u'b017e5e0-6d3e-4a9b-b3bb-53f55fc3e209')
+863252 - katello-selinux-enable throws error
+864216 - IE8 IE9 Content Search Rows - no Arrow and no expansion (basically unusable)
+864372 - CLI - some keys does not work in &quot;shell&quot;
+864936 - Product labels are not currently required to be unique.
+864999 - pulp doesnt handle errata spanning across multiple repos case
+865528 - Incorrect credentials shows strange bug &quot;string indices must be integers&quot;
+865811 - Pulp timeouts under load
+869575 - changeset update --add_product: &quot;More than 1 product found with the name or label provided ...&quot; - but actually not
+871086 - template export fails: &quot;error: string indices must be integers, not str&quot;
+872096 - Configuration files after upgrade are not deployed
+872305 - When importing manifest, Katello doesn't scope the client certificate to access CDN by owner
+872487 - CVE-2012-4574 pulp /etc/pulp/pulp.conf world readable, contains default admin password
+873850 - Cannot create a custom product without explicitly setting a label
+874160 - [upgrade] 1.0 to 1.1 upgrades brings UI error on Organizations edit page
+874185 - After 1.0 to 1.1 upgrade, seeing duplicated repositories in UI
+874768 - [1.0.1 to 1.1 UPGRADE] Katello database failed
+882129 - CVE-2012-5603 CloudForms Katello: lack of authorization in proxies_controller.rb
+882138 - CVE-2012-5605 CloudForms grinder: /var/lib/pulp/cache/grinder directory is world-writeable
+
+6. Package List:
+
+CloudForms Tools for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/CloudForms/SRPMS/gofer-0.66.1-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/CloudForms/SRPMS/gofer-0.66.1-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/CloudForms/SRPMS/katello-agent-1.1.2-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/CloudForms/SRPMS/katello-agent-1.1.2-1.el5.src.rpm</a>
+
+noarch:
+gofer-0.66.1-2.el5.noarch.rpm
+gofer-package-0.66.1-2.el5.noarch.rpm
+gofer-watchdog-0.66.1-2.el5.noarch.rpm
+katello-agent-1.1.2-1.el5.noarch.rpm
+python-gofer-0.66.1-2.el5.noarch.rpm
+
+CloudForms Tools for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/gofer-0.66.1-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/gofer-0.66.1-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-agent-1.1.2-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-agent-1.1.2-1.el6cf.src.rpm</a>
+
+noarch:
+gofer-0.66.1-2.el6cf.noarch.rpm
+gofer-package-0.66.1-2.el6cf.noarch.rpm
+gofer-watchdog-0.66.1-2.el6cf.noarch.rpm
+katello-agent-1.1.2-1.el6cf.noarch.rpm
+python-gofer-0.66.1-2.el6cf.noarch.rpm
+
+System Engine for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/candlepin-0.7.8.1-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/candlepin-0.7.8.1-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/gofer-0.66.1-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/gofer-0.66.1-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/grinder-0.0.150-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/grinder-0.0.150-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-1.1.12-22.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-1.1.12-22.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-certs-tools-1.1.8-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-certs-tools-1.1.8-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-cli-1.1.8-12.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-cli-1.1.8-12.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-cli-tests-1.1.5-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-cli-tests-1.1.5-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-configure-1.1.9-12.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-configure-1.1.9-12.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-selinux-1.1.1-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/katello-selinux-1.1.1-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/pulp-1.1.14-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/pulp-1.1.14-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/quartz-2.1.5-4.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/quartz-2.1.5-4.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-apipie-rails-0.0.11-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/rubygem-apipie-rails-0.0.11-3.el6cf.src.rpm</a>
+
+noarch:
+candlepin-0.7.8.1-1.el6cf.noarch.rpm
+candlepin-devel-0.7.8.1-1.el6cf.noarch.rpm
+candlepin-selinux-0.7.8.1-1.el6cf.noarch.rpm
+candlepin-tomcat6-0.7.8.1-1.el6cf.noarch.rpm
+gofer-0.66.1-2.el6cf.noarch.rpm
+gofer-package-0.66.1-2.el6cf.noarch.rpm
+gofer-watchdog-0.66.1-2.el6cf.noarch.rpm
+grinder-0.0.150-1.el6cf.noarch.rpm
+katello-1.1.12-22.el6cf.noarch.rpm
+katello-all-1.1.12-22.el6cf.noarch.rpm
+katello-api-docs-1.1.12-22.el6cf.noarch.rpm
+katello-certs-tools-1.1.8-1.el6cf.noarch.rpm
+katello-cli-1.1.8-12.el6cf.noarch.rpm
+katello-cli-common-1.1.8-12.el6cf.noarch.rpm
+katello-cli-tests-1.1.5-2.el6cf.noarch.rpm
+katello-common-1.1.12-22.el6cf.noarch.rpm
+katello-configure-1.1.9-12.el6cf.noarch.rpm
+katello-glue-candlepin-1.1.12-22.el6cf.noarch.rpm
+katello-glue-pulp-1.1.12-22.el6cf.noarch.rpm
+katello-selinux-1.1.1-2.el6cf.noarch.rpm
+pulp-1.1.14-1.el6cf.noarch.rpm
+pulp-admin-1.1.14-1.el6cf.noarch.rpm
+pulp-client-lib-1.1.14-1.el6cf.noarch.rpm
+pulp-common-1.1.14-1.el6cf.noarch.rpm
+pulp-consumer-1.1.14-1.el6cf.noarch.rpm
+pulp-selinux-server-1.1.14-1.el6cf.noarch.rpm
+python-gofer-0.66.1-2.el6cf.noarch.rpm
+quartz-2.1.5-4.el6cf.noarch.rpm
+rubygem-apipie-rails-0.0.11-3.el6cf.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3538.html">https://www.redhat.com/security/data/cve/CVE-2012-3538.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4574.html">https://www.redhat.com/security/data/cve/CVE-2012-4574.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5603.html">https://www.redhat.com/security/data/cve/CVE-2012-5603.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5605.html">https://www.redhat.com/security/data/cve/CVE-2012-5605.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/index.html">https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Installation_Guide/index.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Technical_Notes/index.html">https://access.redhat.com/knowledge/docs/en-US/CloudForms/1.1/html/Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQvmOhXlSAg2UNWIIRAqQHAJ9GSB25gII9bR3q50ejaFloEQhPUQCdHGmG
+MMTOOD/1T9gVIwx1xpRHHHI=
+=G5qC
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

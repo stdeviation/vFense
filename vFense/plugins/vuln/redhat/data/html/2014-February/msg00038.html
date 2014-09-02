@@ -1,0 +1,245 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0223&#45;01] Moderate: libtiff security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 27 Feb 2014 13:42:26 &#45;0500 -->
+<!--X-Message-Id: 201402271842.s1RIgPtP005904@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0223-01] Moderate: libtiff security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0223-01] Moderate: libtiff security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0223-01] Moderate: libtiff security update</li>
+<li><em>Date</em>: Thu, 27 Feb 2014 18:42:25 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libtiff security update
+Advisory ID:       RHSA-2014:0223-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0223.html">https://rhn.redhat.com/errata/RHSA-2014-0223.html</a>
+Issue date:        2014-02-27
+CVE Names:         CVE-2013-1960 CVE-2013-1961 CVE-2013-4231 
+                   CVE-2013-4232 CVE-2013-4243 CVE-2013-4244 
+=====================================================================
+
+1. Summary:
+
+Updated libtiff packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The libtiff packages contain a library of functions for manipulating Tagged
+Image File Format (TIFF) files.
+
+A heap-based buffer overflow and a use-after-free flaw were found in the
+tiff2pdf tool. An attacker could use these flaws to create a specially
+crafted TIFF file that would cause tiff2pdf to crash or, possibly, execute
+arbitrary code. (CVE-2013-1960, CVE-2013-4232)
+
+Multiple buffer overflow flaws were found in the gif2tiff tool. An attacker
+could use these flaws to create a specially crafted GIF file that could
+cause gif2tiff to crash or, possibly, execute arbitrary code.
+(CVE-2013-4231, CVE-2013-4243, CVE-2013-4244)
+
+Multiple buffer overflow flaws were found in the tiff2pdf tool. An attacker
+could use these flaws to create a specially crafted TIFF file that would
+cause tiff2pdf to crash. (CVE-2013-1961)
+
+Red Hat would like to thank Emmanuel Bouillon of NCI Agency for reporting
+CVE-2013-1960 and CVE-2013-1961. The CVE-2013-4243 issue was discovered by
+Murray McAllister of the Red Hat Security Response Team, and the
+CVE-2013-4244 issue was discovered by Huzaifa Sidhpurwala of the Red Hat
+Security Response Team.
+
+All libtiff users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. All running
+applications linked against libtiff must be restarted for this update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+952131 - CVE-2013-1961 libtiff (tiff2pdf): Stack-based buffer overflow with malformed image-length and resolution
+952158 - CVE-2013-1960 libtiff (tiff2pdf): Heap-based buffer overflow in t2_process_jpeg_strip()
+995965 - CVE-2013-4231 libtiff (gif2tiff): GIF LZW decoder missing datasize value check
+995975 - CVE-2013-4232 libtiff (tiff2pdf): use-after-free in t2p_readwrite_pdf_image()
+996052 - CVE-2013-4243 libtiff (gif2tiff): possible heap-based buffer overflow in readgifimage()
+996468 - CVE-2013-4244 libtiff (gif2tiff): OOB Write in LZW decompressor
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libtiff-3.8.2-19.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libtiff-3.8.2-19.el5_10.src.rpm</a>
+
+i386:
+libtiff-3.8.2-19.el5_10.i386.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.i386.rpm
+
+x86_64:
+libtiff-3.8.2-19.el5_10.i386.rpm
+libtiff-3.8.2-19.el5_10.x86_64.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.i386.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libtiff-3.8.2-19.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libtiff-3.8.2-19.el5_10.src.rpm</a>
+
+i386:
+libtiff-debuginfo-3.8.2-19.el5_10.i386.rpm
+libtiff-devel-3.8.2-19.el5_10.i386.rpm
+
+x86_64:
+libtiff-debuginfo-3.8.2-19.el5_10.i386.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.x86_64.rpm
+libtiff-devel-3.8.2-19.el5_10.i386.rpm
+libtiff-devel-3.8.2-19.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libtiff-3.8.2-19.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libtiff-3.8.2-19.el5_10.src.rpm</a>
+
+i386:
+libtiff-3.8.2-19.el5_10.i386.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.i386.rpm
+libtiff-devel-3.8.2-19.el5_10.i386.rpm
+
+ia64:
+libtiff-3.8.2-19.el5_10.i386.rpm
+libtiff-3.8.2-19.el5_10.ia64.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.i386.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.ia64.rpm
+libtiff-devel-3.8.2-19.el5_10.ia64.rpm
+
+ppc:
+libtiff-3.8.2-19.el5_10.ppc.rpm
+libtiff-3.8.2-19.el5_10.ppc64.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.ppc.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.ppc64.rpm
+libtiff-devel-3.8.2-19.el5_10.ppc.rpm
+libtiff-devel-3.8.2-19.el5_10.ppc64.rpm
+
+s390x:
+libtiff-3.8.2-19.el5_10.s390.rpm
+libtiff-3.8.2-19.el5_10.s390x.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.s390.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.s390x.rpm
+libtiff-devel-3.8.2-19.el5_10.s390.rpm
+libtiff-devel-3.8.2-19.el5_10.s390x.rpm
+
+x86_64:
+libtiff-3.8.2-19.el5_10.i386.rpm
+libtiff-3.8.2-19.el5_10.x86_64.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.i386.rpm
+libtiff-debuginfo-3.8.2-19.el5_10.x86_64.rpm
+libtiff-devel-3.8.2-19.el5_10.i386.rpm
+libtiff-devel-3.8.2-19.el5_10.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1960.html">https://www.redhat.com/security/data/cve/CVE-2013-1960.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1961.html">https://www.redhat.com/security/data/cve/CVE-2013-1961.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4231.html">https://www.redhat.com/security/data/cve/CVE-2013-4231.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4232.html">https://www.redhat.com/security/data/cve/CVE-2013-4232.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4243.html">https://www.redhat.com/security/data/cve/CVE-2013-4243.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4244.html">https://www.redhat.com/security/data/cve/CVE-2013-4244.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTD4b4XlSAg2UNWIIRAkSvAJ0Z+cFZba9LeDWda2wP9lkQI8v5lQCfa64p
+XDdTPnId1DhffWI++tiUrNI=
+=KXd6
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

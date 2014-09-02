@@ -1,0 +1,176 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0025&#45;01] Moderate: cfme security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 14 Jan 2014 14:25:38 &#45;0500 -->
+<!--X-Message-Id: 201401141925.s0EJPbTu032202@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0025-01] Moderate: cfme security, bug fix,	and enhancement up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0025-01] Moderate: cfme security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:0025-01] Moderate: cfme security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 14 Jan 2014 19:25:37 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: cfme security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:0025-01
+Product:           Red Hat CloudForms
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0025.html">https://rhn.redhat.com/errata/RHSA-2014-0025.html</a>
+Issue date:        2014-01-14
+CVE Names:         CVE-2013-6443 
+=====================================================================
+
+1. Summary:
+
+Updated cfme packages that fix one security issue, several bugs, and add
+various enhancements are now available for Red Hat CloudForms 3.0.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Management Engine - noarch, x86_64
+
+3. Description:
+
+Red Hat CloudForms Management Engine delivers the insight, control, and
+automation enterprises need to address the challenges of managing virtual
+environments, which are far more complex than physical ones. This
+technology enables enterprises with existing virtual infrastructures
+to improve visibility and control, and those just starting virtualization
+deployments to build and operate a well-managed virtual infrastructure.
+
+It was found that sending a GET request for a destructive action could
+bypass the Ruby on Rails protect_from_forgery mechanism. A remote attacker
+could use this flaw to perform Cross-Site Request Forgery (CSRF) attacks
+against CloudForms applications. (CVE-2013-6443)
+
+This issue was discovered by Martin Povolný of Red Hat.
+
+This update fixes several bugs and adds multiple enhancements.
+Documentation for these changes will be available shortly from the Red Hat
+CloudForms 3.0 Management Engine 5.2 Technical Notes linked to in the
+References section.
+
+All users of Red Hat CloudForms are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues and add
+these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1044178 - CVE-2013-6443 CFME: GET request CSRF vulnerability
+
+6. Package List:
+
+Management Engine:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/cfme-5.2.1.8-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/cfme-5.2.1.8-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-activerecord-3.2.13-4.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-activerecord-3.2.13-4.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-linux_admin-0.5.6-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-linux_admin-0.5.6-1.el6cf.src.rpm</a>
+
+noarch:
+ruby193-rubygem-activerecord-3.2.13-4.el6cf.noarch.rpm
+ruby193-rubygem-linux_admin-0.5.6-1.el6cf.noarch.rpm
+
+x86_64:
+cfme-5.2.1.8-1.el6cf.x86_64.rpm
+cfme-appliance-5.2.1.8-1.el6cf.x86_64.rpm
+cfme-debuginfo-5.2.1.8-1.el6cf.x86_64.rpm
+cfme-lib-5.2.1.8-1.el6cf.x86_64.rpm
+mingw32-cfme-host-5.2.1.8-1.el6cf.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6443.html">https://www.redhat.com/security/data/cve/CVE-2013-6443.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/CloudForms/3.0/html/Management_Engine_5.2_Technical_Notes/index.html">https://access.redhat.com/site/documentation/en-US/CloudForms/3.0/html/Management_Engine_5.2_Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS1Y7xXlSAg2UNWIIRAuvHAJ95+Uwp3UQ3nWPd3kNR701FHOT42QCdHg2s
+Dzz8/DB8r1bMka+47L1wbJk=
+=NuRZ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

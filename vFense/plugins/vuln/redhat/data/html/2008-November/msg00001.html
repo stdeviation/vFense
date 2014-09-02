@@ -1,0 +1,371 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0957&#45;02] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Nov 2008 08:35:19 &#45;0500 -->
+<!--X-Message-Id: 200811041335.mA4DZIvL016850@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0957-02] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0957-02] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0957-02] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 4 Nov 2008 08:35:18 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2008:0957-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0957.html">https://rhn.redhat.com/errata/RHSA-2008-0957.html</a>
+Issue date:        2008-11-04
+CVE Names:         CVE-2006-5755 CVE-2007-5907 CVE-2008-2372 
+                   CVE-2008-3276 CVE-2008-3527 CVE-2008-3833 
+                   CVE-2008-4210 CVE-2008-4302 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that resolve several security issues and fix
+various bugs are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+* the Xen implementation did not prevent applications running in a
+para-virtualized guest from modifying CR4 TSC. This could cause a local
+denial of service. (CVE-2007-5907, Important)
+
+* Tavis Ormandy reported missing boundary checks in the Virtual Dynamic
+Shared Objects (vDSO) implementation. This could allow a local unprivileged
+user to cause a denial of service or escalate privileges. (CVE-2008-3527,
+Important)
+
+* the do_truncate() and generic_file_splice_write() functions did not clear
+the setuid and setgid bits. This could allow a local unprivileged user to
+obtain access to privileged information. (CVE-2008-4210, CVE-2008-3833,
+Important)
+
+* a flaw was found in the Linux kernel splice implementation. This could
+cause a local denial of service when there is a certain failure in the
+add_to_page_cache_lru() function. (CVE-2008-4302, Important)
+
+* a flaw was found in the Linux kernel when running on AMD64 systems.
+During a context switch, EFLAGS were being neither saved nor restored. This
+could allow a local unprivileged user to cause a denial of service.
+(CVE-2006-5755, Low)
+
+* a flaw was found in the Linux kernel virtual memory implementation. This
+could allow a local unprivileged user to cause a denial of service.
+(CVE-2008-2372, Low)
+
+* an integer overflow was discovered in the Linux kernel Datagram
+Congestion Control Protocol (DCCP) implementation. This could allow a
+remote attacker to cause a denial of service. By default, remote DCCP is
+blocked by SELinux. (CVE-2008-3276, Low)
+
+In addition, these updated packages fix the following bugs:
+
+* random32() seeding has been improved. 
+
+* in a multi-core environment, a race between the QP async event-handler
+and the destro_qp() function could occur. This led to unpredictable results
+during invalid memory access, which could lead to a kernel crash.
+
+* a format string was omitted in the call to the request_module() function.
+
+* a stack overflow caused by an infinite recursion bug in the binfmt_misc
+kernel module was corrected.
+
+* the ata_scsi_rbuf_get() and ata_scsi_rbuf_put() functions now check for
+scatterlist usage before calling kmap_atomic().
+
+* a sentinel NUL byte was added to the device_write() function to ensure
+that lspace.name is NUL-terminated.
+
+* in the character device driver, a range_is_allowed() check was added to
+the read_mem() and write_mem() functions. It was possible for an
+illegitimate application to bypass these checks, and access /dev/mem beyond
+the 1M limit by calling mmap_mem() instead. Also, the parameters of
+range_is_allowed() were changed to cleanly handle greater than 32-bits of
+physical address on 32-bit architectures.
+
+* some of the newer Nehalem-based systems declare their CPU DSDT entries as
+type &quot;Alias&quot;. During boot, this caused an &quot;Error attaching device data&quot;
+message to be logged.
+
+* the evtchn event channel device lacked locks and memory barriers. This
+has led to xenstore becoming unresponsive on the Itanium® architecture.
+
+* sending of gratuitous ARP packets in the Xen frontend network driver is
+now delayed until the backend signals that its carrier status has been
+processed by the stack.
+
+* on forcedeth devices, whenever setting ethtool parameters for link speed,
+the device could stop receiving interrupts.
+
+* the CIFS 'forcedirectio' option did not allow text to be appended to files.
+
+* the gettimeofday() function returned a backwards time on Intel® 64.
+
+* residual-count corrections during UNDERRUN handling were added to the
+qla2xxx driver.                                                   
+
+* the fix for a small quirk was removed for certain Adaptec controllers for
+which it caused problems.
+
+* the &quot;xm trigger init&quot; command caused a domain panic if a userland
+application was running on a guest on the Intel® 64 architecture.
+
+Users of kernel should upgrade to these updated packages, which contain
+backported patches to correct these issues. 
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+377561 - CVE-2007-5907 kernel-xen 3.1.1 does not prevent modification of the CR4 TSC from  applications (DoS possible)
+452666 - CVE-2008-2372 kernel: Reinstate ZERO_PAGE optimization in 'get_user_pages()' and fix XIP
+457718 - CVE-2006-5755 kernel: local denial of service due to NT bit leakage
+458021 - kernel: random32: seeding improvement [rhel-5.2.z]
+458759 - kernel: dlm: dlm/user.c input validation fixes [rhel-5.2.z]
+458781 - LTC44618-Race possibility between QP async handler and destroy_qp()
+459226 - CVE-2008-3276 Linux kernel dccp_setsockopt_change() integer overflow
+459461 - kernel: cpufreq: fix format string bug [rhel-5.2.z]
+459464 - kernel: binfmt_misc.c: avoid potential kernel stack overflow [rhel-5.2.z]
+460251 - CVE-2008-3527 kernel: missing boundary checks in syscall/syscall32_nopage()
+460638 - [REG][5.3] The system crashed by the NULL pointer access with kmap_atomic() of ata_scsi_rbuf_get().
+460858 - kernel: devmem: add range_is_allowed() check to mmap_mem() [rhel-5.2.z]
+460868 - RHEL5.2  ACPI core bug
+461099 - evtchn device lacks lock and barriers
+461457 - Coordinate gratuitous ARP with backend network status
+461894 - nVidia MCP55 MCP55 Ethernet (rev a3) not functional on kernel 2.6.18-53.1.4
+462434 - CVE-2008-4302 kernel: splice: fix bad unlock_page() in error case
+462591 - CIFS option forcedirectio fails to allow the appending of text to files.
+462860 - RHEL5.3: Fix time of gettimeofday() going backward (EM64T) (*)
+463661 - CVE-2008-4210 kernel: open() call allows setgid bit when user is not in new file's group
+464450 - CVE-2008-3833 kernel: remove SUID when splicing into an inode
+465741 - [QLogic 5.2.z bug] qla2xxx - Additional residual-count corrections during UNDERRUN handling.
+466427 - Significant regression in time() performance
+466885 - [aacraid 5.2.z] aac_srb: aac_fib_send failed with status 8195
+467105 - xm trigger &amp;lt;domain&amp;gt; init causes kernel panic.
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-92.1.17.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-92.1.17.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-92.1.17.el5.i686.rpm
+kernel-PAE-2.6.18-92.1.17.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-92.1.17.el5.i686.rpm
+kernel-PAE-devel-2.6.18-92.1.17.el5.i686.rpm
+kernel-debug-2.6.18-92.1.17.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-92.1.17.el5.i686.rpm
+kernel-debug-devel-2.6.18-92.1.17.el5.i686.rpm
+kernel-debuginfo-2.6.18-92.1.17.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-92.1.17.el5.i686.rpm
+kernel-devel-2.6.18-92.1.17.el5.i686.rpm
+kernel-headers-2.6.18-92.1.17.el5.i386.rpm
+kernel-xen-2.6.18-92.1.17.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-92.1.17.el5.i686.rpm
+kernel-xen-devel-2.6.18-92.1.17.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-92.1.17.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-debug-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-devel-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-headers-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-xen-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-92.1.17.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-92.1.17.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-92.1.17.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-92.1.17.el5.i686.rpm
+kernel-PAE-2.6.18-92.1.17.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-92.1.17.el5.i686.rpm
+kernel-PAE-devel-2.6.18-92.1.17.el5.i686.rpm
+kernel-debug-2.6.18-92.1.17.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-92.1.17.el5.i686.rpm
+kernel-debug-devel-2.6.18-92.1.17.el5.i686.rpm
+kernel-debuginfo-2.6.18-92.1.17.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-92.1.17.el5.i686.rpm
+kernel-devel-2.6.18-92.1.17.el5.i686.rpm
+kernel-headers-2.6.18-92.1.17.el5.i386.rpm
+kernel-xen-2.6.18-92.1.17.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-92.1.17.el5.i686.rpm
+kernel-xen-devel-2.6.18-92.1.17.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-92.1.17.el5.ia64.rpm
+kernel-debug-2.6.18-92.1.17.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-92.1.17.el5.ia64.rpm
+kernel-debug-devel-2.6.18-92.1.17.el5.ia64.rpm
+kernel-debuginfo-2.6.18-92.1.17.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-92.1.17.el5.ia64.rpm
+kernel-devel-2.6.18-92.1.17.el5.ia64.rpm
+kernel-headers-2.6.18-92.1.17.el5.ia64.rpm
+kernel-xen-2.6.18-92.1.17.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-92.1.17.el5.ia64.rpm
+kernel-xen-devel-2.6.18-92.1.17.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-92.1.17.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-92.1.17.el5.ppc64.rpm
+kernel-debug-2.6.18-92.1.17.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-92.1.17.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-92.1.17.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-92.1.17.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-92.1.17.el5.ppc64.rpm
+kernel-devel-2.6.18-92.1.17.el5.ppc64.rpm
+kernel-headers-2.6.18-92.1.17.el5.ppc.rpm
+kernel-headers-2.6.18-92.1.17.el5.ppc64.rpm
+kernel-kdump-2.6.18-92.1.17.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-92.1.17.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-92.1.17.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-92.1.17.el5.s390x.rpm
+kernel-debug-2.6.18-92.1.17.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-92.1.17.el5.s390x.rpm
+kernel-debug-devel-2.6.18-92.1.17.el5.s390x.rpm
+kernel-debuginfo-2.6.18-92.1.17.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-92.1.17.el5.s390x.rpm
+kernel-devel-2.6.18-92.1.17.el5.s390x.rpm
+kernel-headers-2.6.18-92.1.17.el5.s390x.rpm
+kernel-kdump-2.6.18-92.1.17.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-92.1.17.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-92.1.17.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-debug-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-devel-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-headers-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-xen-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-92.1.17.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-92.1.17.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5755">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-5755</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5907">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5907</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2372">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2372</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3276">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3276</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3527">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3527</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3833">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3833</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4210">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4210</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4302">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4302</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJEE9kXlSAg2UNWIIRAtXuAJ9r0hH8Bfb/o53FNKpG4whntJ9RpQCeNM/f
+Ji64btu0eUfOmPlR5p0kq78=
+=x7xq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

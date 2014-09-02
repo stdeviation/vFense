@@ -1,0 +1,178 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1185&#45;01] Important: Red Hat JBoss Fuse 6.0.0 patch 2 -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 29 Aug 2013 19:33:38 &#45;0400 -->
+<!--X-Message-Id: 201308292333.r7TNXaOI003294@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1185-01] Important: Red Hat JBoss Fuse 6.0.0 patch 2</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00022.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1185-01] Important: Red Hat JBoss Fuse 6.0.0 patch 2</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1185-01] Important: Red Hat JBoss Fuse 6.0.0 patch 2</li>
+<li><em>Date</em>: Thu, 29 Aug 2013 23:33:36 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Fuse 6.0.0 patch 2
+Advisory ID:       RHSA-2013:1185-01
+Product:           Fuse Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1185.html">https://rhn.redhat.com/errata/RHSA-2013-1185.html</a>
+Issue date:        2013-08-29
+CVE Names:         CVE-2013-0269 CVE-2013-1768 CVE-2013-1821 
+                   CVE-2013-2160 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Fuse 6.0.0 patch 2, which fixes several security issues and
+various bugs, is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Fuse 6.0.0, based on Apache ServiceMix, provides an
+integration platform.
+
+Red Hat JBoss Fuse 6.0.0 patch 2 is an update to Red Hat JBoss Fuse 6.0.0
+and includes bug fixes. Refer to the readme file included with the patch
+files for information about these fixes.
+
+The following security issues are also resolved with this update:
+
+A flaw was found in the logging performed during deserialization of the
+BrokerFactory class in Apache OpenJPA. A remote attacker able to supply a
+serialized instance of the BrokerFactory class, which will be deserialized
+on a server, could use this flaw to write an executable file to the
+server's file system. (CVE-2013-1768)
+
+A flaw in JRuby's JSON gem allowed remote attacks by creating different
+types of malicious objects. For example, it could initiate a denial of
+service attack through resource consumption by using a JSON document to
+create arbitrary Ruby symbols, which were never garbage collected. It could
+also be exploited to create internal objects which could allow a SQL
+injection attack. (CVE-2013-0269)
+
+It was discovered that JRuby's REXML library did not properly restrict XML
+entity expansion. An attacker could use this flaw to cause a denial of
+service by tricking a Ruby application using REXML to read text nodes from
+specially-crafted XML content, which will result in REXML consuming large
+amounts of system memory. (CVE-2013-1821)
+
+Note: Red Hat JBoss Fuse 6.0.0 ships JRuby as part of the camel-ruby
+component, which allows users to define Camel routes in Ruby. The default
+use of JRuby in Red Hat JBoss Fuse 6.0.0 does not appear to expose either
+CVE-2013-0269 or CVE-2013-1821. If the version of JRuby shipped with Red
+Hat JBoss Fuse 6.0.0 was used to build a custom application, then these
+flaws could be exposed.
+
+Multiple denial of service flaws were found in the way the Apache CXF StAX
+parser implementation processed certain XML files. If a web service
+utilized the StAX parser, a remote attacker could provide a
+specially-crafted XML file that, when processed, would lead to excessive
+CPU and memory consumption. (CVE-2013-2160)
+
+Red Hat would like to thank Ruby on Rails upstream for reporting
+CVE-2013-0269, and Andreas Falkenberg of SEC Consult Deutschland GmbH, and
+Christian Mainka, Juraj Somorovsky and Joerg Schwenk of Ruhr-University
+Bochum for reporting CVE-2013-2160. Upstream acknowledges Thomas Hollstegge
+of Zweitag and Ben Murphy as the original reporters of CVE-2013-0269.
+
+All users of Red Hat JBoss Fuse 6.0 as provided from the Red Hat Customer
+Portal are advised to apply this patch.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update).
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+909029 - CVE-2013-0269 rubygem-json: Denial of Service and SQL Injection
+914716 - CVE-2013-1821 ruby: entity expansion DoS vulnerability in REXML
+929197 - CVE-2013-2160 cxf, jbossws-cxf, apache-cxf: Multiple denial of service flaws in the StAX parser
+984034 - CVE-2013-1768 openjpa: Remote arbitrary code execution by creating a serialized object and leveraging improperly secured server programs
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0269.html">https://www.redhat.com/security/data/cve/CVE-2013-0269.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1768.html">https://www.redhat.com/security/data/cve/CVE-2013-1768.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1821.html">https://www.redhat.com/security/data/cve/CVE-2013-1821.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2160.html">https://www.redhat.com/security/data/cve/CVE-2013-2160.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://cxf.apache.org/security-advisories.data/CVE-2013-2160.txt.asc">https://cxf.apache.org/security-advisories.data/CVE-2013-2160.txt.asc</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jboss.fuse&amp;downloadType=securityPatches&amp;version=6.0.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jboss.fuse&amp;downloadType=securityPatches&amp;version=6.0.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSH9ozXlSAg2UNWIIRAmRbAJ0WBNb8U1KhyttX7+rALW786Y0SJQCeKCld
+f3doC6a80mcQywcOq9tsEkI=
+=qOJi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00022.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

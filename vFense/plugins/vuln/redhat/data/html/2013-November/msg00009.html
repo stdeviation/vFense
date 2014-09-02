@@ -1,0 +1,219 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1520&#45;01] Moderate: kernel security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 14 Nov 2013 12:51:09 &#45;0500 -->
+<!--X-Message-Id: 201311141751.rAEHp8Cp010473@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1520-01] Moderate: kernel security, bug fix,	and enhancement </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1520-01] Moderate: kernel security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1520-01] Moderate: kernel security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 14 Nov 2013 17:51:07 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:1520-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1520.html">https://rhn.redhat.com/errata/RHSA-2013-1520.html</a>
+Issue date:        2013-11-14
+CVE Names:         CVE-2013-4162 CVE-2013-4299 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix two security issues, one bug, and add two
+enhancements are now available for Red Hat OpenStack 3.0.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 3 - noarch, x86_64
+
+3. Description:
+
+Red Hat OpenStack 3.0 includes a custom Red Hat Enterprise Linux 6.4
+kernel. These custom kernel packages include support for network
+namespaces; this support is required to facilitate advanced OpenStack
+Networking deployments.
+
+* A flaw was found in the way the Linux kernel's TCP/IP protocol suite
+implementation handled IPv6 sockets that used the UDP_CORK option. A local,
+unprivileged user could use this flaw to cause a denial of service.
+(CVE-2013-4162, Moderate)
+
+* An information leak flaw was found in the way the Linux kernel's device
+mapper subsystem, under certain conditions, interpreted data written to
+snapshot block devices. An attacker could use this flaw to read data from
+disk blocks in free space, which are normally inaccessible. (CVE-2013-4299,
+Moderate)
+
+Red Hat would like to thank Hannes Frederic Sowa for reporting
+CVE-2013-4162; and Fujitsu for reporting CVE-2013-4299.
+
+This update also fixes the following bug:
+
+* Prior to this update, while performing Generic Routing Encapsulation
+(GRE), the possibility of having a 802.1Q inner header was not considered
+during the Generic Segmentation Offloading (GSO). With this update, a check
+has been added to detect the use of 802.1Q and handle the packet
+accordingly. (BZ#1005804)
+
+In addition, this update adds the following enhancements:
+
+* This update adds support for Distributed Overlay Virtual Ethernet (DOVE).
+(BZ#1009025)
+
+* This update adds support for Virtual Extensible LAN (VXLAN) as an Open
+vSwitch (OVS) tunneling type. (BZ#1009006)
+
+More information on the Red Hat Enterprise Linux 6.4 kernel packages upon
+which these custom kernel packages are based is available in
+RHSA-2013:1436:
+
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1436.html">https://rhn.redhat.com/errata/RHSA-2013-1436.html</a>
+
+All Red Hat OpenStack 3.0 users deploying the OpenStack Networking service
+are advised to install these updated packages.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+Details on how to use the Red Hat Network to apply this update are
+available at <a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+This Red Hat OpenStack 3.0 kernel may be installed by running this command
+while logged in as the root user on a system that has the required
+entitlements and subscriptions attached:
+
+# yum install &quot;kernel-2.6.*.openstack.el6.x86_64&quot;
+
+Documentation for both stable and preview releases of Red Hat OpenStack is
+available at:
+
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/Red_Hat_OpenStack/">https://access.redhat.com/site/documentation/Red_Hat_OpenStack/</a>
+
+In particular it is highly recommended that all users read the Release
+Notes document for the relevant Red Hat OpenStack release prior to
+installation.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+987627 - CVE-2013-4162 Kernel: net: panic while pushing pending data out of a IPv6 socket with UDP_CORK enabled
+1004233 - CVE-2013-4299 kernel: dm: dm-snapshot data leak
+1005804 - modem-like speed when transmitting TCP to a floating IP
+
+6. Package List:
+
+OpenStack 3:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/kernel-2.6.32-358.123.4.openstack.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/kernel-2.6.32-358.123.4.openstack.el6.src.rpm</a>
+
+noarch:
+kernel-doc-2.6.32-358.123.4.openstack.el6.noarch.rpm
+kernel-firmware-2.6.32-358.123.4.openstack.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+kernel-debug-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+kernel-devel-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+kernel-headers-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+perf-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+perf-debuginfo-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+python-perf-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-358.123.4.openstack.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4162.html">https://www.redhat.com/security/data/cve/CVE-2013-4162.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4299.html">https://www.redhat.com/security/data/cve/CVE-2013-4299.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1436.html">https://rhn.redhat.com/errata/RHSA-2013-1436.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/Red_Hat_OpenStack/">https://access.redhat.com/site/documentation/Red_Hat_OpenStack/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFShQ17XlSAg2UNWIIRAtzJAJ4wvd5M6ecxXlTrbOTDzZapwIkhpACfff/6
+TG5dAEXzTLPrJAQ5e3PMV5o=
+=jO1u
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

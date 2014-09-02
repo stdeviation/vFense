@@ -1,69 +1,72 @@
 from bs4 import BeautifulSoup
 import requests
+import os
 import re
-import sys
 import logging
 import logging.config
-from time import mktime, sleep
+from vFense import VFENSE_LOGGING_CONFIG
 from datetime import datetime
 
-from vFense.db.client import r
 
-from vFense.utils.common import month_to_num_month
-from vFense.plugins.vuln import *
-from vFense.plugins.vuln.redhat._constants import *
-from vFense.plugins.vuln.redhat._db import *
-from vFense.plugins.vuln.common import build_bulletin_id
+from vFense.utils.common import decoder
+from vFense.plugins.patching.utils import build_app_id
+from vFense.plugins.vuln.redhat import Redhat, RedhatVulnApp
+from vFense.plugins.vuln.redhat._constants import (
+    RedhatDataDir, REDHAT_ARCHIVE
+)
+from vFense.plugins.vuln.redhat._db import insert_bulletin_data
 
-logging.config.fileConfig('/opt/TopPatch/conf/logging.config')
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 URL = REDHAT_ARCHIVE
 
 def get_threads():
 
-    """
-    Parse the Redhat Officlial Annouces (URL: "https://www.redhat.com/archives/rhsa-announce/") and
-    return the list of threads
+    """Parse the Redhat Official Annouces (URL: "https://www.redhat.com/archives/rhsa-announce/")
+        and return the list of threads.
 
-    BASIC USAGE:
-        >>> from vFense.plugins.vuln.redhat.get_all_redhat_updates import *
+    Basic Usage:
+        >>> from vFense.plugins.vuln.redhat.parser import get_threads
         >>> threads = get_threads()
 
-    RETURNS:
-        >>> threads[0]
-        'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
-        >>>
+    Returns:
+        List of urls
+        >>> [
+            'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
+        ]
 
     """
 
     threads=[]
     req = requests.get(URL)
     soup= BeautifulSoup(req.text)
-    for link in soup.find_all('a'):
-        href=link.get('href')
-        if "thread" in href:
-            threads.append(URL+href)
-    rh_threads = list(set(threads))
-    return(rh_threads)
+    threads = (
+        map(
+            lambda x: os.path.join(URL, x.get("href")),
+            soup.findAll(
+                "a", text=re.compile("Thread")
+            )
+        )
+    )
 
-def get_dlinks(thread):
-    """
-    Parse the Redhat update thread link and return the list of data link or message link.
+    return(threads)
+
+def get_msg_links_by_thread(thread):
+    """Parse the Redhat update thread link and return the list of data link or message link.
     Args:
-        thread (url) : This should be valid Redhat thread link.
-        e.g:
-        >>> thread
-        'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
+        thread (str) : This should be valid Redhat thread url.
 
-    BASIC USAGE:
-    >>> from vFense.plugins.vuln.redhat.get_all_redhat_updates import *
-    >>> dlinks=get_dlinks(thread)
+    Basic Usage:
+        >>> from vFense.plugins.vuln.redhat.parser import get_msg_links_by_thread
+        >>> thread = 'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
+        >>> msg_links = get_msg_links_by_thread(thread)
 
-    RETURNS:
-        >>> dlinks[0]
-        'https://www.redhat.com/archives/rhsa-announce/2014-April/msg00016.html'
-        >>>
+    Returns:
+        List of urls
+        >>> [
+            'https://www.redhat.com/archives/rhsa-announce/2014-April/msg00016.html'
+        ]
     """
 
     dlinks = []
@@ -71,15 +74,16 @@ def get_dlinks(thread):
     if req.ok:
         date = thread.split('/')[-2]
         tsoup=BeautifulSoup(req.text)
-        for mlink in tsoup.find_all('a'):
-             if "msg" in mlink.get('href'):
-                 hlink = (URL +date + '/' + mlink.get('href'))
-                 dlinks.append(hlink)
+        dlinks = (
+            map(
+                lambda x: os.path.join(URL, date, x.get('href')),
+                tsoup.find_all("a", attrs={"name": re.compile("\d+")})
+            )
+        )
 
-    rh_data_links = list(set(dlinks))
-    return(rh_data_links)
+    return(dlinks)
 
-def parse_hdata(hlink):
+def get_html_content(hlink, force=False):
     """
     Parse the content of Individual RedHat Updates or Message link and return the html contents
     Args:
@@ -96,19 +100,75 @@ def parse_hdata(hlink):
         html webpage content
 
     """
-    uri=hlink
-    request=requests.get(uri)
-    if request.ok:
-        content=request.content
+    content = None
+    msg_location = (
+        os.path.join(
+            RedhatDataDir.HTML_DIR, '/'.join(hlink.split('/')[-2:])
+        )
+    )
+
+    if os.path.exists(msg_location) and not force:
+        if os.stat(msg_location).st_size == 0:
+            request = requests.get(hlink)
+            if request.ok:
+                content = request.content
+                msg_file = open(msg_location, 'wb')
+                msg_file.write(content)
+                msg_file.close()
+        else:
+            content = open(msg_location, 'rb').read()
+    else:
+        request = requests.get(hlink)
+        if request.ok:
+            content = request.content
+            msg_file = open(msg_location, 'wb')
+            msg_file.write(content)
+            msg_file.close()
+
     return(content)
 
-def make_html_folder(dname):
+def get_html_latest_content(hlink):
+    """
+    Parse the content of Individual RedHat Updates or Message link and return the html contents
+    Args:
+        hlink (url) : Redhat Update or Message link
+        e.g:
+        >>> hlink
+        'https://www.redhat.com/archives/rhsa-announce/2014-April/msg00016.html'
+
+    Basic Usage :
+        >>> from vFense.plugins.vuln.redhat.get_all_redhat_updates import *
+        >>> content = parse_hdata(hlink)
+
+    Returns:
+        html webpage content
+
+    """
+    content = None
+    msg_location = (
+        os.path.join(
+            RedhatDataDir.HTML_DIR, '/'.join(hlink.split('/')[-2:])
+        )
+    )
+
+    if not os.path.exists(msg_location):
+        request = requests.get(hlink)
+        if request.ok:
+            content = request.content
+            msg_file = open(msg_location, 'wb')
+            msg_file.write(content)
+            msg_file.close()
+
+    return(content)
+
+
+def make_html_folder(dir_name):
     """
     Verify or Create (if not exist) folder to store the redhat updates (html files) and
     return the PATH name.
 
     Args:
-        dname = directory or folder name ('folder-name')
+        dir_name = directory or folder name ('folder-name')
 
     Basic Usage:
 
@@ -124,57 +184,16 @@ def make_html_folder(dname):
 
     """
 
-    PATH = RedhatDataDir.HTML_DIR
-    DIR = dname
-    fpath = (PATH + DIR)
+    fpath = os.path.join(RedhatDataDir.HTML_DIR, dir_name)
     if not os.path.exists(fpath):
         os.makedirs(fpath)
     return(fpath)
 
-def write_content_to_file(file_path, file_name, content=None):
-    """
-    This will write the content of redhat updates to the specified location locally on server
-    and returns the data file.
-
-    ARGS:
-        file_path : Specified path to locate the file to write
-        file_name : Name of the file to write the content
-        content : Content to write the file
-
-    Basic Usage:
-        >>> from vFense.plugins.vuln.redhat._constants import *
-        >>> from vFense.plugins.vuln.redhat.get_all_redhat_updates import *
-        >>> PATH = make_html_folder(dname='redhat')
-        >>> PATH
-        '/usr/local/lib/python2.7/dist-packages/vFense/plugins/vuln/redhat/data/html/redhat'
-        >>> hlink
-        'https://www.redhat.com/archives/rhsa-announce/2014-April/msg00016.html'
-        >>> content = parse_hdata(hlink)
-        >>> file_name = hlink.split('/')[-1]
-        >>> file_name
-        'msg00016.html'
-        >>> data_file = write_content_to_file(file_path=PATH, file_name=file_name, content = content)
-
-     Returns:
-        >>> data_file
-        '/usr/local/lib/python2.7/dist-packages/vFense/plugins/vuln/redhat/data/html/redhat/msg00016.html'
-        >>>
-
-    """
-    dfile = (file_path + '/' + file_name)
-    if not os.path.exists(dfile):
-        msg_file = open(dfile, 'wb')
-        content = content
-	if content:
-            msg_file.write(content)
-            msg_file.close()
-    return(dfile)
-
-def get_rpm_pkgs(dfile):
+def get_apps_info(content):
     """
     Parse the list of rpm packages from the data-file and return as list.
-    ARGS:
-        dfile : data file to parse the rpm package for specific redhat vulnerability updates
+    Args:
+        content (str): the html content this function will parse.
 
     Basic Usage:
         >>> import os
@@ -193,40 +212,33 @@ def get_rpm_pkgs(dfile):
 
     """
     rpm_pkgs = []
-    ftp_rpms = []
-    datafile=dfile
-    if os.stat(datafile).st_size > 0:
-        fo=open(datafile, 'r+')
-        data=fo.read()
-        fo.close()
-        if data:
-            pkg_info = data
-            pkgs = pkg_info.split()
-            for pkg in pkgs:
-                if '.rpm' in pkg:
-                    if 'ftp://' in pkg:
-                        ftp_rpms.append(pkg)
-                    else:
-                        rpm_pkgs.append(pkg)
+    data = []
+    pkgs = content.split()
+    for pkg in pkgs:
+        if '.rpm' in pkg:
+            if not 'ftp://' in pkg:
+                rpm_pkgs.append(pkg)
 
-    rpm_packages = list(set(rpm_pkgs))
-    ftp_packages = list(set(ftp_rpms))
-    data = {
-            'rpm_packages': rpm_packages,
-            'ftp_packages': ftp_packages,
-        }
+    rpm_pkgs = list(set(rpm_pkgs))
+    for pkg in rpm_pkgs:
+        app = RedhatVulnApp()
+        if re.search(r'(^[A-Za-z0-9-_]+)?-', pkg):
+            app.name = re.search(r'(^[A-Za-z0-9-_]+)?-', pkg).group(1)
+            if app.name:
+                pkg = re.sub(r'(^[A-Za-z0-9-]+)?-', '', pkg)
+                app.version = '.'.join(pkg.split('.')[:-2])
+                app.arch = pkg.split('.')[-2]
+                app.app_id = build_app_id(app.name, app.version)
+                data.append(app.to_dict())
 
-    if not rpm_packages:
-        print datafile
+    return data
 
-    return(data)
-
-def get_rh_cve_ids(dfile):
+def get_rh_cve_ids(content):
     """
     Parse cve_ids from the data file and return the list of cve_ids.
 
-    ARGS:
-        dfile : data file to parse the cve-ids for specific redhat vulnerabilty updates.
+    Args:
+        content (str): the html content this function will parse.
 
     Basic Usage:
 
@@ -243,20 +255,18 @@ def get_rh_cve_ids(dfile):
 
     """
     cve_ids = []
-    datafile=dfile
-    if os.stat(datafile).st_size > 0:
-        fo=open(datafile, 'r+')
-        data=fo.read()
-        cves=(re.search(r"CVE\sNames:\s+(\w.*)", data,re.DOTALL))
-        if cves:
-            cve_data = (cves.group()).split(':')[1].strip()
-            for cve in cve_data.split():
-                if 'CVE-' in cve:
-                    cve_ids.append(cve)
-    cve_id_list = list(set(cve_ids))
-    return(cve_id_list)
+    cve_search = re.search(r"CVE\sNames:\s+(\w.*)", content, re.DOTALL)
+    if cve_search:
+        cve_data = cve_search.group().split(':')[1].strip()
+        for cve in cve_data.split():
+            if 'CVE-' in cve:
+                cve_ids.append(cve)
 
-def get_rh_data(dfile):
+    cve_id_list = list(set(cve_ids))
+
+    return cve_id_list
+
+def get_rh_data(content):
     """
     Parse data file to get the vulnerability update Summary, Decsriptions etc. and return
     dictionary data with all the redhay update info.
@@ -274,84 +284,40 @@ def get_rh_data(dfile):
     RETURNS:
         A dictionary data contents redhat update info.
 
-        >>> rh_data['bulletin_id']
-        'RHSA-2010:0333-01'
-        >>> rh_data.keys()
-        ['product', 'bulletin_details', 'bullentin_summary', 'bulletin_id', 'solutions', 'references', 'support_url', 'cve_ids', 'apps', 'date_posted']
-        >>>
-
     """
+    redhat = Redhat()
+    description_search  = (
+        re.search('(Problem description|Description):\n\n(\w.*)\n\n.*\s+Solution', content, re.DOTALL)
+    )
+    if description_search:
+        redhat.details = decoder(description_search.group(2))
 
-    datafile=dfile
-    if os.stat(datafile).st_size > 0:
-        fo=open(datafile, 'r+')
-        data=fo.read()
+    redhat.apps = get_apps_info(content)
 
-        summary = None
-        smry = re.search('1\.\s+Summary:\n\n(\w.*)\n\n.*2.', data, re.DOTALL)
-        if smry:
-            summary = smry.group(1)
+    vulnerability_id_search = re.search(r'Advisory\sID:.*', content)
+    if vulnerability_id_search:
+        redhat.vulnerability_id = (
+            vulnerability_id_search.group().split(':', 1)[1].strip()
+        )
 
-        descriptions = None
-        desc=(re.search('Description:\n\n(\w.*)\n\n.*\s+Solution', data, re.DOTALL))
-        if desc:
-            descriptions=desc.group(1)
+    advisory_url_search = re.search(r"Advisory\sURL:\s.*", content)
+    if advisory_url_search:
+        redhat.support_url = (
+            BeautifulSoup(advisory_url_search.group()).find('a').text
+        )
 
-        solutions = None
-        sol = (re.search('Solution:\n\n(\w.*)\n\n.*\.\s+Bugs fixed', data, re.DOTALL))
-        if sol:
-            solutions=sol.group(1)
-        #bug_fixed=re.search('5\.\s+Bugs fixed:\n\n(\w.*)\n\n.*6\.\s+Package List', data, re.DOTALL).group(1)
+    date_posted_search = re.search(r"Issue\sdate:\s.*", content)
+    if date_posted_search:
+        issue_date = date_posted_search.group().split(':',1)[1].strip()
+        redhat.date_posted = (
+            int(datetime.strptime(issue_date, "%Y-%m-%d").strftime('%s'))
+        )
 
-        pkg_list = get_rpm_pkgs(dfile=dfile)
-        if pkg_list:
-            rpm_packages = pkg_list['rpm_packages']
-            ftp_packages = pkg_list['ftp_packages']
+    redhat.cve_ids = get_rh_cve_ids(content)
 
-        references = None
-        ref = (re.search('References:\n\n(\w.*)\n\n.*\.\s+Contact', data, re.DOTALL))
-        if ref:
-            references=ref.group(1)
+    return(redhat)
 
-        vulnerability_id = None
-        aid = (re.search(r'Advisory\sID:.*', data))
-        if aid:
-            vulnerability_id = (aid.group()).split(':', 1)[1].strip()
-
-        product = None
-        prod=(re.search(r"Product:\s.*", data))
-        if prod:
-            product=prod.group().split(':',1)[1].strip()
-
-        reference_url = None
-        aurl=re.search(r"Advisory\sURL:\s.*", data)
-        if aurl:
-           reference_url=aurl.group().split(':',1)[1].strip()
-
-        date_posted = None
-        idate=(re.search(r"Issue\sdate:\s.*", data))
-        if idate:
-            issue_date=idate.group().split(':',1)[1].strip()
-            date_posted = datetime.strptime(issue_date, "%Y-%m-%d").strftime('%s')
-
-        cve_ids = get_rh_cve_ids(dfile=dfile)
-
-        parse_data={
-            "date_posted": date_posted,
-            "bulletin_id":vulnerability_id,
-            "bullentin_summary": summary,
-            "bulletin_details": descriptions,
-            "apps" : rpm_packages,
-            "solution_apps": ftp_packages,
-            "cve_ids": cve_ids,
-            "support_url": reference_url,
-            "solutions": solutions,
-            "references": references,
-            "product":product,
-        }
-    return(parse_data)
-
-def insert_data_to_db(thread):
+def insert_data_to_db(thread, latest=False):
     """
     Insert the redhat vulnerability updates parsed from data files to the db. It first collects
     data link parsed from threads and then parse each data link and update the list of updates to
@@ -367,27 +333,36 @@ def insert_data_to_db(thread):
         >>> insert = insert_data_to_db(thread=thread)
 
     """
-    cve_updates = []
-    data_links = get_dlinks(thread)
-    if data_links:
-        date=thread.split('/')[-2]
-        fpath = make_html_folder(dname=date)
+    vulnerabilities = []
+    msg_links = get_msg_links_by_thread(thread)
+    update_completed = False
+    date = None
+    if msg_links:
+        date = thread.split('/')[-2]
+        make_html_folder(date)
 
-        for link in data_links:
-            hlink = link
-            print hlink
-            fname = (hlink.split('/')[-1])
-            pre_data=parse_hdata(hlink)
-            dfile = write_content_to_file(file_path=fpath, file_name=fname, content=pre_data)
-            cve_data = get_rh_data(dfile)
-            if cve_data:
-                cve_updates.append(cve_data)
+        for link in msg_links:
+            if latest:
+                content = get_html_latest_content(link)
+                if content:
+                    redhat = get_rh_data(content)
+                    if redhat.vulnerability_id:
+                        vulnerabilities.append(redhat.to_dict_db())
+                else:
+                    update_completed = True
+                    break
+            else:
+                content = get_html_content(link)
+                if content:
+                    redhat = get_rh_data(content)
+                    if redhat.vulnerability_id:
+                        vulnerabilities.append(redhat.to_dict_db())
 
-        insert=insert_bulletin_data(bulletin_data=cve_updates)
-        return(insert)
+        _, count, _, _  = insert_bulletin_data(bulletin_data=vulnerabilities)
+        return(count, date, update_completed)
 
 
-def update_all_redhat_data():
+def begin_redhat_archive_processing(latest=False):
     """
     This will call the function to insert the data into db for all the threads
     and will insert the data one by one.
@@ -400,4 +375,16 @@ def update_all_redhat_data():
     threads=get_threads()
     if threads:
         for thread in threads:
-            insert_data_to_db(thread)
+            count, date, update_completed = insert_data_to_db(thread, latest)
+            if latest and update_completed:
+                msg = 'There aren\'t any vulnerabilities available'
+                logger.info(msg)
+                print msg
+                break
+            else:
+                msg = (
+                    'RedHat vulnerabilities inserted: {0} for Year/Month: {1}'
+                    .format(count, date)
+                )
+                logger.info(msg)
+                print msg

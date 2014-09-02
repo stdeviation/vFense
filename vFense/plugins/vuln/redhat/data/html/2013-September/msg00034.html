@@ -1,0 +1,174 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1260&#45;01] Moderate: rhev&#45;hypervisor6 security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 23 Sep 2013 13:34:23 &#45;0400 -->
+<!--X-Message-Id: 201309231734.r8NHYMdn015960@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1260-01] Moderate: rhev-hypervisor6 security and bug fix	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1260-01] Moderate: rhev-hypervisor6 security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1260-01] Moderate: rhev-hypervisor6 security and bug fix	update</li>
+<li><em>Date</em>: Mon, 23 Sep 2013 17:34:22 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhev-hypervisor6 security and bug fix update
+Advisory ID:       RHSA-2013:1260-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1260.html">https://rhn.redhat.com/errata/RHSA-2013-1260.html</a>
+Issue date:        2013-09-23
+CVE Names:         CVE-2013-4130 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor6 package that fixes one security issue and
+various bugs is now available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-6 - noarch
+
+3. Description:
+
+The rhev-hypervisor6 package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization Hypervisor
+is a dedicated Kernel-based Virtual Machine (KVM) hypervisor. It includes
+everything necessary to run and manage virtual machines: A subset of the
+Red Hat Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+Upgrade Note: If you upgrade the Red Hat Enterprise Virtualization
+Hypervisor through the 3.2 Manager administration portal, the Host may
+appear with the status of &quot;Install Failed&quot;. If this happens, place the host
+into maintenance mode, then activate it again to get the host back to an
+&quot;Up&quot; state.
+
+A flaw was found in the way concurrent access to the clients ring buffer
+was performed in the spice-server library. A remote user able to initiate a
+SPICE connection to a guest could use this flaw to crash the guest.
+(CVE-2013-4130)
+
+This issue was discovered by David Gibson of Red Hat.
+
+This update also contains the fix from the following errata:
+
+* vdsm: RHBA-2013:1261
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2013-1261.html">https://rhn.redhat.com/errata/RHBA-2013-1261.html</a> 
+
+Users of the Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which corrects these issues.
+
+4. Solution:
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+To upgrade Hypervisors in Red Hat Enterprise Virtualization
+environments using the disk image provided by this package, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+984769 - CVE-2013-4130 spice: unsafe clients ring access abort
+1006392 - rhev-hypervisor 6.4 Update 5.1 release
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-6:
+
+noarch:
+rhev-hypervisor6-6.4-20130912.1.el6_4.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4130.html">https://www.redhat.com/security/data/cve/CVE-2013-4130.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2013-1261.html">https://rhn.redhat.com/errata/RHBA-2013-1261.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSQHuOXlSAg2UNWIIRAp38AKCldK3jAs1brTWMJ0Vkmbt4HvNaEwCdGyTt
+NYt41SBZkmawfPXsAKGnu0U=
+=Jytw
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0342&#45;01] Moderate: wireshark security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 31 Mar 2014 14:15:51 &#45;0400 -->
+<!--X-Message-Id: 201403311815.s2VIFoYG012315@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0342-01] Moderate: wireshark security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00038.html">Date Prev</a>][<a href="msg00040.html">Date Next</a>] &nbsp; [<a href="msg00038.html">Thread Prev</a>][<a href="msg00040.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00039">Thread Index</A>]
+[<A HREF="date.html#00039">Date Index</A>]
+[<A HREF="author.html#00039">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0342-01] Moderate: wireshark security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0342-01] Moderate: wireshark security update</li>
+<li><em>Date</em>: Mon, 31 Mar 2014 18:15:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: wireshark security update
+Advisory ID:       RHSA-2014:0342-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0342.html">https://rhn.redhat.com/errata/RHSA-2014-0342.html</a>
+Issue date:        2014-03-31
+CVE Names:         CVE-2013-6336 CVE-2013-6337 CVE-2013-6338 
+                   CVE-2013-6339 CVE-2013-6340 CVE-2013-7112 
+                   CVE-2013-7114 CVE-2014-2281 CVE-2014-2283 
+                   CVE-2014-2299 
+=====================================================================
+
+1. Summary:
+
+Updated wireshark packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Wireshark is a network protocol analyzer. It is used to capture and browse
+the traffic running on a computer network.
+
+Two flaws were found in Wireshark. If Wireshark read a malformed packet off
+a network or opened a malicious dump file, it could crash or, possibly,
+execute arbitrary code as the user running Wireshark. (CVE-2014-2281,
+CVE-2014-2299)
+
+Several denial of service flaws were found in Wireshark. Wireshark could
+crash or stop responding if it read a malformed packet off a network, or
+opened a malicious dump file. (CVE-2013-6336, CVE-2013-6337, CVE-2013-6338,
+CVE-2013-6339, CVE-2013-6340, CVE-2014-2283, CVE-2013-7112, CVE-2013-7114)
+
+All Wireshark users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. All running instances
+of Wireshark must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1026534 - CVE-2013-6336 wireshark: IEEE 802.15.4 dissector crash (wnpa-sec-2013-61)
+1026538 - CVE-2013-6337 wireshark: NBAP dissector crash (wnpa-sec-2013-62)
+1026539 - CVE-2013-6338 wireshark: SIP dissector crash (wnpa-sec-2013-63)
+1026540 - CVE-2013-6339 wireshark: ActiveMQ OpenWire dissector large loop (wnpa-sec-2013-64)
+1026541 - CVE-2013-6340 wireshark: TCP dissector crash (wnpa-sec-2013-65)
+1044508 - CVE-2013-7112 wireshark: SIP dissector could go into an infinite loop (wnpa-sec-2013-66)
+1044510 - CVE-2013-7114 wireshark: NTLMSSP v2 dissector could crash (wnpa-sec-2013-68)
+1074109 - CVE-2014-2299 wireshark: buffer overflow in MPEG file parser (wnpa-sec-2014-04)
+1074111 - CVE-2014-2283 wireshark: RLC dissector crash (wnpa-sec-2014-03)
+1074114 - CVE-2014-2281 wireshark: NFS dissector crash (wnpa-sec-2014-01)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm</a>
+
+i386:
+wireshark-1.8.10-7.el6_5.i686.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-gnome-1.8.10-7.el6_5.i686.rpm
+
+x86_64:
+wireshark-1.8.10-7.el6_5.i686.rpm
+wireshark-1.8.10-7.el6_5.x86_64.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.x86_64.rpm
+wireshark-gnome-1.8.10-7.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm</a>
+
+i386:
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-devel-1.8.10-7.el6_5.i686.rpm
+
+x86_64:
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.x86_64.rpm
+wireshark-devel-1.8.10-7.el6_5.i686.rpm
+wireshark-devel-1.8.10-7.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm</a>
+
+i386:
+wireshark-1.8.10-7.el6_5.i686.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-gnome-1.8.10-7.el6_5.i686.rpm
+
+ppc64:
+wireshark-1.8.10-7.el6_5.ppc.rpm
+wireshark-1.8.10-7.el6_5.ppc64.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.ppc.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.ppc64.rpm
+wireshark-gnome-1.8.10-7.el6_5.ppc64.rpm
+
+s390x:
+wireshark-1.8.10-7.el6_5.s390.rpm
+wireshark-1.8.10-7.el6_5.s390x.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.s390.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.s390x.rpm
+wireshark-gnome-1.8.10-7.el6_5.s390x.rpm
+
+x86_64:
+wireshark-1.8.10-7.el6_5.i686.rpm
+wireshark-1.8.10-7.el6_5.x86_64.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.x86_64.rpm
+wireshark-gnome-1.8.10-7.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm</a>
+
+i386:
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-devel-1.8.10-7.el6_5.i686.rpm
+
+ppc64:
+wireshark-debuginfo-1.8.10-7.el6_5.ppc.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.ppc64.rpm
+wireshark-devel-1.8.10-7.el6_5.ppc.rpm
+wireshark-devel-1.8.10-7.el6_5.ppc64.rpm
+
+s390x:
+wireshark-debuginfo-1.8.10-7.el6_5.s390.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.s390x.rpm
+wireshark-devel-1.8.10-7.el6_5.s390.rpm
+wireshark-devel-1.8.10-7.el6_5.s390x.rpm
+
+x86_64:
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.x86_64.rpm
+wireshark-devel-1.8.10-7.el6_5.i686.rpm
+wireshark-devel-1.8.10-7.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm</a>
+
+i386:
+wireshark-1.8.10-7.el6_5.i686.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-gnome-1.8.10-7.el6_5.i686.rpm
+
+x86_64:
+wireshark-1.8.10-7.el6_5.i686.rpm
+wireshark-1.8.10-7.el6_5.x86_64.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.x86_64.rpm
+wireshark-gnome-1.8.10-7.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/wireshark-1.8.10-7.el6_5.src.rpm</a>
+
+i386:
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-devel-1.8.10-7.el6_5.i686.rpm
+
+x86_64:
+wireshark-debuginfo-1.8.10-7.el6_5.i686.rpm
+wireshark-debuginfo-1.8.10-7.el6_5.x86_64.rpm
+wireshark-devel-1.8.10-7.el6_5.i686.rpm
+wireshark-devel-1.8.10-7.el6_5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6336.html">https://www.redhat.com/security/data/cve/CVE-2013-6336.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6337.html">https://www.redhat.com/security/data/cve/CVE-2013-6337.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6338.html">https://www.redhat.com/security/data/cve/CVE-2013-6338.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6339.html">https://www.redhat.com/security/data/cve/CVE-2013-6339.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6340.html">https://www.redhat.com/security/data/cve/CVE-2013-6340.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-7112.html">https://www.redhat.com/security/data/cve/CVE-2013-7112.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-7114.html">https://www.redhat.com/security/data/cve/CVE-2013-7114.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2281.html">https://www.redhat.com/security/data/cve/CVE-2014-2281.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2283.html">https://www.redhat.com/security/data/cve/CVE-2014-2283.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2299.html">https://www.redhat.com/security/data/cve/CVE-2014-2299.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTObCWXlSAg2UNWIIRAvGBAJ9CpH4SkIM1R5rNDsn+zPFrwONSjgCglTsq
+Jii/SE7kf/HWla32ffv2npc=
+=QcrX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00038.html">Date Prev</a>][<a href="msg00040.html">Date Next</a>] &nbsp; [<a href="msg00038.html">Thread Prev</a>][<a href="msg00040.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00039">Thread Index</A>]
+[<A HREF="date.html#00039">Date Index</A>]
+[<A HREF="author.html#00039">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

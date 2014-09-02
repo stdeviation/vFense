@@ -1,0 +1,307 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1369&#45;01] Moderate: rhncfg security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 15 Oct 2012 14:43:57 &#45;0400 -->
+<!--X-Message-Id: 201210151843.q9FIhmp1012708@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1369-01] Moderate: rhncfg security, bug fix,	and enhancement </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1369-01] Moderate: rhncfg security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2012:1369-01] Moderate: rhncfg security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Mon, 15 Oct 2012 18:43:47 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhncfg security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:1369-01
+Product:           Red Hat Network Tools
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1369.html">https://rhn.redhat.com/errata/RHSA-2012-1369.html</a>
+Issue date:        2012-10-15
+CVE Names:         CVE-2012-2679 
+=====================================================================
+
+1. Summary:
+
+Updated rhncfg packages that fix one security issue, two bugs, and add one
+enhancement are now available for Red Hat Network Tools for Red Hat
+Enterprise Linux 5 and 6; Red Hat Enterprise Linux 5.3 Long Life; and Red
+Hat Enterprise Linux 5.6, 6.0, 6.1, and 6.2 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHN Tools (v. 5 Client) - noarch
+RHN Tools (v. 5 Server) - noarch
+RHN Tools (v. 5.3.LL Server) - noarch
+RHN Tools (v. 5.6.z Server) - noarch
+RHN Tools (v. 6 Client) - noarch
+RHN Tools (v. 6 ComputeNode) - noarch
+RHN Tools (v. 6 Workstation) - noarch
+RHN Tools (v. 6.0.z Server) - noarch
+RHN Tools (v. 6.1.z Server) - noarch
+RHN Tools (v. 6.2.z Server) - noarch
+RHN Tools (v. 6.3.z Server) - noarch
+
+3. Description:
+
+Red Hat Network Tools provide programs and libraries that allow your system
+to use provisioning, monitoring, and configuration management capabilities
+provided by Red Hat Network and Red Hat Network Satellite.
+
+It was discovered that the Red Hat Network (RHN) Configuration Client
+(rhncfg-client) tool set world-readable permissions on the
+&quot;/var/log/rhncfg-actions&quot; file, used to store the output of different
+rhncfg-client actions (such as diffing and verifying files). This could
+possibly allow a local attacker to obtain sensitive information they would
+otherwise not have access to. (CVE-2012-2679)
+
+Note: With this update, rhncfg-client cannot create diffs of files that
+are not already world-readable, and &quot;/var/log/rhncfg-actions&quot; can only be
+read and written to by the root user.
+
+This issue was discovered by Paul Wouters of Red Hat.
+
+This update also fixes the following bugs:
+
+* When the user attempted to use the &quot;rhncfg-client get&quot; command to
+download a backup of deployed configuration files and these configuration
+files contained a broken symbolic link, the command failed with an error.
+This update ensures that &quot;rhncfg-client get&quot; no longer fails in this
+scenario. (BZ#836445)
+
+* The SYNOPSIS section of the rhn-actions-control(8) manual page has been
+updated to include the &quot;--report&quot; command line option as expected.
+(BZ#820517)
+
+As well, this update adds the following enhancement:
+
+* The rhncfg-manager utility now supports a new command line option,
+&quot;--selinux-context&quot;. This option can be used to upload files and
+directories without setting the Security-Enhanced Linux (SELinux) context.
+(BZ#770575)
+
+All users of Red Hat Network Tools are advised to upgrade to these updated
+packages, which correct these issues and add this enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+820517 - Missing option in man page   for rhn-actions-control.
+825275 - CVE-2012-2679 rhncfg: Insecure permissions used for /var/log/rhncfg-actions file
+
+6. Package List:
+
+RHN Tools (v. 5 Client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/RHNTOOLS/SRPMS/rhncfg-5.10.27-8.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/RHNTOOLS/SRPMS/rhncfg-5.10.27-8.el5sat.src.rpm</a>
+
+noarch:
+rhncfg-5.10.27-8.el5sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el5sat.noarch.rpm
+rhncfg-client-5.10.27-8.el5sat.noarch.rpm
+rhncfg-management-5.10.27-8.el5sat.noarch.rpm
+
+RHN Tools (v. 5 Server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNTOOLS/SRPMS/rhncfg-5.10.27-8.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNTOOLS/SRPMS/rhncfg-5.10.27-8.el5sat.src.rpm</a>
+
+noarch:
+rhncfg-5.10.27-8.el5sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el5sat.noarch.rpm
+rhncfg-client-5.10.27-8.el5sat.noarch.rpm
+rhncfg-management-5.10.27-8.el5sat.noarch.rpm
+
+RHN Tools (v. 5.3.LL Server):
+
+Source:
+rhncfg-5.10.27-8.el5sat.src.rpm
+
+noarch:
+rhncfg-5.10.27-8.el5sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el5sat.noarch.rpm
+rhncfg-client-5.10.27-8.el5sat.noarch.rpm
+rhncfg-management-5.10.27-8.el5sat.noarch.rpm
+
+RHN Tools (v. 5.6.z Server):
+
+Source:
+rhncfg-5.10.27-8.el5sat.src.rpm
+
+noarch:
+rhncfg-5.10.27-8.el5sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el5sat.noarch.rpm
+rhncfg-client-5.10.27-8.el5sat.noarch.rpm
+rhncfg-management-5.10.27-8.el5sat.noarch.rpm
+
+RHN Tools (v. 6 Client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/RHNTOOLS/SRPMS/rhncfg-5.10.27-8.el6sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/RHNTOOLS/SRPMS/rhncfg-5.10.27-8.el6sat.src.rpm</a>
+
+noarch:
+rhncfg-5.10.27-8.el6sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el6sat.noarch.rpm
+rhncfg-client-5.10.27-8.el6sat.noarch.rpm
+rhncfg-management-5.10.27-8.el6sat.noarch.rpm
+
+RHN Tools (v. 6 ComputeNode):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/RHNTOOLS/SRPMS/rhncfg-5.10.27-8.el6sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/RHNTOOLS/SRPMS/rhncfg-5.10.27-8.el6sat.src.rpm</a>
+
+noarch:
+rhncfg-5.10.27-8.el6sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el6sat.noarch.rpm
+rhncfg-client-5.10.27-8.el6sat.noarch.rpm
+rhncfg-management-5.10.27-8.el6sat.noarch.rpm
+
+RHN Tools (v. 6.0.z Server):
+
+Source:
+rhncfg-5.10.27-8.el6sat.src.rpm
+
+noarch:
+rhncfg-5.10.27-8.el6sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el6sat.noarch.rpm
+rhncfg-client-5.10.27-8.el6sat.noarch.rpm
+rhncfg-management-5.10.27-8.el6sat.noarch.rpm
+
+RHN Tools (v. 6.1.z Server):
+
+Source:
+rhncfg-5.10.27-8.el6sat.src.rpm
+
+noarch:
+rhncfg-5.10.27-8.el6sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el6sat.noarch.rpm
+rhncfg-client-5.10.27-8.el6sat.noarch.rpm
+rhncfg-management-5.10.27-8.el6sat.noarch.rpm
+
+RHN Tools (v. 6.2.z Server):
+
+Source:
+rhncfg-5.10.27-8.el6sat.src.rpm
+
+noarch:
+rhncfg-5.10.27-8.el6sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el6sat.noarch.rpm
+rhncfg-client-5.10.27-8.el6sat.noarch.rpm
+rhncfg-management-5.10.27-8.el6sat.noarch.rpm
+
+RHN Tools (v. 6.3.z Server):
+
+Source:
+rhncfg-5.10.27-8.el6sat.src.rpm
+
+noarch:
+rhncfg-5.10.27-8.el6sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el6sat.noarch.rpm
+rhncfg-client-5.10.27-8.el6sat.noarch.rpm
+rhncfg-management-5.10.27-8.el6sat.noarch.rpm
+
+RHN Tools (v. 6 Workstation):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/RHNTOOLS/SRPMS/rhncfg-5.10.27-8.el6sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/RHNTOOLS/SRPMS/rhncfg-5.10.27-8.el6sat.src.rpm</a>
+
+noarch:
+rhncfg-5.10.27-8.el6sat.noarch.rpm
+rhncfg-actions-5.10.27-8.el6sat.noarch.rpm
+rhncfg-client-5.10.27-8.el6sat.noarch.rpm
+rhncfg-management-5.10.27-8.el6sat.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2679.html">https://www.redhat.com/security/data/cve/CVE-2012-2679.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQfFjoXlSAg2UNWIIRAty8AJwMMQbPcuidK9NMBuYNp2xsmjJXBACgl6En
+vtinMH+1D3wINi0eZqh6P9o=
+=vQZV
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

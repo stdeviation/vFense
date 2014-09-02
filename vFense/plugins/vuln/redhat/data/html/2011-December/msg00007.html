@@ -1,0 +1,241 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1532&#45;03] Moderate: kexec&#45;tools security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 6 Dec 2011 10:26:46 &#45;0500 -->
+<!--X-Message-Id: 201112061526.pB6FQdPg010270@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1532-03] Moderate: kexec-tools security, bug fix,	and enhance</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1532-03] Moderate: kexec-tools security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1532-03] Moderate: kexec-tools security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 6 Dec 2011 15:26:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kexec-tools security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:1532-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1532.html">https://rhn.redhat.com/errata/RHSA-2011-1532.html</a>
+Issue date:        2011-12-06
+CVE Names:         CVE-2011-3588 CVE-2011-3589 CVE-2011-3590 
+=====================================================================
+
+1. Summary:
+
+An updated kexec-tools package that fixes three security issues, various
+bugs, and adds enhancements is now available for Red Hat
+Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Kexec allows for booting a Linux kernel from the context of an already
+running kernel.
+
+Kdump used the SSH (Secure Shell) &quot;StrictHostKeyChecking=no&quot; option when
+dumping to SSH targets, causing the target kdump server's SSH host key not
+to be checked. This could make it easier for a man-in-the-middle attacker
+on the local network to impersonate the kdump SSH target server and
+possibly gain access to sensitive information in the vmcore dumps.
+(CVE-2011-3588)
+
+mkdumprd created initrd files with world-readable permissions. A local user
+could possibly use this flaw to gain access to sensitive information, such
+as the private SSH key used to authenticate to a remote server when kdump
+was configured to dump to an SSH target. (CVE-2011-3589)
+
+mkdumprd included unneeded sensitive files (such as all files from the
+&quot;/root/.ssh/&quot; directory and the host's private SSH keys) in the resulting
+initrd. This could lead to an information leak when initrd files were
+previously created with world-readable permissions. Note: With this update,
+only the SSH client configuration, known hosts files, and the SSH key
+configured via the newly introduced sshkey option in &quot;/etc/kdump.conf&quot; are
+included in the initrd. The default is the key generated when running the
+&quot;service kdump propagate&quot; command, &quot;/root/.ssh/kdump_id_rsa&quot;.
+(CVE-2011-3590)
+
+Red Hat would like to thank Kevan Carstensen for reporting these issues.
+
+This update also fixes several bugs and adds various enhancements.
+Space precludes documenting all of these changes in this advisory.
+Documentation for these bug fixes and enhancements will be available
+shortly from the Technical Notes document, linked to in the References
+section.
+
+All kexec-tools users should upgrade to this updated package, which
+contains backported patches to resolve these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+681796 - Pass &amp;quot;noefi acpi_rsdp=X&amp;quot; to the second kernel
+708503 - fails to build without downstream patches
+716439 - CVE-2011-3588 CVE-2011-3589 CVE-2011-3590 kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
+719105 - mkdumprd hang in depsolve_modlist when running kernel is not target kernel
+725484 - kexec-tools: x86: Start using nr_cpus=1 instead of maxcpus=1
+727892 - kexec-tools: Warn a user to use maxcpus=1 instead of nr_cpus=1 for older kernels
+731394 - [kexec-tools] Remove warning when kdump service starts
+734528 - kexec-tools: Add memory usage debugging capability in second kernel
+739050 - non-fatal &amp;lt;unknown&amp;gt; scriptlet failure in rpm package fence-agents
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kexec-tools-2.0.0-209.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kexec-tools-2.0.0-209.el6.src.rpm</a>
+
+i386:
+kexec-tools-2.0.0-209.el6.i686.rpm
+kexec-tools-debuginfo-2.0.0-209.el6.i686.rpm
+
+x86_64:
+kexec-tools-2.0.0-209.el6.x86_64.rpm
+kexec-tools-debuginfo-2.0.0-209.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kexec-tools-2.0.0-209.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kexec-tools-2.0.0-209.el6.src.rpm</a>
+
+x86_64:
+kexec-tools-2.0.0-209.el6.x86_64.rpm
+kexec-tools-debuginfo-2.0.0-209.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kexec-tools-2.0.0-209.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kexec-tools-2.0.0-209.el6.src.rpm</a>
+
+i386:
+kexec-tools-2.0.0-209.el6.i686.rpm
+kexec-tools-debuginfo-2.0.0-209.el6.i686.rpm
+
+ppc64:
+kexec-tools-2.0.0-209.el6.ppc64.rpm
+kexec-tools-debuginfo-2.0.0-209.el6.ppc64.rpm
+
+s390x:
+kexec-tools-2.0.0-209.el6.s390x.rpm
+kexec-tools-debuginfo-2.0.0-209.el6.s390x.rpm
+
+x86_64:
+kexec-tools-2.0.0-209.el6.x86_64.rpm
+kexec-tools-debuginfo-2.0.0-209.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kexec-tools-2.0.0-209.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kexec-tools-2.0.0-209.el6.src.rpm</a>
+
+i386:
+kexec-tools-2.0.0-209.el6.i686.rpm
+kexec-tools-debuginfo-2.0.0-209.el6.i686.rpm
+
+x86_64:
+kexec-tools-2.0.0-209.el6.x86_64.rpm
+kexec-tools-debuginfo-2.0.0-209.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3588.html">https://www.redhat.com/security/data/cve/CVE-2011-3588.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3589.html">https://www.redhat.com/security/data/cve/CVE-2011-3589.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3590.html">https://www.redhat.com/security/data/cve/CVE-2011-3590.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.2_Technical_Notes/kexec-tools.html#RHSA-2011-1532">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.2_Technical_Notes/kexec-tools.html#RHSA-2011-1532</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFO3jQMXlSAg2UNWIIRAjV9AJ9Z4ms5xCvGM7YRZQmkHS0vf7BUgACfYFmy
+zzV4tO+I3e9Gu9KKIfR9xJw=
+=G1sq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0130&#45;01] Low: httpd security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Jan 2013 02:03:47 &#45;0500 -->
+<!--X-Message-Id: 201301080703.r0873jln001507@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0130-01] Low: httpd security, bug fix,	and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0130-01] Low: httpd security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0130-01] Low: httpd security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 8 Jan 2013 06:53:56 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: httpd security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:0130-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0130.html">https://rhn.redhat.com/errata/RHSA-2013-0130.html</a>
+Issue date:        2013-01-08
+CVE Names:         CVE-2008-0455 CVE-2008-0456 CVE-2012-2687 
+=====================================================================
+
+1. Summary:
+
+Updated httpd packages that fix multiple security issues, various bugs,
+and add enhancements are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The httpd packages contain the Apache HTTP Server (httpd), which is the
+namesake project of The Apache Software Foundation.
+
+Input sanitization flaws were found in the mod_negotiation module. A remote
+attacker able to upload or create files with arbitrary names in a directory
+that has the MultiViews options enabled, could use these flaws to conduct
+cross-site scripting and HTTP response splitting attacks against users
+visiting the site. (CVE-2008-0455, CVE-2008-0456, CVE-2012-2687)
+
+Bug fixes:
+
+* Previously, no check was made to see if the
+/etc/pki/tls/private/localhost.key file was a valid key prior to running
+the &quot;%post&quot; script for the &quot;mod_ssl&quot; package. Consequently, when
+/etc/pki/tls/certs/localhost.crt did not exist and &quot;localhost.key&quot; was
+present but invalid, upgrading the Apache HTTP Server daemon (httpd) with
+mod_ssl failed. The &quot;%post&quot; script has been fixed to test for an existing
+SSL key. As a result, upgrading httpd with mod_ssl now proceeds as
+expected. (BZ#752618)
+
+* The &quot;mod_ssl&quot; module did not support operation under FIPS mode.
+Consequently, when operating Red Hat Enterprise Linux 5 with FIPS mode
+enabled, httpd failed to start. An upstream patch has been applied to
+disable non-FIPS functionality if operating under FIPS mode and httpd now
+starts as expected. (BZ#773473)
+
+* Prior to this update, httpd exit status codes were not Linux Standard
+Base (LSB) compliant. When the command &quot;service httpd reload&quot; was run and
+httpd failed, the exit status code returned was &quot;0&quot; and not in the range 1
+to 6 as expected. A patch has been applied to the init script and httpd now
+returns &quot;1&quot; as an exit status code. (BZ#783242)
+
+* Chunked Transfer Coding is described in RFC 2616. Previously, the
+Apache server did not correctly handle a chunked encoded POST request with
+a &quot;chunk-size&quot; or &quot;chunk-extension&quot; value of 32 bytes or more.
+Consequently, when such a POST request was made the server did not respond.
+An upstream patch has been applied and the problem no longer occurs.
+(BZ#840845)
+
+* Due to a regression, when mod_cache received a non-cacheable 304
+response, the headers were served incorrectly. Consequently, compressed
+data could be returned to the client without the cached headers to indicate
+the data was compressed. An upstream patch has been applied to merge
+response and cached headers before data from the cache is served to the
+client. As a result, cached data is now correctly interpreted by the
+client. (BZ#845532)
+
+* In a proxy configuration, certain response-line strings were not handled
+correctly. If a response-line without a &quot;description&quot; string was received
+from the origin server, for a non-standard status code, such as the &quot;450&quot;
+status code, a &quot;500 Internal Server Error&quot; would be returned to the client.
+This bug has been fixed so that the original response line is returned to
+the client. (BZ#853128)
+
+Enhancements:
+
+* The configuration directive &quot;LDAPReferrals&quot; is now supported in addition
+to the previously introduced &quot;LDAPChaseReferrals&quot;. (BZ#727342)
+
+* The AJP support module for &quot;mod_proxy&quot;, &quot;mod_proxy_ajp&quot;, now supports the
+&quot;ProxyErrorOverride&quot; directive. Consequently, it is now possible to
+configure customized error pages for web applications running on a backend
+server accessed via AJP. (BZ#767890)
+
+* The &quot;%posttrans&quot; scriptlet which automatically restarts the httpd service
+after a package upgrade can now be disabled. If the file
+/etc/sysconfig/httpd-disable-posttrans exists, the scriptlet will not
+restart the daemon. (BZ#833042)
+
+* The output of &quot;httpd -S&quot; now includes configured alias names for each
+virtual host. (BZ#833043)
+
+* New certificate variable names are now exposed by &quot;mod_ssl&quot; using the
+&quot;_DN_userID&quot; suffix, such as &quot;SSL_CLIENT_S_DN_userID&quot;, which use the
+commonly used object identifier (OID) definition of &quot;userID&quot;, OID
+0.9.2342.19200300.100.1.1. (BZ#840036)
+
+All users of httpd are advised to upgrade to these updated packages, which
+fix these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+727342 - LDAPChaseReferrals should be LDAPReferrals
+752618 - mod_ssl post install script can cause failures
+767890 - The mod_proxy_ajp lacks the ErrorOverride
+773473 - [RHEL 5.7] Apache HTTP Server cannot start with mod_ssl when FIPS 140-2 mode enabled
+783242 - service httpd reload return 0 when it fails
+840845 - httpd fails in processing chunked requests with &gt; 31 bytes chunk-size / -extension line
+845532 - mod_cache regression in httpd 2.2.3-65: non-cacheable 304 responses serve bad data
+850794 - CVE-2012-2687 CVE-2008-0455 httpd: mod_negotiation XSS via untrusted file names in directories with MultiViews enabled
+879292 - CVE-2008-0456 httpd: mod_negotiation CRLF injection via untrusted file names in directories with MultiViews enabled
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-74.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-74.el5.src.rpm</a>
+
+i386:
+httpd-2.2.3-74.el5.i386.rpm
+httpd-debuginfo-2.2.3-74.el5.i386.rpm
+mod_ssl-2.2.3-74.el5.i386.rpm
+
+x86_64:
+httpd-2.2.3-74.el5.x86_64.rpm
+httpd-debuginfo-2.2.3-74.el5.x86_64.rpm
+mod_ssl-2.2.3-74.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-74.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/httpd-2.2.3-74.el5.src.rpm</a>
+
+i386:
+httpd-debuginfo-2.2.3-74.el5.i386.rpm
+httpd-devel-2.2.3-74.el5.i386.rpm
+httpd-manual-2.2.3-74.el5.i386.rpm
+
+x86_64:
+httpd-debuginfo-2.2.3-74.el5.i386.rpm
+httpd-debuginfo-2.2.3-74.el5.x86_64.rpm
+httpd-devel-2.2.3-74.el5.i386.rpm
+httpd-devel-2.2.3-74.el5.x86_64.rpm
+httpd-manual-2.2.3-74.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/httpd-2.2.3-74.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/httpd-2.2.3-74.el5.src.rpm</a>
+
+i386:
+httpd-2.2.3-74.el5.i386.rpm
+httpd-debuginfo-2.2.3-74.el5.i386.rpm
+httpd-devel-2.2.3-74.el5.i386.rpm
+httpd-manual-2.2.3-74.el5.i386.rpm
+mod_ssl-2.2.3-74.el5.i386.rpm
+
+ia64:
+httpd-2.2.3-74.el5.ia64.rpm
+httpd-debuginfo-2.2.3-74.el5.ia64.rpm
+httpd-devel-2.2.3-74.el5.ia64.rpm
+httpd-manual-2.2.3-74.el5.ia64.rpm
+mod_ssl-2.2.3-74.el5.ia64.rpm
+
+ppc:
+httpd-2.2.3-74.el5.ppc.rpm
+httpd-debuginfo-2.2.3-74.el5.ppc.rpm
+httpd-debuginfo-2.2.3-74.el5.ppc64.rpm
+httpd-devel-2.2.3-74.el5.ppc.rpm
+httpd-devel-2.2.3-74.el5.ppc64.rpm
+httpd-manual-2.2.3-74.el5.ppc.rpm
+mod_ssl-2.2.3-74.el5.ppc.rpm
+
+s390x:
+httpd-2.2.3-74.el5.s390x.rpm
+httpd-debuginfo-2.2.3-74.el5.s390.rpm
+httpd-debuginfo-2.2.3-74.el5.s390x.rpm
+httpd-devel-2.2.3-74.el5.s390.rpm
+httpd-devel-2.2.3-74.el5.s390x.rpm
+httpd-manual-2.2.3-74.el5.s390x.rpm
+mod_ssl-2.2.3-74.el5.s390x.rpm
+
+x86_64:
+httpd-2.2.3-74.el5.x86_64.rpm
+httpd-debuginfo-2.2.3-74.el5.i386.rpm
+httpd-debuginfo-2.2.3-74.el5.x86_64.rpm
+httpd-devel-2.2.3-74.el5.i386.rpm
+httpd-devel-2.2.3-74.el5.x86_64.rpm
+httpd-manual-2.2.3-74.el5.x86_64.rpm
+mod_ssl-2.2.3-74.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-0455.html">https://www.redhat.com/security/data/cve/CVE-2008-0455.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-0456.html">https://www.redhat.com/security/data/cve/CVE-2008-0456.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2687.html">https://www.redhat.com/security/data/cve/CVE-2012-2687.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ68TMXlSAg2UNWIIRApH8AJ9lf6CJcLnIK7D9siL6M2/OxR1argCeO7mh
+/xD6DzmFPZw8MhY2CC19xag=
+=mexo
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

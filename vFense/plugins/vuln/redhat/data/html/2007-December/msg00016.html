@@ -1,0 +1,252 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1157&#45;01] Important: mysql security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 19 Dec 2007 11:14:40 &#45;0500 -->
+<!--X-Message-Id: 200712191614.lBJGEdh8023244@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1157-01] Important: mysql security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1157-01] Important: mysql security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1157-01] Important: mysql security update</li>
+<li><em>Date</em>: Wed, 19 Dec 2007 11:14:39 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Important: mysql security update
+Advisory ID:       RHSA-2007:1157-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1157.html">https://rhn.redhat.com/errata/RHSA-2007-1157.html</a>
+Issue date:        2007-12-19
+Updated on:        2007-12-19
+Product:           Red Hat Application Stack
+CVE Names:         CVE-2007-5969 CVE-2007-5925 CVE-2007-6303 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated mysql packages that fix several security issues are now available
+for Red Hat Application Stack v1 and v2.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Application Stack v1 for Enterprise Linux AS (v.4) - i386, x86_64
+Red Hat Application Stack v1 for Enterprise Linux ES (v.4) - i386, x86_64
+Red Hat Application Stack v2 for Enterprise Linux (v.5) - i386, x86_64
+
+3. Problem description:
+
+MySQL is a multi-user, multi-threaded SQL database server. MySQL is a
+client/server implementation consisting of a server daemon (mysqld), and
+many different client programs and libraries.
+
+A flaw was found in a way MySQL handled symbolic links when database tables
+were created with explicit &quot;DATA&quot; and &quot;INDEX DIRECTORY&quot; options. An
+authenticated user could create a table that would overwrite tables in
+other databases, causing destruction of data or allowing the user to
+elevate privileges. (CVE-2007-5969)
+
+A flaw was found in a way MySQL's InnoDB engine handled spatial indexes. An
+authenticated user could create a table with spatial indexes, which are not
+supported by the InnoDB engine, that would cause the mysql daemon to crash
+when used. This issue only causes a temporary denial of service, as the
+mysql daemon will be automatically restarted after the crash.
+(CVE-2007-5925)
+
+A flaw was found in a way MySQL handled the &quot;DEFINER&quot; view parameter. A
+user with the &quot;ALTER VIEW&quot; privilege for a view created by another database
+user, could modify that view to get access to any data accessible to the
+creator of said view. (CVE-2007-6303)
+
+All mysql users are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+377451 - CVE-2007-5925 mysql DoS in the InnoDB Engine
+397071 - CVE-2007-5969 mysql: possible system table information overwrite using symlinks
+420231 - CVE-2007-6303 mysql: DEFINER value of view not altered on ALTER VIEW
+
+6. RPMs required:
+
+Red Hat Application Stack v1 for Enterprise Linux AS (v.4):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHWAS/SRPMS/mysql-5.0.44-2.el4s1.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHWAS/SRPMS/mysql-5.0.44-2.el4s1.1.src.rpm</a>
+ca84729dbb47b6733cde3b385ca3773d  mysql-5.0.44-2.el4s1.1.src.rpm
+
+i386:
+d71440ea3ee98d1d6481457b0cfcd7eb  mysql-5.0.44-2.el4s1.1.i386.rpm
+2da466fc2754b6b4bb279f7181d7cf37  mysql-bench-5.0.44-2.el4s1.1.i386.rpm
+8f6c64281708ba3ad7eaaf6948762fc1  mysql-cluster-5.0.44-2.el4s1.1.i386.rpm
+a5483597c4385b1372aa821f8d514946  mysql-debuginfo-5.0.44-2.el4s1.1.i386.rpm
+72a2d26bf19cc79d0a9c4f94658b00d0  mysql-devel-5.0.44-2.el4s1.1.i386.rpm
+c77211698fb1ce60be43744acc28a546  mysql-libs-5.0.44-2.el4s1.1.i386.rpm
+8e9bb1932f851006a5a4e3f586c8b148  mysql-server-5.0.44-2.el4s1.1.i386.rpm
+80ebb4bc395e2338b2175188d636e81f  mysql-test-5.0.44-2.el4s1.1.i386.rpm
+
+x86_64:
+d71440ea3ee98d1d6481457b0cfcd7eb  mysql-5.0.44-2.el4s1.1.i386.rpm
+8b3674d07d0de7131ca61d0e5b82d9d4  mysql-5.0.44-2.el4s1.1.x86_64.rpm
+e32256754d35b2f741cf023d313db803  mysql-bench-5.0.44-2.el4s1.1.x86_64.rpm
+0433ff7e161e6166069b990ed5e5adc0  mysql-cluster-5.0.44-2.el4s1.1.x86_64.rpm
+a5483597c4385b1372aa821f8d514946  mysql-debuginfo-5.0.44-2.el4s1.1.i386.rpm
+4a6bd81a3ca36b47a5c7eb7289d9c69a  mysql-debuginfo-5.0.44-2.el4s1.1.x86_64.rpm
+706271c5eb07ec0862ffb6cd820f15c0  mysql-devel-5.0.44-2.el4s1.1.x86_64.rpm
+c77211698fb1ce60be43744acc28a546  mysql-libs-5.0.44-2.el4s1.1.i386.rpm
+ea65b280ea61b2c8aae57ebad1bd5748  mysql-libs-5.0.44-2.el4s1.1.x86_64.rpm
+064abb6df8f7272d1a91ca890fefe1ff  mysql-server-5.0.44-2.el4s1.1.x86_64.rpm
+81b83016558b08b4558f3b04dd681b19  mysql-test-5.0.44-2.el4s1.1.x86_64.rpm
+
+Red Hat Application Stack v1 for Enterprise Linux ES (v.4):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHWAS/SRPMS/mysql-5.0.44-2.el4s1.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHWAS/SRPMS/mysql-5.0.44-2.el4s1.1.src.rpm</a>
+ca84729dbb47b6733cde3b385ca3773d  mysql-5.0.44-2.el4s1.1.src.rpm
+
+i386:
+d71440ea3ee98d1d6481457b0cfcd7eb  mysql-5.0.44-2.el4s1.1.i386.rpm
+2da466fc2754b6b4bb279f7181d7cf37  mysql-bench-5.0.44-2.el4s1.1.i386.rpm
+8f6c64281708ba3ad7eaaf6948762fc1  mysql-cluster-5.0.44-2.el4s1.1.i386.rpm
+a5483597c4385b1372aa821f8d514946  mysql-debuginfo-5.0.44-2.el4s1.1.i386.rpm
+72a2d26bf19cc79d0a9c4f94658b00d0  mysql-devel-5.0.44-2.el4s1.1.i386.rpm
+c77211698fb1ce60be43744acc28a546  mysql-libs-5.0.44-2.el4s1.1.i386.rpm
+8e9bb1932f851006a5a4e3f586c8b148  mysql-server-5.0.44-2.el4s1.1.i386.rpm
+80ebb4bc395e2338b2175188d636e81f  mysql-test-5.0.44-2.el4s1.1.i386.rpm
+
+x86_64:
+d71440ea3ee98d1d6481457b0cfcd7eb  mysql-5.0.44-2.el4s1.1.i386.rpm
+8b3674d07d0de7131ca61d0e5b82d9d4  mysql-5.0.44-2.el4s1.1.x86_64.rpm
+e32256754d35b2f741cf023d313db803  mysql-bench-5.0.44-2.el4s1.1.x86_64.rpm
+0433ff7e161e6166069b990ed5e5adc0  mysql-cluster-5.0.44-2.el4s1.1.x86_64.rpm
+a5483597c4385b1372aa821f8d514946  mysql-debuginfo-5.0.44-2.el4s1.1.i386.rpm
+4a6bd81a3ca36b47a5c7eb7289d9c69a  mysql-debuginfo-5.0.44-2.el4s1.1.x86_64.rpm
+706271c5eb07ec0862ffb6cd820f15c0  mysql-devel-5.0.44-2.el4s1.1.x86_64.rpm
+c77211698fb1ce60be43744acc28a546  mysql-libs-5.0.44-2.el4s1.1.i386.rpm
+ea65b280ea61b2c8aae57ebad1bd5748  mysql-libs-5.0.44-2.el4s1.1.x86_64.rpm
+064abb6df8f7272d1a91ca890fefe1ff  mysql-server-5.0.44-2.el4s1.1.x86_64.rpm
+81b83016558b08b4558f3b04dd681b19  mysql-test-5.0.44-2.el4s1.1.x86_64.rpm
+
+Red Hat Application Stack v2 for Enterprise Linux (v.5):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise//en/RHWAS/SRPMS/mysql-5.0.44-3.el5s2.src.rpm">ftp://updates.redhat.com/enterprise//en/RHWAS/SRPMS/mysql-5.0.44-3.el5s2.src.rpm</a>
+9b9b957fe2d29d198f27f956dedb31fe  mysql-5.0.44-3.el5s2.src.rpm
+
+i386:
+cf1887c176b79fe704600f2bdc163474  mysql-5.0.44-3.el5s2.i386.rpm
+1753693081423dc9841979b5564b58ff  mysql-bench-5.0.44-3.el5s2.i386.rpm
+3be4ca88aa307cb4fd3ad786852782ec  mysql-cluster-5.0.44-3.el5s2.i386.rpm
+d9621538bdd467798c1016936fe3bcae  mysql-debuginfo-5.0.44-3.el5s2.i386.rpm
+dcacca0a00f7eb14bdcebd1f943c47e7  mysql-devel-5.0.44-3.el5s2.i386.rpm
+809ff153137e95e27fd771c1be590dfc  mysql-libs-5.0.44-3.el5s2.i386.rpm
+a7a65b019b44f9c016739b5818dbf46b  mysql-server-5.0.44-3.el5s2.i386.rpm
+1a40e64039df2a50d68c22cbbb88edbf  mysql-test-5.0.44-3.el5s2.i386.rpm
+
+x86_64:
+cf1887c176b79fe704600f2bdc163474  mysql-5.0.44-3.el5s2.i386.rpm
+cc9549cea809112110f1ec76cfbee1d8  mysql-5.0.44-3.el5s2.x86_64.rpm
+c20fc6b7e24a6928e7f080cfba9d98dd  mysql-bench-5.0.44-3.el5s2.x86_64.rpm
+9ae5003039deb5772fb954ed1440cbcc  mysql-cluster-5.0.44-3.el5s2.x86_64.rpm
+d9621538bdd467798c1016936fe3bcae  mysql-debuginfo-5.0.44-3.el5s2.i386.rpm
+1e76cbe8a731f04266502d54a5506a47  mysql-debuginfo-5.0.44-3.el5s2.x86_64.rpm
+dcacca0a00f7eb14bdcebd1f943c47e7  mysql-devel-5.0.44-3.el5s2.i386.rpm
+823725665e22e44533177134487d9f0f  mysql-devel-5.0.44-3.el5s2.x86_64.rpm
+809ff153137e95e27fd771c1be590dfc  mysql-libs-5.0.44-3.el5s2.i386.rpm
+b66ef3e045f403152d0451ae0bee8e39  mysql-libs-5.0.44-3.el5s2.x86_64.rpm
+cb45dec1b2d708e62955c4017f663036  mysql-server-5.0.44-3.el5s2.x86_64.rpm
+902c6e1e350ae925d5de24c5e13f0418  mysql-test-5.0.44-3.el5s2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5969">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5969</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5925">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5925</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6303">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6303</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHaUM+XlSAg2UNWIIRAtDSAKCM7s75ag8eIliaC/8YXrBYmHdaWACgjbQx
+3pISyq8SjHZpfV45rzfXIAQ=
+=DACv
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

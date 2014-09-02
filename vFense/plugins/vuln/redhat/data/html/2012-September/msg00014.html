@@ -1,0 +1,278 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1258&#45;01] Moderate: quagga security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 12 Sep 2012 16:10:36 &#45;0400 -->
+<!--X-Message-Id: 201209122010.q8CKAUCS032206@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1258-01] Moderate: quagga security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1258-01] Moderate: quagga security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1258-01] Moderate: quagga security update</li>
+<li><em>Date</em>: Wed, 12 Sep 2012 20:10:30 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: quagga security update
+Advisory ID:       RHSA-2012:1258-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1258.html">https://rhn.redhat.com/errata/RHSA-2012-1258.html</a>
+Issue date:        2012-09-12
+CVE Names:         CVE-2010-1674 CVE-2011-3323 CVE-2011-3324 
+                   CVE-2011-3325 CVE-2011-3326 CVE-2011-3327 
+                   CVE-2012-0249 CVE-2012-0250 
+=====================================================================
+
+1. Summary:
+
+Updated quagga packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Quagga is a TCP/IP based routing software suite. The Quagga bgpd daemon
+implements the BGP (Border Gateway Protocol) routing protocol. The Quagga
+ospfd and ospf6d daemons implement the OSPF (Open Shortest Path First)
+routing protocol.
+
+A heap-based buffer overflow flaw was found in the way the bgpd daemon
+processed malformed Extended Communities path attributes. An attacker could
+send a specially-crafted BGP message, causing bgpd on a target system to
+crash or, possibly, execute arbitrary code with the privileges of the user
+running bgpd. The UPDATE message would have to arrive from an explicitly
+configured BGP peer, but could have originated elsewhere in the BGP
+network. (CVE-2011-3327)
+
+A NULL pointer dereference flaw was found in the way the bgpd daemon
+processed malformed route Extended Communities attributes. A configured
+BGP peer could crash bgpd on a target system via a specially-crafted BGP
+message. (CVE-2010-1674)
+
+A stack-based buffer overflow flaw was found in the way the ospf6d daemon
+processed malformed Link State Update packets. An OSPF router could use
+this flaw to crash ospf6d on an adjacent router. (CVE-2011-3323)
+
+A flaw was found in the way the ospf6d daemon processed malformed link
+state advertisements. An OSPF neighbor could use this flaw to crash
+ospf6d on a target system. (CVE-2011-3324)
+
+A flaw was found in the way the ospfd daemon processed malformed Hello
+packets. An OSPF neighbor could use this flaw to crash ospfd on a
+target system. (CVE-2011-3325)
+
+A flaw was found in the way the ospfd daemon processed malformed link state
+advertisements. An OSPF router in the autonomous system could use this flaw
+to crash ospfd on a target system. (CVE-2011-3326)
+
+An assertion failure was found in the way the ospfd daemon processed
+certain Link State Update packets. An OSPF router could use this flaw to
+cause ospfd on an adjacent router to abort. (CVE-2012-0249)
+
+A buffer overflow flaw was found in the way the ospfd daemon processed
+certain Link State Update packets. An OSPF router could use this flaw to
+crash ospfd on an adjacent router. (CVE-2012-0250)
+
+Red Hat would like to thank CERT-FI for reporting CVE-2011-3327,
+CVE-2011-3323, CVE-2011-3324, CVE-2011-3325, and CVE-2011-3326; and the
+CERT/CC for reporting CVE-2012-0249 and CVE-2012-0250. CERT-FI acknowledges
+Riku Hietamäki, Tuomo Untinen and Jukka Taimisto of the Codenomicon CROSS
+project as the original reporters of CVE-2011-3327, CVE-2011-3323,
+CVE-2011-3324, CVE-2011-3325, and CVE-2011-3326. The CERT/CC acknowledges
+Martin Winter at OpenSourceRouting.org as the original reporter of
+CVE-2012-0249 and CVE-2012-0250.
+
+Users of quagga should upgrade to these updated packages, which contain
+backported patches to correct these issues. After installing the updated
+packages, the bgpd, ospfd, and ospf6d daemons will be restarted
+automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+654603 - CVE-2010-1674 quagga: DoS (crash) by processing malformed extended community attribute in a route
+738393 - CVE-2011-3323 Quagga (ospf6d): Stack-based buffer overflow while decoding Link State Update packet with malformed Inter Area Prefix LSA
+738394 - CVE-2011-3324 Quagga (ospf6d): Denial of service by decoding malformed Database Description packet headers
+738396 - CVE-2011-3325 Quagga (ospfd): Denial of service by decoding too short Hello packet or Hello packet with invalid OSPFv2 header type
+738398 - CVE-2011-3326 Quagga (ospfd): Denial of service by decoding Link State Update LSAs of unknown type
+738400 - CVE-2011-3327 Quagga (bgpd): Heap-based buffer overflow by decoding BGP UPDATE message with unknown AS_PATH attributes
+802827 - CVE-2012-0249 quagga (ospfd): Assertion failure due improper length check for a received LS-Update OSPF packet
+802829 - CVE-2012-0250 quagga (ospfd): Crash by processing LS-Update OSPF packet due improper length check of the Network-LSA structures
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/quagga-0.98.6-7.el5_8.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/quagga-0.98.6-7.el5_8.1.src.rpm</a>
+
+i386:
+quagga-contrib-0.98.6-7.el5_8.1.i386.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.i386.rpm
+
+x86_64:
+quagga-contrib-0.98.6-7.el5_8.1.x86_64.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/quagga-0.98.6-7.el5_8.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/quagga-0.98.6-7.el5_8.1.src.rpm</a>
+
+i386:
+quagga-0.98.6-7.el5_8.1.i386.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.i386.rpm
+quagga-devel-0.98.6-7.el5_8.1.i386.rpm
+
+x86_64:
+quagga-0.98.6-7.el5_8.1.x86_64.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.i386.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.x86_64.rpm
+quagga-devel-0.98.6-7.el5_8.1.i386.rpm
+quagga-devel-0.98.6-7.el5_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/quagga-0.98.6-7.el5_8.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/quagga-0.98.6-7.el5_8.1.src.rpm</a>
+
+i386:
+quagga-0.98.6-7.el5_8.1.i386.rpm
+quagga-contrib-0.98.6-7.el5_8.1.i386.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.i386.rpm
+quagga-devel-0.98.6-7.el5_8.1.i386.rpm
+
+ia64:
+quagga-0.98.6-7.el5_8.1.ia64.rpm
+quagga-contrib-0.98.6-7.el5_8.1.ia64.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.ia64.rpm
+quagga-devel-0.98.6-7.el5_8.1.ia64.rpm
+
+ppc:
+quagga-0.98.6-7.el5_8.1.ppc.rpm
+quagga-contrib-0.98.6-7.el5_8.1.ppc.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.ppc.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.ppc64.rpm
+quagga-devel-0.98.6-7.el5_8.1.ppc.rpm
+quagga-devel-0.98.6-7.el5_8.1.ppc64.rpm
+
+s390x:
+quagga-0.98.6-7.el5_8.1.s390x.rpm
+quagga-contrib-0.98.6-7.el5_8.1.s390x.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.s390.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.s390x.rpm
+quagga-devel-0.98.6-7.el5_8.1.s390.rpm
+quagga-devel-0.98.6-7.el5_8.1.s390x.rpm
+
+x86_64:
+quagga-0.98.6-7.el5_8.1.x86_64.rpm
+quagga-contrib-0.98.6-7.el5_8.1.x86_64.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.i386.rpm
+quagga-debuginfo-0.98.6-7.el5_8.1.x86_64.rpm
+quagga-devel-0.98.6-7.el5_8.1.i386.rpm
+quagga-devel-0.98.6-7.el5_8.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1674.html">https://www.redhat.com/security/data/cve/CVE-2010-1674.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3323.html">https://www.redhat.com/security/data/cve/CVE-2011-3323.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3324.html">https://www.redhat.com/security/data/cve/CVE-2011-3324.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3325.html">https://www.redhat.com/security/data/cve/CVE-2011-3325.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3326.html">https://www.redhat.com/security/data/cve/CVE-2011-3326.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3327.html">https://www.redhat.com/security/data/cve/CVE-2011-3327.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0249.html">https://www.redhat.com/security/data/cve/CVE-2012-0249.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0250.html">https://www.redhat.com/security/data/cve/CVE-2012-0250.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQUOwgXlSAg2UNWIIRAnpmAKCmR0UYneuYqhGXzZc7Wol864tlKACeIGwA
+EBCd27eTiT5JPHMgOGBqNSI=
+=Q9Tw
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

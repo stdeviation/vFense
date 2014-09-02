@@ -1,0 +1,232 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0221&#45;01] Critical: flash&#45;plugin security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Apr 2008 19:49:09 &#45;0400 -->
+<!--X-Message-Id: 200804082349.m38Nn8Ou023729@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0221-01] Critical: flash-plugin security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0221-01] Critical: flash-plugin security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0221-01] Critical: flash-plugin security update</li>
+<li><em>Date</em>: Tue, 8 Apr 2008 19:49:08 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: flash-plugin security update
+Advisory ID:       RHSA-2008:0221-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0221.html">https://rhn.redhat.com/errata/RHSA-2008-0221.html</a>
+Issue date:        2008-04-08
+CVE Names:         CVE-2007-5275 CVE-2007-6243 CVE-2007-6637 
+                   CVE-2007-6019 CVE-2007-0071 CVE-2008-1655 
+                   CVE-2008-1654 
+=====================================================================
+
+1. Summary:
+
+An updated Adobe Flash Player package that fixes several security issues is
+now available for Red Hat Enterprise Linux 3 Extras, Red Hat Enterprise
+Linux 4 Extras, and Red Hat Enterprise Linux 5 Supplementary.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 3 Extras - i386
+Red Hat Desktop version 3 Extras - i386
+Red Hat Enterprise Linux ES version 3 Extras - i386
+Red Hat Enterprise Linux WS version 3 Extras - i386
+Red Hat Enterprise Linux AS version 4 Extras - i386
+Red Hat Desktop version 4 Extras - i386
+Red Hat Enterprise Linux ES version 4 Extras - i386
+Red Hat Enterprise Linux WS version 4 Extras - i386
+RHEL Desktop Supplementary (v. 5 client) - i386, x86_64
+RHEL Supplementary (v. 5 server) - i386, x86_64
+
+3. Description:
+
+The flash-plugin package contains a Firefox-compatible Adobe Flash Player
+Web browser plug-in.
+
+Several input validation flaws were found in the way Flash Player displayed
+certain content. These may have made it possible to execute arbitrary code
+on a victim's machine, if the victim opened a malicious Adobe Flash file.
+(CVE-2007-0071, CVE-2007-6019)
+
+A flaw was found in the way Flash Player established TCP sessions to remote
+hosts. A remote attacker could, consequently, use Flash Player to conduct a
+DNS rebinding attack. (CVE-2007-5275, CVE-2008-1655)
+
+A flaw was found in the way Flash Player restricted the interpretation and
+usage of cross-domain policy files. A remote attacker could use Flash
+Player to conduct cross-domain and cross-site scripting attacks.
+(CVE-2007-6243, CVE-2008-1654)
+
+A flaw was found in the way Flash Player interacted with web browsers. An
+attacker could use malicious content presented by Flash Player to conduct a
+cross-site scripting attack. (CVE-2007-6637)
+
+All users of Adobe Flash Player should upgrade to this updated package,
+which contains Flash Player version 9.0.124.0 and resolves these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+367501 - CVE-2007-5275 Flash plugin DNS rebinding
+440664 - CVE-2007-6243 Flash Player cross-domain and cross-site scripting flaws
+440666 - CVE-2007-6637 Flash Player content injection flaw
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 3 Extras:
+
+i386:
+flash-plugin-9.0.124.0-1.el3.with.oss.i386.rpm
+
+Red Hat Desktop version 3 Extras:
+
+i386:
+flash-plugin-9.0.124.0-1.el3.with.oss.i386.rpm
+
+Red Hat Enterprise Linux ES version 3 Extras:
+
+i386:
+flash-plugin-9.0.124.0-1.el3.with.oss.i386.rpm
+
+Red Hat Enterprise Linux WS version 3 Extras:
+
+i386:
+flash-plugin-9.0.124.0-1.el3.with.oss.i386.rpm
+
+Red Hat Enterprise Linux AS version 4 Extras:
+
+i386:
+flash-plugin-9.0.124.0-1.el4.i386.rpm
+
+Red Hat Desktop version 4 Extras:
+
+i386:
+flash-plugin-9.0.124.0-1.el4.i386.rpm
+
+Red Hat Enterprise Linux ES version 4 Extras:
+
+i386:
+flash-plugin-9.0.124.0-1.el4.i386.rpm
+
+Red Hat Enterprise Linux WS version 4 Extras:
+
+i386:
+flash-plugin-9.0.124.0-1.el4.i386.rpm
+
+RHEL Desktop Supplementary (v. 5 client):
+
+i386:
+flash-plugin-9.0.124.0-1.el5.i386.rpm
+
+x86_64:
+flash-plugin-9.0.124.0-1.el5.i386.rpm
+
+RHEL Supplementary (v. 5 server):
+
+i386:
+flash-plugin-9.0.124.0-1.el5.i386.rpm
+
+x86_64:
+flash-plugin-9.0.124.0-1.el5.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5275">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5275</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6243">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6243</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6637">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6637</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6019">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6019</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0071">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0071</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1655">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1655</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1654">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1654</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFH/ARyXlSAg2UNWIIRAmH9AJoDh5tWbwt6UKTo3TWp6uXO5mY5EgCgsBuv
+lK7I9GdvxAw8ySpOHybYFRk=
+=zuAv
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

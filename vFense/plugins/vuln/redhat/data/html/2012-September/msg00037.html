@@ -1,0 +1,182 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1307&#45;01] Important: openssl security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 24 Sep 2012 12:08:52 &#45;0400 -->
+<!--X-Message-Id: 201209241608.q8OG8lmK015320@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1307-01] Important: openssl security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1307-01] Important: openssl security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1307-01] Important: openssl security update</li>
+<li><em>Date</em>: Mon, 24 Sep 2012 16:08:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openssl security update
+Advisory ID:       RHSA-2012:1307-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1307.html">https://rhn.redhat.com/errata/RHSA-2012-1307.html</a>
+Issue date:        2012-09-24
+CVE Names:         CVE-2011-4108 CVE-2011-4109 CVE-2011-4576 
+                   CVE-2011-4619 CVE-2012-0884 CVE-2012-1165 
+                   CVE-2012-2110 CVE-2012-2333 
+=====================================================================
+
+1. Summary:
+
+An update for the OpenSSL component for JBoss Enterprise Application
+Platform 5.1.2 for Solaris and Microsoft Windows that fixes multiple
+security issues is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+OpenSSL is a toolkit that implements the Secure Sockets Layer (SSL v2/v3)
+and Transport Layer Security (TLS v1) protocols, as well as a
+full-strength, general purpose cryptography library.
+
+Multiple numeric conversion errors, leading to a buffer overflow, were
+found in the way OpenSSL parsed ASN.1 (Abstract Syntax Notation One) data
+from BIO (OpenSSL's I/O abstraction) inputs. Specially-crafted DER
+(Distinguished Encoding Rules) encoded data read from a file or other BIO
+input could cause an application using the OpenSSL library to crash or,
+potentially, execute arbitrary code. (CVE-2012-2110)
+
+A double free flaw was discovered in the policy checking code in OpenSSL.
+A remote attacker could use this flaw to crash an application that uses
+OpenSSL by providing an X.509 certificate that has specially-crafted
+policy extension data. (CVE-2011-4109)
+
+An information leak flaw was found in the SSL 3.0 protocol implementation
+in OpenSSL. Incorrect initialization of SSL record padding bytes could
+cause an SSL client or server to send a limited amount of possibly
+sensitive data to its SSL peer via the encrypted connection.
+(CVE-2011-4576)
+
+It was discovered that OpenSSL did not limit the number of TLS/SSL
+handshake restarts required to support Server Gated Cryptography. A remote
+attacker could use this flaw to make a TLS/SSL server using OpenSSL consume
+an excessive amount of CPU by continuously restarting the handshake.
+(CVE-2011-4619)
+
+This update also fixes additional security issues in OpenSSL that are not
+exposed in JBoss Enterprise Application Platform: CVE-2011-4108,
+CVE-2012-0884, CVE-2012-1165, and CVE-2012-2333.
+
+Warning: Before applying this update, back up your JBoss Enterprise
+Application Platform's &quot;server/[PROFILE]/deploy/&quot; directory, along with all
+other customized configuration files.
+
+All users of JBoss Enterprise Application Platform 5.1.2 for Solaris and
+Microsoft Windows as provided from the Red Hat Customer Portal are advised
+to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise Application Platform installation (including all
+applications and configuration files).
+
+JBoss server instances configured to use the Tomcat Native library must be
+restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+771770 - CVE-2011-4108 openssl: DTLS plaintext recovery attack
+771771 - CVE-2011-4109 openssl: double-free in policy checks
+771775 - CVE-2011-4576 openssl: uninitialized SSL 3.0 padding
+771780 - CVE-2011-4619 openssl: SGC restart DoS attack
+802489 - CVE-2012-1165 openssl: mime_param_cmp NULL dereference crash
+802725 - CVE-2012-0884 openssl: CMS and PKCS#7 Bleichenbacher attack
+814185 - CVE-2012-2110 openssl: asn1_d2i_read_bio integer errors leading to buffer overflow
+820686 - CVE-2012-2333 openssl: record length handling integer underflow
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4108.html">https://www.redhat.com/security/data/cve/CVE-2011-4108.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4109.html">https://www.redhat.com/security/data/cve/CVE-2011-4109.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4576.html">https://www.redhat.com/security/data/cve/CVE-2011-4576.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4619.html">https://www.redhat.com/security/data/cve/CVE-2011-4619.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0884.html">https://www.redhat.com/security/data/cve/CVE-2012-0884.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1165.html">https://www.redhat.com/security/data/cve/CVE-2012-1165.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2110.html">https://www.redhat.com/security/data/cve/CVE-2012-2110.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2333.html">https://www.redhat.com/security/data/cve/CVE-2012-2333.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=securityPatches&amp;version=5.1.2">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=securityPatches&amp;version=5.1.2</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQYIWAXlSAg2UNWIIRAvuYAJ9pO3bR7gaailCeXKyqndaw+Ir+7gCdEc8+
+MFp7NNG88KAnEksVM43FKv8=
+=LjcO
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

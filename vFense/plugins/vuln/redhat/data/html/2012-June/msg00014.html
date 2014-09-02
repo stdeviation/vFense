@@ -1,0 +1,344 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0744&#45;01] Moderate: python security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 18 Jun 2012 09:54:11 &#45;0400 -->
+<!--X-Message-Id: 201206181354.q5IDs46j016164@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0744-01] Moderate: python security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0744-01] Moderate: python security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0744-01] Moderate: python security update</li>
+<li><em>Date</em>: Mon, 18 Jun 2012 13:54:04 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: python security update
+Advisory ID:       RHSA-2012:0744-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0744.html">https://rhn.redhat.com/errata/RHSA-2012-0744.html</a>
+Issue date:        2012-06-18
+CVE Names:         CVE-2011-4940 CVE-2011-4944 CVE-2012-0845 
+                   CVE-2012-1150 
+=====================================================================
+
+1. Summary:
+
+Updated python packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Python is an interpreted, interactive, object-oriented programming
+language.
+
+A denial of service flaw was found in the implementation of associative
+arrays (dictionaries) in Python. An attacker able to supply a large number
+of inputs to a Python application (such as HTTP POST request parameters
+sent to a web application) that are used as keys when inserting data into
+an array could trigger multiple hash function collisions, making array
+operations take an excessive amount of CPU time. To mitigate this issue,
+randomization has been added to the hash function to reduce the chance of
+an attacker successfully causing intentional collisions. (CVE-2012-1150)
+
+Note: The hash randomization is not enabled by default as it may break
+applications that incorrectly depend on dictionary ordering. To enable the
+protection, the new &quot;PYTHONHASHSEED&quot; environment variable or the Python
+interpreter's &quot;-R&quot; command line option can be used. Refer to the python(1)
+manual page for details.
+
+The RHSA-2012:0731 expat erratum must be installed with this update, which
+adds hash randomization to the Expat library used by the Python pyexpat
+module.
+
+A flaw was found in the way the Python SimpleXMLRPCServer module handled
+clients disconnecting prematurely. A remote attacker could use this flaw to
+cause excessive CPU consumption on a server using SimpleXMLRPCServer.
+(CVE-2012-0845)
+
+A flaw was found in the way the Python SimpleHTTPServer module generated
+directory listings. An attacker able to upload a file with a
+specially-crafted name to a server could possibly perform a cross-site
+scripting (XSS) attack against victims visiting a listing page generated by
+SimpleHTTPServer, for a directory containing the crafted file (if the
+victims were using certain web browsers). (CVE-2011-4940)
+
+A race condition was found in the way the Python distutils module set file
+permissions during the creation of the .pypirc file. If a local user had
+access to the home directory of another user who is running distutils, they
+could use this flaw to gain access to that user's .pypirc file, which can
+contain usernames and passwords for code repositories. (CVE-2011-4944)
+
+Red Hat would like to thank oCERT for reporting CVE-2012-1150. oCERT
+acknowledges Julian Wälde and Alexander Klink as the original reporters of
+CVE-2012-1150.
+
+All Python users should upgrade to these updated packages, which contain
+backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+750555 - CVE-2012-1150 python: hash table collisions CPU usage DoS (oCERT-2011-003)
+758905 - CVE-2011-4944 python: distutils creates ~/.pypirc insecurely
+789790 - CVE-2012-0845 python: SimpleXMLRPCServer CPU usage DoS via malformed XML-RPC request
+803500 - CVE-2011-4940 python: potential XSS in SimpleHTTPServer's list_directory()
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm</a>
+
+i386:
+python-2.6.6-29.el6_2.2.i686.rpm
+python-debuginfo-2.6.6-29.el6_2.2.i686.rpm
+python-libs-2.6.6-29.el6_2.2.i686.rpm
+tkinter-2.6.6-29.el6_2.2.i686.rpm
+
+x86_64:
+python-2.6.6-29.el6_2.2.x86_64.rpm
+python-debuginfo-2.6.6-29.el6_2.2.x86_64.rpm
+python-libs-2.6.6-29.el6_2.2.x86_64.rpm
+tkinter-2.6.6-29.el6_2.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm</a>
+
+i386:
+python-debuginfo-2.6.6-29.el6_2.2.i686.rpm
+python-devel-2.6.6-29.el6_2.2.i686.rpm
+python-test-2.6.6-29.el6_2.2.i686.rpm
+python-tools-2.6.6-29.el6_2.2.i686.rpm
+
+x86_64:
+python-debuginfo-2.6.6-29.el6_2.2.x86_64.rpm
+python-devel-2.6.6-29.el6_2.2.x86_64.rpm
+python-test-2.6.6-29.el6_2.2.x86_64.rpm
+python-tools-2.6.6-29.el6_2.2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm</a>
+
+x86_64:
+python-2.6.6-29.el6_2.2.x86_64.rpm
+python-debuginfo-2.6.6-29.el6_2.2.x86_64.rpm
+python-libs-2.6.6-29.el6_2.2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm</a>
+
+x86_64:
+python-debuginfo-2.6.6-29.el6_2.2.x86_64.rpm
+python-devel-2.6.6-29.el6_2.2.x86_64.rpm
+python-test-2.6.6-29.el6_2.2.x86_64.rpm
+python-tools-2.6.6-29.el6_2.2.x86_64.rpm
+tkinter-2.6.6-29.el6_2.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm</a>
+
+i386:
+python-2.6.6-29.el6_2.2.i686.rpm
+python-debuginfo-2.6.6-29.el6_2.2.i686.rpm
+python-devel-2.6.6-29.el6_2.2.i686.rpm
+python-libs-2.6.6-29.el6_2.2.i686.rpm
+tkinter-2.6.6-29.el6_2.2.i686.rpm
+
+ppc64:
+python-2.6.6-29.el6_2.2.ppc64.rpm
+python-debuginfo-2.6.6-29.el6_2.2.ppc64.rpm
+python-devel-2.6.6-29.el6_2.2.ppc64.rpm
+python-libs-2.6.6-29.el6_2.2.ppc64.rpm
+tkinter-2.6.6-29.el6_2.2.ppc64.rpm
+
+s390x:
+python-2.6.6-29.el6_2.2.s390x.rpm
+python-debuginfo-2.6.6-29.el6_2.2.s390x.rpm
+python-devel-2.6.6-29.el6_2.2.s390x.rpm
+python-libs-2.6.6-29.el6_2.2.s390x.rpm
+
+x86_64:
+python-2.6.6-29.el6_2.2.x86_64.rpm
+python-debuginfo-2.6.6-29.el6_2.2.x86_64.rpm
+python-devel-2.6.6-29.el6_2.2.x86_64.rpm
+python-libs-2.6.6-29.el6_2.2.x86_64.rpm
+tkinter-2.6.6-29.el6_2.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm</a>
+
+i386:
+python-debuginfo-2.6.6-29.el6_2.2.i686.rpm
+python-test-2.6.6-29.el6_2.2.i686.rpm
+python-tools-2.6.6-29.el6_2.2.i686.rpm
+
+ppc64:
+python-debuginfo-2.6.6-29.el6_2.2.ppc64.rpm
+python-test-2.6.6-29.el6_2.2.ppc64.rpm
+python-tools-2.6.6-29.el6_2.2.ppc64.rpm
+
+s390x:
+python-debuginfo-2.6.6-29.el6_2.2.s390x.rpm
+python-test-2.6.6-29.el6_2.2.s390x.rpm
+python-tools-2.6.6-29.el6_2.2.s390x.rpm
+tkinter-2.6.6-29.el6_2.2.s390x.rpm
+
+x86_64:
+python-debuginfo-2.6.6-29.el6_2.2.x86_64.rpm
+python-test-2.6.6-29.el6_2.2.x86_64.rpm
+python-tools-2.6.6-29.el6_2.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm</a>
+
+i386:
+python-2.6.6-29.el6_2.2.i686.rpm
+python-debuginfo-2.6.6-29.el6_2.2.i686.rpm
+python-devel-2.6.6-29.el6_2.2.i686.rpm
+python-libs-2.6.6-29.el6_2.2.i686.rpm
+tkinter-2.6.6-29.el6_2.2.i686.rpm
+
+x86_64:
+python-2.6.6-29.el6_2.2.x86_64.rpm
+python-debuginfo-2.6.6-29.el6_2.2.x86_64.rpm
+python-devel-2.6.6-29.el6_2.2.x86_64.rpm
+python-libs-2.6.6-29.el6_2.2.x86_64.rpm
+tkinter-2.6.6-29.el6_2.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/python-2.6.6-29.el6_2.2.src.rpm</a>
+
+i386:
+python-debuginfo-2.6.6-29.el6_2.2.i686.rpm
+python-test-2.6.6-29.el6_2.2.i686.rpm
+python-tools-2.6.6-29.el6_2.2.i686.rpm
+
+x86_64:
+python-debuginfo-2.6.6-29.el6_2.2.x86_64.rpm
+python-test-2.6.6-29.el6_2.2.x86_64.rpm
+python-tools-2.6.6-29.el6_2.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4940.html">https://www.redhat.com/security/data/cve/CVE-2011-4940.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4944.html">https://www.redhat.com/security/data/cve/CVE-2011-4944.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0845.html">https://www.redhat.com/security/data/cve/CVE-2012-0845.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1150.html">https://www.redhat.com/security/data/cve/CVE-2012-1150.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.ocert.org/advisories/ocert-2011-003.html">http://www.ocert.org/advisories/ocert-2011-003.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0731.html">https://rhn.redhat.com/errata/RHSA-2012-0731.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP3zLEXlSAg2UNWIIRAiquAJ0dluqeRUIVeNpseyMtcu2hs9hO+ACgm0vr
+4UI0eMtMFXwmTtQmkElLR3M=
+=yK9n
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

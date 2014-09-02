@@ -1,0 +1,376 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0519&#45;02] Moderate: openssh security,	bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:47:05 &#45;0500 -->
+<!--X-Message-Id: 201302210647.r1L6l3oR028657@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0519-02] Moderate: openssh security,	bug fix and enhancement </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00057.html">Date Prev</a>][<a href="msg00059.html">Date Next</a>] &nbsp; [<a href="msg00057.html">Thread Prev</a>][<a href="msg00059.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00058">Thread Index</A>]
+[<A HREF="date.html#00058">Date Index</A>]
+[<A HREF="author.html#00058">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0519-02] Moderate: openssh security,	bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0519-02] Moderate: openssh security,	bug fix and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:36:01 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openssh security, bug fix and enhancement update
+Advisory ID:       RHSA-2013:0519-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0519.html">https://rhn.redhat.com/errata/RHSA-2013-0519.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2012-5536 
+=====================================================================
+
+1. Summary:
+
+Updated openssh packages that fix one security issue, multiple bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+OpenSSH is OpenBSD's Secure Shell (SSH) protocol implementation. These
+packages include the core files necessary for the OpenSSH client and
+server.
+
+Due to the way the pam_ssh_agent_auth PAM module was built in Red Hat
+Enterprise Linux 6, the glibc's error() function was called rather than the
+intended error() function in pam_ssh_agent_auth to report errors. As these
+two functions expect different arguments, it was possible for an attacker
+to cause an application using pam_ssh_agent_auth to crash, disclose
+portions of its memory or, potentially, execute arbitrary code.
+(CVE-2012-5536)
+
+Note that the pam_ssh_agent_auth module is not used in Red Hat Enterprise
+Linux 6 by default.
+
+This update also fixes the following bugs:
+
+* All possible options for the new RequiredAuthentications directive were
+not documented in the sshd_config man page. This update improves the man
+page to document all the possible options. (BZ#821641)
+
+* When stopping one instance of the SSH daemon (sshd), the sshd init script
+(/etc/rc.d/init.d/sshd) stopped all sshd processes regardless of the PID of
+the processes. This update improves the init script so that it only kills
+processes with the relevant PID. As a result, the init script now works
+more reliably in a multi-instance environment. (BZ#826720)
+
+* Due to a regression, the ssh-copy-id command returned an exit status code
+of zero even if there was an error in copying the key to a remote host.
+With this update, a patch has been applied and ssh-copy-id now returns a
+non-zero exit code if there is an error in copying the SSH certificate to a
+remote host. (BZ#836650)
+
+* When SELinux was disabled on the system, no on-disk policy was installed,
+a user account was used for a connection, and no &quot;~/.ssh&quot; configuration was
+present in that user's home directory, the SSH client terminated
+unexpectedly with a segmentation fault when attempting to connect to
+another system. A patch has been provided to address this issue and the
+crashes no longer occur in the described scenario. (BZ#836655)
+
+* The &quot;HOWTO&quot; document /usr/share/doc/openssh-ldap-5.3p1/HOWTO.ldap-keys
+incorrectly documented the use of the AuthorizedKeysCommand directive.
+This update corrects the document. (BZ#857760)
+
+This update also adds the following enhancements:
+
+* When attempting to enable SSH for use with a Common Access Card (CAC),
+the ssh-agent utility read all the certificates in the card even though
+only the ID certificate was needed. Consequently, if a user entered their
+PIN incorrectly, then the CAC was locked, as a match for the PIN was
+attempted against all three certificates. With this update, ssh-add does
+not try the same PIN for every certificate if the PIN fails for the first
+one. As a result, the CAC will not be disabled if a user enters their PIN
+incorrectly. (BZ#782912)
+
+* This update adds a &quot;netcat mode&quot; to SSH. The &quot;ssh -W host:port ...&quot;
+command connects standard input and output (stdio) on a client to a single
+port on a server. As a result, SSH can be used to route connections via
+intermediate servers. (BZ#860809)
+
+* Due to a bug, arguments for the RequiredAuthentications2 directive were
+not stored in a Match block. Consequently, parsing of the config file was
+not in accordance with the man sshd_config documentation. This update fixes
+the bug and users can now use the required authentication feature to
+specify a list of authentication methods as expected according to the man
+page. (BZ#869903)
+
+All users of openssh are advised to upgrade to these updated packages,
+which fix these issues and add these enhancements. After installing this
+update, the OpenSSH server daemon (sshd) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+821641 - Document possible options to RequiredAuthentications1/2
+826720 - sshd initscript clobbers other sshd processes.
+834618 - CVE-2012-5536 pam_ssh_agent_auth: symbol crash leading to glibc error() called incorrectly
+836650 - ssh-copy-id returns 0 even if the actual operation fails.
+857760 - Error/typo in openssh-ldap HOWTO file
+869903 - RequiredAuthentications2 does not work in Match blocks as documented.
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm</a>
+
+i386:
+openssh-5.3p1-84.1.el6.i686.rpm
+openssh-askpass-5.3p1-84.1.el6.i686.rpm
+openssh-clients-5.3p1-84.1.el6.i686.rpm
+openssh-debuginfo-5.3p1-84.1.el6.i686.rpm
+openssh-server-5.3p1-84.1.el6.i686.rpm
+
+x86_64:
+openssh-5.3p1-84.1.el6.x86_64.rpm
+openssh-askpass-5.3p1-84.1.el6.x86_64.rpm
+openssh-clients-5.3p1-84.1.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-84.1.el6.x86_64.rpm
+openssh-server-5.3p1-84.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm</a>
+
+i386:
+openssh-debuginfo-5.3p1-84.1.el6.i686.rpm
+openssh-ldap-5.3p1-84.1.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.i686.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-84.1.el6.i686.rpm
+openssh-debuginfo-5.3p1-84.1.el6.x86_64.rpm
+openssh-ldap-5.3p1-84.1.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm</a>
+
+x86_64:
+openssh-5.3p1-84.1.el6.x86_64.rpm
+openssh-clients-5.3p1-84.1.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-84.1.el6.x86_64.rpm
+openssh-server-5.3p1-84.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm</a>
+
+x86_64:
+openssh-askpass-5.3p1-84.1.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-84.1.el6.i686.rpm
+openssh-debuginfo-5.3p1-84.1.el6.x86_64.rpm
+openssh-ldap-5.3p1-84.1.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm</a>
+
+i386:
+openssh-5.3p1-84.1.el6.i686.rpm
+openssh-askpass-5.3p1-84.1.el6.i686.rpm
+openssh-clients-5.3p1-84.1.el6.i686.rpm
+openssh-debuginfo-5.3p1-84.1.el6.i686.rpm
+openssh-server-5.3p1-84.1.el6.i686.rpm
+
+ppc64:
+openssh-5.3p1-84.1.el6.ppc64.rpm
+openssh-askpass-5.3p1-84.1.el6.ppc64.rpm
+openssh-clients-5.3p1-84.1.el6.ppc64.rpm
+openssh-debuginfo-5.3p1-84.1.el6.ppc64.rpm
+openssh-server-5.3p1-84.1.el6.ppc64.rpm
+
+s390x:
+openssh-5.3p1-84.1.el6.s390x.rpm
+openssh-askpass-5.3p1-84.1.el6.s390x.rpm
+openssh-clients-5.3p1-84.1.el6.s390x.rpm
+openssh-debuginfo-5.3p1-84.1.el6.s390x.rpm
+openssh-server-5.3p1-84.1.el6.s390x.rpm
+
+x86_64:
+openssh-5.3p1-84.1.el6.x86_64.rpm
+openssh-askpass-5.3p1-84.1.el6.x86_64.rpm
+openssh-clients-5.3p1-84.1.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-84.1.el6.x86_64.rpm
+openssh-server-5.3p1-84.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm</a>
+
+i386:
+openssh-debuginfo-5.3p1-84.1.el6.i686.rpm
+openssh-ldap-5.3p1-84.1.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.i686.rpm
+
+ppc64:
+openssh-debuginfo-5.3p1-84.1.el6.ppc.rpm
+openssh-debuginfo-5.3p1-84.1.el6.ppc64.rpm
+openssh-ldap-5.3p1-84.1.el6.ppc64.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.ppc.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.ppc64.rpm
+
+s390x:
+openssh-debuginfo-5.3p1-84.1.el6.s390.rpm
+openssh-debuginfo-5.3p1-84.1.el6.s390x.rpm
+openssh-ldap-5.3p1-84.1.el6.s390x.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.s390.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.s390x.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-84.1.el6.i686.rpm
+openssh-debuginfo-5.3p1-84.1.el6.x86_64.rpm
+openssh-ldap-5.3p1-84.1.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm</a>
+
+i386:
+openssh-5.3p1-84.1.el6.i686.rpm
+openssh-askpass-5.3p1-84.1.el6.i686.rpm
+openssh-clients-5.3p1-84.1.el6.i686.rpm
+openssh-debuginfo-5.3p1-84.1.el6.i686.rpm
+openssh-server-5.3p1-84.1.el6.i686.rpm
+
+x86_64:
+openssh-5.3p1-84.1.el6.x86_64.rpm
+openssh-askpass-5.3p1-84.1.el6.x86_64.rpm
+openssh-clients-5.3p1-84.1.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-84.1.el6.x86_64.rpm
+openssh-server-5.3p1-84.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-84.1.el6.src.rpm</a>
+
+i386:
+openssh-debuginfo-5.3p1-84.1.el6.i686.rpm
+openssh-ldap-5.3p1-84.1.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.i686.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-84.1.el6.i686.rpm
+openssh-debuginfo-5.3p1-84.1.el6.x86_64.rpm
+openssh-ldap-5.3p1-84.1.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-84.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5536.html">https://www.redhat.com/security/data/cve/CVE-2012-5536.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJcLeXlSAg2UNWIIRAgh1AKCZaxrdla8xGH6eIUCHrBE7MACftgCeO6hL
+j+JTC8NKAk7/8MVzHeAZPlU=
+=AM3w
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00057.html">Date Prev</a>][<a href="msg00059.html">Date Next</a>] &nbsp; [<a href="msg00057.html">Thread Prev</a>][<a href="msg00059.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00058">Thread Index</A>]
+[<A HREF="date.html#00058">Date Index</A>]
+[<A HREF="author.html#00058">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

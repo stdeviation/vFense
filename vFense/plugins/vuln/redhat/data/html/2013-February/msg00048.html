@@ -1,0 +1,252 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0505&#45;02] Moderate: squid security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:33:35 &#45;0500 -->
+<!--X-Message-Id: 201302210633.r1L6XXcB024256@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0505-02] Moderate: squid security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00047.html">Date Prev</a>][<a href="msg00049.html">Date Next</a>] &nbsp; [<a href="msg00047.html">Thread Prev</a>][<a href="msg00049.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00048">Thread Index</A>]
+[<A HREF="date.html#00048">Date Index</A>]
+[<A HREF="author.html#00048">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0505-02] Moderate: squid security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0505-02] Moderate: squid security and bug fix update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:22:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: squid security and bug fix update
+Advisory ID:       RHSA-2013:0505-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0505.html">https://rhn.redhat.com/errata/RHSA-2013-0505.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2012-5643 
+=====================================================================
+
+1. Summary:
+
+Updated squid packages that fix one security issue and several bugs are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Squid is a high-performance proxy caching server for web clients that
+supports FTP, Gopher, and HTTP data objects.
+
+A denial of service flaw was found in the way the Squid Cache Manager
+processed certain requests. A remote attacker who is able to access the
+Cache Manager CGI could use this flaw to cause Squid to consume an
+excessive amount of memory. (CVE-2012-5643)
+
+This update also fixes the following bugs:
+
+* Due to a bug in the ConnStateData::noteMoreBodySpaceAvailable() function,
+child processes of Squid terminated upon encountering a failed assertion.
+An upstream patch has been provided and Squid child processes no longer
+terminate. (BZ#805879)
+
+* Due to an upstream patch, which renamed the HTTP header controlling
+persistent connections from &quot;Proxy-Connection&quot; to &quot;Connection&quot;, the NTLM
+pass-through authentication does not work, thus preventing login. This
+update adds the new &quot;http10&quot; option to the squid.conf file, which can be
+used to enable the change in the patch. This option is set to &quot;off&quot; by
+default. When set to &quot;on&quot;, the NTLM pass-through authentication works
+properly, thus allowing login attempts to succeed. (BZ#844723)
+
+* When the IPv6 protocol was disabled and Squid tried to handle an HTTP GET
+request containing an IPv6 address, the Squid child process terminated due
+to signal 6. This bug has been fixed and such requests are now handled as
+expected. (BZ#832484)
+
+* The old &quot;stale if hit&quot; logic did not account for cases where the stored
+stale response became fresh due to a successful re-validation with the
+origin server. Consequently, incorrect warning messages were returned. Now,
+Squid no longer marks elements as stale in the described scenario.
+(BZ#847056)
+
+* When squid packages were installed before samba-winbind, the wbpriv group
+did not include Squid. Consequently, NTLM authentication calls failed. Now,
+Squid correctly adds itself into the wbpriv group if samba-winbind is
+installed before Squid, thus fixing this bug. (BZ#797571)
+
+* In FIPS mode, Squid was using private MD5 hash functions for user
+authentication and network access. As MD5 is incompatible with FIPS mode,
+Squid could fail to start. This update limits the use of the private MD5
+functions to local disk file hash identifiers, thus allowing Squid to work
+in FIPS mode. (BZ#833086)
+
+* Under high system load, the squid process could terminate unexpectedly
+with a segmentation fault during reboot. This update provides better memory
+handling during reboot, thus fixing this bug. (BZ#782732)
+
+* Squid incorrectly set the timeout limit for client HTTP connections with
+the value for server-side connections, which is much higher, thus creating
+unnecessary delays. With this update, Squid uses a proper value for the
+client timeout limit. (BZ#798090)
+
+* Squid did not properly release allocated memory when generating error
+page contents, which caused memory leaks. Consequently, the Squid proxy
+server consumed a lot of memory within a short time period. This update
+fixes this memory leak. (BZ#758861)
+
+* Squid did not pass the ident value to a URL rewriter that was configured
+using the &quot;url_rewrite_program&quot; directive. Consequently, the URL rewriter
+received the dash character (&quot;–&quot;) as the user value instead of the correct
+user name. Now, the URL rewriter receives the correct user name in the
+described scenario. (BZ#797884)
+
+* Squid, used as a transparent proxy, can only handle the HTTP protocol.
+Previously, it was possible to define a URL in which the access protocol
+contained the asterisk character (*) or an unknown protocol namespace URI.
+Consequently, an &quot;Invalid URL&quot; error message was logged to access.log
+during reload. This update ensures that &quot;<a  rel="nofollow" href="http://&quot">http://&quot</a>; is always used in
+transparent proxy URLs, and the error message is no longer logged in this
+scenario. (BZ#720504)
+
+All users of squid are advised to upgrade to these updated packages, which
+fix these issues. After installing this update, the squid service will be
+restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+797571 - squid userid not added to wbpriv group
+798090 - client timeout uses server-side &quot;read_timeout&quot;, not &quot;request_timeout&quot;
+832484 - Squid exits due to signal 6 when IPv6 is disabled and HTTP GET request contains IPv6 address
+833086 - squid uses a private md5 hash function for user auth, bypassing FIPS 140-2 restrictions
+844723 - The NTLM pass-through authentication doesn't work via squid-3.1.10
+847056 - squid incorrectly marks elements as stale when the client uses If-Modified-Since and If-None-Match headers
+887962 - CVE-2012-5643 squid: cachemgr.cgi memory usage DoS and memory leaks
+
+6. Package List:
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/squid-3.1.10-16.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/squid-3.1.10-16.el6.src.rpm</a>
+
+i386:
+squid-3.1.10-16.el6.i686.rpm
+squid-debuginfo-3.1.10-16.el6.i686.rpm
+
+ppc64:
+squid-3.1.10-16.el6.ppc64.rpm
+squid-debuginfo-3.1.10-16.el6.ppc64.rpm
+
+s390x:
+squid-3.1.10-16.el6.s390x.rpm
+squid-debuginfo-3.1.10-16.el6.s390x.rpm
+
+x86_64:
+squid-3.1.10-16.el6.x86_64.rpm
+squid-debuginfo-3.1.10-16.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/squid-3.1.10-16.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/squid-3.1.10-16.el6.src.rpm</a>
+
+i386:
+squid-3.1.10-16.el6.i686.rpm
+squid-debuginfo-3.1.10-16.el6.i686.rpm
+
+x86_64:
+squid-3.1.10-16.el6.x86_64.rpm
+squid-debuginfo-3.1.10-16.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5643.html">https://www.redhat.com/security/data/cve/CVE-2012-5643.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/squid.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/squid.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJb+xXlSAg2UNWIIRAoEzAKCDKnVlg/rlFH8fBhtvvkWH8RSHyQCgs0c8
+HqpgR9/jJryGudXFpDlDc0Q=
+=weAl
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00047.html">Date Prev</a>][<a href="msg00049.html">Date Next</a>] &nbsp; [<a href="msg00047.html">Thread Prev</a>][<a href="msg00049.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00048">Thread Index</A>]
+[<A HREF="date.html#00048">Date Index</A>]
+[<A HREF="author.html#00048">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

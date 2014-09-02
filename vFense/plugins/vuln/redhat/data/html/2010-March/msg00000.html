@@ -1,0 +1,248 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0124&#45;01] Important: systemtap security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 1 Mar 2010 14:25:57 &#45;0500 -->
+<!--X-Message-Id: 201003011925.o21JPp9W007519@int&#45;mx05.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0124-01] Important: systemtap security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0124-01] Important: systemtap security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0124-01] Important: systemtap security update</li>
+<li><em>Date</em>: Mon, 1 Mar 2010 14:25:51 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: systemtap security update
+Advisory ID:       RHSA-2010:0124-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0124.html">https://rhn.redhat.com/errata/RHSA-2010-0124.html</a>
+Issue date:        2010-03-01
+CVE Names:         CVE-2009-4273 CVE-2010-0411 
+=====================================================================
+
+1. Summary:
+
+Updated systemtap packages that fix two security issues are now available
+for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+SystemTap is an instrumentation system for systems running the Linux
+kernel, version 2.6. Developers can write scripts to collect data on the
+operation of the system.
+
+A flaw was found in the SystemTap compile server, stap-server, an optional
+component of SystemTap. This server did not adequately sanitize input
+provided by the stap-client program, which may allow a remote user to
+execute arbitrary shell code with the privileges of the compile server
+process, which could possibly be running as the root user. (CVE-2009-4273)
+
+Note: stap-server is not run by default. It must be started by a user or
+administrator.
+
+A buffer overflow flaw was found in SystemTap's tapset __get_argv()
+function. If a privileged user ran a SystemTap script that called this
+function, a local, unprivileged user could, while that script is still
+running, trigger this flaw and cause memory corruption by running a command
+with a large argument list, which may lead to a system crash or,
+potentially, arbitrary code execution with root privileges. (CVE-2010-0411)
+
+Note: SystemTap scripts that call __get_argv(), being a privileged
+function, can only be executed by the root user or users in the stapdev
+group. As well, if such a script was compiled and installed by root, users
+in the stapusr group would also be able to execute it.
+
+SystemTap users should upgrade to these updated packages, which contain
+backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+550172 - CVE-2009-4273 systemtap: remote code execution via stap-server
+559719 - CVE-2010-0411 systemtap: Crash with systemtap script using __get_argv()
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/systemtap-0.9.7-5.el5_4.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/systemtap-0.9.7-5.el5_4.3.src.rpm</a>
+
+i386:
+systemtap-0.9.7-5.el5_4.3.i386.rpm
+systemtap-client-0.9.7-5.el5_4.3.i386.rpm
+systemtap-debuginfo-0.9.7-5.el5_4.3.i386.rpm
+systemtap-initscript-0.9.7-5.el5_4.3.i386.rpm
+systemtap-runtime-0.9.7-5.el5_4.3.i386.rpm
+systemtap-sdt-devel-0.9.7-5.el5_4.3.i386.rpm
+systemtap-server-0.9.7-5.el5_4.3.i386.rpm
+systemtap-testsuite-0.9.7-5.el5_4.3.i386.rpm
+
+x86_64:
+systemtap-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-client-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-debuginfo-0.9.7-5.el5_4.3.i386.rpm
+systemtap-debuginfo-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-initscript-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-runtime-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-sdt-devel-0.9.7-5.el5_4.3.i386.rpm
+systemtap-sdt-devel-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-server-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-testsuite-0.9.7-5.el5_4.3.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/systemtap-0.9.7-5.el5_4.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/systemtap-0.9.7-5.el5_4.3.src.rpm</a>
+
+i386:
+systemtap-0.9.7-5.el5_4.3.i386.rpm
+systemtap-client-0.9.7-5.el5_4.3.i386.rpm
+systemtap-debuginfo-0.9.7-5.el5_4.3.i386.rpm
+systemtap-initscript-0.9.7-5.el5_4.3.i386.rpm
+systemtap-runtime-0.9.7-5.el5_4.3.i386.rpm
+systemtap-sdt-devel-0.9.7-5.el5_4.3.i386.rpm
+systemtap-server-0.9.7-5.el5_4.3.i386.rpm
+systemtap-testsuite-0.9.7-5.el5_4.3.i386.rpm
+
+ia64:
+systemtap-0.9.7-5.el5_4.3.ia64.rpm
+systemtap-client-0.9.7-5.el5_4.3.ia64.rpm
+systemtap-debuginfo-0.9.7-5.el5_4.3.ia64.rpm
+systemtap-initscript-0.9.7-5.el5_4.3.ia64.rpm
+systemtap-runtime-0.9.7-5.el5_4.3.ia64.rpm
+systemtap-sdt-devel-0.9.7-5.el5_4.3.ia64.rpm
+systemtap-server-0.9.7-5.el5_4.3.ia64.rpm
+systemtap-testsuite-0.9.7-5.el5_4.3.ia64.rpm
+
+ppc:
+systemtap-0.9.7-5.el5_4.3.ppc64.rpm
+systemtap-client-0.9.7-5.el5_4.3.ppc64.rpm
+systemtap-debuginfo-0.9.7-5.el5_4.3.ppc64.rpm
+systemtap-initscript-0.9.7-5.el5_4.3.ppc64.rpm
+systemtap-runtime-0.9.7-5.el5_4.3.ppc64.rpm
+systemtap-sdt-devel-0.9.7-5.el5_4.3.ppc64.rpm
+systemtap-server-0.9.7-5.el5_4.3.ppc64.rpm
+systemtap-testsuite-0.9.7-5.el5_4.3.ppc64.rpm
+
+s390x:
+systemtap-0.9.7-5.el5_4.3.s390x.rpm
+systemtap-client-0.9.7-5.el5_4.3.s390x.rpm
+systemtap-debuginfo-0.9.7-5.el5_4.3.s390.rpm
+systemtap-debuginfo-0.9.7-5.el5_4.3.s390x.rpm
+systemtap-initscript-0.9.7-5.el5_4.3.s390x.rpm
+systemtap-runtime-0.9.7-5.el5_4.3.s390x.rpm
+systemtap-sdt-devel-0.9.7-5.el5_4.3.s390.rpm
+systemtap-sdt-devel-0.9.7-5.el5_4.3.s390x.rpm
+systemtap-server-0.9.7-5.el5_4.3.s390x.rpm
+systemtap-testsuite-0.9.7-5.el5_4.3.s390x.rpm
+
+x86_64:
+systemtap-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-client-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-debuginfo-0.9.7-5.el5_4.3.i386.rpm
+systemtap-debuginfo-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-initscript-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-runtime-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-sdt-devel-0.9.7-5.el5_4.3.i386.rpm
+systemtap-sdt-devel-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-server-0.9.7-5.el5_4.3.x86_64.rpm
+systemtap-testsuite-0.9.7-5.el5_4.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4273.html">https://www.redhat.com/security/data/cve/CVE-2009-4273.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0411.html">https://www.redhat.com/security/data/cve/CVE-2010-0411.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLjBSyXlSAg2UNWIIRAiiRAJ4hghHhyCjzqz29tYpqgjkapkoLQwCfao4T
+15iSFtYEdGxmIYYeJCoKGD0=
+=u3Es
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

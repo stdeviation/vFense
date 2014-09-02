@@ -1,0 +1,185 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0595&#45;01] Moderate: openstack&#45;packstack security and bug	fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 5 Mar 2013 16:05:34 &#45;0500 -->
+<!--X-Message-Id: 201303052105.r25L5YYB022426@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0595-01] Moderate: openstack-packstack security and bug	fix u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0595-01] Moderate: openstack-packstack security and bug	fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0595-01] Moderate: openstack-packstack security and bug	fix update</li>
+<li><em>Date</em>: Tue, 5 Mar 2013 21:05:33 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-packstack security and bug fix update
+Advisory ID:       RHSA-2013:0595-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0595.html">https://rhn.redhat.com/errata/RHSA-2013-0595.html</a>
+Issue date:        2013-03-05
+CVE Names:         CVE-2013-0261 CVE-2013-0266 
+=====================================================================
+
+1. Summary:
+
+An updated openstack-packstack package that fixes two security issues and
+several bugs is now available for Red Hat OpenStack Folsom.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack Folsom - noarch
+
+3. Description:
+
+PackStack is a command line utility that uses Puppet modules to support
+rapid deployment of OpenStack on existing servers over an SSH connection.
+PackStack is suitable for deploying both single node proof of concept
+installations and more complex multi-node installations.
+
+A flaw was found in PackStack. During manifest creation, the manifest file
+was written to /tmp/ with a predictable file name. A local attacker could
+use this flaw to perform a symbolic link attack, overwriting an arbitrary
+file accessible to the user running PackStack with the contents of the
+manifest, which could lead to a denial of service. Additionally, the
+attacker could read and potentially modify the manifest being generated,
+allowing them to modify systems being deployed using OpenStack.
+(CVE-2013-0261)
+
+It was discovered that the cinder.conf and all api-paste.ini configuration
+files were created with world-readable permissions. A local attacker could
+use this flaw to view administrative passwords, allowing them to control
+systems deployed and managed by OpenStack. (CVE-2013-0266)
+
+The CVE-2013-0261 issue was discovered by Kurt Seifried of the Red Hat
+Security Response Team, and CVE-2013-0266 was discovered by Derek Higgins
+of the Red Hat OpenStack team.
+
+This update also fixes several bugs in the openstack-packstack package.
+
+All users of openstack-packstack are advised to upgrade to this updated
+package, which corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+886592 - Openstack Installer: packstack should return an informative error when remote nodes are not configured with openstack repository
+890295 - Packstack should not fail installation of cinder-vol service if the VG doesn't exist (as cinder-vol may be using plugins)
+892942 - openstack-packstack: When SELinux disabled on machine installation failed with Error during remote puppet apply of horizon.pp.
+903187 - Better error handling for missing parameters in answer file
+904669 - PackStack should create a simple cinder block storage device to use by default if none is present
+905516 - openstack-packstack: Race condition caused /etc/sysconfig/modules/kvm.modules could not be found.
+905737 - When using packstack where hostname is localhost.localdomain, mysql fails to install
+906006 - The --gen-answer-file parameter does not understand the ~ shortcut for home.
+906410 - Generate answer file when running on live mode
+907624 - Misleading message when generating public key.
+907737 - Typo: Creating Galnce Manifest...
+908101 - CVE-2013-0261 OpenStack packstack: insecure use of /tmp in manifest creation
+908581 - CVE-2013-0266 OpenStack packstack: puppetlabs-cinder / manifests / base.pp weak file permissions
+910211 - Epel version is hardcoded to epel-release-6-8
+910818 - packstack should install openstack-selinux
+911653 - KeyError in remove_remote_var_dirs
+
+6. Package List:
+
+OpenStack Folsom:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-packstack-2012.2.2-1.0.dev408.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-packstack-2012.2.2-1.0.dev408.el6ost.src.rpm</a>
+
+noarch:
+openstack-packstack-2012.2.2-1.0.dev408.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0261.html">https://www.redhat.com/security/data/cve/CVE-2013-0261.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0266.html">https://www.redhat.com/security/data/cve/CVE-2013-0266.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRNl37XlSAg2UNWIIRAqaIAJoD3rVBXb5HMlkMZNWTXdFz11EGygCgkz3V
+rb6tf2+zMrAk/lGh09wlZHI=
+=oOBi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

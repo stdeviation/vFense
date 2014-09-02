@@ -1,0 +1,371 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0884&#45;04] Low: openssh security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jun 2012 05:30:10 &#45;0400 -->
+<!--X-Message-Id: 201206200930.q5K9U266031055@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0884-04] Low: openssh security, bug fix,	and enhancement upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0884-04] Low: openssh security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0884-04] Low: openssh security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 20 Jun 2012 09:25:57 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: openssh security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:0884-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0884.html">https://rhn.redhat.com/errata/RHSA-2012-0884.html</a>
+Issue date:        2012-06-20
+CVE Names:         CVE-2011-5000 
+=====================================================================
+
+1. Summary:
+
+Updated openssh packages that fix one security issue, several bugs, and add
+various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+OpenSSH is OpenBSD's Secure Shell (SSH) protocol implementation. These
+packages include the core files necessary for the OpenSSH client and
+server.
+
+A denial of service flaw was found in the OpenSSH GSSAPI authentication
+implementation. A remote, authenticated user could use this flaw to make
+the OpenSSH server daemon (sshd) use an excessive amount of memory, leading
+to a denial of service. GSSAPI authentication is enabled by default
+(&quot;GSSAPIAuthentication yes&quot; in &quot;/etc/ssh/sshd_config&quot;). (CVE-2011-5000)
+
+These updated openssh packages also provide fixes for the following bugs:
+
+* SSH X11 forwarding failed if IPv6 was enabled and the parameter
+X11UseLocalhost was set to &quot;no&quot;. Consequently, users could not set X
+forwarding. This update fixes sshd and ssh to correctly bind the port for
+the IPv6 protocol. As a result, X11 forwarding now works as expected with
+IPv6. (BZ#732955)
+
+* The sshd daemon was killed by the OOM killer when running a stress test.
+Consequently, a user could not log in. With this update, the sshd daemon
+sets its oom_adj value to -17. As a result, sshd is not chosen by OOM
+killer and users are able to log in to solve problems with memory.
+(BZ#744236)
+
+* If the SSH server is configured with a banner that contains a backslash
+character, then the client will escape it with another &quot;\&quot; character, so it
+prints double backslashes. An upstream patch has been applied to correct
+the problem and the SSH banner is now correctly displayed. (BZ#809619)
+
+In addition, these updated openssh packages provide the following
+enhancements:
+
+* Previously, SSH allowed multiple ways of authentication of which only one
+was required for a successful login. SSH can now be set up to require
+multiple ways of authentication. For example, logging in to an SSH-enabled
+machine requires both a passphrase and a public key to be entered. The
+RequiredAuthentications1 and RequiredAuthentications2 options can be
+configured in the /etc/ssh/sshd_config file to specify authentications that
+are required for a successful login. For example, to set key and password
+authentication for SSH version 2, type:
+
+echo &quot;RequiredAuthentications2 publickey,password&quot; &gt;&gt; /etc/ssh/sshd_config
+
+For more information on the aforementioned /etc/ssh/sshd_config options,
+refer to the sshd_config man page. (BZ#657378)
+
+* Previously, OpenSSH could use the Advanced Encryption Standard New
+Instructions (AES-NI) instruction set only with the AES Cipher-block
+chaining (CBC) cipher. This update adds support for Counter (CTR) mode
+encryption in OpenSSH so the AES-NI instruction set can now be used
+efficiently also with the AES CTR cipher. (BZ#756929)
+
+* Prior to this update, an unprivileged slave sshd process was run as
+the sshd_t context during privilege separation (privsep). sshd_t is the
+SELinux context used for running the sshd daemon. Given that the
+unprivileged slave process is run under the user's UID, it is fitting to
+run this process under the user's SELinux context instead of the privileged
+sshd_t context. With this update, the unprivileged slave process is now run
+as the user's context instead of the sshd_t context in accordance with the
+principle of privilege separation. The unprivileged process, which might be
+potentially more sensitive to security threats, is now run under the user's
+SELinux context. (BZ#798241)
+
+Users are advised to upgrade to these updated openssh packages, which
+contain backported patches to resolve these issues and add these
+enhancements. After installing this update, the OpenSSH server daemon
+(sshd) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+657378 - [RFE] ability to require password and public-key for login
+732955 - X11 forwarding fails, if IPv6 is enabled and X11UseLocalhost=no
+797384 - Init scripts tries to read missing file
+809938 - CVE-2011-5000 openssh: post-authentication resource exhaustion bug via GSSAPI
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm</a>
+
+i386:
+openssh-5.3p1-81.el6.i686.rpm
+openssh-askpass-5.3p1-81.el6.i686.rpm
+openssh-clients-5.3p1-81.el6.i686.rpm
+openssh-debuginfo-5.3p1-81.el6.i686.rpm
+openssh-server-5.3p1-81.el6.i686.rpm
+
+x86_64:
+openssh-5.3p1-81.el6.x86_64.rpm
+openssh-askpass-5.3p1-81.el6.x86_64.rpm
+openssh-clients-5.3p1-81.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-81.el6.x86_64.rpm
+openssh-server-5.3p1-81.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm</a>
+
+i386:
+openssh-debuginfo-5.3p1-81.el6.i686.rpm
+openssh-ldap-5.3p1-81.el6.i686.rpm
+pam_ssh_agent_auth-0.9-81.el6.i686.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-81.el6.i686.rpm
+openssh-debuginfo-5.3p1-81.el6.x86_64.rpm
+openssh-ldap-5.3p1-81.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9-81.el6.i686.rpm
+pam_ssh_agent_auth-0.9-81.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm</a>
+
+x86_64:
+openssh-5.3p1-81.el6.x86_64.rpm
+openssh-clients-5.3p1-81.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-81.el6.x86_64.rpm
+openssh-server-5.3p1-81.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm</a>
+
+x86_64:
+openssh-askpass-5.3p1-81.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-81.el6.i686.rpm
+openssh-debuginfo-5.3p1-81.el6.x86_64.rpm
+openssh-ldap-5.3p1-81.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9-81.el6.i686.rpm
+pam_ssh_agent_auth-0.9-81.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm</a>
+
+i386:
+openssh-5.3p1-81.el6.i686.rpm
+openssh-askpass-5.3p1-81.el6.i686.rpm
+openssh-clients-5.3p1-81.el6.i686.rpm
+openssh-debuginfo-5.3p1-81.el6.i686.rpm
+openssh-server-5.3p1-81.el6.i686.rpm
+
+ppc64:
+openssh-5.3p1-81.el6.ppc64.rpm
+openssh-askpass-5.3p1-81.el6.ppc64.rpm
+openssh-clients-5.3p1-81.el6.ppc64.rpm
+openssh-debuginfo-5.3p1-81.el6.ppc64.rpm
+openssh-server-5.3p1-81.el6.ppc64.rpm
+
+s390x:
+openssh-5.3p1-81.el6.s390x.rpm
+openssh-askpass-5.3p1-81.el6.s390x.rpm
+openssh-clients-5.3p1-81.el6.s390x.rpm
+openssh-debuginfo-5.3p1-81.el6.s390x.rpm
+openssh-server-5.3p1-81.el6.s390x.rpm
+
+x86_64:
+openssh-5.3p1-81.el6.x86_64.rpm
+openssh-askpass-5.3p1-81.el6.x86_64.rpm
+openssh-clients-5.3p1-81.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-81.el6.x86_64.rpm
+openssh-server-5.3p1-81.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm</a>
+
+i386:
+openssh-debuginfo-5.3p1-81.el6.i686.rpm
+openssh-ldap-5.3p1-81.el6.i686.rpm
+pam_ssh_agent_auth-0.9-81.el6.i686.rpm
+
+ppc64:
+openssh-debuginfo-5.3p1-81.el6.ppc.rpm
+openssh-debuginfo-5.3p1-81.el6.ppc64.rpm
+openssh-ldap-5.3p1-81.el6.ppc64.rpm
+pam_ssh_agent_auth-0.9-81.el6.ppc.rpm
+pam_ssh_agent_auth-0.9-81.el6.ppc64.rpm
+
+s390x:
+openssh-debuginfo-5.3p1-81.el6.s390.rpm
+openssh-debuginfo-5.3p1-81.el6.s390x.rpm
+openssh-ldap-5.3p1-81.el6.s390x.rpm
+pam_ssh_agent_auth-0.9-81.el6.s390.rpm
+pam_ssh_agent_auth-0.9-81.el6.s390x.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-81.el6.i686.rpm
+openssh-debuginfo-5.3p1-81.el6.x86_64.rpm
+openssh-ldap-5.3p1-81.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9-81.el6.i686.rpm
+pam_ssh_agent_auth-0.9-81.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm</a>
+
+i386:
+openssh-5.3p1-81.el6.i686.rpm
+openssh-askpass-5.3p1-81.el6.i686.rpm
+openssh-clients-5.3p1-81.el6.i686.rpm
+openssh-debuginfo-5.3p1-81.el6.i686.rpm
+openssh-server-5.3p1-81.el6.i686.rpm
+
+x86_64:
+openssh-5.3p1-81.el6.x86_64.rpm
+openssh-askpass-5.3p1-81.el6.x86_64.rpm
+openssh-clients-5.3p1-81.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-81.el6.x86_64.rpm
+openssh-server-5.3p1-81.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openssh-5.3p1-81.el6.src.rpm</a>
+
+i386:
+openssh-debuginfo-5.3p1-81.el6.i686.rpm
+openssh-ldap-5.3p1-81.el6.i686.rpm
+pam_ssh_agent_auth-0.9-81.el6.i686.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-81.el6.i686.rpm
+openssh-debuginfo-5.3p1-81.el6.x86_64.rpm
+openssh-ldap-5.3p1-81.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9-81.el6.i686.rpm
+pam_ssh_agent_auth-0.9-81.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-5000.html">https://www.redhat.com/security/data/cve/CVE-2011-5000.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4ZgUXlSAg2UNWIIRAqstAJ9KvG7vG5oxpJ3dQ8WZ/LcoIVOK9ACeKYTc
+AIxdFbAQv3n8KXk613bwPKo=
+=WreZ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

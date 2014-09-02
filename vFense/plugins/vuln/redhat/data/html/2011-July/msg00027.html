@@ -1,0 +1,295 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1085&#45;01] Important: freetype security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Jul 2011 11:52:50 &#45;0400 -->
+<!--X-Message-Id: 201107211552.p6LFqimH008241@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1085-01] Important: freetype security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1085-01] Important: freetype security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1085-01] Important: freetype security update</li>
+<li><em>Date</em>: Thu, 21 Jul 2011 15:52:44 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: freetype security update
+Advisory ID:       RHSA-2011:1085-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1085.html">https://rhn.redhat.com/errata/RHSA-2011-1085.html</a>
+Issue date:        2011-07-21
+CVE Names:         CVE-2011-0226 
+=====================================================================
+
+1. Summary:
+
+Updated freetype packages that fix one security issue are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+FreeType is a free, high-quality, portable font engine that can open and
+manage font files. It also loads, hints, and renders individual glyphs
+efficiently. These packages provide the FreeType 2 font engine.
+
+A flaw was found in the way the FreeType font rendering engine processed
+certain PostScript Type 1 fonts. If a user loaded a specially-crafted font
+file with an application linked against FreeType, it could cause the
+application to crash or, possibly, execute arbitrary code with the
+privileges of the user running the application. (CVE-2011-0226)
+
+Users are advised to upgrade to these updated packages, which contain a
+backported patch to correct this issue. The X server must be restarted (log
+out, then log back in) for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+722701 - CVE-2011-0226 freetype: postscript type1 font parsing vulnerability
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm</a>
+
+i386:
+freetype-2.3.11-6.el6_1.6.i686.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+
+x86_64:
+freetype-2.3.11-6.el6_1.6.i686.rpm
+freetype-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm</a>
+
+i386:
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-demos-2.3.11-6.el6_1.6.i686.rpm
+freetype-devel-2.3.11-6.el6_1.6.i686.rpm
+
+x86_64:
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-demos-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-devel-2.3.11-6.el6_1.6.i686.rpm
+freetype-devel-2.3.11-6.el6_1.6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm</a>
+
+x86_64:
+freetype-2.3.11-6.el6_1.6.i686.rpm
+freetype-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm</a>
+
+x86_64:
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-demos-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-devel-2.3.11-6.el6_1.6.i686.rpm
+freetype-devel-2.3.11-6.el6_1.6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm</a>
+
+i386:
+freetype-2.3.11-6.el6_1.6.i686.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-devel-2.3.11-6.el6_1.6.i686.rpm
+
+ppc64:
+freetype-2.3.11-6.el6_1.6.ppc.rpm
+freetype-2.3.11-6.el6_1.6.ppc64.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.ppc.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.ppc64.rpm
+freetype-devel-2.3.11-6.el6_1.6.ppc.rpm
+freetype-devel-2.3.11-6.el6_1.6.ppc64.rpm
+
+s390x:
+freetype-2.3.11-6.el6_1.6.s390.rpm
+freetype-2.3.11-6.el6_1.6.s390x.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.s390.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.s390x.rpm
+freetype-devel-2.3.11-6.el6_1.6.s390.rpm
+freetype-devel-2.3.11-6.el6_1.6.s390x.rpm
+
+x86_64:
+freetype-2.3.11-6.el6_1.6.i686.rpm
+freetype-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-devel-2.3.11-6.el6_1.6.i686.rpm
+freetype-devel-2.3.11-6.el6_1.6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm</a>
+
+i386:
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-demos-2.3.11-6.el6_1.6.i686.rpm
+
+ppc64:
+freetype-debuginfo-2.3.11-6.el6_1.6.ppc64.rpm
+freetype-demos-2.3.11-6.el6_1.6.ppc64.rpm
+
+s390x:
+freetype-debuginfo-2.3.11-6.el6_1.6.s390x.rpm
+freetype-demos-2.3.11-6.el6_1.6.s390x.rpm
+
+x86_64:
+freetype-debuginfo-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-demos-2.3.11-6.el6_1.6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm</a>
+
+i386:
+freetype-2.3.11-6.el6_1.6.i686.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-devel-2.3.11-6.el6_1.6.i686.rpm
+
+x86_64:
+freetype-2.3.11-6.el6_1.6.i686.rpm
+freetype-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-debuginfo-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-devel-2.3.11-6.el6_1.6.i686.rpm
+freetype-devel-2.3.11-6.el6_1.6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/freetype-2.3.11-6.el6_1.6.src.rpm</a>
+
+i386:
+freetype-debuginfo-2.3.11-6.el6_1.6.i686.rpm
+freetype-demos-2.3.11-6.el6_1.6.i686.rpm
+
+x86_64:
+freetype-debuginfo-2.3.11-6.el6_1.6.x86_64.rpm
+freetype-demos-2.3.11-6.el6_1.6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0226.html">https://www.redhat.com/security/data/cve/CVE-2011-0226.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOKEs3XlSAg2UNWIIRApFYAKClEeLjn9l2U5arrjouc7fAtKIS6ACfUpiw
+CWvYkbEwtFsTlSMupeW9Vao=
+=nc3+
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

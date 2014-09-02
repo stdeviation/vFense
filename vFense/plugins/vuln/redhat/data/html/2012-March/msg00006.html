@@ -1,0 +1,244 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0370&#45;01] Important: xen security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 7 Mar 2012 09:43:08 &#45;0500 -->
+<!--X-Message-Id: 201203071443.q27Eh2la015592@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0370-01] Important: xen security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0370-01] Important: xen security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0370-01] Important: xen security and bug fix update</li>
+<li><em>Date</em>: Wed, 7 Mar 2012 14:43:01 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: xen security and bug fix update
+Advisory ID:       RHSA-2012:0370-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0370.html">https://rhn.redhat.com/errata/RHSA-2012-0370.html</a>
+Issue date:        2012-03-07
+CVE Names:         CVE-2012-0029 
+=====================================================================
+
+1. Summary:
+
+Updated xen packages that fix one security issue and two bugs are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - i386, x86_64
+RHEL Virtualization (v. 5 server) - i386, ia64, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The xen packages contain administration tools and the xend service for
+managing the kernel-xen kernel for virtualization on Red Hat Enterprise
+Linux.
+
+A heap overflow flaw was found in the way QEMU emulated the e1000 network
+interface card. A privileged guest user in a virtual machine whose network
+interface is configured to use the e1000 emulated driver could use this
+flaw to crash QEMU or, possibly, escalate their privileges on the host.
+(CVE-2012-0029)
+
+Red Hat would like to thank Nicolae Mogoreanu for reporting this issue.
+
+This update also fixes the following bugs:
+
+* Adding support for jumbo frames introduced incorrect network device
+expansion when a bridge is created. The expansion worked correctly with the
+default configuration, but could have caused network setup failures when a
+user-defined network script was used. This update changes the expansion so
+network setup will not fail, even when a user-defined network script is
+used. (BZ#797191)
+
+* A bug was found in xenconsoled, the Xen hypervisor console daemon. If
+timestamp logging for this daemon was enabled (using both the
+XENCONSOLED_TIMESTAMP_HYPERVISOR_LOG and XENCONSOLED_TIMESTAMP_GUEST_LOG
+options in &quot;/etc/sysconfig/xend&quot;), xenconsoled could crash if the guest
+emitted a lot of information to its serial console in a short period of
+time. Eventually, the guest would freeze after the console buffer was
+filled due to the crashed xenconsoled. Timestamp logging is disabled by
+default. (BZ#797836)
+
+All xen users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+772075 - CVE-2012-0029 qemu: e1000: process_tx_desc legacy mode packets heap overflow
+797191 - xen-network-common.sh scripting typo
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-135.el5_8.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-135.el5_8.2.src.rpm</a>
+
+i386:
+xen-debuginfo-3.0.3-135.el5_8.2.i386.rpm
+xen-libs-3.0.3-135.el5_8.2.i386.rpm
+
+x86_64:
+xen-debuginfo-3.0.3-135.el5_8.2.i386.rpm
+xen-debuginfo-3.0.3-135.el5_8.2.x86_64.rpm
+xen-libs-3.0.3-135.el5_8.2.i386.rpm
+xen-libs-3.0.3-135.el5_8.2.x86_64.rpm
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-135.el5_8.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-135.el5_8.2.src.rpm</a>
+
+i386:
+xen-3.0.3-135.el5_8.2.i386.rpm
+xen-debuginfo-3.0.3-135.el5_8.2.i386.rpm
+xen-devel-3.0.3-135.el5_8.2.i386.rpm
+
+x86_64:
+xen-3.0.3-135.el5_8.2.x86_64.rpm
+xen-debuginfo-3.0.3-135.el5_8.2.i386.rpm
+xen-debuginfo-3.0.3-135.el5_8.2.x86_64.rpm
+xen-devel-3.0.3-135.el5_8.2.i386.rpm
+xen-devel-3.0.3-135.el5_8.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-135.el5_8.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-135.el5_8.2.src.rpm</a>
+
+i386:
+xen-debuginfo-3.0.3-135.el5_8.2.i386.rpm
+xen-libs-3.0.3-135.el5_8.2.i386.rpm
+
+ia64:
+xen-debuginfo-3.0.3-135.el5_8.2.ia64.rpm
+xen-libs-3.0.3-135.el5_8.2.ia64.rpm
+
+x86_64:
+xen-debuginfo-3.0.3-135.el5_8.2.i386.rpm
+xen-debuginfo-3.0.3-135.el5_8.2.x86_64.rpm
+xen-libs-3.0.3-135.el5_8.2.i386.rpm
+xen-libs-3.0.3-135.el5_8.2.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-135.el5_8.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-135.el5_8.2.src.rpm</a>
+
+i386:
+xen-3.0.3-135.el5_8.2.i386.rpm
+xen-debuginfo-3.0.3-135.el5_8.2.i386.rpm
+xen-devel-3.0.3-135.el5_8.2.i386.rpm
+
+ia64:
+xen-3.0.3-135.el5_8.2.ia64.rpm
+xen-debuginfo-3.0.3-135.el5_8.2.ia64.rpm
+xen-devel-3.0.3-135.el5_8.2.ia64.rpm
+
+x86_64:
+xen-3.0.3-135.el5_8.2.x86_64.rpm
+xen-debuginfo-3.0.3-135.el5_8.2.i386.rpm
+xen-debuginfo-3.0.3-135.el5_8.2.x86_64.rpm
+xen-devel-3.0.3-135.el5_8.2.i386.rpm
+xen-devel-3.0.3-135.el5_8.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0029.html">https://www.redhat.com/security/data/cve/CVE-2012-0029.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPV3OJXlSAg2UNWIIRAmW9AJ9fJNBoRl53OF0j7rYcIObn33DHJgCgsUJ8
+5lwaUxxjnVeHwQo3Xj78Yjg=
+=Qq2v
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0558&#45;01] Low: rhevm&#45;reports 3.3.3 security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 27 May 2014 12:37:01 &#45;0400 -->
+<!--X-Message-Id: 201405271637.s4RGb0pX023512@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0558-01] Low: rhevm-reports 3.3.3 security and bug fix	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0558-01] Low: rhevm-reports 3.3.3 security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0558-01] Low: rhevm-reports 3.3.3 security and bug fix	update</li>
+<li><em>Date</em>: Tue, 27 May 2014 16:37:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: rhevm-reports 3.3.3 security and bug fix update
+Advisory ID:       RHSA-2014:0558-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0558.html">https://rhn.redhat.com/errata/RHSA-2014-0558.html</a>
+Issue date:        2014-05-27
+CVE Names:         CVE-2014-0199 CVE-2014-0200 CVE-2014-0201 
+=====================================================================
+
+1. Summary:
+
+An updated rhevm-reports package that fixes three security issues and one
+bug is now available.
+
+The Red Hat Security Response Team has rated this update as having Low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.3 - noarch
+
+3. Description:
+
+The Red Hat Enterprise Virtualization reports package provides a suite of
+pre-configured reports and dashboards that enable you to monitor the
+system. The reports module is based on JasperReports and JasperServer, and
+can also be used to create ad-hoc reports.
+
+It was found that the ovirt-engine-reports setup script logged the reports
+database password in plain text to a world-readable file. An attacker with
+a local user account on the Red Hat Enterprise Virtualization Manager
+server could use this flaw to access, read, and modify the reports
+database. (CVE-2014-0199)
+
+Note: Applying the update provided by this advisory does not modify any
+existing log files. It is recommended that you search your existing log
+files and remove any occurrences of plain text passwords manually.
+
+It was found that the Red Hat Enterprise Virtualization Manager reports
+datasource configuration file (js-jboss7-ds.xml) was world-readable.
+An attacker with a local user account on the Red Hat Enterprise
+Virtualization Manager server could use this flaw to access, read, and
+modify the reports database. (CVE-2014-0200)
+
+It was found that multiple ovirt-engine-reports configuration files were
+world-readable. An attacker with a local user account on the Red Hat
+Enterprise Virtualization Manager server could use this flaw to access a
+variety of potentially sensitive information. (CVE-2014-0201)
+
+These issues were discovered by Red Hat.
+
+This update also fixes the following bug:
+
+* Previously, rhevm-reports-setup failed if the default spacing of the
+pg_hba.conf file was manually modified. Now, the command does not check
+exact spacing in the file, and setup completes successfully. (BZ#1085374)
+
+All rhevm-reports users are advised to upgrade to this updated package,
+which corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1085374 - rhevm-reports-setup fails if pg_hba.conf is manually modified
+1094222 - CVE-2014-0199 ovirt-engine-reports: setup script logs database password in cleartext
+1094229 - CVE-2014-0200 ovirt-engine-reports: js-jboss7-ds.xml is world-readable
+1094231 - CVE-2014-0201 ovirt-engine-reports: various configuration files are world-readable
+
+6. Package List:
+
+RHEV-M 3.3:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-reports-3.3.3-1.el6ev.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-reports-3.3.3-1.el6ev.src.rpm</a>
+
+noarch:
+rhevm-reports-3.3.3-1.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0199.html">https://www.redhat.com/security/data/cve/CVE-2014-0199.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0200.html">https://www.redhat.com/security/data/cve/CVE-2014-0200.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0201.html">https://www.redhat.com/security/data/cve/CVE-2014-0201.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFThL7jXlSAg2UNWIIRAqL9AJ93gr2nVLNLq6ubv3ARyYbwR86VvQCeNNAU
+E+ZkdopySo/crt37cLPZIx8=
+=vFPP
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

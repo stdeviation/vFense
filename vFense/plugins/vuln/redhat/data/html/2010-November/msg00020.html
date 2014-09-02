@@ -1,0 +1,355 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0872&#45;02] Important: glibc security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 10 Nov 2010 14:41:38 &#45;0500 -->
+<!--X-Message-Id: 201011101941.oAAJfWDe017594@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0872-02] Important: glibc security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0872-02] Important: glibc security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0872-02] Important: glibc security and bug fix update</li>
+<li><em>Date</em>: Wed, 10 Nov 2010 12:41:32 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: glibc security and bug fix update
+Advisory ID:       RHSA-2010:0872-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0872.html">https://rhn.redhat.com/errata/RHSA-2010-0872.html</a>
+Issue date:        2010-11-10
+CVE Names:         CVE-2010-3847 CVE-2010-3856 
+=====================================================================
+
+1. Summary:
+
+Updated glibc packages that fix two security issues and two bugs are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The glibc packages contain the standard C libraries used by multiple
+programs on the system. These packages contain the standard C and the
+standard math libraries. Without these two libraries, a Linux system
+cannot function properly.
+
+It was discovered that the glibc dynamic linker/loader did not handle the
+$ORIGIN dynamic string token set in the LD_AUDIT environment variable
+securely. A local attacker with write access to a file system containing
+setuid or setgid binaries could use this flaw to escalate their privileges.
+(CVE-2010-3847)
+
+It was discovered that the glibc dynamic linker/loader did not perform
+sufficient safety checks when loading dynamic shared objects (DSOs) to
+provide callbacks for its auditing API during the execution of privileged
+programs. A local attacker could use this flaw to escalate their privileges
+via a carefully-chosen system DSO library containing unsafe constructors.
+(CVE-2010-3856)
+
+Red Hat would like to thank Tavis Ormandy for reporting the CVE-2010-3847
+issue, and Ben Hawkes and Tavis Ormandy for reporting the CVE-2010-3856
+issue.
+
+This update also fixes the following bugs:
+
+* Previously, the generic implementation of the strstr() and memmem()
+functions did not handle certain periodic patterns correctly and could find
+a false positive match. This error has been fixed, and both functions now
+work as expected. (BZ#643341)
+
+* The &quot;TCB_ALIGNMENT&quot; value has been increased to 32 bytes to prevent
+applications from crashing during symbol resolution on 64-bit systems with
+support for Intel AVX vector registers. (BZ#643343)
+
+All users are advised to upgrade to these updated packages, which contain
+backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+643306 - CVE-2010-3847 glibc: ld.so insecure handling of $ORIGIN in LD_AUDIT for setuid/setgid programs
+643341 - memmem, strstr, and strcasestr are broken
+643343 - [Intel 6.0 Bug] Dynamic linker failed to align TCB for AVX
+645672 - CVE-2010-3856 glibc: ld.so arbitrary DSO loading via LD_AUDIT in setuid/setgid programs
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm</a>
+
+i386:
+glibc-2.12-1.7.el6_0.3.i686.rpm
+glibc-common-2.12-1.7.el6_0.3.i686.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.i686.rpm
+glibc-devel-2.12-1.7.el6_0.3.i686.rpm
+glibc-headers-2.12-1.7.el6_0.3.i686.rpm
+glibc-utils-2.12-1.7.el6_0.3.i686.rpm
+nscd-2.12-1.7.el6_0.3.i686.rpm
+
+x86_64:
+glibc-2.12-1.7.el6_0.3.i686.rpm
+glibc-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-common-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.i686.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-devel-2.12-1.7.el6_0.3.i686.rpm
+glibc-devel-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-headers-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-utils-2.12-1.7.el6_0.3.x86_64.rpm
+nscd-2.12-1.7.el6_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm</a>
+
+i386:
+glibc-debuginfo-2.12-1.7.el6_0.3.i686.rpm
+glibc-static-2.12-1.7.el6_0.3.i686.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-static-2.12-1.7.el6_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm</a>
+
+x86_64:
+glibc-2.12-1.7.el6_0.3.i686.rpm
+glibc-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-common-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.i686.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-devel-2.12-1.7.el6_0.3.i686.rpm
+glibc-devel-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-headers-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-utils-2.12-1.7.el6_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm</a>
+
+x86_64:
+glibc-debuginfo-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-static-2.12-1.7.el6_0.3.x86_64.rpm
+nscd-2.12-1.7.el6_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm</a>
+
+i386:
+glibc-2.12-1.7.el6_0.3.i686.rpm
+glibc-common-2.12-1.7.el6_0.3.i686.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.i686.rpm
+glibc-devel-2.12-1.7.el6_0.3.i686.rpm
+glibc-headers-2.12-1.7.el6_0.3.i686.rpm
+glibc-utils-2.12-1.7.el6_0.3.i686.rpm
+nscd-2.12-1.7.el6_0.3.i686.rpm
+
+ppc64:
+glibc-2.12-1.7.el6_0.3.ppc.rpm
+glibc-2.12-1.7.el6_0.3.ppc64.rpm
+glibc-common-2.12-1.7.el6_0.3.ppc64.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.ppc.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.ppc64.rpm
+glibc-devel-2.12-1.7.el6_0.3.ppc.rpm
+glibc-devel-2.12-1.7.el6_0.3.ppc64.rpm
+glibc-headers-2.12-1.7.el6_0.3.ppc64.rpm
+glibc-utils-2.12-1.7.el6_0.3.ppc64.rpm
+nscd-2.12-1.7.el6_0.3.ppc64.rpm
+
+s390x:
+glibc-2.12-1.7.el6_0.3.s390.rpm
+glibc-2.12-1.7.el6_0.3.s390x.rpm
+glibc-common-2.12-1.7.el6_0.3.s390x.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.s390.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.s390x.rpm
+glibc-devel-2.12-1.7.el6_0.3.s390.rpm
+glibc-devel-2.12-1.7.el6_0.3.s390x.rpm
+glibc-headers-2.12-1.7.el6_0.3.s390x.rpm
+glibc-utils-2.12-1.7.el6_0.3.s390x.rpm
+nscd-2.12-1.7.el6_0.3.s390x.rpm
+
+x86_64:
+glibc-2.12-1.7.el6_0.3.i686.rpm
+glibc-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-common-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.i686.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-devel-2.12-1.7.el6_0.3.i686.rpm
+glibc-devel-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-headers-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-utils-2.12-1.7.el6_0.3.x86_64.rpm
+nscd-2.12-1.7.el6_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm</a>
+
+i386:
+glibc-debuginfo-2.12-1.7.el6_0.3.i686.rpm
+glibc-static-2.12-1.7.el6_0.3.i686.rpm
+
+ppc64:
+glibc-debuginfo-2.12-1.7.el6_0.3.ppc64.rpm
+glibc-static-2.12-1.7.el6_0.3.ppc64.rpm
+
+s390x:
+glibc-debuginfo-2.12-1.7.el6_0.3.s390x.rpm
+glibc-static-2.12-1.7.el6_0.3.s390x.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-static-2.12-1.7.el6_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm</a>
+
+i386:
+glibc-2.12-1.7.el6_0.3.i686.rpm
+glibc-common-2.12-1.7.el6_0.3.i686.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.i686.rpm
+glibc-devel-2.12-1.7.el6_0.3.i686.rpm
+glibc-headers-2.12-1.7.el6_0.3.i686.rpm
+glibc-utils-2.12-1.7.el6_0.3.i686.rpm
+nscd-2.12-1.7.el6_0.3.i686.rpm
+
+x86_64:
+glibc-2.12-1.7.el6_0.3.i686.rpm
+glibc-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-common-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.i686.rpm
+glibc-debuginfo-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-devel-2.12-1.7.el6_0.3.i686.rpm
+glibc-devel-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-headers-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-utils-2.12-1.7.el6_0.3.x86_64.rpm
+nscd-2.12-1.7.el6_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/glibc-2.12-1.7.el6_0.3.src.rpm</a>
+
+i386:
+glibc-debuginfo-2.12-1.7.el6_0.3.i686.rpm
+glibc-static-2.12-1.7.el6_0.3.i686.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.7.el6_0.3.x86_64.rpm
+glibc-static-2.12-1.7.el6_0.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3847.html">https://www.redhat.com/security/data/cve/CVE-2010-3847.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3856.html">https://www.redhat.com/security/data/cve/CVE-2010-3856.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM2vVBXlSAg2UNWIIRAnrHAJ9oUOQ0B/t7qQKdbe13H5G9a2BbYwCgin8R
+zI5tnvloLFQFUvG+Ifda8uI=
+=Nk0i
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

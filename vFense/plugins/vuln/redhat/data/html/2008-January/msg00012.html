@@ -1,0 +1,213 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0064&#45;01] Important: libXfont security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 17 Jan 2008 15:48:54 &#45;0500 -->
+<!--X-Message-Id: 200801172048.m0HKmrdA023136@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0064-01] Important: libXfont security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0064-01] Important: libXfont security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0064-01] Important: libXfont security update</li>
+<li><em>Date</em>: Thu, 17 Jan 2008 15:48:53 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: libXfont security update
+Advisory ID:       RHSA-2008:0064-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0064.html">https://rhn.redhat.com/errata/RHSA-2008-0064.html</a>
+Issue date:        2008-01-17
+CVE Names:         CVE-2008-0006 
+=====================================================================
+
+1. Summary:
+
+An updated X.Org libXfont package that fixes a security issue is now
+available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The libXfont package contains the X.Org X11 libXfont runtime library.
+
+A heap based buffer overflow flaw was found in the way the X.Org server
+handled malformed font files. A malicious local user could exploit this
+issue to potentially execute arbitrary code with the privileges of the
+X.Org server. (CVE-2008-0006)
+
+Users of X.Org libXfont should upgrade to these updated packages, which
+contain a backported patch to resolve this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+428044 - CVE-2008-0006 Xorg / XFree86 PCF font parser buffer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libXfont-1.2.2-1.0.3.el5_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libXfont-1.2.2-1.0.3.el5_1.src.rpm</a>
+
+i386:
+libXfont-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.i386.rpm
+
+x86_64:
+libXfont-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-1.2.2-1.0.3.el5_1.x86_64.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libXfont-1.2.2-1.0.3.el5_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libXfont-1.2.2-1.0.3.el5_1.src.rpm</a>
+
+i386:
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.i386.rpm
+
+x86_64:
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.x86_64.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libXfont-1.2.2-1.0.3.el5_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libXfont-1.2.2-1.0.3.el5_1.src.rpm</a>
+
+i386:
+libXfont-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.i386.rpm
+
+ia64:
+libXfont-1.2.2-1.0.3.el5_1.ia64.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.ia64.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.ia64.rpm
+
+ppc:
+libXfont-1.2.2-1.0.3.el5_1.ppc.rpm
+libXfont-1.2.2-1.0.3.el5_1.ppc64.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.ppc.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.ppc64.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.ppc.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.ppc64.rpm
+
+s390x:
+libXfont-1.2.2-1.0.3.el5_1.s390.rpm
+libXfont-1.2.2-1.0.3.el5_1.s390x.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.s390.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.s390x.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.s390.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.s390x.rpm
+
+x86_64:
+libXfont-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-1.2.2-1.0.3.el5_1.x86_64.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-debuginfo-1.2.2-1.0.3.el5_1.x86_64.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.i386.rpm
+libXfont-devel-1.2.2-1.0.3.el5_1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0006">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0006</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHj78PXlSAg2UNWIIRAiGsAJ9H8a/kQ8YMALs4x/HP5aYj2fvxhwCeIZbu
+7EsEncl92WPsBQelEOQLkGU=
+=nKFc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

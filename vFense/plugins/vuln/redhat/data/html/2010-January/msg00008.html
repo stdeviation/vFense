@@ -1,0 +1,195 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0037&#45;01] Critical: acroread security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 13 Jan 2010 11:47:56 &#45;0500 -->
+<!--X-Message-Id: 201001131647.o0DGlo9f003568@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0037-01] Critical: acroread security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0037-01] Critical: acroread security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0037-01] Critical: acroread security and bug fix update</li>
+<li><em>Date</em>: Wed, 13 Jan 2010 11:47:50 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: acroread security and bug fix update
+Advisory ID:       RHSA-2010:0037-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0037.html">https://rhn.redhat.com/errata/RHSA-2010-0037.html</a>
+Issue date:        2010-01-13
+CVE Names:         CVE-2009-3953 CVE-2009-3954 CVE-2009-3955 
+                   CVE-2009-3956 CVE-2009-3959 CVE-2009-4324 
+=====================================================================
+
+1. Summary:
+
+Updated acroread packages that fix multiple security issues and three bugs
+are now available for Red Hat Enterprise Linux 5 Supplementary.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Supplementary (v. 5 client) - i386, x86_64
+RHEL Supplementary (v. 5 server) - i386, x86_64
+
+3. Description:
+
+Adobe Reader allows users to view and print documents in Portable Document
+Format (PDF).
+
+This update fixes several vulnerabilities in Adobe Reader. These
+vulnerabilities are summarized on the Adobe Security Advisory APSB10-02
+page listed in the References section. A specially-crafted PDF file could
+cause Adobe Reader to crash or, potentially, execute arbitrary code as the
+user running Adobe Reader when opened. (CVE-2009-4324, CVE-2009-3953,
+CVE-2009-3954, CVE-2009-3955, CVE-2009-3959, CVE-2009-3956)
+
+This update also fixes the following bugs:
+
+* the acroread process continued to run even after closing a PDF file. If
+multiple PDF files were opened and then closed, the acroread processes
+continued to run and consume system resources (up to 100% CPU usage). With
+this update, the acroread process correctly exits, which resolves this
+issue. (BZ#473217)
+
+* the PPKLite.api plug-in was missing, causing Adobe Reader to crash when
+attempting to open signed PDF files. For such files, if an immediate crash
+was not observed, clicking on the Signature Panel could trigger one. With
+this update, the PPKLite.api plug-in is included, which resolves this
+issue. (BZ#472975)
+
+* Adobe Reader has been upgraded to version 9.3. (BZ#497957)
+
+Adobe have discontinued support for Adobe Reader 8 for Linux. All users of
+Adobe Reader are advised to install these updated packages, which contain
+Adobe Reader version 9.3, which is not vulnerable to these issues and fixes
+these bugs. All running instances of Adobe Reader must be restarted for the
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+472975 - acroread missing PPKLite.api and crashes on signed PDFs
+473217 - acroread takes 100% cpu and does not die when killed
+547799 - CVE-2009-4324 acroread: media.newplayer JavaScript API code execution vulnerability (APSB10-02)
+554293 - CVE-2009-3953 CVE-2009-3954 CVE-2009-3955 CVE-2009-3959 acroread: multiple code execution flaws (APSB10-02)
+554296 - CVE-2009-3956 acroread: script injection vulnerability (APSB10-02)
+
+6. Package List:
+
+RHEL Desktop Supplementary (v. 5 client):
+
+i386:
+acroread-9.3-1.el5.i386.rpm
+acroread-plugin-9.3-1.el5.i386.rpm
+
+x86_64:
+acroread-9.3-1.el5.i386.rpm
+acroread-plugin-9.3-1.el5.i386.rpm
+
+RHEL Supplementary (v. 5 server):
+
+i386:
+acroread-9.3-1.el5.i386.rpm
+acroread-plugin-9.3-1.el5.i386.rpm
+
+x86_64:
+acroread-9.3-1.el5.i386.rpm
+acroread-plugin-9.3-1.el5.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3953.html">https://www.redhat.com/security/data/cve/CVE-2009-3953.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3954.html">https://www.redhat.com/security/data/cve/CVE-2009-3954.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3955.html">https://www.redhat.com/security/data/cve/CVE-2009-3955.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3956.html">https://www.redhat.com/security/data/cve/CVE-2009-3956.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3959.html">https://www.redhat.com/security/data/cve/CVE-2009-3959.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4324.html">https://www.redhat.com/security/data/cve/CVE-2009-4324.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.adobe.com/support/security/bulletins/apsb10-02.html">http://www.adobe.com/support/security/bulletins/apsb10-02.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLTfktXlSAg2UNWIIRAtxHAJ9WKDp5rvHdg6iaKnXZ6NCZPRdiIACgmsfz
+BO8XjHIZODRu7ZK0nPM3FaE=
+=983N
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

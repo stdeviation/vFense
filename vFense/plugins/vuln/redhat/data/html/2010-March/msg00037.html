@@ -1,0 +1,221 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0291&#45;04] Moderate: gfs&#45;kmod security,	bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 30 Mar 2010 13:11:56 &#45;0400 -->
+<!--X-Message-Id: 201003301711.o2UHBoxI005739@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0291-04] Moderate: gfs-kmod security,	bug fix and enhancement</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0291-04] Moderate: gfs-kmod security,	bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0291-04] Moderate: gfs-kmod security,	bug fix and enhancement update</li>
+<li><em>Date</em>: Tue, 30 Mar 2010 13:11:49 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: gfs-kmod security, bug fix and enhancement update
+Advisory ID:       RHSA-2010:0291-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0291.html">https://rhn.redhat.com/errata/RHSA-2010-0291.html</a>
+Issue date:        2010-03-30
+CVE Names:         CVE-2010-0727 
+=====================================================================
+
+1. Summary:
+
+Updated gfs-kmod packages that fix one security issue, numerous bugs, and
+add one enhancement are now available for Red Hat Enterprise Linux 5.5,
+kernel release 2.6.18-194.el5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Cluster-Storage (v. 5 server) - i386, ia64, ppc, x86_64
+
+3. Description:
+
+The gfs-kmod packages contain modules that provide the ability to mount and
+use GFS file systems.
+
+A flaw was found in the gfs_lock() implementation. The GFS locking code
+could skip the lock operation for files that have the S_ISGID bit
+(set-group-ID on execution) in their mode set. A local, unprivileged user
+on a system that has a GFS file system mounted could use this flaw to cause
+a kernel panic. (CVE-2010-0727)
+
+These updated gfs-kmod packages are in sync with the latest kernel
+(2.6.18-194.el5). The modules in earlier gfs-kmod packages failed to load
+because they did not match the running kernel. It was possible to
+force-load the modules. With this update, however, users no longer need to.
+
+These updated gfs-kmod packages also fix the following bugs:
+
+* when SELinux was in permissive mode, a race condition during file
+creation could have caused one or more cluster nodes to be fenced and lock
+the remaining nodes out of the GFS file system. This race condition no
+longer occurs with this update. (BZ#471258)
+
+* when ACLs (Access Control Lists) are enabled on a GFS file system, if a
+transaction that has started to do a write request does not have enough
+spare blocks for the operation it causes a kernel panic. This update
+ensures that there are enough blocks for the write request before starting
+the operation. (BZ#513885)
+
+* requesting a &quot;flock&quot; on a file in GFS in either read-only or read-write
+mode would sometimes cause a &quot;Resource temporarily unavailable&quot; state error
+(error 11 for EWOULDBLOCK) to occur. In these cases, a flock could not be
+obtained on the file in question. This has been fixed with this update so
+that flocks can successfully be obtained on GFS files without this error
+occurring. (BZ#515717)
+
+* the GFS withdraw function is a data integrity feature of GFS file systems
+in a cluster. If the GFS kernel module detects an inconsistency in a GFS
+file system following an I/O operation, the file system becomes unavailable
+to the cluster. The GFS withdraw function is less severe than a kernel
+panic, which would cause another node to fence the node. With this update,
+you can override the GFS withdraw function by mounting the file system with
+the &quot;-o errors=panic&quot; option specified. When this option is specified, any
+errors that would normally cause the system to withdraw cause the system to
+panic instead. This stops the node's cluster communications, which causes
+the node to be fenced. (BZ#517145)
+
+Finally, these updated gfs-kmod packages provide the following enhancement:
+
+* the GFS kernel modules have been updated to use the new generic freeze
+and unfreeze ioctl interface that is also supported by the following file
+systems: ext3, ext4, GFS2, JFS and ReiserFS. With this update, GFS supports
+freeze/unfreeze through the VFS-level FIFREEZE/FITHAW ioctl interface.
+(BZ#487610)
+
+Users are advised to upgrade to these latest gfs-kmod packages, updated for
+use with the 2.6.18-194.el5 kernel, which contain backported patches to
+correct these issues, fix these bugs, and add this enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+471258 - fatal: assertion &quot;gfs_glock_is_locked_by_me(gl) &amp;&amp; gfs_glock_is_held_excl(gl)&quot; failed
+487610 - GFS: Change gfs freeze/unfreeze to use new standard
+513885 - GFS kernel panic, suid + nfsd with posix ACLs enabled
+515717 - Flock on GFS fs file will error with &quot;Resource tempory unavailable&quot; for EWOULDBLOCK
+517145 - [RFE] GFS: New mount option: -o errors=withdraw|panic
+570863 - CVE-2010-0727 bug in GFS/GFS2 locking code leads to dos
+
+6. Package List:
+
+RHEL Cluster-Storage (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gfs-kmod-0.1.34-12.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gfs-kmod-0.1.34-12.el5.src.rpm</a>
+
+i386:
+gfs-kmod-debuginfo-0.1.34-12.el5.i686.rpm
+kmod-gfs-0.1.34-12.el5.i686.rpm
+kmod-gfs-PAE-0.1.34-12.el5.i686.rpm
+kmod-gfs-xen-0.1.34-12.el5.i686.rpm
+
+ia64:
+gfs-kmod-debuginfo-0.1.34-12.el5.ia64.rpm
+kmod-gfs-0.1.34-12.el5.ia64.rpm
+kmod-gfs-xen-0.1.34-12.el5.ia64.rpm
+
+ppc:
+gfs-kmod-debuginfo-0.1.34-12.el5.ppc64.rpm
+kmod-gfs-0.1.34-12.el5.ppc64.rpm
+
+x86_64:
+gfs-kmod-debuginfo-0.1.34-12.el5.x86_64.rpm
+kmod-gfs-0.1.34-12.el5.x86_64.rpm
+kmod-gfs-xen-0.1.34-12.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0727.html">https://www.redhat.com/security/data/cve/CVE-2010-0727.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLsi+qXlSAg2UNWIIRAph7AJ43Q61Hpm87P8Emz+wrszNrdoRh6QCgua95
+o4WPF1UY+zOiu3iFOajiisY=
+=67XL
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

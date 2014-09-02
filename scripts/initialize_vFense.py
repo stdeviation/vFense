@@ -10,13 +10,11 @@ from time import sleep
 from _magic import *
 from vFense import (
     VFENSE_BASE_SRC_PATH, VFENSE_BASE_PATH,
-    VFENSE_LOG_PATH, VFENSE_CONF_PATH,
-    VFENSE_LOGGING_CONFIG, VFENSE_VULN_PATH,
+    VFENSE_LOG_PATH, VFENSE_LOGGING_CONFIG, VFENSE_VULN_PATH,
     VFENSE_APP_TMP_PATH, VFENSE_SCHEDULER_PATH,
     VFENSE_TMP_PATH, VFENSED_SYMLINK, VFENSED,
     VFENSE_INIT_D_SCRIPT, VFENSE_INIT_D_SYMLINK,
-    VFENSE_SSL_PATH, RETHINK_VFENSE_PATH, RETHINK_DATA_PATH,
-    RETHINK_PATH
+    VFENSE_SSL_PATH, RETHINK_VFENSE_PATH, RETHINK_PATH
 )
 from vFense.core.logger.logger import vFenseLogger
 vfense_logger = vFenseLogger()
@@ -49,6 +47,7 @@ from vFense.plugins import monit
 from vFense.plugins.vuln.cve.parser import load_up_all_xml_into_db
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
 from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing
+from vFense.plugins.vuln.redhat.parser import begin_redhat_archive_processing
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -359,6 +358,9 @@ def generate_vuln_data():
     print "Updating Ubuntu Security Bulletin Ids...( This can take a couple of minutes )"
     begin_usn_home_page_processing(full_parse=True)
     print "Done Updating Ubuntu Security Bulletin Ids..."
+    print "Updating Redhat Security Bulletin Ids...( This can take a couple of minutes )"
+    begin_redhat_archive_processing(latest=False)
+    print "Done Updating Redhat Security Bulletin Ids..."
 
 
 def clean_database():

@@ -1,0 +1,500 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1360&#45;01] Moderate: xorg&#45;x11 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 6 Oct 2011 14:10:10 &#45;0400 -->
+<!--X-Message-Id: 201110061810.p96IA4xw029030@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1360-01] Moderate: xorg-x11 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1360-01] Moderate: xorg-x11 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1360-01] Moderate: xorg-x11 security update</li>
+<li><em>Date</em>: Thu, 6 Oct 2011 18:10:04 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: xorg-x11 security update
+Advisory ID:       RHSA-2011:1360-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1360.html">https://rhn.redhat.com/errata/RHSA-2011-1360.html</a>
+Issue date:        2011-10-06
+CVE Names:         CVE-2010-4818 CVE-2010-4819 
+=====================================================================
+
+1. Summary:
+
+Updated xorg-x11 packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 4.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+X.Org is an open source implementation of the X Window System. It provides
+the basic low-level functionality that full-fledged graphical user
+interfaces are designed upon.
+
+Multiple input sanitization flaws were found in the X.Org GLX (OpenGL
+extension to the X Window System) extension. A malicious, authorized client
+could use these flaws to crash the X.Org server or, potentially, execute
+arbitrary code with root privileges. (CVE-2010-4818)
+
+An input sanitization flaw was found in the X.Org Render extension. A
+malicious, authorized client could use this flaw to leak arbitrary memory
+from the X.Org server process, or possibly crash the X.Org server.
+(CVE-2010-4819)
+
+Users of xorg-x11 should upgrade to these updated packages, which contain a
+backported patch to resolve these issues. All running X.Org server
+instances must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+740954 - CVE-2010-4818 X.org: multiple GLX input sanitization flaws
+740961 - CVE-2010-4819 X.org: ProcRenderAddGlyphs input sanitization flaw
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/xorg-x11-6.8.2-1.EL.70.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/xorg-x11-6.8.2-1.EL.70.src.rpm</a>
+
+i386:
+xorg-x11-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-doc-6.8.2-1.EL.70.i386.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.i386.rpm
+xorg-x11-tools-6.8.2-1.EL.70.i386.rpm
+xorg-x11-twm-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.i386.rpm
+
+ia64:
+xorg-x11-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-devel-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-doc-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-tools-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-twm-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.ia64.rpm
+
+ppc:
+xorg-x11-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.ppc64.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.ppc64.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.ppc64.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.ppc64.rpm
+xorg-x11-devel-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-devel-6.8.2-1.EL.70.ppc64.rpm
+xorg-x11-doc-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-libs-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-libs-6.8.2-1.EL.70.ppc64.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-tools-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-twm-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.ppc.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.ppc.rpm
+
+s390:
+xorg-x11-6.8.2-1.EL.70.s390.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.s390.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.s390.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.s390.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.s390.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.s390.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.s390.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.s390.rpm
+xorg-x11-devel-6.8.2-1.EL.70.s390.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.s390.rpm
+xorg-x11-libs-6.8.2-1.EL.70.s390.rpm
+xorg-x11-tools-6.8.2-1.EL.70.s390.rpm
+xorg-x11-twm-6.8.2-1.EL.70.s390.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.s390.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.s390.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.s390.rpm
+
+s390x:
+xorg-x11-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.s390.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.s390.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.s390.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.s390.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-devel-6.8.2-1.EL.70.s390.rpm
+xorg-x11-devel-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-libs-6.8.2-1.EL.70.s390.rpm
+xorg-x11-libs-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-tools-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-twm-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.s390x.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.s390x.rpm
+
+x86_64:
+xorg-x11-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-devel-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-doc-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-tools-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-twm-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/xorg-x11-6.8.2-1.EL.70.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/xorg-x11-6.8.2-1.EL.70.src.rpm</a>
+
+i386:
+xorg-x11-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-doc-6.8.2-1.EL.70.i386.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.i386.rpm
+xorg-x11-tools-6.8.2-1.EL.70.i386.rpm
+xorg-x11-twm-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.i386.rpm
+
+x86_64:
+xorg-x11-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-devel-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-doc-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-tools-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-twm-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/xorg-x11-6.8.2-1.EL.70.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/xorg-x11-6.8.2-1.EL.70.src.rpm</a>
+
+i386:
+xorg-x11-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-doc-6.8.2-1.EL.70.i386.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.i386.rpm
+xorg-x11-tools-6.8.2-1.EL.70.i386.rpm
+xorg-x11-twm-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.i386.rpm
+
+ia64:
+xorg-x11-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-devel-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-doc-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-tools-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-twm-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.ia64.rpm
+
+x86_64:
+xorg-x11-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-devel-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-doc-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-tools-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-twm-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/xorg-x11-6.8.2-1.EL.70.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/xorg-x11-6.8.2-1.EL.70.src.rpm</a>
+
+i386:
+xorg-x11-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-doc-6.8.2-1.EL.70.i386.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.i386.rpm
+xorg-x11-tools-6.8.2-1.EL.70.i386.rpm
+xorg-x11-twm-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.i386.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.i386.rpm
+
+ia64:
+xorg-x11-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-devel-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-doc-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-tools-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-twm-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.ia64.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.ia64.rpm
+
+x86_64:
+xorg-x11-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGL-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.i386.rpm
+xorg-x11-Mesa-libGLU-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xdmx-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xnest-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-Xvfb-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-deprecated-libs-devel-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-devel-6.8.2-1.EL.70.i386.rpm
+xorg-x11-devel-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-doc-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-font-utils-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-libs-6.8.2-1.EL.70.i386.rpm
+xorg-x11-libs-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-sdk-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-tools-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-twm-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xauth-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xdm-6.8.2-1.EL.70.x86_64.rpm
+xorg-x11-xfs-6.8.2-1.EL.70.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4818.html">https://www.redhat.com/security/data/cve/CVE-2010-4818.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4819.html">https://www.redhat.com/security/data/cve/CVE-2010-4819.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOje7sXlSAg2UNWIIRAl+aAKDA78G4AxS3PKYoOYelYm7UUi4RSACgwx9z
+rqzl6PR5DN+wpy/lLhgVtjQ=
+=LxkM
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

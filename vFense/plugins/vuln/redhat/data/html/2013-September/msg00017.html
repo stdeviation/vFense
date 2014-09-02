@@ -1,0 +1,216 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1213&#45;01] Important: gdm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Sep 2013 14:58:49 &#45;0400 -->
+<!--X-Message-Id: 201309051858.r85Iwmnf024438@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1213-01] Important: gdm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1213-01] Important: gdm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1213-01] Important: gdm security update</li>
+<li><em>Date</em>: Thu, 5 Sep 2013 18:58:48 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: gdm security update
+Advisory ID:       RHSA-2013:1213-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1213.html">https://rhn.redhat.com/errata/RHSA-2013-1213.html</a>
+Issue date:        2013-09-05
+CVE Names:         CVE-2013-4169 
+=====================================================================
+
+1. Summary:
+
+Updated gdm and initscripts packages that fix one security issue are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The GNOME Display Manager (GDM) provides the graphical login screen, shown
+shortly after boot up, log out, and when user-switching.
+
+A race condition was found in the way GDM handled the X server sockets
+directory located in the system temporary directory. An unprivileged user
+could use this flaw to perform a symbolic link attack, giving them write
+access to any file, allowing them to escalate their privileges to root.
+(CVE-2013-4169)
+
+Note that this erratum includes an updated initscripts package. To fix
+CVE-2013-4169, the vulnerable code was removed from GDM and the initscripts
+package was modified to create the affected directory safely during the
+system boot process. Therefore, this update will appear on all systems,
+however systems without GDM installed are not affected by this flaw.
+
+Red Hat would like to thank the researcher with the nickname vladz for
+reporting this issue.
+
+All users should upgrade to these updated packages, which correct this
+issue. The system must be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+988498 - CVE-2013-4169 gdm: TOCTTOU race condition on /tmp/.X11-unix
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gdm-2.16.0-59.el5_9.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gdm-2.16.0-59.el5_9.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/initscripts-8.45.42-2.el5_9.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/initscripts-8.45.42-2.el5_9.1.src.rpm</a>
+
+i386:
+gdm-2.16.0-59.el5_9.1.i386.rpm
+gdm-debuginfo-2.16.0-59.el5_9.1.i386.rpm
+gdm-docs-2.16.0-59.el5_9.1.i386.rpm
+initscripts-8.45.42-2.el5_9.1.i386.rpm
+initscripts-debuginfo-8.45.42-2.el5_9.1.i386.rpm
+
+x86_64:
+gdm-2.16.0-59.el5_9.1.x86_64.rpm
+gdm-debuginfo-2.16.0-59.el5_9.1.x86_64.rpm
+gdm-docs-2.16.0-59.el5_9.1.x86_64.rpm
+initscripts-8.45.42-2.el5_9.1.x86_64.rpm
+initscripts-debuginfo-8.45.42-2.el5_9.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gdm-2.16.0-59.el5_9.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gdm-2.16.0-59.el5_9.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/initscripts-8.45.42-2.el5_9.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/initscripts-8.45.42-2.el5_9.1.src.rpm</a>
+
+i386:
+gdm-2.16.0-59.el5_9.1.i386.rpm
+gdm-debuginfo-2.16.0-59.el5_9.1.i386.rpm
+gdm-docs-2.16.0-59.el5_9.1.i386.rpm
+initscripts-8.45.42-2.el5_9.1.i386.rpm
+initscripts-debuginfo-8.45.42-2.el5_9.1.i386.rpm
+
+ia64:
+gdm-2.16.0-59.el5_9.1.ia64.rpm
+gdm-debuginfo-2.16.0-59.el5_9.1.ia64.rpm
+gdm-docs-2.16.0-59.el5_9.1.ia64.rpm
+initscripts-8.45.42-2.el5_9.1.ia64.rpm
+initscripts-debuginfo-8.45.42-2.el5_9.1.ia64.rpm
+
+ppc:
+gdm-2.16.0-59.el5_9.1.ppc.rpm
+gdm-debuginfo-2.16.0-59.el5_9.1.ppc.rpm
+gdm-docs-2.16.0-59.el5_9.1.ppc.rpm
+initscripts-8.45.42-2.el5_9.1.ppc.rpm
+initscripts-debuginfo-8.45.42-2.el5_9.1.ppc.rpm
+
+s390x:
+gdm-2.16.0-59.el5_9.1.s390x.rpm
+gdm-debuginfo-2.16.0-59.el5_9.1.s390x.rpm
+gdm-docs-2.16.0-59.el5_9.1.s390x.rpm
+initscripts-8.45.42-2.el5_9.1.s390x.rpm
+initscripts-debuginfo-8.45.42-2.el5_9.1.s390x.rpm
+
+x86_64:
+gdm-2.16.0-59.el5_9.1.x86_64.rpm
+gdm-debuginfo-2.16.0-59.el5_9.1.x86_64.rpm
+gdm-docs-2.16.0-59.el5_9.1.x86_64.rpm
+initscripts-8.45.42-2.el5_9.1.x86_64.rpm
+initscripts-debuginfo-8.45.42-2.el5_9.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4169.html">https://www.redhat.com/security/data/cve/CVE-2013-4169.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSKNRIXlSAg2UNWIIRAj4YAJ9ENwOuMcy+f7ZD8VHFFniU0aoC1gCgqASG
+/vYNTQOyHL7KlD2svmN+YA0=
+=NuON
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0373&#45;01] Moderate: Apache Commons Fileupload and JBoss Web	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 3 Apr 2014 17:59:24 &#45;0400 -->
+<!--X-Message-Id: 201404032159.s33LxOeG005352@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0373-01] Moderate: Apache Commons Fileupload and JBoss Web	se</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0373-01] Moderate: Apache Commons Fileupload and JBoss Web	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0373-01] Moderate: Apache Commons Fileupload and JBoss Web	security update</li>
+<li><em>Date</em>: Thu, 3 Apr 2014 21:59:24 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Apache Commons Fileupload and JBoss Web security update
+Advisory ID:       RHSA-2014:0373-01
+Product:           Red Hat JBoss Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0373.html">https://rhn.redhat.com/errata/RHSA-2014-0373.html</a>
+Issue date:        2014-04-03
+CVE Names:         CVE-2013-4286 CVE-2014-0050 
+=====================================================================
+
+1. Summary:
+
+An update for the Apache Commons Fileupload and JBoss Web components that
+fixes two security issues is now available from the Red Hat Customer Portal
+for Red Hat JBoss BRMS 6.0.1 and Red Hat JBoss BPM Suite 6.0.1.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Description:
+
+JBoss Web Server is an enterprise ready web server designed for medium and
+large applications, and is based on Tomcat. JBoss Web Server provides
+organizations with a single deployment platform for Java Server Pages (JSP)
+and Java Servlet technologies, PHP, and CGI. It uses a genuine high
+performance hybrid technology that incorporates the best of the most recent
+OS technologies for processing high volume data, while keeping all the
+reference Java specifications.
+
+Apache Commons FileUpload package makes it easy to add robust,
+high-performance, file upload capability to servlets and web applications.
+
+It was found that when JBoss Web processed a series of HTTP requests in
+which at least one request contained either multiple content-length
+headers, or one content-length header with a chunked transfer-encoding
+header, JBoss Web would incorrectly handle the request. A remote attacker
+could use this flaw to poison a web cache, perform cross-site scripting
+(XSS) attacks, or obtain sensitive information from other requests.
+(CVE-2013-4286)
+
+A denial of service flaw was found in the way Apache Commons FileUpload,
+which is embedded in the JBoss Web component of JBoss EAP bundled with
+JBoss BRMS and BPM Suite, handled small-sized buffers used by
+MultipartStream. A remote attacker could use this flaw to create a
+malformed Content-Type header for a multipart request, causing JBoss Web to
+enter an infinite loop when processing such an incoming request.
+(CVE-2014-0050)
+
+All users of the affected products as provided from the Red Hat Customer
+Portal are advised to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains download links (you must
+log in to download the updates). Before applying the updates, back up
+your existing installation, including all applications, configuration
+files, databases and database settings, and so on.
+
+It is recommended to halt the server by stopping the JBoss Application
+Server process before installing this update, and then after installing the
+update, restart the server by starting the JBoss Application Server
+process.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1062337 - CVE-2014-0050 apache-commons-fileupload: denial of service due to too-small buffer size used by MultipartStream
+1069921 - CVE-2013-4286 tomcat: incomplete fix for CVE-2005-2090
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4286.html">https://www.redhat.com/security/data/cve/CVE-2013-4286.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0050.html">https://www.redhat.com/security/data/cve/CVE-2014-0050.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=brms&amp;downloadType=securityPatches&amp;version=6.0.1">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=brms&amp;downloadType=securityPatches&amp;version=6.0.1</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=bpm.suite&amp;downloadType=securityPatches&amp;version=6.0.1">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=bpm.suite&amp;downloadType=securityPatches&amp;version=6.0.1</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTPdmNXlSAg2UNWIIRAgR7AKCpF/GM0ZPGnl7kk1iEoAqsRnseKwCgvSWn
+2LAP5hYcZ4D0KUr31fcButw=
+=U9fo
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

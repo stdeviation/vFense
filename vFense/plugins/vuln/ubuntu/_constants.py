@@ -10,3 +10,9 @@ class UbuntuUSNStrings():
     MAIN_USN_URL = 'http://www.ubuntu.com/usn'
     USR_URI = '/usn/usn-[0-9]+[0-9]+'
     NEXT_PAGE = '\?page=[0-9]+'
+
+class UbuntuVulnSubKeys():
+    NAME = 'name'
+    VERSION = 'version'
+    OS_STRING = 'os_string'
+    APP_ID = 'app_id'

@@ -1,0 +1,175 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0806&#45;01] Low: openstack&#45;keystone security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 9 May 2013 14:17:34 &#45;0400 -->
+<!--X-Message-Id: 201305091817.r49IHXCZ010619@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0806-01] Low: openstack-keystone security and bug fix	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0806-01] Low: openstack-keystone security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0806-01] Low: openstack-keystone security and bug fix	update</li>
+<li><em>Date</em>: Thu, 9 May 2013 18:17:33 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: openstack-keystone security and bug fix update
+Advisory ID:       RHSA-2013:0806-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0806.html">https://rhn.redhat.com/errata/RHSA-2013-0806.html</a>
+Issue date:        2013-05-09
+CVE Names:         CVE-2013-2006 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-keystone packages that fix one security issue and various
+bugs are now available for Red Hat OpenStack Folsom.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack Folsom - noarch
+
+3. Description:
+
+The openstack-keystone packages provide Keystone, a Python implementation
+of the OpenStack identity service API, which provides Identity, Token,
+Catalog, and Policy services.
+
+These updated packages have been upgraded to upstream version 2012.2.4,
+which provides a number of bug fixes over the previous version. (BZ#950132)
+
+This update also fixes the following security issue:
+
+In environments using LDAP (Lightweight Directory Access Protocol), if
+debug-level logging was enabled (for example, by enabling it in
+&quot;/etc/keystone/keystone.conf&quot;), the LDAP server password was logged in
+plain text to a world-readable log file. Debug-level logging is not enabled
+by default. (CVE-2013-2006)
+
+Additionally, this update also fixes the following bugs:
+
+* If the Keystone service incurred an HTTP error as a result of a transient
+network error, authentication tokens were listed as invalid. With this
+update, the Keystone service will now retry requests a few times before
+failing, which masks transient network errors. (BZ#919526)
+
+* The &quot;/var/log/keystone/&quot; directory was world-readable. With this update,
+world-read permissions have been removed. (BZ#956474)
+
+All users of openstack-keystone are advised to upgrade to these updated
+packages, which correct these issues. After installing the updated
+packages, the Keystone service (openstack-keystone) will be restarted
+automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+919526 - Temporary network outage results in connection refused and invalid token
+956007 - CVE-2013-2006 OpenStack keystone: DEBUG level LDAP password disclosure in log files
+956474 - OpenStack keystone: /var/log/keystone/ is world readable
+
+6. Package List:
+
+OpenStack Folsom:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-keystone-2012.2.4-2.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-keystone-2012.2.4-2.el6ost.src.rpm</a>
+
+noarch:
+openstack-keystone-2012.2.4-2.el6ost.noarch.rpm
+openstack-keystone-doc-2012.2.4-2.el6ost.noarch.rpm
+python-keystone-2012.2.4-2.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2006.html">https://www.redhat.com/security/data/cve/CVE-2013-2006.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRi+gjXlSAg2UNWIIRAqqCAKDCxKhFK2RZ5G5O+4fk+YAhAMwd9QCfTMIr
+xFTj5fOKhpze1wBAu0cD3Pw=
+=JQDL
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

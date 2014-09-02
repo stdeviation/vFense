@@ -1,0 +1,187 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1028&#45;01] Important: Fuse ESB Enterprise 7.1.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 9 Jul 2013 14:01:57 &#45;0400 -->
+<!--X-Message-Id: 201307091801.r69I1toe031571@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1028-01] Important: Fuse ESB Enterprise 7.1.0 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1028-01] Important: Fuse ESB Enterprise 7.1.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1028-01] Important: Fuse ESB Enterprise 7.1.0 update</li>
+<li><em>Date</em>: Tue, 9 Jul 2013 18:01:55 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Fuse ESB Enterprise 7.1.0 update
+Advisory ID:       RHSA-2013:1028-01
+Product:           Fuse Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1028.html">https://rhn.redhat.com/errata/RHSA-2013-1028.html</a>
+Issue date:        2013-07-09
+CVE Names:         CVE-2012-5575 CVE-2013-0269 CVE-2013-1821 
+                   CVE-2013-2160 
+=====================================================================
+
+1. Summary:
+
+Fuse ESB Enterprise 7.1.0 roll up patch 1, which fixes multiple security
+issues and various bugs, is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+Fuse ESB Enterprise, based on Apache ServiceMix, provides an integration
+platform.
+
+This release of Fuse ESB Enterprise 7.1.0 roll up patch 1 is an update to
+Fuse ESB Enterprise 7.1.0 and includes bug fixes. Refer to the readme file
+included with the patch files for information about the bug fixes.
+
+The following security issues are also fixed with this release:
+
+XML encryption backwards compatibility attacks were found against various
+frameworks, including Apache CXF. An attacker could force a server to use
+insecure, legacy cryptosystems, even when secure cryptosystems were enabled
+on endpoints. By forcing the use of legacy cryptosystems, flaws such as
+CVE-2011-1096 and CVE-2011-2487 would be exposed, allowing plain text to be
+recovered from cryptograms and symmetric keys. (CVE-2012-5575)
+
+Note: Automatic checks to prevent CVE-2012-5575 are only run when
+WS-SecurityPolicy is used to enforce security requirements. It is best
+practice to use WS-SecurityPolicy to enforce security requirements.
+
+A flaw in JRuby's JSON gem allowed remote attacks by creating different
+types of malicious objects. For example, it could initiate a denial of
+service attack through resource consumption by using a JSON document to
+create arbitrary Ruby symbols, which were never garbage collected. It could
+also be exploited to create internal objects which could allow a SQL
+injection attack. (CVE-2013-0269)
+
+It was discovered that JRuby's REXML library did not properly restrict XML
+entity expansion. An attacker could use this flaw to cause a denial of
+service by tricking a Ruby application using REXML to read text nodes from
+specially-crafted XML content, which will result in REXML consuming large
+amounts of system memory. (CVE-2013-1821)
+
+Multiple denial of service flaws were found in the way the Apache CXF
+StAX parser implementation processed certain XML files. If a web service
+utilized the StAX parser, a remote attacker could provide a
+specially-crafted XML file that, when processed, would lead to excessive
+CPU and memory consumption. (CVE-2013-2160)
+
+Note: Fuse ESB Enterprise 7.1.0 ships JRuby as part of the camel-ruby
+component, which allows users to define Camel routes in Ruby. The default
+use of JRuby in Fuse ESB Enterprise 7.1.0 does not appear to expose either
+CVE-2013-0269 or CVE-2013-1821. If the version of JRuby shipped with Fuse
+ESB Enterprise 7.1.0 was used to build a custom application, then these
+flaws could be exposed.
+
+Red Hat would like to thank Tibor Jager, Kenneth G. Paterson and Juraj
+Somorovsky of Ruhr-University Bochum for reporting CVE-2012-5575; Ruby
+on Rails upstream for reporting CVE-2013-0269; and Andreas Falkenberg of
+SEC Consult Deutschland GmbH, and Christian Mainka, Juraj Somorovsky and
+Joerg Schwenk of Ruhr-University Bochum for reporting CVE-2013-2160.
+Upstream acknowledges Thomas Hollstegge of Zweitag and Ben Murphy as the
+original reporters of CVE-2013-0269.
+
+All users of Fuse ESB Enterprise 7.1.0 as provided from the Red Hat
+Customer Portal are advised to upgrade to Fuse ESB Enterprise 7.1.0 roll up
+patch 1.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update).
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+880443 - CVE-2012-5575 jbossws-native, jbossws-cxf, apache-cxf: XML encryption backwards compatibility attacks
+909029 - CVE-2013-0269 rubygem-json: Denial of Service and SQL Injection
+914716 - CVE-2013-1821 ruby: entity expansion DoS vulnerability in REXML
+929197 - CVE-2013-2160 cxf, jbossws-cxf, apache-cxf: Multiple denial of service flaws in the StAX parser
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5575.html">https://www.redhat.com/security/data/cve/CVE-2012-5575.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0269.html">https://www.redhat.com/security/data/cve/CVE-2013-0269.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1821.html">https://www.redhat.com/security/data/cve/CVE-2013-1821.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2160.html">https://www.redhat.com/security/data/cve/CVE-2013-2160.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=fuse.esb.enterprise&amp;downloadType=securityPatches&amp;version=7.1.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=fuse.esb.enterprise&amp;downloadType=securityPatches&amp;version=7.1.0</a>
+<a  rel="nofollow" href="http://cxf.apache.org/cve-2012-5575.html">http://cxf.apache.org/cve-2012-5575.html</a>
+<a  rel="nofollow" href="https://cxf.apache.org/security-advisories.data/CVE-2013-2160.txt.asc">https://cxf.apache.org/security-advisories.data/CVE-2013-2160.txt.asc</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFR3E/xXlSAg2UNWIIRAsvVAKCf8pGQ9CDR9pwQYUbn0l1hB0R6kgCgtGn3
+bJaiDK+zZxeA/Xvt4LdhsqE=
+=4+Kq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

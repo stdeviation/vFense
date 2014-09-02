@@ -1,0 +1,210 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2009:1692&#45;01] Important: rhev&#45;hypervisor security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 23 Dec 2009 10:34:13 &#45;0500 -->
+<!--X-Message-Id: 200912231534.nBNFY7DD014013@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1692-01] Important: rhev-hypervisor security and bug fix	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1692-01] Important: rhev-hypervisor security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2009:1692-01] Important: rhev-hypervisor security and bug fix	update</li>
+<li><em>Date</em>: Wed, 23 Dec 2009 10:34:07 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor security and bug fix update
+Advisory ID:       RHSA-2009:1692-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1692.html">https://rhn.redhat.com/errata/RHSA-2009-1692.html</a>
+Issue date:        2009-12-23
+CVE Names:         CVE-2009-3613 CVE-2009-4031 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor package that fixes security issues and several
+bugs is now available.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor - noarch
+
+3. Description:
+
+The rhev-hypervisor package provides a Red Hat Enterprise Virtualization
+(RHEV) Hypervisor ISO disk image. The RHEV Hypervisor is a dedicated
+Kernel-based Virtual Machine (KVM) hypervisor. It includes everything
+necessary to run and manage virtual machines: A subset of the Red Hat
+Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: RHEV Hypervisor is only available for the Intel 64 and AMD64
+architectures with virtualization extensions.
+
+A flaw was found in the Realtek r8169 Ethernet driver in the Linux kernel.
+pci_unmap_single() presented a memory leak that could lead to IOMMU space
+exhaustion and a system crash. An attacker on the local network could
+trigger this flaw by using jumbo frames for large amounts of network
+traffic. (CVE-2009-3613)
+
+On x86 platforms, the do_insn_fetch() function did not limit the amount of
+instruction bytes fetched per instruction. Users in guest operating systems
+could leverage this flaw to cause large latencies on SMP hosts that could
+lead to a local denial of service on the host operating system. This update
+fixes this issue by imposing the architecturally-defined 15 byte length
+limit for instructions. (CVE-2009-4031)
+
+This updated package provides updated components that include fixes for
+security issues; however, these issues have no security impact for RHEV
+Hypervisor. These fixes are for kernel issues CVE-2009-2695, CVE-2009-2908,
+CVE-2009-3228, CVE-2009-3286, CVE-2009-3547, CVE-2009-3612, CVE-2009-3620,
+CVE-2009-3621, and CVE-2009-3726; acpid issue CVE-2009-4033; expat issues
+CVE-2009-3560 and CVE-2009-3720; and wget issue CVE-2009-3490.
+
+This update also fixes the following bugs:
+
+* the scsi_dh_rdac driver was updated to recognize the Sun StorageTek
+Flexline 380. This driver is now also loaded into initrd to handle passive
+paths correctly. Without this initrd change, lots of errors could occur
+during boot, increasing boot time. (BZ#545909)
+
+* during the firstboot network configuration of the RHEV Hypervisor, it was
+only possible to specify NTP servers by their IP addresses if the RHEV
+Hypervisor system was configured with a static IP address. With this
+update, hostnames can also be used to specify NTP servers. (BZ#545923)
+
+* with the default settings, performance problems occurred when using the
+qcow2 image format. This could cause guest operating system installations
+to take hours. With this update, performance patches have been backported
+to resolve this issue. (BZ#520693)
+
+* when using the virtual vm8086 mode, bugs in the emulated hardware task
+switching implementation may have, in some situations, caused older guest
+operating systems to malfunction. (BZ#532031)
+
+* Windows Server 2003 guests (32-bit) with more than 4GB of memory may have
+crashed during reboot when using the default RHEV Hypervisor settings.
+(BZ#532043)
+
+* guests continued to run after encountering disk read errors. This could
+have led to their file systems becoming corrupted (but not the host's),
+notably in environments that use networked storage. With this update,
+guests will now pause on disk read and write errors. (BZ#537334, BZ#540406)
+
+* the para-virtualized block driver (virtio-blk) silently ignored read
+errors when accessing disk images. With this update, the driver correctly
+signals the read error to the guest. (BZ#537334)
+
+Users of the Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+529137 - CVE-2009-3613 kernel: flood ping cause out-of-iommu error and panic when mtu larger than 1500
+541160 - CVE-2009-4031 kernel: KVM: x86 emulator: limit instructions to 15 bytes
+
+6. Package List:
+
+RHEV Hypervisor:
+
+Source:
+rhev-hypervisor-5.4-2.1.3.el5_4rhev2_1.src.rpm
+
+noarch:
+rhev-hypervisor-5.4-2.1.3.el5_4rhev2_1.noarch.rpm
+rhev-hypervisor-pxe-5.4-2.1.3.el5_4rhev2_1.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3613.html">https://www.redhat.com/security/data/cve/CVE-2009-3613.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4031.html">https://www.redhat.com/security/data/cve/CVE-2009-4031.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization/Red_Hat_Enterprise_Virtualization_Hypervisor/5.4-2.1/html/RHEV-Hypervisor_Deployment_Guide/">http://redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization/Red_Hat_Enterprise_Virtualization_Hypervisor/5.4-2.1/html/RHEV-Hypervisor_Deployment_Guide/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLMjghXlSAg2UNWIIRAuteAJ9cMMvX5v2pflg+u7CV5ygxP/Au4ACcCy6T
+9kjKzvk6xaspS+poEovxFHg=
+=mPxn
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

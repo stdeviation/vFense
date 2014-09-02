@@ -1,0 +1,221 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1459&#45;01] Low: nspluginwrapper security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 13 Nov 2012 11:07:12 &#45;0500 -->
+<!--X-Message-Id: 201211131607.qADG76LF011675@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1459-01] Low: nspluginwrapper security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1459-01] Low: nspluginwrapper security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1459-01] Low: nspluginwrapper security and bug fix update</li>
+<li><em>Date</em>: Tue, 13 Nov 2012 16:07:06 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: nspluginwrapper security and bug fix update
+Advisory ID:       RHSA-2012:1459-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1459.html">https://rhn.redhat.com/errata/RHSA-2012-1459.html</a>
+Issue date:        2012-11-13
+CVE Names:         CVE-2011-2486 
+=====================================================================
+
+1. Summary:
+
+Updated nspluginwrapper packages that fix one security issue and one bug
+are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+nspluginwrapper is a utility which allows 32-bit plug-ins to run in a
+64-bit browser environment (a common example is Adobe's browser plug-in for
+presenting proprietary Flash files embedded in web pages). It includes the
+plug-in viewer and a tool for managing plug-in installations and updates.
+
+It was not possible for plug-ins wrapped by nspluginwrapper to discover
+whether the browser was running in Private Browsing mode. This flaw could
+lead to plug-ins wrapped by nspluginwrapper using normal mode while they
+were expected to run in Private Browsing mode. (CVE-2011-2486)
+
+This update also fixes the following bug:
+
+* When using the Adobe Reader web browser plug-in provided by the
+acroread-plugin package on a 64-bit system, opening Portable Document
+Format (PDF) files in Firefox could cause the plug-in to crash and a black
+window to be displayed where the PDF should be. Firefox had to be restarted
+to resolve the issue. This update implements a workaround in
+nspluginwrapper to automatically handle the plug-in crash, so that users
+no longer have to keep restarting Firefox. (BZ#869554)
+
+All users of nspluginwrapper are advised to upgrade to these updated
+packages, which upgrade nspluginwrapper to upstream version 1.4.4, and
+correct these issues. After installing the update, Firefox must be
+restarted for the changes to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+715384 - CVE-2011-2486 nspluginwrapper: NPNVprivateModeBool variable not forwarded
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nspluginwrapper-1.4.4-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nspluginwrapper-1.4.4-1.el6_3.src.rpm</a>
+
+i386:
+nspluginwrapper-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.i686.rpm
+
+x86_64:
+nspluginwrapper-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-1.4.4-1.el6_3.x86_64.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nspluginwrapper-1.4.4-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nspluginwrapper-1.4.4-1.el6_3.src.rpm</a>
+
+x86_64:
+nspluginwrapper-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-1.4.4-1.el6_3.x86_64.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nspluginwrapper-1.4.4-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nspluginwrapper-1.4.4-1.el6_3.src.rpm</a>
+
+i386:
+nspluginwrapper-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.i686.rpm
+
+ppc64:
+nspluginwrapper-1.4.4-1.el6_3.ppc.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.ppc.rpm
+
+x86_64:
+nspluginwrapper-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-1.4.4-1.el6_3.x86_64.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nspluginwrapper-1.4.4-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nspluginwrapper-1.4.4-1.el6_3.src.rpm</a>
+
+i386:
+nspluginwrapper-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.i686.rpm
+
+x86_64:
+nspluginwrapper-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-1.4.4-1.el6_3.x86_64.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.i686.rpm
+nspluginwrapper-debuginfo-1.4.4-1.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2486.html">https://www.redhat.com/security/data/cve/CVE-2011-2486.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQom/9XlSAg2UNWIIRAr29AJ9791YX3MhreTV8M7f9gbBBR6ntDgCbBzj5
+bO78kC9r56oeaZ+DUFl2R4k=
+=bgBc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

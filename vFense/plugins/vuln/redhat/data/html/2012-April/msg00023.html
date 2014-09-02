@@ -1,0 +1,439 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0522&#45;01] Important: openssl security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 25 Apr 2012 08:48:19 &#45;0400 -->
+<!--X-Message-Id: 201204251248.q3PCmDgW025776@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0522-01] Important: openssl security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0522-01] Important: openssl security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0522-01] Important: openssl security update</li>
+<li><em>Date</em>: Wed, 25 Apr 2012 12:48:12 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openssl security update
+Advisory ID:       RHSA-2012:0522-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0522.html">https://rhn.redhat.com/errata/RHSA-2012-0522.html</a>
+Issue date:        2012-04-25
+CVE Names:         CVE-2012-2110 
+=====================================================================
+
+1. Summary:
+
+Updated openssl packages that fix one security issue are now available for
+Red Hat Enterprise Linux 3 and 4 Extended Life Cycle Support; Red Hat
+Enterprise Linux 5.3 Long Life; and Red Hat Enterprise Linux 5.6, 6.0 and
+6.1 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS (v. 3 ELS) - i386
+Red Hat Enterprise Linux AS (v. 4 ELS) - i386, ia64, x86_64
+Red Hat Enterprise Linux ES (v. 3 ELS) - i386
+Red Hat Enterprise Linux ES (v. 4 ELS) - i386, x86_64
+Red Hat Enterprise Linux EUS (v. 5.6 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Long Life (v. 5.3 server) - i386, ia64, x86_64
+Red Hat Enterprise Linux Server EUS (v. 6.0) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server EUS (v. 6.1) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.0) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.1) - i386, ppc64, s390x, x86_64
+
+3. Description:
+
+OpenSSL is a toolkit that implements the Secure Sockets Layer (SSL v2/v3)
+and Transport Layer Security (TLS v1) protocols, as well as a
+full-strength, general purpose cryptography library.
+
+Multiple numeric conversion errors, leading to a buffer overflow, were
+found in the way OpenSSL parsed ASN.1 (Abstract Syntax Notation One) data
+from BIO (OpenSSL's I/O abstraction) inputs. Specially-crafted DER
+(Distinguished Encoding Rules) encoded data read from a file or other BIO
+input could cause an application using the OpenSSL library to crash or,
+potentially, execute arbitrary code. (CVE-2012-2110)
+
+All OpenSSL users should upgrade to these updated packages, which contain
+a backported patch to resolve this issue. For the update to take effect,
+all services linked to the OpenSSL library must be restarted, or the system
+rebooted.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+814185 - CVE-2012-2110 openssl: asn1_d2i_read_bio integer errors leading to buffer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux AS (v. 3 ELS):
+
+Source:
+openssl-0.9.7a-33.28.src.rpm
+
+i386:
+openssl-0.9.7a-33.28.i386.rpm
+openssl-0.9.7a-33.28.i686.rpm
+openssl-debuginfo-0.9.7a-33.28.i386.rpm
+openssl-debuginfo-0.9.7a-33.28.i686.rpm
+openssl-devel-0.9.7a-33.28.i386.rpm
+openssl-perl-0.9.7a-33.28.i386.rpm
+
+Red Hat Enterprise Linux ES (v. 3 ELS):
+
+Source:
+openssl-0.9.7a-33.28.src.rpm
+
+i386:
+openssl-0.9.7a-33.28.i386.rpm
+openssl-0.9.7a-33.28.i686.rpm
+openssl-debuginfo-0.9.7a-33.28.i386.rpm
+openssl-debuginfo-0.9.7a-33.28.i686.rpm
+openssl-devel-0.9.7a-33.28.i386.rpm
+openssl-perl-0.9.7a-33.28.i386.rpm
+
+Red Hat Enterprise Linux AS (v. 4 ELS):
+
+Source:
+openssl-0.9.7a-43.20.el4.src.rpm
+
+i386:
+openssl-0.9.7a-43.20.el4.i386.rpm
+openssl-0.9.7a-43.20.el4.i686.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.i386.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.i686.rpm
+openssl-devel-0.9.7a-43.20.el4.i386.rpm
+openssl-perl-0.9.7a-43.20.el4.i386.rpm
+
+ia64:
+openssl-0.9.7a-43.20.el4.i686.rpm
+openssl-0.9.7a-43.20.el4.ia64.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.i686.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.ia64.rpm
+openssl-devel-0.9.7a-43.20.el4.ia64.rpm
+openssl-perl-0.9.7a-43.20.el4.ia64.rpm
+
+x86_64:
+openssl-0.9.7a-43.20.el4.i686.rpm
+openssl-0.9.7a-43.20.el4.x86_64.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.i386.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.i686.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.x86_64.rpm
+openssl-devel-0.9.7a-43.20.el4.i386.rpm
+openssl-devel-0.9.7a-43.20.el4.x86_64.rpm
+openssl-perl-0.9.7a-43.20.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES (v. 4 ELS):
+
+Source:
+openssl-0.9.7a-43.20.el4.src.rpm
+
+i386:
+openssl-0.9.7a-43.20.el4.i386.rpm
+openssl-0.9.7a-43.20.el4.i686.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.i386.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.i686.rpm
+openssl-devel-0.9.7a-43.20.el4.i386.rpm
+openssl-perl-0.9.7a-43.20.el4.i386.rpm
+
+x86_64:
+openssl-0.9.7a-43.20.el4.i686.rpm
+openssl-0.9.7a-43.20.el4.x86_64.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.i386.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.i686.rpm
+openssl-debuginfo-0.9.7a-43.20.el4.x86_64.rpm
+openssl-devel-0.9.7a-43.20.el4.i386.rpm
+openssl-devel-0.9.7a-43.20.el4.x86_64.rpm
+openssl-perl-0.9.7a-43.20.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Long Life (v. 5.3 server):
+
+Source:
+openssl-0.9.8e-7.el5_3.2.src.rpm
+
+i386:
+openssl-0.9.8e-7.el5_3.2.i386.rpm
+openssl-0.9.8e-7.el5_3.2.i686.rpm
+openssl-debuginfo-0.9.8e-7.el5_3.2.i386.rpm
+openssl-debuginfo-0.9.8e-7.el5_3.2.i686.rpm
+openssl-devel-0.9.8e-7.el5_3.2.i386.rpm
+openssl-perl-0.9.8e-7.el5_3.2.i386.rpm
+
+ia64:
+openssl-0.9.8e-7.el5_3.2.i686.rpm
+openssl-0.9.8e-7.el5_3.2.ia64.rpm
+openssl-debuginfo-0.9.8e-7.el5_3.2.i686.rpm
+openssl-debuginfo-0.9.8e-7.el5_3.2.ia64.rpm
+openssl-devel-0.9.8e-7.el5_3.2.ia64.rpm
+openssl-perl-0.9.8e-7.el5_3.2.ia64.rpm
+
+x86_64:
+openssl-0.9.8e-7.el5_3.2.i686.rpm
+openssl-0.9.8e-7.el5_3.2.x86_64.rpm
+openssl-debuginfo-0.9.8e-7.el5_3.2.i386.rpm
+openssl-debuginfo-0.9.8e-7.el5_3.2.i686.rpm
+openssl-debuginfo-0.9.8e-7.el5_3.2.x86_64.rpm
+openssl-devel-0.9.8e-7.el5_3.2.i386.rpm
+openssl-devel-0.9.8e-7.el5_3.2.x86_64.rpm
+openssl-perl-0.9.8e-7.el5_3.2.x86_64.rpm
+
+Red Hat Enterprise Linux EUS (v. 5.6 server):
+
+Source:
+openssl-0.9.8e-12.el5_6.9.src.rpm
+
+i386:
+openssl-0.9.8e-12.el5_6.9.i386.rpm
+openssl-0.9.8e-12.el5_6.9.i686.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.i386.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.i686.rpm
+openssl-devel-0.9.8e-12.el5_6.9.i386.rpm
+openssl-perl-0.9.8e-12.el5_6.9.i386.rpm
+
+ia64:
+openssl-0.9.8e-12.el5_6.9.i686.rpm
+openssl-0.9.8e-12.el5_6.9.ia64.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.i686.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.ia64.rpm
+openssl-devel-0.9.8e-12.el5_6.9.ia64.rpm
+openssl-perl-0.9.8e-12.el5_6.9.ia64.rpm
+
+ppc:
+openssl-0.9.8e-12.el5_6.9.ppc.rpm
+openssl-0.9.8e-12.el5_6.9.ppc64.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.ppc.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.ppc64.rpm
+openssl-devel-0.9.8e-12.el5_6.9.ppc.rpm
+openssl-devel-0.9.8e-12.el5_6.9.ppc64.rpm
+openssl-perl-0.9.8e-12.el5_6.9.ppc.rpm
+
+s390x:
+openssl-0.9.8e-12.el5_6.9.s390.rpm
+openssl-0.9.8e-12.el5_6.9.s390x.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.s390.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.s390x.rpm
+openssl-devel-0.9.8e-12.el5_6.9.s390.rpm
+openssl-devel-0.9.8e-12.el5_6.9.s390x.rpm
+openssl-perl-0.9.8e-12.el5_6.9.s390x.rpm
+
+x86_64:
+openssl-0.9.8e-12.el5_6.9.i686.rpm
+openssl-0.9.8e-12.el5_6.9.x86_64.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.i386.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.i686.rpm
+openssl-debuginfo-0.9.8e-12.el5_6.9.x86_64.rpm
+openssl-devel-0.9.8e-12.el5_6.9.i386.rpm
+openssl-devel-0.9.8e-12.el5_6.9.x86_64.rpm
+openssl-perl-0.9.8e-12.el5_6.9.x86_64.rpm
+
+Red Hat Enterprise Linux Server EUS (v. 6.0):
+
+Source:
+openssl-1.0.0-4.el6_0.3.src.rpm
+
+i386:
+openssl-1.0.0-4.el6_0.3.i686.rpm
+openssl-debuginfo-1.0.0-4.el6_0.3.i686.rpm
+openssl-devel-1.0.0-4.el6_0.3.i686.rpm
+
+ppc64:
+openssl-1.0.0-4.el6_0.3.ppc.rpm
+openssl-1.0.0-4.el6_0.3.ppc64.rpm
+openssl-debuginfo-1.0.0-4.el6_0.3.ppc.rpm
+openssl-debuginfo-1.0.0-4.el6_0.3.ppc64.rpm
+openssl-devel-1.0.0-4.el6_0.3.ppc.rpm
+openssl-devel-1.0.0-4.el6_0.3.ppc64.rpm
+
+s390x:
+openssl-1.0.0-4.el6_0.3.s390.rpm
+openssl-1.0.0-4.el6_0.3.s390x.rpm
+openssl-debuginfo-1.0.0-4.el6_0.3.s390.rpm
+openssl-debuginfo-1.0.0-4.el6_0.3.s390x.rpm
+openssl-devel-1.0.0-4.el6_0.3.s390.rpm
+openssl-devel-1.0.0-4.el6_0.3.s390x.rpm
+
+x86_64:
+openssl-1.0.0-4.el6_0.3.i686.rpm
+openssl-1.0.0-4.el6_0.3.x86_64.rpm
+openssl-debuginfo-1.0.0-4.el6_0.3.i686.rpm
+openssl-debuginfo-1.0.0-4.el6_0.3.x86_64.rpm
+openssl-devel-1.0.0-4.el6_0.3.i686.rpm
+openssl-devel-1.0.0-4.el6_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server EUS (v. 6.1):
+
+Source:
+openssl-1.0.0-10.el6_1.6.src.rpm
+
+i386:
+openssl-1.0.0-10.el6_1.6.i686.rpm
+openssl-debuginfo-1.0.0-10.el6_1.6.i686.rpm
+openssl-devel-1.0.0-10.el6_1.6.i686.rpm
+
+ppc64:
+openssl-1.0.0-10.el6_1.6.ppc.rpm
+openssl-1.0.0-10.el6_1.6.ppc64.rpm
+openssl-debuginfo-1.0.0-10.el6_1.6.ppc.rpm
+openssl-debuginfo-1.0.0-10.el6_1.6.ppc64.rpm
+openssl-devel-1.0.0-10.el6_1.6.ppc.rpm
+openssl-devel-1.0.0-10.el6_1.6.ppc64.rpm
+
+s390x:
+openssl-1.0.0-10.el6_1.6.s390.rpm
+openssl-1.0.0-10.el6_1.6.s390x.rpm
+openssl-debuginfo-1.0.0-10.el6_1.6.s390.rpm
+openssl-debuginfo-1.0.0-10.el6_1.6.s390x.rpm
+openssl-devel-1.0.0-10.el6_1.6.s390.rpm
+openssl-devel-1.0.0-10.el6_1.6.s390x.rpm
+
+x86_64:
+openssl-1.0.0-10.el6_1.6.i686.rpm
+openssl-1.0.0-10.el6_1.6.x86_64.rpm
+openssl-debuginfo-1.0.0-10.el6_1.6.i686.rpm
+openssl-debuginfo-1.0.0-10.el6_1.6.x86_64.rpm
+openssl-devel-1.0.0-10.el6_1.6.i686.rpm
+openssl-devel-1.0.0-10.el6_1.6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.0):
+
+Source:
+openssl-1.0.0-4.el6_0.3.src.rpm
+
+i386:
+openssl-debuginfo-1.0.0-4.el6_0.3.i686.rpm
+openssl-perl-1.0.0-4.el6_0.3.i686.rpm
+openssl-static-1.0.0-4.el6_0.3.i686.rpm
+
+ppc64:
+openssl-debuginfo-1.0.0-4.el6_0.3.ppc64.rpm
+openssl-perl-1.0.0-4.el6_0.3.ppc64.rpm
+openssl-static-1.0.0-4.el6_0.3.ppc64.rpm
+
+s390x:
+openssl-debuginfo-1.0.0-4.el6_0.3.s390x.rpm
+openssl-perl-1.0.0-4.el6_0.3.s390x.rpm
+openssl-static-1.0.0-4.el6_0.3.s390x.rpm
+
+x86_64:
+openssl-debuginfo-1.0.0-4.el6_0.3.x86_64.rpm
+openssl-perl-1.0.0-4.el6_0.3.x86_64.rpm
+openssl-static-1.0.0-4.el6_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.1):
+
+Source:
+openssl-1.0.0-10.el6_1.6.src.rpm
+
+i386:
+openssl-debuginfo-1.0.0-10.el6_1.6.i686.rpm
+openssl-perl-1.0.0-10.el6_1.6.i686.rpm
+openssl-static-1.0.0-10.el6_1.6.i686.rpm
+
+ppc64:
+openssl-debuginfo-1.0.0-10.el6_1.6.ppc64.rpm
+openssl-perl-1.0.0-10.el6_1.6.ppc64.rpm
+openssl-static-1.0.0-10.el6_1.6.ppc64.rpm
+
+s390x:
+openssl-debuginfo-1.0.0-10.el6_1.6.s390x.rpm
+openssl-perl-1.0.0-10.el6_1.6.s390x.rpm
+openssl-static-1.0.0-10.el6_1.6.s390x.rpm
+
+x86_64:
+openssl-debuginfo-1.0.0-10.el6_1.6.x86_64.rpm
+openssl-perl-1.0.0-10.el6_1.6.x86_64.rpm
+openssl-static-1.0.0-10.el6_1.6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2110.html">https://www.redhat.com/security/data/cve/CVE-2012-2110.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.openssl.org/news/secadv_20120419.txt">http://www.openssl.org/news/secadv_20120419.txt</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPl/I1XlSAg2UNWIIRAhppAKC9ayZPWIpcHisigISpnlmPMHvXWQCeIDIm
+hk+py0IUiauQgLB7ltS7um0=
+=N/6r
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

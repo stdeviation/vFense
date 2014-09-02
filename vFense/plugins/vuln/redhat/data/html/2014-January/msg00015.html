@@ -1,0 +1,150 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0045&#45;01] Moderate: Red Hat JBoss Web Framework Kit 2.4.0	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Jan 2014 12:38:02 &#45;0500 -->
+<!--X-Message-Id: 201401201738.s0KHc160014240@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0045-01] Moderate: Red Hat JBoss Web Framework Kit 2.4.0	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0045-01] Moderate: Red Hat JBoss Web Framework Kit 2.4.0	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0045-01] Moderate: Red Hat JBoss Web Framework Kit 2.4.0	update</li>
+<li><em>Date</em>: Mon, 20 Jan 2014 17:38:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Web Framework Kit 2.4.0 update
+Advisory ID:       RHSA-2014:0045-01
+Product:           Red Hat JBoss Web Framework Kit
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0045.html">https://rhn.redhat.com/errata/RHSA-2014-0045.html</a>
+Issue date:        2014-01-20
+CVE Names:         CVE-2013-6447 CVE-2013-6448 
+=====================================================================
+
+1. Summary:
+
+An update for the seam-remoting component of Red Hat JBoss Web Framework
+Kit 2.4.0 that fixes two security issues is now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+moderate security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+Red Hat JBoss Web Framework Kit combines popular open source web frameworks
+into a single solution for Java applications. The JBoss Seam Remoting
+component provides a convenient method of remotely accessing Seam
+components from a web page, using AJAX (Asynchronous Javascript and XML).
+
+It was found that the ExecutionHandler, PollHandler, and
+SubscriptionHandler classes in JBoss Seam Remoting unmarshalled
+user-supplied XML and resolved external entities in this XML. A remote
+attacker could use this flaw to read files accessible to the user running
+the application server, and potentially perform other more advanced XML
+External Entity (XXE) attacks. (CVE-2013-6447)
+
+It was found that the InterfaceGenerator handler in JBoss Seam Remoting
+exposed details of all classes and methods on the server's classpath, not
+only methods with the org.jboss.seam.annotations.remoting.WebRemote
+annotation. A remote attacker could use this flaw to determine which
+classes are deployed on the JBoss server. (CVE-2013-6448)
+
+Red Hat would like to thank Jon Passki of Coverity SRL for reporting these
+issues.
+
+All users of Red Hat JBoss Web Framework Kit 2.4.0 as provided from the Red
+Hat Customer Portal are advised to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing installation of Red Hat JBoss Web Framework Kit.
+
+The JBoss server process must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1044784 - CVE-2013-6447 JBoss Seam: XML eXternal Entity (XXE) flaw in remoting
+1044794 - CVE-2013-6448 JBoss Seam: Information disclosure in remoting
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6447.html">https://www.redhat.com/security/data/cve/CVE-2013-6447.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6448.html">https://www.redhat.com/security/data/cve/CVE-2013-6448.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=web.framework.kit&amp;downloadType=securityPatches&amp;version=2.4.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=web.framework.kit&amp;downloadType=securityPatches&amp;version=2.4.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS3V7aXlSAg2UNWIIRAjjgAKCCTZdKYufg2ZWcOlWBGmm9+VU4kwCfUTYE
+ceR58FhAS5ntxVqs2r2i2Mg=
+=cwPy
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

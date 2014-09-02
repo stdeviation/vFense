@@ -1,0 +1,196 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0858&#45;01] Moderate: redhat&#45;ds&#45;base security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 10 Sep 2008 14:23:07 &#45;0400 -->
+<!--X-Message-Id: 200809101823.m8AIN7F3003584@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0858-01] Moderate: redhat-ds-base security and bug fix	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0858-01] Moderate: redhat-ds-base security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0858-01] Moderate: redhat-ds-base security and bug fix	update</li>
+<li><em>Date</em>: Wed, 10 Sep 2008 14:23:07 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: redhat-ds-base security and bug fix update
+Advisory ID:       RHSA-2008:0858-01
+Product:           Red Hat Enterprise IPA
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0858.html">https://rhn.redhat.com/errata/RHSA-2008-0858.html</a>
+Issue date:        2008-09-10
+CVE Names:         CVE-2008-2930 CVE-2008-3283 
+=====================================================================
+
+1. Summary:
+
+Updated redhat-ds-base packages are now available that fix security issues
+and various bugs for Red Hat Enterprise IPA.
+
+This update has been rated as having moderate security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat IPA 1 for RHEL 5 Server - i386, x86_64
+
+3. Description:
+
+Red Hat Directory Server is an LDAPv3-compliant directory server.
+
+Multiple memory leaks were identified in the Directory Server. An
+unauthenticated remote attacker could use these flaws to trigger high
+memory consumption in the Directory Server, possibly causing it to crash or
+terminate unexpectedly when the server ran out of available memory.
+(CVE-2008-3283)
+
+Ulf Weltman of Hewlett-Packard discovered a flaw in the way Directory
+Server handled LDAP search requests with patterns. A remote attacker with
+access to the LDAP service could create a search request that, when the
+search pattern was matched against specially crafted data records, caused
+Directory Server to use a large amount of CPU time. Directory Server did
+not impose time limits on such search requests. In this updated package,
+Directory Server imposes a configurable limit on the pattern-search query
+run time, with the default limit set to 30 seconds. (CVE-2008-2930)
+
+In addition to these security fixes, the following bugs have been fixed in
+these updated packages:
+
+* The change sequence numbers in multi-master replication had a built-in
+time skew to accommodate differences in the clocks on master servers. Under
+certain circumstances, this skew exceeded the maximum allowable skew,
+causing replication to stop entirely.
+ 
+* If an entry with a large attribute value, such as over 32KB, was
+replicated, the replication could fail with a DB_BUFFER_SMALL error. 
+
+* If a password policy attribute such as accountunlocktime was added to an
+entry, the server would attempt to replicate that attribute, causing
+replication to fail. 
+
+* In replication scenarios, if an attribute value was scheduled to be
+deleted and also was indexed or had an attribute subtype which was indexed,
+the Directory Server would crash during the index operation.
+
+* On x86_64 systems, recursively adding groups as members to other groups 
+could crash the server because the stack size for the memberOf plug-in on 
+64-bit systems was hard-coded to 256KB, regardless of the ulimit value.
+
+* A problem in the SASL IO handling meant that memory was not reallocated
+after SASL binds. For example, a simple bind coming immediately after a
+SASL bind might have failed.
+
+All users of Red Hat Directory Server 8.0 should upgrade to these updated
+packages, which resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+454065 - CVE-2008-2930 Directory Server: temporary DoS via crafted pattern searches
+458977 - CVE-2008-3283 Directory Server: multiple memory leaks
+
+6. Package List:
+
+Red Hat IPA 1 for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEIPA/SRPMS/redhat-ds-base-8.0.4-7.el5dsrv.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEIPA/SRPMS/redhat-ds-base-8.0.4-7.el5dsrv.src.rpm</a>
+
+i386:
+redhat-ds-base-8.0.4-7.el5dsrv.i386.rpm
+redhat-ds-base-debuginfo-8.0.4-7.el5dsrv.i386.rpm
+redhat-ds-base-devel-8.0.4-7.el5dsrv.i386.rpm
+
+x86_64:
+redhat-ds-base-8.0.4-7.el5dsrv.x86_64.rpm
+redhat-ds-base-debuginfo-8.0.4-7.el5dsrv.x86_64.rpm
+redhat-ds-base-devel-8.0.4-7.el5dsrv.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2930">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2930</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3283">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3283</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIyBB7XlSAg2UNWIIRAiy5AJ0V5vkKd0GSN12U9hyZ8DuYpEhFvgCfcplY
+EQm/p51ueJ+nF06D2+YEv1s=
+=sT9X
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

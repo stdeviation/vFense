@@ -1,0 +1,218 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0221&#45;04] Low: squid security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 30 Mar 2010 13:01:03 &#45;0400 -->
+<!--X-Message-Id: 201003301700.o2UH0viJ002868@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0221-04] Low: squid security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0221-04] Low: squid security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0221-04] Low: squid security and bug fix update</li>
+<li><em>Date</em>: Tue, 30 Mar 2010 13:00:57 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: squid security and bug fix update
+Advisory ID:       RHSA-2010:0221-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0221.html">https://rhn.redhat.com/errata/RHSA-2010-0221.html</a>
+Issue date:        2010-03-30
+CVE Names:         CVE-2009-2855 CVE-2010-0308 
+=====================================================================
+
+1. Summary:
+
+An updated squid package that fixes two security issues and several bugs is
+now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+Squid is a high-performance proxy caching server for web clients,
+supporting FTP, Gopher, and HTTP data objects.
+
+A flaw was found in the way Squid processed certain external ACL helper
+HTTP header fields that contained a delimiter that was not a comma. A
+remote attacker could issue a crafted request to the Squid server, causing
+excessive CPU use (up to 100%). (CVE-2009-2855)
+
+Note: The CVE-2009-2855 issue only affected non-default configurations that
+use an external ACL helper script.
+
+A flaw was found in the way Squid handled truncated DNS replies. A remote
+attacker able to send specially-crafted UDP packets to Squid's DNS client
+port could trigger an assertion failure in Squid's child process, causing
+that child process to exit. (CVE-2010-0308)
+
+This update also fixes the following bugs:
+
+* Squid's init script returns a non-zero value when trying to stop a
+stopped service. This is not LSB compliant and can generate difficulties in
+cluster environments. This update makes stopping LSB compliant. (BZ#521926)
+
+* Squid is not currently built to support MAC address filtering in ACLs.
+This update includes support for MAC address filtering. (BZ#496170)
+
+* Squid is not currently built to support Kerberos negotiate
+authentication. This update enables Kerberos authentication. (BZ#516245)
+
+* Squid does not include the port number as part of URIs it constructs when
+configured as an accelerator. This results in a 403 error. This update
+corrects this behavior. (BZ#538738)
+
+* the error_map feature does not work if the same handling is set also on
+the HTTP server that operates in deflate mode. This update fixes this
+issue. (BZ#470843)
+
+All users of squid should upgrade to this updated package, which resolves
+these issues. After installing this update, the squid service will be
+restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+496170 - Add arp filter option
+516245 - negotiate support not enabled in squid (for kerberized sso)
+518182 - CVE-2009-2855 DoS (100% CPU use) while processing certain external ACL helper HTTP headers
+521926 - squid 'stop after stop' is not LSB compliant
+538738 - Squid accelerator mode works only if port 80 is opened
+556389 - CVE-2010-0308 squid: temporary DoS (assertion failure) triggered by truncated DNS packet (SQUID-2010:1)
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/squid-2.6.STABLE21-6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/squid-2.6.STABLE21-6.el5.src.rpm</a>
+
+i386:
+squid-2.6.STABLE21-6.el5.i386.rpm
+squid-debuginfo-2.6.STABLE21-6.el5.i386.rpm
+
+x86_64:
+squid-2.6.STABLE21-6.el5.x86_64.rpm
+squid-debuginfo-2.6.STABLE21-6.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/squid-2.6.STABLE21-6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/squid-2.6.STABLE21-6.el5.src.rpm</a>
+
+i386:
+squid-2.6.STABLE21-6.el5.i386.rpm
+squid-debuginfo-2.6.STABLE21-6.el5.i386.rpm
+
+ia64:
+squid-2.6.STABLE21-6.el5.ia64.rpm
+squid-debuginfo-2.6.STABLE21-6.el5.ia64.rpm
+
+ppc:
+squid-2.6.STABLE21-6.el5.ppc.rpm
+squid-debuginfo-2.6.STABLE21-6.el5.ppc.rpm
+
+s390x:
+squid-2.6.STABLE21-6.el5.s390x.rpm
+squid-debuginfo-2.6.STABLE21-6.el5.s390x.rpm
+
+x86_64:
+squid-2.6.STABLE21-6.el5.x86_64.rpm
+squid-debuginfo-2.6.STABLE21-6.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2855.html">https://www.redhat.com/security/data/cve/CVE-2009-2855.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0308.html">https://www.redhat.com/security/data/cve/CVE-2010-0308.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLsi4bXlSAg2UNWIIRAvlyAJ9WvFarx8zhoLaZ8o5MPa6g7BBWlACgty4x
+cNJHsh6qrBPqWOCdJp8XtUM=
+=BJgW
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

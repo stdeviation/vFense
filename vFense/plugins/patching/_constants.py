@@ -36,7 +36,7 @@ class AppStatuses():
     PENDING = 'pending'
 
     @staticmethod
-    def get_valid_statuses():
+    def get_values():
         valid_statuses = (
             map(
                 lambda x:
@@ -112,47 +112,102 @@ class InstallDefaults():
     NET_THROTTLE = 0
 
 class AppDefaults():
-    REBOOT_REQUIRED = 'possible'
-    HIDDEN = 'no'
-    UPDATE = PackageCodes.ThisIsNotAnUpdate
-    DOWNLOAD_STATUS = PackageCodes.FileCompletedDownload
-    VFENSE_SEVERITY = 'Optional'
+    @staticmethod
+    def reboot_required():
+        return 'possible'
+
+    @staticmethod
+    def hidden():
+        return 'no'
+
+    @staticmethod
+    def update():
+        return PackageCodes.ThisIsNotAnUpdate
+
+    @staticmethod
+    def download_status():
+        return PackageCodes.FileCompletedDownload
+
+    @staticmethod
+    def vfense_severity():
+        return 'Optional'
+
+    @staticmethod
+    def vuln_categories():
+        return list()
+
+    @staticmethod
+    def vuln_id():
+        return str()
+
+    @staticmethod
+    def cve_ids():
+        return list()
+
+    @staticmethod
+    def dependencies():
+        return list()
+
+    @staticmethod
+    def views():
+        return list()
 
 class FileDefaults():
-    AGENT_IDS = []
-    APP_IDS = []
+    @staticmethod
+    def agent_ids():
+        return list()
+
+    @staticmethod
+    def app_ids():
+        return list()
 
 
-class PossibleRebootValues():
+class RebootValues():
     POSSIBLE = 'possible'
     NO = 'no'
     REQUIRED = 'required'
 
     @staticmethod
-    def get_reboot_values():
+    def get_values():
         valid_values = (
             map(
                 lambda x:
                 getattr(
-                    PossibleRebootValues, x),
-                dir(PossibleRebootValues)[:-3]
+                    RebootValues, x),
+                dir(RebootValues)[:-3]
             )
         )
         return valid_values
 
 
-class PossibleHiddenValues():
+class HiddenValues():
     YES = 'yes'
     NO = 'no'
 
     @staticmethod
-    def get_hidden_values():
+    def get_values():
         valid_values = (
             map(
                 lambda x:
                 getattr(
-                    PossibleHiddenValues, x),
-                dir(PossibleHiddenValues)[:-3]
+                    HiddenValues, x),
+                dir(HiddenValues)[:-3]
+            )
+        )
+        return valid_values
+
+class UninstallableValues():
+    YES = 'yes'
+    NO = 'no'
+
+    @staticmethod
+    def get_values():
+        valid_values = (
+            map(
+                lambda x:
+                getattr(
+                    UninstallableValues, x),
+                dir(UninstallableValues)[:-3]
             )
         )
         return valid_values

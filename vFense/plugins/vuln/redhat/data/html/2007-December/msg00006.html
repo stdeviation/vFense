@@ -1,0 +1,236 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1117&#45;01] Critical: samba security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 10 Dec 2007 13:30:25 &#45;0500 -->
+<!--X-Message-Id: 200712101830.lBAIUOeK006096@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1117-01] Critical: samba security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1117-01] Critical: samba security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1117-01] Critical: samba security update</li>
+<li><em>Date</em>: Mon, 10 Dec 2007 13:30:17 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: samba security update
+Advisory ID:       RHSA-2007:1117-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1117.html">https://rhn.redhat.com/errata/RHSA-2007-1117.html</a>
+Issue date:        2007-12-10
+Updated on:        2007-12-10
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-6015 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated samba packages that fix a security issue are now available for Red
+Hat Enterprise Linux 4.5 Extended Update Support.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4.5.z - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux ES version 4.5.z - i386, ia64, x86_64
+
+3. Problem description:
+
+Samba is a suite of programs used by machines to share files, printers, and
+other information.
+
+A stack buffer overflow flaw was found in the way Samba authenticates
+remote users. A remote unauthenticated user could trigger this flaw to
+cause the Samba server to crash, or execute arbitrary code with the
+permissions of the Samba server. (CVE-2007-6015)
+
+Red Hat would like to thank Alin Rad Pop of Secunia Research for
+responsibly disclosing this issue.
+
+Users of Samba are advised to upgrade to these updated packages, which
+contain a backported patch to resolve this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+396401 - CVE-2007-6015 samba: send_mailslot() buffer overflow
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS version 4.5.z:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/4AS-4.5.z/en/os/SRPMS/samba-3.0.10-2.el4_5.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/4AS-4.5.z/en/os/SRPMS/samba-3.0.10-2.el4_5.2.src.rpm</a>
+bd444386c67ac7144c57d1bf8e0df4db  samba-3.0.10-2.el4_5.2.src.rpm
+
+i386:
+68bd0ed7ea0a3eda6ba31054bd05df15  samba-3.0.10-2.el4_5.2.i386.rpm
+ab4f817962e1423511fd73bcf9d0291d  samba-client-3.0.10-2.el4_5.2.i386.rpm
+176b8d500ac0e0b32ec91815d5d48387  samba-common-3.0.10-2.el4_5.2.i386.rpm
+ce7814f3a1ba6acf678021834fb7cc3d  samba-debuginfo-3.0.10-2.el4_5.2.i386.rpm
+21ade3a16594b54b5e22f1571fc7bd1e  samba-swat-3.0.10-2.el4_5.2.i386.rpm
+
+ia64:
+95cf0f3a3b84329cbbdd627e4016139c  samba-3.0.10-2.el4_5.2.ia64.rpm
+498bdd8d0f4b8ef55062bb8ccb5bce67  samba-client-3.0.10-2.el4_5.2.ia64.rpm
+176b8d500ac0e0b32ec91815d5d48387  samba-common-3.0.10-2.el4_5.2.i386.rpm
+9e86c189a5a05e8d6d4ffd0d5d680039  samba-common-3.0.10-2.el4_5.2.ia64.rpm
+ce7814f3a1ba6acf678021834fb7cc3d  samba-debuginfo-3.0.10-2.el4_5.2.i386.rpm
+b95f0ae908d1a0f7e68dac8b26e253a6  samba-debuginfo-3.0.10-2.el4_5.2.ia64.rpm
+300a2404564f207f005cc44cc0605bbf  samba-swat-3.0.10-2.el4_5.2.ia64.rpm
+
+ppc:
+7427942413c4a5429dbf5178187f5d40  samba-3.0.10-2.el4_5.2.ppc.rpm
+913df2994bf1738000eb39035ccd88f7  samba-client-3.0.10-2.el4_5.2.ppc.rpm
+8b9d23e2e7930cb76350f0bcef823fa1  samba-common-3.0.10-2.el4_5.2.ppc.rpm
+afe0aafde8f9101f5f5be33a209d00b3  samba-common-3.0.10-2.el4_5.2.ppc64.rpm
+cc42be07f948c45985930fcc2e43bb6e  samba-debuginfo-3.0.10-2.el4_5.2.ppc.rpm
+b3cbafb998f0102f1ca6cfb30dbdc6e7  samba-debuginfo-3.0.10-2.el4_5.2.ppc64.rpm
+dfdd54785f0811c48aa5d2d72c1c50d2  samba-swat-3.0.10-2.el4_5.2.ppc.rpm
+
+s390:
+75d3cf814daf7c92e7fec4ef5ba9e41a  samba-3.0.10-2.el4_5.2.s390.rpm
+cb0f98695b6d5f8dc79b7d2b58cf0fbe  samba-client-3.0.10-2.el4_5.2.s390.rpm
+591d86cb399119291ded94edbfc4ecc2  samba-common-3.0.10-2.el4_5.2.s390.rpm
+0ec7186626901945f82409ea425c40d5  samba-debuginfo-3.0.10-2.el4_5.2.s390.rpm
+3fd1c77586c071209ff102b5d4b27d78  samba-swat-3.0.10-2.el4_5.2.s390.rpm
+
+s390x:
+c5294a17056d22515d9f07be5cacd9d5  samba-3.0.10-2.el4_5.2.s390x.rpm
+74c59956ebf28a5b03bd002e8e4a7a63  samba-client-3.0.10-2.el4_5.2.s390x.rpm
+591d86cb399119291ded94edbfc4ecc2  samba-common-3.0.10-2.el4_5.2.s390.rpm
+13fe64f043730e952d7fe657dfaf94f1  samba-common-3.0.10-2.el4_5.2.s390x.rpm
+0ec7186626901945f82409ea425c40d5  samba-debuginfo-3.0.10-2.el4_5.2.s390.rpm
+14ebe4be341686377690b47969beb7e1  samba-debuginfo-3.0.10-2.el4_5.2.s390x.rpm
+bb08947066e3e91bba9ae40de81b5945  samba-swat-3.0.10-2.el4_5.2.s390x.rpm
+
+x86_64:
+e30f7eeb3b1f81bd8f4455c91b54a82a  samba-3.0.10-2.el4_5.2.x86_64.rpm
+c7deff56c3bf23848565e3bd001f0f5d  samba-client-3.0.10-2.el4_5.2.x86_64.rpm
+176b8d500ac0e0b32ec91815d5d48387  samba-common-3.0.10-2.el4_5.2.i386.rpm
+e2d28bd3b89b7206204071672fd732e4  samba-common-3.0.10-2.el4_5.2.x86_64.rpm
+ce7814f3a1ba6acf678021834fb7cc3d  samba-debuginfo-3.0.10-2.el4_5.2.i386.rpm
+77eb0ea631192bd50bff5cec29f4c53a  samba-debuginfo-3.0.10-2.el4_5.2.x86_64.rpm
+df5f78c25b3e3ff0274ca059bf2a97da  samba-swat-3.0.10-2.el4_5.2.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4.5.z:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/4ES-4.5.z/en/os/SRPMS/samba-3.0.10-2.el4_5.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/4ES-4.5.z/en/os/SRPMS/samba-3.0.10-2.el4_5.2.src.rpm</a>
+bd444386c67ac7144c57d1bf8e0df4db  samba-3.0.10-2.el4_5.2.src.rpm
+
+i386:
+68bd0ed7ea0a3eda6ba31054bd05df15  samba-3.0.10-2.el4_5.2.i386.rpm
+ab4f817962e1423511fd73bcf9d0291d  samba-client-3.0.10-2.el4_5.2.i386.rpm
+176b8d500ac0e0b32ec91815d5d48387  samba-common-3.0.10-2.el4_5.2.i386.rpm
+ce7814f3a1ba6acf678021834fb7cc3d  samba-debuginfo-3.0.10-2.el4_5.2.i386.rpm
+21ade3a16594b54b5e22f1571fc7bd1e  samba-swat-3.0.10-2.el4_5.2.i386.rpm
+
+ia64:
+95cf0f3a3b84329cbbdd627e4016139c  samba-3.0.10-2.el4_5.2.ia64.rpm
+498bdd8d0f4b8ef55062bb8ccb5bce67  samba-client-3.0.10-2.el4_5.2.ia64.rpm
+176b8d500ac0e0b32ec91815d5d48387  samba-common-3.0.10-2.el4_5.2.i386.rpm
+9e86c189a5a05e8d6d4ffd0d5d680039  samba-common-3.0.10-2.el4_5.2.ia64.rpm
+ce7814f3a1ba6acf678021834fb7cc3d  samba-debuginfo-3.0.10-2.el4_5.2.i386.rpm
+b95f0ae908d1a0f7e68dac8b26e253a6  samba-debuginfo-3.0.10-2.el4_5.2.ia64.rpm
+300a2404564f207f005cc44cc0605bbf  samba-swat-3.0.10-2.el4_5.2.ia64.rpm
+
+x86_64:
+e30f7eeb3b1f81bd8f4455c91b54a82a  samba-3.0.10-2.el4_5.2.x86_64.rpm
+c7deff56c3bf23848565e3bd001f0f5d  samba-client-3.0.10-2.el4_5.2.x86_64.rpm
+176b8d500ac0e0b32ec91815d5d48387  samba-common-3.0.10-2.el4_5.2.i386.rpm
+e2d28bd3b89b7206204071672fd732e4  samba-common-3.0.10-2.el4_5.2.x86_64.rpm
+ce7814f3a1ba6acf678021834fb7cc3d  samba-debuginfo-3.0.10-2.el4_5.2.i386.rpm
+77eb0ea631192bd50bff5cec29f4c53a  samba-debuginfo-3.0.10-2.el4_5.2.x86_64.rpm
+df5f78c25b3e3ff0274ca059bf2a97da  samba-swat-3.0.10-2.el4_5.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6015">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6015</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHXYWvXlSAg2UNWIIRAi41AKC7DCxTI52D9+k7GwwfhcVA1ojT9gCfYAy9
+RRIy+IkmVtNUb6Z90j/N9xY=
+=TLBL
+-----END PGP SIGNATURE-----
+
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

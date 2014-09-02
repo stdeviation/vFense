@@ -6,8 +6,8 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
 from vFense.plugins.vuln.windows._db_model import (
-    WindowsSecurityCollection, WindowsSecurityBulletinKey,
-    WindowsSecurityBulletinIndexes
+    WindowsVulnerabilityCollections, WindowsVulnerabilityKeys,
+    WindowsVulnerabilityIndexes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -17,7 +17,7 @@ logger = logging.getLogger('cve')
 @time_it
 @db_create_close
 def fetch_vuln_ids(kb, conn=None):
-    """Retrieve Windows Bulletin IDS and CVE_IDS for an Application
+    """Retrieve Windows Vulnerabilities IDS and CVE_IDS for an Application
     Args:
         kb (str): The KB number of the application (KB980436)
 
@@ -40,11 +40,11 @@ def fetch_vuln_ids(kb, conn=None):
     try:
         data = list(
             r
-            .table(WindowsSecurityCollection.Bulletin)
-            .get_all(kb, index=WindowsSecurityBulletinIndexes.ComponentKb)
+            .table(WindowsVulnerabilityCollections.Vulnerabilities)
+            .get_all(kb, index=WindowsVulnerabilityIndexes.ComponentKb)
             .pluck(
-                WindowsSecurityBulletinKey.BulletinId,
-                WindowsSecurityBulletinKey.CveIds
+                WindowsVulnerabilityKeys.VulnerabilitiesId,
+                WindowsVulnerabilityKeys.CveIds
             )
             .run(conn)
         )
@@ -57,7 +57,7 @@ def fetch_vuln_ids(kb, conn=None):
 @time_it
 @db_create_close
 def fetch_vuln_data(vuln_id, conn=None):
-    """Retrieve Windows Bulletin data for an Application by bulletin id.
+    """Retrieve Windows Vulnerabilities data for an Application by bulletin id.
     Args:
         vuln_id (str): The vulnerability id aka (MS10-049)
 
@@ -87,25 +87,25 @@ def fetch_vuln_data(vuln_id, conn=None):
     data = []
     map_hash = (
         {
-            WindowsSecurityBulletinKey.Id:
-                r.row[WindowsSecurityBulletinKey.Id],
-            WindowsSecurityBulletinKey.BulletinId:
-                r.row[WindowsSecurityBulletinKey.BulletinId],
-            WindowsSecurityBulletinKey.DatePosted:
-                r.row[WindowsSecurityBulletinKey.DatePosted].to_epoch_time(),
-            WindowsSecurityBulletinKey.Details:
-                r.row[WindowsSecurityBulletinKey.Details],
-            WindowsSecurityBulletinKey.CveIds:
-                r.row[WindowsSecurityBulletinKey.CveIds],
-            WindowsSecurityBulletinKey.Supersedes:
-                r.row[WindowsSecurityBulletinKey.Supersedes],
+            WindowsVulnerabilityKeys.Id:
+                r.row[WindowsVulnerabilityKeys.Id],
+            WindowsVulnerabilityKeys.VulnerabilitiesId:
+                r.row[WindowsVulnerabilityKeys.VulnerabilitiesId],
+            WindowsVulnerabilityKeys.DatePosted:
+                r.row[WindowsVulnerabilityKeys.DatePosted].to_epoch_time(),
+            WindowsVulnerabilityKeys.Details:
+                r.row[WindowsVulnerabilityKeys.Details],
+            WindowsVulnerabilityKeys.CveIds:
+                r.row[WindowsVulnerabilityKeys.CveIds],
+            WindowsVulnerabilityKeys.Supersedes:
+                r.row[WindowsVulnerabilityKeys.Supersedes],
         }
     )
     try:
         data = list(
             r
-            .table(WindowsSecurityCollection.Bulletin)
-            .get_all(vuln_id, index=WindowsSecurityBulletinIndexes.BulletinId)
+            .table(WindowsVulnerabilityCollections.Vulnerabilities)
+            .get_all(vuln_id, index=WindowsVulnerabilityIndexes.VulnerabilitiesId)
             .map(map_hash)
             .run(conn)
         )
@@ -120,7 +120,7 @@ def fetch_vuln_data(vuln_id, conn=None):
 @db_create_close
 @return_status_tuple
 def insert_bulletin_data(bulletin_data, conn=None):
-    """Insert Windows Bulletin data into the Windows Security Bulletin
+    """Insert Windows Vulnerabilities data into the Windows Security Vulnerabilities
     Collection.
 
         DO NOT CALL DIRECTLY
@@ -140,7 +140,7 @@ def insert_bulletin_data(bulletin_data, conn=None):
     try:
         data = (
             r
-            .table(WindowsSecurityCollection.Bulletin)
+            .table(WindowsVulnerabilityCollections.Vulnerabilities)
             .insert(bulletin_data, upsert=True)
             .run(conn)
         )

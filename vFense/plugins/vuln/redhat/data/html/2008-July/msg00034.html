@@ -1,0 +1,346 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0768&#45;01] Moderate: mysql security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 24 Jul 2008 13:31:56 &#45;0400 -->
+<!--X-Message-Id: 200807241731.m6OHVtg2022830@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0768-01] Moderate: mysql security, bug fix,	and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0768-01] Moderate: mysql security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0768-01] Moderate: mysql security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 24 Jul 2008 13:31:55 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: mysql security, bug fix, and enhancement update
+Advisory ID:       RHSA-2008:0768-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0768.html">https://rhn.redhat.com/errata/RHSA-2008-0768.html</a>
+Issue date:        2008-07-24
+CVE Names:         CVE-2006-3469 CVE-2006-4031 CVE-2007-2691 
+                   CVE-2008-2079 
+=====================================================================
+
+1. Summary:
+
+Updated mysql packages that fix various security issues, several bugs, and
+add an enhancement are now available for Red Hat Enterprise Linux 4.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+MySQL is a multi-user, multi-threaded SQL database server. MySQL is a
+client/server implementation consisting of a server daemon (mysqld), and
+many different client programs and libraries.
+
+MySQL did not correctly check directories used as arguments for the DATA
+DIRECTORY and INDEX DIRECTORY directives. Using this flaw, an authenticated
+attacker could elevate their access privileges to tables created by other
+database users. Note: this attack does not work on existing tables. An
+attacker can only elevate their access to another user's tables as the
+tables are created. As well, the names of these created tables need to be
+predicted correctly for this attack to succeed. (CVE-2008-2079)
+
+MySQL did not require the &quot;DROP&quot; privilege for &quot;RENAME TABLE&quot; statements.
+An authenticated user could use this flaw to rename arbitrary tables.
+(CVE-2007-2691)
+
+MySQL allowed an authenticated user to access a table through a previously
+created MERGE table, even after the user's privileges were revoked from the
+original table, which might violate intended security policy. This is
+addressed by allowing the MERGE storage engine to be disabled, which can be
+done by running mysqld with the &quot;--skip-merge&quot; option. (CVE-2006-4031)
+
+A flaw in MySQL allowed an authenticated user to cause the MySQL daemon to
+crash via crafted SQL queries. This only caused a temporary denial of
+service, as the MySQL daemon is automatically restarted after the crash.
+(CVE-2006-3469)
+
+As well, these updated packages fix the following bugs:
+
+* in the previous mysql packages, if a column name was referenced more
+than once in an &quot;ORDER BY&quot; section of a query, a segmentation fault
+occurred.
+
+* when MySQL failed to start, the init script returned a successful (0)
+exit code. When using the Red Hat Cluster Suite, this may have caused
+cluster services to report a successful start, even when MySQL failed to
+start. In these updated packages, the init script returns the correct exit
+codes, which resolves this issue.
+
+* it was possible to use the mysqld_safe command to specify invalid port
+numbers (higher than 65536), causing invalid ports to be created, and, in
+some cases, a &quot;port number definition: unsigned short&quot; error. In these
+updated packages, when an invalid port number is specified, the default
+port number is used.
+
+* when setting &quot;myisam_repair_threads &gt; 1&quot;, any repair set the index
+cardinality to &quot;1&quot;, regardless of the table size.
+
+* the MySQL init script no longer runs &quot;chmod -R&quot; on the entire database
+directory tree during every startup.
+
+* when running &quot;mysqldump&quot; with the MySQL 4.0 compatibility mode option,
+&quot;--compatible=mysql40&quot;, mysqldump created dumps that omitted the
+&quot;auto_increment&quot; field.
+
+As well, the MySQL init script now uses more reliable methods for
+determining parameters, such as the data directory location.
+
+Note: these updated packages upgrade MySQL to version 4.1.22. For a full
+list of bug fixes and enhancements, refer to the MySQL release notes:
+<a  rel="nofollow" href="http://dev.mysql.com/doc/refman/4.1/en/news-4-1-22.html">http://dev.mysql.com/doc/refman/4.1/en/news-4-1-22.html</a>
+
+All mysql users are advised to upgrade to these updated packages, which
+resolve these issues and add this enhancement.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+201904 - CVE-2006-3469 mysql server DoS
+201988 - Queries using a column name multiple times in ORDER BY crash mysql
+202246 - CVE-2006-4031 MySQL improper permission revocation
+221085 - chown -R of the mysql data directory every startup
+233771 - RFE+patch: MySQLd &quot;init.d&quot; startup script should rely on &quot;/usr/bin/my_print_defaults&quot; to get at options
+241688 - CVE-2007-2691 mysql DROP privilege not enforced when renaming tables
+445222 - CVE-2008-2079 mysql: privilege escalation via DATA/INDEX DIRECTORY directives
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/mysql-4.1.22-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/mysql-4.1.22-2.el4.src.rpm</a>
+
+i386:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-bench-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-devel-4.1.22-2.el4.i386.rpm
+mysql-server-4.1.22-2.el4.i386.rpm
+
+ia64:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-4.1.22-2.el4.ia64.rpm
+mysql-bench-4.1.22-2.el4.ia64.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.ia64.rpm
+mysql-devel-4.1.22-2.el4.ia64.rpm
+mysql-server-4.1.22-2.el4.ia64.rpm
+
+ppc:
+mysql-4.1.22-2.el4.ppc.rpm
+mysql-4.1.22-2.el4.ppc64.rpm
+mysql-bench-4.1.22-2.el4.ppc.rpm
+mysql-debuginfo-4.1.22-2.el4.ppc.rpm
+mysql-debuginfo-4.1.22-2.el4.ppc64.rpm
+mysql-devel-4.1.22-2.el4.ppc.rpm
+mysql-server-4.1.22-2.el4.ppc.rpm
+
+s390:
+mysql-4.1.22-2.el4.s390.rpm
+mysql-bench-4.1.22-2.el4.s390.rpm
+mysql-debuginfo-4.1.22-2.el4.s390.rpm
+mysql-devel-4.1.22-2.el4.s390.rpm
+mysql-server-4.1.22-2.el4.s390.rpm
+
+s390x:
+mysql-4.1.22-2.el4.s390.rpm
+mysql-4.1.22-2.el4.s390x.rpm
+mysql-bench-4.1.22-2.el4.s390x.rpm
+mysql-debuginfo-4.1.22-2.el4.s390.rpm
+mysql-debuginfo-4.1.22-2.el4.s390x.rpm
+mysql-devel-4.1.22-2.el4.s390x.rpm
+mysql-server-4.1.22-2.el4.s390x.rpm
+
+x86_64:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-4.1.22-2.el4.x86_64.rpm
+mysql-bench-4.1.22-2.el4.x86_64.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.x86_64.rpm
+mysql-devel-4.1.22-2.el4.x86_64.rpm
+mysql-server-4.1.22-2.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/mysql-4.1.22-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/mysql-4.1.22-2.el4.src.rpm</a>
+
+i386:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-bench-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-devel-4.1.22-2.el4.i386.rpm
+mysql-server-4.1.22-2.el4.i386.rpm
+
+x86_64:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-4.1.22-2.el4.x86_64.rpm
+mysql-bench-4.1.22-2.el4.x86_64.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.x86_64.rpm
+mysql-devel-4.1.22-2.el4.x86_64.rpm
+mysql-server-4.1.22-2.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/mysql-4.1.22-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/mysql-4.1.22-2.el4.src.rpm</a>
+
+i386:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-bench-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-devel-4.1.22-2.el4.i386.rpm
+mysql-server-4.1.22-2.el4.i386.rpm
+
+ia64:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-4.1.22-2.el4.ia64.rpm
+mysql-bench-4.1.22-2.el4.ia64.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.ia64.rpm
+mysql-devel-4.1.22-2.el4.ia64.rpm
+mysql-server-4.1.22-2.el4.ia64.rpm
+
+x86_64:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-4.1.22-2.el4.x86_64.rpm
+mysql-bench-4.1.22-2.el4.x86_64.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.x86_64.rpm
+mysql-devel-4.1.22-2.el4.x86_64.rpm
+mysql-server-4.1.22-2.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/mysql-4.1.22-2.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/mysql-4.1.22-2.el4.src.rpm</a>
+
+i386:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-bench-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-devel-4.1.22-2.el4.i386.rpm
+mysql-server-4.1.22-2.el4.i386.rpm
+
+ia64:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-4.1.22-2.el4.ia64.rpm
+mysql-bench-4.1.22-2.el4.ia64.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.ia64.rpm
+mysql-devel-4.1.22-2.el4.ia64.rpm
+mysql-server-4.1.22-2.el4.ia64.rpm
+
+x86_64:
+mysql-4.1.22-2.el4.i386.rpm
+mysql-4.1.22-2.el4.x86_64.rpm
+mysql-bench-4.1.22-2.el4.x86_64.rpm
+mysql-debuginfo-4.1.22-2.el4.i386.rpm
+mysql-debuginfo-4.1.22-2.el4.x86_64.rpm
+mysql-devel-4.1.22-2.el4.x86_64.rpm
+mysql-server-4.1.22-2.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-3469">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-3469</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4031">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4031</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2691">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2691</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2079">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2079</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIiLyJXlSAg2UNWIIRArBHAKC62RfDzLo5S34aHextiX0mpiZTMQCfVpG3
+ZtbcR3clj+yx6AKQ2sND3rQ=
+=aUwH
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

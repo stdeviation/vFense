@@ -1,0 +1,304 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0128&#45;01] Moderate: httpd security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 13 Feb 2012 15:40:05 &#45;0500 -->
+<!--X-Message-Id: 201202132039.q1DKdxQw031765@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0128-01] Moderate: httpd security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00028.html">Date Prev</a>][<a href="msg00030.html">Date Next</a>] &nbsp; [<a href="msg00028.html">Thread Prev</a>][<a href="msg00030.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00029">Thread Index</A>]
+[<A HREF="date.html#00029">Date Index</A>]
+[<A HREF="author.html#00029">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0128-01] Moderate: httpd security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0128-01] Moderate: httpd security update</li>
+<li><em>Date</em>: Mon, 13 Feb 2012 20:39:57 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: httpd security update
+Advisory ID:       RHSA-2012:0128-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0128.html">https://rhn.redhat.com/errata/RHSA-2012-0128.html</a>
+Issue date:        2012-02-13
+CVE Names:         CVE-2011-3607 CVE-2011-3639 CVE-2011-4317 
+                   CVE-2012-0031 CVE-2012-0053 
+=====================================================================
+
+1. Summary:
+
+Updated httpd packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+The Apache HTTP Server is a popular web server.
+
+It was discovered that the fix for CVE-2011-3368 (released via
+RHSA-2011:1391) did not completely address the problem. An attacker could
+bypass the fix and make a reverse proxy connect to an arbitrary server not
+directly accessible to the attacker by sending an HTTP version 0.9 request,
+or by using a specially-crafted URI. (CVE-2011-3639, CVE-2011-4317)
+
+The httpd server included the full HTTP header line in the default error
+page generated when receiving an excessively long or malformed header.
+Malicious JavaScript running in the server's domain context could use this
+flaw to gain access to httpOnly cookies. (CVE-2012-0053)
+
+An integer overflow flaw, leading to a heap-based buffer overflow, was
+found in the way httpd performed substitutions in regular expressions. An
+attacker able to set certain httpd settings, such as a user permitted to
+override the httpd configuration for a specific directory using a
+&quot;.htaccess&quot; file, could use this flaw to crash the httpd child process or,
+possibly, execute arbitrary code with the privileges of the &quot;apache&quot; user.
+(CVE-2011-3607)
+
+A flaw was found in the way httpd handled child process status information.
+A malicious program running with httpd child process privileges (such as a
+PHP or CGI script) could use this flaw to cause the parent httpd process to
+crash during httpd service shutdown. (CVE-2012-0031)
+
+All httpd users should upgrade to these updated packages, which contain
+backported patches to correct these issues. After installing the updated
+packages, the httpd daemon will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+752080 - CVE-2011-3639 httpd: http 0.9 request bypass of the reverse proxy vulnerability CVE-2011-3368 fix
+756483 - CVE-2011-4317 httpd: uri scheme bypass of the reverse proxy vulnerability CVE-2011-3368 fix
+769844 - CVE-2011-3607 httpd: ap_pregsub Integer overflow to buffer overflow
+773744 - CVE-2012-0031 httpd: possible crash on shutdown due to flaw in scoreboard handling
+785069 - CVE-2012-0053 httpd: cookie exposure due to error responses
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm</a>
+
+i386:
+httpd-2.2.15-15.el6_2.1.i686.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.i686.rpm
+httpd-tools-2.2.15-15.el6_2.1.i686.rpm
+
+x86_64:
+httpd-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-tools-2.2.15-15.el6_2.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm</a>
+
+i386:
+httpd-debuginfo-2.2.15-15.el6_2.1.i686.rpm
+httpd-devel-2.2.15-15.el6_2.1.i686.rpm
+mod_ssl-2.2.15-15.el6_2.1.i686.rpm
+
+noarch:
+httpd-manual-2.2.15-15.el6_2.1.noarch.rpm
+
+x86_64:
+httpd-debuginfo-2.2.15-15.el6_2.1.i686.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-devel-2.2.15-15.el6_2.1.i686.rpm
+httpd-devel-2.2.15-15.el6_2.1.x86_64.rpm
+mod_ssl-2.2.15-15.el6_2.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm</a>
+
+x86_64:
+httpd-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-tools-2.2.15-15.el6_2.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm</a>
+
+noarch:
+httpd-manual-2.2.15-15.el6_2.1.noarch.rpm
+
+x86_64:
+httpd-debuginfo-2.2.15-15.el6_2.1.i686.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-devel-2.2.15-15.el6_2.1.i686.rpm
+httpd-devel-2.2.15-15.el6_2.1.x86_64.rpm
+mod_ssl-2.2.15-15.el6_2.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm</a>
+
+i386:
+httpd-2.2.15-15.el6_2.1.i686.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.i686.rpm
+httpd-devel-2.2.15-15.el6_2.1.i686.rpm
+httpd-tools-2.2.15-15.el6_2.1.i686.rpm
+mod_ssl-2.2.15-15.el6_2.1.i686.rpm
+
+noarch:
+httpd-manual-2.2.15-15.el6_2.1.noarch.rpm
+
+ppc64:
+httpd-2.2.15-15.el6_2.1.ppc64.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.ppc.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.ppc64.rpm
+httpd-devel-2.2.15-15.el6_2.1.ppc.rpm
+httpd-devel-2.2.15-15.el6_2.1.ppc64.rpm
+httpd-tools-2.2.15-15.el6_2.1.ppc64.rpm
+mod_ssl-2.2.15-15.el6_2.1.ppc64.rpm
+
+s390x:
+httpd-2.2.15-15.el6_2.1.s390x.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.s390.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.s390x.rpm
+httpd-devel-2.2.15-15.el6_2.1.s390.rpm
+httpd-devel-2.2.15-15.el6_2.1.s390x.rpm
+httpd-tools-2.2.15-15.el6_2.1.s390x.rpm
+mod_ssl-2.2.15-15.el6_2.1.s390x.rpm
+
+x86_64:
+httpd-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.i686.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-devel-2.2.15-15.el6_2.1.i686.rpm
+httpd-devel-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-tools-2.2.15-15.el6_2.1.x86_64.rpm
+mod_ssl-2.2.15-15.el6_2.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/httpd-2.2.15-15.el6_2.1.src.rpm</a>
+
+i386:
+httpd-2.2.15-15.el6_2.1.i686.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.i686.rpm
+httpd-devel-2.2.15-15.el6_2.1.i686.rpm
+httpd-tools-2.2.15-15.el6_2.1.i686.rpm
+mod_ssl-2.2.15-15.el6_2.1.i686.rpm
+
+noarch:
+httpd-manual-2.2.15-15.el6_2.1.noarch.rpm
+
+x86_64:
+httpd-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.i686.rpm
+httpd-debuginfo-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-devel-2.2.15-15.el6_2.1.i686.rpm
+httpd-devel-2.2.15-15.el6_2.1.x86_64.rpm
+httpd-tools-2.2.15-15.el6_2.1.x86_64.rpm
+mod_ssl-2.2.15-15.el6_2.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3607.html">https://www.redhat.com/security/data/cve/CVE-2011-3607.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3639.html">https://www.redhat.com/security/data/cve/CVE-2011-3639.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4317.html">https://www.redhat.com/security/data/cve/CVE-2011-4317.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0031.html">https://www.redhat.com/security/data/cve/CVE-2012-0031.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0053.html">https://www.redhat.com/security/data/cve/CVE-2012-0053.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1391.html">https://rhn.redhat.com/errata/RHSA-2011-1391.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPOXUIXlSAg2UNWIIRAg4AAJ9vTPttyKrbHbaSV7xCAzG89ytZgACfTSq+
+HOLS5+cKusdo+jUiYKIV4mw=
+=fM2U
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00028.html">Date Prev</a>][<a href="msg00030.html">Date Next</a>] &nbsp; [<a href="msg00028.html">Thread Prev</a>][<a href="msg00030.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00029">Thread Index</A>]
+[<A HREF="date.html#00029">Date Index</A>]
+[<A HREF="author.html#00029">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

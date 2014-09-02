@@ -1,0 +1,298 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0260&#45;01] Low: python security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 16 Feb 2011 10:36:30 &#45;0500 -->
+<!--X-Message-Id: 201102161536.p1GFaOUb020096@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0260-01] Low: python security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0260-01] Low: python security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0260-01] Low: python security and bug fix update</li>
+<li><em>Date</em>: Wed, 16 Feb 2011 10:36:07 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: python security and bug fix update
+Advisory ID:       RHSA-2011:0260-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0260.html">https://rhn.redhat.com/errata/RHSA-2011-0260.html</a>
+Issue date:        2011-02-16
+CVE Names:         CVE-2009-4134 CVE-2010-1449 CVE-2010-1450 
+=====================================================================
+
+1. Summary:
+
+Updated python packages that fix multiple security issues and three bugs
+are now available for Red Hat Enterprise Linux 4.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+Python is an interpreted, interactive, object-oriented programming
+language.
+
+Multiple flaws were found in the Python rgbimg module. If an application
+written in Python was using the rgbimg module and loaded a
+specially-crafted SGI image file, it could cause the application to crash
+or, possibly, execute arbitrary code with the privileges of the user
+running the application. (CVE-2009-4134, CVE-2010-1449, CVE-2010-1450)
+
+This update also fixes the following bugs:
+
+* Python 2.3.4's time.strptime() function did not correctly handle the &quot;%W&quot;
+week number format string. This update backports the _strptime
+implementation from Python 2.3.6, fixing this issue. (BZ#436001)
+
+* Python 2.3.4's socket.htons() function returned partially-uninitialized
+data on IBM System z, generally leading to incorrect results. (BZ#513341)
+
+* Python 2.3.4's pwd.getpwuid() and grp.getgrgid() functions did not
+support the full range of user and group IDs on 64-bit architectures,
+leading to &quot;OverflowError&quot; exceptions for large input values. This update
+adds support for the full range of user and group IDs on 64-bit
+architectures. (BZ#497540)
+
+Users of Python should upgrade to these updated packages, which contain
+backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+497540 - grp module does not support whole uid/gid range
+541698 - CVE-2009-4134 CVE-2010-1449 CVE-2010-1450 python: rgbimg: multiple security issues
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/python-2.3.4-14.9.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/python-2.3.4-14.9.el4.src.rpm</a>
+
+i386:
+python-2.3.4-14.9.el4.i386.rpm
+python-debuginfo-2.3.4-14.9.el4.i386.rpm
+python-devel-2.3.4-14.9.el4.i386.rpm
+python-docs-2.3.4-14.9.el4.i386.rpm
+python-tools-2.3.4-14.9.el4.i386.rpm
+tkinter-2.3.4-14.9.el4.i386.rpm
+
+ia64:
+python-2.3.4-14.9.el4.ia64.rpm
+python-debuginfo-2.3.4-14.9.el4.ia64.rpm
+python-devel-2.3.4-14.9.el4.ia64.rpm
+python-docs-2.3.4-14.9.el4.ia64.rpm
+python-tools-2.3.4-14.9.el4.ia64.rpm
+tkinter-2.3.4-14.9.el4.ia64.rpm
+
+ppc:
+python-2.3.4-14.9.el4.ppc.rpm
+python-debuginfo-2.3.4-14.9.el4.ppc.rpm
+python-devel-2.3.4-14.9.el4.ppc.rpm
+python-docs-2.3.4-14.9.el4.ppc.rpm
+python-tools-2.3.4-14.9.el4.ppc.rpm
+tkinter-2.3.4-14.9.el4.ppc.rpm
+
+s390:
+python-2.3.4-14.9.el4.s390.rpm
+python-debuginfo-2.3.4-14.9.el4.s390.rpm
+python-devel-2.3.4-14.9.el4.s390.rpm
+python-docs-2.3.4-14.9.el4.s390.rpm
+python-tools-2.3.4-14.9.el4.s390.rpm
+tkinter-2.3.4-14.9.el4.s390.rpm
+
+s390x:
+python-2.3.4-14.9.el4.s390x.rpm
+python-debuginfo-2.3.4-14.9.el4.s390x.rpm
+python-devel-2.3.4-14.9.el4.s390x.rpm
+python-docs-2.3.4-14.9.el4.s390x.rpm
+python-tools-2.3.4-14.9.el4.s390x.rpm
+tkinter-2.3.4-14.9.el4.s390x.rpm
+
+x86_64:
+python-2.3.4-14.9.el4.x86_64.rpm
+python-debuginfo-2.3.4-14.9.el4.x86_64.rpm
+python-devel-2.3.4-14.9.el4.x86_64.rpm
+python-docs-2.3.4-14.9.el4.x86_64.rpm
+python-tools-2.3.4-14.9.el4.x86_64.rpm
+tkinter-2.3.4-14.9.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/python-2.3.4-14.9.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/python-2.3.4-14.9.el4.src.rpm</a>
+
+i386:
+python-2.3.4-14.9.el4.i386.rpm
+python-debuginfo-2.3.4-14.9.el4.i386.rpm
+python-devel-2.3.4-14.9.el4.i386.rpm
+python-docs-2.3.4-14.9.el4.i386.rpm
+python-tools-2.3.4-14.9.el4.i386.rpm
+tkinter-2.3.4-14.9.el4.i386.rpm
+
+x86_64:
+python-2.3.4-14.9.el4.x86_64.rpm
+python-debuginfo-2.3.4-14.9.el4.x86_64.rpm
+python-devel-2.3.4-14.9.el4.x86_64.rpm
+python-docs-2.3.4-14.9.el4.x86_64.rpm
+python-tools-2.3.4-14.9.el4.x86_64.rpm
+tkinter-2.3.4-14.9.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/python-2.3.4-14.9.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/python-2.3.4-14.9.el4.src.rpm</a>
+
+i386:
+python-2.3.4-14.9.el4.i386.rpm
+python-debuginfo-2.3.4-14.9.el4.i386.rpm
+python-devel-2.3.4-14.9.el4.i386.rpm
+python-docs-2.3.4-14.9.el4.i386.rpm
+python-tools-2.3.4-14.9.el4.i386.rpm
+tkinter-2.3.4-14.9.el4.i386.rpm
+
+ia64:
+python-2.3.4-14.9.el4.ia64.rpm
+python-debuginfo-2.3.4-14.9.el4.ia64.rpm
+python-devel-2.3.4-14.9.el4.ia64.rpm
+python-docs-2.3.4-14.9.el4.ia64.rpm
+python-tools-2.3.4-14.9.el4.ia64.rpm
+tkinter-2.3.4-14.9.el4.ia64.rpm
+
+x86_64:
+python-2.3.4-14.9.el4.x86_64.rpm
+python-debuginfo-2.3.4-14.9.el4.x86_64.rpm
+python-devel-2.3.4-14.9.el4.x86_64.rpm
+python-docs-2.3.4-14.9.el4.x86_64.rpm
+python-tools-2.3.4-14.9.el4.x86_64.rpm
+tkinter-2.3.4-14.9.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/python-2.3.4-14.9.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/python-2.3.4-14.9.el4.src.rpm</a>
+
+i386:
+python-2.3.4-14.9.el4.i386.rpm
+python-debuginfo-2.3.4-14.9.el4.i386.rpm
+python-devel-2.3.4-14.9.el4.i386.rpm
+python-docs-2.3.4-14.9.el4.i386.rpm
+python-tools-2.3.4-14.9.el4.i386.rpm
+tkinter-2.3.4-14.9.el4.i386.rpm
+
+ia64:
+python-2.3.4-14.9.el4.ia64.rpm
+python-debuginfo-2.3.4-14.9.el4.ia64.rpm
+python-devel-2.3.4-14.9.el4.ia64.rpm
+python-docs-2.3.4-14.9.el4.ia64.rpm
+python-tools-2.3.4-14.9.el4.ia64.rpm
+tkinter-2.3.4-14.9.el4.ia64.rpm
+
+x86_64:
+python-2.3.4-14.9.el4.x86_64.rpm
+python-debuginfo-2.3.4-14.9.el4.x86_64.rpm
+python-devel-2.3.4-14.9.el4.x86_64.rpm
+python-docs-2.3.4-14.9.el4.x86_64.rpm
+python-tools-2.3.4-14.9.el4.x86_64.rpm
+tkinter-2.3.4-14.9.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4134.html">https://www.redhat.com/security/data/cve/CVE-2009-4134.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1449.html">https://www.redhat.com/security/data/cve/CVE-2010-1449.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1450.html">https://www.redhat.com/security/data/cve/CVE-2010-1450.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNW+4GXlSAg2UNWIIRAp4eAKCby8RkLfj9EfGCzjBB5lEJcmKpXwCfUsqb
+Gvw0YLxN5Snhin3dlt6XsI4=
+=xcOn
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

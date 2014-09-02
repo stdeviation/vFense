@@ -1,0 +1,251 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0061&#45;02] Moderate: setroubleshoot security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 21 May 2008 10:28:24 &#45;0400 -->
+<!--X-Message-Id: 200805211428.m4LESNuh029997@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0061-02] Moderate: setroubleshoot security and bug fix	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0061-02] Moderate: setroubleshoot security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0061-02] Moderate: setroubleshoot security and bug fix	update</li>
+<li><em>Date</em>: Wed, 21 May 2008 10:28:23 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: setroubleshoot security and bug fix update
+Advisory ID:       RHSA-2008:0061-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0061.html">https://rhn.redhat.com/errata/RHSA-2008-0061.html</a>
+Issue date:        2008-05-20
+Updated on:        2008-05-21
+CVE Names:         CVE-2007-5495 CVE-2007-5496 
+=====================================================================
+
+1. Summary:
+
+Updated setroubleshoot packages that fix two security issues and several
+bugs are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - noarch
+Red Hat Enterprise Linux (v. 5 server) - noarch
+
+3. Description:
+
+The setroubleshoot packages provide tools to help diagnose SELinux
+problems. When AVC messages occur, an alert is generated that gives
+information about the problem, and how to create a resolution.
+
+A flaw was found in the way sealert wrote diagnostic messages to a
+temporary file. A local unprivileged user could perform a symbolic link
+attack, and cause arbitrary files, writable by other users, to be
+overwritten when a victim runs sealert. (CVE-2007-5495)
+
+A flaw was found in the way sealert displayed records from the
+setroubleshoot database as unescaped HTML. An local unprivileged attacker
+could cause AVC denial events with carefully crafted process or file names,
+injecting arbitrary HTML tags into the logs, which could be used as a
+scripting attack, or to confuse the user running sealert. (CVE-2007-5496)
+
+Additionally, the following bugs have been fixed in these update packages:
+
+* in certain situations, the sealert process used excessive CPU. These
+alerts are now capped at a maximum of 30, D-Bus is used instead of polling,
+threads causing excessive wake-up have been removed, and more robust
+exception-handling has been added.
+
+* different combinations of the sealert '-a', '-l', '-H', and '-v' options
+did not work as documented.
+
+* the SETroubleShoot browser did not allow multiple entries to be deleted. 
+
+* the SETroubleShoot browser did not display statements that displayed
+whether SELinux was using Enforcing or Permissive mode, particularly when
+warning about SELinux preventions.
+
+* in certain cases, the SETroubleShoot browser gave incorrect instructions
+regarding paths, and would not display the full paths to files.
+
+* adding an email recipient to the recipients option from the
+/etc/setroubleshoot/setroubleshoot.cfg file and then generating an SELinux
+denial caused a traceback error. The recipients option has been removed;
+email addresses are now managed through the SETroubleShoot browser by
+navigating to File -&gt; Edit Email Alert List, or by editing the
+/var/lib/setroubleshoot/email_alert_recipients file.
+
+* the setroubleshoot browser incorrectly displayed a period between the
+httpd_sys_content_t context and the directory path.
+
+* on the PowerPC architecture, The get_credentials() function in
+access_control.py would generate an exception when it called the
+socket.getsockopt() function.
+
+* The code which handles path information has been completely rewritten so
+that assumptions on path information which were misleading are no longer
+made. If the path information is not present, it will be presented as
+&quot;&lt;Unknown&gt;&quot;.
+
+* setroubleshoot had problems with non-English locales under certain
+circumstances, possibly causing a python traceback, an sealert window
+pop-up containing an error, a &quot;RuntimeError: maximum recursion depth
+exceeded&quot; error after a traceback, or a &quot;UnicodeEncodeError&quot; after a traceback.
+
+* sealert ran even when SELinux was disabled, causing &quot;attempt to open
+server connection failed&quot; errors. Sealert now checks whether SELinux is
+enabled or disabled.
+
+* the database setroubleshoot maintains was world-readable. The
+setroubleshoot database is now mode 600, and is owned by the root user and
+group.
+
+* setroubleshoot did not validate requests to set AVC filtering options for
+users. In these updated packages, checks ensure that requests originate
+from the filter owner.
+
+* the previous setroubleshoot packages required a number of GNOME packages
+and libraries. setroubleshoot has therefore been split into 2 packages:
+setroubleshoot and setroubleshoot-server.
+
+* a bug in decoding the audit field caused an &quot;Input is not proper UTF-8,
+indicate encoding!&quot; error message. The decoding code has been rewritten.
+
+* a file name mismatch in the setroubleshoot init script would cause a
+failure to shut down.
+
+Users of setroubleshoot are advised to upgrade to these updated packages,
+which resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+227806 - setroubleshoot browser doesn't allow multiple entry deletion
+240355 - setroubleshoot gives bad suggestions
+241543 - Adding recipents entry to config file crashes setroubleshoot
+243800 - typo in sealert / setroubleshoot suggestion
+244345 - missing filename in setroubleshoot (AVC.get_path() returns incomplete path)
+250239 - Runtime Error: maximum recursion depth exceeded
+288221 - CVE-2007-5495 setroubleshoot insecure logging
+288271 - CVE-2007-5496 setroubleshoot log injection
+288881 - setroubleshoot failure when httpd is trying to access rpm_log_t
+312281 - setroubleshoot requires gnome to run
+431768 - setroubleshoot - audit_listener_database.xml:3029: parser error in xmlParseDoc()
+436564 - socket.getsockopt() on ppc generates exception
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/setroubleshoot-2.0.5-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/setroubleshoot-2.0.5-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/setroubleshoot-plugins-2.0.4-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/setroubleshoot-plugins-2.0.4-2.el5.src.rpm</a>
+
+noarch:
+setroubleshoot-2.0.5-3.el5.noarch.rpm
+setroubleshoot-plugins-2.0.4-2.el5.noarch.rpm
+setroubleshoot-server-2.0.5-3.el5.noarch.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/setroubleshoot-2.0.5-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/setroubleshoot-2.0.5-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/setroubleshoot-plugins-2.0.4-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/setroubleshoot-plugins-2.0.4-2.el5.src.rpm</a>
+
+noarch:
+setroubleshoot-2.0.5-3.el5.noarch.rpm
+setroubleshoot-plugins-2.0.4-2.el5.noarch.rpm
+setroubleshoot-server-2.0.5-3.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5495">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5495</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5496">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5496</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFINDF9XlSAg2UNWIIRAkHzAJ0YcawxJSJKZPdqP3c6znexeA44/wCeL0MB
+SPdFNZlyQ5cKA915HmCC7Yw=
+=/U9U
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

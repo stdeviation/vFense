@@ -1,0 +1,204 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1210&#45;01] Moderate: rhevm security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 10 Sep 2013 15:08:50 &#45;0400 -->
+<!--X-Message-Id: 201309101908.r8AJ8mp3009937@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1210-01] Moderate: rhevm security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1210-01] Moderate: rhevm security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1210-01] Moderate: rhevm security and bug fix update</li>
+<li><em>Date</em>: Tue, 10 Sep 2013 19:08:48 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhevm security and bug fix update
+Advisory ID:       RHSA-2013:1210-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1210.html">https://rhn.redhat.com/errata/RHSA-2013-1210.html</a>
+Issue date:        2013-09-10
+CVE Names:         CVE-2013-4181 
+=====================================================================
+
+1. Summary:
+
+Updated rhevm packages that fix one security issue and various bugs are now
+available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.2 - noarch
+
+3. Description:
+
+The Red Hat Enterprise Virtualization Manager is a centralized management
+platform that allows system administrators to view and manage virtual
+machines. The Manager provides a comprehensive range of features including
+search capabilities, resource management, live migrations, and virtual
+infrastructure provisioning.
+
+The Manager is a JBoss Application Server application that provides several
+interfaces through which the virtual environment can be accessed and
+interacted with, including an Administration Portal, a User Portal, and a
+Representational State Transfer (REST) Application Programming Interface
+(API).
+
+A reflected cross-site scripting (XSS) flaw was found in Red Hat Enterprise
+Virtualization Manager. An attacker could construct a carefully-crafted
+URL, which once visited by an unsuspecting user, could cause the user's web
+browser to execute malicious script in the context of the Red Hat
+Enterprise Virtualization Manager domain. (CVE-2013-4181)
+
+Red Hat would like to thank Kayhan KAYIHAN of Endersys A.Ş. for reporting
+this issue.
+
+A list of the bugs fixed in this update is available in the Technical Notes
+document:
+
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Technical_Notes/chap-RHSA-2013-1210.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Technical_Notes/chap-RHSA-2013-1210.html</a>
+
+All Red Hat Enterprise Virtualization Manager users are advised to upgrade
+to these updated packages, which resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+Further information on upgrading the Red Hat Enterprise Virtualization
+Manager is available in the Installation Guide:
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Installation_Guide/Upgrading_between_Minor_Releases.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Installation_Guide/Upgrading_between_Minor_Releases.html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+988048 - Underscores in tag names break tags
+988774 - CVE-2013-4181 ovirt-engine: RedirectServlet cross-site scripting flaw
+991542 - [LSM] engine: disk remains in locked state with repeating error in engine log when vm's pid is suddenly killed
+993014 - [RHEV+RHS] Volume created for VM Image Store, on Red Hat Storage nodes added to 'Gluster Enabled Cluster',  cannot be added as Storage Domain, to POSIX compliant FS Data Center, possibly due to firewall block
+994100 - unit-tests need to fix occasional NPE failure in WebAdminHostPageServletTest
+996125 - [engine] Display type is not inherited correctly from templates
+996127 - Windows XP guest fails to start when enabling native USB support.
+996854 - [host-deploy] block concurrent installation for same host
+996970 - Changing email address for event notification results in error &quot;User is already subscribed to this event with the same Notification method&quot;
+997394 - [rhevm-manage-domains] /var/log/ovirt-engine/engine-manage-domains.log doesn't exist
+997426 - There is no notifier.log generation
+998240 - Attaching a network to a host's nic inherits the host nic's IP to the new network
+998254 - User can't see networks in DC when he has NetworkUser role on that DC.
+998520 - [engine-config] /var/log/ovirt-engine/engine-config.log doesn't exist
+998523 - RHEVM slow due to stored procedure getdisksvmguid() consuming most CPU
+998539 - host with no unique id can be activated
+999060 - [user portal] RHEVM slow due to stored procedure getdisksvmguid() consuming most CPU
+999224 - [upgrade] correctly detect if packages can be rollbacked
+
+6. Package List:
+
+RHEV-M 3.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-3.2.3-0.42.el6ev.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-3.2.3-0.42.el6ev.src.rpm</a>
+
+noarch:
+rhevm-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-backend-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-config-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-dbscripts-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-genericapi-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-notification-service-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-restapi-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-setup-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-setup-plugin-allinone-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-tools-common-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-userportal-3.2.3-0.42.el6ev.noarch.rpm
+rhevm-webadmin-portal-3.2.3-0.42.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4181.html">https://www.redhat.com/security/data/cve/CVE-2013-4181.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Installation_Guide/Upgrading_between_Minor_Releases.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Installation_Guide/Upgrading_between_Minor_Releases.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Technical_Notes/chap-RHSA-2013-1210.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Technical_Notes/chap-RHSA-2013-1210.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSL24oXlSAg2UNWIIRAtwUAJwOWUsPZKy3MexBtfNiVPNKJpTpiwCaA7tf
+aaRGv7PfJT//r7HSsw3XaUc=
+=L1r5
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

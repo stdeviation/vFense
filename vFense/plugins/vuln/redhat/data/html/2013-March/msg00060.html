@@ -1,0 +1,178 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0658&#45;01] Moderate: openstack&#45;cinder security and	enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Mar 2013 14:29:13 &#45;0400 -->
+<!--X-Message-Id: 201303211829.r2LITCHj027419@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0658-01] Moderate: openstack-cinder security and	enhancement </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00059.html">Date Prev</a>][<a href="msg00061.html">Date Next</a>] &nbsp; [<a href="msg00059.html">Thread Prev</a>][<a href="msg00061.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00060">Thread Index</A>]
+[<A HREF="date.html#00060">Date Index</A>]
+[<A HREF="author.html#00060">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0658-01] Moderate: openstack-cinder security and	enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0658-01] Moderate: openstack-cinder security and	enhancement update</li>
+<li><em>Date</em>: Thu, 21 Mar 2013 18:29:12 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-cinder security and enhancement update
+Advisory ID:       RHSA-2013:0658-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0658.html">https://rhn.redhat.com/errata/RHSA-2013-0658.html</a>
+Issue date:        2013-03-21
+CVE Names:         CVE-2013-1664 CVE-2013-1665 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-cinder packages that fix two security issues and add one
+enhancement are now available for Red Hat OpenStack Folsom.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack Folsom - noarch
+
+3. Description:
+
+The openstack-cinder packages provide OpenStack Volume (code name Cinder),
+which provides services to manage and access block storage volumes for use
+by virtual machine instances.
+
+A denial of service flaw was found in the Extensible Markup Language (XML)
+parser used by Cinder. A remote attacker could use this flaw to send a
+specially-crafted request to a Cinder API, causing Cinder to consume an
+excessive amount of CPU and memory. (CVE-2013-1664)
+
+A flaw was found in the XML parser used by Cinder. If a remote attacker
+sent a specially-crafted request to a Cinder API, it could cause Cinder to
+connect to external entities, causing a large amount of system load, or
+allow an attacker to read files on the Cinder server that are accessible
+to the user running Cinder. (CVE-2013-1665)
+
+This update also adds the following enhancement:
+
+* This update implements a Cinder driver that allows Red Hat Storage to be
+used as a back-end for Cinder volumes. To use this driver,
+&quot;volume_driver = cinder.volume.glusterfs.GlusterfsDriver&quot; and the
+&quot;glusterfs_shares_config&quot; option must be set in &quot;/etc/cinder/cinder.conf&quot;,
+and the RHSA-2013:0657 openstack-nova update must also be installed. Note
+that there is no volume snapshot or clone support when using this driver.
+(BZ#892686)
+
+All users of openstack-cinder are advised to upgrade to these updated
+packages, which fix these issues and add this enhancement. After installing
+the updated packages, the Cinder running services will be restarted
+automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+892686 - Develop Cinder driver for Gluster/Red Hat Storage backend for volume support
+910222 - CVE-2013-1664 CVE-2013-1665 OpenStack cinder: XML entity parsing
+912982 - CVE-2013-1665 Python xml bindings: External entity expansion in Python XML libraries inflicts potential security flaws and DoS vulnerabilities
+913808 - CVE-2013-1664 Python xml bindings: Internal entity expansion in Python XML libraries inflicts DoS vulnerabilities
+
+6. Package List:
+
+OpenStack Folsom:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-cinder-2012.2.3-4.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-cinder-2012.2.3-4.el6ost.src.rpm</a>
+
+noarch:
+openstack-cinder-2012.2.3-4.el6ost.noarch.rpm
+openstack-cinder-doc-2012.2.3-4.el6ost.noarch.rpm
+python-cinder-2012.2.3-4.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1664.html">https://www.redhat.com/security/data/cve/CVE-2013-1664.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1665.html">https://www.redhat.com/security/data/cve/CVE-2013-1665.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0657.html">https://rhn.redhat.com/errata/RHSA-2013-0657.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRS1FgXlSAg2UNWIIRAntSAJ0dX0r4bc3ohO/7bAETVP9NAxWz3gCgiA8J
+exT7U4260Re8r9hkpCWoIW8=
+=QlFK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00059.html">Date Prev</a>][<a href="msg00061.html">Date Next</a>] &nbsp; [<a href="msg00059.html">Thread Prev</a>][<a href="msg00061.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00060">Thread Index</A>]
+[<A HREF="date.html#00060">Date Index</A>]
+[<A HREF="author.html#00060">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0233&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 7 May 2008 03:49:26 &#45;0400 -->
+<!--X-Message-Id: 200805070749.m477nP4H002186@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0233-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0233-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0233-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Wed, 7 May 2008 03:49:25 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2008:0233-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0233.html">https://rhn.redhat.com/errata/RHSA-2008-0233.html</a>
+Issue date:        2008-05-07
+CVE Names:         CVE-2007-5498 CVE-2008-0007 CVE-2008-1367 
+                   CVE-2008-1375 CVE-2008-1619 CVE-2008-1669 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix various security issues and several bugs
+are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+These updated packages fix the following security issues:
+
+* the absence of a protection mechanism when attempting to access a
+critical section of code has been found in the Linux kernel open file
+descriptors control mechanism, fcntl. This could allow a local unprivileged
+user to simultaneously execute code, which would otherwise be protected
+against parallel execution. As well, a race condition when handling locks
+in the Linux kernel fcntl functionality, may have allowed a process
+belonging to a local unprivileged user to gain re-ordered access to the
+descriptor table. (CVE-2008-1669, Important)
+
+* a possible hypervisor panic was found in the Linux kernel. A privileged
+user of a fully virtualized guest could initiate a stress-test File
+Transfer Protocol (FTP) transfer between the guest and the hypervisor,
+possibly leading to hypervisor panic. (CVE-2008-1619, Important)
+
+* the absence of a protection mechanism when attempting to access a
+critical section of code, as well as a race condition, have been found
+in the Linux kernel file system event notifier, dnotify. This could allow a
+local unprivileged user to get inconsistent data, or to send arbitrary
+signals to arbitrary system processes. (CVE-2008-1375, Important)
+
+Red Hat would like to thank Nick Piggin for responsibly disclosing the
+following issue:
+
+* when accessing kernel memory locations, certain Linux kernel drivers
+registering a fault handler did not perform required range checks. A local
+unprivileged user could use this flaw to gain read or write access to
+arbitrary kernel memory, or possibly cause a kernel crash.
+(CVE-2008-0007, Important)
+
+* the absence of sanity-checks was found in the hypervisor block backend
+driver, when running 32-bit paravirtualized guests on a 64-bit host. The
+number of blocks to be processed per one request from guest to host, or
+vice-versa, was not checked for its maximum value, which could have allowed
+a local privileged user of the guest operating system to cause a denial of
+service. (CVE-2007-5498, Important)
+
+* it was discovered that the Linux kernel handled string operations in the
+opposite way to the GNU Compiler Collection (GCC). This could allow a local
+unprivileged user to cause memory corruption. (CVE-2008-1367, Low)
+
+As well, these updated packages fix the following bugs:
+
+* on IBM System z architectures, when running QIOASSIST enabled QDIO
+devices in an IBM z/VM environment, the output queue stalled under heavy
+load. This caused network performance to degrade, possibly causing network
+hangs and outages.
+
+* multiple buffer overflows were discovered in the neofb video driver. It
+was not possible for an unprivileged user to exploit these issues, and as
+such, they have not been handled as security issues.
+
+* when running Microsoft Windows in a HVM, a bug in vmalloc/vfree caused
+network performance to degrade.
+
+* on certain architectures, a bug in the libATA sata_nv driver may have
+caused infinite reboots, and an &quot;ata1: CPB flags CMD err flags 0x11&quot; error.
+
+* repeatedly hot-plugging a PCI Express card may have caused &quot;Bad DLLP&quot;
+errors.
+
+* a NULL pointer dereference in NFS, which may have caused applications to
+crash, has been resolved.
+
+* when attempting to kexec reboot, either manually or via a panic-triggered
+kdump, the Unisys ES7000/one hanged after rebooting in the new kernel,
+after printing the &quot;Memory: 32839688k/33685504k available&quot; line.
+
+Red Hat Enterprise Linux 5 users are advised to upgrade to these updated
+packages, which contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+369531 - CVE-2007-5498 missing sanity check in xen block backend driver
+412071 - LTC37008-QDIO based network connections hang with QIOASSIST ON
+427400 - CVE-2008-1619 [xen-ia64] Dom0 panic while we run ftp test tool between HVM and Dom0.
+428961 - CVE-2008-0007 kernel: insufficient range checks in fault handlers with mremap
+433616 - [Xen] vmalloc/vfree on HVM Guest/IA64 does untolerate performance.
+433617 - libata: sata_nv may send commands with duplicate tags [5.1.z]
+437312 - CVE-2008-1367 Kernel doesn't clear DF for signal handlers
+437770 - CVE-2008-1619 [xen-ia64] Dom0 panic while we run ftp test tool between HVM and Dom0.
+439754 - CVE-2008-1375 kernel: race condition in dnotify (local DoS, local roothole possible)
+440438 - [5.1] PCI Express hotplug driver problem (Bad DLLP) [rhel-5.1.z]
+440447 - 2.6.18-53.1.12 crashes on NULL pointer dereference with NFS on the stack [rhel-5.1.z]
+442922 - kexec or kdump hangs on ES7000/ONE
+443433 - CVE-2008-1669 kernel: add rcu_read_lock() to fcheck() in both dnotify, locks.c and fix fcntl store/load race in locks.c
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-53.1.19.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-53.1.19.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-53.1.19.el5.i686.rpm
+kernel-PAE-2.6.18-53.1.19.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-53.1.19.el5.i686.rpm
+kernel-PAE-devel-2.6.18-53.1.19.el5.i686.rpm
+kernel-debug-2.6.18-53.1.19.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-53.1.19.el5.i686.rpm
+kernel-debug-devel-2.6.18-53.1.19.el5.i686.rpm
+kernel-debuginfo-2.6.18-53.1.19.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-53.1.19.el5.i686.rpm
+kernel-devel-2.6.18-53.1.19.el5.i686.rpm
+kernel-headers-2.6.18-53.1.19.el5.i386.rpm
+kernel-xen-2.6.18-53.1.19.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-53.1.19.el5.i686.rpm
+kernel-xen-devel-2.6.18-53.1.19.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-53.1.19.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-debug-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-devel-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-headers-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-xen-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-53.1.19.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-53.1.19.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-53.1.19.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-53.1.19.el5.i686.rpm
+kernel-PAE-2.6.18-53.1.19.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-53.1.19.el5.i686.rpm
+kernel-PAE-devel-2.6.18-53.1.19.el5.i686.rpm
+kernel-debug-2.6.18-53.1.19.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-53.1.19.el5.i686.rpm
+kernel-debug-devel-2.6.18-53.1.19.el5.i686.rpm
+kernel-debuginfo-2.6.18-53.1.19.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-53.1.19.el5.i686.rpm
+kernel-devel-2.6.18-53.1.19.el5.i686.rpm
+kernel-headers-2.6.18-53.1.19.el5.i386.rpm
+kernel-xen-2.6.18-53.1.19.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-53.1.19.el5.i686.rpm
+kernel-xen-devel-2.6.18-53.1.19.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-53.1.19.el5.ia64.rpm
+kernel-debug-2.6.18-53.1.19.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-53.1.19.el5.ia64.rpm
+kernel-debug-devel-2.6.18-53.1.19.el5.ia64.rpm
+kernel-debuginfo-2.6.18-53.1.19.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-53.1.19.el5.ia64.rpm
+kernel-devel-2.6.18-53.1.19.el5.ia64.rpm
+kernel-headers-2.6.18-53.1.19.el5.ia64.rpm
+kernel-xen-2.6.18-53.1.19.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-53.1.19.el5.ia64.rpm
+kernel-xen-devel-2.6.18-53.1.19.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-53.1.19.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-53.1.19.el5.ppc64.rpm
+kernel-debug-2.6.18-53.1.19.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-53.1.19.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-53.1.19.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-53.1.19.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-53.1.19.el5.ppc64.rpm
+kernel-devel-2.6.18-53.1.19.el5.ppc64.rpm
+kernel-headers-2.6.18-53.1.19.el5.ppc.rpm
+kernel-headers-2.6.18-53.1.19.el5.ppc64.rpm
+kernel-kdump-2.6.18-53.1.19.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-53.1.19.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-53.1.19.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-53.1.19.el5.s390x.rpm
+kernel-debug-2.6.18-53.1.19.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-53.1.19.el5.s390x.rpm
+kernel-debug-devel-2.6.18-53.1.19.el5.s390x.rpm
+kernel-debuginfo-2.6.18-53.1.19.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-53.1.19.el5.s390x.rpm
+kernel-devel-2.6.18-53.1.19.el5.s390x.rpm
+kernel-headers-2.6.18-53.1.19.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-debug-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-devel-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-headers-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-xen-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-53.1.19.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-53.1.19.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5498">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5498</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0007">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0007</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1367">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1367</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1375">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1375</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1619">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1619</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1669">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1669</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIIV6cXlSAg2UNWIIRAroqAJ9mxmGtFJNNxXGQ1Yv53ROudG4AOgCdEIBH
+oxXtczRwSakkE0jTk1AnyN4=
+=WSVP
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

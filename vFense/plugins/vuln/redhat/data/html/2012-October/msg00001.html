@@ -1,0 +1,188 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1324&#45;01] Important: rhev&#45;hypervisor5 security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 2 Oct 2012 13:48:15 &#45;0400 -->
+<!--X-Message-Id: 201210021748.q92HmAai021816@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1324-01] Important: rhev-hypervisor5 security and bug fix	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1324-01] Important: rhev-hypervisor5 security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1324-01] Important: rhev-hypervisor5 security and bug fix	update</li>
+<li><em>Date</em>: Tue, 2 Oct 2012 17:48:09 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor5 security and bug fix update
+Advisory ID:       RHSA-2012:1324-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1324.html">https://rhn.redhat.com/errata/RHSA-2012-1324.html</a>
+Issue date:        2012-10-02
+CVE Names:         CVE-2012-3412 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor5 package that fixes one security issue and
+various bugs is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-5 - noarch
+
+3. Description:
+
+The rhev-hypervisor5 package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization Hypervisor
+is a dedicated Kernel-based Virtual Machine (KVM) hypervisor. It includes
+everything necessary to run and manage virtual machines: A subset of the
+Red Hat Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+A flaw was found in the way socket buffers (skb) requiring TSO (TCP segment
+offloading) were handled by the sfc driver. If the skb did not fit within
+the minimum-size of the transmission queue, the network card could
+repeatedly reset itself. A remote attacker could use this flaw to cause a
+denial of service. (CVE-2012-3412)
+
+Red Hat would like to thank Ben Hutchings of Solarflare (tm) for reporting
+this issue.
+
+This updated package provides updated components that include fixes for
+various security issues. These issues have no security impact on Red Hat
+Enterprise Virtualization Hypervisor itself, however. The security fixes
+included in this update address the following CVE numbers:
+
+CVE-2012-4244 (bind issue)
+
+CVE-2012-2319, CVE-2012-3430, and CVE-2012-3510 (kernel issues)
+
+CVE-2011-3102, CVE-2012-0841, and CVE-2012-2807 (libxml2 issues)
+
+Users of Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which fixes these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To upgrade Hypervisors in Red Hat Enterprise Virtualization
+2.2 environments using the disk image provided by this package, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/5/h">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/5/h</a>
+tml/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Ent
+erprise_Virtualization_Hypervisors.html
+
+To upgrade Hypervisors in Red Hat Enterprise Virtualization
+3.0 environments using the disk image provided by this package, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/h">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/h</a>
+tml/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Ent
+erprise_Virtualization_Hypervisors.html
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+844714 - CVE-2012-3412 kernel: sfc: potential remote denial of service through TCP MSS option
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-5:
+
+noarch:
+rhev-hypervisor5-5.8-20120919.0.el5_8.noarch.rpm
+rhev-hypervisor5-tools-5.8-20120919.0.el5_8.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3412.html">https://www.redhat.com/security/data/cve/CVE-2012-3412.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/5/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/5/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQayjBXlSAg2UNWIIRAt6FAJ4pvm3G2GxT5ev8w+d6euKvyQUQ2wCfeIes
+n1HQ4Vi/atVMG0ARcd5d9cE=
+=36kU
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

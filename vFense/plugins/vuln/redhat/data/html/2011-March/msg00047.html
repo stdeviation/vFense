@@ -1,0 +1,219 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0407&#45;01] Moderate: logrotate security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 31 Mar 2011 11:44:45 &#45;0400 -->
+<!--X-Message-Id: 201103311544.p2VFidbu023079@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0407-01] Moderate: logrotate security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00046.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00046.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00047">Thread Index</A>]
+[<A HREF="date.html#00047">Date Index</A>]
+[<A HREF="author.html#00047">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0407-01] Moderate: logrotate security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0407-01] Moderate: logrotate security update</li>
+<li><em>Date</em>: Thu, 31 Mar 2011 11:44:39 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: logrotate security update
+Advisory ID:       RHSA-2011:0407-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0407.html">https://rhn.redhat.com/errata/RHSA-2011-0407.html</a>
+Issue date:        2011-03-31
+CVE Names:         CVE-2011-1098 CVE-2011-1154 CVE-2011-1155 
+=====================================================================
+
+1. Summary:
+
+An updated logrotate package that fixes multiple security issues is now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The logrotate utility simplifies the administration of multiple log files,
+allowing the automatic rotation, compression, removal, and mailing of log
+files.
+
+A shell command injection flaw was found in the way logrotate handled the
+shred directive. A specially-crafted log file could cause logrotate to
+execute arbitrary commands with the privileges of the user running
+logrotate (root, by default). Note: The shred directive is not enabled by
+default. (CVE-2011-1154)
+
+A race condition flaw was found in the way logrotate applied permissions
+when creating new log files. In some specific configurations, a local
+attacker could use this flaw to open new log files before logrotate applies
+the final permissions, possibly leading to the disclosure of sensitive
+information. (CVE-2011-1098)
+
+An input sanitization flaw was found in logrotate. A log file with a
+specially-crafted file name could cause logrotate to abort when attempting
+to process that file a subsequent time. (CVE-2011-1155)
+
+All logrotate users should upgrade to this updated package, which contains
+backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+680796 - CVE-2011-1154 logrotate: Shell command injection by using the shred configuration directive
+680797 - CVE-2011-1155 logrotate: DoS due improper escaping of file names within 'write state' action
+680798 - CVE-2011-1098 logrotate: TOCTOU race condition by creation of new files (between opening the file and moment, final permissions have been applied) [information disclosure]
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/logrotate-3.7.8-12.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/logrotate-3.7.8-12.el6_0.1.src.rpm</a>
+
+i386:
+logrotate-3.7.8-12.el6_0.1.i686.rpm
+logrotate-debuginfo-3.7.8-12.el6_0.1.i686.rpm
+
+x86_64:
+logrotate-3.7.8-12.el6_0.1.x86_64.rpm
+logrotate-debuginfo-3.7.8-12.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/logrotate-3.7.8-12.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/logrotate-3.7.8-12.el6_0.1.src.rpm</a>
+
+x86_64:
+logrotate-3.7.8-12.el6_0.1.x86_64.rpm
+logrotate-debuginfo-3.7.8-12.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/logrotate-3.7.8-12.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/logrotate-3.7.8-12.el6_0.1.src.rpm</a>
+
+i386:
+logrotate-3.7.8-12.el6_0.1.i686.rpm
+logrotate-debuginfo-3.7.8-12.el6_0.1.i686.rpm
+
+ppc64:
+logrotate-3.7.8-12.el6_0.1.ppc64.rpm
+logrotate-debuginfo-3.7.8-12.el6_0.1.ppc64.rpm
+
+s390x:
+logrotate-3.7.8-12.el6_0.1.s390x.rpm
+logrotate-debuginfo-3.7.8-12.el6_0.1.s390x.rpm
+
+x86_64:
+logrotate-3.7.8-12.el6_0.1.x86_64.rpm
+logrotate-debuginfo-3.7.8-12.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/logrotate-3.7.8-12.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/logrotate-3.7.8-12.el6_0.1.src.rpm</a>
+
+i386:
+logrotate-3.7.8-12.el6_0.1.i686.rpm
+logrotate-debuginfo-3.7.8-12.el6_0.1.i686.rpm
+
+x86_64:
+logrotate-3.7.8-12.el6_0.1.x86_64.rpm
+logrotate-debuginfo-3.7.8-12.el6_0.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1098.html">https://www.redhat.com/security/data/cve/CVE-2011-1098.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1154.html">https://www.redhat.com/security/data/cve/CVE-2011-1154.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1155.html">https://www.redhat.com/security/data/cve/CVE-2011-1155.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &amp;lt;secalert redhat com&amp;gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNlKFGXlSAg2UNWIIRAjApAJ97Bd2AGAvK6wNwN4MFaomxvDdDgQCgtUBR
+U0Sk/eBSz/ZKmoKDV5MhDqU=
+=H81B
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00046.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00046.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00047">Thread Index</A>]
+[<A HREF="date.html#00047">Date Index</A>]
+[<A HREF="author.html#00047">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

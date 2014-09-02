@@ -1,0 +1,955 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0497&#45;01] Important: sblim security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 24 Jun 2008 05:32:48 &#45;0400 -->
+<!--X-Message-Id: 200806240932.m5O9WlsE006395@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0497-01] Important: sblim security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0497-01] Important: sblim security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0497-01] Important: sblim security update</li>
+<li><em>Date</em>: Tue, 24 Jun 2008 05:32:47 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: sblim security update
+Advisory ID:       RHSA-2008:0497-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0497.html">https://rhn.redhat.com/errata/RHSA-2008-0497.html</a>
+Issue date:        2008-06-24
+CVE Names:         CVE-2008-1951 
+=====================================================================
+
+1. Summary:
+
+Updated sblim packages that resolve a security issue are now available for
+Red Hat Enterprise Linux 4 and Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+SBLIM stands for Standards-Based Linux Instrumentation for Manageability.
+It consists of a set of standards-based, Web-Based Enterprise Management
+(WBEM) modules that use the Common Information Model (CIM) standard to
+gather and provide systems management information, events, and methods to
+local or networked consumers via a CIM object services broker using the
+CMPI (Common Manageability Programming Interface) standard. This package
+provides a set of core providers and development tools for systems
+management applications.
+
+It was discovered that certain sblim libraries had an RPATH (runtime
+library search path) set in the ELF (Executable and Linking Format) header.
+This RPATH pointed to a sub-directory of a world-writable, temporary
+directory. A local user could create a file with the same name as a library
+required by sblim (such as libc.so) and place it in the directory defined
+in the RPATH. This file could then execute arbitrary code with the
+privileges of the user running an application that used sblim (eg
+tog-pegasus). (CVE-2008-1951)
+
+Users are advised to upgrade to these updated sblim packages, which resolve
+this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+447705 - CVE-2008-1951 sblim: libraries built with insecure RPATH
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/sblim-1-13a.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/sblim-1-13a.el4_6.1.src.rpm</a>
+
+i386:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.i386.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.i386.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.i386.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.i386.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.i386.rpm
+sblim-debuginfo-1-13a.el4_6.1.i386.rpm
+sblim-gather-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.i386.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.i386.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.i386.rpm
+
+ia64:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.ia64.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.ia64.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.ia64.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.ia64.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.ia64.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.ia64.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.ia64.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.ia64.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.ia64.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.ia64.rpm
+sblim-debuginfo-1-13a.el4_6.1.ia64.rpm
+sblim-gather-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.ia64.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.ia64.rpm
+
+ppc:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.ppc.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.ppc.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.ppc.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.ppc.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.ppc.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.ppc.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.ppc.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.ppc.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.ppc.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.ppc.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.ppc.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.ppc.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.ppc.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.ppc.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.ppc.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.ppc.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.ppc.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.ppc.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.ppc.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.ppc.rpm
+sblim-debuginfo-1-13a.el4_6.1.ppc.rpm
+sblim-gather-2.1.1-13a.el4_6.1.ppc.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.ppc.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.ppc.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.ppc.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.ppc.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.ppc.rpm
+
+s390:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.s390.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.s390.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.s390.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.s390.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.s390.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.s390.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.s390.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.s390.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.s390.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.s390.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.s390.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.s390.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.s390.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.s390.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.s390.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.s390.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.s390.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.s390.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.s390.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.s390.rpm
+sblim-debuginfo-1-13a.el4_6.1.s390.rpm
+sblim-gather-2.1.1-13a.el4_6.1.s390.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.s390.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.s390.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.s390.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.s390.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.s390.rpm
+
+s390x:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.s390x.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.s390x.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.s390x.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.s390x.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.s390x.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.s390x.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.s390x.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.s390x.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.s390x.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.s390x.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.s390x.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.s390x.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.s390x.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.s390x.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.s390x.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.s390x.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.s390x.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.s390x.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.s390x.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.s390x.rpm
+sblim-debuginfo-1-13a.el4_6.1.s390x.rpm
+sblim-gather-2.1.1-13a.el4_6.1.s390x.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.s390x.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.s390x.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.s390x.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.s390x.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.s390x.rpm
+
+x86_64:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.x86_64.rpm
+sblim-debuginfo-1-13a.el4_6.1.x86_64.rpm
+sblim-gather-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/sblim-1-13a.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/sblim-1-13a.el4_6.1.src.rpm</a>
+
+i386:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.i386.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.i386.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.i386.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.i386.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.i386.rpm
+sblim-debuginfo-1-13a.el4_6.1.i386.rpm
+sblim-gather-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.i386.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.i386.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.i386.rpm
+
+x86_64:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.x86_64.rpm
+sblim-debuginfo-1-13a.el4_6.1.x86_64.rpm
+sblim-gather-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/sblim-1-13a.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/sblim-1-13a.el4_6.1.src.rpm</a>
+
+i386:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.i386.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.i386.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.i386.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.i386.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.i386.rpm
+sblim-debuginfo-1-13a.el4_6.1.i386.rpm
+sblim-gather-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.i386.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.i386.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.i386.rpm
+
+ia64:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.ia64.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.ia64.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.ia64.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.ia64.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.ia64.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.ia64.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.ia64.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.ia64.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.ia64.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.ia64.rpm
+sblim-debuginfo-1-13a.el4_6.1.ia64.rpm
+sblim-gather-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.ia64.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.ia64.rpm
+
+x86_64:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.x86_64.rpm
+sblim-debuginfo-1-13a.el4_6.1.x86_64.rpm
+sblim-gather-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/sblim-1-13a.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/sblim-1-13a.el4_6.1.src.rpm</a>
+
+i386:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.i386.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.i386.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.i386.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.i386.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.i386.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.i386.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.i386.rpm
+sblim-debuginfo-1-13a.el4_6.1.i386.rpm
+sblim-gather-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.i386.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.i386.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.i386.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.i386.rpm
+
+ia64:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.ia64.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.ia64.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.ia64.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.ia64.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.ia64.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.ia64.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.ia64.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.ia64.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.ia64.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.ia64.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.ia64.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.ia64.rpm
+sblim-debuginfo-1-13a.el4_6.1.ia64.rpm
+sblim-gather-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.ia64.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.ia64.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.ia64.rpm
+
+x86_64:
+sblim-cmpi-base-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-base-devel-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-base-test-1.5.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-devel-1.0.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-devel-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-fsvol-test-1.4.3-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-devel-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-network-test-1.3.7-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv3-1.0.13-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv3-test-1.0.13-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv4-1.0.11-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-nfsv4-test-1.0.11-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-params-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-params-test-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-sysfs-1.1.8-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-sysfs-test-1.1.8-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-syslog-0.7.9-13a.el4_6.1.x86_64.rpm
+sblim-cmpi-syslog-test-0.7.9-13a.el4_6.1.x86_64.rpm
+sblim-debuginfo-1-13a.el4_6.1.x86_64.rpm
+sblim-gather-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-devel-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-provider-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-gather-test-2.1.1-13a.el4_6.1.x86_64.rpm
+sblim-testsuite-1.2.4-13a.el4_6.1.x86_64.rpm
+sblim-wbemcli-1.5.1-13a.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sblim-1-31.el5_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sblim-1-31.el5_2.1.src.rpm</a>
+
+i386:
+sblim-cim-client-1.3.3-31.el5_2.1.i386.rpm
+sblim-cim-client-javadoc-1-31.el5_2.1.i386.rpm
+sblim-cim-client-manual-1-31.el5_2.1.i386.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.i386.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.i386.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.i386.rpm
+sblim-cmpi-nfsv3-1.0.14-31.el5_2.1.i386.rpm
+sblim-cmpi-nfsv4-1.0.12-31.el5_2.1.i386.rpm
+sblim-cmpi-params-1.2.6-31.el5_2.1.i386.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.i386.rpm
+sblim-cmpi-sysfs-1.1.9-31.el5_2.1.i386.rpm
+sblim-cmpi-syslog-0.7.11-31.el5_2.1.i386.rpm
+sblim-debuginfo-1-31.el5_2.1.i386.rpm
+sblim-gather-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.i386.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.i386.rpm
+sblim-wbemcli-1.5.1-31.el5_2.1.i386.rpm
+
+x86_64:
+sblim-cim-client-1.3.3-31.el5_2.1.x86_64.rpm
+sblim-cim-client-javadoc-1-31.el5_2.1.x86_64.rpm
+sblim-cim-client-manual-1-31.el5_2.1.x86_64.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.i386.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.x86_64.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.i386.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.x86_64.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.i386.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.x86_64.rpm
+sblim-cmpi-nfsv3-1.0.14-31.el5_2.1.x86_64.rpm
+sblim-cmpi-nfsv4-1.0.12-31.el5_2.1.x86_64.rpm
+sblim-cmpi-params-1.2.6-31.el5_2.1.x86_64.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.i386.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.x86_64.rpm
+sblim-cmpi-sysfs-1.1.9-31.el5_2.1.x86_64.rpm
+sblim-cmpi-syslog-0.7.11-31.el5_2.1.x86_64.rpm
+sblim-debuginfo-1-31.el5_2.1.i386.rpm
+sblim-debuginfo-1-31.el5_2.1.x86_64.rpm
+sblim-gather-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-2.1.2-31.el5_2.1.x86_64.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.x86_64.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.i386.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.x86_64.rpm
+sblim-wbemcli-1.5.1-31.el5_2.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sblim-1-31.el5_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sblim-1-31.el5_2.1.src.rpm</a>
+
+i386:
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.i386.rpm
+sblim-cmpi-base-test-1.5.5-31.el5_2.1.i386.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.i386.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.i386.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.i386.rpm
+sblim-cmpi-dns-test-1-31.el5_2.1.i386.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.i386.rpm
+sblim-cmpi-fsvol-test-1.4.4-31.el5_2.1.i386.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.i386.rpm
+sblim-cmpi-network-test-1.3.8-31.el5_2.1.i386.rpm
+sblim-cmpi-nfsv3-test-1.0.14-31.el5_2.1.i386.rpm
+sblim-cmpi-nfsv4-test-1.0.12-31.el5_2.1.i386.rpm
+sblim-cmpi-params-test-1.2.6-31.el5_2.1.i386.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.i386.rpm
+sblim-cmpi-samba-test-1-31.el5_2.1.i386.rpm
+sblim-cmpi-sysfs-test-1.1.9-31.el5_2.1.i386.rpm
+sblim-cmpi-syslog-test-0.7.11-31.el5_2.1.i386.rpm
+sblim-debuginfo-1-31.el5_2.1.i386.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-test-2.1.2-31.el5_2.1.i386.rpm
+sblim-testsuite-1.2.4-31.el5_2.1.i386.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.i386.rpm
+
+x86_64:
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.i386.rpm
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.x86_64.rpm
+sblim-cmpi-base-test-1.5.5-31.el5_2.1.x86_64.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.i386.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.x86_64.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.i386.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.x86_64.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.i386.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.x86_64.rpm
+sblim-cmpi-dns-test-1-31.el5_2.1.x86_64.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.i386.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.x86_64.rpm
+sblim-cmpi-fsvol-test-1.4.4-31.el5_2.1.x86_64.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.i386.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.x86_64.rpm
+sblim-cmpi-network-test-1.3.8-31.el5_2.1.x86_64.rpm
+sblim-cmpi-nfsv3-test-1.0.14-31.el5_2.1.x86_64.rpm
+sblim-cmpi-nfsv4-test-1.0.12-31.el5_2.1.x86_64.rpm
+sblim-cmpi-params-test-1.2.6-31.el5_2.1.x86_64.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.i386.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.x86_64.rpm
+sblim-cmpi-samba-test-1-31.el5_2.1.x86_64.rpm
+sblim-cmpi-sysfs-test-1.1.9-31.el5_2.1.x86_64.rpm
+sblim-cmpi-syslog-test-0.7.11-31.el5_2.1.x86_64.rpm
+sblim-debuginfo-1-31.el5_2.1.i386.rpm
+sblim-debuginfo-1-31.el5_2.1.x86_64.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.x86_64.rpm
+sblim-gather-test-2.1.2-31.el5_2.1.x86_64.rpm
+sblim-testsuite-1.2.4-31.el5_2.1.x86_64.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.i386.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/sblim-1-31.el5_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/sblim-1-31.el5_2.1.src.rpm</a>
+
+i386:
+sblim-cim-client-1.3.3-31.el5_2.1.i386.rpm
+sblim-cim-client-javadoc-1-31.el5_2.1.i386.rpm
+sblim-cim-client-manual-1-31.el5_2.1.i386.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.i386.rpm
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.i386.rpm
+sblim-cmpi-base-test-1.5.5-31.el5_2.1.i386.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.i386.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.i386.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.i386.rpm
+sblim-cmpi-dns-test-1-31.el5_2.1.i386.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.i386.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.i386.rpm
+sblim-cmpi-fsvol-test-1.4.4-31.el5_2.1.i386.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.i386.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.i386.rpm
+sblim-cmpi-network-test-1.3.8-31.el5_2.1.i386.rpm
+sblim-cmpi-nfsv3-1.0.14-31.el5_2.1.i386.rpm
+sblim-cmpi-nfsv3-test-1.0.14-31.el5_2.1.i386.rpm
+sblim-cmpi-nfsv4-1.0.12-31.el5_2.1.i386.rpm
+sblim-cmpi-nfsv4-test-1.0.12-31.el5_2.1.i386.rpm
+sblim-cmpi-params-1.2.6-31.el5_2.1.i386.rpm
+sblim-cmpi-params-test-1.2.6-31.el5_2.1.i386.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.i386.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.i386.rpm
+sblim-cmpi-samba-test-1-31.el5_2.1.i386.rpm
+sblim-cmpi-sysfs-1.1.9-31.el5_2.1.i386.rpm
+sblim-cmpi-sysfs-test-1.1.9-31.el5_2.1.i386.rpm
+sblim-cmpi-syslog-0.7.11-31.el5_2.1.i386.rpm
+sblim-cmpi-syslog-test-0.7.11-31.el5_2.1.i386.rpm
+sblim-debuginfo-1-31.el5_2.1.i386.rpm
+sblim-gather-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-test-2.1.2-31.el5_2.1.i386.rpm
+sblim-testsuite-1.2.4-31.el5_2.1.i386.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.i386.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.i386.rpm
+sblim-wbemcli-1.5.1-31.el5_2.1.i386.rpm
+
+ia64:
+sblim-cim-client-1.3.3-31.el5_2.1.ia64.rpm
+sblim-cim-client-javadoc-1-31.el5_2.1.ia64.rpm
+sblim-cim-client-manual-1-31.el5_2.1.ia64.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.ia64.rpm
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.ia64.rpm
+sblim-cmpi-base-test-1.5.5-31.el5_2.1.ia64.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.ia64.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.ia64.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.ia64.rpm
+sblim-cmpi-dns-test-1-31.el5_2.1.ia64.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.ia64.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.ia64.rpm
+sblim-cmpi-fsvol-test-1.4.4-31.el5_2.1.ia64.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.ia64.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.ia64.rpm
+sblim-cmpi-network-test-1.3.8-31.el5_2.1.ia64.rpm
+sblim-cmpi-nfsv3-1.0.14-31.el5_2.1.ia64.rpm
+sblim-cmpi-nfsv3-test-1.0.14-31.el5_2.1.ia64.rpm
+sblim-cmpi-nfsv4-1.0.12-31.el5_2.1.ia64.rpm
+sblim-cmpi-nfsv4-test-1.0.12-31.el5_2.1.ia64.rpm
+sblim-cmpi-params-1.2.6-31.el5_2.1.ia64.rpm
+sblim-cmpi-params-test-1.2.6-31.el5_2.1.ia64.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.ia64.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.ia64.rpm
+sblim-cmpi-samba-test-1-31.el5_2.1.ia64.rpm
+sblim-cmpi-sysfs-1.1.9-31.el5_2.1.ia64.rpm
+sblim-cmpi-sysfs-test-1.1.9-31.el5_2.1.ia64.rpm
+sblim-cmpi-syslog-0.7.11-31.el5_2.1.ia64.rpm
+sblim-cmpi-syslog-test-0.7.11-31.el5_2.1.ia64.rpm
+sblim-debuginfo-1-31.el5_2.1.ia64.rpm
+sblim-gather-2.1.2-31.el5_2.1.ia64.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.ia64.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.ia64.rpm
+sblim-gather-test-2.1.2-31.el5_2.1.ia64.rpm
+sblim-testsuite-1.2.4-31.el5_2.1.ia64.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.ia64.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.ia64.rpm
+sblim-wbemcli-1.5.1-31.el5_2.1.ia64.rpm
+
+ppc:
+sblim-cim-client-1.3.3-31.el5_2.1.ppc.rpm
+sblim-cim-client-javadoc-1-31.el5_2.1.ppc.rpm
+sblim-cim-client-manual-1-31.el5_2.1.ppc.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.ppc.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.ppc64.rpm
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.ppc.rpm
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.ppc64.rpm
+sblim-cmpi-base-test-1.5.5-31.el5_2.1.ppc.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.ppc.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.ppc64.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.ppc.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.ppc64.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.ppc.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.ppc64.rpm
+sblim-cmpi-dns-test-1-31.el5_2.1.ppc.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.ppc.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.ppc64.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.ppc.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.ppc64.rpm
+sblim-cmpi-fsvol-test-1.4.4-31.el5_2.1.ppc.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.ppc.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.ppc64.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.ppc.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.ppc64.rpm
+sblim-cmpi-network-test-1.3.8-31.el5_2.1.ppc.rpm
+sblim-cmpi-nfsv3-1.0.14-31.el5_2.1.ppc.rpm
+sblim-cmpi-nfsv3-test-1.0.14-31.el5_2.1.ppc.rpm
+sblim-cmpi-nfsv4-1.0.12-31.el5_2.1.ppc.rpm
+sblim-cmpi-nfsv4-test-1.0.12-31.el5_2.1.ppc.rpm
+sblim-cmpi-params-1.2.6-31.el5_2.1.ppc.rpm
+sblim-cmpi-params-test-1.2.6-31.el5_2.1.ppc.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.ppc.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.ppc64.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.ppc.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.ppc64.rpm
+sblim-cmpi-samba-test-1-31.el5_2.1.ppc.rpm
+sblim-cmpi-sysfs-1.1.9-31.el5_2.1.ppc.rpm
+sblim-cmpi-sysfs-test-1.1.9-31.el5_2.1.ppc.rpm
+sblim-cmpi-syslog-0.7.11-31.el5_2.1.ppc.rpm
+sblim-cmpi-syslog-test-0.7.11-31.el5_2.1.ppc.rpm
+sblim-debuginfo-1-31.el5_2.1.ppc.rpm
+sblim-debuginfo-1-31.el5_2.1.ppc64.rpm
+sblim-gather-2.1.2-31.el5_2.1.ppc.rpm
+sblim-gather-2.1.2-31.el5_2.1.ppc64.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.ppc.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.ppc64.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.ppc.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.ppc64.rpm
+sblim-gather-test-2.1.2-31.el5_2.1.ppc.rpm
+sblim-testsuite-1.2.4-31.el5_2.1.ppc.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.ppc.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.ppc64.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.ppc.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.ppc64.rpm
+sblim-wbemcli-1.5.1-31.el5_2.1.ppc.rpm
+
+s390x:
+sblim-cim-client-1.3.3-31.el5_2.1.s390x.rpm
+sblim-cim-client-javadoc-1-31.el5_2.1.s390x.rpm
+sblim-cim-client-manual-1-31.el5_2.1.s390x.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.s390.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.s390x.rpm
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.s390.rpm
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.s390x.rpm
+sblim-cmpi-base-test-1.5.5-31.el5_2.1.s390x.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.s390.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.s390x.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.s390.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.s390x.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.s390.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.s390x.rpm
+sblim-cmpi-dns-test-1-31.el5_2.1.s390x.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.s390.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.s390x.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.s390.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.s390x.rpm
+sblim-cmpi-fsvol-test-1.4.4-31.el5_2.1.s390x.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.s390.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.s390x.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.s390.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.s390x.rpm
+sblim-cmpi-network-test-1.3.8-31.el5_2.1.s390x.rpm
+sblim-cmpi-nfsv3-1.0.14-31.el5_2.1.s390x.rpm
+sblim-cmpi-nfsv3-test-1.0.14-31.el5_2.1.s390x.rpm
+sblim-cmpi-nfsv4-1.0.12-31.el5_2.1.s390x.rpm
+sblim-cmpi-nfsv4-test-1.0.12-31.el5_2.1.s390x.rpm
+sblim-cmpi-params-1.2.6-31.el5_2.1.s390x.rpm
+sblim-cmpi-params-test-1.2.6-31.el5_2.1.s390x.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.s390.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.s390x.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.s390.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.s390x.rpm
+sblim-cmpi-samba-test-1-31.el5_2.1.s390x.rpm
+sblim-cmpi-sysfs-1.1.9-31.el5_2.1.s390x.rpm
+sblim-cmpi-sysfs-test-1.1.9-31.el5_2.1.s390x.rpm
+sblim-cmpi-syslog-0.7.11-31.el5_2.1.s390x.rpm
+sblim-cmpi-syslog-test-0.7.11-31.el5_2.1.s390x.rpm
+sblim-debuginfo-1-31.el5_2.1.s390.rpm
+sblim-debuginfo-1-31.el5_2.1.s390x.rpm
+sblim-gather-2.1.2-31.el5_2.1.s390.rpm
+sblim-gather-2.1.2-31.el5_2.1.s390x.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.s390.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.s390x.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.s390.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.s390x.rpm
+sblim-gather-test-2.1.2-31.el5_2.1.s390x.rpm
+sblim-testsuite-1.2.4-31.el5_2.1.s390x.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.s390.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.s390x.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.s390.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.s390x.rpm
+sblim-wbemcli-1.5.1-31.el5_2.1.s390x.rpm
+
+x86_64:
+sblim-cim-client-1.3.3-31.el5_2.1.x86_64.rpm
+sblim-cim-client-javadoc-1-31.el5_2.1.x86_64.rpm
+sblim-cim-client-manual-1-31.el5_2.1.x86_64.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.i386.rpm
+sblim-cmpi-base-1.5.5-31.el5_2.1.x86_64.rpm
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.i386.rpm
+sblim-cmpi-base-devel-1.5.5-31.el5_2.1.x86_64.rpm
+sblim-cmpi-base-test-1.5.5-31.el5_2.1.x86_64.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.i386.rpm
+sblim-cmpi-devel-1.0.4-31.el5_2.1.x86_64.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.i386.rpm
+sblim-cmpi-dns-0.5.2-31.el5_2.1.x86_64.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.i386.rpm
+sblim-cmpi-dns-devel-1-31.el5_2.1.x86_64.rpm
+sblim-cmpi-dns-test-1-31.el5_2.1.x86_64.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.i386.rpm
+sblim-cmpi-fsvol-1.4.4-31.el5_2.1.x86_64.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.i386.rpm
+sblim-cmpi-fsvol-devel-1.4.4-31.el5_2.1.x86_64.rpm
+sblim-cmpi-fsvol-test-1.4.4-31.el5_2.1.x86_64.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.i386.rpm
+sblim-cmpi-network-1.3.8-31.el5_2.1.x86_64.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.i386.rpm
+sblim-cmpi-network-devel-1.3.8-31.el5_2.1.x86_64.rpm
+sblim-cmpi-network-test-1.3.8-31.el5_2.1.x86_64.rpm
+sblim-cmpi-nfsv3-1.0.14-31.el5_2.1.x86_64.rpm
+sblim-cmpi-nfsv3-test-1.0.14-31.el5_2.1.x86_64.rpm
+sblim-cmpi-nfsv4-1.0.12-31.el5_2.1.x86_64.rpm
+sblim-cmpi-nfsv4-test-1.0.12-31.el5_2.1.x86_64.rpm
+sblim-cmpi-params-1.2.6-31.el5_2.1.x86_64.rpm
+sblim-cmpi-params-test-1.2.6-31.el5_2.1.x86_64.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.i386.rpm
+sblim-cmpi-samba-0.5.2-31.el5_2.1.x86_64.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.i386.rpm
+sblim-cmpi-samba-devel-1-31.el5_2.1.x86_64.rpm
+sblim-cmpi-samba-test-1-31.el5_2.1.x86_64.rpm
+sblim-cmpi-sysfs-1.1.9-31.el5_2.1.x86_64.rpm
+sblim-cmpi-sysfs-test-1.1.9-31.el5_2.1.x86_64.rpm
+sblim-cmpi-syslog-0.7.11-31.el5_2.1.x86_64.rpm
+sblim-cmpi-syslog-test-0.7.11-31.el5_2.1.x86_64.rpm
+sblim-debuginfo-1-31.el5_2.1.i386.rpm
+sblim-debuginfo-1-31.el5_2.1.x86_64.rpm
+sblim-gather-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-2.1.2-31.el5_2.1.x86_64.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-devel-2.1.2-31.el5_2.1.x86_64.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.i386.rpm
+sblim-gather-provider-2.1.2-31.el5_2.1.x86_64.rpm
+sblim-gather-test-2.1.2-31.el5_2.1.x86_64.rpm
+sblim-testsuite-1.2.4-31.el5_2.1.x86_64.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.i386.rpm
+sblim-tools-libra-0.2.3-31.el5_2.1.x86_64.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.i386.rpm
+sblim-tools-libra-devel-0.2.3-31.el5_2.1.x86_64.rpm
+sblim-wbemcli-1.5.1-31.el5_2.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1951">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1951</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIYL8hXlSAg2UNWIIRAvTNAJ9PwTtuWq+W5FNLulTfZ/2G7Yus+QCfWfcz
+6p7mHMm3xcPr469tXLS9EzQ=
+=NQ0Z
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

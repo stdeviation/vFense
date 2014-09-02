@@ -1,0 +1,372 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0544&#45;01] Important: Subscription Asset Manager 1.2 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 14:22:04 &#45;0500 -->
+<!--X-Message-Id: 201302211922.r1LJM4k9007855@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0544-01] Important: Subscription Asset Manager 1.2 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00065.html">Date Prev</a>][<a href="msg00067.html">Date Next</a>] &nbsp; [<a href="msg00065.html">Thread Prev</a>][<a href="msg00067.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00066">Thread Index</A>]
+[<A HREF="date.html#00066">Date Index</A>]
+[<A HREF="author.html#00066">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0544-01] Important: Subscription Asset Manager 1.2 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2013:0544-01] Important: Subscription Asset Manager 1.2 update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 19:22:03 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Subscription Asset Manager 1.2 update
+Advisory ID:       RHSA-2013:0544-01
+Product:           Red Hat Subscription Asset Manager
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0544.html">https://rhn.redhat.com/errata/RHSA-2013-0544.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2012-5561 CVE-2012-5603 CVE-2012-5604 
+                   CVE-2012-6109 CVE-2012-6496 CVE-2013-0162 
+                   CVE-2013-0183 CVE-2013-0184 
+=====================================================================
+
+1. Summary:
+
+Red Hat Subscription Asset Manager 1.2, which fixes several security
+issues, multiple bugs, and adds various enhancements, is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Subscription Asset Manager for RHEL 6 Server - noarch, x86_64
+
+3. Description:
+
+Red Hat Subscription Asset Manager acts as a proxy for handling
+subscription information and software updates on client machines.
+
+It was discovered that Katello did not properly check user permissions when
+handling certain requests. An authenticated remote attacker could use this
+flaw to download consumer certificates or change settings of other users'
+systems if they knew the target system's UUID. (CVE-2012-5603)
+
+A vulnerability in rubygem-ldap_fluff allowed a remote attacker to bypass
+authentication and log into Subscription Asset Manager when a Microsoft
+Active Directory server was used as the back-end authentication server.
+(CVE-2012-5604)
+
+It was found that the
+&quot;/usr/share/katello/script/katello-generate-passphrase&quot; utility, which is
+run during the installation and configuration process, set world-readable
+permissions on the &quot;/etc/katello/secure/passphrase&quot; file. A local attacker
+could use this flaw to obtain the passphrase for Katello, giving them
+access to information they would otherwise not have access to.
+(CVE-2012-5561)
+
+Note: After installing this update, ensure the
+&quot;/etc/katello/secure/passphrase&quot; file is owned by the root user and group
+and mode 0750 permissions. Sites should also consider re-creating the
+Katello passphrase as this issue exposed it to local users.
+
+Three flaws were found in rubygem-rack. A remote attacker could use these
+flaws to perform a denial of service attack against applications using
+rubygem-rack. (CVE-2012-6109, CVE-2013-0183, CVE-2013-0184)
+
+A flaw was found in the way rubygem-activerecord dynamic finders extracted
+options from method parameters. A remote attacker could possibly use this
+flaw to perform SQL injection attacks against applications using the Active
+Record dynamic finder methods. (CVE-2012-6496)
+
+It was found that ruby_parser from rubygem-ruby_parser created a temporary
+file in an insecure way. A local attacker could use this flaw to perform a
+symbolic link attack, overwriting arbitrary files accessible to the
+application using ruby_parser. (CVE-2013-0162)
+
+The CVE-2012-5603 issue was discovered by Lukas Zapletal of Red Hat;
+CVE-2012-5604 was discovered by Og Maciel of Red Hat; CVE-2012-5561 was
+discovered by Aaron Weitekamp of the Red Hat Cloud Quality Engineering
+team; and CVE-2013-0162 was discovered by Michael Scherer of the Red Hat
+Regional IT team.
+
+These updated Subscription Asset Manager packages include a number of bug
+fixes and enhancements. Space precludes documenting all of these changes
+in this advisory. Refer to the Red Hat Subscription Asset Manager 1.2
+Release Notes for information about these changes:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Subscription_Asset_Manager/1.2/html/Release_Notes/index.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Subscription_Asset_Manager/1.2/html/Release_Notes/index.html</a>
+
+All users of Red Hat Subscription Asset Manager are advised to upgrade to
+these updated packages, which fix these issues and add various
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+760564 - UI should show virtual child pools as &quot;children&quot; of the parent.
+800145 - Manifest import needs to be smarter about product attribute copying
+809823 - katello-configure --deployment=katello is accepted in a SAM only installation.
+813291 - [RFE] Username cannot contain characters other than alpha numerals,'_', '-', can not resume after failure
+817845 - Better CLI error message  when options are invalid
+817946 - API not accessible from browser
+818679 - katello-configure --help should show valid options.
+818903 - Name of the pdf generated for sam system report command should be modified
+819002 - [RFE] Hide password creation and Email fields at user creation time if LDAP auth is enabled in CFSE
+819611 - [RFE] SAM 1.0 Have PostgreSQL only listen on 127.0.0.1 instead of 127.0.0.1 and 0.0.0.0
+822942 - [RFE] Add new Application Shell to Subscription Asset Manager
+822943 - [RFE] Improved Subscription Viewer
+822945 - [RFE] Improved Visibility to Customer Portal
+826099 - katello-debug returns unexpected error messages when run on a SAM installation
+829474 - Assigning a subscription to a macihne in SAM does not update the compliance icon in the System List
+832425 - SAM cli headpin Version command returns exitCode as 1 even after successful completion of command
+832462 - katello-cli and katello-cli-headpin should now how to handle upgrading to prevent file conflicts over client.conf.
+840595 - katello-configure --help optparse.rb:395:in `+': can't convert nil into String (TypeError)
+840600 - Post creating new environment in headpin, webui returns row:NotFound error
+840603 - Post 'import manifest' subscriptions return row:NotFound
+840609 - katello-headpin displays system groups under activation key when headpin will not support system groups
+840792 - Activation key delete displays error
+840969 - Delete environment with members causes Couldn't find KTEnvironment with
+841868 - Systems page always shows lo interface IP on list
+843625 - The thin server on sam installations will listen on all ip addresses, should listen on localhost only.
+843857 - Katello Webui dashboard does not render the pie chart (graph) in the appropriate location
+843861 - Installing the candlepin-cert bootstrap package fails on RHEL5.8+
+843904 - During transition between systems in the webui, user will see System Group and Errata elements along with install button and other.
+845501 - katello-configure  --deployment=headpin  fails  after katello-headpin-all install on fedora-16
+845620 - [RFE] Improve messaging around results of setting the yStream
+847024 - Web pages fail to render all elements and colors correctly in IE8 and IE9
+847117 - Extend scroll bug on content tab, with &gt; 50 subscriptions only the first 50 will populate.
+847598 - katello-configure --deployment failed after katello-all install
+850336 - As a user I would like the organization selector at login to provide feedback once I have selected the org I wish to login to.
+852508 - User limited by role will receive ResourceTypeNotFound in Dashboard#index when logging in
+854278 - After adding certain objects to katello one will see a warning, '' did not meet the current search criteria and is not being shown
+854283 - When creating a new organization, the Environment specified at creation time is not being created.
+854985 - subscription-manager register for a system fails using the activation key
+856303 - &quot;Invalid resource type 'system_groups' &quot; error message when trying to unregister from SAM
+856777 - Test case failure: As a Admin I would like to know that my manifest will load as scheduled, even if katello-jobs is not running when I submit the request.
+856795 - Test case failure: [SAM] Install - Quick (Default) Fails
+857452 - katello-configure fails with katello-jobs change to running failed
+859128 - Consumer fails to consume content from a Headpin distributor PYCURL ERROR 52 - &quot;Empty reply from server&quot;
+863461 - Headpin Cli automation : Failure to list the org updated with special chars other than ascii chars
+865571 - man page for headpin shows katello context
+866323 - Storing the user report via cli in a pdf format fails in headpin-cli upstream
+866972 - katello-debug needs to take headpin into consideration
+866995 - server version is &quot;Unknown&quot; when registered to a katello/cfse/sam server
+868290 - Thumbslug needs to verify more certificates.
+869380 - add confirmation dialog to &quot;delete manifest&quot; functionality
+871622 - Upgrade from 1.0 to 1.2 fails with file conflict
+872332 - Username/password from previous katello-configure returns CLI error &quot;error: string indices must be integers&quot;
+872334 - existing orgs do not get default value for system_info_keys in database
+872335 - deleting an imported manifest should add message to /owner/$owner/imports results
+872602 - API: /consumers/{id}/entitlements returns incorrect data and Content-Type header
+872687 - create a Role with single-character name fails
+873038 - Entering an env name of &quot;Library&quot; when creating an organization does not give clear error message
+873443 - RAM value listed should be &quot;memory.memtotal&quot; fact
+873803 - subscription filter chooser on systems page blinks when page first loads
+873809 - Javascript error when looking at Import History for subscriptions
+874182 - Creating a consumer with blank sockets results in missing system
+874280 - change of terminology related to subscriptions and distributors
+874502 - Upload manifests UI in 'ja' language contains headings overwritten on each other
+874510 - Activation Key Page  in 'ja' language headings ovewritten in headpin
+874583 - Environments do not populate when adding a new user without full admin
+874737 - [upgrade] 1.0 to 1.1 upgrades brings UI error on Organizations edit page
+874744 - Product labels are not currently required to be unique.
+875101 - ISO installer uses 2.7 API, which does not run on RHEL 6
+875609 - Could not find ESX/Hyper-V host on SAM WebUI
+875876 - Thumbslug prevents client connections for unknown reason
+876869 - [ja_JP][SAM Web GUI] Overlapped in Add Permission page and Edit Permission page.
+876896 - [ja_JP][SAM Web GUI] Overlapped in Content - Subscriptions page
+876911 - [ja_JP][SAM Web GUI] Overlapped in Content - Activation Keys page
+877317 - [ALL_LANG][SAM Web GUI] Unlocalized string 'Viewing xx of xx results (xx Total xx)'.
+877473 - SAM upgrade fails with uninitialized constant Glue::Foreman
+877894 - [ALL_LANG][SAM Web GUI] Some unlocalized messages for creating Users.
+878191 - CLI system remove_deletion fails calling candlepin proxy
+878341 - [ja_JP][zh_TW][ko_KR][SAM Web GUI] Default environment name 'Library' should not be localized.
+878355 - [ru_RU][fr_FR][SAM Web GUI] - Text not fitting in the level properly
+878370 - [ALL_LANG][SAM Web GUI] Unlocalized date, tooltips for Release Version and strings for Systems
+878377 - [es_ES] - Unlocalized strings in SAM Web GUI pages.
+878693 - [RFE] Selecting multiple systems does not give me any action
+878750 - [es_ES][it_IT][SAM Web GUI] - Mouse over and Click tool causing overlap with the other contents
+879094 - CVE-2012-5561 Katello: /etc/katello/secure/passphrase is world readable
+879170 - [fr_FR][SAM Web GUI] - Untranslated strings in SAM Web GUI
+879245 - [cli] `system subscriptions --uuid`returns python's &quot;None&quot; as system name
+879320 - [cli] system list shows 127.0.0.1 for registered virtual guests
+880113 - [ALL LANG][SAM CLI] undefined method `with_indifferent_access' for #&lt;Array:0x7f9a1164f0e8&gt; occurred when --add_subscription or  --remove_subscription with blank or invalid ?? value for activation_key update module.
+880116 - [ALL LANG][SAM CLI] undefined method `[]' for nil:NilClass occurred when --add_subscription with pool id for activation_key update module.
+880710 - subscription-manager problems when organization label is different than name
+880848 - Typo: Subscripton/Subscription in the Dashboard
+880905 - [fr_FR][it_IT][SAM Web GUI] - New Role can not be created
+881616 - [ALL_LANG][SAM Web GUI] Usage Limit value to be set as '-1' when uncheck the 'Unlimited' and Save the Activation Key.
+882129 - CVE-2012-5603 CloudForms Katello: lack of authorization in proxies_controller.rb
+882136 - CVE-2012-5604 rubygem-ldap_fluff: CloudForms authentication bypass when handling anonymous LDAP bind
+882957 - HTML id attributes are not unique
+885096 - Headpin/SAM headpin mode new foreman command 'architecture' should be removed
+886137 - Tracker: remove katello-reset-dbs script
+886462 - [cli] ping returns $? == 30 (but all services are OK)
+889649 - CVE-2012-6496 rubygem-activerecord: find_by_* SQL Injection
+890000 - Can not auto-subscribe against SAM-20121221.n.1 server
+892639 - SAM Compose : 7th January puddle -&gt; katello-configure failed
+892806 - CVE-2013-0162 rubygem-ruby_parser: incorrect temporary file usage
+895277 - CVE-2012-6109 rubygem-rack: parsing Content-Disposition header DoS
+895282 - CVE-2013-0183 rubygem-rack: receiving excessively long lines triggers out-of-memory error
+895384 - CVE-2013-0184 rubygem-rack: Rack::Auth::AbstractRequest DoS
+896550 - Typo during generation of candlepin.conf
+
+6. Package List:
+
+Red Hat Subscription Asset Manager for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/apache-commons-codec-1.7-2.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/apache-commons-codec-1.7-2.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/apache-mime4j-0.6-4_redhat_1.ep6.el6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/apache-mime4j-0.6-4_redhat_1.ep6.el6.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/candlepin-0.7.23-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/candlepin-0.7.23-1.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/elasticsearch-0.19.9-5.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/elasticsearch-0.19.9-5.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/katello-1.2.1-15h.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/katello-1.2.1-15h.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/katello-certs-tools-1.2.1-1h.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/katello-certs-tools-1.2.1-1h.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/katello-cli-1.2.1-12h.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/katello-cli-1.2.1-12h.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/katello-configure-1.2.3-3h.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/katello-configure-1.2.3-3h.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/katello-selinux-1.2.1-2h.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/katello-selinux-1.2.1-2h.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/lucene3-3.6.1-10h.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/lucene3-3.6.1-10h.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/puppet-2.6.17-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/puppet-2.6.17-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/quartz-2.1.5-4.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/quartz-2.1.5-4.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/rubygem-activesupport-3.0.10-10.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/rubygem-activesupport-3.0.10-10.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/rubygem-apipie-rails-0.0.12-2.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/rubygem-apipie-rails-0.0.12-2.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/rubygem-ldap_fluff-0.1.3-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/rubygem-ldap_fluff-0.1.3-1.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/rubygem-mail-2.3.0-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/rubygem-mail-2.3.0-3.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/rubygem-ruby_parser-2.0.4-6.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/rubygem-ruby_parser-2.0.4-6.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/sigar-1.6.5-0.12.git58097d9h.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/sigar-1.6.5-0.12.git58097d9h.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/snappy-java-1.0.4-2.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/snappy-java-1.0.4-2.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/thumbslug-0.0.28-1.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/SAM/SRPMS/thumbslug-0.0.28-1.el6_3.src.rpm</a>
+
+noarch:
+apache-mime4j-0.6-4_redhat_1.ep6.el6.1.noarch.rpm
+apache-mime4j-javadoc-0.6-4_redhat_1.ep6.el6.1.noarch.rpm
+candlepin-0.7.23-1.el6_3.noarch.rpm
+candlepin-devel-0.7.23-1.el6_3.noarch.rpm
+candlepin-selinux-0.7.23-1.el6_3.noarch.rpm
+candlepin-tomcat6-0.7.23-1.el6_3.noarch.rpm
+elasticsearch-0.19.9-5.el6_3.noarch.rpm
+katello-certs-tools-1.2.1-1h.el6_3.noarch.rpm
+katello-cli-1.2.1-12h.el6_3.noarch.rpm
+katello-cli-common-1.2.1-12h.el6_3.noarch.rpm
+katello-common-1.2.1-15h.el6_3.noarch.rpm
+katello-configure-1.2.3-3h.el6_3.noarch.rpm
+katello-glue-candlepin-1.2.1-15h.el6_3.noarch.rpm
+katello-headpin-1.2.1-15h.el6_3.noarch.rpm
+katello-headpin-all-1.2.1-15h.el6_3.noarch.rpm
+katello-selinux-1.2.1-2h.el6_3.noarch.rpm
+lucene3-3.6.1-10h.el6_3.noarch.rpm
+lucene3-contrib-3.6.1-10h.el6_3.noarch.rpm
+puppet-2.6.17-2.el6cf.noarch.rpm
+puppet-server-2.6.17-2.el6cf.noarch.rpm
+quartz-2.1.5-4.el6_3.noarch.rpm
+rubygem-activesupport-3.0.10-10.el6cf.noarch.rpm
+rubygem-apipie-rails-0.0.12-2.el6cf.noarch.rpm
+rubygem-ldap_fluff-0.1.3-1.el6_3.noarch.rpm
+rubygem-mail-2.3.0-3.el6cf.noarch.rpm
+rubygem-mail-doc-2.3.0-3.el6cf.noarch.rpm
+rubygem-ruby_parser-2.0.4-6.el6cf.noarch.rpm
+rubygem-ruby_parser-doc-2.0.4-6.el6cf.noarch.rpm
+thumbslug-0.0.28-1.el6_3.noarch.rpm
+thumbslug-selinux-0.0.28-1.el6_3.noarch.rpm
+
+x86_64:
+apache-commons-codec-1.7-2.el6_3.x86_64.rpm
+apache-commons-codec-debuginfo-1.7-2.el6_3.x86_64.rpm
+sigar-1.6.5-0.12.git58097d9h.el6_3.x86_64.rpm
+sigar-debuginfo-1.6.5-0.12.git58097d9h.el6_3.x86_64.rpm
+sigar-java-1.6.5-0.12.git58097d9h.el6_3.x86_64.rpm
+snappy-java-1.0.4-2.el6_3.x86_64.rpm
+snappy-java-debuginfo-1.0.4-2.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5561.html">https://www.redhat.com/security/data/cve/CVE-2012-5561.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5603.html">https://www.redhat.com/security/data/cve/CVE-2012-5603.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5604.html">https://www.redhat.com/security/data/cve/CVE-2012-5604.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6109.html">https://www.redhat.com/security/data/cve/CVE-2012-6109.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6496.html">https://www.redhat.com/security/data/cve/CVE-2012-6496.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0162.html">https://www.redhat.com/security/data/cve/CVE-2013-0162.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0183.html">https://www.redhat.com/security/data/cve/CVE-2013-0183.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0184.html">https://www.redhat.com/security/data/cve/CVE-2013-0184.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Subscription_Asset_Manager/1.2/html/Release_Notes/index.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Subscription_Asset_Manager/1.2/html/Release_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJnPCXlSAg2UNWIIRAq2dAKCQZX3pZfaEu6MNNioy5AlcY+sonQCfSn/a
+WrxtC+HWUg11apjnU7Lzjts=
+=r0mR
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00065.html">Date Prev</a>][<a href="msg00067.html">Date Next</a>] &nbsp; [<a href="msg00065.html">Thread Prev</a>][<a href="msg00067.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00066">Thread Index</A>]
+[<A HREF="date.html#00066">Date Index</A>]
+[<A HREF="author.html#00066">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

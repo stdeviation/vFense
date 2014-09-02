@@ -1,0 +1,358 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1361&#45;01] Critical: xulrunner security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Fri, 12 Oct 2012 16:17:40 &#45;0400 -->
+<!--X-Message-Id: 201210122017.q9CKHZ2C020799@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1361-01] Critical: xulrunner security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1361-01] Critical: xulrunner security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1361-01] Critical: xulrunner security update</li>
+<li><em>Date</em>: Fri, 12 Oct 2012 20:17:34 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: xulrunner security update
+Advisory ID:       RHSA-2012:1361-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1361.html">https://rhn.redhat.com/errata/RHSA-2012-1361.html</a>
+Issue date:        2012-10-12
+CVE Names:         CVE-2012-4193 
+=====================================================================
+
+1. Summary:
+
+Updated xulrunner packages that fix one security issue are now available
+for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+XULRunner provides the XUL Runtime environment for applications using the
+Gecko layout engine.
+
+A flaw was found in the way XULRunner handled security wrappers. A web page
+containing malicious content could possibly cause an application linked
+against XULRunner (such as Mozilla Firefox) to execute arbitrary code with
+the privileges of the user running the application. (CVE-2012-4193)
+
+For technical details regarding this flaw, refer to the Mozilla security
+advisories. You can find a link to the Mozilla advisories in the References
+section of this erratum.
+
+Red Hat would like to thank the Mozilla project for reporting this issue.
+Upstream acknowledges moz_bug_r_a4 as the original reporter.
+
+All XULRunner users should upgrade to these updated packages, which correct
+this issue. After installing the update, applications using XULRunner must
+be restarted for the changes to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+865215 - CVE-2012-4193 Mozilla: defaultValue security checks not applied (MFSA 2012-89)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-10.0.8-2.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-10.0.8-2.el5_8.src.rpm</a>
+
+i386:
+xulrunner-10.0.8-2.el5_8.i386.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.i386.rpm
+
+x86_64:
+xulrunner-10.0.8-2.el5_8.i386.rpm
+xulrunner-10.0.8-2.el5_8.x86_64.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.i386.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-10.0.8-2.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xulrunner-10.0.8-2.el5_8.src.rpm</a>
+
+i386:
+xulrunner-debuginfo-10.0.8-2.el5_8.i386.rpm
+xulrunner-devel-10.0.8-2.el5_8.i386.rpm
+
+x86_64:
+xulrunner-debuginfo-10.0.8-2.el5_8.i386.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.x86_64.rpm
+xulrunner-devel-10.0.8-2.el5_8.i386.rpm
+xulrunner-devel-10.0.8-2.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xulrunner-10.0.8-2.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xulrunner-10.0.8-2.el5_8.src.rpm</a>
+
+i386:
+xulrunner-10.0.8-2.el5_8.i386.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.i386.rpm
+xulrunner-devel-10.0.8-2.el5_8.i386.rpm
+
+ia64:
+xulrunner-10.0.8-2.el5_8.ia64.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.ia64.rpm
+xulrunner-devel-10.0.8-2.el5_8.ia64.rpm
+
+ppc:
+xulrunner-10.0.8-2.el5_8.ppc.rpm
+xulrunner-10.0.8-2.el5_8.ppc64.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.ppc.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.ppc64.rpm
+xulrunner-devel-10.0.8-2.el5_8.ppc.rpm
+xulrunner-devel-10.0.8-2.el5_8.ppc64.rpm
+
+s390x:
+xulrunner-10.0.8-2.el5_8.s390.rpm
+xulrunner-10.0.8-2.el5_8.s390x.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.s390.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.s390x.rpm
+xulrunner-devel-10.0.8-2.el5_8.s390.rpm
+xulrunner-devel-10.0.8-2.el5_8.s390x.rpm
+
+x86_64:
+xulrunner-10.0.8-2.el5_8.i386.rpm
+xulrunner-10.0.8-2.el5_8.x86_64.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.i386.rpm
+xulrunner-debuginfo-10.0.8-2.el5_8.x86_64.rpm
+xulrunner-devel-10.0.8-2.el5_8.i386.rpm
+xulrunner-devel-10.0.8-2.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm</a>
+
+i386:
+xulrunner-10.0.8-2.el6_3.i686.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+
+x86_64:
+xulrunner-10.0.8-2.el6_3.i686.rpm
+xulrunner-10.0.8-2.el6_3.x86_64.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm</a>
+
+i386:
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+xulrunner-devel-10.0.8-2.el6_3.i686.rpm
+
+x86_64:
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.x86_64.rpm
+xulrunner-devel-10.0.8-2.el6_3.i686.rpm
+xulrunner-devel-10.0.8-2.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm</a>
+
+x86_64:
+xulrunner-10.0.8-2.el6_3.i686.rpm
+xulrunner-10.0.8-2.el6_3.x86_64.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.x86_64.rpm
+xulrunner-devel-10.0.8-2.el6_3.i686.rpm
+xulrunner-devel-10.0.8-2.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm</a>
+
+i386:
+xulrunner-10.0.8-2.el6_3.i686.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+
+ppc64:
+xulrunner-10.0.8-2.el6_3.ppc.rpm
+xulrunner-10.0.8-2.el6_3.ppc64.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.ppc.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.ppc64.rpm
+
+s390x:
+xulrunner-10.0.8-2.el6_3.s390.rpm
+xulrunner-10.0.8-2.el6_3.s390x.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.s390.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.s390x.rpm
+
+x86_64:
+xulrunner-10.0.8-2.el6_3.i686.rpm
+xulrunner-10.0.8-2.el6_3.x86_64.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm</a>
+
+i386:
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+xulrunner-devel-10.0.8-2.el6_3.i686.rpm
+
+ppc64:
+xulrunner-debuginfo-10.0.8-2.el6_3.ppc.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.ppc64.rpm
+xulrunner-devel-10.0.8-2.el6_3.ppc.rpm
+xulrunner-devel-10.0.8-2.el6_3.ppc64.rpm
+
+s390x:
+xulrunner-debuginfo-10.0.8-2.el6_3.s390.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.s390x.rpm
+xulrunner-devel-10.0.8-2.el6_3.s390.rpm
+xulrunner-devel-10.0.8-2.el6_3.s390x.rpm
+
+x86_64:
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.x86_64.rpm
+xulrunner-devel-10.0.8-2.el6_3.i686.rpm
+xulrunner-devel-10.0.8-2.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm</a>
+
+i386:
+xulrunner-10.0.8-2.el6_3.i686.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+
+x86_64:
+xulrunner-10.0.8-2.el6_3.i686.rpm
+xulrunner-10.0.8-2.el6_3.x86_64.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xulrunner-10.0.8-2.el6_3.src.rpm</a>
+
+i386:
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+xulrunner-devel-10.0.8-2.el6_3.i686.rpm
+
+x86_64:
+xulrunner-debuginfo-10.0.8-2.el6_3.i686.rpm
+xulrunner-debuginfo-10.0.8-2.el6_3.x86_64.rpm
+xulrunner-devel-10.0.8-2.el6_3.i686.rpm
+xulrunner-devel-10.0.8-2.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4193.html">https://www.redhat.com/security/data/cve/CVE-2012-4193.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.mozilla.org/security/known-vulnerabilities/firefoxESR.html">http://www.mozilla.org/security/known-vulnerabilities/firefoxESR.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQeHqeXlSAg2UNWIIRAk79AKC3KhWJGNgQCDkDBZ0KUwoiPscdEwCfWK90
+McNsasTYXKl//P0LQiuK+o4=
+=Dkgo
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

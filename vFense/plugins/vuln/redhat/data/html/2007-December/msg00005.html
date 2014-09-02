@@ -1,0 +1,579 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1114&#45;01] Critical: samba security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 10 Dec 2007 13:30:04 &#45;0500 -->
+<!--X-Message-Id: 200712101830.lBAIU3Vn005969@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1114-01] Critical: samba security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1114-01] Critical: samba security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1114-01] Critical: samba security and bug fix update</li>
+<li><em>Date</em>: Mon, 10 Dec 2007 13:30:03 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: samba security and bug fix update
+Advisory ID:       RHSA-2007:1114-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1114.html">https://rhn.redhat.com/errata/RHSA-2007-1114.html</a>
+Issue date:        2007-12-10
+Updated on:        2007-12-10
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-6015 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated samba packages that fix a security issue and a bug are now
+available for Red Hat Enterprise Linux.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS (Advanced Server) version 2.1  - i386, ia64
+Red Hat Linux Advanced Workstation 2.1 - ia64
+Red Hat Enterprise Linux ES version 2.1 - i386
+Red Hat Enterprise Linux WS version 2.1 - i386
+Red Hat Enterprise Linux AS version 3 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Desktop version 3 - i386, x86_64
+Red Hat Enterprise Linux ES version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Problem description:
+
+Samba is a suite of programs used by machines to share files, printers, and
+other information.
+
+A stack buffer overflow flaw was found in the way Samba authenticates
+remote users. A remote unauthenticated user could trigger this flaw to
+cause the Samba server to crash, or execute arbitrary code with the
+permissions of the Samba server. (CVE-2007-6015)
+
+Red Hat would like to thank Alin Rad Pop of Secunia Research for
+responsibly disclosing this issue.
+
+This update also fixes a regression caused by the fix for CVE-2007-4572,
+which prevented some clients from being able to properly access shares.
+
+Users of Samba are advised to upgrade to these updated packages, which
+contain a backported patch to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+389021 - Critical Regression caused by CVE-2007-4572
+396401 - CVE-2007-6015 samba: send_mailslot() buffer overflow
+407071 - Critical Regression caused by CVE-2007-4572
+407081 - Critical Regression caused by CVE-2007-4572
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS (Advanced Server) version 2.1 :
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1AS/en/os/SRPMS/samba-2.2.12-1.21as.8.2.src.rpm">ftp://updates.redhat.com/enterprise/2.1AS/en/os/SRPMS/samba-2.2.12-1.21as.8.2.src.rpm</a>
+736a5ff3fc6cb67ad2c00f6d29fbc63d  samba-2.2.12-1.21as.8.2.src.rpm
+
+i386:
+068ec4ae53febbcaa2504a799bb7ff40  samba-2.2.12-1.21as.8.2.i386.rpm
+4ae0e8f558906f9e810d164ecf5a0003  samba-client-2.2.12-1.21as.8.2.i386.rpm
+4b7337b654d4d2b9997dbbd2a100d1f0  samba-common-2.2.12-1.21as.8.2.i386.rpm
+cd7d82b601f4da8074f2b25a0be4d225  samba-swat-2.2.12-1.21as.8.2.i386.rpm
+
+ia64:
+702410acf536a93b21e694c3d991bd63  samba-2.2.12-1.21as.8.2.ia64.rpm
+10577425c420f1dd0e279278a826c83e  samba-client-2.2.12-1.21as.8.2.ia64.rpm
+48d9cc2240d1b30a9487754cb7e0fae0  samba-common-2.2.12-1.21as.8.2.ia64.rpm
+a0b7f79e4b7774d2f5059e42a90bfc98  samba-swat-2.2.12-1.21as.8.2.ia64.rpm
+
+Red Hat Linux Advanced Workstation 2.1:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1AW/en/os/SRPMS/samba-2.2.12-1.21as.8.2.src.rpm">ftp://updates.redhat.com/enterprise/2.1AW/en/os/SRPMS/samba-2.2.12-1.21as.8.2.src.rpm</a>
+736a5ff3fc6cb67ad2c00f6d29fbc63d  samba-2.2.12-1.21as.8.2.src.rpm
+
+ia64:
+702410acf536a93b21e694c3d991bd63  samba-2.2.12-1.21as.8.2.ia64.rpm
+10577425c420f1dd0e279278a826c83e  samba-client-2.2.12-1.21as.8.2.ia64.rpm
+48d9cc2240d1b30a9487754cb7e0fae0  samba-common-2.2.12-1.21as.8.2.ia64.rpm
+a0b7f79e4b7774d2f5059e42a90bfc98  samba-swat-2.2.12-1.21as.8.2.ia64.rpm
+
+Red Hat Enterprise Linux ES version 2.1:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1ES/en/os/SRPMS/samba-2.2.12-1.21as.8.2.src.rpm">ftp://updates.redhat.com/enterprise/2.1ES/en/os/SRPMS/samba-2.2.12-1.21as.8.2.src.rpm</a>
+736a5ff3fc6cb67ad2c00f6d29fbc63d  samba-2.2.12-1.21as.8.2.src.rpm
+
+i386:
+068ec4ae53febbcaa2504a799bb7ff40  samba-2.2.12-1.21as.8.2.i386.rpm
+4ae0e8f558906f9e810d164ecf5a0003  samba-client-2.2.12-1.21as.8.2.i386.rpm
+4b7337b654d4d2b9997dbbd2a100d1f0  samba-common-2.2.12-1.21as.8.2.i386.rpm
+cd7d82b601f4da8074f2b25a0be4d225  samba-swat-2.2.12-1.21as.8.2.i386.rpm
+
+Red Hat Enterprise Linux WS version 2.1:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1WS/en/os/SRPMS/samba-2.2.12-1.21as.8.2.src.rpm">ftp://updates.redhat.com/enterprise/2.1WS/en/os/SRPMS/samba-2.2.12-1.21as.8.2.src.rpm</a>
+736a5ff3fc6cb67ad2c00f6d29fbc63d  samba-2.2.12-1.21as.8.2.src.rpm
+
+i386:
+068ec4ae53febbcaa2504a799bb7ff40  samba-2.2.12-1.21as.8.2.i386.rpm
+4ae0e8f558906f9e810d164ecf5a0003  samba-client-2.2.12-1.21as.8.2.i386.rpm
+4b7337b654d4d2b9997dbbd2a100d1f0  samba-common-2.2.12-1.21as.8.2.i386.rpm
+cd7d82b601f4da8074f2b25a0be4d225  samba-swat-2.2.12-1.21as.8.2.i386.rpm
+
+Red Hat Enterprise Linux AS version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/samba-3.0.9-1.3E.14.3.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/samba-3.0.9-1.3E.14.3.src.rpm</a>
+079e19bbed89cdc3e78830dc2c3f7992  samba-3.0.9-1.3E.14.3.src.rpm
+
+i386:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+625de7105790e9d4636addbc6fffbbbe  samba-client-3.0.9-1.3E.14.3.i386.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+5d9c16038d9d9217269f3a00b960737a  samba-swat-3.0.9-1.3E.14.3.i386.rpm
+
+ia64:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+b4cc1724d76bd5164305922e98f540ae  samba-3.0.9-1.3E.14.3.ia64.rpm
+61fc8f255cc970db7a2e34f1bc6e9d09  samba-client-3.0.9-1.3E.14.3.ia64.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+2902a7a69ea39af0bb240ef8ca17db75  samba-common-3.0.9-1.3E.14.3.ia64.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+244b7ab278329109b312c9ba1abeadf2  samba-debuginfo-3.0.9-1.3E.14.3.ia64.rpm
+38df293b371476cd9e32b33699828a2b  samba-swat-3.0.9-1.3E.14.3.ia64.rpm
+
+ppc:
+5adc413f485db7bbdc235724a057b731  samba-3.0.9-1.3E.14.3.ppc.rpm
+43eb2120d969a8409b352ec06b27f4d5  samba-3.0.9-1.3E.14.3.ppc64.rpm
+378dd386070253e9b64c97cfa8414825  samba-client-3.0.9-1.3E.14.3.ppc.rpm
+9ea24506656ccf7fc070cc2c265c1b50  samba-common-3.0.9-1.3E.14.3.ppc.rpm
+5b3e0d2217bb2f3e15e8673c3f6fc580  samba-common-3.0.9-1.3E.14.3.ppc64.rpm
+c795611f6fbdde44b3d426c1badb9a6a  samba-debuginfo-3.0.9-1.3E.14.3.ppc.rpm
+59b6fae58ec54ce27ee047caeda13556  samba-debuginfo-3.0.9-1.3E.14.3.ppc64.rpm
+d7f37013a8b02ca681c171335f8e9e95  samba-swat-3.0.9-1.3E.14.3.ppc.rpm
+
+s390:
+2d5d685cf9580039a80b23e3c2e0ea8c  samba-3.0.9-1.3E.14.3.s390.rpm
+4fe23911e0bbc73a2f7d06c2c3a130dd  samba-client-3.0.9-1.3E.14.3.s390.rpm
+dfb064ce5d5d46ee558d26a99885df4a  samba-common-3.0.9-1.3E.14.3.s390.rpm
+c6f13cb2d78f64d44d9968dab049d055  samba-debuginfo-3.0.9-1.3E.14.3.s390.rpm
+3d380d723b495ceaec108701c55bf5b7  samba-swat-3.0.9-1.3E.14.3.s390.rpm
+
+s390x:
+2d5d685cf9580039a80b23e3c2e0ea8c  samba-3.0.9-1.3E.14.3.s390.rpm
+080acc97a88c42822707bce05a494f14  samba-3.0.9-1.3E.14.3.s390x.rpm
+c34203214355603b584eef6499c4949c  samba-client-3.0.9-1.3E.14.3.s390x.rpm
+dfb064ce5d5d46ee558d26a99885df4a  samba-common-3.0.9-1.3E.14.3.s390.rpm
+8dd3831a0feec34accbc3b338a8554b6  samba-common-3.0.9-1.3E.14.3.s390x.rpm
+c6f13cb2d78f64d44d9968dab049d055  samba-debuginfo-3.0.9-1.3E.14.3.s390.rpm
+51300e43557bc52c53e5521c6dc3d4de  samba-debuginfo-3.0.9-1.3E.14.3.s390x.rpm
+4a4c05869304bd6e94abb0cc2a83d84d  samba-swat-3.0.9-1.3E.14.3.s390x.rpm
+
+x86_64:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+7ca762e50cd8cb8125574e27f6cb079f  samba-3.0.9-1.3E.14.3.x86_64.rpm
+e267203475bf3585b595d1bdd1c03df8  samba-client-3.0.9-1.3E.14.3.x86_64.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+200f7b35fb0e3b88c4465d88428193ba  samba-common-3.0.9-1.3E.14.3.x86_64.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+f54dd8405bdfa346a6ee8bc0dc09322d  samba-debuginfo-3.0.9-1.3E.14.3.x86_64.rpm
+e9f4f7fd7f9c8eb1503798e274d1bfea  samba-swat-3.0.9-1.3E.14.3.x86_64.rpm
+
+Red Hat Desktop version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/samba-3.0.9-1.3E.14.3.src.rpm">ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/samba-3.0.9-1.3E.14.3.src.rpm</a>
+079e19bbed89cdc3e78830dc2c3f7992  samba-3.0.9-1.3E.14.3.src.rpm
+
+i386:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+625de7105790e9d4636addbc6fffbbbe  samba-client-3.0.9-1.3E.14.3.i386.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+5d9c16038d9d9217269f3a00b960737a  samba-swat-3.0.9-1.3E.14.3.i386.rpm
+
+x86_64:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+7ca762e50cd8cb8125574e27f6cb079f  samba-3.0.9-1.3E.14.3.x86_64.rpm
+e267203475bf3585b595d1bdd1c03df8  samba-client-3.0.9-1.3E.14.3.x86_64.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+200f7b35fb0e3b88c4465d88428193ba  samba-common-3.0.9-1.3E.14.3.x86_64.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+f54dd8405bdfa346a6ee8bc0dc09322d  samba-debuginfo-3.0.9-1.3E.14.3.x86_64.rpm
+e9f4f7fd7f9c8eb1503798e274d1bfea  samba-swat-3.0.9-1.3E.14.3.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/samba-3.0.9-1.3E.14.3.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/samba-3.0.9-1.3E.14.3.src.rpm</a>
+079e19bbed89cdc3e78830dc2c3f7992  samba-3.0.9-1.3E.14.3.src.rpm
+
+i386:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+625de7105790e9d4636addbc6fffbbbe  samba-client-3.0.9-1.3E.14.3.i386.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+5d9c16038d9d9217269f3a00b960737a  samba-swat-3.0.9-1.3E.14.3.i386.rpm
+
+ia64:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+b4cc1724d76bd5164305922e98f540ae  samba-3.0.9-1.3E.14.3.ia64.rpm
+61fc8f255cc970db7a2e34f1bc6e9d09  samba-client-3.0.9-1.3E.14.3.ia64.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+2902a7a69ea39af0bb240ef8ca17db75  samba-common-3.0.9-1.3E.14.3.ia64.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+244b7ab278329109b312c9ba1abeadf2  samba-debuginfo-3.0.9-1.3E.14.3.ia64.rpm
+38df293b371476cd9e32b33699828a2b  samba-swat-3.0.9-1.3E.14.3.ia64.rpm
+
+x86_64:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+7ca762e50cd8cb8125574e27f6cb079f  samba-3.0.9-1.3E.14.3.x86_64.rpm
+e267203475bf3585b595d1bdd1c03df8  samba-client-3.0.9-1.3E.14.3.x86_64.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+200f7b35fb0e3b88c4465d88428193ba  samba-common-3.0.9-1.3E.14.3.x86_64.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+f54dd8405bdfa346a6ee8bc0dc09322d  samba-debuginfo-3.0.9-1.3E.14.3.x86_64.rpm
+e9f4f7fd7f9c8eb1503798e274d1bfea  samba-swat-3.0.9-1.3E.14.3.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/samba-3.0.9-1.3E.14.3.src.rpm">ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/samba-3.0.9-1.3E.14.3.src.rpm</a>
+079e19bbed89cdc3e78830dc2c3f7992  samba-3.0.9-1.3E.14.3.src.rpm
+
+i386:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+625de7105790e9d4636addbc6fffbbbe  samba-client-3.0.9-1.3E.14.3.i386.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+5d9c16038d9d9217269f3a00b960737a  samba-swat-3.0.9-1.3E.14.3.i386.rpm
+
+ia64:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+b4cc1724d76bd5164305922e98f540ae  samba-3.0.9-1.3E.14.3.ia64.rpm
+61fc8f255cc970db7a2e34f1bc6e9d09  samba-client-3.0.9-1.3E.14.3.ia64.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+2902a7a69ea39af0bb240ef8ca17db75  samba-common-3.0.9-1.3E.14.3.ia64.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+244b7ab278329109b312c9ba1abeadf2  samba-debuginfo-3.0.9-1.3E.14.3.ia64.rpm
+38df293b371476cd9e32b33699828a2b  samba-swat-3.0.9-1.3E.14.3.ia64.rpm
+
+x86_64:
+1f2f5652a9bde00c73d0e0a8b4a60ef7  samba-3.0.9-1.3E.14.3.i386.rpm
+7ca762e50cd8cb8125574e27f6cb079f  samba-3.0.9-1.3E.14.3.x86_64.rpm
+e267203475bf3585b595d1bdd1c03df8  samba-client-3.0.9-1.3E.14.3.x86_64.rpm
+74e9aef3e855a21c1ab4b93ca91185fa  samba-common-3.0.9-1.3E.14.3.i386.rpm
+200f7b35fb0e3b88c4465d88428193ba  samba-common-3.0.9-1.3E.14.3.x86_64.rpm
+067cfb58d3f69bd053cd1d1829eb6692  samba-debuginfo-3.0.9-1.3E.14.3.i386.rpm
+f54dd8405bdfa346a6ee8bc0dc09322d  samba-debuginfo-3.0.9-1.3E.14.3.x86_64.rpm
+e9f4f7fd7f9c8eb1503798e274d1bfea  samba-swat-3.0.9-1.3E.14.3.x86_64.rpm
+
+Red Hat Enterprise Linux AS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/samba-3.0.25b-1.el4_6.4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/samba-3.0.25b-1.el4_6.4.src.rpm</a>
+f727f27e09f9aafa2e36ec92291edb1c  samba-3.0.25b-1.el4_6.4.src.rpm
+
+i386:
+45d563301c64b6821e4e68c4fb1bfcfd  samba-3.0.25b-1.el4_6.4.i386.rpm
+5d573f67d6b43a93660b3349c7d1ebf0  samba-client-3.0.25b-1.el4_6.4.i386.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+349aba5bcaf5521a8b113280598b6691  samba-swat-3.0.25b-1.el4_6.4.i386.rpm
+
+ia64:
+d686f19b733375711202e6b94da842bd  samba-3.0.25b-1.el4_6.4.ia64.rpm
+7cb06afbd8ff842c2a96185bd83c3338  samba-client-3.0.25b-1.el4_6.4.ia64.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+ba0303f24d5f4ee1f65f5f3c77165024  samba-common-3.0.25b-1.el4_6.4.ia64.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+2d816b786cf8a04a962fa873a0d6c6f8  samba-debuginfo-3.0.25b-1.el4_6.4.ia64.rpm
+6f3b801015aeded843675a509fc6490a  samba-swat-3.0.25b-1.el4_6.4.ia64.rpm
+
+ppc:
+dd7d91e5fa631f043dd72520f51e6a24  samba-3.0.25b-1.el4_6.4.ppc.rpm
+625bee72792d5d870c454280e645408a  samba-client-3.0.25b-1.el4_6.4.ppc.rpm
+0e3514d22edbacb0462beec35089feff  samba-common-3.0.25b-1.el4_6.4.ppc.rpm
+26453ea33785893f749e9fcdb394e30b  samba-common-3.0.25b-1.el4_6.4.ppc64.rpm
+c506d224457385588e55bce7cfffc84f  samba-debuginfo-3.0.25b-1.el4_6.4.ppc.rpm
+456d47037ccb99b9a4b24fd5017ae1ce  samba-debuginfo-3.0.25b-1.el4_6.4.ppc64.rpm
+62813f161a3f801b64ecff4a73fda465  samba-swat-3.0.25b-1.el4_6.4.ppc.rpm
+
+s390:
+2c186c23419951be0128f0521e69cf42  samba-3.0.25b-1.el4_6.4.s390.rpm
+5d799b8c88f0019f1e3352c32c646aa6  samba-client-3.0.25b-1.el4_6.4.s390.rpm
+b13e524a76bf418f9b59536cd438152f  samba-common-3.0.25b-1.el4_6.4.s390.rpm
+d5a0ae2337277a4d61f17c39d06d9836  samba-debuginfo-3.0.25b-1.el4_6.4.s390.rpm
+6fc99afc6652a85293e1ac225a2b75f4  samba-swat-3.0.25b-1.el4_6.4.s390.rpm
+
+s390x:
+203c85f318dc3d8a014860938cd4b432  samba-3.0.25b-1.el4_6.4.s390x.rpm
+7281d1247719298e892228a78d63fa29  samba-client-3.0.25b-1.el4_6.4.s390x.rpm
+b13e524a76bf418f9b59536cd438152f  samba-common-3.0.25b-1.el4_6.4.s390.rpm
+4be88724c11abd49317f0284ea13e829  samba-common-3.0.25b-1.el4_6.4.s390x.rpm
+d5a0ae2337277a4d61f17c39d06d9836  samba-debuginfo-3.0.25b-1.el4_6.4.s390.rpm
+2299c0b776d115f980528437f5e54317  samba-debuginfo-3.0.25b-1.el4_6.4.s390x.rpm
+e5f6098753dc040b1951bee7ef9f42e2  samba-swat-3.0.25b-1.el4_6.4.s390x.rpm
+
+x86_64:
+667435c8afe4a85fe4ceba1137bb0c13  samba-3.0.25b-1.el4_6.4.x86_64.rpm
+0b939c067faf16c0f17679ceb06800a9  samba-client-3.0.25b-1.el4_6.4.x86_64.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+0eedccae0a9d8ca56056e7069739e42c  samba-common-3.0.25b-1.el4_6.4.x86_64.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+892de6cd406d4b31316fe8e584336015  samba-debuginfo-3.0.25b-1.el4_6.4.x86_64.rpm
+e5b5e6aaa29332615cc50e08c80bbae7  samba-swat-3.0.25b-1.el4_6.4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/samba-3.0.25b-1.el4_6.4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/samba-3.0.25b-1.el4_6.4.src.rpm</a>
+f727f27e09f9aafa2e36ec92291edb1c  samba-3.0.25b-1.el4_6.4.src.rpm
+
+i386:
+45d563301c64b6821e4e68c4fb1bfcfd  samba-3.0.25b-1.el4_6.4.i386.rpm
+5d573f67d6b43a93660b3349c7d1ebf0  samba-client-3.0.25b-1.el4_6.4.i386.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+349aba5bcaf5521a8b113280598b6691  samba-swat-3.0.25b-1.el4_6.4.i386.rpm
+
+x86_64:
+667435c8afe4a85fe4ceba1137bb0c13  samba-3.0.25b-1.el4_6.4.x86_64.rpm
+0b939c067faf16c0f17679ceb06800a9  samba-client-3.0.25b-1.el4_6.4.x86_64.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+0eedccae0a9d8ca56056e7069739e42c  samba-common-3.0.25b-1.el4_6.4.x86_64.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+892de6cd406d4b31316fe8e584336015  samba-debuginfo-3.0.25b-1.el4_6.4.x86_64.rpm
+e5b5e6aaa29332615cc50e08c80bbae7  samba-swat-3.0.25b-1.el4_6.4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/samba-3.0.25b-1.el4_6.4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/samba-3.0.25b-1.el4_6.4.src.rpm</a>
+f727f27e09f9aafa2e36ec92291edb1c  samba-3.0.25b-1.el4_6.4.src.rpm
+
+i386:
+45d563301c64b6821e4e68c4fb1bfcfd  samba-3.0.25b-1.el4_6.4.i386.rpm
+5d573f67d6b43a93660b3349c7d1ebf0  samba-client-3.0.25b-1.el4_6.4.i386.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+349aba5bcaf5521a8b113280598b6691  samba-swat-3.0.25b-1.el4_6.4.i386.rpm
+
+ia64:
+d686f19b733375711202e6b94da842bd  samba-3.0.25b-1.el4_6.4.ia64.rpm
+7cb06afbd8ff842c2a96185bd83c3338  samba-client-3.0.25b-1.el4_6.4.ia64.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+ba0303f24d5f4ee1f65f5f3c77165024  samba-common-3.0.25b-1.el4_6.4.ia64.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+2d816b786cf8a04a962fa873a0d6c6f8  samba-debuginfo-3.0.25b-1.el4_6.4.ia64.rpm
+6f3b801015aeded843675a509fc6490a  samba-swat-3.0.25b-1.el4_6.4.ia64.rpm
+
+x86_64:
+667435c8afe4a85fe4ceba1137bb0c13  samba-3.0.25b-1.el4_6.4.x86_64.rpm
+0b939c067faf16c0f17679ceb06800a9  samba-client-3.0.25b-1.el4_6.4.x86_64.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+0eedccae0a9d8ca56056e7069739e42c  samba-common-3.0.25b-1.el4_6.4.x86_64.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+892de6cd406d4b31316fe8e584336015  samba-debuginfo-3.0.25b-1.el4_6.4.x86_64.rpm
+e5b5e6aaa29332615cc50e08c80bbae7  samba-swat-3.0.25b-1.el4_6.4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/samba-3.0.25b-1.el4_6.4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/samba-3.0.25b-1.el4_6.4.src.rpm</a>
+f727f27e09f9aafa2e36ec92291edb1c  samba-3.0.25b-1.el4_6.4.src.rpm
+
+i386:
+45d563301c64b6821e4e68c4fb1bfcfd  samba-3.0.25b-1.el4_6.4.i386.rpm
+5d573f67d6b43a93660b3349c7d1ebf0  samba-client-3.0.25b-1.el4_6.4.i386.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+349aba5bcaf5521a8b113280598b6691  samba-swat-3.0.25b-1.el4_6.4.i386.rpm
+
+ia64:
+d686f19b733375711202e6b94da842bd  samba-3.0.25b-1.el4_6.4.ia64.rpm
+7cb06afbd8ff842c2a96185bd83c3338  samba-client-3.0.25b-1.el4_6.4.ia64.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+ba0303f24d5f4ee1f65f5f3c77165024  samba-common-3.0.25b-1.el4_6.4.ia64.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+2d816b786cf8a04a962fa873a0d6c6f8  samba-debuginfo-3.0.25b-1.el4_6.4.ia64.rpm
+6f3b801015aeded843675a509fc6490a  samba-swat-3.0.25b-1.el4_6.4.ia64.rpm
+
+x86_64:
+667435c8afe4a85fe4ceba1137bb0c13  samba-3.0.25b-1.el4_6.4.x86_64.rpm
+0b939c067faf16c0f17679ceb06800a9  samba-client-3.0.25b-1.el4_6.4.x86_64.rpm
+dd5a9ef4165e38e5534f537452c0b5a7  samba-common-3.0.25b-1.el4_6.4.i386.rpm
+0eedccae0a9d8ca56056e7069739e42c  samba-common-3.0.25b-1.el4_6.4.x86_64.rpm
+a5da1cb31526cfaba513dd29a6c0b920  samba-debuginfo-3.0.25b-1.el4_6.4.i386.rpm
+892de6cd406d4b31316fe8e584336015  samba-debuginfo-3.0.25b-1.el4_6.4.x86_64.rpm
+e5b5e6aaa29332615cc50e08c80bbae7  samba-swat-3.0.25b-1.el4_6.4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.25b-1.el5_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.25b-1.el5_1.4.src.rpm</a>
+773c9f6cda514a69dedf5bdcc57626fd  samba-3.0.25b-1.el5_1.4.src.rpm
+
+i386:
+549bca3755b02b23d78449f35cc533bd  samba-3.0.25b-1.el5_1.4.i386.rpm
+f77d9ae9221b25e76472d5494b8a8301  samba-client-3.0.25b-1.el5_1.4.i386.rpm
+f06678933e51e2f887662513ac98a2e2  samba-common-3.0.25b-1.el5_1.4.i386.rpm
+e396d3530986f8b62e968bc83f2ce29f  samba-debuginfo-3.0.25b-1.el5_1.4.i386.rpm
+409dbcdd4c7826c7f474f5b51e9ef220  samba-swat-3.0.25b-1.el5_1.4.i386.rpm
+
+x86_64:
+5f3bad02b9a4326cc2ddc3fba2771f2c  samba-3.0.25b-1.el5_1.4.x86_64.rpm
+f7f249de280d2e8a21765630ac0dfdb0  samba-client-3.0.25b-1.el5_1.4.x86_64.rpm
+f06678933e51e2f887662513ac98a2e2  samba-common-3.0.25b-1.el5_1.4.i386.rpm
+b2b38fb84acf3d52a176b2295c544185  samba-common-3.0.25b-1.el5_1.4.x86_64.rpm
+e396d3530986f8b62e968bc83f2ce29f  samba-debuginfo-3.0.25b-1.el5_1.4.i386.rpm
+f716a45b73d56a81877720280b9a8563  samba-debuginfo-3.0.25b-1.el5_1.4.x86_64.rpm
+1b84de831d56f18acf378f602a233c2f  samba-swat-3.0.25b-1.el5_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba-3.0.25b-1.el5_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba-3.0.25b-1.el5_1.4.src.rpm</a>
+773c9f6cda514a69dedf5bdcc57626fd  samba-3.0.25b-1.el5_1.4.src.rpm
+
+i386:
+549bca3755b02b23d78449f35cc533bd  samba-3.0.25b-1.el5_1.4.i386.rpm
+f77d9ae9221b25e76472d5494b8a8301  samba-client-3.0.25b-1.el5_1.4.i386.rpm
+f06678933e51e2f887662513ac98a2e2  samba-common-3.0.25b-1.el5_1.4.i386.rpm
+e396d3530986f8b62e968bc83f2ce29f  samba-debuginfo-3.0.25b-1.el5_1.4.i386.rpm
+409dbcdd4c7826c7f474f5b51e9ef220  samba-swat-3.0.25b-1.el5_1.4.i386.rpm
+
+ia64:
+a865605d46646455332f6a4a160914aa  samba-3.0.25b-1.el5_1.4.ia64.rpm
+e341b566cceb045157f23d94f83f5065  samba-client-3.0.25b-1.el5_1.4.ia64.rpm
+32cf91c43eb3ebed4ba87ad9aa7744df  samba-common-3.0.25b-1.el5_1.4.ia64.rpm
+5f69bc215657b6060d04851182c3a2be  samba-debuginfo-3.0.25b-1.el5_1.4.ia64.rpm
+36a0a256a6b038298654d4aeb862687e  samba-swat-3.0.25b-1.el5_1.4.ia64.rpm
+
+ppc:
+e2019a546a2473be4171c85a6f1d2150  samba-3.0.25b-1.el5_1.4.ppc.rpm
+f8b1e5d36ff22865fed79d3c48c0a306  samba-client-3.0.25b-1.el5_1.4.ppc.rpm
+512c3bbf3dc14ca290f787c551f23cc5  samba-common-3.0.25b-1.el5_1.4.ppc.rpm
+7a82351c979720a4d0711737d15a6365  samba-common-3.0.25b-1.el5_1.4.ppc64.rpm
+e0c3eae4f189c2ad839b3998f641069b  samba-debuginfo-3.0.25b-1.el5_1.4.ppc.rpm
+22613801a94a5b894da709366e1792eb  samba-debuginfo-3.0.25b-1.el5_1.4.ppc64.rpm
+a41c7f611e59c34cc7122e301252e812  samba-swat-3.0.25b-1.el5_1.4.ppc.rpm
+
+s390x:
+09f95d6266982f062acfd252c70057de  samba-3.0.25b-1.el5_1.4.s390x.rpm
+83d3a5003ff77baed55113c6e1761ab6  samba-client-3.0.25b-1.el5_1.4.s390x.rpm
+4bf9ca969701be82f78115ebd3df66a9  samba-common-3.0.25b-1.el5_1.4.s390.rpm
+00000ba81de3ad5a7eef4790da494172  samba-common-3.0.25b-1.el5_1.4.s390x.rpm
+9d4505ff32e316d31f46b34201eb21c9  samba-debuginfo-3.0.25b-1.el5_1.4.s390.rpm
+a96596f1b4f5b37916f046f4e4b59e14  samba-debuginfo-3.0.25b-1.el5_1.4.s390x.rpm
+37e48d95df8ec952b8b9922d17182472  samba-swat-3.0.25b-1.el5_1.4.s390x.rpm
+
+x86_64:
+5f3bad02b9a4326cc2ddc3fba2771f2c  samba-3.0.25b-1.el5_1.4.x86_64.rpm
+f7f249de280d2e8a21765630ac0dfdb0  samba-client-3.0.25b-1.el5_1.4.x86_64.rpm
+f06678933e51e2f887662513ac98a2e2  samba-common-3.0.25b-1.el5_1.4.i386.rpm
+b2b38fb84acf3d52a176b2295c544185  samba-common-3.0.25b-1.el5_1.4.x86_64.rpm
+e396d3530986f8b62e968bc83f2ce29f  samba-debuginfo-3.0.25b-1.el5_1.4.i386.rpm
+f716a45b73d56a81877720280b9a8563  samba-debuginfo-3.0.25b-1.el5_1.4.x86_64.rpm
+1b84de831d56f18acf378f602a233c2f  samba-swat-3.0.25b-1.el5_1.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6015">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6015</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHXYWiXlSAg2UNWIIRAsQQAKCfBsoQ5SLbXyx6mAk0lbio6q/mGQCeNRuh
+qptfdNeqsOAHKbBfWPufL58=
+=vOrw
+-----END PGP SIGNATURE-----
+
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

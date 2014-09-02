@@ -1,0 +1,362 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1455&#45;01] Moderate: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 29 Sep 2009 15:48:46 &#45;0400 -->
+<!--X-Message-Id: 200909291948.n8TJmjtT026304@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1455-01] Moderate: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1455-01] Moderate: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1455-01] Moderate: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 29 Sep 2009 15:48:44 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel security and bug fix update
+Advisory ID:       RHSA-2009:1455-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1455.html">https://rhn.redhat.com/errata/RHSA-2009-1455.html</a>
+Issue date:        2009-09-29
+CVE Names:         CVE-2009-2849 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix one security issue and several bugs are
+now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+Security fix:
+
+* a NULL pointer dereference flaw was found in the Multiple Devices (md)
+driver in the Linux kernel. If the &quot;suspend_lo&quot; or &quot;suspend_hi&quot; file on the
+sysfs file system (&quot;/sys/&quot;) is modified when the disk array is inactive, it
+could lead to a local denial of service or privilege escalation. Note: By
+default, only the root user can write to the files mentioned above.
+(CVE-2009-2849, Moderate)
+
+Bug fixes:
+
+* a bug in nlm_lookup_host() could lead to un-reclaimed locks on file
+systems, resulting in umount failing and NFS service relocation issues for
+clusters. (BZ#517967)
+
+* a bug in the sky2 driver prevented the phy from being reset properly on
+some hardware when it hanged, preventing a link from coming back up.
+(BZ#517976)
+
+* disabling MSI-X for qla2xxx also disabled MSI interrupts. (BZ#519782)
+
+* performance issues with reads when using the qlge driver on PowerPC
+systems. A system hang could also occur during reboot. (BZ#519783)
+
+* unreliable time keeping for Red Hat Enterprise Linux virtual machines.
+The KVM pvclock code is now used to detect/correct lost ticks. (BZ#520685)
+
+* /proc/cpuinfo was missing flags for new features in supported processors,
+possibly preventing the operating system and applications from getting the
+best performance. (BZ#520686)
+
+* reading/writing with a serial loopback device on a certain IBM system did
+not work unless booted with &quot;pnpacpi=off&quot;. (BZ#520905)
+
+* mlx4_core failed to load on systems with more than 32 CPUs. (BZ#520906)
+
+* on big-endian platforms, interfaces using the mlx4_en driver and Large
+Receive Offload (LRO) did not handle VLAN traffic properly (a segmentation
+fault in the VLAN stack in the kernel occurred). (BZ#520908)
+
+* due to a lock being held for a long time, some systems may have
+experienced &quot;BUG: soft lockup&quot; messages under very heavy load. (BZ#520919)
+
+* incorrect APIC timer calibration may have caused a system hang during
+boot, as well as the system time becoming faster or slower. A warning is
+now provided. (BZ#521238)
+
+* a Fibre Channel device re-scan via 'echo &quot;---&quot; &gt; /sys/class/scsi_host/
+host[x]/scan' may not complete after hot adding a drive, leading to soft
+lockups (&quot;BUG: soft lockup detected&quot;). (BZ#521239)
+
+* the Broadcom BCM5761 network device was unable to be initialized
+properly; therefore, the associated interface could not obtain an IP
+address via DHCP, or be assigned one manually. (BZ#521241)
+
+* when a process attempted to read from a page that had first been
+accessed by writing to part of it (via write(2)), the NFS client needed to
+flush the modified portion of the page out to the server, and then read
+the entire page back in. This flush caused performance issues. (BZ#521244)
+
+* a kernel panic when using bnx2x devices and LRO in a bridge. A warning is
+now provided to disable LRO in these situations. (BZ#522636)
+
+* the scsi_dh_rdac driver was updated to recognize the Sun StorageTek
+Flexline 380. (BZ#523237)
+
+* in FIPS mode, random number generators are required to not return the
+first block of random data they generate, but rather save it to seed the
+repetition check. This update brings the random number generator into
+conformance. (BZ#523289)
+
+* an option to disable/enable the use of the first random block is now
+provided to bring ansi_cprng into compliance with FIPS-140 continuous test
+requirements. (BZ#523290)
+
+* running the SAP Linux Certification Suite in a KVM guest caused severe
+SAP kernel errors, causing it to exit. (BZ#524150)
+
+* attempting to 'online' a CPU for a KVM guest via sysfs caused a system
+crash. (BZ#524151)
+
+* when using KVM, pvclock returned bogus wallclock values. (BZ#524152)
+
+* the clock could go backwards when using the vsyscall infrastructure.
+(BZ#524527)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+517967 - Bug in lockd prevents a locks being freed. [rhel-5.4.z]
+517976 - [RHEL 5] sky2 eth0: receiver hang detected [rhel-5.4.z]
+518132 - CVE-2009-2849 kernel: md: NULL pointer deref when accessing suspend_* sysfs attributes
+519782 - [QLogic 5.5 bug] qla2xxx - allow use of MSI when MSI-X disabled. [rhel-5.4.z]
+519783 - [QLogic 5.5 bug] qlge - fix hangs and read perfromance [rhel-5.4.z]
+520685 - use KVM pvclock code to detect/correct lost ticks [rhel-5.4.z]
+520686 - bare-metal and xen: /proc/cpuinfo does not list all CPU flags presented by CPU [rhel-5.4.z]
+520905 - Serial ports don't function on 4838-310 without pnpacpi=off boot option [rhel-5.4.z]
+520906 - mlx4_core fails to load on systems with32 cores [rhel-5.4.z]
+520908 - TCP traffic for VLAN interfaces fails over mlx4_en parent interface. [rhel-5.4.z]
+520919 - BUG: soft lockup - CPU#5 stuck for 10s at .context_struct_compute_av+0x214/0x39c [rhel-5.4.z]
+521238 - [RHEL 5] Hang on boot due to wrong APIC timer calibration [rhel-5.4.z]
+521239 - scsi_transport_fc: fc_user_scan can loop forever, needs mutex with rport list changes [rhel-5.4.z]
+521241 - 5.4 alpha: Broadcom 5761 NIC does not work [rhel-5.4.z]
+521244 - Read/Write NFS I/O performance degraded by FLUSH_STABLE page flushing [rhel-5.4.z]
+522636 - bridge: Fix LRO crash with tun (tun_chr_read()) [rhel-5.4.z]
+523237 - Add kernel (scsi_dh_rdac) support for Sun 6540 storage arrays. [rhel-5.4.z]
+523289 - [FIP140-2] the first n- bit block generated after power-up, initialization, or reset shall not be used [rhel-5.4.z]
+523290 - [FIPS140-2] Provide option to disable/enable use of the first random block [rhel-5.4.z]
+524150 - Can't override KVM clock in a KVM guest with -165 kernel to triage SAP DB create failure [rhel-5.4.z]
+524151 - cpu1 didn't come online in a kvm i686 guest [rhel-5.4.z]
+524152 - pvclock return bogus wallclock values [rhel-5.4.z]
+524527 - RHEV : SAP SLCS 2.3 fails during install/import in a RHEV-H/KVM guest with PV KVM clock [rhel-5.4.z]
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-164.2.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-164.2.1.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-164.2.1.el5.i686.rpm
+kernel-PAE-2.6.18-164.2.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-164.2.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-164.2.1.el5.i686.rpm
+kernel-debug-2.6.18-164.2.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-164.2.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-164.2.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-164.2.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-164.2.1.el5.i686.rpm
+kernel-devel-2.6.18-164.2.1.el5.i686.rpm
+kernel-headers-2.6.18-164.2.1.el5.i386.rpm
+kernel-xen-2.6.18-164.2.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-164.2.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-164.2.1.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-164.2.1.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-debug-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-devel-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-headers-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-xen-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-164.2.1.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-164.2.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-164.2.1.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-164.2.1.el5.i686.rpm
+kernel-PAE-2.6.18-164.2.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-164.2.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-164.2.1.el5.i686.rpm
+kernel-debug-2.6.18-164.2.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-164.2.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-164.2.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-164.2.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-164.2.1.el5.i686.rpm
+kernel-devel-2.6.18-164.2.1.el5.i686.rpm
+kernel-headers-2.6.18-164.2.1.el5.i386.rpm
+kernel-xen-2.6.18-164.2.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-164.2.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-164.2.1.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-164.2.1.el5.ia64.rpm
+kernel-debug-2.6.18-164.2.1.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-164.2.1.el5.ia64.rpm
+kernel-debug-devel-2.6.18-164.2.1.el5.ia64.rpm
+kernel-debuginfo-2.6.18-164.2.1.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-164.2.1.el5.ia64.rpm
+kernel-devel-2.6.18-164.2.1.el5.ia64.rpm
+kernel-headers-2.6.18-164.2.1.el5.ia64.rpm
+kernel-xen-2.6.18-164.2.1.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-164.2.1.el5.ia64.rpm
+kernel-xen-devel-2.6.18-164.2.1.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-164.2.1.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-164.2.1.el5.ppc64.rpm
+kernel-debug-2.6.18-164.2.1.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-164.2.1.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-164.2.1.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-164.2.1.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-164.2.1.el5.ppc64.rpm
+kernel-devel-2.6.18-164.2.1.el5.ppc64.rpm
+kernel-headers-2.6.18-164.2.1.el5.ppc.rpm
+kernel-headers-2.6.18-164.2.1.el5.ppc64.rpm
+kernel-kdump-2.6.18-164.2.1.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-164.2.1.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-164.2.1.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-164.2.1.el5.s390x.rpm
+kernel-debug-2.6.18-164.2.1.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-164.2.1.el5.s390x.rpm
+kernel-debug-devel-2.6.18-164.2.1.el5.s390x.rpm
+kernel-debuginfo-2.6.18-164.2.1.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-164.2.1.el5.s390x.rpm
+kernel-devel-2.6.18-164.2.1.el5.s390x.rpm
+kernel-headers-2.6.18-164.2.1.el5.s390x.rpm
+kernel-kdump-2.6.18-164.2.1.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-164.2.1.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-164.2.1.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-debug-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-devel-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-headers-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-xen-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-164.2.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-164.2.1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2849">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2849</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKwmRPXlSAg2UNWIIRApiJAJ0ZsswUu9VyoFsWGKDxEL+1NAuTFgCfbTvI
+KAiY3cGhmT9HvYtXJ0Zz6wE=
+=aLny
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

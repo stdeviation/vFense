@@ -1,0 +1,189 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0992&#45;01] Important: python&#45;keystoneclient security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 27 Jun 2013 14:21:32 &#45;0400 -->
+<!--X-Message-Id: 201306271821.r5RILVPL030271@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0992-01] Important: python-keystoneclient security, bug fix,	</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0992-01] Important: python-keystoneclient security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0992-01] Important: python-keystoneclient security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 27 Jun 2013 18:21:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: python-keystoneclient security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:0992-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0992.html">https://rhn.redhat.com/errata/RHSA-2013-0992.html</a>
+Issue date:        2013-06-27
+CVE Names:         CVE-2013-2166 CVE-2013-2167 
+=====================================================================
+
+1. Summary:
+
+Updated python-keystoneclient packages that fix two security issues, one
+bug, and add one enhancement are now available for Red Hat OpenStack 3.0
+(Grizzly) Preview.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 3 - noarch
+
+3. Description:
+
+Python-keystoneclient is the client library and command line utility for
+interacting with the OpenStack identity API.
+
+A flaw was found in the way python-keystoneclient handled encrypted data
+from memcached. Even when the memcache_security_strategy setting in
+&quot;/etc/swift/proxy-server.conf&quot; was set to ENCRYPT to help prevent
+tampering, an attacker on the local network, or possibly an unprivileged
+user in a virtual machine hosted on OpenStack, could use this flaw to
+bypass intended restrictions and modify data in memcached that will later
+be used by services utilizing python-keystoneclient (such as Nova, Cinder,
+Swift, Glance, and so on). (CVE-2013-2166)
+
+A flaw was found in the way python-keystoneclient verified data from
+memcached. Even when the memcache_security_strategy setting in
+&quot;/etc/swift/proxy-server.conf&quot; was set to MAC to perform signature
+checking, an attacker on the local network, or possibly an unprivileged
+user in a virtual machine hosted on OpenStack, could use this flaw to
+modify data in memcached that will later pass signature checking in
+python-keystoneclient. (CVE-2013-2167)
+
+Red Hat would like to thank the OpenStack project for reporting these
+issues. Upstream acknowledges Paul McMillan of Nebula as the original
+reporter.
+
+This update also fixes the following bug:
+
+* python-webob1.2 (which can be installed in parallel with python-webob1.0)
+was not found by python-keystoneclient. Attempting to import python-webob
+from python-keystoneclient failed with a stack trace. This could also be
+observed with other applications using python-keystoneclient, such as
+OpenStack Swift. With this update, python-keystoneclient can import
+python-webob1.2 independently from other installed versions. (BZ#971026)
+
+Additionally, this update adds the following enhancement:
+
+* This update adds support for Amazon Web Services (AWS) Signature Version
+4 to python-keystoneclient. This makes python-keystoneclient compatible
+with future versions of python-boto, which will use Signature Version 4 by
+default. (BZ#970134)
+
+All users of Red Hat OpenStack 3.0 (Grizzly) Preview are advised to install
+these updated packages, which correct these issues and add this
+enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+971026 - Dependancy issue prevents swift proxy from starting
+974271 - CVE-2013-2166 CVE-2013-2167 python-keystoneclient: middleware memcache encryption and signing bypass
+
+6. Package List:
+
+OpenStack 3:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/python-keystoneclient-0.2.3-5.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/python-keystoneclient-0.2.3-5.el6ost.src.rpm</a>
+
+noarch:
+python-keystoneclient-0.2.3-5.el6ost.noarch.rpm
+python-keystoneclient-doc-0.2.3-5.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2166.html">https://www.redhat.com/security/data/cve/CVE-2013-2166.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2167.html">https://www.redhat.com/security/data/cve/CVE-2013-2167.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRzIKWXlSAg2UNWIIRAmGXAJ9LLNDLGEdjMWBTDB62ORslsby/6ACeKqI+
+6ExbNxiK3R1FU6AEC6WjDrg=
+=NVkT
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

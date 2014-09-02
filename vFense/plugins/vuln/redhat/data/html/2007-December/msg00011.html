@@ -1,0 +1,386 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1130&#45;01] Moderate: squid security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 18 Dec 2007 11:40:25 &#45;0500 -->
+<!--X-Message-Id: 200712181640.lBIGeOpv017979@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1130-01] Moderate: squid security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1130-01] Moderate: squid security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1130-01] Moderate: squid security update</li>
+<li><em>Date</em>: Tue, 18 Dec 2007 11:40:24 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: squid security update
+Advisory ID:       RHSA-2007:1130-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1130.html">https://rhn.redhat.com/errata/RHSA-2007-1130.html</a>
+Issue date:        2007-12-18
+Updated on:        2007-12-18
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-6239 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated squid packages that fix a security issue are now available for Red
+Hat Enterprise Linux 2.1, 3, 4 and 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS (Advanced Server) version 2.1  - i386, ia64
+Red Hat Linux Advanced Workstation 2.1 - ia64
+Red Hat Enterprise Linux ES version 2.1 - i386
+Red Hat Enterprise Linux AS version 3 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Desktop version 3 - i386, x86_64
+Red Hat Enterprise Linux ES version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Problem description:
+
+Squid is a high-performance proxy caching server for Web clients,
+supporting FTP, gopher, and HTTP data objects.
+
+A flaw was found in the way squid stored HTTP headers for cached objects
+in system memory. An attacker could cause squid to use additional memory,
+and trigger high CPU usage when processing requests for certain cached
+objects, possibly leading to a denial of service. (CVE-2007-6239)
+
+Users of squid are advised to upgrade to these updated packages, which
+contain a backported patch to resolve this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+410181 - CVE-2007-6239 squid: DoS in cache updates
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS (Advanced Server) version 2.1 :
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1AS/en/os/SRPMS/squid-2.4.STABLE7-1.21as.11.src.rpm">ftp://updates.redhat.com/enterprise/2.1AS/en/os/SRPMS/squid-2.4.STABLE7-1.21as.11.src.rpm</a>
+ece653d214fe3de7552e4c4f105ae3a7  squid-2.4.STABLE7-1.21as.11.src.rpm
+
+i386:
+b9d27df2ff2d7dcbe20abcc424c9aba6  squid-2.4.STABLE7-1.21as.11.i386.rpm
+
+ia64:
+fe6279f75619d921cfb543f91a5ef93f  squid-2.4.STABLE7-1.21as.11.ia64.rpm
+
+Red Hat Linux Advanced Workstation 2.1:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1AW/en/os/SRPMS/squid-2.4.STABLE7-1.21as.11.src.rpm">ftp://updates.redhat.com/enterprise/2.1AW/en/os/SRPMS/squid-2.4.STABLE7-1.21as.11.src.rpm</a>
+ece653d214fe3de7552e4c4f105ae3a7  squid-2.4.STABLE7-1.21as.11.src.rpm
+
+ia64:
+fe6279f75619d921cfb543f91a5ef93f  squid-2.4.STABLE7-1.21as.11.ia64.rpm
+
+Red Hat Enterprise Linux ES version 2.1:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/2.1ES/en/os/SRPMS/squid-2.4.STABLE7-1.21as.11.src.rpm">ftp://updates.redhat.com/enterprise/2.1ES/en/os/SRPMS/squid-2.4.STABLE7-1.21as.11.src.rpm</a>
+ece653d214fe3de7552e4c4f105ae3a7  squid-2.4.STABLE7-1.21as.11.src.rpm
+
+i386:
+b9d27df2ff2d7dcbe20abcc424c9aba6  squid-2.4.STABLE7-1.21as.11.i386.rpm
+
+Red Hat Enterprise Linux AS version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/squid-2.5.STABLE3-8.3E.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/squid-2.5.STABLE3-8.3E.src.rpm</a>
+33e54e551779fb32990b54b406143027  squid-2.5.STABLE3-8.3E.src.rpm
+
+i386:
+ab247e2aba77e505d88cff074849f045  squid-2.5.STABLE3-8.3E.i386.rpm
+2bba9f1a118984bf1ed8814439a4ba22  squid-debuginfo-2.5.STABLE3-8.3E.i386.rpm
+
+ia64:
+6688d8d1bd5221c4eb31b55da930bb54  squid-2.5.STABLE3-8.3E.ia64.rpm
+84af8ffa403a6e94daec6ce4b72ddff0  squid-debuginfo-2.5.STABLE3-8.3E.ia64.rpm
+
+ppc:
+fe42f1e938614448fedf5fe82768789f  squid-2.5.STABLE3-8.3E.ppc.rpm
+0196585dbc4e874371335e0510a376e6  squid-debuginfo-2.5.STABLE3-8.3E.ppc.rpm
+
+s390:
+1b5d86c9df50e17f98e1c4bf436cc66b  squid-2.5.STABLE3-8.3E.s390.rpm
+c6280fc05b9b2547b89c6895ef2fa070  squid-debuginfo-2.5.STABLE3-8.3E.s390.rpm
+
+s390x:
+74bfad18cae240d909f022fa43de5d8e  squid-2.5.STABLE3-8.3E.s390x.rpm
+670d9e23a2c1775d9bc7c899ab629c59  squid-debuginfo-2.5.STABLE3-8.3E.s390x.rpm
+
+x86_64:
+0aafeeea7acb8f7c74bee676b9de8b57  squid-2.5.STABLE3-8.3E.x86_64.rpm
+a032eadab80f394d7ded60ae61129dc9  squid-debuginfo-2.5.STABLE3-8.3E.x86_64.rpm
+
+Red Hat Desktop version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/squid-2.5.STABLE3-8.3E.src.rpm">ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/squid-2.5.STABLE3-8.3E.src.rpm</a>
+33e54e551779fb32990b54b406143027  squid-2.5.STABLE3-8.3E.src.rpm
+
+i386:
+ab247e2aba77e505d88cff074849f045  squid-2.5.STABLE3-8.3E.i386.rpm
+2bba9f1a118984bf1ed8814439a4ba22  squid-debuginfo-2.5.STABLE3-8.3E.i386.rpm
+
+x86_64:
+0aafeeea7acb8f7c74bee676b9de8b57  squid-2.5.STABLE3-8.3E.x86_64.rpm
+a032eadab80f394d7ded60ae61129dc9  squid-debuginfo-2.5.STABLE3-8.3E.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/squid-2.5.STABLE3-8.3E.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/squid-2.5.STABLE3-8.3E.src.rpm</a>
+33e54e551779fb32990b54b406143027  squid-2.5.STABLE3-8.3E.src.rpm
+
+i386:
+ab247e2aba77e505d88cff074849f045  squid-2.5.STABLE3-8.3E.i386.rpm
+2bba9f1a118984bf1ed8814439a4ba22  squid-debuginfo-2.5.STABLE3-8.3E.i386.rpm
+
+ia64:
+6688d8d1bd5221c4eb31b55da930bb54  squid-2.5.STABLE3-8.3E.ia64.rpm
+84af8ffa403a6e94daec6ce4b72ddff0  squid-debuginfo-2.5.STABLE3-8.3E.ia64.rpm
+
+x86_64:
+0aafeeea7acb8f7c74bee676b9de8b57  squid-2.5.STABLE3-8.3E.x86_64.rpm
+a032eadab80f394d7ded60ae61129dc9  squid-debuginfo-2.5.STABLE3-8.3E.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/squid-2.5.STABLE3-8.3E.src.rpm">ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/squid-2.5.STABLE3-8.3E.src.rpm</a>
+33e54e551779fb32990b54b406143027  squid-2.5.STABLE3-8.3E.src.rpm
+
+i386:
+ab247e2aba77e505d88cff074849f045  squid-2.5.STABLE3-8.3E.i386.rpm
+2bba9f1a118984bf1ed8814439a4ba22  squid-debuginfo-2.5.STABLE3-8.3E.i386.rpm
+
+ia64:
+6688d8d1bd5221c4eb31b55da930bb54  squid-2.5.STABLE3-8.3E.ia64.rpm
+84af8ffa403a6e94daec6ce4b72ddff0  squid-debuginfo-2.5.STABLE3-8.3E.ia64.rpm
+
+x86_64:
+0aafeeea7acb8f7c74bee676b9de8b57  squid-2.5.STABLE3-8.3E.x86_64.rpm
+a032eadab80f394d7ded60ae61129dc9  squid-debuginfo-2.5.STABLE3-8.3E.x86_64.rpm
+
+Red Hat Enterprise Linux AS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm</a>
+c252e79be2fcba9f696565ed87b12aae  squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm
+
+i386:
+d951a7bd76166490d1a922b4772c4740  squid-2.5.STABLE14-1.4E.el4_6.1.i386.rpm
+a5ee5827a0906ff45f7e10fc8ba51b7a  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.i386.rpm
+
+ia64:
+9536874e2e40bc9669b767c7cbc5c97e  squid-2.5.STABLE14-1.4E.el4_6.1.ia64.rpm
+17fecd8aaa42b0c492dd35399d9640b8  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.ia64.rpm
+
+ppc:
+29979a4f2fe43d50e7cc3ab32948b956  squid-2.5.STABLE14-1.4E.el4_6.1.ppc.rpm
+9216796c2778aaf5c18e8799d1568453  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.ppc.rpm
+
+s390:
+124ea7fcf76fd2ed056d57a68af45f57  squid-2.5.STABLE14-1.4E.el4_6.1.s390.rpm
+e4ba12277b17cd630af314d6877a6dfe  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.s390.rpm
+
+s390x:
+53c5859f6826ee234bd3f2fc7268c79a  squid-2.5.STABLE14-1.4E.el4_6.1.s390x.rpm
+15bd808af4138103f0055fe9cceae769  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.s390x.rpm
+
+x86_64:
+463f654fc16dff0e65728f111f9e685f  squid-2.5.STABLE14-1.4E.el4_6.1.x86_64.rpm
+17e7ad34be5eb825cfbecce3a41c877b  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm</a>
+c252e79be2fcba9f696565ed87b12aae  squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm
+
+i386:
+d951a7bd76166490d1a922b4772c4740  squid-2.5.STABLE14-1.4E.el4_6.1.i386.rpm
+a5ee5827a0906ff45f7e10fc8ba51b7a  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.i386.rpm
+
+x86_64:
+463f654fc16dff0e65728f111f9e685f  squid-2.5.STABLE14-1.4E.el4_6.1.x86_64.rpm
+17e7ad34be5eb825cfbecce3a41c877b  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm</a>
+c252e79be2fcba9f696565ed87b12aae  squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm
+
+i386:
+d951a7bd76166490d1a922b4772c4740  squid-2.5.STABLE14-1.4E.el4_6.1.i386.rpm
+a5ee5827a0906ff45f7e10fc8ba51b7a  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.i386.rpm
+
+ia64:
+9536874e2e40bc9669b767c7cbc5c97e  squid-2.5.STABLE14-1.4E.el4_6.1.ia64.rpm
+17fecd8aaa42b0c492dd35399d9640b8  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.ia64.rpm
+
+x86_64:
+463f654fc16dff0e65728f111f9e685f  squid-2.5.STABLE14-1.4E.el4_6.1.x86_64.rpm
+17e7ad34be5eb825cfbecce3a41c877b  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm</a>
+c252e79be2fcba9f696565ed87b12aae  squid-2.5.STABLE14-1.4E.el4_6.1.src.rpm
+
+i386:
+d951a7bd76166490d1a922b4772c4740  squid-2.5.STABLE14-1.4E.el4_6.1.i386.rpm
+a5ee5827a0906ff45f7e10fc8ba51b7a  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.i386.rpm
+
+ia64:
+9536874e2e40bc9669b767c7cbc5c97e  squid-2.5.STABLE14-1.4E.el4_6.1.ia64.rpm
+17fecd8aaa42b0c492dd35399d9640b8  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.ia64.rpm
+
+x86_64:
+463f654fc16dff0e65728f111f9e685f  squid-2.5.STABLE14-1.4E.el4_6.1.x86_64.rpm
+17e7ad34be5eb825cfbecce3a41c877b  squid-debuginfo-2.5.STABLE14-1.4E.el4_6.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/squid-2.6.STABLE6-5.el5_1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/squid-2.6.STABLE6-5.el5_1.2.src.rpm</a>
+30db384fc837a2b7cfe3be12c80bfed0  squid-2.6.STABLE6-5.el5_1.2.src.rpm
+
+i386:
+172091586b423ff41d70b9a2d9fead00  squid-2.6.STABLE6-5.el5_1.2.i386.rpm
+482ac42a07e452a26a5805e9f5c1532d  squid-debuginfo-2.6.STABLE6-5.el5_1.2.i386.rpm
+
+x86_64:
+76876b1c2f21b013ab81b2203cc274c2  squid-2.6.STABLE6-5.el5_1.2.x86_64.rpm
+37a3b6a430820be138def86fdcba002e  squid-debuginfo-2.6.STABLE6-5.el5_1.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/squid-2.6.STABLE6-5.el5_1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/squid-2.6.STABLE6-5.el5_1.2.src.rpm</a>
+30db384fc837a2b7cfe3be12c80bfed0  squid-2.6.STABLE6-5.el5_1.2.src.rpm
+
+i386:
+172091586b423ff41d70b9a2d9fead00  squid-2.6.STABLE6-5.el5_1.2.i386.rpm
+482ac42a07e452a26a5805e9f5c1532d  squid-debuginfo-2.6.STABLE6-5.el5_1.2.i386.rpm
+
+ia64:
+4eaa32cfae9667e7b96a6a756bff1559  squid-2.6.STABLE6-5.el5_1.2.ia64.rpm
+932751869d724a6c9e6723c45ab3f2e9  squid-debuginfo-2.6.STABLE6-5.el5_1.2.ia64.rpm
+
+ppc:
+404a22e1fd3ff9282e83c166d4c43307  squid-2.6.STABLE6-5.el5_1.2.ppc.rpm
+8b3bdb5fd4c27327e6489ff6da4cf2ae  squid-debuginfo-2.6.STABLE6-5.el5_1.2.ppc.rpm
+
+s390x:
+3e74a922b55cbdff9486079828d73582  squid-2.6.STABLE6-5.el5_1.2.s390x.rpm
+85e86189294f374cd0655ef0d0bfcd1e  squid-debuginfo-2.6.STABLE6-5.el5_1.2.s390x.rpm
+
+x86_64:
+76876b1c2f21b013ab81b2203cc274c2  squid-2.6.STABLE6-5.el5_1.2.x86_64.rpm
+37a3b6a430820be138def86fdcba002e  squid-debuginfo-2.6.STABLE6-5.el5_1.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6239">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6239</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHZ/fOXlSAg2UNWIIRAoVBAJ9jGsCBuf1dy2SRY+TGPAwwcE9qNQCfRmPj
+6HrsUl6YsP1Wy96VxYRiAfA=
+=0hBW
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0011&#45;01] Moderate: httpd and httpd22 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 6 Jan 2010 11:29:55 &#45;0500 -->
+<!--X-Message-Id: 201001061629.o06GToFc032414@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0011-01] Moderate: httpd and httpd22 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0011-01] Moderate: httpd and httpd22 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0011-01] Moderate: httpd and httpd22 security update</li>
+<li><em>Date</em>: Wed, 6 Jan 2010 11:29:50 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: httpd and httpd22 security update
+Advisory ID:       RHSA-2010:0011-01
+Product:           JBoss Enterprise Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0011.html">https://rhn.redhat.com/errata/RHSA-2010-0011.html</a>
+Issue date:        2010-01-06
+CVE Names:         CVE-2009-3094 CVE-2009-3095 CVE-2009-3555 
+=====================================================================
+
+1. Summary:
+
+Updated httpd and httpd22 packages that fix multiple security issues are
+now available for JBoss Enterprise Web Server 1.0.0 for Red Hat Enterprise
+Linux 4 and 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Web Server 1.0.0 for RHEL 4 AS - i386, x86_64
+JBoss Enterprise Web Server 1.0.0 for RHEL 4 ES - i386, x86_64
+JBoss Enterprise Web Server 1.0.0 for RHEL 5 Server - i386, x86_64
+
+3. Description:
+
+The Apache HTTP Server is a popular Web server.
+
+A flaw was found in the way the TLS/SSL (Transport Layer Security/Secure
+Sockets Layer) protocols handle session renegotiation. A man-in-the-middle
+attacker could use this flaw to prefix arbitrary plain text to a client's
+session (for example, an HTTPS connection to a website). This could force
+the server to process an attacker's request as if authenticated using the
+victim's credentials. This update partially mitigates this flaw for SSL
+sessions to HTTP servers using mod_ssl by rejecting client-requested
+renegotiation. (CVE-2009-3555)
+
+Note: This update does not fully resolve the issue for HTTPS servers. An
+attack is still possible in configurations that require a server-initiated
+renegotiation. Refer to the following Knowledgebase article for further
+information: <a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+
+A NULL pointer dereference flaw was found in the Apache mod_proxy_ftp
+module. A malicious FTP server to which requests are being proxied could
+use this flaw to crash an httpd child process via a malformed reply to the
+EPSV or PASV commands, resulting in a limited denial of service.
+(CVE-2009-3094)
+
+A second flaw was found in the Apache mod_proxy_ftp module. In a reverse
+proxy configuration, a remote attacker could use this flaw to bypass
+intended access restrictions by creating a carefully-crafted HTTP
+Authorization header, allowing the attacker to send arbitrary commands to
+the FTP server. (CVE-2009-3095)
+
+All users of JBoss Enterprise Web Server 1.0.0 should upgrade to these
+updated packages, which contain backported patches to correct these issues.
+After installing the updated packages, Red Hat Enterprise Linux 4 users
+must restart the httpd22 service, and Red Hat Enterprise Linux 5 users must
+restart the httpd service, for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+521619 - CVE-2009-3094 httpd: NULL pointer defer in mod_proxy_ftp caused by crafted EPSV and PASV reply
+522209 - CVE-2009-3095 httpd: mod_proxy_ftp FTP command injection via Authorization HTTP header
+533125 - CVE-2009-3555 TLS: MITM attacks via session renegotiation
+
+6. Package List:
+
+JBoss Enterprise Web Server 1.0.0 for RHEL 4 AS:
+
+Source:
+httpd22-2.2.10-25.1.ep5.el4.src.rpm
+
+i386:
+httpd22-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-apr-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-apr-devel-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-apr-util-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-apr-util-devel-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-debuginfo-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-devel-2.2.10-25.1.ep5.el4.i386.rpm
+mod_ssl22-2.2.10-25.1.ep5.el4.i386.rpm
+
+x86_64:
+httpd22-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-apr-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-apr-devel-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-apr-util-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-apr-util-devel-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-debuginfo-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-devel-2.2.10-25.1.ep5.el4.x86_64.rpm
+mod_ssl22-2.2.10-25.1.ep5.el4.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0.0 for RHEL 4 ES:
+
+Source:
+httpd22-2.2.10-25.1.ep5.el4.src.rpm
+
+i386:
+httpd22-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-apr-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-apr-devel-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-apr-util-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-apr-util-devel-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-debuginfo-2.2.10-25.1.ep5.el4.i386.rpm
+httpd22-devel-2.2.10-25.1.ep5.el4.i386.rpm
+mod_ssl22-2.2.10-25.1.ep5.el4.i386.rpm
+
+x86_64:
+httpd22-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-apr-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-apr-devel-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-apr-util-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-apr-util-devel-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-debuginfo-2.2.10-25.1.ep5.el4.x86_64.rpm
+httpd22-devel-2.2.10-25.1.ep5.el4.x86_64.rpm
+mod_ssl22-2.2.10-25.1.ep5.el4.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0.0 for RHEL 5 Server:
+
+Source:
+httpd-2.2.10-11.ep5.el5.src.rpm
+
+i386:
+httpd-2.2.10-11.ep5.el5.i386.rpm
+httpd-debuginfo-2.2.10-11.ep5.el5.i386.rpm
+httpd-devel-2.2.10-11.ep5.el5.i386.rpm
+httpd-manual-2.2.10-11.ep5.el5.i386.rpm
+mod_ssl-2.2.10-11.ep5.el5.i386.rpm
+
+x86_64:
+httpd-2.2.10-11.ep5.el5.x86_64.rpm
+httpd-debuginfo-2.2.10-11.ep5.el5.x86_64.rpm
+httpd-devel-2.2.10-11.ep5.el5.x86_64.rpm
+httpd-manual-2.2.10-11.ep5.el5.x86_64.rpm
+mod_ssl-2.2.10-11.ep5.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3094.html">https://www.redhat.com/security/data/cve/CVE-2009-3094.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3095.html">https://www.redhat.com/security/data/cve/CVE-2009-3095.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3555.html">https://www.redhat.com/security/data/cve/CVE-2009-3555.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLRLpzXlSAg2UNWIIRAv3CAJ9ZdHn7aMsKjhEaQfyHvASedYH1EQCaAwTF
+XJYkhj5yohCUEA57QPJAdvM=
+=os8/
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

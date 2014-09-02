@@ -1,0 +1,290 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0921&#45;01] Important: httpd security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 23 Jul 2014 06:07:31 &#45;0400 -->
+<!--X-Message-Id: 201407231007.s6NA7TvK029752@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0921-01] Important: httpd security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00046.html">Date Prev</a>][<a href="msg00048.html">Date Next</a>] &nbsp; [<a href="msg00046.html">Thread Prev</a>][<a href="msg00048.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00047">Thread Index</A>]
+[<A HREF="date.html#00047">Date Index</A>]
+[<A HREF="author.html#00047">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0921-01] Important: httpd security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0921-01] Important: httpd security update</li>
+<li><em>Date</em>: Wed, 23 Jul 2014 10:14:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: httpd security update
+Advisory ID:       RHSA-2014:0921-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0921.html">https://rhn.redhat.com/errata/RHSA-2014-0921.html</a>
+Issue date:        2014-07-23
+CVE Names:         CVE-2013-4352 CVE-2014-0117 CVE-2014-0118 
+                   CVE-2014-0226 CVE-2014-0231 
+=====================================================================
+
+1. Summary:
+
+Updated httpd packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 7.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 7) - noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The httpd packages provide the Apache HTTP Server, a powerful, efficient,
+and extensible web server.
+
+A race condition flaw, leading to heap-based buffer overflows, was found in
+the mod_status httpd module. A remote attacker able to access a status page
+served by mod_status on a server using a threaded Multi-Processing Module
+(MPM) could send a specially crafted request that would cause the httpd
+child process to crash or, possibly, allow the attacker to execute
+arbitrary code with the privileges of the &quot;apache&quot; user. (CVE-2014-0226)
+
+A NULL pointer dereference flaw was found in the mod_cache httpd module.
+A malicious HTTP server could cause the httpd child process to crash when
+the Apache HTTP Server was used as a forward proxy with caching.
+(CVE-2013-4352)
+
+A denial of service flaw was found in the mod_proxy httpd module. A remote
+attacker could send a specially crafted request to a server configured as a
+reverse proxy using a threaded Multi-Processing Modules (MPM) that would
+cause the httpd child process to crash. (CVE-2014-0117)
+
+A denial of service flaw was found in the way httpd's mod_deflate module
+handled request body decompression (configured via the &quot;DEFLATE&quot; input
+filter). A remote attacker able to send a request whose body would be
+decompressed could use this flaw to consume an excessive amount of system
+memory and CPU on the target system. (CVE-2014-0118)
+
+A denial of service flaw was found in the way httpd's mod_cgid module
+executed CGI scripts that did not read data from the standard input.
+A remote attacker could submit a specially crafted request that would cause
+the httpd child process to hang indefinitely. (CVE-2014-0231)
+
+All httpd users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, the httpd daemon will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1120596 - CVE-2014-0231 httpd: mod_cgid denial of service
+1120599 - CVE-2014-0117 httpd: mod_proxy denial of service
+1120601 - CVE-2014-0118 httpd: mod_deflate denial of service
+1120603 - CVE-2014-0226 httpd: mod_status heap-based buffer overflow
+1120604 - CVE-2013-4352 httpd: mod_cache NULL pointer dereference crash
+
+6. Package List:
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+Source:
+httpd-2.4.6-18.el7_0.src.rpm
+
+noarch:
+httpd-manual-2.4.6-18.el7_0.noarch.rpm
+
+x86_64:
+httpd-2.4.6-18.el7_0.x86_64.rpm
+httpd-debuginfo-2.4.6-18.el7_0.x86_64.rpm
+httpd-devel-2.4.6-18.el7_0.x86_64.rpm
+httpd-tools-2.4.6-18.el7_0.x86_64.rpm
+mod_ldap-2.4.6-18.el7_0.x86_64.rpm
+mod_proxy_html-2.4.6-18.el7_0.x86_64.rpm
+mod_session-2.4.6-18.el7_0.x86_64.rpm
+mod_ssl-2.4.6-18.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+Source:
+httpd-2.4.6-18.el7_0.src.rpm
+
+noarch:
+httpd-manual-2.4.6-18.el7_0.noarch.rpm
+
+x86_64:
+httpd-2.4.6-18.el7_0.x86_64.rpm
+httpd-debuginfo-2.4.6-18.el7_0.x86_64.rpm
+httpd-devel-2.4.6-18.el7_0.x86_64.rpm
+httpd-tools-2.4.6-18.el7_0.x86_64.rpm
+mod_ldap-2.4.6-18.el7_0.x86_64.rpm
+mod_proxy_html-2.4.6-18.el7_0.x86_64.rpm
+mod_session-2.4.6-18.el7_0.x86_64.rpm
+mod_ssl-2.4.6-18.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+httpd-2.4.6-18.el7_0.src.rpm
+
+noarch:
+httpd-manual-2.4.6-18.el7_0.noarch.rpm
+
+ppc64:
+httpd-2.4.6-18.el7_0.ppc64.rpm
+httpd-debuginfo-2.4.6-18.el7_0.ppc64.rpm
+httpd-devel-2.4.6-18.el7_0.ppc64.rpm
+httpd-tools-2.4.6-18.el7_0.ppc64.rpm
+mod_ssl-2.4.6-18.el7_0.ppc64.rpm
+
+s390x:
+httpd-2.4.6-18.el7_0.s390x.rpm
+httpd-debuginfo-2.4.6-18.el7_0.s390x.rpm
+httpd-devel-2.4.6-18.el7_0.s390x.rpm
+httpd-tools-2.4.6-18.el7_0.s390x.rpm
+mod_ssl-2.4.6-18.el7_0.s390x.rpm
+
+x86_64:
+httpd-2.4.6-18.el7_0.x86_64.rpm
+httpd-debuginfo-2.4.6-18.el7_0.x86_64.rpm
+httpd-devel-2.4.6-18.el7_0.x86_64.rpm
+httpd-tools-2.4.6-18.el7_0.x86_64.rpm
+mod_ssl-2.4.6-18.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+httpd-debuginfo-2.4.6-18.el7_0.ppc64.rpm
+mod_ldap-2.4.6-18.el7_0.ppc64.rpm
+mod_proxy_html-2.4.6-18.el7_0.ppc64.rpm
+mod_session-2.4.6-18.el7_0.ppc64.rpm
+
+s390x:
+httpd-debuginfo-2.4.6-18.el7_0.s390x.rpm
+mod_ldap-2.4.6-18.el7_0.s390x.rpm
+mod_proxy_html-2.4.6-18.el7_0.s390x.rpm
+mod_session-2.4.6-18.el7_0.s390x.rpm
+
+x86_64:
+httpd-debuginfo-2.4.6-18.el7_0.x86_64.rpm
+mod_ldap-2.4.6-18.el7_0.x86_64.rpm
+mod_proxy_html-2.4.6-18.el7_0.x86_64.rpm
+mod_session-2.4.6-18.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+httpd-2.4.6-18.el7_0.src.rpm
+
+noarch:
+httpd-manual-2.4.6-18.el7_0.noarch.rpm
+
+x86_64:
+httpd-2.4.6-18.el7_0.x86_64.rpm
+httpd-debuginfo-2.4.6-18.el7_0.x86_64.rpm
+httpd-devel-2.4.6-18.el7_0.x86_64.rpm
+httpd-tools-2.4.6-18.el7_0.x86_64.rpm
+mod_ssl-2.4.6-18.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+httpd-debuginfo-2.4.6-18.el7_0.x86_64.rpm
+mod_ldap-2.4.6-18.el7_0.x86_64.rpm
+mod_proxy_html-2.4.6-18.el7_0.x86_64.rpm
+mod_session-2.4.6-18.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4352.html">https://www.redhat.com/security/data/cve/CVE-2013-4352.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0117.html">https://www.redhat.com/security/data/cve/CVE-2014-0117.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0118.html">https://www.redhat.com/security/data/cve/CVE-2014-0118.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0226.html">https://www.redhat.com/security/data/cve/CVE-2014-0226.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0231.html">https://www.redhat.com/security/data/cve/CVE-2014-0231.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTz4k8XlSAg2UNWIIRAhYKAJ9g2VrkFgyFz55UEfv0x8fGXSyjwACghfJ7
+zOzeWbMF1aXEVExM5K4QNMA=
+=qBwW
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00046.html">Date Prev</a>][<a href="msg00048.html">Date Next</a>] &nbsp; [<a href="msg00046.html">Thread Prev</a>][<a href="msg00048.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00047">Thread Index</A>]
+[<A HREF="date.html#00047">Date Index</A>]
+[<A HREF="author.html#00047">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

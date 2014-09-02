@@ -1,0 +1,156 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1334&#45;01] Important: JBoss Enterprise SOA Platform 5.1.0	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 22 Sep 2011 13:09:27 &#45;0400 -->
+<!--X-Message-Id: 201109221709.p8MH9MTN019556@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1334-01] Important: JBoss Enterprise SOA Platform 5.1.0	secur</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1334-01] Important: JBoss Enterprise SOA Platform 5.1.0	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1334-01] Important: JBoss Enterprise SOA Platform 5.1.0	security update</li>
+<li><em>Date</em>: Thu, 22 Sep 2011 17:09:22 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise SOA Platform 5.1.0 security update
+Advisory ID:       RHSA-2011:1334-01
+Product:           JBoss Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1334.html">https://rhn.redhat.com/errata/RHSA-2011-1334.html</a>
+Issue date:        2011-09-22
+CVE Names:         CVE-2011-2894 
+=====================================================================
+
+1. Summary:
+
+Updated Spring Framework 3 files for JBoss Enterprise SOA Platform 5.1.0
+that fix multiple security issues are now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+JBoss Enterprise SOA Platform is the next-generation ESB and business
+process automation infrastructure. JBoss Enterprise SOA Platform allows IT
+to leverage existing (MoM and EAI), modern (SOA and BPM-Rules), and future
+(EDA and CEP) integration methodologies to dramatically improve business
+process execution speed and quality.
+
+Multiple flaws were found in the way Spring Framework 3 deserialized
+certain Java objects. If an attacker were able to control the stream from
+which an application with the Spring Framework 3 AOP in its class-path was
+deserializing objects, they could use these flaws to execute arbitrary code
+with the privileges of the JBoss Application Server process via a
+specially-crafted, serialized Java object. (CVE-2011-2894)
+
+Note: JBoss Enterprise SOA Platform does not expose applications that
+deserialize objects from an untrusted source by default. These flaws would
+affect applications configured to trust a malicious source, for example,
+if the messaging service was configured to look up a remote messaging
+queue, and an attacker had control of that queue.
+
+All users of JBoss Enterprise SOA Platform 5.1.0 as provided from the Red
+Hat Customer Portal are advised to install this update. Refer to the
+Solution section for information about installing the update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise SOA Platform installation (including its
+databases, applications, configuration files, and so on).
+
+If you have created custom applications that are packaged with a copy of
+the Spring Framework 3 library, those applications must be rebuilt with the
+Spring Framework 3 files provided by this update.
+
+Note that it is recommended to halt the JBoss Enterprise SOA Platform
+server by stopping the JBoss Application Server process before installing
+this update, and then after installing the update, restart the JBoss
+Enterprise SOA Platform server by starting the JBoss Application Server
+process.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+737611 - CVE-2011-2894 Spring Framework, Spring Security:  Chosen commands execution on the server (Framework) or authentication token bypass (Security) by objects de-serialization
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2894.html">https://www.redhat.com/security/data/cve/CVE-2011-2894.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=soaplatform&amp;downloadType=securityPatches&amp;version=5.1.0+GA">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=soaplatform&amp;downloadType=securityPatches&amp;version=5.1.0+GA</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOe2u0XlSAg2UNWIIRAko1AJ9jCnICBuYt0Ou2XIybJd3dHE/axACfQe48
+rPSltdXnEliw5kYHw+eukDg=
+=b+0C
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

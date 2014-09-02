@@ -1,0 +1,267 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1077&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 2 Jun 2009 12:50:48 &#45;0400 -->
+<!--X-Message-Id: 200906021650.n52Gol2K028047@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1077-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1077-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1077-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 2 Jun 2009 12:50:47 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2009:1077-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1077.html">https://rhn.redhat.com/errata/RHSA-2009-1077.html</a>
+Issue date:        2009-06-02
+CVE Names:         CVE-2009-1336 CVE-2009-1337 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix two security issues and two bugs are now
+available for Red Hat Enterprise Linux 4.7 Extended Update Support.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4.7.z - i386, ia64, noarch, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux ES version 4.7.z - i386, ia64, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update includes backported fixes for two approved security issues.
+These issues only affected users of Red Hat Enterprise Linux 4.7 Extended
+Update Support, as they have already been addressed for users of Red Hat
+Enterprise Linux 4 in the 4.8 update, RHSA-2009:1024.
+
+* the exit_notify() function in the Linux kernel did not properly reset the
+exit signal if a process executed a set user ID (setuid) application before
+exiting. This could allow a local, unprivileged user to elevate their
+privileges. (CVE-2009-1337, Important)
+
+* the Linux kernel implementation of the Network File System (NFS) version
+4 did not properly initialize the file name limit in the nfs_server data
+structure. This flaw could possibly lead to a denial of service on a client
+mounting an NFSv4 share. (CVE-2009-1336, Moderate)
+
+This update fixes the following bugs:
+
+* on IBM System z systems, if the cio driver was used for DASD devices, and
+the last path to a DASD device was varied off, it was still possible to
+attempt read and write operations to that device, resulting in errors. In
+this update, path verification is used in this situation, which resolves
+this issue. Also, a bug may have caused errors when subchannels were
+unregistered. (BZ#437486)
+
+* a bug prevented the Broadcom NetXtreme II 57710 network device from
+working correctly on some Dell PowerEdge R805 systems. This device was
+correctly shown in &quot;lspci&quot; output, but &quot;ifup&quot; failed and an IP address was
+not assigned. In this update, the device works correctly on Dell PowerEdge
+R805 systems. (BZ#491752)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. For this update to take effect, the system
+must be rebooted.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+491752 - For Broadcom(r)  BMC57710, modprobe bnx2* fails citing memory allocation failures
+493771 - CVE-2009-1337 kernel: exit_notify: kill the wrong capable(CAP_KILL) check
+494074 - CVE-2009-1336 kernel: nfsv4 client can be crashed by stating a long filename
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4.7.z:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-78.0.24.EL.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-78.0.24.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-78.0.24.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.0.24.EL.i686.rpm
+kernel-devel-2.6.9-78.0.24.EL.i686.rpm
+kernel-hugemem-2.6.9-78.0.24.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.0.24.EL.i686.rpm
+kernel-smp-2.6.9-78.0.24.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.0.24.EL.i686.rpm
+kernel-xenU-2.6.9-78.0.24.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.0.24.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-78.0.24.EL.ia64.rpm
+kernel-debuginfo-2.6.9-78.0.24.EL.ia64.rpm
+kernel-devel-2.6.9-78.0.24.EL.ia64.rpm
+kernel-largesmp-2.6.9-78.0.24.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-78.0.24.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-78.0.24.EL.noarch.rpm
+
+ppc:
+kernel-2.6.9-78.0.24.EL.ppc64.rpm
+kernel-2.6.9-78.0.24.EL.ppc64iseries.rpm
+kernel-debuginfo-2.6.9-78.0.24.EL.ppc64.rpm
+kernel-debuginfo-2.6.9-78.0.24.EL.ppc64iseries.rpm
+kernel-devel-2.6.9-78.0.24.EL.ppc64.rpm
+kernel-devel-2.6.9-78.0.24.EL.ppc64iseries.rpm
+kernel-largesmp-2.6.9-78.0.24.EL.ppc64.rpm
+kernel-largesmp-devel-2.6.9-78.0.24.EL.ppc64.rpm
+
+s390:
+kernel-2.6.9-78.0.24.EL.s390.rpm
+kernel-debuginfo-2.6.9-78.0.24.EL.s390.rpm
+kernel-devel-2.6.9-78.0.24.EL.s390.rpm
+
+s390x:
+kernel-2.6.9-78.0.24.EL.s390x.rpm
+kernel-debuginfo-2.6.9-78.0.24.EL.s390x.rpm
+kernel-devel-2.6.9-78.0.24.EL.s390x.rpm
+
+x86_64:
+kernel-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-devel-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-smp-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.0.24.EL.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4.7.z:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-78.0.24.EL.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-78.0.24.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-78.0.24.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.0.24.EL.i686.rpm
+kernel-devel-2.6.9-78.0.24.EL.i686.rpm
+kernel-hugemem-2.6.9-78.0.24.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.0.24.EL.i686.rpm
+kernel-smp-2.6.9-78.0.24.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.0.24.EL.i686.rpm
+kernel-xenU-2.6.9-78.0.24.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.0.24.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-78.0.24.EL.ia64.rpm
+kernel-debuginfo-2.6.9-78.0.24.EL.ia64.rpm
+kernel-devel-2.6.9-78.0.24.EL.ia64.rpm
+kernel-largesmp-2.6.9-78.0.24.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-78.0.24.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-78.0.24.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-devel-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-smp-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.0.24.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.0.24.EL.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1336">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1336</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1337">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1337</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKJVf9XlSAg2UNWIIRAoqQAKCdA9VS09hy4LZ7CQNdIgBaaW+lRQCeM9K5
+JRMPsFzX6I1Y4v52XvvkTaw=
+=clEY
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

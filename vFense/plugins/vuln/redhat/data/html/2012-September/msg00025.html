@@ -1,0 +1,305 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1284&#45;01] Moderate: spice&#45;gtk security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 17 Sep 2012 13:02:14 &#45;0400 -->
+<!--X-Message-Id: 201209171702.q8HH29tB020132@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1284-01] Moderate: spice-gtk security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1284-01] Moderate: spice-gtk security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1284-01] Moderate: spice-gtk security update</li>
+<li><em>Date</em>: Mon, 17 Sep 2012 17:02:08 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: spice-gtk security update
+Advisory ID:       RHSA-2012:1284-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1284.html">https://rhn.redhat.com/errata/RHSA-2012-1284.html</a>
+Issue date:        2012-09-17
+CVE Names:         CVE-2012-4425 
+=====================================================================
+
+1. Summary:
+
+Updated spice-gtk packages that fix one security issue are now available
+for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The spice-gtk packages provide a GIMP Toolkit (GTK+) widget for SPICE
+(Simple Protocol for Independent Computing Environments) clients. Both
+Virtual Machine Manager and Virtual Machine Viewer can make use of this
+widget to access virtual machines using the SPICE protocol.
+
+It was discovered that the spice-gtk setuid helper application,
+spice-client-glib-usb-acl-helper, did not clear the environment variables
+read by the libraries it uses. A local attacker could possibly use this
+flaw to escalate their privileges by setting specific environment variables
+before running the helper application. (CVE-2012-4425)
+
+Red Hat would like to thank Sebastian Krahmer of the SUSE Security Team for
+reporting this issue.
+
+All users of spice-gtk are advised to upgrade to these updated packages,
+which contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+857283 - CVE-2012-4425 spice-gtk/glib: Possible privilege escalation via un-sanitized environment variable
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm</a>
+
+i386:
+spice-glib-0.11-11.el6_3.1.i686.rpm
+spice-gtk-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-python-0.11-11.el6_3.1.i686.rpm
+
+x86_64:
+spice-glib-0.11-11.el6_3.1.i686.rpm
+spice-glib-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-0.11-11.el6_3.1.i686.rpm
+spice-gtk-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-python-0.11-11.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm</a>
+
+i386:
+spice-glib-devel-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-devel-0.11-11.el6_3.1.i686.rpm
+spice-gtk-tools-0.11-11.el6_3.1.i686.rpm
+
+x86_64:
+spice-glib-devel-0.11-11.el6_3.1.i686.rpm
+spice-glib-devel-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-devel-0.11-11.el6_3.1.i686.rpm
+spice-gtk-devel-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-tools-0.11-11.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm</a>
+
+x86_64:
+spice-glib-0.11-11.el6_3.1.i686.rpm
+spice-glib-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-0.11-11.el6_3.1.i686.rpm
+spice-gtk-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-python-0.11-11.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm</a>
+
+x86_64:
+spice-glib-devel-0.11-11.el6_3.1.i686.rpm
+spice-glib-devel-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-devel-0.11-11.el6_3.1.i686.rpm
+spice-gtk-devel-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-tools-0.11-11.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm</a>
+
+i386:
+spice-glib-0.11-11.el6_3.1.i686.rpm
+spice-gtk-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-python-0.11-11.el6_3.1.i686.rpm
+
+x86_64:
+spice-glib-0.11-11.el6_3.1.i686.rpm
+spice-glib-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-0.11-11.el6_3.1.i686.rpm
+spice-gtk-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-python-0.11-11.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm</a>
+
+i386:
+spice-glib-devel-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-devel-0.11-11.el6_3.1.i686.rpm
+spice-gtk-tools-0.11-11.el6_3.1.i686.rpm
+
+x86_64:
+spice-glib-devel-0.11-11.el6_3.1.i686.rpm
+spice-glib-devel-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-devel-0.11-11.el6_3.1.i686.rpm
+spice-gtk-devel-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-tools-0.11-11.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm</a>
+
+i386:
+spice-glib-0.11-11.el6_3.1.i686.rpm
+spice-gtk-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-python-0.11-11.el6_3.1.i686.rpm
+
+x86_64:
+spice-glib-0.11-11.el6_3.1.i686.rpm
+spice-glib-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-0.11-11.el6_3.1.i686.rpm
+spice-gtk-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-python-0.11-11.el6_3.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/spice-gtk-0.11-11.el6_3.1.src.rpm</a>
+
+i386:
+spice-glib-devel-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-devel-0.11-11.el6_3.1.i686.rpm
+spice-gtk-tools-0.11-11.el6_3.1.i686.rpm
+
+x86_64:
+spice-glib-devel-0.11-11.el6_3.1.i686.rpm
+spice-glib-devel-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.i686.rpm
+spice-gtk-debuginfo-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-devel-0.11-11.el6_3.1.i686.rpm
+spice-gtk-devel-0.11-11.el6_3.1.x86_64.rpm
+spice-gtk-tools-0.11-11.el6_3.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4425.html">https://www.redhat.com/security/data/cve/CVE-2012-4425.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQV1ddXlSAg2UNWIIRAu/BAJ4uf6RWxxW9Ru63HcMWjoOJLTtyVQCfUHf4
+MzBuDCow6lSozjfJfs4a8io=
+=U9Of
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1205&#45;01] Low: Red Hat Storage 2.0 security, bug fix,	and enhancement update #6 -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 4 Sep 2013 15:02:14 &#45;0400 -->
+<!--X-Message-Id: 201309041902.r84J2DhY020640@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1205-01] Low: Red Hat Storage 2.0 security, bug fix,	and enha</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1205-01] Low: Red Hat Storage 2.0 security, bug fix,	and enhancement update #6</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2013:1205-01] Low: Red Hat Storage 2.0 security, bug fix,	and enhancement update #6</li>
+<li><em>Date</em>: Wed, 4 Sep 2013 19:02:13 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat Storage 2.0 security, bug fix, and enhancement update #6
+Advisory ID:       RHSA-2013:1205-01
+Product:           Red Hat Storage
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1205.html">https://rhn.redhat.com/errata/RHSA-2013-1205.html</a>
+Issue date:        2013-09-04
+CVE Names:         CVE-2013-4157 
+=====================================================================
+
+1. Summary:
+
+Updated Red Hat Storage 2.0 packages that fix multiple security issues,
+various bugs, and add one enhancement are now available.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Storage Server 2.0 - noarch, x86_64
+
+3. Description:
+
+Red Hat Storage is a software only, scale-out storage solution that
+provides flexible and agile unstructured data storage for the enterprise.
+
+Multiple insecure temporary file creation flaws were found in Red Hat
+Storage server. A local user on the Red Hat Storage server could use these
+flaws to cause arbitrary files to be overwritten as the root user via a
+symbolic link attack. (CVE-2013-4157)
+
+These issues were discovered by Gowrishankar Rajaiyan of Red Hat and Kurt
+Seifried of the Red Hat Security Response Team.
+
+This update also fixes the following bugs:
+
+* Previously, rolling upgrades on a volume caused some processes to abort
+which led to a possible corruption of the volume. Yum update aborts with a
+message to stop the volume during an update. Now, with this update rolling
+upgrades is not supported and it is mandatory to stop the volume before any
+'yum update'. (BZ#998649)
+
+*  Installing or upgrading the gluster-swift-plugin RPM overwrites
+/etc/swift configuration files. Hence, the customer configuration is
+overwritten, causing data unavailability. Now, the RPM installs or upgrades
+new configuration files with a non-conflicting extension and customer
+configuration files are not overwritten, maintaining data availability.
+(BZ#997940, BZ#1000423)
+
+This update also adds the following enhancement:
+
+* A new upgrade script has been added. When Red Hat Storage Server 2.1 is
+released, this script will help users upgrade and resubscribe their
+Red Hat Storage Server 2.0 Update 6 systems to Red Hat Storage Server 2.1.
+(BZ#1002872)
+
+All users of Red Hat Storage are advised to upgrade to these updated
+packages.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+986516 - CVE-2013-4157 Red Hat Storage Server 2.0: appliance-base / redhat-storage-server /tmp file creation vuln
+997940 - Inclusion of gluster-swift gluster-swift-plugin-1.0-6 package needed
+1000423 - Upgrade from RHS2.0-U5 to U6 results in broken gluster-swift services, it  gives 503 for every request
+
+6. Package List:
+
+Red Hat Storage Server 2.0:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/appliance-2.0.6.0-2.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/appliance-2.0.6.0-2.el6rhs.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/gluster-swift-plugin-1.0-7.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/gluster-swift-plugin-1.0-7.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/glusterfs-3.3.0.14rhs-1.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/glusterfs-3.3.0.14rhs-1.el6rhs.src.rpm</a>
+
+noarch:
+appliance-base-2.0.6.0-2.el6rhs.noarch.rpm
+gluster-swift-plugin-1.0-7.noarch.rpm
+
+x86_64:
+glusterfs-3.3.0.14rhs-1.el6rhs.x86_64.rpm
+glusterfs-debuginfo-3.3.0.14rhs-1.el6rhs.x86_64.rpm
+glusterfs-devel-3.3.0.14rhs-1.el6rhs.x86_64.rpm
+glusterfs-fuse-3.3.0.14rhs-1.el6rhs.x86_64.rpm
+glusterfs-geo-replication-3.3.0.14rhs-1.el6rhs.x86_64.rpm
+glusterfs-rdma-3.3.0.14rhs-1.el6rhs.x86_64.rpm
+glusterfs-server-3.3.0.14rhs-1.el6rhs.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4157.html">https://www.redhat.com/security/data/cve/CVE-2013-4157.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSJ4OaXlSAg2UNWIIRAoGVAJ9jQIv0b4peMEVGo68pNmHR2AfU2ACdFtK3
+sKqRWebvJj0/5znvLNDwNFY=
+=tYcD
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0677&#45;01] Important: kernel security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 7 Sep 2010 10:45:28 &#45;0400 -->
+<!--X-Message-Id: 201009071445.o87EjN5D002737@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0677-01] Important: kernel security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0677-01] Important: kernel security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0677-01] Important: kernel security update</li>
+<li><em>Date</em>: Tue, 7 Sep 2010 10:45:23 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security update
+Advisory ID:       RHSA-2010:0677-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0677.html">https://rhn.redhat.com/errata/RHSA-2010-0677.html</a>
+Issue date:        2010-09-07
+CVE Names:         CVE-2010-2240 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix one security issue are now available for
+Red Hat Enterprise Linux 4.7 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4.7.z - i386, ia64, noarch, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux ES version 4.7.z - i386, ia64, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issue:
+
+* When an application has a stack overflow, the stack could silently
+overwrite another memory mapped area instead of a segmentation fault
+occurring, which could cause an application to execute arbitrary code,
+possibly leading to privilege escalation. It is known that the X Window
+System server can be used to trigger this flaw. (CVE-2010-2240, Important)
+
+Red Hat would like to thank the X.Org security team for reporting this
+issue. Upstream acknowledges Rafal Wojtczuk as the original reporter.
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct this issue. The system must be rebooted for this update
+to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+606611 - CVE-2010-2240 kernel: mm: keep a guard page below a grow-down stack segment
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4.7.z:
+
+Source:
+kernel-2.6.9-78.0.32.EL.src.rpm
+
+i386:
+kernel-2.6.9-78.0.32.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.0.32.EL.i686.rpm
+kernel-devel-2.6.9-78.0.32.EL.i686.rpm
+kernel-hugemem-2.6.9-78.0.32.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.0.32.EL.i686.rpm
+kernel-smp-2.6.9-78.0.32.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.0.32.EL.i686.rpm
+kernel-xenU-2.6.9-78.0.32.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.0.32.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-78.0.32.EL.ia64.rpm
+kernel-debuginfo-2.6.9-78.0.32.EL.ia64.rpm
+kernel-devel-2.6.9-78.0.32.EL.ia64.rpm
+kernel-largesmp-2.6.9-78.0.32.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-78.0.32.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-78.0.32.EL.noarch.rpm
+
+ppc:
+kernel-2.6.9-78.0.32.EL.ppc64.rpm
+kernel-2.6.9-78.0.32.EL.ppc64iseries.rpm
+kernel-debuginfo-2.6.9-78.0.32.EL.ppc64.rpm
+kernel-debuginfo-2.6.9-78.0.32.EL.ppc64iseries.rpm
+kernel-devel-2.6.9-78.0.32.EL.ppc64.rpm
+kernel-devel-2.6.9-78.0.32.EL.ppc64iseries.rpm
+kernel-largesmp-2.6.9-78.0.32.EL.ppc64.rpm
+kernel-largesmp-devel-2.6.9-78.0.32.EL.ppc64.rpm
+
+s390:
+kernel-2.6.9-78.0.32.EL.s390.rpm
+kernel-debuginfo-2.6.9-78.0.32.EL.s390.rpm
+kernel-devel-2.6.9-78.0.32.EL.s390.rpm
+
+s390x:
+kernel-2.6.9-78.0.32.EL.s390x.rpm
+kernel-debuginfo-2.6.9-78.0.32.EL.s390x.rpm
+kernel-devel-2.6.9-78.0.32.EL.s390x.rpm
+
+x86_64:
+kernel-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-devel-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-smp-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.0.32.EL.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4.7.z:
+
+Source:
+kernel-2.6.9-78.0.32.EL.src.rpm
+
+i386:
+kernel-2.6.9-78.0.32.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.0.32.EL.i686.rpm
+kernel-devel-2.6.9-78.0.32.EL.i686.rpm
+kernel-hugemem-2.6.9-78.0.32.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.0.32.EL.i686.rpm
+kernel-smp-2.6.9-78.0.32.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.0.32.EL.i686.rpm
+kernel-xenU-2.6.9-78.0.32.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.0.32.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-78.0.32.EL.ia64.rpm
+kernel-debuginfo-2.6.9-78.0.32.EL.ia64.rpm
+kernel-devel-2.6.9-78.0.32.EL.ia64.rpm
+kernel-largesmp-2.6.9-78.0.32.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-78.0.32.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-78.0.32.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-devel-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-smp-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.0.32.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.0.32.EL.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2240.html">https://www.redhat.com/security/data/cve/CVE-2010-2240.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMhk/QXlSAg2UNWIIRAqoWAJ9JwBUdCUUty7RY8WlkCElcKSR/EwCePAiK
+aNVYvqTYmWEdn/MbJnHiuYE=
+=jF2h
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

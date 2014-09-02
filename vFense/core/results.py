@@ -30,6 +30,86 @@ class ApiResultKeys():
     AGENT_ID = 'agent_id'
 
 
+class ApiResults(object):
+    """Used to represent an instance of api results."""
+
+    def __init__(self, updated_ids=None, invalid_ids=None, unchanged_ids=None,
+                 deleted_ids=None, generic_status_code=None, data=None,
+                 vfense_status_code=None, db_status_code=None, http_uri=None,
+                 message=None, http_method=None, errors=None, user_name=None,
+                 operation=None, operations=None, agent_id=None, tag_id=None,
+                 app_id=None, operation_id=None, count=None
+                 ):
+        """
+        Kwargs:
+        """
+        self.updated_ids = updated_ids
+        self.invalid_ids = invalid_ids
+        self.unchanged_ids = unchanged_ids
+        self.deleted_ids = deleted_ids
+        self.db_status_code = db_status_code
+        self.generic_status_code = generic_status_code
+        self.vfense_status_code = vfense_status_code
+        self.http_uri = http_uri
+        self.http_method = http_method
+        self.message = message
+        self.data = data
+        self.operation = operation
+        self.operations = operations
+        self.count = count
+
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+
+        Use case(s):
+            Useful when you want to create an install instance and only
+            want to fill in a few fields, then allow the install
+            functions to call this method to fill in the rest.
+        """
+
+        if not self.updated_ids:
+            self.updated_ids = []
+
+        if not self.invalid_ids:
+            self.invalid_ids = []
+
+        if not self.unchanged_ids:
+            self.unchanged_ids = []
+
+        if not self.deleted_ids:
+            self.deleted_ids = []
+
+        if not self.data:
+            self.data = []
+
+        if not self.operations:
+            self.operations = []
+
+
+    def to_dict_results(self):
+        """ Turn the view fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields corresponding to the
+                install operation.
+
+        """
+
+        return {
+            ApiResultKeys.UPDATED_IDS: self.updated_ids,
+            ApiResultKeys.UNCHANGED_IDS: self.unchanged_ids,
+            ApiResultKeys.DELETED_IDS: self.deleted_ids,
+            ApiResultKeys.INVALID_IDS: self.invalid_ids,
+            ApiResultKeys.GENERIC_STATUS_CODE: self.generic_status_code,
+            ApiResultKeys.VFENSE_STATUS_CODE: self.vfense_status_code,
+            ApiResultKeys.COUNT: self.count,
+            ApiResultKeys.DATA: self.data,
+            ApiResultKeys.MESSAGE: self.message,
+        }
+
+
+
 class Results(object):
     def __init__(self, username, uri, method):
         self.uri = uri

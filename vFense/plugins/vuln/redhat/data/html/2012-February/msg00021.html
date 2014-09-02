@@ -1,0 +1,249 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0103&#45;01] Moderate: squirrelmail security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 8 Feb 2012 15:11:58 &#45;0500 -->
+<!--X-Message-Id: 201202082011.q18KBrtp008154@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0103-01] Moderate: squirrelmail security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0103-01] Moderate: squirrelmail security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0103-01] Moderate: squirrelmail security update</li>
+<li><em>Date</em>: Wed, 8 Feb 2012 20:11:52 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: squirrelmail security update
+Advisory ID:       RHSA-2012:0103-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0103.html">https://rhn.redhat.com/errata/RHSA-2012-0103.html</a>
+Issue date:        2012-02-08
+CVE Names:         CVE-2010-1637 CVE-2010-2813 CVE-2010-4554 
+                   CVE-2010-4555 CVE-2011-2023 CVE-2011-2752 
+                   CVE-2011-2753 
+=====================================================================
+
+1. Summary:
+
+An updated squirrelmail package that fixes several security issues is now
+available for Red Hat Enterprise Linux 4 and 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - noarch
+Red Hat Enterprise Linux (v. 5 server) - noarch
+Red Hat Enterprise Linux AS version 4 - noarch
+Red Hat Enterprise Linux Desktop version 4 - noarch
+Red Hat Enterprise Linux ES version 4 - noarch
+Red Hat Enterprise Linux WS version 4 - noarch
+
+3. Description:
+
+SquirrelMail is a standards-based webmail package written in PHP.
+
+A cross-site scripting (XSS) flaw was found in the way SquirrelMail
+performed the sanitization of HTML style tag content. A remote attacker
+could use this flaw to send a specially-crafted Multipurpose Internet Mail
+Extensions (MIME) message that, when opened by a victim, would lead to
+arbitrary web script execution in the context of their SquirrelMail
+session. (CVE-2011-2023)
+
+Multiple cross-site scripting (XSS) flaws were found in SquirrelMail. A
+remote attacker could possibly use these flaws to execute arbitrary web
+script in the context of a victim's SquirrelMail session. (CVE-2010-4555)
+
+An input sanitization flaw was found in the way SquirrelMail handled the
+content of various HTML input fields. A remote attacker could use this
+flaw to alter user preference values via a newline character contained in
+the input for these fields. (CVE-2011-2752)
+
+It was found that the SquirrelMail Empty Trash and Index Order pages did
+not protect against Cross-Site Request Forgery (CSRF) attacks. If a remote
+attacker could trick a user, who was logged into SquirrelMail, into
+visiting a specially-crafted URL, the attacker could empty the victim's
+trash folder or alter the ordering of the columns on the message index
+page. (CVE-2011-2753)
+
+SquirrelMail was allowed to be loaded into an HTML sub-frame, allowing a
+remote attacker to perform a clickjacking attack against logged in users
+and possibly gain access to sensitive user data. With this update, the
+SquirrelMail main frame can only be loaded into the top most browser frame.
+(CVE-2010-4554)
+
+A flaw was found in the way SquirrelMail handled failed log in attempts. A
+user preference file was created when attempting to log in with a password
+containing an 8-bit character, even if the username was not valid. A
+remote attacker could use this flaw to eventually consume all hard disk
+space on the target SquirrelMail server. (CVE-2010-2813)
+
+A flaw was found in the SquirrelMail Mail Fetch plug-in. If an
+administrator enabled this plug-in, a SquirrelMail user could use this flaw
+to port scan the local network the server was on. (CVE-2010-1637)
+
+Users of SquirrelMail should upgrade to this updated package, which
+contains backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+606459 - CVE-2010-1637 SquirrelMail: Mail Fetch plugin -- port-scans via non-standard POP3 server ports
+618096 - CVE-2010-2813 SquirrelMail: DoS (disk space consumption) by random IMAP login attempts with 8-bit characters in the password
+720693 - CVE-2010-4554 SquirrelMail: Prone to clickjacking attacks
+720694 - CVE-2010-4555 SquirrelMail: Multiple XSS flaws
+720695 - CVE-2011-2023 SquirrelMail: XSS in &lt;style&gt; tag handling
+722831 - CVE-2011-2752 SquirrelMail: CRLF injection vulnerability
+722832 - CVE-2011-2753 SquirrelMail: CSRF in the empty trash feature and in Index Order page
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/squirrelmail-1.4.8-18.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/squirrelmail-1.4.8-18.el4.src.rpm</a>
+
+noarch:
+squirrelmail-1.4.8-18.el4.noarch.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/squirrelmail-1.4.8-18.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/squirrelmail-1.4.8-18.el4.src.rpm</a>
+
+noarch:
+squirrelmail-1.4.8-18.el4.noarch.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/squirrelmail-1.4.8-18.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/squirrelmail-1.4.8-18.el4.src.rpm</a>
+
+noarch:
+squirrelmail-1.4.8-18.el4.noarch.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/squirrelmail-1.4.8-18.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/squirrelmail-1.4.8-18.el4.src.rpm</a>
+
+noarch:
+squirrelmail-1.4.8-18.el4.noarch.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/squirrelmail-1.4.8-5.el5_7.13.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/squirrelmail-1.4.8-5.el5_7.13.src.rpm</a>
+
+noarch:
+squirrelmail-1.4.8-5.el5_7.13.noarch.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/squirrelmail-1.4.8-5.el5_7.13.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/squirrelmail-1.4.8-5.el5_7.13.src.rpm</a>
+
+noarch:
+squirrelmail-1.4.8-5.el5_7.13.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1637.html">https://www.redhat.com/security/data/cve/CVE-2010-1637.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2813.html">https://www.redhat.com/security/data/cve/CVE-2010-2813.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4554.html">https://www.redhat.com/security/data/cve/CVE-2010-4554.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4555.html">https://www.redhat.com/security/data/cve/CVE-2010-4555.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2023.html">https://www.redhat.com/security/data/cve/CVE-2011-2023.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2752.html">https://www.redhat.com/security/data/cve/CVE-2011-2752.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2753.html">https://www.redhat.com/security/data/cve/CVE-2011-2753.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.squirrelmail.org/security/issue/2010-06-21">http://www.squirrelmail.org/security/issue/2010-06-21</a>
+<a  rel="nofollow" href="http://www.squirrelmail.org/security/issue/2010-07-23">http://www.squirrelmail.org/security/issue/2010-07-23</a>
+<a  rel="nofollow" href="http://www.squirrelmail.org/security/issue/2011-07-10">http://www.squirrelmail.org/security/issue/2011-07-10</a>
+<a  rel="nofollow" href="http://www.squirrelmail.org/security/issue/2011-07-11">http://www.squirrelmail.org/security/issue/2011-07-11</a>
+<a  rel="nofollow" href="http://www.squirrelmail.org/security/issue/2011-07-12">http://www.squirrelmail.org/security/issue/2011-07-12</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPMtb2XlSAg2UNWIIRAsxFAKCMlHL7/L5T0nmg12UKFzL6VTftnwCgxGX6
+WFC9w0kBpUYrlNzBBpgiUxs=
+=U5Lr
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0368&#45;01] Critical: flash&#45;plugin &#45; End Of Life -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 21 Mar 2011 13:37:47 &#45;0400 -->
+<!--X-Message-Id: 201103211737.p2LHbg4x011512@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0368-01] Critical: flash-plugin - End Of Life</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0368-01] Critical: flash-plugin - End Of Life</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0368-01] Critical: flash-plugin - End Of Life</li>
+<li><em>Date</em>: Mon, 21 Mar 2011 13:37:42 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: flash-plugin - End Of Life
+Advisory ID:       RHSA-2011:0368-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0368.html">https://rhn.redhat.com/errata/RHSA-2011-0368.html</a>
+Issue date:        2011-03-21
+CVE Names:         CVE-2011-0558 CVE-2011-0559 CVE-2011-0560 
+                   CVE-2011-0561 CVE-2011-0571 CVE-2011-0572 
+                   CVE-2011-0573 CVE-2011-0574 CVE-2011-0575 
+                   CVE-2011-0577 CVE-2011-0578 CVE-2011-0607 
+                   CVE-2011-0608 
+=====================================================================
+
+1. Summary:
+
+This update disables Adobe Flash Player 9 on Red Hat Enterprise Linux 4, as
+it contains multiple security flaws and should no longer be used.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact.
+
+2. Relevant releases/architectures:
+
+Red Hat Desktop version 4 Extras - i386
+Red Hat Enterprise Linux AS version 4 Extras - i386
+Red Hat Enterprise Linux ES version 4 Extras - i386
+Red Hat Enterprise Linux WS version 4 Extras - i386
+
+3. Description:
+
+The flash-plugin package contains a Mozilla Firefox compatible Adobe Flash
+Player web browser plug-in.
+
+Adobe Flash Player 9 is vulnerable to critical security flaws and should no
+longer be used. A remote attacker could use these flaws to execute
+arbitrary code with the privileges of the user running Flash Player 9.
+(CVE-2011-0558, CVE-2011-0559, CVE-2011-0560, CVE-2011-0561, CVE-2011-0571,
+CVE-2011-0572, CVE-2011-0573, CVE-2011-0574, CVE-2011-0575, CVE-2011-0577,
+CVE-2011-0578, CVE-2011-0607, CVE-2011-0608)
+
+Adobe is no longer providing security updates for Adobe Flash Player 9, and
+is not providing a replacement Flash Player version compatible with Red Hat
+Enterprise Linux 4.
+
+This erratum disables Adobe Flash Player 9 to prevent it from functioning.
+User wishing to continue using Flash Player 9, despite the vulnerabilities,
+can add the flash-plugin package to the up2date skip list. Refer to the
+following Red Hat Knowledgebase article for instructions on adding a
+package to the up2date skip list:
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-1639">https://access.redhat.com/kb/docs/DOC-1639</a>
+
+4. Solution:
+
+This update disables the flash-plugin package due to its known security
+vulnerabilities.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+676226 - CVE-2011-0558 CVE-2011-0559 CVE-2011-0560 CVE-2011-0561 CVE-2011-0571 CVE-2011-0572 CVE-2011-0573 CVE-2011-0574 CVE-2011-0575 CVE-2011-0577 CVE-2011-0578 CVE-2011-0607 CVE-2011-0608 flash-plugin: multiple code execution flaws (APSB11-02)
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4 Extras:
+
+i386:
+flash-plugin-9.0.289.0-3.el4.i386.rpm
+
+Red Hat Desktop version 4 Extras:
+
+i386:
+flash-plugin-9.0.289.0-3.el4.i386.rpm
+
+Red Hat Enterprise Linux ES version 4 Extras:
+
+i386:
+flash-plugin-9.0.289.0-3.el4.i386.rpm
+
+Red Hat Enterprise Linux WS version 4 Extras:
+
+i386:
+flash-plugin-9.0.289.0-3.el4.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0558.html">https://www.redhat.com/security/data/cve/CVE-2011-0558.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0559.html">https://www.redhat.com/security/data/cve/CVE-2011-0559.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0560.html">https://www.redhat.com/security/data/cve/CVE-2011-0560.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0561.html">https://www.redhat.com/security/data/cve/CVE-2011-0561.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0571.html">https://www.redhat.com/security/data/cve/CVE-2011-0571.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0572.html">https://www.redhat.com/security/data/cve/CVE-2011-0572.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0573.html">https://www.redhat.com/security/data/cve/CVE-2011-0573.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0574.html">https://www.redhat.com/security/data/cve/CVE-2011-0574.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0575.html">https://www.redhat.com/security/data/cve/CVE-2011-0575.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0577.html">https://www.redhat.com/security/data/cve/CVE-2011-0577.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0578.html">https://www.redhat.com/security/data/cve/CVE-2011-0578.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0607.html">https://www.redhat.com/security/data/cve/CVE-2011-0607.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0608.html">https://www.redhat.com/security/data/cve/CVE-2011-0608.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://kb2.adobe.com/cps/406/kb406791.html">http://kb2.adobe.com/cps/406/kb406791.html</a> 
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-1639">https://access.redhat.com/kb/docs/DOC-1639</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNh4yzXlSAg2UNWIIRAgTUAJ9NM0sg5xjXNhVZas+IV5mIeTMlFQCeLPJU
+IFWKWpb5COIy5PQofYYj6kM=
+=MYUn
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

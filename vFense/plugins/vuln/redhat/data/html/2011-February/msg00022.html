@@ -1,0 +1,259 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0266&#45;01] Low: fence security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 16 Feb 2011 11:27:48 &#45;0500 -->
+<!--X-Message-Id: 201102161627.p1GGRhXl010183@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0266-01] Low: fence security, bug fix,	and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0266-01] Low: fence security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0266-01] Low: fence security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 16 Feb 2011 11:27:26 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: fence security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:0266-01
+Product:           Red Hat Cluster Suite
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0266.html">https://rhn.redhat.com/errata/RHSA-2011-0266.html</a>
+Issue date:        2011-02-16
+CVE Names:         CVE-2008-4192 CVE-2008-4579 
+=====================================================================
+
+1. Summary:
+
+An updated fence package that fixes multiple security issues, several bugs,
+and adds two enhancements is now available for Red Hat Cluster Suite 4.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Cluster Suite 4AS - i386, ia64, ppc, x86_64
+Red Hat Cluster Suite 4ES - i386, ia64, x86_64
+Red Hat Cluster Suite 4WS - i386, ia64, x86_64
+
+3. Description:
+
+The fence package allows failed or unreachable nodes to be forcibly
+restarted and removed from a cluster.
+
+Insecure temporary file use flaws were found in fence_egenera, fence_apc,
+and fence_apc_snmp. A local attacker could use these flaws to overwrite an
+arbitrary file writable by the victim running those utilities via a
+symbolic link attack. (CVE-2008-4192, CVE-2008-4579)
+
+This update also fixes the following bugs:
+
+* fence_apc_snmp now waits for five seconds after fencing to properly get
+status. (BZ#494587)
+
+* The fence_drac5 help output now shows the proper commands. (BZ#498870)
+
+* fence_scsi_test.pl now verifies that sg_persist is in the path before
+running. (BZ#500172)
+
+* fence_drac5 is now more consistent with other agents and uses module_name
+instead of modulename. (BZ#500546)
+
+* fence_apc and fence_wti no longer fail with a pexpect exception.
+(BZ#501890, BZ#504589)
+
+* fence_wti no longer issues a traceback when an option is missing.
+(BZ#508258)
+
+* fence_sanbox2 is now able to properly obtain the status after fencing.
+(BZ#510279)
+
+* Fencing no longer fails if fence_wti is used without telnet. (BZ#510335)
+
+* fence_scsi get_scsi_devices no longer hangs with various devices.
+(BZ#545193)
+
+* fence_ilo no longer fails to reboot with ilo2 firmware 1.70. (BZ#545682)
+
+* Fixed an issue with fence_ilo not rebooting in some implementations.
+(BZ#576036)
+
+* fence_ilo no longer throws exceptions if the user does not have power
+privileges. (BZ#576178)
+
+As well, this update adds the following enhancements:
+
+* Support has been added for SSH-enabled RSA II fence devices. (BZ#476161)
+
+* The APC fence agent will now work with a non-root account. (BZ#491643)
+
+All fence users are advised to upgrade to this updated package, which
+corrects these issues and adds these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+460476 - CVE-2008-4192 cman/fence: insecure temporary file usage in the egenera fence agent
+467386 - CVE-2008-4579 cman/fence: insecure temporary file usage in the apc fence agents
+491643 - APC Fence Agent does not work with non-admin account
+494587 - fence_apc_snmp time wait
+498870 - fence_drac5 help output shows incorrect usage
+498983 - cluster product is affected by several symlink attack vulnerabilities
+500172 - cman - fence_scsi_test.pl does not check for sg_persist in the path
+500546 - fence_drac5 uses module_name instead of modulename
+501890 - fence_apc fails with pexpect exception
+504589 - fence agents (fence_apc, fence_wti) fails with pexpect exception
+508268 - Fence agent for WTI ends with traceback when option is missing
+510279 - fence_sanbox2 unable to retrieve status of fencing
+545193 - fence_scsi get_scsi_devices() too slow, maybe hanging
+545682 - fence_ilo fails to reboot, possibly timing problem with ilo2 1.70
+576036 - ipmi fence failed
+576178 - fence_ilo will throw exception if user does not have power priviledges
+584133 - Can't build fence without removing -Wstrict-prototypes due to nss issue
+
+6. Package List:
+
+Red Hat Cluster Suite 4AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/RHCS/SRPMS/fence-1.32.68-5.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/RHCS/SRPMS/fence-1.32.68-5.el4.src.rpm</a>
+
+i386:
+fence-1.32.68-5.el4.i686.rpm
+fence-debuginfo-1.32.68-5.el4.i686.rpm
+
+ia64:
+fence-1.32.68-5.el4.ia64.rpm
+fence-debuginfo-1.32.68-5.el4.ia64.rpm
+
+ppc:
+fence-1.32.68-5.el4.ppc64.rpm
+fence-debuginfo-1.32.68-5.el4.ppc64.rpm
+
+x86_64:
+fence-1.32.68-5.el4.x86_64.rpm
+fence-debuginfo-1.32.68-5.el4.x86_64.rpm
+
+Red Hat Cluster Suite 4ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/RHCS/SRPMS/fence-1.32.68-5.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/RHCS/SRPMS/fence-1.32.68-5.el4.src.rpm</a>
+
+i386:
+fence-1.32.68-5.el4.i686.rpm
+fence-debuginfo-1.32.68-5.el4.i686.rpm
+
+ia64:
+fence-1.32.68-5.el4.ia64.rpm
+fence-debuginfo-1.32.68-5.el4.ia64.rpm
+
+x86_64:
+fence-1.32.68-5.el4.x86_64.rpm
+fence-debuginfo-1.32.68-5.el4.x86_64.rpm
+
+Red Hat Cluster Suite 4WS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/RHCS/SRPMS/fence-1.32.68-5.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/RHCS/SRPMS/fence-1.32.68-5.el4.src.rpm</a>
+
+i386:
+fence-1.32.68-5.el4.i686.rpm
+fence-debuginfo-1.32.68-5.el4.i686.rpm
+
+ia64:
+fence-1.32.68-5.el4.ia64.rpm
+fence-debuginfo-1.32.68-5.el4.ia64.rpm
+
+x86_64:
+fence-1.32.68-5.el4.x86_64.rpm
+fence-debuginfo-1.32.68-5.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-4192.html">https://www.redhat.com/security/data/cve/CVE-2008-4192.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-4579.html">https://www.redhat.com/security/data/cve/CVE-2008-4579.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNW/nOXlSAg2UNWIIRAiV9AJkBbTjAqRKJQtT/tadx7diZqqf8dACgrs0C
+FVyhqvCe98RBBnxnAnCkFQs=
+=AvHV
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

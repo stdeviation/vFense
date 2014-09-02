@@ -1,0 +1,176 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0763&#45;01] Moderate: JBoss Web Framework Kit 2.2.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 22 Apr 2013 17:27:12 &#45;0400 -->
+<!--X-Message-Id: 201304222127.r3MLRB4d001688@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0763-01] Moderate: JBoss Web Framework Kit 2.2.0 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0763-01] Moderate: JBoss Web Framework Kit 2.2.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0763-01] Moderate: JBoss Web Framework Kit 2.2.0 update</li>
+<li><em>Date</em>: Mon, 22 Apr 2013 21:27:11 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: JBoss Web Framework Kit 2.2.0 update
+Advisory ID:       RHSA-2013:0763-01
+Product:           JBoss Web Framework Kit
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0763.html">https://rhn.redhat.com/errata/RHSA-2013-0763.html</a>
+Issue date:        2013-04-22
+CVE Names:         CVE-2009-2625 CVE-2012-5783 
+=====================================================================
+
+1. Summary:
+
+JBoss Web Framework Kit 2.2.0, which fixes two security issues, various
+bugs, and adds enhancements is now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Description:
+
+The JBoss Web Framework Kit combines popular open source web frameworks
+into a single solution for Java applications.
+
+This release of JBoss Web Framework Kit 2.2.0 serves as a replacement for
+JBoss Web Framework Kit 2.1.0. It includes various bug fixes and
+enhancements which are detailed in the JBoss Web Framework Kit 2.2.0
+Release Notes. The Release Notes will be available shortly from
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+
+This release also fixes the following security issues:
+
+A flaw was found in the way the Apache Xerces2 Java Parser processed the
+SYSTEM identifier in DTDs. A remote attacker could provide a
+specially-crafted XML file, which once parsed by an application using the
+Apache Xerces2 Java Parser, would lead to a denial of service (application
+hang due to excessive CPU use). (CVE-2009-2625)
+
+Note: Seam and RichFaces used the xerces:xercesImpl:2.9.1-patch01 artifact,
+which is vulnerable to the CVE-2009-2625 flaw. In this release, the
+artifact has been replaced with xerces:xercesImpl:2.9.1-redhat-3, which is
+not vulnerable.
+
+The Jakarta Commons HttpClient component did not verify that the server
+hostname matched the domain name in the subject's Common Name (CN) or
+subjectAltName field in X.509 certificates. This could allow a
+man-in-the-middle attacker to spoof an SSL server if they had a certificate
+that was valid for any domain name. (CVE-2012-5783)
+
+Note: Jakarta Commons HttpClient 3 is vulnerable to CVE-2012-5783. Jakarta
+Commons HttpClient 3 has reached its end of life as an Apache-maintained
+component, and no upstream build is available that addresses this flaw. The
+version of Jakarta Commons HttpClient 3 that ships with JBoss Web Framework
+Kit 2.2.0 includes a patch for this flaw, which has been built by Red Hat.
+Versions that are consumed from Maven Central do not have this patch
+applied.
+
+Jakarta Commons HttpClient 3 is a transitive dependency for multiple
+components included in JBoss Web Framework Kit 2.2.0. If this dependency is
+resolved using a build of HttpClient 3 from Maven Central, then this flaw
+may be exposed.
+
+Warning: Before applying this update, back up your existing installation of
+JBoss Enterprise Application Platform or JBoss Enterprise Web Server, and
+applications deployed to it.
+
+All users of JBoss Web Framework Kit 2.1.0 as provided from the Red Hat
+Customer Portal are advised to upgrade to JBoss Web Framework Kit 2.2.0.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing installation of JBoss Enterprise Application Platform or JBoss
+Enterprise Web Server, and applications deployed to it.
+
+The JBoss server process must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+512921 - CVE-2009-2625 xerces-j2, JDK: XML parsing Denial-Of-Service (6845701)
+873317 - CVE-2012-5783 jakarta-commons-httpclient: missing connection hostname check against X.509 certificate name
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2625.html">https://www.redhat.com/security/data/cve/CVE-2009-2625.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5783.html">https://www.redhat.com/security/data/cve/CVE-2012-5783.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=web.framework.kit&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=web.framework.kit&amp;downloadType=distributions</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/">https://access.redhat.com/site/documentation/</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRdasaXlSAg2UNWIIRAqDqAJ9PbTS2IZ6rkgUeb0EnBniZkXtGaACdHyIu
+QfgrRlAafvV/aLz8TCDpJGs=
+=UIkM
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

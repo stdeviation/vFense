@@ -1,0 +1,316 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1197&#45;01] Moderate: libvirt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 23 Aug 2011 10:49:38 &#45;0400 -->
+<!--X-Message-Id: 201108231449.p7NEnWDj031027@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1197-01] Moderate: libvirt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1197-01] Moderate: libvirt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1197-01] Moderate: libvirt security and bug fix update</li>
+<li><em>Date</em>: Tue, 23 Aug 2011 14:49:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libvirt security and bug fix update
+Advisory ID:       RHSA-2011:1197-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1197.html">https://rhn.redhat.com/errata/RHSA-2011-1197.html</a>
+Issue date:        2011-08-23
+CVE Names:         CVE-2011-2511 
+=====================================================================
+
+1. Summary:
+
+Updated libvirt packages that fix one security issue and several bugs are
+now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The libvirt library is a C API for managing and interacting with the
+virtualization capabilities of Linux and other operating systems. In
+addition, libvirt provides tools for remotely managing virtualized systems.
+
+An integer overflow flaw was found in libvirtd's RPC call handling. An
+attacker able to establish read-only connections to libvirtd could trigger
+this flaw by calling virDomainGetVcpus() with specially-crafted parameters,
+causing libvirtd to crash. (CVE-2011-2511)
+
+This update also fixes the following bugs:
+
+* Previously, when the &quot;virsh vol-create-from&quot; command was run on an LVM
+(Logical Volume Manager) storage pool, performance of the command was very
+low and the operation consumed an excessive amount of time. This bug has
+been fixed in the virStorageVolCreateXMLFrom() function, and the
+performance problem of the command no longer occurs.
+
+* Due to a regression, libvirt used undocumented command line options,
+instead of the recommended ones. Consequently, the qemu-img utility used an
+invalid argument while creating an encrypted volume, and the process
+eventually failed. With this update, the bug in the backing format of the
+storage back end has been fixed, and encrypted volumes can now be created
+as expected. (BZ#726617)
+
+* Due to a bug in the qemuAuditDisk() function, hot unplug failures were
+never audited, and a hot unplug success was audited as a failure. This bug
+has been fixed, and auditing of disk hot unplug operations now works as
+expected. (BZ#728516)
+
+* Previously, when a debug process was being activated, the act of
+preparing a debug message ended up with dereferencing a UUID (universally
+unique identifier) prior to the NULL argument check. Consequently, an API
+running the debug process sometimes terminated with a segmentation fault.
+With this update, a patch has been provided to address this issue, and the
+crashes no longer occur in the described scenario. (BZ#728546)
+
+* The libvirt library uses the &quot;boot=on&quot; option to mark which disk is
+bootable but it only uses that option if Qemu advertises its support. The
+qemu-kvm utility in Red Hat Enterprise Linux 6.1 removed support for that
+option and libvirt could not use it. As a consequence, when an IDE disk was
+added as the second storage with a virtio disk being set up as the first
+one by default, the operating system tried to boot from the IDE disk rather
+than the virtio disk and either failed to boot with the &quot;No bootable disk&quot;
+error message returned, or the system booted whatever operating system was
+on the IDE disk. With this update, the boot configuration is translated
+into bootindex, which provides control over which device is used for
+booting a guest operating system, thus fixing this bug.
+
+All users of libvirt are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. After installing
+the updated packages, libvirtd must be restarted (&quot;service libvirtd
+restart&quot;) for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+717199 - CVE-2011-2511 libvirt: integer overflow in VirDomainGetVcpus
+726617 - libvirt regression with creating encrypted volume
+728516 - Auditing of QEMU driver disk hotunplug events logs is missing and/or incorrect
+728546 - [libvirt] [logs] null dereference while preparing libvirt logs
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm</a>
+
+i386:
+libvirt-0.8.7-18.el6_1.1.i686.rpm
+libvirt-client-0.8.7-18.el6_1.1.i686.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.i686.rpm
+libvirt-python-0.8.7-18.el6_1.1.i686.rpm
+
+x86_64:
+libvirt-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-client-0.8.7-18.el6_1.1.i686.rpm
+libvirt-client-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.i686.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-python-0.8.7-18.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm</a>
+
+i386:
+libvirt-debuginfo-0.8.7-18.el6_1.1.i686.rpm
+libvirt-devel-0.8.7-18.el6_1.1.i686.rpm
+
+x86_64:
+libvirt-debuginfo-0.8.7-18.el6_1.1.i686.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-devel-0.8.7-18.el6_1.1.i686.rpm
+libvirt-devel-0.8.7-18.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm</a>
+
+x86_64:
+libvirt-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-client-0.8.7-18.el6_1.1.i686.rpm
+libvirt-client-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.i686.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-python-0.8.7-18.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm</a>
+
+x86_64:
+libvirt-debuginfo-0.8.7-18.el6_1.1.i686.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-devel-0.8.7-18.el6_1.1.i686.rpm
+libvirt-devel-0.8.7-18.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm</a>
+
+i386:
+libvirt-0.8.7-18.el6_1.1.i686.rpm
+libvirt-client-0.8.7-18.el6_1.1.i686.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.i686.rpm
+libvirt-devel-0.8.7-18.el6_1.1.i686.rpm
+libvirt-python-0.8.7-18.el6_1.1.i686.rpm
+
+ppc64:
+libvirt-0.8.7-18.el6_1.1.ppc64.rpm
+libvirt-client-0.8.7-18.el6_1.1.ppc.rpm
+libvirt-client-0.8.7-18.el6_1.1.ppc64.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.ppc.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.ppc64.rpm
+libvirt-devel-0.8.7-18.el6_1.1.ppc.rpm
+libvirt-devel-0.8.7-18.el6_1.1.ppc64.rpm
+libvirt-python-0.8.7-18.el6_1.1.ppc64.rpm
+
+s390x:
+libvirt-0.8.7-18.el6_1.1.s390x.rpm
+libvirt-client-0.8.7-18.el6_1.1.s390.rpm
+libvirt-client-0.8.7-18.el6_1.1.s390x.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.s390.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.s390x.rpm
+libvirt-devel-0.8.7-18.el6_1.1.s390.rpm
+libvirt-devel-0.8.7-18.el6_1.1.s390x.rpm
+libvirt-python-0.8.7-18.el6_1.1.s390x.rpm
+
+x86_64:
+libvirt-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-client-0.8.7-18.el6_1.1.i686.rpm
+libvirt-client-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.i686.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-devel-0.8.7-18.el6_1.1.i686.rpm
+libvirt-devel-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-python-0.8.7-18.el6_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libvirt-0.8.7-18.el6_1.1.src.rpm</a>
+
+i386:
+libvirt-0.8.7-18.el6_1.1.i686.rpm
+libvirt-client-0.8.7-18.el6_1.1.i686.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.i686.rpm
+libvirt-devel-0.8.7-18.el6_1.1.i686.rpm
+libvirt-python-0.8.7-18.el6_1.1.i686.rpm
+
+x86_64:
+libvirt-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-client-0.8.7-18.el6_1.1.i686.rpm
+libvirt-client-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.i686.rpm
+libvirt-debuginfo-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-devel-0.8.7-18.el6_1.1.i686.rpm
+libvirt-devel-0.8.7-18.el6_1.1.x86_64.rpm
+libvirt-python-0.8.7-18.el6_1.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2511.html">https://www.redhat.com/security/data/cve/CVE-2011-2511.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD4DBQFOU730XlSAg2UNWIIRAsorAJiH2nLKrFKzE6Nipl948A/sMkwQAJ4sME1x
+aG3oAPAIDOjm2bf+/TwzdA==
+=zho7
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

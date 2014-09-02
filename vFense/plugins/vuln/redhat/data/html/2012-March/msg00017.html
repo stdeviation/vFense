@@ -1,0 +1,500 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0411&#45;01] Important: openoffice.org security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 22 Mar 2012 14:53:53 &#45;0400 -->
+<!--X-Message-Id: 201203221853.q2MIrlI0014965@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0411-01] Important: openoffice.org security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0411-01] Important: openoffice.org security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0411-01] Important: openoffice.org security update</li>
+<li><em>Date</em>: Thu, 22 Mar 2012 18:53:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openoffice.org security update
+Advisory ID:       RHSA-2012:0411-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0411.html">https://rhn.redhat.com/errata/RHSA-2012-0411.html</a>
+Issue date:        2012-03-22
+CVE Names:         CVE-2012-0037 
+=====================================================================
+
+1. Summary:
+
+Updated openoffice.org packages that fix one security issue are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+RHEL Optional Productivity Applications (v. 5 server) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+OpenOffice.org is an office productivity suite that includes desktop
+applications, such as a word processor, spreadsheet application,
+presentation manager, formula editor, and a drawing program. OpenOffice.org
+embeds a copy of Raptor, which provides parsers for Resource Description
+Framework (RDF) files.
+
+An XML External Entity expansion flaw was found in the way Raptor processed
+RDF files. If OpenOffice.org were to open a specially-crafted file (such
+as an OpenDocument Format or OpenDocument Presentation file), it could
+possibly allow a remote attacker to obtain a copy of an arbitrary local
+file that the user running OpenOffice.org had access to. A bug in the way
+Raptor handled external entities could cause OpenOffice.org to crash or,
+possibly, execute arbitrary code with the privileges of the user running 
+OpenOffice.org. (CVE-2012-0037)
+
+Red Hat would like to thank Timothy D. Morgan of VSR for reporting this
+issue.
+
+All OpenOffice.org users are advised to upgrade to these updated packages,
+which contain backported patches to correct this issue. All running
+instances of OpenOffice.org applications must be restarted for this update
+to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+791296 - CVE-2012-0037 raptor: XML External Entity (XXE) attack via RDF files
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openoffice.org-3.1.1-19.10.el5_8.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openoffice.org-3.1.1-19.10.el5_8.1.src.rpm</a>
+
+i386:
+openoffice.org-base-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-calc-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-core-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-debuginfo-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-draw-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-emailmerge-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-graphicfilter-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-headless-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-impress-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-javafilter-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-af_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ar-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-as_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-bg_BG-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-bn-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ca_ES-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-cs_CZ-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-cy_GB-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-da_DK-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-de-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-el_GR-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-es-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-et_EE-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-eu_ES-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-fi_FI-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-fr-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ga_IE-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-gl_ES-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-gu_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-he_IL-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-hi_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-hr_HR-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-hu_HU-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-it-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ja_JP-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-kn_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ko_KR-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-lt_LT-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ml_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-mr_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ms_MY-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-nb_NO-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-nl-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-nn_NO-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-nr_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-nso_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-or_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-pa_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-pl_PL-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-pt_BR-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-pt_PT-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ru-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-sk_SK-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-sl_SI-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-sr_CS-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ss_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-st_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-sv-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ta_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-te_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-th_TH-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-tn_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-tr_TR-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ts_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ur-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ve_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-xh_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-zh_CN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-zh_TW-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-zu_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-math-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-pyuno-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-testtools-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-ure-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-writer-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-xsltfilter-3.1.1-19.10.el5_8.1.i386.rpm
+
+x86_64:
+openoffice.org-base-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-calc-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-core-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-debuginfo-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-draw-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-emailmerge-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-graphicfilter-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-headless-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-impress-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-javafilter-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-af_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ar-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-as_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-bg_BG-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-bn-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ca_ES-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-cs_CZ-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-cy_GB-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-da_DK-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-de-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-el_GR-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-es-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-et_EE-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-eu_ES-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-fi_FI-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-fr-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ga_IE-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-gl_ES-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-gu_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-he_IL-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-hi_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-hr_HR-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-hu_HU-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-it-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ja_JP-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-kn_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ko_KR-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-lt_LT-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ml_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-mr_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ms_MY-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-nb_NO-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-nl-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-nn_NO-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-nr_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-nso_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-or_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-pa_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-pl_PL-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-pt_BR-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-pt_PT-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ru-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-sk_SK-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-sl_SI-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-sr_CS-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ss_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-st_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-sv-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ta_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-te_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-th_TH-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-tn_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-tr_TR-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ts_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ur-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ve_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-xh_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-zh_CN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-zh_TW-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-zu_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-math-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-pyuno-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-testtools-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-ure-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-writer-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-xsltfilter-3.1.1-19.10.el5_8.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openoffice.org-3.1.1-19.10.el5_8.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openoffice.org-3.1.1-19.10.el5_8.1.src.rpm</a>
+
+i386:
+openoffice.org-debuginfo-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-sdk-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-sdk-doc-3.1.1-19.10.el5_8.1.i386.rpm
+
+x86_64:
+openoffice.org-debuginfo-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-sdk-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-sdk-doc-3.1.1-19.10.el5_8.1.x86_64.rpm
+
+RHEL Optional Productivity Applications (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/openoffice.org-3.1.1-19.10.el5_8.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/openoffice.org-3.1.1-19.10.el5_8.1.src.rpm</a>
+
+i386:
+openoffice.org-base-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-calc-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-core-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-debuginfo-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-draw-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-emailmerge-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-graphicfilter-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-headless-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-impress-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-javafilter-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-af_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ar-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-as_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-bg_BG-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-bn-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ca_ES-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-cs_CZ-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-cy_GB-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-da_DK-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-de-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-el_GR-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-es-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-et_EE-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-eu_ES-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-fi_FI-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-fr-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ga_IE-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-gl_ES-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-gu_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-he_IL-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-hi_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-hr_HR-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-hu_HU-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-it-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ja_JP-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-kn_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ko_KR-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-lt_LT-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ml_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-mr_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ms_MY-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-nb_NO-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-nl-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-nn_NO-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-nr_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-nso_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-or_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-pa_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-pl_PL-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-pt_BR-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-pt_PT-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ru-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-sk_SK-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-sl_SI-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-sr_CS-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ss_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-st_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-sv-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ta_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-te_IN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-th_TH-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-tn_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-tr_TR-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ts_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ur-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-ve_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-xh_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-zh_CN-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-zh_TW-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-langpack-zu_ZA-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-math-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-pyuno-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-sdk-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-sdk-doc-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-testtools-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-ure-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-writer-3.1.1-19.10.el5_8.1.i386.rpm
+openoffice.org-xsltfilter-3.1.1-19.10.el5_8.1.i386.rpm
+
+x86_64:
+openoffice.org-base-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-calc-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-core-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-debuginfo-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-draw-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-emailmerge-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-graphicfilter-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-headless-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-impress-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-javafilter-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-af_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ar-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-as_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-bg_BG-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-bn-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ca_ES-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-cs_CZ-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-cy_GB-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-da_DK-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-de-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-el_GR-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-es-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-et_EE-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-eu_ES-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-fi_FI-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-fr-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ga_IE-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-gl_ES-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-gu_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-he_IL-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-hi_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-hr_HR-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-hu_HU-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-it-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ja_JP-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-kn_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ko_KR-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-lt_LT-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ml_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-mr_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ms_MY-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-nb_NO-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-nl-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-nn_NO-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-nr_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-nso_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-or_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-pa_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-pl_PL-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-pt_BR-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-pt_PT-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ru-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-sk_SK-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-sl_SI-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-sr_CS-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ss_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-st_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-sv-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ta_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-te_IN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-th_TH-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-tn_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-tr_TR-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ts_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ur-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-ve_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-xh_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-zh_CN-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-zh_TW-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-langpack-zu_ZA-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-math-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-pyuno-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-sdk-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-sdk-doc-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-testtools-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-ure-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-writer-3.1.1-19.10.el5_8.1.x86_64.rpm
+openoffice.org-xsltfilter-3.1.1-19.10.el5_8.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0037.html">https://www.redhat.com/security/data/cve/CVE-2012-0037.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.openoffice.org/security/cves/CVE-2012-0037.html">http://www.openoffice.org/security/cves/CVE-2012-0037.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPa3UnXlSAg2UNWIIRAuQcAKC/U88zU1NFsUyKEMJxuZB0u+z0lwCgwEzL
+KVuh6RBPGErFb1pZrM+572I=
+=kFub
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

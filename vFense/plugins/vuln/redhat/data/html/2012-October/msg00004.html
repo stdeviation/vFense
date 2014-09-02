@@ -1,0 +1,245 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1327&#45;01] Moderate: freeradius2 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 2 Oct 2012 13:51:42 &#45;0400 -->
+<!--X-Message-Id: 201210021751.q92HpaUH021826@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1327-01] Moderate: freeradius2 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1327-01] Moderate: freeradius2 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1327-01] Moderate: freeradius2 security update</li>
+<li><em>Date</em>: Tue, 2 Oct 2012 17:51:36 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: freeradius2 security update
+Advisory ID:       RHSA-2012:1327-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1327.html">https://rhn.redhat.com/errata/RHSA-2012-1327.html</a>
+Issue date:        2012-10-02
+CVE Names:         CVE-2012-3547 
+=====================================================================
+
+1. Summary:
+
+Updated freeradius2 packages that fix one security issue are now available
+for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+FreeRADIUS is a high-performance and highly configurable free Remote
+Authentication Dial In User Service (RADIUS) server, designed to allow
+centralized authentication and authorization for a network.
+
+A buffer overflow flaw was discovered in the way radiusd handled the
+expiration date field in X.509 client certificates. A remote attacker could
+possibly use this flaw to crash radiusd if it were configured to use the
+certificate or TLS tunnelled authentication methods (such as EAP-TLS,
+EAP-TTLS, and PEAP). (CVE-2012-3547)
+
+Red Hat would like to thank Timo Warns of PRESENSE Technologies GmbH for
+reporting this issue.
+
+Users of FreeRADIUS are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue. After installing the
+update, radiusd will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+852752 - CVE-2012-3547 freeradius: stack-based buffer overflow via long expiration date fields in client X509 certificates
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/freeradius2-2.1.12-4.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/freeradius2-2.1.12-4.el5_8.src.rpm</a>
+
+i386:
+freeradius2-2.1.12-4.el5_8.i386.rpm
+freeradius2-debuginfo-2.1.12-4.el5_8.i386.rpm
+freeradius2-krb5-2.1.12-4.el5_8.i386.rpm
+freeradius2-ldap-2.1.12-4.el5_8.i386.rpm
+freeradius2-mysql-2.1.12-4.el5_8.i386.rpm
+freeradius2-perl-2.1.12-4.el5_8.i386.rpm
+freeradius2-postgresql-2.1.12-4.el5_8.i386.rpm
+freeradius2-python-2.1.12-4.el5_8.i386.rpm
+freeradius2-unixODBC-2.1.12-4.el5_8.i386.rpm
+freeradius2-utils-2.1.12-4.el5_8.i386.rpm
+
+x86_64:
+freeradius2-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-debuginfo-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-krb5-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-ldap-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-mysql-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-perl-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-postgresql-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-python-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-unixODBC-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-utils-2.1.12-4.el5_8.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/freeradius2-2.1.12-4.el5_8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/freeradius2-2.1.12-4.el5_8.src.rpm</a>
+
+i386:
+freeradius2-2.1.12-4.el5_8.i386.rpm
+freeradius2-debuginfo-2.1.12-4.el5_8.i386.rpm
+freeradius2-krb5-2.1.12-4.el5_8.i386.rpm
+freeradius2-ldap-2.1.12-4.el5_8.i386.rpm
+freeradius2-mysql-2.1.12-4.el5_8.i386.rpm
+freeradius2-perl-2.1.12-4.el5_8.i386.rpm
+freeradius2-postgresql-2.1.12-4.el5_8.i386.rpm
+freeradius2-python-2.1.12-4.el5_8.i386.rpm
+freeradius2-unixODBC-2.1.12-4.el5_8.i386.rpm
+freeradius2-utils-2.1.12-4.el5_8.i386.rpm
+
+ia64:
+freeradius2-2.1.12-4.el5_8.ia64.rpm
+freeradius2-debuginfo-2.1.12-4.el5_8.ia64.rpm
+freeradius2-krb5-2.1.12-4.el5_8.ia64.rpm
+freeradius2-ldap-2.1.12-4.el5_8.ia64.rpm
+freeradius2-mysql-2.1.12-4.el5_8.ia64.rpm
+freeradius2-perl-2.1.12-4.el5_8.ia64.rpm
+freeradius2-postgresql-2.1.12-4.el5_8.ia64.rpm
+freeradius2-python-2.1.12-4.el5_8.ia64.rpm
+freeradius2-unixODBC-2.1.12-4.el5_8.ia64.rpm
+freeradius2-utils-2.1.12-4.el5_8.ia64.rpm
+
+ppc:
+freeradius2-2.1.12-4.el5_8.ppc.rpm
+freeradius2-debuginfo-2.1.12-4.el5_8.ppc.rpm
+freeradius2-krb5-2.1.12-4.el5_8.ppc.rpm
+freeradius2-ldap-2.1.12-4.el5_8.ppc.rpm
+freeradius2-mysql-2.1.12-4.el5_8.ppc.rpm
+freeradius2-perl-2.1.12-4.el5_8.ppc.rpm
+freeradius2-postgresql-2.1.12-4.el5_8.ppc.rpm
+freeradius2-python-2.1.12-4.el5_8.ppc.rpm
+freeradius2-unixODBC-2.1.12-4.el5_8.ppc.rpm
+freeradius2-utils-2.1.12-4.el5_8.ppc.rpm
+
+s390x:
+freeradius2-2.1.12-4.el5_8.s390x.rpm
+freeradius2-debuginfo-2.1.12-4.el5_8.s390x.rpm
+freeradius2-krb5-2.1.12-4.el5_8.s390x.rpm
+freeradius2-ldap-2.1.12-4.el5_8.s390x.rpm
+freeradius2-mysql-2.1.12-4.el5_8.s390x.rpm
+freeradius2-perl-2.1.12-4.el5_8.s390x.rpm
+freeradius2-postgresql-2.1.12-4.el5_8.s390x.rpm
+freeradius2-python-2.1.12-4.el5_8.s390x.rpm
+freeradius2-unixODBC-2.1.12-4.el5_8.s390x.rpm
+freeradius2-utils-2.1.12-4.el5_8.s390x.rpm
+
+x86_64:
+freeradius2-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-debuginfo-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-krb5-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-ldap-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-mysql-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-perl-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-postgresql-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-python-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-unixODBC-2.1.12-4.el5_8.x86_64.rpm
+freeradius2-utils-2.1.12-4.el5_8.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3547.html">https://www.redhat.com/security/data/cve/CVE-2012-3547.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQaymGXlSAg2UNWIIRAngnAKCq0SHW8mZ2pquRyjNGC42RbTwsaQCcCbiJ
+i0Ife1iwEBtiNtz6Za1nIt4=
+=jl3I
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

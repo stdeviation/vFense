@@ -1,0 +1,414 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0139&#45;01] Moderate: pidgin security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 5 Feb 2014 12:48:44 &#45;0500 -->
+<!--X-Message-Id: 201402051748.s15HmfVt021101@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0139-01] Moderate: pidgin security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0139-01] Moderate: pidgin security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0139-01] Moderate: pidgin security update</li>
+<li><em>Date</em>: Wed, 5 Feb 2014 17:48:40 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: pidgin security update
+Advisory ID:       RHSA-2014:0139-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0139.html">https://rhn.redhat.com/errata/RHSA-2014-0139.html</a>
+Issue date:        2014-02-05
+CVE Names:         CVE-2012-6152 CVE-2013-6477 CVE-2013-6478 
+                   CVE-2013-6479 CVE-2013-6481 CVE-2013-6482 
+                   CVE-2013-6483 CVE-2013-6484 CVE-2013-6485 
+                   CVE-2013-6487 CVE-2013-6489 CVE-2013-6490 
+                   CVE-2014-0020 
+=====================================================================
+
+1. Summary:
+
+Updated pidgin packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Pidgin is an instant messaging program which can log in to multiple
+accounts on multiple instant messaging networks simultaneously.
+
+A heap-based buffer overflow flaw was found in the way Pidgin processed
+certain HTTP responses. A malicious server could send a specially crafted
+HTTP response, causing Pidgin to crash or potentially execute arbitrary
+code with the permissions of the user running Pidgin. (CVE-2013-6485)
+
+Multiple heap-based buffer overflow flaws were found in several protocol
+plug-ins in Pidgin (Gadu-Gadu, MXit, SIMPLE). A malicious server could send
+a specially crafted message, causing Pidgin to crash or potentially execute
+arbitrary code with the permissions of the user running Pidgin.
+(CVE-2013-6487, CVE-2013-6489, CVE-2013-6490)
+
+Multiple denial of service flaws were found in several protocol plug-ins in
+Pidgin (Yahoo!, XMPP, MSN, stun, IRC). A remote attacker could use these
+flaws to crash Pidgin by sending a specially crafted message.
+(CVE-2012-6152, CVE-2013-6477, CVE-2013-6481, CVE-2013-6482, CVE-2013-6484,
+CVE-2014-0020)
+
+It was found that the Pidgin XMPP protocol plug-in did not verify the
+origin of &quot;iq&quot; replies. A remote attacker could use this flaw to spoof an
+&quot;iq&quot; reply, which could lead to injection of fake data or cause Pidgin to
+crash via a NULL pointer dereference. (CVE-2013-6483)
+
+A flaw was found in the way Pidgin parsed certain HTTP response headers.
+A remote attacker could use this flaw to crash Pidgin via a specially
+crafted HTTP response header. (CVE-2013-6479)
+
+It was found that Pidgin crashed when a mouse pointer was hovered over a
+long URL. A remote attacker could use this flaw to crash Pidgin by sending
+a message containing a long URL string. (CVE-2013-6478)
+
+Red Hat would like to thank the Pidgin project for reporting these issues.
+Upstream acknowledges Thijs Alkemade, Robert Vehse, Jaime Breva Ribes,
+Jacob Appelbaum of the Tor Project, Daniel Atallah, Fabian Yamaguchi and
+Christian Wressnegger of the University of Goettingen, Matt Jones of
+Volvent, and Yves Younan, Ryan Pentney, and Pawel Janic of Sourcefire VRT
+as the original reporters of these issues.
+
+All pidgin users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. Pidgin must be
+restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1056473 - CVE-2012-6152 pidgin: DoS when decoding non-UTF-8 strings in Yahoo protocol plugin
+1056479 - CVE-2013-6477 pidgin: DoS when handling timestamps in the XMPP plugin
+1056904 - CVE-2013-6478 pidgin: DoS when rendering long URLs
+1056907 - CVE-2013-6479 pidgin: DoS when parsing certain HTTP response headers
+1056908 - CVE-2013-6481 pidgin: DoS caused due to OOB read in Yahoo protocol plugin
+1056913 - CVE-2013-6482 pidgin: DoS via multiple null pointer dereferences in MSN protocol plugin
+1056978 - CVE-2013-6483 pidgin: Possible spoofing using iq replies in XMPP protocol plugin
+1057481 - CVE-2013-6484 pidgin: DoS via specially-crafted stun messages
+1057484 - CVE-2013-6485 pidgin: Heap-based buffer overflow when parsing chunked HTTP responses
+1057489 - CVE-2013-6487 pidgin: Heap-based buffer overflow in Gadu-Gadu protocol plugin
+1057490 - CVE-2013-6489 pidgin: Heap-based buffer overflow in MXit emoticon parsing
+1057498 - CVE-2013-6490 pidgin: Heap-based buffer overflow in SIMPLE protocol plugin
+1057502 - CVE-2014-0020 pidgin: DoS in IRC protocol plugin due to arguement parsing
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/pidgin-2.6.6-32.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/pidgin-2.6.6-32.el5.src.rpm</a>
+
+i386:
+finch-2.6.6-32.el5.i386.rpm
+libpurple-2.6.6-32.el5.i386.rpm
+libpurple-perl-2.6.6-32.el5.i386.rpm
+libpurple-tcl-2.6.6-32.el5.i386.rpm
+pidgin-2.6.6-32.el5.i386.rpm
+pidgin-debuginfo-2.6.6-32.el5.i386.rpm
+pidgin-perl-2.6.6-32.el5.i386.rpm
+
+x86_64:
+finch-2.6.6-32.el5.i386.rpm
+finch-2.6.6-32.el5.x86_64.rpm
+libpurple-2.6.6-32.el5.i386.rpm
+libpurple-2.6.6-32.el5.x86_64.rpm
+libpurple-perl-2.6.6-32.el5.x86_64.rpm
+libpurple-tcl-2.6.6-32.el5.x86_64.rpm
+pidgin-2.6.6-32.el5.i386.rpm
+pidgin-2.6.6-32.el5.x86_64.rpm
+pidgin-debuginfo-2.6.6-32.el5.i386.rpm
+pidgin-debuginfo-2.6.6-32.el5.x86_64.rpm
+pidgin-perl-2.6.6-32.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/pidgin-2.6.6-32.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/pidgin-2.6.6-32.el5.src.rpm</a>
+
+i386:
+finch-devel-2.6.6-32.el5.i386.rpm
+libpurple-devel-2.6.6-32.el5.i386.rpm
+pidgin-debuginfo-2.6.6-32.el5.i386.rpm
+pidgin-devel-2.6.6-32.el5.i386.rpm
+
+x86_64:
+finch-devel-2.6.6-32.el5.i386.rpm
+finch-devel-2.6.6-32.el5.x86_64.rpm
+libpurple-devel-2.6.6-32.el5.i386.rpm
+libpurple-devel-2.6.6-32.el5.x86_64.rpm
+pidgin-debuginfo-2.6.6-32.el5.i386.rpm
+pidgin-debuginfo-2.6.6-32.el5.x86_64.rpm
+pidgin-devel-2.6.6-32.el5.i386.rpm
+pidgin-devel-2.6.6-32.el5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pidgin-2.7.9-27.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pidgin-2.7.9-27.el6.src.rpm</a>
+
+i386:
+libpurple-2.7.9-27.el6.i686.rpm
+pidgin-2.7.9-27.el6.i686.rpm
+pidgin-debuginfo-2.7.9-27.el6.i686.rpm
+
+x86_64:
+libpurple-2.7.9-27.el6.i686.rpm
+libpurple-2.7.9-27.el6.x86_64.rpm
+pidgin-2.7.9-27.el6.x86_64.rpm
+pidgin-debuginfo-2.7.9-27.el6.i686.rpm
+pidgin-debuginfo-2.7.9-27.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pidgin-2.7.9-27.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pidgin-2.7.9-27.el6.src.rpm</a>
+
+i386:
+finch-2.7.9-27.el6.i686.rpm
+finch-devel-2.7.9-27.el6.i686.rpm
+libpurple-devel-2.7.9-27.el6.i686.rpm
+libpurple-perl-2.7.9-27.el6.i686.rpm
+libpurple-tcl-2.7.9-27.el6.i686.rpm
+pidgin-debuginfo-2.7.9-27.el6.i686.rpm
+pidgin-devel-2.7.9-27.el6.i686.rpm
+pidgin-docs-2.7.9-27.el6.i686.rpm
+pidgin-perl-2.7.9-27.el6.i686.rpm
+
+x86_64:
+finch-2.7.9-27.el6.i686.rpm
+finch-2.7.9-27.el6.x86_64.rpm
+finch-devel-2.7.9-27.el6.i686.rpm
+finch-devel-2.7.9-27.el6.x86_64.rpm
+libpurple-devel-2.7.9-27.el6.i686.rpm
+libpurple-devel-2.7.9-27.el6.x86_64.rpm
+libpurple-perl-2.7.9-27.el6.x86_64.rpm
+libpurple-tcl-2.7.9-27.el6.x86_64.rpm
+pidgin-debuginfo-2.7.9-27.el6.i686.rpm
+pidgin-debuginfo-2.7.9-27.el6.x86_64.rpm
+pidgin-devel-2.7.9-27.el6.i686.rpm
+pidgin-devel-2.7.9-27.el6.x86_64.rpm
+pidgin-docs-2.7.9-27.el6.x86_64.rpm
+pidgin-perl-2.7.9-27.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pidgin-2.7.9-27.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pidgin-2.7.9-27.el6.src.rpm</a>
+
+i386:
+finch-2.7.9-27.el6.i686.rpm
+finch-devel-2.7.9-27.el6.i686.rpm
+libpurple-2.7.9-27.el6.i686.rpm
+libpurple-devel-2.7.9-27.el6.i686.rpm
+libpurple-perl-2.7.9-27.el6.i686.rpm
+libpurple-tcl-2.7.9-27.el6.i686.rpm
+pidgin-2.7.9-27.el6.i686.rpm
+pidgin-debuginfo-2.7.9-27.el6.i686.rpm
+pidgin-devel-2.7.9-27.el6.i686.rpm
+pidgin-docs-2.7.9-27.el6.i686.rpm
+pidgin-perl-2.7.9-27.el6.i686.rpm
+
+ppc64:
+finch-2.7.9-27.el6.ppc.rpm
+finch-2.7.9-27.el6.ppc64.rpm
+finch-devel-2.7.9-27.el6.ppc.rpm
+finch-devel-2.7.9-27.el6.ppc64.rpm
+libpurple-2.7.9-27.el6.ppc.rpm
+libpurple-2.7.9-27.el6.ppc64.rpm
+libpurple-devel-2.7.9-27.el6.ppc.rpm
+libpurple-devel-2.7.9-27.el6.ppc64.rpm
+libpurple-perl-2.7.9-27.el6.ppc64.rpm
+libpurple-tcl-2.7.9-27.el6.ppc64.rpm
+pidgin-2.7.9-27.el6.ppc64.rpm
+pidgin-debuginfo-2.7.9-27.el6.ppc.rpm
+pidgin-debuginfo-2.7.9-27.el6.ppc64.rpm
+pidgin-devel-2.7.9-27.el6.ppc.rpm
+pidgin-devel-2.7.9-27.el6.ppc64.rpm
+pidgin-docs-2.7.9-27.el6.ppc64.rpm
+pidgin-perl-2.7.9-27.el6.ppc64.rpm
+
+x86_64:
+finch-2.7.9-27.el6.i686.rpm
+finch-2.7.9-27.el6.x86_64.rpm
+finch-devel-2.7.9-27.el6.i686.rpm
+finch-devel-2.7.9-27.el6.x86_64.rpm
+libpurple-2.7.9-27.el6.i686.rpm
+libpurple-2.7.9-27.el6.x86_64.rpm
+libpurple-devel-2.7.9-27.el6.i686.rpm
+libpurple-devel-2.7.9-27.el6.x86_64.rpm
+libpurple-perl-2.7.9-27.el6.x86_64.rpm
+libpurple-tcl-2.7.9-27.el6.x86_64.rpm
+pidgin-2.7.9-27.el6.x86_64.rpm
+pidgin-debuginfo-2.7.9-27.el6.i686.rpm
+pidgin-debuginfo-2.7.9-27.el6.x86_64.rpm
+pidgin-devel-2.7.9-27.el6.i686.rpm
+pidgin-devel-2.7.9-27.el6.x86_64.rpm
+pidgin-docs-2.7.9-27.el6.x86_64.rpm
+pidgin-perl-2.7.9-27.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pidgin-2.7.9-27.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pidgin-2.7.9-27.el6.src.rpm</a>
+
+i386:
+libpurple-2.7.9-27.el6.i686.rpm
+pidgin-2.7.9-27.el6.i686.rpm
+pidgin-debuginfo-2.7.9-27.el6.i686.rpm
+
+x86_64:
+libpurple-2.7.9-27.el6.i686.rpm
+libpurple-2.7.9-27.el6.x86_64.rpm
+pidgin-2.7.9-27.el6.x86_64.rpm
+pidgin-debuginfo-2.7.9-27.el6.i686.rpm
+pidgin-debuginfo-2.7.9-27.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pidgin-2.7.9-27.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pidgin-2.7.9-27.el6.src.rpm</a>
+
+i386:
+finch-2.7.9-27.el6.i686.rpm
+finch-devel-2.7.9-27.el6.i686.rpm
+libpurple-devel-2.7.9-27.el6.i686.rpm
+libpurple-perl-2.7.9-27.el6.i686.rpm
+libpurple-tcl-2.7.9-27.el6.i686.rpm
+pidgin-debuginfo-2.7.9-27.el6.i686.rpm
+pidgin-devel-2.7.9-27.el6.i686.rpm
+pidgin-docs-2.7.9-27.el6.i686.rpm
+pidgin-perl-2.7.9-27.el6.i686.rpm
+
+x86_64:
+finch-2.7.9-27.el6.i686.rpm
+finch-2.7.9-27.el6.x86_64.rpm
+finch-devel-2.7.9-27.el6.i686.rpm
+finch-devel-2.7.9-27.el6.x86_64.rpm
+libpurple-devel-2.7.9-27.el6.i686.rpm
+libpurple-devel-2.7.9-27.el6.x86_64.rpm
+libpurple-perl-2.7.9-27.el6.x86_64.rpm
+libpurple-tcl-2.7.9-27.el6.x86_64.rpm
+pidgin-debuginfo-2.7.9-27.el6.i686.rpm
+pidgin-debuginfo-2.7.9-27.el6.x86_64.rpm
+pidgin-devel-2.7.9-27.el6.i686.rpm
+pidgin-devel-2.7.9-27.el6.x86_64.rpm
+pidgin-docs-2.7.9-27.el6.x86_64.rpm
+pidgin-perl-2.7.9-27.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6152.html">https://www.redhat.com/security/data/cve/CVE-2012-6152.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6477.html">https://www.redhat.com/security/data/cve/CVE-2013-6477.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6478.html">https://www.redhat.com/security/data/cve/CVE-2013-6478.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6479.html">https://www.redhat.com/security/data/cve/CVE-2013-6479.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6481.html">https://www.redhat.com/security/data/cve/CVE-2013-6481.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6482.html">https://www.redhat.com/security/data/cve/CVE-2013-6482.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6483.html">https://www.redhat.com/security/data/cve/CVE-2013-6483.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6484.html">https://www.redhat.com/security/data/cve/CVE-2013-6484.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6485.html">https://www.redhat.com/security/data/cve/CVE-2013-6485.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6487.html">https://www.redhat.com/security/data/cve/CVE-2013-6487.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6489.html">https://www.redhat.com/security/data/cve/CVE-2013-6489.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6490.html">https://www.redhat.com/security/data/cve/CVE-2013-6490.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0020.html">https://www.redhat.com/security/data/cve/CVE-2014-0020.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.pidgin.im/news/security/">http://www.pidgin.im/news/security/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS8nlZXlSAg2UNWIIRArBiAJoDu2N613Zl8eGtvl8ZP5apVDEdPACgt4y0
+f1RLP3CKhTR7CM3e6WmJdzc=
+=uxHX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

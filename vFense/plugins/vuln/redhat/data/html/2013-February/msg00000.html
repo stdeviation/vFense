@@ -1,0 +1,228 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0211&#45;01] Moderate: rhevm 3.1.2 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 4 Feb 2013 19:10:25 &#45;0500 -->
+<!--X-Message-Id: 201302050010.r150A8VX021130@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0211-01] Moderate: rhevm 3.1.2 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0211-01] Moderate: rhevm 3.1.2 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0211-01] Moderate: rhevm 3.1.2 security and bug fix update</li>
+<li><em>Date</em>: Tue, 5 Feb 2013 00:10:07 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhevm 3.1.2 security and bug fix update
+Advisory ID:       RHSA-2013:0211-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0211.html">https://rhn.redhat.com/errata/RHSA-2013-0211.html</a>
+Issue date:        2013-02-04
+CVE Names:         CVE-2012-6115 CVE-2013-0168 
+=====================================================================
+
+1. Summary:
+
+Updated rhevm packages that fix two security issues and various bugs are
+now available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.1 - noarch
+
+3. Description:
+
+The Red Hat Enterprise Virtualization Manager is a centralized management
+platform that allows system administrators to view and manage virtual
+machines. The Red Hat Enterprise Virtualization Manager provides a
+comprehensive range of features including search capabilities, resource
+management, live migrations, and virtual infrastructure provisioning. The
+Manager is a JBoss Application Server application that provides several
+interfaces through which the virtual environment can be accessed and
+interacted with, including an Administration Portal, a User Portal, and a
+Representational State Transfer (REST) Application Programming Interface
+(API).
+
+It was discovered that running the domain management tool with the validate
+action (&quot;rhevm-manage-domains -action=validate&quot;) logged administrative
+passwords to a world-readable log file. A local attacker could use this
+flaw to gain control of systems that are managed by Red Hat Enterprise
+Virtualization Manager. (CVE-2012-6115)
+
+A flaw was found in the way the MoveDisk command checked permissions on the
+target storage domain. A privileged user (a storage admin of a storage
+domain) could use this flaw to exhaust all available free space in another
+storage domain they would otherwise not have access to. (CVE-2013-0168)
+
+The CVE-2012-6115 issue was discovered by Andrew Cathrow of Red Hat. The
+CVE-2013-0168 issue was discovered by Ondrej Machacek of Red Hat.
+
+Previously, upgrading from Red Hat Enterprise Virtualization Manager 3.0 to
+3.1 was not formally supported by Red Hat. This update fixes a number of
+known issues with the upgrade process. As a result, upgrading from Red Hat
+Enterprise Virtualization Manager 3.0 to 3.1 is now supported.
+
+For more information on upgrading to Red Hat Enterprise Virtualization
+Manager 3.1, consult the Installation Guide:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Installation_Guide/chap-Upgrading_to_Red_Hat_Enterprise_Virtualization_3.1.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Installation_Guide/chap-Upgrading_to_Red_Hat_Enterprise_Virtualization_3.1.html</a>
+
+Additional tips and considerations to take into account are also available
+in the Red Hat Knowledgebase:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/269333">https://access.redhat.com/knowledge/articles/269333</a>
+
+Information on the bugs fixed in this update is available in the Technical
+Notes document:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Technical_Notes/chap-RHSA-2013-0211.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Technical_Notes/chap-RHSA-2013-0211.html</a>
+
+All Red Hat Enterprise Virtualization Manager administrators are advised to
+install these updated packages, which fix these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Installation_Guide/chap-Upgrading_to_Red_Hat_Enterprise_Virtualization_3.1.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Installation_Guide/chap-Upgrading_to_Red_Hat_Enterprise_Virtualization_3.1.html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+842134 - [Storage] cannot force extend block storage domains (no force extendVG support)
+854214 - engine: logging - when domain is partially inaccessible event log does not report which luns are inaccessible
+881059 - RESTAPI: RSDL does not document lun-based disks parameters for add()
+881121 - [es_ES] heading &quot;Virtual size&quot; is truncated in Spanish [LAYOUT]
+881783 - ovrit-engine-backend:.rollbackQuota ignores disabled quota
+883893 - [ja_JP] Test case failure: Host Tab [LAYOUT] - &quot;no network assigned&quot; translation doesn't fit a single line
+883896 - [ja_JP] Test case failure: Storage Tab: General sub-tab: unnecessary colon (&quot;:&quot;) between &quot;Used: xxxxGB&quot; line and NFS Export Path
+883903 - [es_ES] Event Tab, Advance view 's heading Event is truncated [LAYOUT]
+883910 - [ja_JP] Test case failure: Disk Tab: Remove Disk(s) dialog: &quot;[disk-alias] is Bootable and Attached to [n] VM(s)&quot; message structure need to be revised.
+883915 - Portal Login button label is not localized
+883933 - [zh_CN] Truncation column name on logical networks sub tab [LAYOUT]
+886166 - Backend: CPU pinning works only with single-digit CPU's
+886520 - Create ISCSI LUN Disk: Connection details should be mandatory
+886654 - [ja_JP] Test case failure: Check the message for Alert/Events/Tasks: The Date part of the message contains minutes in the month-section.
+887856 - [ja_JP] Test case failure: Virtual Machines [LAYOUT]: New VM dialog -&gt; Resrouce Allocation section -&gt; string &quot;clone&quot; is broken into two lines
+887904 - [rhevm-upgrade] during upgrade rhev-guest-tools-iso is not updated to latest version and remains with old version
+888039 - Failed Hot-Plug and Hot-UnPlug Direct LUN in FC DC environment
+888309 - Importing a VM from an OVF without the diskAlias property with copyCollapse=false will not auto-generate disk aliases
+888317 - [engine] [upgrade] Unable to perform operations as user on existing VM after upgrade from RHEV 3.0 to 3.1
+888785 - [RHEVM Web Admin Portal localization] Zanata source strings (rhevm-3.1 version) containing &quot;oVirt&quot; and &quot;Engine&quot;
+889792 - 'Configure Local Disk' does not work properly in Japanese environment
+891631 - rhevm-upgrade must check for enough disk space to perform an upgrade before starting the upgrade
+893355 - CVE-2013-0168 rhev-m: insufficient MoveDisk target domain permission checks
+902341 - [User Portal] An user with UserRole assigned to a pool does not see pool's VMs
+905865 - CVE-2012-6115 rhev: rhevm-manage-domains logs admin passwords
+
+6. Package List:
+
+RHEV-M 3.1:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-3.1.0-43.el6ev.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-3.1.0-43.el6ev.src.rpm</a>
+
+noarch:
+rhevm-3.1.0-43.el6ev.noarch.rpm
+rhevm-backend-3.1.0-43.el6ev.noarch.rpm
+rhevm-config-3.1.0-43.el6ev.noarch.rpm
+rhevm-dbscripts-3.1.0-43.el6ev.noarch.rpm
+rhevm-genericapi-3.1.0-43.el6ev.noarch.rpm
+rhevm-notification-service-3.1.0-43.el6ev.noarch.rpm
+rhevm-restapi-3.1.0-43.el6ev.noarch.rpm
+rhevm-setup-3.1.0-43.el6ev.noarch.rpm
+rhevm-setup-plugin-allinone-3.1.0-43.el6ev.noarch.rpm
+rhevm-tools-common-3.1.0-43.el6ev.noarch.rpm
+rhevm-userportal-3.1.0-43.el6ev.noarch.rpm
+rhevm-webadmin-portal-3.1.0-43.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6115.html">https://www.redhat.com/security/data/cve/CVE-2012-6115.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0168.html">https://www.redhat.com/security/data/cve/CVE-2013-0168.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Installation_Guide/chap-Upgrading_to_Red_Hat_Enterprise_Virtualization_3.1.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Installation_Guide/chap-Upgrading_to_Red_Hat_Enterprise_Virtualization_3.1.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Technical_Notes/chap-RHSA-2013-0211.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Virtualization/3.1/html/Technical_Notes/chap-RHSA-2013-0211.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/269333">https://access.redhat.com/knowledge/articles/269333</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFREE3LXlSAg2UNWIIRAh+TAJ0TXJhqM491GBV6F3Hfda0S8ZhbWwCgwP/y
+/Dazn2rr38rSvr7OBNbdM1I=
+=0BTD
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

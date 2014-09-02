@@ -1,0 +1,176 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0500&#45;01] Important: rhpki&#45;common security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 2 Jul 2008 13:56:33 &#45;0400 -->
+<!--X-Message-Id: 200807021756.m62HuWvT027003@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0500-01] Important: rhpki-common security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0500-01] Important: rhpki-common security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0500-01] Important: rhpki-common security update</li>
+<li><em>Date</em>: Wed, 2 Jul 2008 13:56:32 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhpki-common security update
+Advisory ID:       RHSA-2008:0500-01
+Product:           Red Hat Certificate System
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0500.html">https://rhn.redhat.com/errata/RHSA-2008-0500.html</a>
+Issue date:        2008-07-02
+CVE Names:         CVE-2008-1676 
+=====================================================================
+
+1. Summary:
+
+An updated rhpki-common package that fixes a security issue is now available
+for Red Hat Certificate System 7.3.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team. 
+
+2. Relevant releases/architectures:
+
+Red Hat Certificate System 7.3 for 4AS - noarch
+Red Hat Certificate System 7.3 for 4ES - noarch
+
+3. Description:
+
+Red Hat Certificate System (RHCS) is an enterprise software system designed
+to manage enterprise Public Key Infrastructure (PKI) deployments.
+
+rhpki-common -- the Red Hat PKI Common Framework -- is required by the
+following four RHCS subsystems: the Red Hat Certificate Authority; the Red
+Hat Data Recovery Manager; the Red Hat Online Certificate Status Protocol
+Manager; and the Red Hat Token Key Service.
+
+A flaw was found in the way Red Hat Certificate System handled Extensions
+in the certificate signing requests (CSR). All requested Extensions were
+added to the issued certificate even if constraints were defined in the
+Certificate Authority (CA) profile. An attacker could submit a CSR for a
+subordinate CA certificate even if the CA configuration prohibited
+subordinate CA certificates. This lead to a bypass of the intended security
+policy, possibly simplifying man-in-the-middle attacks against users that
+trust Certificate Authorities managed by Red Hat Certificate System.
+(CVE-2008-1676)
+
+All users of Red Hat Certificate System 7.3 should upgrade to this
+updated package, which resolves this issue.
+
+4. Solution:
+
+Users running Red Hat Certificate System on Red Hat Enterprise Linux:
+
+Before applying this update, make sure that all previously-released errata
+relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use the Red
+Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+Users running Red Hat Certificate System on Sun Solaris:
+
+An updated Solaris packages in .pkg format are available in the Red Hat
+Certificate System Solaris channels on the Red Hat Network. This packages
+should be installed/upgraded using Solaris native package management tools.
+
+See also Red Hat Certificate System Administration Guide for installation
+instructions:
+<a  rel="nofollow" href="http://www.redhat.com/docs/manuals/cert-system/">http://www.redhat.com/docs/manuals/cert-system/</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+445227 - CVE-2008-1676 Certificate System: incorrect handling of Extensions in CSRs
+
+6. Package List:
+
+Red Hat Certificate System 7.3 for 4AS:
+
+noarch:
+rhpki-common-7.3.0-29.el4.noarch.rpm
+
+Red Hat Certificate System 7.3 for 4ES:
+
+noarch:
+rhpki-common-7.3.0-29.el4.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1676">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1676</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIa8EnXlSAg2UNWIIRAlIPAKCJTcayaS35w+4Cs18OSzf7OUkBeQCgl5+t
+LSTdb4tdBvO2ErlZBuFDxx0=
+=YI5n
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

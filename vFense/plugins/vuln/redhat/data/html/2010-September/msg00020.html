@@ -1,0 +1,340 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0723&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 29 Sep 2010 10:58:06 &#45;0400 -->
+<!--X-Message-Id: 201009291458.o8TEw0q6012387@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0723-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0723-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0723-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Wed, 29 Sep 2010 08:58:00 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2010:0723-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0723.html">https://rhn.redhat.com/errata/RHSA-2010-0723.html</a>
+Issue date:        2010-09-29
+CVE Names:         CVE-2010-1083 CVE-2010-2492 CVE-2010-2798 
+                   CVE-2010-2938 CVE-2010-2942 CVE-2010-2943 
+                   CVE-2010-3015 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues and several bugs
+are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* A buffer overflow flaw was found in the ecryptfs_uid_hash() function in
+the Linux kernel eCryptfs implementation. On systems that have the eCryptfs
+netlink transport (Red Hat Enterprise Linux 5 does) or where the
+&quot;/dev/ecryptfs&quot; file has world writable permissions (which it does not, by
+default, on Red Hat Enterprise Linux 5), a local, unprivileged user could
+use this flaw to cause a denial of service or possibly escalate their
+privileges. (CVE-2010-2492, Important)
+
+* A miscalculation of the size of the free space of the initial directory
+entry in a directory leaf block was found in the Linux kernel Global File
+System 2 (GFS2) implementation. A local, unprivileged user with write
+access to a GFS2-mounted file system could perform a rename operation on
+that file system to trigger a NULL pointer dereference, possibly resulting
+in a denial of service or privilege escalation. (CVE-2010-2798, Important)
+
+* A flaw was found in the Xen hypervisor implementation when running a
+system that has an Intel CPU without Extended Page Tables (EPT) support.
+While attempting to dump information about a crashing fully-virtualized
+guest, the flaw could cause the hypervisor to crash the host as well. A
+user with permissions to configure a fully-virtualized guest system could
+use this flaw to crash the host. (CVE-2010-2938, Moderate)
+
+* Information leak flaws were found in the Linux kernel's Traffic Control
+Unit implementation. A local attacker could use these flaws to cause the
+kernel to leak kernel memory to user-space, possibly leading to the
+disclosure of sensitive information. (CVE-2010-2942, Moderate)
+
+* A flaw was found in the Linux kernel's XFS file system implementation.
+The file handle lookup could return an invalid inode as valid. If an XFS
+file system was mounted via NFS (Network File System), a local attacker
+could access stale data or overwrite existing data that reused the inodes.
+(CVE-2010-2943, Moderate)
+
+* An integer overflow flaw was found in the extent range checking code in
+the Linux kernel's ext4 file system implementation. A local, unprivileged
+user with write access to an ext4-mounted file system could trigger this
+flaw by writing to a file at a very large file offset, resulting in a local
+denial of service. (CVE-2010-3015, Moderate)
+
+* An information leak flaw was found in the Linux kernel's USB
+implementation. Certain USB errors could result in an uninitialized kernel
+buffer being sent to user-space. An attacker with physical access to a
+target system could use this flaw to cause an information leak.
+(CVE-2010-1083, Low)
+
+Red Hat would like to thank Andre Osterhues for reporting CVE-2010-2492;
+Grant Diffey of CenITex for reporting CVE-2010-2798; Toshiyuki Okajima for
+reporting CVE-2010-3015; and Marcus Meissner for reporting CVE-2010-1083.
+
+This update also fixes several bugs. Documentation for these bug fixes will
+be available shortly from the Technical Notes document linked to in the
+References.
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+566624 - CVE-2010-1083 kernel: information leak via userspace USB interface
+611385 - CVE-2010-2492 kernel: ecryptfs_uid_hash() buffer overflow
+620300 - CVE-2010-2798 kernel: gfs2: rename causes kernel panic
+620490 - CVE-2010-2938 kernel: guest crashes on non-EPT machines may crash the host as well
+620661 - ips driver sleeps while holding spin_lock [rhel-5.5.z]
+621940 - Significant MSI performance issue due to redundant interrupt masking [rhel-5.5.z]
+623141 - High CPU overhead from mapping/unmapping the zero page [rhel-5.5.z]
+623143 - [5u6] Bonding in ALB mode sends ARP in loop [rhel-5.5.z]
+624327 - CVE-2010-3015 kernel: integer overflow in ext4_ext_get_blocks()
+624365 - cpu flags missing from /proc/cpuinfo [rhel-5.5.z]
+624369 - need to backport 2e3219b5c8a2e44e0b83ae6e04f52f20a82ac0f2 [rhel-5.5.z]
+624903 - CVE-2010-2942 kernel: net sched: fix some kernel memory leaks
+624923 - CVE-2010-2943 kernel: xfs: validate inode numbers in file handles correctly
+627194 - dasd: force online does not work. [rhel-5.5.z]
+627195 - dasd: allocate fallback cqr for reserve/release [rhel-5.5.z]
+629219 - [rhel5.6] XFS incorrectly validates inodes [rhel-5.5.z]
+630978 - Detect and recover from cxgb3 adapter parity errors [rhel-5.5.z]
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-194.17.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-194.17.1.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-194.17.1.el5.i686.rpm
+kernel-PAE-2.6.18-194.17.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-194.17.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-194.17.1.el5.i686.rpm
+kernel-debug-2.6.18-194.17.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-194.17.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-194.17.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-194.17.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-194.17.1.el5.i686.rpm
+kernel-devel-2.6.18-194.17.1.el5.i686.rpm
+kernel-headers-2.6.18-194.17.1.el5.i386.rpm
+kernel-xen-2.6.18-194.17.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-194.17.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-194.17.1.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-194.17.1.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-debug-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-devel-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-headers-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-xen-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-194.17.1.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-194.17.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-194.17.1.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-194.17.1.el5.i686.rpm
+kernel-PAE-2.6.18-194.17.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-194.17.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-194.17.1.el5.i686.rpm
+kernel-debug-2.6.18-194.17.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-194.17.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-194.17.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-194.17.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-194.17.1.el5.i686.rpm
+kernel-devel-2.6.18-194.17.1.el5.i686.rpm
+kernel-headers-2.6.18-194.17.1.el5.i386.rpm
+kernel-xen-2.6.18-194.17.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-194.17.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-194.17.1.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-194.17.1.el5.ia64.rpm
+kernel-debug-2.6.18-194.17.1.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-194.17.1.el5.ia64.rpm
+kernel-debug-devel-2.6.18-194.17.1.el5.ia64.rpm
+kernel-debuginfo-2.6.18-194.17.1.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-194.17.1.el5.ia64.rpm
+kernel-devel-2.6.18-194.17.1.el5.ia64.rpm
+kernel-headers-2.6.18-194.17.1.el5.ia64.rpm
+kernel-xen-2.6.18-194.17.1.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-194.17.1.el5.ia64.rpm
+kernel-xen-devel-2.6.18-194.17.1.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-194.17.1.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-194.17.1.el5.ppc64.rpm
+kernel-debug-2.6.18-194.17.1.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-194.17.1.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-194.17.1.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-194.17.1.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-194.17.1.el5.ppc64.rpm
+kernel-devel-2.6.18-194.17.1.el5.ppc64.rpm
+kernel-headers-2.6.18-194.17.1.el5.ppc.rpm
+kernel-headers-2.6.18-194.17.1.el5.ppc64.rpm
+kernel-kdump-2.6.18-194.17.1.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-194.17.1.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-194.17.1.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-194.17.1.el5.s390x.rpm
+kernel-debug-2.6.18-194.17.1.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-194.17.1.el5.s390x.rpm
+kernel-debug-devel-2.6.18-194.17.1.el5.s390x.rpm
+kernel-debuginfo-2.6.18-194.17.1.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-194.17.1.el5.s390x.rpm
+kernel-devel-2.6.18-194.17.1.el5.s390x.rpm
+kernel-headers-2.6.18-194.17.1.el5.s390x.rpm
+kernel-kdump-2.6.18-194.17.1.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-194.17.1.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-194.17.1.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-debug-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-devel-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-headers-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-xen-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-194.17.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-194.17.1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1083.html">https://www.redhat.com/security/data/cve/CVE-2010-1083.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2492.html">https://www.redhat.com/security/data/cve/CVE-2010-2492.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2798.html">https://www.redhat.com/security/data/cve/CVE-2010-2798.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2938.html">https://www.redhat.com/security/data/cve/CVE-2010-2938.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2942.html">https://www.redhat.com/security/data/cve/CVE-2010-2942.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2943.html">https://www.redhat.com/security/data/cve/CVE-2010-2943.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3015.html">https://www.redhat.com/security/data/cve/CVE-2010-3015.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.5_Technical_Notes/kernel.html#id3512212">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.5_Technical_Notes/kernel.html#id3512212</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMo1PlXlSAg2UNWIIRAru4AKDDneLpnqm1NmKpeex587DG+Kv0dQCaAm3q
+IzNefLs41/QIrZpu4RGazlg=
+=tYAt
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

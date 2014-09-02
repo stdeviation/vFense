@@ -1,0 +1,201 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0149&#45;03] Moderate: kvm security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Feb 2012 23:59:32 &#45;0500 -->
+<!--X-Message-Id: 201202210459.q1L4xOWh019785@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0149-03] Moderate: kvm security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00054.html">Date Prev</a>][<a href="msg00056.html">Date Next</a>] &nbsp; [<a href="msg00054.html">Thread Prev</a>][<a href="msg00056.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00055">Thread Index</A>]
+[<A HREF="date.html#00055">Date Index</A>]
+[<A HREF="author.html#00055">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0149-03] Moderate: kvm security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0149-03] Moderate: kvm security and bug fix update</li>
+<li><em>Date</em>: Tue, 21 Feb 2012 04:59:24 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kvm security and bug fix update
+Advisory ID:       RHSA-2012:0149-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0149.html">https://rhn.redhat.com/errata/RHSA-2012-0149.html</a>
+Issue date:        2012-02-21
+CVE Names:         CVE-2011-4347 
+=====================================================================
+
+1. Summary:
+
+Updated kvm packages that fix one security issue and several bugs are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - x86_64
+RHEL Virtualization (v. 5 server) - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. KVM is a Linux kernel module built for
+the standard Red Hat Enterprise Linux kernel.
+
+It was found that the kvm_vm_ioctl_assign_device() function in the KVM
+subsystem of a Linux kernel did not check if the user requesting device
+assignment was privileged or not. A member of the kvm group on the host
+could assign unused PCI devices, or even devices that were in use and
+whose resources were not properly claimed by the respective drivers, which
+could result in the host crashing. (CVE-2011-4347)
+
+Red Hat would like to thank Sasha Levin for reporting this issue.
+
+These updated kvm packages include several bug fixes. Space precludes
+documenting all of these changes in this advisory. Users are directed to
+the Red Hat Enterprise Linux 5.8 Technical Notes, linked to in the
+References, for information on the most significant of these changes.
+
+All KVM users should upgrade to these updated packages, which contain
+backported patches to correct these issues. Note: The procedure in the
+Solution section must be performed before this update will take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+The following procedure must be performed before this update will take
+effect:
+
+1) Stop all KVM guest virtual machines.
+
+2) Either reboot the hypervisor machine or, as the root user, remove (using
+&quot;modprobe -r [module]&quot;) and reload (using &quot;modprobe [module]&quot;) all of the
+following modules which are currently running (determined using &quot;lsmod&quot;):
+kvm, ksm, kvm-intel or kvm-amd.
+
+3) Restart the KVM guest virtual machines.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+701616 - limitation on max number of assigned devices does not take effect if hot-plug pci devices
+703335 - KVM guest clocks jump forward one hour on reboot
+703446 - Failed to ping guest after MTU is changed
+704081 - mouse responds very slowly with huge memory
+725876 - RTC interrupt problems with RHEL5 qemu/kvm (0.10 based) on 2.6.38+ guest kernels.
+753860 - Fix kvm userspace compilation on RHEL-5 to match the kernel changes
+756084 - CVE-2011-4347 kernel: kvm: device assignment DoS
+
+6. Package List:
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kvm-83-249.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kvm-83-249.el5.src.rpm</a>
+
+x86_64:
+kmod-kvm-83-249.el5.x86_64.rpm
+kmod-kvm-debug-83-249.el5.x86_64.rpm
+kvm-83-249.el5.x86_64.rpm
+kvm-debuginfo-83-249.el5.x86_64.rpm
+kvm-qemu-img-83-249.el5.x86_64.rpm
+kvm-tools-83-249.el5.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kvm-83-249.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kvm-83-249.el5.src.rpm</a>
+
+x86_64:
+kmod-kvm-83-249.el5.x86_64.rpm
+kmod-kvm-debug-83-249.el5.x86_64.rpm
+kvm-83-249.el5.x86_64.rpm
+kvm-debuginfo-83-249.el5.x86_64.rpm
+kvm-qemu-img-83-249.el5.x86_64.rpm
+kvm-tools-83-249.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4347.html">https://www.redhat.com/security/data/cve/CVE-2011-4347.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.8_Technical_Notes/kvm.html#RHSA-2012-0149">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.8_Technical_Notes/kvm.html#RHSA-2012-0149</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPQySTXlSAg2UNWIIRArlTAJ0WoKPpeN65MwnhycwM8+RzPo1dNACff1HW
+NKHsqhoy0Aa32Ro59AEwoXw=
+=5ijl
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00054.html">Date Prev</a>][<a href="msg00056.html">Date Next</a>] &nbsp; [<a href="msg00054.html">Thread Prev</a>][<a href="msg00056.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00055">Thread Index</A>]
+[<A HREF="date.html#00055">Date Index</A>]
+[<A HREF="author.html#00055">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

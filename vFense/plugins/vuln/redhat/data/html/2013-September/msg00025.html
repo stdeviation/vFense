@@ -1,0 +1,263 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1263&#45;01] Moderate: Red Hat Storage Console 2.1 security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Sun, 15 Sep 2013 23:13:52 &#45;0400 -->
+<!--X-Message-Id: 201309160313.r8G3Do4b021236@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1263-01] Moderate: Red Hat Storage Console 2.1 security	updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1263-01] Moderate: Red Hat Storage Console 2.1 security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2013:1263-01] Moderate: Red Hat Storage Console 2.1 security	update</li>
+<li><em>Date</em>: Mon, 16 Sep 2013 03:13:49 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Storage Console 2.1 security update
+Advisory ID:       RHSA-2013:1263-01
+Product:           Red Hat Storage
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1263.html">https://rhn.redhat.com/errata/RHSA-2013-1263.html</a>
+Issue date:        2013-09-16
+CVE Names:         CVE-2012-0818 
+=====================================================================
+
+1. Summary:
+
+Updated Red Hat Storage Console packages that fix one security issue,
+various bugs, and add enhancements are now available for Red Hat Storage
+Server 2.1.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Storage Console 2.1 - noarch
+
+3. Description:
+
+Red Hat Storage Console (RHS-C) is a powerful and simple web based
+Graphical User Interface for managing a Red Hat Storage 2.1 environment.
+This feature is provided as a Technology Preview, and is currently not
+supported under Red Hat Storage subscription services. Refer to the
+following for more information about Technology Previews:
+<a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview/">https://access.redhat.com/support/offerings/techpreview/</a>
+
+It was found that RESTEasy was vulnerable to XML External Entity (XXE)
+attacks. If a remote attacker who is able to access the Red Hat Storage
+Console REST API submitted a request containing an external XML entity
+to a RESTEasy endpoint, the entity would be resolved, allowing the
+attacker to read files accessible to the user running the application
+server. This flaw affected DOM (Document Object Model) Document and JAXB
+(Java Architecture for XML Binding) input. (CVE-2012-0818)
+
+This update also fixes the following bugs:
+
+* A new server could not be added to a cluster if the required packages
+were not installed on the server. Now, the administrator can add a server
+to a cluster which will automatically install the required packages, if
+missing. (BZ#850431)
+
+* Previously, the rhs-log-collector tool did not collect GlusterFS related
+logs. (BZ#855271)
+
+* Previously, it was not possible for rhsc-setup to complete successfully
+on systems that have SELinux in disabled mode. (BZ#841342)
+
+* The 'Add Brick' button in the 'Add Bricks' pop up is now placed next to
+the 'Brick Directory' field for a better UI experience. (BZ#863929)
+
+* The UUID of the volume was not visible. Now, a new field is added to the
+'Summary' sub-tab of the 'Volumes' tab to display the UUIDs. (BZ#887806)
+
+* The web console was not accessible after a server reboot. The setup
+mechanism has been modified to ensure the web console is accessible after a
+server reboot. (BZ#838284)
+
+This update also adds the following enhancements:
+
+* Previously, to import an existing storage cluster into the Red Hat
+Storage Console the hosts were added one by one. Now, a new feature has
+been added that allows users to import an existing storage cluster. The new
+Cluster Creation window has an option to import an existing storage
+cluster. If IP_Address or the hostname and password of one of the hosts of
+the cluster is entered, a list containing all the hosts of the cluster is
+displayed and the same can be added to the Console. The volumes which are
+part of the cluster also get imported. (BZ#850438)
+
+* The command line was required to enable a volume to use CIFS. Now, you
+can enable or disable the export of a volume with the new 'CIFS' checkbox
+in the 'Create Volume' window. (BZ#850452)
+
+* The new Red Hat Support plug-in for Red Hat Storage is a Technology
+Preview feature that offers seamless, integrated access to the Red Hat
+subscription services from the Red Hat Customer Portal. Subscribers who
+install this plug-in can access these features:
+
+- - Create, manage, and update the Red Hat support cases.
+- - Conveniently access exclusive Red Hat knowledge and solutions.
+- - Search error codes, messages, etc. and view related knowledge from the
+Red Hat Customer Portal. (BZ#999245)
+
+* A new 'Event ID' column is added to the 'Events' table in the 'Advanced
+View' of 'Events' tab which allows users to see the ID of each event in the
+'Events' tab. (BZ#889942)
+
+* A new feature is added to manage and monitor the hooks on the Console. It
+also reports changes in the hooks and checks for new hook scripts by
+polling at regular intervals. (BZ#850483)
+
+* A new 'Optimize for Virt Store' option is added to optimize a volume to
+use it as a virt store. The system sets the &quot;virt&quot; group option on the
+volume and also the following two volume options:
+
+- - storage.owner-uid=36
+- - storage.owner-gid=36
+
+This option is available during volume creation and also for existing
+volumes. (BZ#891493, BZ#891491)
+
+All users of Red Hat Storage Server 2.1 are advised to upgrade to these
+updated packages.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+785631 - CVE-2011-5245 CVE-2012-0818 RESTEasy: XML eXternal Entity (XXE) flaw
+855271 - Collecting support data from all storage nodes through RHSC
+863929 - RFE: [RHEVM/RHSC] AddBrick button is currently positioned incorrectly creating confusion
+887806 - [RHSC] RFE: Field to display Volume ID
+889942 - [RHSC] RFE: Field to display code corresponding to each event in the Events tab
+
+6. Package List:
+
+Red Hat Storage Console 2.1:
+
+Source:
+otopi-1.1.0-1.el6ev.src.rpm
+ovirt-host-deploy-1.1.0-1.el6ev.src.rpm
+python-daemon-1.5.2-1.el6.src.rpm
+python-kitchen-1.1.1-2.el6ev.src.rpm
+python-lockfile-0.8-5.el6.src.rpm
+python-ply-3.3-7.el6ev.src.rpm
+redhat-access-plugin-storage-2.1.0-0.el6rhs.src.rpm
+rhsc-2.1.0-0.bb10.el6rhs.src.rpm
+rhsc-cli-2.1.0.0-0.bb3a.el6rhs.src.rpm
+rhsc-log-collector-2.1-0.1.el6rhs.src.rpm
+rhsc-sdk-2.1.0.0-0.bb3a.el6rhs.src.rpm
+
+noarch:
+otopi-1.1.0-1.el6ev.noarch.rpm
+otopi-devel-1.1.0-1.el6ev.noarch.rpm
+otopi-java-1.1.0-1.el6ev.noarch.rpm
+otopi-repolib-1.1.0-1.el6ev.noarch.rpm
+ovirt-host-deploy-1.1.0-1.el6ev.noarch.rpm
+ovirt-host-deploy-java-1.1.0-1.el6ev.noarch.rpm
+ovirt-host-deploy-repolib-1.1.0-1.el6ev.noarch.rpm
+python-daemon-1.5.2-1.el6.noarch.rpm
+python-kitchen-1.1.1-2.el6ev.noarch.rpm
+python-lockfile-0.8-5.el6.noarch.rpm
+python-ply-3.3-7.el6ev.noarch.rpm
+redhat-access-plugin-storage-2.1.0-0.el6rhs.noarch.rpm
+rhsc-2.1.0-0.bb10.el6rhs.noarch.rpm
+rhsc-backend-2.1.0-0.bb10.el6rhs.noarch.rpm
+rhsc-cli-2.1.0.0-0.bb3a.el6rhs.noarch.rpm
+rhsc-dbscripts-2.1.0-0.bb10.el6rhs.noarch.rpm
+rhsc-log-collector-2.1-0.1.el6rhs.noarch.rpm
+rhsc-restapi-2.1.0-0.bb10.el6rhs.noarch.rpm
+rhsc-sdk-2.1.0.0-0.bb3a.el6rhs.noarch.rpm
+rhsc-setup-2.1.0-0.bb10.el6rhs.noarch.rpm
+rhsc-tools-2.1.0-0.bb10.el6rhs.noarch.rpm
+rhsc-webadmin-portal-2.1.0-0.bb10.el6rhs.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0818.html">https://www.redhat.com/security/data/cve/CVE-2012-0818.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview/">https://access.redhat.com/support/offerings/techpreview/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSNndWXlSAg2UNWIIRAgEDAJ9356JqpwEoqpdiGLs8IcYR53lDTQCeIQN3
+9auGz1o/xZ7QTWTX2nleUZY=
+=ew+M
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

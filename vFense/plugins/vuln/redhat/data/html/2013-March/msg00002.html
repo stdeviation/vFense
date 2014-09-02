@@ -1,0 +1,395 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0588&#45;01] Moderate: gnutls security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 4 Mar 2013 16:20:21 &#45;0500 -->
+<!--X-Message-Id: 201303042120.r24LKBFF018130@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0588-01] Moderate: gnutls security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0588-01] Moderate: gnutls security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0588-01] Moderate: gnutls security update</li>
+<li><em>Date</em>: Mon, 4 Mar 2013 21:20:11 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: gnutls security update
+Advisory ID:       RHSA-2013:0588-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0588.html">https://rhn.redhat.com/errata/RHSA-2013-0588.html</a>
+Issue date:        2013-03-04
+CVE Names:         CVE-2013-1619 
+=====================================================================
+
+1. Summary:
+
+Updated gnutls packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The GnuTLS library provides support for cryptographic algorithms and for
+protocols such as Transport Layer Security (TLS).
+
+It was discovered that GnuTLS leaked timing information when decrypting
+TLS/SSL protocol encrypted records when CBC-mode cipher suites were used.
+A remote attacker could possibly use this flaw to retrieve plain text from
+the encrypted packets by using a TLS/SSL server as a padding oracle.
+(CVE-2013-1619)
+
+Users of GnuTLS are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue. For the update to take
+effect, all applications linked to the GnuTLS library must be restarted,
+or the system rebooted.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+908238 - CVE-2013-1619 gnutls: TLS CBC padding timing attack (lucky-13)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnutls-1.4.1-10.el5_9.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnutls-1.4.1-10.el5_9.1.src.rpm</a>
+
+i386:
+gnutls-1.4.1-10.el5_9.1.i386.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.i386.rpm
+gnutls-utils-1.4.1-10.el5_9.1.i386.rpm
+
+x86_64:
+gnutls-1.4.1-10.el5_9.1.i386.rpm
+gnutls-1.4.1-10.el5_9.1.x86_64.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.i386.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.x86_64.rpm
+gnutls-utils-1.4.1-10.el5_9.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnutls-1.4.1-10.el5_9.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnutls-1.4.1-10.el5_9.1.src.rpm</a>
+
+i386:
+gnutls-debuginfo-1.4.1-10.el5_9.1.i386.rpm
+gnutls-devel-1.4.1-10.el5_9.1.i386.rpm
+
+x86_64:
+gnutls-debuginfo-1.4.1-10.el5_9.1.i386.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.x86_64.rpm
+gnutls-devel-1.4.1-10.el5_9.1.i386.rpm
+gnutls-devel-1.4.1-10.el5_9.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gnutls-1.4.1-10.el5_9.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gnutls-1.4.1-10.el5_9.1.src.rpm</a>
+
+i386:
+gnutls-1.4.1-10.el5_9.1.i386.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.i386.rpm
+gnutls-devel-1.4.1-10.el5_9.1.i386.rpm
+gnutls-utils-1.4.1-10.el5_9.1.i386.rpm
+
+ia64:
+gnutls-1.4.1-10.el5_9.1.i386.rpm
+gnutls-1.4.1-10.el5_9.1.ia64.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.i386.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.ia64.rpm
+gnutls-devel-1.4.1-10.el5_9.1.ia64.rpm
+gnutls-utils-1.4.1-10.el5_9.1.ia64.rpm
+
+ppc:
+gnutls-1.4.1-10.el5_9.1.ppc.rpm
+gnutls-1.4.1-10.el5_9.1.ppc64.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.ppc.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.ppc64.rpm
+gnutls-devel-1.4.1-10.el5_9.1.ppc.rpm
+gnutls-devel-1.4.1-10.el5_9.1.ppc64.rpm
+gnutls-utils-1.4.1-10.el5_9.1.ppc.rpm
+
+s390x:
+gnutls-1.4.1-10.el5_9.1.s390.rpm
+gnutls-1.4.1-10.el5_9.1.s390x.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.s390.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.s390x.rpm
+gnutls-devel-1.4.1-10.el5_9.1.s390.rpm
+gnutls-devel-1.4.1-10.el5_9.1.s390x.rpm
+gnutls-utils-1.4.1-10.el5_9.1.s390x.rpm
+
+x86_64:
+gnutls-1.4.1-10.el5_9.1.i386.rpm
+gnutls-1.4.1-10.el5_9.1.x86_64.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.i386.rpm
+gnutls-debuginfo-1.4.1-10.el5_9.1.x86_64.rpm
+gnutls-devel-1.4.1-10.el5_9.1.i386.rpm
+gnutls-devel-1.4.1-10.el5_9.1.x86_64.rpm
+gnutls-utils-1.4.1-10.el5_9.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm</a>
+
+i386:
+gnutls-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-utils-2.8.5-10.el6_4.1.i686.rpm
+
+x86_64:
+gnutls-2.8.5-10.el6_4.1.i686.rpm
+gnutls-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-utils-2.8.5-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm</a>
+
+i386:
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-devel-2.8.5-10.el6_4.1.i686.rpm
+gnutls-guile-2.8.5-10.el6_4.1.i686.rpm
+
+x86_64:
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-devel-2.8.5-10.el6_4.1.i686.rpm
+gnutls-devel-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-guile-2.8.5-10.el6_4.1.i686.rpm
+gnutls-guile-2.8.5-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm</a>
+
+x86_64:
+gnutls-2.8.5-10.el6_4.1.i686.rpm
+gnutls-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-utils-2.8.5-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm</a>
+
+x86_64:
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-devel-2.8.5-10.el6_4.1.i686.rpm
+gnutls-devel-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-guile-2.8.5-10.el6_4.1.i686.rpm
+gnutls-guile-2.8.5-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm</a>
+
+i386:
+gnutls-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-devel-2.8.5-10.el6_4.1.i686.rpm
+gnutls-utils-2.8.5-10.el6_4.1.i686.rpm
+
+ppc64:
+gnutls-2.8.5-10.el6_4.1.ppc.rpm
+gnutls-2.8.5-10.el6_4.1.ppc64.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.ppc.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.ppc64.rpm
+gnutls-devel-2.8.5-10.el6_4.1.ppc.rpm
+gnutls-devel-2.8.5-10.el6_4.1.ppc64.rpm
+gnutls-utils-2.8.5-10.el6_4.1.ppc64.rpm
+
+s390x:
+gnutls-2.8.5-10.el6_4.1.s390.rpm
+gnutls-2.8.5-10.el6_4.1.s390x.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.s390.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.s390x.rpm
+gnutls-devel-2.8.5-10.el6_4.1.s390.rpm
+gnutls-devel-2.8.5-10.el6_4.1.s390x.rpm
+gnutls-utils-2.8.5-10.el6_4.1.s390x.rpm
+
+x86_64:
+gnutls-2.8.5-10.el6_4.1.i686.rpm
+gnutls-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-devel-2.8.5-10.el6_4.1.i686.rpm
+gnutls-devel-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-utils-2.8.5-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm</a>
+
+i386:
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-guile-2.8.5-10.el6_4.1.i686.rpm
+
+ppc64:
+gnutls-debuginfo-2.8.5-10.el6_4.1.ppc.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.ppc64.rpm
+gnutls-guile-2.8.5-10.el6_4.1.ppc.rpm
+gnutls-guile-2.8.5-10.el6_4.1.ppc64.rpm
+
+s390x:
+gnutls-debuginfo-2.8.5-10.el6_4.1.s390.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.s390x.rpm
+gnutls-guile-2.8.5-10.el6_4.1.s390.rpm
+gnutls-guile-2.8.5-10.el6_4.1.s390x.rpm
+
+x86_64:
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-guile-2.8.5-10.el6_4.1.i686.rpm
+gnutls-guile-2.8.5-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm</a>
+
+i386:
+gnutls-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-devel-2.8.5-10.el6_4.1.i686.rpm
+gnutls-utils-2.8.5-10.el6_4.1.i686.rpm
+
+x86_64:
+gnutls-2.8.5-10.el6_4.1.i686.rpm
+gnutls-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-devel-2.8.5-10.el6_4.1.i686.rpm
+gnutls-devel-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-utils-2.8.5-10.el6_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gnutls-2.8.5-10.el6_4.1.src.rpm</a>
+
+i386:
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-guile-2.8.5-10.el6_4.1.i686.rpm
+
+x86_64:
+gnutls-debuginfo-2.8.5-10.el6_4.1.i686.rpm
+gnutls-debuginfo-2.8.5-10.el6_4.1.x86_64.rpm
+gnutls-guile-2.8.5-10.el6_4.1.i686.rpm
+gnutls-guile-2.8.5-10.el6_4.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1619.html">https://www.redhat.com/security/data/cve/CVE-2013-1619.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRNQ/6XlSAg2UNWIIRAgzlAKCF5EweVXAQaJk5FQ9WdIAYBT88jACgqa9H
+3zi9fpSBsg251qiv+417zss=
+=LO9j
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

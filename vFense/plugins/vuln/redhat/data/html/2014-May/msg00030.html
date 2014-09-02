@@ -1,0 +1,197 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0537&#45;01] Moderate: mysql55&#45;mysql security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 22 May 2014 13:22:41 &#45;0400 -->
+<!--X-Message-Id: 201405221722.s4MHMeZN015388@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0537-01] Moderate: mysql55-mysql security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0537-01] Moderate: mysql55-mysql security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0537-01] Moderate: mysql55-mysql security update</li>
+<li><em>Date</em>: Thu, 22 May 2014 17:22:55 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: mysql55-mysql security update
+Advisory ID:       RHSA-2014:0537-01
+Product:           Red Hat Software Collections
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0537.html">https://rhn.redhat.com/errata/RHSA-2014-0537.html</a>
+Issue date:        2014-05-22
+CVE Names:         CVE-2014-0384 CVE-2014-2419 CVE-2014-2430 
+                   CVE-2014-2431 CVE-2014-2432 CVE-2014-2436 
+                   CVE-2014-2438 CVE-2014-2440 
+=====================================================================
+
+1. Summary:
+
+Updated mysql55-mysql packages that fix several security issues are now
+available for Red Hat Software Collections 1.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Software Collections for RHEL 6 Server - x86_64
+Red Hat Software Collections for RHEL 6 Workstation - x86_64
+
+3. Description:
+
+MySQL is a multi-user, multi-threaded SQL database server. It consists of
+the MySQL server daemon (mysqld) and many client programs and libraries.
+
+This update fixes several vulnerabilities in the MySQL database server.
+Information about these flaws can be found on the Oracle Critical Patch
+Update Advisory page, listed in the References section. (CVE-2014-2436,
+CVE-2014-2440, CVE-2014-0384, CVE-2014-2419, CVE-2014-2430, CVE-2014-2431,
+CVE-2014-2432, CVE-2014-2438)
+
+These updated packages upgrade MySQL to version 5.5.37. Refer to the MySQL
+Release Notes listed in the References section for a complete list of
+changes.
+
+All MySQL users should upgrade to these updated packages, which correct
+these issues. After installing this update, the MySQL server daemon
+(mysqld) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1088133 - CVE-2014-0384 mysql: unspecified DoS related to XML (CPU April 2014)
+1088134 - CVE-2014-2419 mysql: unspecified DoS related to Partition (CPU April 2014)
+1088143 - CVE-2014-2430 mysql: unspecified DoS related to Performance Schema (CPU April 2014)
+1088146 - CVE-2014-2431 mysql: unspecified DoS related to Options (CPU April 2014)
+1088179 - CVE-2014-2432 mysql: unspecified DoS related to Federated (CPU April 2014)
+1088190 - CVE-2014-2436 mysql: unspecified vulnerability related to RBR (CPU April 2014)
+1088191 - CVE-2014-2438 mysql: unspecified DoS related to Replication (CPU April 2014)
+1088197 - CVE-2014-2440 mysql: unspecified vulnerability related to Client (CPU April 2014)
+
+6. Package List:
+
+Red Hat Software Collections for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHSCL/SRPMS/mysql55-mysql-5.5.37-1.2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHSCL/SRPMS/mysql55-mysql-5.5.37-1.2.el6.src.rpm</a>
+
+x86_64:
+mysql55-mysql-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-bench-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-debuginfo-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-devel-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-libs-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-server-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-test-5.5.37-1.2.el6.x86_64.rpm
+
+Red Hat Software Collections for RHEL 6 Workstation:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/RHSCL/SRPMS/mysql55-mysql-5.5.37-1.2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/RHSCL/SRPMS/mysql55-mysql-5.5.37-1.2.el6.src.rpm</a>
+
+x86_64:
+mysql55-mysql-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-bench-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-debuginfo-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-devel-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-libs-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-server-5.5.37-1.2.el6.x86_64.rpm
+mysql55-mysql-test-5.5.37-1.2.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0384.html">https://www.redhat.com/security/data/cve/CVE-2014-0384.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2419.html">https://www.redhat.com/security/data/cve/CVE-2014-2419.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2430.html">https://www.redhat.com/security/data/cve/CVE-2014-2430.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2431.html">https://www.redhat.com/security/data/cve/CVE-2014-2431.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2432.html">https://www.redhat.com/security/data/cve/CVE-2014-2432.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2436.html">https://www.redhat.com/security/data/cve/CVE-2014-2436.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2438.html">https://www.redhat.com/security/data/cve/CVE-2014-2438.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2440.html">https://www.redhat.com/security/data/cve/CVE-2014-2440.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://www.oracle.com/technetwork/topics/security/cpuapr2014-1972952.html#AppendixMSQL">https://www.oracle.com/technetwork/topics/security/cpuapr2014-1972952.html#AppendixMSQL</a>
+<a  rel="nofollow" href="https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-37.html">https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-37.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTfjI8XlSAg2UNWIIRAkEUAJoD28RpkhQ08LWXBUA9WaAuCJVltACgvjnk
+9c7wU5lZmZTH2VA4E4msICg=
+=9Fjc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

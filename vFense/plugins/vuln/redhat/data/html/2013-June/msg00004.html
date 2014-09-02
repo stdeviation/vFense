@@ -1,0 +1,300 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0898&#45;01] Moderate: mesa security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 3 Jun 2013 13:50:37 &#45;0400 -->
+<!--X-Message-Id: 201306031750.r53Hoauk020694@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0898-01] Moderate: mesa security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0898-01] Moderate: mesa security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0898-01] Moderate: mesa security update</li>
+<li><em>Date</em>: Mon, 3 Jun 2013 17:50:36 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: mesa security update
+Advisory ID:       RHSA-2013:0898-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0898.html">https://rhn.redhat.com/errata/RHSA-2013-0898.html</a>
+Issue date:        2013-06-03
+CVE Names:         CVE-2013-1993 
+=====================================================================
+
+1. Summary:
+
+Updated mesa packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Mesa provides a 3D graphics API that is compatible with Open Graphics
+Library (OpenGL). It also provides hardware-accelerated drivers for many
+popular graphics chips.
+
+It was found that Mesa did not correctly validate messages from the X
+server. A malicious X server could cause an application using Mesa to crash
+or, potentially, execute arbitrary code with the privileges of the user
+running the application. (CVE-2013-1993)
+
+All users of Mesa are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. All running
+applications linked against Mesa must be restarted for this update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+961613 - CVE-2013-1993 Mesa: Multiple integer overflows leading to heap-based bufer overflows
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mesa-6.5.1-7.11.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mesa-6.5.1-7.11.el5_9.src.rpm</a>
+
+i386:
+glx-utils-6.5.1-7.11.el5_9.i386.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGL-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.i386.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.i386.rpm
+mesa-source-6.5.1-7.11.el5_9.i386.rpm
+
+x86_64:
+glx-utils-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.i386.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGL-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGL-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.i386.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-source-6.5.1-7.11.el5_9.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mesa-6.5.1-7.11.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/mesa-6.5.1-7.11.el5_9.src.rpm</a>
+
+i386:
+mesa-debuginfo-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.i386.rpm
+
+x86_64:
+mesa-debuginfo-6.5.1-7.11.el5_9.i386.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/mesa-6.5.1-7.11.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/mesa-6.5.1-7.11.el5_9.src.rpm</a>
+
+i386:
+glx-utils-6.5.1-7.11.el5_9.i386.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGL-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.i386.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-source-6.5.1-7.11.el5_9.i386.rpm
+
+ia64:
+glx-utils-6.5.1-7.11.el5_9.ia64.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.i386.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.ia64.rpm
+mesa-libGL-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGL-6.5.1-7.11.el5_9.ia64.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.ia64.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.ia64.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.ia64.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.ia64.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.ia64.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.ia64.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.ia64.rpm
+mesa-source-6.5.1-7.11.el5_9.ia64.rpm
+
+ppc:
+glx-utils-6.5.1-7.11.el5_9.ppc.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.ppc.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.ppc64.rpm
+mesa-libGL-6.5.1-7.11.el5_9.ppc.rpm
+mesa-libGL-6.5.1-7.11.el5_9.ppc64.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.ppc.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.ppc64.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.ppc.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.ppc64.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.ppc.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.ppc64.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.ppc.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.ppc64.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.ppc.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.ppc64.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.ppc.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.ppc64.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.ppc.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.ppc64.rpm
+mesa-source-6.5.1-7.11.el5_9.ppc.rpm
+
+s390x:
+glx-utils-6.5.1-7.11.el5_9.s390x.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.s390.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.s390x.rpm
+mesa-libGL-6.5.1-7.11.el5_9.s390.rpm
+mesa-libGL-6.5.1-7.11.el5_9.s390x.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.s390.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.s390x.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.s390.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.s390x.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.s390.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.s390x.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.s390.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.s390x.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.s390.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.s390x.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.s390.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.s390x.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.s390.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.s390x.rpm
+mesa-source-6.5.1-7.11.el5_9.s390x.rpm
+
+x86_64:
+glx-utils-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.i386.rpm
+mesa-debuginfo-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGL-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGL-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGL-devel-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLU-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLU-devel-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLw-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libGLw-devel-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.i386.rpm
+mesa-libOSMesa-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.i386.rpm
+mesa-libOSMesa-devel-6.5.1-7.11.el5_9.x86_64.rpm
+mesa-source-6.5.1-7.11.el5_9.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1993.html">https://www.redhat.com/security/data/cve/CVE-2013-1993.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRrNdGXlSAg2UNWIIRArJwAJ4hGiFY+7y/YhJ3Zz54TctpuFEhwwCeJEqA
+R9bD0gup3+nMUqFJ/X5sL08=
+=98zo
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

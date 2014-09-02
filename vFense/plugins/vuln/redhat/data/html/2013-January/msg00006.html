@@ -1,0 +1,305 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0123&#45;01] Low: OpenIPMI security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Jan 2013 01:54:23 &#45;0500 -->
+<!--X-Message-Id: 201301080654.r086sLHG031264@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0123-01] Low: OpenIPMI security, bug fix,	and enhancement upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0123-01] Low: OpenIPMI security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0123-01] Low: OpenIPMI security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 8 Jan 2013 06:44:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: OpenIPMI security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:0123-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0123.html">https://rhn.redhat.com/errata/RHSA-2013-0123.html</a>
+Issue date:        2013-01-08
+CVE Names:         CVE-2011-4339 
+=====================================================================
+
+1. Summary:
+
+Updated OpenIPMI packages that fix one security issue, multiple bugs, and
+add one enhancement are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The OpenIPMI packages provide command line tools and utilities to access
+platform information using Intelligent Platform Management Interface
+(IPMI). System administrators can use OpenIPMI to manage systems and to
+perform system health monitoring.
+
+It was discovered that the IPMI event daemon (ipmievd) created its process
+ID (PID) file with world-writable permissions. A local user could use this
+flaw to make the ipmievd init script kill an arbitrary process when the
+ipmievd daemon is stopped or restarted. (CVE-2011-4339)
+
+Note: This issue did not affect the default configuration of OpenIPMI as
+shipped with Red Hat Enterprise Linux 5.
+
+This update also fixes the following bugs:
+
+* Prior to this update, the ipmitool utility first checked the IPMI
+hardware for Dell IPMI extensions and listed only supported commands when
+printing command usage like the option &quot;ipmtool delloem help&quot;. On a
+non-Dell platform, the usage text was incomplete and misleading. This
+update lists all Dell OEM extensions in usage texts on all platforms, which
+allows users to check for command line arguments on non-Dell hardware.
+(BZ#658762)
+
+* Prior to this update, the ipmitool utility tried to retrieve the Sensor
+Data Records (SDR) from the IPMI bus instead of the Baseboard Management
+Controller (BMC) bus when IPMI-enabled devices reported SDR under a
+different owner than the BMC. As a consequence, the timeout setting for the
+SDR read attempt could significantly decrease the performance and no sensor
+data was shown. This update modifies ipmitool to read these SDR records
+from the BMC and shows the correct sensor data on these platforms.
+(BZ#671059, BZ#749796)
+
+* Prior to this update, the exit code of the &quot;ipmitool -o list&quot; option was
+not set correctly. As a consequence, &quot;ipmitool -o list&quot; always returned the
+value 1 instead of the expected value 0. This update modifies the
+underlying code to return the value 0 as expected. (BZ#740780)
+
+* Prior to this update, the &quot;ipmi&quot; service init script did not specify the
+full path to the &quot;/sbin/lsmod&quot; and &quot;/sbin/modprobe&quot; system utilities. As a
+consequence, the init script failed when it was executed if PATH did not
+point to /sbin, for example, when running &quot;sudo /etc/init.d/ipmi&quot;. This
+update modifies the init script so that it now contains the full path to
+lsmod and modrpobe. Now, it can be executed with sudo. (BZ#829705)
+
+* Prior to this update, the ipmitool man page did not list the &quot;-b&quot;, &quot;-B&quot;,
+&quot;-l&quot; and &quot;-T&quot; options. In this update, these options are documented in the
+ipmitool man page. (BZ#846596)
+
+This update also adds the following enhancement:
+
+* Updates to the Dell-specific IPMI extension: A new vFlash command, which
+allows users to display information about extended SD cards; a new setled
+command, which allows users to display the backplane LED status; improved
+error descriptions; added support for new hardware; and updated
+documentation of the ipmitool delloem commands in the ipmitool manual
+page. (BZ#797050)
+
+All users of OpenIPMI are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues and add this
+enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+658762 - ipmitool delloem accesses IPMI before acting (e.g. listing help)
+671059 - bad performance of ipmitool sdr by update to 2.0.16
+740780 - ipmitool -o list return always 1
+742837 - CVE-2011-4339 OpenIPMI: IPMI event daemon creates PID file with world writeable permissions
+749796 - Bad performance for ipmitool sdr in verbose mode
+829705 - initscript of ipmi contains incomplete path and cannot start by certain users
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/OpenIPMI-2.0.16-16.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/OpenIPMI-2.0.16-16.el5.src.rpm</a>
+
+i386:
+OpenIPMI-2.0.16-16.el5.i386.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.i386.rpm
+OpenIPMI-gui-2.0.16-16.el5.i386.rpm
+OpenIPMI-libs-2.0.16-16.el5.i386.rpm
+OpenIPMI-perl-2.0.16-16.el5.i386.rpm
+OpenIPMI-python-2.0.16-16.el5.i386.rpm
+OpenIPMI-tools-2.0.16-16.el5.i386.rpm
+
+x86_64:
+OpenIPMI-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.i386.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-gui-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-libs-2.0.16-16.el5.i386.rpm
+OpenIPMI-libs-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-perl-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-python-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-tools-2.0.16-16.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/OpenIPMI-2.0.16-16.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/OpenIPMI-2.0.16-16.el5.src.rpm</a>
+
+i386:
+OpenIPMI-debuginfo-2.0.16-16.el5.i386.rpm
+OpenIPMI-devel-2.0.16-16.el5.i386.rpm
+
+x86_64:
+OpenIPMI-debuginfo-2.0.16-16.el5.i386.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-devel-2.0.16-16.el5.i386.rpm
+OpenIPMI-devel-2.0.16-16.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/OpenIPMI-2.0.16-16.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/OpenIPMI-2.0.16-16.el5.src.rpm</a>
+
+i386:
+OpenIPMI-2.0.16-16.el5.i386.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.i386.rpm
+OpenIPMI-devel-2.0.16-16.el5.i386.rpm
+OpenIPMI-gui-2.0.16-16.el5.i386.rpm
+OpenIPMI-libs-2.0.16-16.el5.i386.rpm
+OpenIPMI-perl-2.0.16-16.el5.i386.rpm
+OpenIPMI-python-2.0.16-16.el5.i386.rpm
+OpenIPMI-tools-2.0.16-16.el5.i386.rpm
+
+ia64:
+OpenIPMI-2.0.16-16.el5.ia64.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.ia64.rpm
+OpenIPMI-devel-2.0.16-16.el5.ia64.rpm
+OpenIPMI-gui-2.0.16-16.el5.ia64.rpm
+OpenIPMI-libs-2.0.16-16.el5.ia64.rpm
+OpenIPMI-perl-2.0.16-16.el5.ia64.rpm
+OpenIPMI-python-2.0.16-16.el5.ia64.rpm
+OpenIPMI-tools-2.0.16-16.el5.ia64.rpm
+
+ppc:
+OpenIPMI-2.0.16-16.el5.ppc.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.ppc.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.ppc64.rpm
+OpenIPMI-devel-2.0.16-16.el5.ppc.rpm
+OpenIPMI-devel-2.0.16-16.el5.ppc64.rpm
+OpenIPMI-gui-2.0.16-16.el5.ppc.rpm
+OpenIPMI-libs-2.0.16-16.el5.ppc.rpm
+OpenIPMI-libs-2.0.16-16.el5.ppc64.rpm
+OpenIPMI-perl-2.0.16-16.el5.ppc.rpm
+OpenIPMI-python-2.0.16-16.el5.ppc.rpm
+OpenIPMI-tools-2.0.16-16.el5.ppc.rpm
+
+s390x:
+OpenIPMI-2.0.16-16.el5.s390x.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.s390.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.s390x.rpm
+OpenIPMI-devel-2.0.16-16.el5.s390.rpm
+OpenIPMI-devel-2.0.16-16.el5.s390x.rpm
+OpenIPMI-gui-2.0.16-16.el5.s390x.rpm
+OpenIPMI-libs-2.0.16-16.el5.s390.rpm
+OpenIPMI-libs-2.0.16-16.el5.s390x.rpm
+OpenIPMI-perl-2.0.16-16.el5.s390x.rpm
+OpenIPMI-python-2.0.16-16.el5.s390x.rpm
+OpenIPMI-tools-2.0.16-16.el5.s390x.rpm
+
+x86_64:
+OpenIPMI-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.i386.rpm
+OpenIPMI-debuginfo-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-devel-2.0.16-16.el5.i386.rpm
+OpenIPMI-devel-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-gui-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-libs-2.0.16-16.el5.i386.rpm
+OpenIPMI-libs-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-perl-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-python-2.0.16-16.el5.x86_64.rpm
+OpenIPMI-tools-2.0.16-16.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4339.html">https://www.redhat.com/security/data/cve/CVE-2011-4339.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ68KZXlSAg2UNWIIRAhTUAKCijFkIEKV02pgq/J4KNB/n4t5cuwCbB+ti
+v3R5c2Nol+1v+cAx+u0IqC8=
+=h068
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -15,8 +15,11 @@ from vFense.plugins.patching._db_model import *
 from vFense.plugins.mightymouse import *
 from vFense.plugins.vuln.cve._db_model import *
 from vFense.plugins.vuln.ubuntu._db_model import *
+from vFense.plugins.vuln.ubuntu._constants import UbuntuVulnSubKeys
 from vFense.plugins.vuln.redhat._db_model import *
+from vFense.plugins.vuln.redhat._constants import RedhatVulnSubKeys
 from vFense.plugins.vuln.windows._db_model import *
+from vFense.plugins.vuln.windows._constants import WindowsVulnSubKeys
 from vFense.core.queue import *
 
 Id = 'id'
@@ -33,9 +36,9 @@ def initialize_indexes_and_create_tables():
         (FileCollections.Files, FilesKey.FileName),
         (FileCollections.FileServers, FileServerKeys.FileServerName),
         (CVECollections.CVE, CveKeys.CveId),
-        (WindowsSecurityCollection.Bulletin, WindowsSecurityBulletinKey.Id),
-        (UbuntuSecurityCollection.Bulletin, UbuntuSecurityBulletinKey.BulletinId),
-        (RedHatSecurityCollection.Bulletin, RedhatSecurityBulletinKey.BulletinId),
+        (WindowsVulnerabilityCollections.Vulnerabilities, WindowsVulnerabilityKeys.VulnerabilityId),
+        (UbuntuVulnerabilityCollections.Vulnerabilities, UbuntuVulnerabilityKeys.VulnerabilityId),
+        (RedHatVulnerabilityCollections.Vulnerabilities, RedhatVulnerabilityKeys.VulnerabilityId),
         ('downloaded_status', Id),
         (AgentCollections.Hardware, Id),
         (NotificationCollections.NotificationPlugins, Id),
@@ -69,8 +72,9 @@ def initialize_indexes_and_create_tables():
     vfense_app_list = r.table(AppCollections.vFenseApps).index_list().run(conn)
     vfense_app_per_agent_list = r.table(AppCollections.vFenseAppsPerAgent).index_list().run(conn)
     cve_list = r.table(CVECollections.CVE).index_list().run(conn)
-    windows_bulletin_list = r.table(WindowsSecurityCollection.Bulletin).index_list().run(conn)
-    ubuntu_bulletin_list = r.table(UbuntuSecurityCollection.Bulletin).index_list().run(conn)
+    windows_bulletin_list = r.table(WindowsVulnerabilityCollections.Vulnerabilities).index_list().run(conn)
+    ubuntu_bulletin_list = r.table(UbuntuVulnerabilityCollections.Vulnerabilities).index_list().run(conn)
+    redhat_bulletin_list = r.table(RedHatVulnerabilityCollections.Vulnerabilities).index_list().run(conn)
     files_list = r.table(FileCollections.Files).index_list().run(conn)
     file_server_list = r.table(FileCollections.FileServers).index_list().run(conn)
     tags_list = r.table(TagCollections.Tags).index_list().run(conn)
@@ -421,24 +425,53 @@ def initialize_indexes_and_create_tables():
         r.table(NotificationCollections.NotificationPlugins).index_create(NotificationPluginKeys.ViewName).run(conn)
 
 #################################### Cve Indexes ###################################################
-    if not CveIndexes.CveCategories in cve_list:
-        r.table(CVECollections.CVE).index_create(CveIndexes.CveCategories, multi=True).run(conn)
+    if not CveIndexes.Categories in cve_list:
+        r.table(CVECollections.CVE).index_create(CveIndexes.Categories, multi=True).run(conn)
 
 #################################### Windows Bulletin Indexes ###################################################
-    if not WindowsSecurityBulletinIndexes.BulletinId in windows_bulletin_list:
-        r.table(WindowsSecurityCollection.Bulletin).index_create(WindowsSecurityBulletinIndexes.BulletinId).run(conn)
+    if not WindowsVulnerabilityIndexes.ComponentKb in windows_bulletin_list:
+        (
+            r
+            .table(WindowsVulnerabilityCollections.Vulnerabilities)
+            .index_create(
+                WindowsVulnerabilityIndexes.ComponentKb,
+                lambda x:
+                    x[WindowsVulnerabilityKeys.Apps].map(
+                        lambda y: y[WindowsVulnSubKeys.KB]
+                    ),
+                multi=True
+            )
+            .run(conn)
+        )
 
-    if not WindowsSecurityBulletinIndexes.ComponentKb in windows_bulletin_list:
-        r.table(WindowsSecurityCollection.Bulletin).index_create(WindowsSecurityBulletinIndexes.ComponentKb).run(conn)
+    if not WindowsVulnerabilityIndexes.CveIds in windows_bulletin_list:
+        r.table(WindowsVulnerabilityCollections.Vulnerabilities).index_create(WindowsVulnerabilityIndexes.CveIds, multi=True).run(conn)
 
-    if not WindowsSecurityBulletinIndexes.CveIds in windows_bulletin_list:
-        r.table(WindowsSecurityCollection.Bulletin).index_create(WindowsSecurityBulletinIndexes.CveIds, multi=True).run(conn)
 #################################### Ubuntu Bulletin Indexes ###################################################
-    if not UbuntuSecurityBulletinIndexes.NameAndVersion in ubuntu_bulletin_list:
-        r.table(UbuntuSecurityCollection.Bulletin).index_create(
-            UbuntuSecurityBulletinIndexes.NameAndVersion, lambda x:
-                x[UbuntuSecurityBulletinKey.Apps].map(lambda y:
-                    [y['name'], y['version']]), multi=True).run(conn)
+    if not UbuntuVulnerabilityIndexes.NameAndVersion in ubuntu_bulletin_list:
+        r.table(UbuntuVulnerabilityCollections.Vulnerabilities).index_create(
+            UbuntuVulnerabilityIndexes.NameAndVersion, lambda x:
+                x[UbuntuVulnerabilityKeys.Apps].map(lambda y:
+                    [y[UbuntuVulnSubKeys.NAME], y[UbuntuVulnSubKeys.VERSION]]), multi=True).run(conn)
+
+    if not UbuntuVulnerabilityIndexes.AppId in ubuntu_bulletin_list:
+        r.table(UbuntuVulnerabilityCollections.Vulnerabilities).index_create(
+            UbuntuVulnerabilityIndexes.AppId, lambda x:
+                x[UbuntuVulnerabilityKeys.Apps].map(lambda y:
+                    y[UbuntuVulnSubKeys.APP_ID]), multi=True).run(conn)
+
+#################################### Redhat Bulletin Indexes ###################################################
+    if not RedhatVulnerabilityIndexes.NameAndVersion in redhat_bulletin_list:
+        r.table(RedHatVulnerabilityCollections.Vulnerabilities).index_create(
+            RedhatVulnerabilityIndexes.NameAndVersion, lambda x:
+                x[RedhatVulnerabilityKeys.Apps].map(lambda y:
+                    [y[RedhatVulnSubKeys.NAME], y[RedhatVulnSubKeys.VERSION]]), multi=True).run(conn)
+
+    if not RedhatVulnerabilityIndexes.AppId in redhat_bulletin_list:
+        r.table(RedHatVulnerabilityCollections.Vulnerabilities).index_create(
+            RedhatVulnerabilityIndexes.AppId, lambda x:
+                x[RedhatVulnerabilityKeys.Apps].map(lambda y:
+                    y[RedhatVulnSubKeys.APP_ID]), multi=True).run(conn)
 
 #################################### Agent Queue Indexes ###################################################
     if not AgentQueueIndexes.AgentId in agent_queue_list:

@@ -1,0 +1,298 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0134&#45;01] Low: freeradius2 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Jan 2013 02:06:23 &#45;0500 -->
+<!--X-Message-Id: 201301080706.r0876LdI011711@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0134-01] Low: freeradius2 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0134-01] Low: freeradius2 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0134-01] Low: freeradius2 security and bug fix update</li>
+<li><em>Date</em>: Tue, 8 Jan 2013 06:56:32 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: freeradius2 security and bug fix update
+Advisory ID:       RHSA-2013:0134-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0134.html">https://rhn.redhat.com/errata/RHSA-2013-0134.html</a>
+Issue date:        2013-01-08
+CVE Names:         CVE-2011-4966 
+=====================================================================
+
+1. Summary:
+
+Updated freeradius2 packages that fix one security issue and multiple bugs
+are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+FreeRADIUS is an open-source Remote Authentication Dial-In User Service
+(RADIUS) server which allows RADIUS clients to perform authentication
+against the RADIUS server. The RADIUS server may optionally perform
+accounting of its operations using the RADIUS protocol.
+
+It was found that the &quot;unix&quot; module ignored the password expiration
+setting in &quot;/etc/shadow&quot;. If FreeRADIUS was configured to use this module
+for user authentication, this flaw could allow users with an expired
+password to successfully authenticate, even though their access should have
+been denied. (CVE-2011-4966)
+
+This update also fixes the following bugs:
+
+* After log rotation, the freeradius logrotate script failed to reload the
+radiusd daemon and log messages were lost. This update has added a command
+to the freeradius logrotate script to reload the radiusd daemon and the
+radiusd daemon re-initializes and reopens its log files after log rotation
+as expected. (BZ#787111)
+
+* The radtest script with the &quot;eap-md5&quot; option failed because it passed the
+IP family argument when invoking the radeapclient utility and the
+radeapclient utility did not recognize the IP family. The radeapclient
+utility now recognizes the IP family argument and radtest now works with
+eap-md5 as expected. (BZ#846476)
+
+* Previously, freeradius was compiled without the &quot;--with-udpfromto&quot;
+option. Consequently, with a multihomed server and explicitly specifying
+the IP address, freeradius sent the reply with the wrong IP source address.
+With this update, freeradius has been built with the &quot;--with-udpfromto&quot;
+configuration option and the RADIUS reply is always sourced from the IP
+address the request was sent to. (BZ#846471)
+
+* Due to invalid syntax in the PostgreSQL admin schema file, the FreeRADIUS
+PostgreSQL tables failed to be created. With this update, the syntax has
+been adjusted and the tables are created as expected. (BZ#818885)
+
+* FreeRADIUS has a thread pool that dynamically grows based on load. If
+multiple threads using the &quot;rlm_perl()&quot; function are spawned in quick
+succession, the FreeRADIUS server sometimes terminated unexpectedly with a
+segmentation fault due to parallel calls to the &quot;rlm_perl_clone()&quot;
+function. With this update, a mutex for the threads has been added and the
+problem no longer occurs. (BZ#846475)
+
+* The man page for &quot;rlm_dbm_parser&quot; was incorrectly installed as
+&quot;rlm_dbm_parse&quot;, omitting the trailing &quot;r&quot;. The man page now correctly
+appears as rlm_dbm_parser. (BZ#781877)
+
+All users of freeradius2 are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. They are also
+advised to check for RPM backup files ending in &quot;.rpmnew&quot; or &quot;.rpmsave&quot;
+under the /etc/raddb/ directory after the update because the FreeRADIUS
+server will attempt to load every file it finds in its configuration
+directory. The extra files will often cause the wrong configuration values
+to be applied resulting in either unpredictable behavior or the failure of
+the server to initialize and run.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+Users are also advised to check for RPM backup files ending in &quot;.rpmnew&quot; or
+&quot;.rpmsave&quot; under the /etc/raddb/ directory after the update because the
+FreeRADIUS server will attempt to load every file it finds in its
+configuration directory. The extra files will often cause the wrong
+configuration values to be applied resulting in either unpredictable
+behavior or the failure of the server to initialize and run.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+781877 - rlm_dbm_parser has man pages in rlm_dbm_parse.8.gz
+787111 - freeradius logrotate script does not reload running daemon, causing log files not written after logrotate
+818885 - possible errors in /etc/raddb/sql/postgresql/admin.sql template
+846471 - freeradius not compiled with --with-udpfromto
+846474 - shadow password expiration does not work in freeradius 2.1.10
+846475 - Segfault with freeradius-perl threading
+846476 - radtest script is not working with eap-md5 option
+879045 - CVE-2011-4966 freeradius: does not respect expired passwords when using the unix module
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/freeradius2-2.1.12-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/freeradius2-2.1.12-5.el5.src.rpm</a>
+
+i386:
+freeradius2-2.1.12-5.el5.i386.rpm
+freeradius2-debuginfo-2.1.12-5.el5.i386.rpm
+freeradius2-krb5-2.1.12-5.el5.i386.rpm
+freeradius2-ldap-2.1.12-5.el5.i386.rpm
+freeradius2-mysql-2.1.12-5.el5.i386.rpm
+freeradius2-perl-2.1.12-5.el5.i386.rpm
+freeradius2-postgresql-2.1.12-5.el5.i386.rpm
+freeradius2-python-2.1.12-5.el5.i386.rpm
+freeradius2-unixODBC-2.1.12-5.el5.i386.rpm
+freeradius2-utils-2.1.12-5.el5.i386.rpm
+
+x86_64:
+freeradius2-2.1.12-5.el5.x86_64.rpm
+freeradius2-debuginfo-2.1.12-5.el5.x86_64.rpm
+freeradius2-krb5-2.1.12-5.el5.x86_64.rpm
+freeradius2-ldap-2.1.12-5.el5.x86_64.rpm
+freeradius2-mysql-2.1.12-5.el5.x86_64.rpm
+freeradius2-perl-2.1.12-5.el5.x86_64.rpm
+freeradius2-postgresql-2.1.12-5.el5.x86_64.rpm
+freeradius2-python-2.1.12-5.el5.x86_64.rpm
+freeradius2-unixODBC-2.1.12-5.el5.x86_64.rpm
+freeradius2-utils-2.1.12-5.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/freeradius2-2.1.12-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/freeradius2-2.1.12-5.el5.src.rpm</a>
+
+i386:
+freeradius2-2.1.12-5.el5.i386.rpm
+freeradius2-debuginfo-2.1.12-5.el5.i386.rpm
+freeradius2-krb5-2.1.12-5.el5.i386.rpm
+freeradius2-ldap-2.1.12-5.el5.i386.rpm
+freeradius2-mysql-2.1.12-5.el5.i386.rpm
+freeradius2-perl-2.1.12-5.el5.i386.rpm
+freeradius2-postgresql-2.1.12-5.el5.i386.rpm
+freeradius2-python-2.1.12-5.el5.i386.rpm
+freeradius2-unixODBC-2.1.12-5.el5.i386.rpm
+freeradius2-utils-2.1.12-5.el5.i386.rpm
+
+ia64:
+freeradius2-2.1.12-5.el5.ia64.rpm
+freeradius2-debuginfo-2.1.12-5.el5.ia64.rpm
+freeradius2-krb5-2.1.12-5.el5.ia64.rpm
+freeradius2-ldap-2.1.12-5.el5.ia64.rpm
+freeradius2-mysql-2.1.12-5.el5.ia64.rpm
+freeradius2-perl-2.1.12-5.el5.ia64.rpm
+freeradius2-postgresql-2.1.12-5.el5.ia64.rpm
+freeradius2-python-2.1.12-5.el5.ia64.rpm
+freeradius2-unixODBC-2.1.12-5.el5.ia64.rpm
+freeradius2-utils-2.1.12-5.el5.ia64.rpm
+
+ppc:
+freeradius2-2.1.12-5.el5.ppc.rpm
+freeradius2-debuginfo-2.1.12-5.el5.ppc.rpm
+freeradius2-krb5-2.1.12-5.el5.ppc.rpm
+freeradius2-ldap-2.1.12-5.el5.ppc.rpm
+freeradius2-mysql-2.1.12-5.el5.ppc.rpm
+freeradius2-perl-2.1.12-5.el5.ppc.rpm
+freeradius2-postgresql-2.1.12-5.el5.ppc.rpm
+freeradius2-python-2.1.12-5.el5.ppc.rpm
+freeradius2-unixODBC-2.1.12-5.el5.ppc.rpm
+freeradius2-utils-2.1.12-5.el5.ppc.rpm
+
+s390x:
+freeradius2-2.1.12-5.el5.s390x.rpm
+freeradius2-debuginfo-2.1.12-5.el5.s390x.rpm
+freeradius2-krb5-2.1.12-5.el5.s390x.rpm
+freeradius2-ldap-2.1.12-5.el5.s390x.rpm
+freeradius2-mysql-2.1.12-5.el5.s390x.rpm
+freeradius2-perl-2.1.12-5.el5.s390x.rpm
+freeradius2-postgresql-2.1.12-5.el5.s390x.rpm
+freeradius2-python-2.1.12-5.el5.s390x.rpm
+freeradius2-unixODBC-2.1.12-5.el5.s390x.rpm
+freeradius2-utils-2.1.12-5.el5.s390x.rpm
+
+x86_64:
+freeradius2-2.1.12-5.el5.x86_64.rpm
+freeradius2-debuginfo-2.1.12-5.el5.x86_64.rpm
+freeradius2-krb5-2.1.12-5.el5.x86_64.rpm
+freeradius2-ldap-2.1.12-5.el5.x86_64.rpm
+freeradius2-mysql-2.1.12-5.el5.x86_64.rpm
+freeradius2-perl-2.1.12-5.el5.x86_64.rpm
+freeradius2-postgresql-2.1.12-5.el5.x86_64.rpm
+freeradius2-python-2.1.12-5.el5.x86_64.rpm
+freeradius2-unixODBC-2.1.12-5.el5.x86_64.rpm
+freeradius2-utils-2.1.12-5.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4966.html">https://www.redhat.com/security/data/cve/CVE-2011-4966.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ68VYXlSAg2UNWIIRAq6WAJ4mewJWeAUzKItA7OK+7c422jrApgCcDEat
+zkwlDK+p9hul6WpKVajIe0Q=
+=7Lpm
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

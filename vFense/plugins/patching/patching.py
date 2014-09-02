@@ -4,6 +4,7 @@ import logging
 import urllib
 
 from vFense import VFENSE_LOGGING_CONFIG
+from vFense.supported_platforms import REDHAT_DISTROS
 from vFense.core._constants import CommonKeys
 from vFense.core.agent._db import total_agents_in_view
 from vFense.core._db_constants import DbTime
@@ -35,7 +36,7 @@ from vFense.plugins.patching._db import (fetch_file_servers_addresses,
 from vFense.core.decorators import time_it, results_message
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.manager import ViewManager
-from vFense.plugins.vuln import SecurityBulletinKey
+from vFense.plugins.vuln import VulnerabilityKeys
 import vFense.plugins.vuln.windows.ms as ms
 import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.cve.cve as cve
@@ -672,10 +673,7 @@ def update_app_status_by_agentid_and_appid(
 
     return updated
 
-def get_vulnerability_info_for_app(
-        os_string, app_name=None,
-        app_version=None, kb=''
-    ):
+def get_vulnerability_info_for_app(app):
     """Retrieve the relevant vulnerability for an application if
         it exist. We search by using the kb for Windows and by using the name
         and version for Ubuntu.
@@ -700,29 +698,36 @@ def get_vulnerability_info_for_app(
         Dictionary
     """
 
-    vuln_data = {}
-    vuln_info = {}
-    vuln_data[AppsKey.CveIds] = []
-    vuln_data[AppsKey.VulnerabilityId] = ""
-    vuln_data[AppsKey.VulnerabilityCategories] = []
+    vuln_data = Apps()
 
-    if kb != "" and re.search(r'Windows', os_string, re.IGNORECASE):
-        vuln_info = ms.get_vuln_ids(kb)
+    if app.kb != "" and re.search(r'Windows', app.os_string, re.IGNORECASE):
+        vuln_info = ms.get_vuln_ids(app.kb)
 
     elif (
-            re.search(r'Ubuntu|Mint', os_string, re.IGNORECASE)
-            and app_name and app_version
+            re.search(r'Ubuntu|Mint', app.os_string, re.IGNORECASE)
+            and app.name and app.version
          ):
         vuln_info = (
             usn.get_vuln_ids(
-                app_name, app_version, os_string
+                app.name, app.version, app.os_string
+            )
+        )
+
+    elif (
+            re.search('|'.join(REDHAT_DISTROS), app.os_string, re.IGNORECASE)
+            and app.name and app.version
+         ):
+
+        vuln_info = (
+            usn.get_vuln_ids(
+                app.name, app.version, app.os_string
             )
         )
 
     if vuln_info:
-        vuln_data[AppsKey.CveIds] = vuln_info[SecurityBulletinKey.CveIds]
+        vuln_data[AppsKey.CveIds] = vuln_info[VulnerabilityKeys.CveIds]
         vuln_data[AppsKey.VulnerabilityId] = (
-            vuln_info[SecurityBulletinKey.BulletinId]
+            vuln_info[VulnerabilityKeys.VulnerabilityId]
         )
         for cve_id in vuln_data[AppsKey.CveIds]:
             vuln_data[AppsKey.VulnerabilityCategories] += (
@@ -736,8 +741,8 @@ def get_vulnerability_info_for_app(
     return vuln_data
 
 @time_it
-def application_updater(app_data, os_string,
-        collection=AppCollections.UniqueApplications):
+def application_updater(app_data, file_data,
+                        collection=AppCollections.UniqueApplications):
     """Insert or update an existing application in the provided collection.
 
     Args:
@@ -776,47 +781,25 @@ def application_updater(app_data, os_string,
     updated_count = 0
     inserted_count = 0
 
-    status = app_data.pop(DbCommonAppPerAgentKeys.Status, None)
-    agent_id = app_data.pop(DbCommonAppPerAgentKeys.AgentId, None)
-    app_data.pop(DbCommonAppPerAgentKeys.InstallDate, None)
-    file_data = app_data.pop(DbCommonAppKeys.FileData)
-    app_name = app_data.get(DbCommonAppKeys.Name, None)
-    app_version = app_data.get(DbCommonAppKeys.Version, None)
-    app_kb = app_data.get(DbCommonAppKeys.Kb, '')
-    app_id = app_data.get(DbCommonAppKeys.AppId)
-    exists = object_exist(app_id, collection)
+    exists = object_exist(app_data.app_id, collection)
 
     if exists:
-        add_file_data(app_id, file_data, agent_id)
         vuln_data = (
             get_vulnerability_info_for_app(
-                os_string, app_name, app_version, app_kb
+                app_data.os_string, app_data.name, app_data.version,
+                app_data.kb
             )
         )
         data_updated = (
-            update_app_data_by_app_id(app_id, vuln_data, collection)
+            update_app_data_by_app_id(app_data.app_id, vuln_data, collection)
         )
         if data_updated[0] == DbCodes.Replaced:
             updated_count = data_updated[1]
 
     else:
-        add_file_data(app_id, file_data, agent_id)
-        app_data[AppsKey.Hidden] = CommonKeys.NO
-
-        if (len(file_data) > 0 and status == CommonAppKeys.AVAILABLE or
-                len(file_data) > 0 and status == CommonAppKeys.INSTALLED):
-            app_data[AppsKey.FilesDownloadStatus] = (
-                PackageCodes.FilePendingDownload
-            )
-
-        elif len(file_data) == 0 and status == CommonAppKeys.AVAILABLE:
-            app_data[AppsKey.FilesDownloadStatus] = PackageCodes.MissingUri
-
-        elif len(file_data) == 0 and status == CommonAppKeys.INSTALLED:
-            app_data[AppsKey.FilesDownloadStatus] = PackageCodes.FileNotRequired
 
         vuln_data = get_vulnerability_info_for_app(
-            os_string, app_name, app_version, app_kb
+            app_data.os_string, app_data.name, app_data.version, app_data.kb
         )
 
         app_data = dict(app_data.items() + vuln_data.items())

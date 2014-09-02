@@ -1,0 +1,199 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1150&#45;01] Moderate: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 8 Aug 2012 12:46:11 &#45;0400 -->
+<!--X-Message-Id: 201208081646.q78Gk55A030861@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1150-01] Moderate: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1150-01] Moderate: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1150-01] Moderate: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Wed, 8 Aug 2012 16:46:04 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2012:1150-01
+Product:           Red Hat Enterprise MRG for RHEL-6
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1150.html">https://rhn.redhat.com/errata/RHSA-2012-1150.html</a>
+Issue date:        2012-08-08
+CVE Names:         CVE-2012-2390 CVE-2012-3375 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix two security issues and two bugs are
+now available for Red Hat Enterprise MRG 2.1.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 6 Server v.2 - noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* A memory leak flaw was found in the way the Linux kernel's memory
+subsystem handled resource clean up in the mmap() failure path when the
+MAP_HUGETLB flag was set. A local, unprivileged user could use this flaw to
+cause a denial of service. (CVE-2012-2390, Moderate)
+
+* A flaw was found in the way the Linux kernel's Event Poll (epoll)
+subsystem handled resource clean up when an ELOOP error code was returned.
+A local, unprivileged user could use this flaw to cause a denial of
+service. (CVE-2012-3375, Moderate)
+
+This update also fixes the following bugs:
+
+* The MRG 2.1 realtime kernel lacked support for automatic memory
+reservation for the kdump kernel, as present in Red Hat Enterprise Linux
+kernels. Using the parameter crashkernel=auto on the kernel boot command
+line led to kdump being disabled because no memory was correctly reserved.
+Support for crashkernel=auto has been implemented in the 3.0 realtime
+kernel and now when the crashkernel=auto parameter is specified, machines
+with more than 4GB of RAM have the amount of memory required by the kdump
+kernel calculated and reserved. (BZ#820427)
+
+* The current bnx2x driver in the MRG 2.1 realtime kernel had faulty
+support for the network adapter PCI ID 14e4:168e and did not work
+correctly. The bnx2x driver was updated to include support for this network
+adapter. (BZ#839037)
+
+Users should upgrade to these updated packages, which upgrade the kernel-rt
+kernel to version kernel-rt-3.0.36-rt57, and correct these issues. The
+system must be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+824345 - CVE-2012-2390 kernel: huge pages: memory leak on mmap failure
+837502 - CVE-2012-3375 kernel: epoll: can leak file descriptors when returning -ELOOP
+
+6. Package List:
+
+MRG Realtime for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/kernel-rt-3.0.36-rt57.66.el6rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/kernel-rt-3.0.36-rt57.66.el6rt.src.rpm</a>
+
+noarch:
+kernel-rt-doc-3.0.36-rt57.66.el6rt.noarch.rpm
+kernel-rt-firmware-3.0.36-rt57.66.el6rt.noarch.rpm
+
+x86_64:
+kernel-rt-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-debug-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-debug-debuginfo-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-debug-devel-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-debuginfo-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-debuginfo-common-x86_64-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-devel-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-trace-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-trace-debuginfo-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-trace-devel-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-vanilla-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-3.0.36-rt57.66.el6rt.x86_64.rpm
+kernel-rt-vanilla-devel-3.0.36-rt57.66.el6rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2390.html">https://www.redhat.com/security/data/cve/CVE-2012-2390.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3375.html">https://www.redhat.com/security/data/cve/CVE-2012-3375.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQIpeaXlSAg2UNWIIRAm72AKCb7Rag3OkfxGyo36NHNiC4ft4plgCbBjJT
+hhAnnNvnle5CxkDCCEuiUpg=
+=Y9b7
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

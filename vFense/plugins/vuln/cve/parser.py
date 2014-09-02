@@ -1,26 +1,23 @@
 import os
 import gc
+import re
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from lxml import etree
 from re import sub
-from vFense.plugins.vuln.cve._db_model import CveKeys
+from vFense.plugins.vuln.cve import (
+    Cve, CvssVector, CveDescriptions, CveReferences,
+    CveVulnSoft, CveVulnSoftVers
+)
 from vFense.plugins.vuln.cve._constants import (
-    CVEDataDir, NVDFeeds, CVEStrings, CVEVectors,
-    CVSS_BASE_VECTORS, CVSS_BASE_VECTOR_AV_VALUES,
-    CVSS_BASE_VECTOR_AC_VALUES, CVSS_BASE_VECTOR_AU_VALUES,
-    CVSS_BASE_VECTOR_C_VALUES, CVSS_BASE_VECTOR_I_VALUES,
-    CVSS_BASE_VECTOR_A_VALUES, CVSS_TEMPORAL_VECTORS,
-    CVSS_TEMPORAL_VECTOR_E_VALUES, CVSS_TEMPORAL_VECTOR_RL_VALUES,
-    CVSS_TEMPORAL_VECTOR_RC_VALUES, CVSS_ENVIRONMENTAL_VECTORS
+    CVEDataDir, NVDFeeds, CVEStrings, CVECategories
 )
 
-from vFense.plugins.vuln.cve._db import insert_cve_data, update_cve_categories
+from vFense.plugins.vuln.cve._db import insert_cve_data
 from vFense.plugins.vuln.cve.downloader import start_nvd_xml_download
 from vFense.utils.common import date_parser, timestamp_verifier
-from vFense.db.client import r
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
@@ -34,69 +31,37 @@ class NvdParser(object):
         Args:
             entry (lxml.etree._Element): This is an lxml Element
         Returns:
-            Dictionary
-            {
-                "cvss_vector": [
-                    {
-                        "metric": "Access Vector",
-                        "value": "Network"
-                    },
-                    {
-                        "metric": "Access Complexity",
-                        "value": "Medium"
-                    }
-                ],
-                "cve_sev": "Medium",
-                "cve_id": "CVE-2009-5138",
-                "cvss_base_score": "5.8",
-                "cvss_exploit_subscore": "8.6",
-                "cvss_version": "2.0",
-                "cvss_impact_subscore": "4.9",
-                "cvss_score": "5.8"
-            }
+            Cve instance
         """
-        data = {}
+        cve = Cve()
+        cve.fill_in_defaults()
         attrib = entry.attrib
-        data[CveKeys.CveId] = attrib.get(CVEStrings.CVE_NAME)
-        data[CveKeys.CveSev] = attrib.get(CVEStrings.CVE_SEVERITY)
-        data[CveKeys.CvePublishedDate] = (
-            r.epoch_time(
-                timestamp_verifier(
-                    date_parser(
-                        attrib.get(CVEStrings.CVE_PUBLISHED_DATE)
-                    )
-                )
+        cve.cve_id = unicode(attrib.get(CVEStrings.CVE_NAME))
+        cve.severity = attrib.get(CVEStrings.CVE_SEVERITY)
+        cve.date_posted = (
+            timestamp_verifier(
+                date_parser(attrib.get(CVEStrings.CVE_PUBLISHED_DATE))
             )
         )
-        data[CveKeys.CveModifiedDate] = (
-            r.epoch_time(
-                timestamp_verifier(
-                    date_parser(
-                        attrib.get(CVEStrings.CVE_MODIFIED_DATE)
-                    )
-                )
+        cve.date_modified = (
+            timestamp_verifier(
+                date_parser(attrib.get(CVEStrings.CVE_MODIFIED_DATE))
             )
         )
-        data[CveKeys.CvssScore] = (
-            float(attrib.get(CVEStrings.CVSS_SCORE, 0.0))
-        )
-        data[CveKeys.CvssBaseScore] = (
-            float(attrib.get(CVEStrings.CVSS_BASE_SCORE, 0.0))
-        )
-        data[CveKeys.CvssImpactSubScore] = (
+        cve.score = float(attrib.get(CVEStrings.CVSS_SCORE, 0.0))
+        cve.base_score = float(attrib.get(CVEStrings.CVSS_BASE_SCORE, 0.0))
+        cve.impact_score = (
             float(attrib.get(CVEStrings.CVSS_IMPACT_SUBSCORE, 0.0))
         )
-        data[CveKeys.CvssExploitSubScore] = (
+        cve.exploit_score = (
             float(attrib.get(CVEStrings.CVSS_EXPLOIT_SUBSCORE, 0.0))
         )
-        data[CveKeys.CvssVector] = (
+        cve.vector = (
             self._parse_vectors(attrib.get(CVEStrings.CVSS_VECTOR))
         )
-        data[CveKeys.CvssVersion] = (
-            attrib.get(CVEStrings.CVSS_VERSION)
-        )
+        cve.version = unicode(attrib.get(CVEStrings.CVSS_VERSION))
 
-        return(data)
+        return(cve)
 
     def get_descriptions(self, entry):
         """Parse the desc object under the top level entry object
@@ -106,7 +71,7 @@ class NvdParser(object):
             entry (lxml.etree._Element): This is an lxml Element
 
         Returns:
-            List of dictionaires
+            Tuple (descriptions, categories)
             [
                 {
                     "source": "cve",
@@ -115,19 +80,23 @@ class NvdParser(object):
                         n CVE-2014-1959."
                 }
             ]
-
         """
         list_of_descriptions = []
-        for descript in entry:
-            list_of_descriptions.append(
-                {
-                    CVEStrings.DESCRIPTION: descript.text,
-                    CVEStrings.DESCRIPTION_SOURCE: descript.attrib.get(
-                        CVEStrings.DESCRIPTION_SOURCE)
-                }
+        categories = []
+        for desc in entry:
+            description = CveDescriptions()
+            description.description = unicode(desc.text)
+            description.source = (
+                desc.attrib.get(CVEStrings.DESCRIPTION_SOURCE)
             )
 
-        return(list_of_descriptions)
+            for category in CVECategories.get_values():
+                if re.search(category, unicode(desc.text), re.IGNORECASE):
+                    categories.append(category)
+
+            list_of_descriptions.append(description.to_dict())
+
+        return(list_of_descriptions, categories)
 
     def get_refs(self, entry):
         """Parse the refs object under the top level entry object
@@ -157,17 +126,20 @@ class NvdParser(object):
         """
         list_of_refs = []
         for reference in entry:
-            list_of_refs.append(
-                {
-                    CVEStrings.REF_ID: reference.text,
-                    CVEStrings.REF_URL: reference.attrib.get(
-                        CVEStrings.REF_URL
-                    ),
-                    CVEStrings.REF_SOURCE: reference.attrib.get(
-                        CVEStrings.REF_SOURCE
-                    ),
-                }
-            )
+            ref = CveReferences()
+            ref.url = reference.attrib.get(CVEStrings.REF_URL)
+            ref.source = reference.attrib.get(CVEStrings.REF_SOURCE)
+            ref.id = unicode(reference.text)
+            ref.signature = reference.attrib.get(CVEStrings.REF_SIG, False)
+            if ref.signature:
+                ref.signature = True
+            ref.advisory = reference.attrib.get(CVEStrings.REF_ADV, False)
+            if ref.advisory:
+                ref.advisory = True
+            ref.patch = reference.attrib.get(CVEStrings.REF_PATCH, False)
+            if ref.patch:
+                ref.patch = True
+            list_of_refs.append(ref.to_dict())
 
         return(list_of_refs)
 
@@ -180,25 +152,18 @@ class NvdParser(object):
         """
         vuln_soft_list = []
         for vulns_soft in entry:
-            vuln_soft_dict = {}
-            vuln_soft_dict[CVEStrings.VENDOR_VERSIONS] = []
+            vuln_soft = CveVulnSoft()
+            vuln_soft.fill_in_defaults()
+            vuln_soft.vendor = vulns_soft.attrib.get(CVEStrings.VENDOR)
+            vuln_soft.name = vulns_soft.attrib.get(CVEStrings.VENDOR_NAME)
             vulns = vulns_soft.getchildren()
             for vuln in vulns:
-                vuln_soft_dict[CVEStrings.VENDOR] = (
-                    vuln.attrib.get(CVEStrings.VENDOR)
-                )
-                vuln_soft_dict[CVEStrings.VENDOR_NAME] = (
-                    vuln.attrib.get(CVEStrings.VENDOR_NAME)
-                )
-                vulns_versions = vuln.getchildren()
-                for version in vulns_versions:
-                    version_dict = {}
-                    for key in version.keys():
-                        version_dict[key] = version.attrib[key]
-                    vuln_soft_dict[CVEStrings.VENDOR_VERSIONS].append(
-                        version_dict
-                    )
-            vuln_soft_list.append(vuln_soft_dict)
+                version = CveVulnSoftVers()
+                version.number = vuln.attrib.get("num")
+                version.previous = vuln.attrib.get("prev")
+                version.edition = vuln.attrib.get("edition")
+                vuln_soft.versions.append(version.to_dict())
+            vuln_soft_list.append(vuln_soft.to_dict())
 
         return(vuln_soft_list)
 
@@ -207,89 +172,19 @@ class NvdParser(object):
         Args:
             unformatted_vector ():
         """
-        translated_metric = None
-        translated_value = None
         formatted_vectors = []
         if unformatted_vector:
             vectors = sub('\(|\)', '', unformatted_vector).split('/')
             for vector in vectors:
                 metric, value = vector.split(':')
-                translated_metric, translated_value = (
-                    self._verify_vector(metric, value)
+                cvss_vectors = (
+                    CvssVector(
+                        untranslated_metric=metric, untranslated_value=value
+                    )
                 )
-                formatted_vectors.append(
-                    {
-                        CVEStrings.METRIC: translated_metric,
-                        CVEStrings.VALUE: translated_value
-                    }
-                )
+                formatted_vectors.append(cvss_vectors.to_dict())
 
         return(formatted_vectors)
-
-    def _verify_vector(self, metric, value):
-        """Translate the cve vector acronyms into siomething understandable
-        Args:
-            metric (str): Example... AV|AC|Au|C|I|A
-            value (str):  Example... L|A|N
-        """
-        translated_metric = None
-        translated_value = None
-
-        if metric in CVSS_BASE_VECTORS:
-            translated_metric = CVSS_BASE_VECTORS[metric]
-
-            if metric == CVEVectors.BASE_METRIC_AV:
-                translated_value = CVSS_BASE_VECTOR_AV_VALUES[value]
-
-            elif metric == CVEVectors.BASE_METRIC_AC:
-                translated_value = CVSS_BASE_VECTOR_AC_VALUES[value]
-
-            elif metric == CVEVectors.BASE_METRIC_Au:
-                translated_value = CVSS_BASE_VECTOR_AU_VALUES[value]
-
-            elif metric == CVEVectors.BASE_METRIC_C:
-                translated_value = CVSS_BASE_VECTOR_C_VALUES[value]
-
-            elif metric == CVEVectors.BASE_METRIC_I:
-                translated_value = CVSS_BASE_VECTOR_I_VALUES[value]
-
-            elif metric == CVEVectors.BASE_METRIC_A:
-                translated_value = CVSS_BASE_VECTOR_A_VALUES[value]
-
-        elif metric in CVSS_TEMPORAL_VECTORS:
-            translated_metric = CVSS_TEMPORAL_VECTORS[metric]
-
-            if metric == CVEVectors.TEMPORAL_METRIC_E:
-                translated_value = CVSS_TEMPORAL_VECTOR_E_VALUES[value]
-
-            elif metric == CVEVectors.TEMPORAL_METRIC_RL:
-                translated_value = CVSS_TEMPORAL_VECTOR_RL_VALUES[value]
-
-            elif metric == CVEVectors.TEMPORAL_METRIC_RC:
-                translated_value = CVSS_TEMPORAL_VECTOR_RC_VALUES[value]
-
-        elif metric in CVSS_ENVIRONMENTAL_VECTORS:
-            translated_metric = CVSS_ENVIRONMENTAL_VECTORS[metric]
-
-            # TODO(urgent): what happened to the BASE_VECTOR and
-            # ENVIRONMENTAL_VECTOR dictionaries?
-
-            if metric == CVEVectors.ENVIRONMENTAL_METRIC_CDP:
-                translated_value = CVSS_BASE_VECTOR_CDP_VALUES[value]
-
-            elif metric == CVEVectors.ENVIRONMENTAL_METRIC_TD:
-                translated_value = CVSS_ENVIRONMENTAL_VECTOR_TD_VALUES[value]
-
-            elif metric == CVEVectors.ENVIRONMENTAL_METRIC_CR:
-                translated_value = CVSS_ENVIRONMENTAL_VECTOR_CR_VALUES[value]
-
-            elif metric == CVEVectors.ENVIRONMENTAL_METRIC_IR:
-                translated_value = CVSS_ENVIRONMENTAL_VECTOR_IR_VALUES[value]
-
-            elif metric == CVEVectors.ENVIRONMENTAL_METRIC_AR:
-                translated_value = CVSS_ENVIRONMENTAL_VECTOR_AR_VALUES[value]
-
-        return(translated_metric, translated_value)
 
 
 def parse_cve_and_udpatedb(
@@ -313,40 +208,22 @@ def parse_cve_and_udpatedb(
         cve_data = {}
         for event, entry in etree.iterparse(nvd_file, events=['start', 'end']):
             if entry.tag == NVDFeeds.ENTRY and event == 'start':
-                cve_data = parser.get_entry_info(entry)
+                cve = parser.get_entry_info(entry)
 
             if entry.tag == NVDFeeds.DESC and event == 'start':
-                cve_data[CveKeys.CveDescriptions] = \
+                cve.descriptions, cve.vulnerability_categories = (
                     parser.get_descriptions(entry)
+                )
 
             if entry.tag == NVDFeeds.REFS and event == 'start':
-                cve_data[CveKeys.CveRefs] = parser.get_refs(entry)
+                cve.references = parser.get_refs(entry)
 
-            #if entry.tag == NVDFeeds.VULN_SOFT and event == 'start':
-            #    cve_data[CveKeys.CveVulnsSoft] = parser.get_vulns_soft(entry)
+            if entry.tag == NVDFeeds.VULN_SOFT and event == 'start':
+                cve.vuln_soft = parser.get_vulns_soft(entry)
 
-            cve_data[CveKeys.CveCategories] = []
             if entry.tag == NVDFeeds.ENTRY and event == 'end':
-                for key in cve_data.keys():
-                    if (key != CveKeys.CveDescriptions and
-                            key != CveKeys.CveRefs and
-                            key != CveKeys.CveVulnsSoft and
-                            key != CveKeys.CvePublishedDate and
-                            key != CveKeys.CveCategories and
-                            key != CveKeys.CvssVector and
-                            key != CveKeys.CvssBaseScore and
-                            key != CveKeys.CvssScore and
-                            key != CveKeys.CvssExploitSubScore and
-                            key != CveKeys.CvssImpactSubScore and
-                            key != CveKeys.CveModifiedDate):
-                        cve_data[key] = unicode(cve_data[key])
+                cve_data_list.append(cve.to_dict_db())
 
-                cve_data_list.append(cve_data)
-
-            #entry.clear()
-            #while entry.getprevious() is not None:
-            #    del entry.getparent()[0]
-            #del entry
 
         status, count, _, _ = insert_cve_data(cve_data_list)
         xml_file = nvd_file.split('/')[-1]
@@ -369,11 +246,10 @@ def load_up_all_xml_into_db():
     nvd_files = []
     if not os.path.exists(CVEDataDir.XML_DIR):
         os.makedirs(CVEDataDir.XML_DIR)
-    xml_exists = os.listdir(CVEDataDir.XML_DIR)
+    #xml_exists = os.listdir(CVEDataDir.XML_DIR)
     logger.info('starting cve/nvd update process')
-    if not xml_exists:
-        logger.info('downloading nvd/cve xml data files')
-        start_nvd_xml_download()
+    logger.info('downloading nvd/cve xml data files')
+    start_nvd_xml_download()
     for directory, _, files in os.walk(CVEDataDir.XML_DIR):
         for xml_file in files:
             nvd_file = os.path.join(directory, xml_file)
@@ -381,6 +257,6 @@ def load_up_all_xml_into_db():
 
     nvd_files.sort()
     parse_cve_and_udpatedb(False, nvd_files)
-    update_cve_categories()
+    #update_cve_categories()
     logger.info('finished cve/nvd update process')
     gc.collect()

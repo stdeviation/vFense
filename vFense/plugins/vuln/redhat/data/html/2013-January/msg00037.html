@@ -1,0 +1,222 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0169&#45;01] Moderate: vino security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 21 Jan 2013 17:41:56 &#45;0500 -->
+<!--X-Message-Id: 201301212241.r0LMfuYm007761@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0169-01] Moderate: vino security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0169-01] Moderate: vino security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0169-01] Moderate: vino security update</li>
+<li><em>Date</em>: Mon, 21 Jan 2013 22:41:55 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: vino security update
+Advisory ID:       RHSA-2013:0169-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0169.html">https://rhn.redhat.com/errata/RHSA-2013-0169.html</a>
+Issue date:        2013-01-21
+CVE Names:         CVE-2011-0904 CVE-2011-0905 CVE-2011-1164 
+                   CVE-2011-1165 CVE-2012-4429 
+=====================================================================
+
+1. Summary:
+
+An updated vino package that fixes several security issues is now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Vino is a Virtual Network Computing (VNC) server for GNOME. It allows
+remote users to connect to a running GNOME session using VNC.
+
+It was found that Vino transmitted all clipboard activity on the system
+running Vino to all clients connected to port 5900, even those who had not
+authenticated. A remote attacker who is able to access port 5900 on a
+system running Vino could use this flaw to read clipboard data without
+authenticating. (CVE-2012-4429)
+
+Two out-of-bounds memory read flaws were found in the way Vino processed
+client framebuffer requests in certain encodings. An authenticated client
+could use these flaws to send a specially-crafted request to Vino, causing
+it to crash. (CVE-2011-0904, CVE-2011-0905)
+
+In certain circumstances, the vino-preferences dialog box incorrectly
+indicated that Vino was only accessible from the local network. This could
+confuse a user into believing connections from external networks are not
+allowed (even when they are allowed). With this update, vino-preferences no
+longer displays connectivity and reachable information. (CVE-2011-1164)
+
+There was no warning that Universal Plug and Play (UPnP) was used to open
+ports on a user's network router when the &quot;Configure network automatically
+to accept connections&quot; option was enabled (it is disabled by default) in
+the Vino preferences. This update changes the option's description to avoid
+the risk of a UPnP router configuration change without the user's consent.
+(CVE-2011-1165)
+
+All Vino users should upgrade to this updated package, which contains
+backported patches to resolve these issues. The GNOME session must be
+restarted (log out, then log back in) for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+553477 - CVE-2011-1164 vino: vino-preferences incorrectly indicates that computer is only reachable over local network
+678846 - CVE-2011-1165 vino-preferences does not warn about UPnP especially with no password and no confirmation.
+694455 - CVE-2011-0904 vino: Out of bounds read flaw by processing certain client raw encoding framebuffer update requests
+694456 - CVE-2011-0905 vino: Out of bounds read flaw by processing certain client tight encoding framebuffer update requests
+857250 - CVE-2012-4429 vino: information leak and authentication bypass
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/vino-2.28.1-8.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/vino-2.28.1-8.el6_3.src.rpm</a>
+
+i386:
+vino-2.28.1-8.el6_3.i686.rpm
+vino-debuginfo-2.28.1-8.el6_3.i686.rpm
+
+x86_64:
+vino-2.28.1-8.el6_3.x86_64.rpm
+vino-debuginfo-2.28.1-8.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/vino-2.28.1-8.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/vino-2.28.1-8.el6_3.src.rpm</a>
+
+i386:
+vino-2.28.1-8.el6_3.i686.rpm
+vino-debuginfo-2.28.1-8.el6_3.i686.rpm
+
+ppc64:
+vino-2.28.1-8.el6_3.ppc64.rpm
+vino-debuginfo-2.28.1-8.el6_3.ppc64.rpm
+
+s390x:
+vino-2.28.1-8.el6_3.s390x.rpm
+vino-debuginfo-2.28.1-8.el6_3.s390x.rpm
+
+x86_64:
+vino-2.28.1-8.el6_3.x86_64.rpm
+vino-debuginfo-2.28.1-8.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/vino-2.28.1-8.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/vino-2.28.1-8.el6_3.src.rpm</a>
+
+i386:
+vino-2.28.1-8.el6_3.i686.rpm
+vino-debuginfo-2.28.1-8.el6_3.i686.rpm
+
+x86_64:
+vino-2.28.1-8.el6_3.x86_64.rpm
+vino-debuginfo-2.28.1-8.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0904.html">https://www.redhat.com/security/data/cve/CVE-2011-0904.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0905.html">https://www.redhat.com/security/data/cve/CVE-2011-0905.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1164.html">https://www.redhat.com/security/data/cve/CVE-2011-1164.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1165.html">https://www.redhat.com/security/data/cve/CVE-2011-1165.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4429.html">https://www.redhat.com/security/data/cve/CVE-2012-4429.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ/cQCXlSAg2UNWIIRAiBQAJ44hwOjZL72v7GmJ77EZFa2XyO27gCaAnqs
+vZl0XkPZPdvK3IQhWrFSdFI=
+=sso5
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

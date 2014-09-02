@@ -1,0 +1,294 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0168&#45;01] Moderate: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 22 Jan 2013 14:57:38 &#45;0500 -->
+<!--X-Message-Id: 201301221957.r0MJvbRk024135@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0168-01] Moderate: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0168-01] Moderate: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0168-01] Moderate: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 22 Jan 2013 19:57:37 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel security and bug fix update
+Advisory ID:       RHSA-2013:0168-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0168.html">https://rhn.redhat.com/errata/RHSA-2013-0168.html</a>
+Issue date:        2013-01-22
+CVE Names:         CVE-2012-1568 CVE-2012-4444 CVE-2012-5515 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix three security issues and several bugs are
+now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* It was found that the Xen hypervisor implementation did not perform
+range checking on the guest provided values in multiple hypercalls. A
+privileged guest user could use this flaw to trigger long loops, leading
+to a denial of service (Xen hypervisor hang). (CVE-2012-5515, Moderate)
+
+* It was found that when running a 32-bit binary that uses a large number
+of shared libraries, one of the libraries would always be loaded at a
+predictable address in memory. An attacker could use this flaw to bypass
+the Address Space Layout Randomization (ASLR) security feature.
+(CVE-2012-1568, Low)
+
+* A flaw was found in the way the Linux kernel's IPv6 implementation
+handled overlapping, fragmented IPv6 packets. A remote attacker could
+potentially use this flaw to bypass protection mechanisms (such as a
+firewall or intrusion detection system (IDS)) when sending network packets
+to a target system. (CVE-2012-4444, Low)
+
+Red Hat would like to thank the Xen project for reporting CVE-2012-5515,
+and Antonios Atlasis working with Beyond Security's SecuriTeam Secure
+Disclosure program and Loganaden Velvindron of AFRINIC for reporting
+CVE-2012-4444.
+
+This update also fixes several bugs. Space precludes documenting all of
+these changes in this advisory. Documentation for these changes will be
+available shortly from the Red Hat Enterprise Linux 5.9 Technical Notes
+document linked to in the References section.
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+804947 - CVE-2012-1568 kernel: execshield: predictable ascii armour base address
+874835 - CVE-2012-4444 kernel: net: acceptation of overlapping ipv6 fragments
+877397 - CVE-2012-5515 kernel: xen: Several memory hypercall operations allow invalid extent order values
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-348.1.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-348.1.1.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-348.1.1.el5.i686.rpm
+kernel-PAE-2.6.18-348.1.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-348.1.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-348.1.1.el5.i686.rpm
+kernel-debug-2.6.18-348.1.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-348.1.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-348.1.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-348.1.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-348.1.1.el5.i686.rpm
+kernel-devel-2.6.18-348.1.1.el5.i686.rpm
+kernel-headers-2.6.18-348.1.1.el5.i386.rpm
+kernel-xen-2.6.18-348.1.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-348.1.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-348.1.1.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-348.1.1.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-debug-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-devel-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-headers-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-xen-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-348.1.1.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-348.1.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-348.1.1.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-348.1.1.el5.i686.rpm
+kernel-PAE-2.6.18-348.1.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-348.1.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-348.1.1.el5.i686.rpm
+kernel-debug-2.6.18-348.1.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-348.1.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-348.1.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-348.1.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-348.1.1.el5.i686.rpm
+kernel-devel-2.6.18-348.1.1.el5.i686.rpm
+kernel-headers-2.6.18-348.1.1.el5.i386.rpm
+kernel-xen-2.6.18-348.1.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-348.1.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-348.1.1.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-348.1.1.el5.ia64.rpm
+kernel-debug-2.6.18-348.1.1.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-348.1.1.el5.ia64.rpm
+kernel-debug-devel-2.6.18-348.1.1.el5.ia64.rpm
+kernel-debuginfo-2.6.18-348.1.1.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-348.1.1.el5.ia64.rpm
+kernel-devel-2.6.18-348.1.1.el5.ia64.rpm
+kernel-headers-2.6.18-348.1.1.el5.ia64.rpm
+kernel-xen-2.6.18-348.1.1.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-348.1.1.el5.ia64.rpm
+kernel-xen-devel-2.6.18-348.1.1.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-348.1.1.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-348.1.1.el5.ppc64.rpm
+kernel-debug-2.6.18-348.1.1.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-348.1.1.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-348.1.1.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-348.1.1.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-348.1.1.el5.ppc64.rpm
+kernel-devel-2.6.18-348.1.1.el5.ppc64.rpm
+kernel-headers-2.6.18-348.1.1.el5.ppc.rpm
+kernel-headers-2.6.18-348.1.1.el5.ppc64.rpm
+kernel-kdump-2.6.18-348.1.1.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-348.1.1.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-348.1.1.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-348.1.1.el5.s390x.rpm
+kernel-debug-2.6.18-348.1.1.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-348.1.1.el5.s390x.rpm
+kernel-debug-devel-2.6.18-348.1.1.el5.s390x.rpm
+kernel-debuginfo-2.6.18-348.1.1.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-348.1.1.el5.s390x.rpm
+kernel-devel-2.6.18-348.1.1.el5.s390x.rpm
+kernel-headers-2.6.18-348.1.1.el5.s390x.rpm
+kernel-kdump-2.6.18-348.1.1.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-348.1.1.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-348.1.1.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-debug-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-devel-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-headers-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-xen-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-348.1.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-348.1.1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1568.html">https://www.redhat.com/security/data/cve/CVE-2012-1568.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4444.html">https://www.redhat.com/security/data/cve/CVE-2012-4444.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5515.html">https://www.redhat.com/security/data/cve/CVE-2012-5515.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.9_Technical_Notes/kernel.html#RHSA-2013-0168">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/5/html/5.9_Technical_Notes/kernel.html#RHSA-2013-0168</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD4DBQFQ/u8hXlSAg2UNWIIRApEXAJ0b2CjrKygVjA0hPpPDhH9uMUMMRACXc6Fv
+QrIwgNIlVkxL5UEujHZ/+A==
+=Tgfp
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

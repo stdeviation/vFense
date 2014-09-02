@@ -1,0 +1,273 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0017&#45;01] Important: libxml2 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 11 Jan 2012 13:05:02 &#45;0500 -->
+<!--X-Message-Id: 201201111804.q0BI4voU020611@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0017-01] Important: libxml2 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0017-01] Important: libxml2 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0017-01] Important: libxml2 security update</li>
+<li><em>Date</em>: Wed, 11 Jan 2012 18:04:57 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: libxml2 security update
+Advisory ID:       RHSA-2012:0017-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0017.html">https://rhn.redhat.com/errata/RHSA-2012-0017.html</a>
+Issue date:        2012-01-11
+CVE Names:         CVE-2010-4008 CVE-2011-0216 CVE-2011-1944 
+                   CVE-2011-2834 CVE-2011-3905 CVE-2011-3919 
+=====================================================================
+
+1. Summary:
+
+Updated libxml2 packages that fix several security issues are now available
+for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The libxml2 library is a development toolbox providing the implementation
+of various XML standards. One of those standards is the XML Path Language
+(XPath), which is a language for addressing parts of an XML document.
+
+A heap-based buffer overflow flaw was found in the way libxml2 decoded
+entity references with long names. A remote attacker could provide a
+specially-crafted XML file that, when opened in an application linked
+against libxml2, would cause the application to crash or, potentially,
+execute arbitrary code with the privileges of the user running the
+application. (CVE-2011-3919)
+
+An off-by-one error, leading to a heap-based buffer overflow, was found in
+the way libxml2 parsed certain XML files. A remote attacker could provide a
+specially-crafted XML file that, when opened in an application linked
+against libxml2, would cause the application to crash or, potentially,
+execute arbitrary code with the privileges of the user running the
+application. (CVE-2011-0216)
+
+An integer overflow flaw, leading to a heap-based buffer overflow, was
+found in the way libxml2 parsed certain XPath expressions. If an attacker
+were able to supply a specially-crafted XML file to an application using
+libxml2, as well as an XPath expression for that application to run against
+the crafted file, it could cause the application to crash or, possibly,
+execute arbitrary code. (CVE-2011-1944)
+
+Flaws were found in the way libxml2 parsed certain XPath expressions. If an
+attacker were able to supply a specially-crafted XML file to an application
+using libxml2, as well as an XPath expression for that application to run
+against the crafted file, it could cause the application to crash.
+(CVE-2010-4008, CVE-2011-2834)
+
+An out-of-bounds memory read flaw was found in libxml2. A remote attacker
+could provide a specially-crafted XML file that, when opened in an
+application linked against libxml2, would cause the application to crash.
+(CVE-2011-3905)
+
+Note: Red Hat does not ship any applications that use libxml2 in a way that
+would allow the CVE-2011-1944, CVE-2010-4008, and CVE-2011-2834 flaws to be
+exploited; however, third-party applications may allow XPath expressions to
+be passed which could trigger these flaws.
+
+Red Hat would like to thank the Google Security Team for reporting the
+CVE-2010-4008 issue. Upstream acknowledges Bui Quang Minh from Bkis as the
+original reporter of CVE-2010-4008.
+
+All users of libxml2 are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. The desktop must
+be restarted (log out, then log back in) for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+645341 - CVE-2010-4008 libxml2: Crash (stack frame overflow or NULL pointer dereference) by traversal of XPath axis
+709747 - CVE-2011-1944 libxml, libxml2: Heap-based buffer overflow by adding new namespace node to an existing nodeset or merging nodesets
+724906 - CVE-2011-0216 libxml2: Off-by-one error leading to heap-based buffer overflow in encoding
+735751 - CVE-2011-2834 libxml2: double-free caused by malformed XPath expression in XSLT
+767387 - CVE-2011-3905 libxml2 out of bounds read
+771896 - CVE-2011-3919 libxml2: Heap-based buffer overflow when decoding an entity reference with a long name
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxml2-2.6.26-2.1.12.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxml2-2.6.26-2.1.12.el5_7.2.src.rpm</a>
+
+i386:
+libxml2-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-python-2.6.26-2.1.12.el5_7.2.i386.rpm
+
+x86_64:
+libxml2-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-2.6.26-2.1.12.el5_7.2.x86_64.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.x86_64.rpm
+libxml2-python-2.6.26-2.1.12.el5_7.2.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxml2-2.6.26-2.1.12.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libxml2-2.6.26-2.1.12.el5_7.2.src.rpm</a>
+
+i386:
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.i386.rpm
+
+x86_64:
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.x86_64.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libxml2-2.6.26-2.1.12.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libxml2-2.6.26-2.1.12.el5_7.2.src.rpm</a>
+
+i386:
+libxml2-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-python-2.6.26-2.1.12.el5_7.2.i386.rpm
+
+ia64:
+libxml2-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-2.6.26-2.1.12.el5_7.2.ia64.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.ia64.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.ia64.rpm
+libxml2-python-2.6.26-2.1.12.el5_7.2.ia64.rpm
+
+ppc:
+libxml2-2.6.26-2.1.12.el5_7.2.ppc.rpm
+libxml2-2.6.26-2.1.12.el5_7.2.ppc64.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.ppc.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.ppc64.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.ppc.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.ppc64.rpm
+libxml2-python-2.6.26-2.1.12.el5_7.2.ppc.rpm
+
+s390x:
+libxml2-2.6.26-2.1.12.el5_7.2.s390.rpm
+libxml2-2.6.26-2.1.12.el5_7.2.s390x.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.s390.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.s390x.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.s390.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.s390x.rpm
+libxml2-python-2.6.26-2.1.12.el5_7.2.s390x.rpm
+
+x86_64:
+libxml2-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-2.6.26-2.1.12.el5_7.2.x86_64.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-debuginfo-2.6.26-2.1.12.el5_7.2.x86_64.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.i386.rpm
+libxml2-devel-2.6.26-2.1.12.el5_7.2.x86_64.rpm
+libxml2-python-2.6.26-2.1.12.el5_7.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4008.html">https://www.redhat.com/security/data/cve/CVE-2010-4008.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0216.html">https://www.redhat.com/security/data/cve/CVE-2011-0216.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1944.html">https://www.redhat.com/security/data/cve/CVE-2011-1944.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2834.html">https://www.redhat.com/security/data/cve/CVE-2011-2834.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3905.html">https://www.redhat.com/security/data/cve/CVE-2011-3905.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3919.html">https://www.redhat.com/security/data/cve/CVE-2011-3919.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPDc8yXlSAg2UNWIIRAp0FAKCr3G8qJvCfqK4BJBzJsMWlSYXXFQCgxNs7
+ZcFDHRyFhx22yjGNtU/I5SA=
+=FALM
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

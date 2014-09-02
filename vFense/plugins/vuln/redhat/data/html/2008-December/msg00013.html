@@ -1,0 +1,393 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0973&#45;03] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 17 Dec 2008 04:47:41 &#45;0500 -->
+<!--X-Message-Id: 200812170947.mBH9ledN031823@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0973-03] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0973-03] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0973-03] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Wed, 17 Dec 2008 04:47:36 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2008:0973-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0973.html">https://rhn.redhat.com/errata/RHSA-2008-0973.html</a>
+Issue date:        2008-12-16
+CVE Names:         CVE-2008-4210 CVE-2008-3275 CVE-2008-0598 
+                   CVE-2008-2136 CVE-2008-2812 CVE-2007-6063 
+                   CVE-2008-3525 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that resolve several security issues and fix
+various bugs are now available for Red Hat Enterprise Linux 3.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 3 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Desktop version 3 - i386, x86_64
+Red Hat Enterprise Linux ES version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 3 - i386, ia64, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update addresses the following security issues:
+
+* Tavis Ormandy discovered a deficiency in the Linux kernel 32-bit and
+64-bit emulation. This could allow a local, unprivileged user to prepare
+and run a specially-crafted binary which would use this deficiency to leak
+uninitialized and potentially sensitive data. (CVE-2008-0598, Important)
+
+* a possible kernel memory leak was found in the Linux kernel Simple
+Internet Transition (SIT) INET6 implementation. This could allow a local,
+unprivileged user to cause a denial of service. (CVE-2008-2136, Important)
+
+* missing capability checks were found in the SBNI WAN driver which could
+allow a local user to bypass intended capability restrictions.
+(CVE-2008-3525, Important)
+
+* the do_truncate() and generic_file_splice_write() functions did not clear
+the setuid and setgid bits. This could allow a local, unprivileged user to
+obtain access to privileged information. (CVE-2008-4210, Important)
+
+* a buffer overflow flaw was found in Integrated Services Digital Network
+(ISDN) subsystem. A local, unprivileged user could use this flaw to cause a
+denial of service. (CVE-2007-6063, Moderate)
+
+* multiple NULL pointer dereferences were found in various Linux kernel
+network drivers. These drivers were missing checks for terminal validity,
+which could allow privilege escalation. (CVE-2008-2812, Moderate)
+
+* a deficiency was found in the Linux kernel virtual filesystem (VFS)
+implementation. This could allow a local, unprivileged user to attempt file
+creation within deleted directories, possibly causing a denial of service.
+(CVE-2008-3275, Moderate)
+
+This update also fixes the following bugs:
+
+* the incorrect kunmap function was used in nfs_xdr_readlinkres. kunmap()
+was used where kunmap_atomic() should have been. As a consequence, if an
+NFSv2 or NFSv3 server exported a volume containing a symlink which included
+a path equal to or longer than the local system's PATH_MAX, accessing the
+link caused a kernel oops. This has been corrected in this update.
+
+* mptctl_gettargetinfo did not check if pIoc3 was NULL before using it as a
+pointer. This caused a kernel panic in mptctl_gettargetinfo in some
+circumstances. A check has been added which prevents this.
+
+* lost tick compensation code in the timer interrupt routine triggered
+without apparent cause. When running as a fully-virtualized client, this
+spurious triggering caused the 64-bit version of Red Hat Enterprise Linux 3
+to present highly inaccurate times. With this update the lost tick
+compensation code is turned off when the operating system is running as a
+fully-virtualized client under Xen or VMWare®.
+
+All Red Hat Enterprise Linux 3 users should install this updated kernel
+which addresses these vulnerabilities and fixes these bugs.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+392101 - CVE-2007-6063 Linux Kernel isdn_net_setcfg buffer overflow
+433938 - CVE-2008-0598 kernel: linux x86_64 ia32 emulation leaks uninitialized data
+438758 - wrong kunmap call in nfs_xdr_readlinkres
+446031 - CVE-2008-2136 kernel: sit memory leak
+453419 - CVE-2008-2812 kernel: NULL ptr dereference in multiple network drivers due to missing checks in tty code
+457858 - CVE-2008-3275 Linux kernel local filesystem DoS
+460401 - CVE-2008-3525 kernel: missing capability checks in sbni_ioctl()
+463661 - CVE-2008-4210 kernel: open() call allows setgid bit when user is not in new file's group
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/kernel-2.4.21-58.EL.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/kernel-2.4.21-58.EL.src.rpm</a>
+
+i386:
+kernel-2.4.21-58.EL.athlon.rpm
+kernel-2.4.21-58.EL.i686.rpm
+kernel-BOOT-2.4.21-58.EL.i386.rpm
+kernel-debuginfo-2.4.21-58.EL.athlon.rpm
+kernel-debuginfo-2.4.21-58.EL.i386.rpm
+kernel-debuginfo-2.4.21-58.EL.i686.rpm
+kernel-doc-2.4.21-58.EL.i386.rpm
+kernel-hugemem-2.4.21-58.EL.i686.rpm
+kernel-hugemem-unsupported-2.4.21-58.EL.i686.rpm
+kernel-smp-2.4.21-58.EL.athlon.rpm
+kernel-smp-2.4.21-58.EL.i686.rpm
+kernel-smp-unsupported-2.4.21-58.EL.athlon.rpm
+kernel-smp-unsupported-2.4.21-58.EL.i686.rpm
+kernel-source-2.4.21-58.EL.i386.rpm
+kernel-unsupported-2.4.21-58.EL.athlon.rpm
+kernel-unsupported-2.4.21-58.EL.i686.rpm
+
+ia64:
+kernel-2.4.21-58.EL.ia64.rpm
+kernel-debuginfo-2.4.21-58.EL.ia64.rpm
+kernel-doc-2.4.21-58.EL.ia64.rpm
+kernel-source-2.4.21-58.EL.ia64.rpm
+kernel-unsupported-2.4.21-58.EL.ia64.rpm
+
+ppc:
+kernel-2.4.21-58.EL.ppc64iseries.rpm
+kernel-2.4.21-58.EL.ppc64pseries.rpm
+kernel-debuginfo-2.4.21-58.EL.ppc64.rpm
+kernel-debuginfo-2.4.21-58.EL.ppc64iseries.rpm
+kernel-debuginfo-2.4.21-58.EL.ppc64pseries.rpm
+kernel-doc-2.4.21-58.EL.ppc64.rpm
+kernel-source-2.4.21-58.EL.ppc64.rpm
+kernel-unsupported-2.4.21-58.EL.ppc64iseries.rpm
+kernel-unsupported-2.4.21-58.EL.ppc64pseries.rpm
+
+s390:
+kernel-2.4.21-58.EL.s390.rpm
+kernel-debuginfo-2.4.21-58.EL.s390.rpm
+kernel-doc-2.4.21-58.EL.s390.rpm
+kernel-source-2.4.21-58.EL.s390.rpm
+kernel-unsupported-2.4.21-58.EL.s390.rpm
+
+s390x:
+kernel-2.4.21-58.EL.s390x.rpm
+kernel-debuginfo-2.4.21-58.EL.s390x.rpm
+kernel-doc-2.4.21-58.EL.s390x.rpm
+kernel-source-2.4.21-58.EL.s390x.rpm
+kernel-unsupported-2.4.21-58.EL.s390x.rpm
+
+x86_64:
+kernel-2.4.21-58.EL.ia32e.rpm
+kernel-2.4.21-58.EL.x86_64.rpm
+kernel-debuginfo-2.4.21-58.EL.ia32e.rpm
+kernel-debuginfo-2.4.21-58.EL.x86_64.rpm
+kernel-doc-2.4.21-58.EL.x86_64.rpm
+kernel-smp-2.4.21-58.EL.x86_64.rpm
+kernel-smp-unsupported-2.4.21-58.EL.x86_64.rpm
+kernel-source-2.4.21-58.EL.x86_64.rpm
+kernel-unsupported-2.4.21-58.EL.ia32e.rpm
+kernel-unsupported-2.4.21-58.EL.x86_64.rpm
+
+Red Hat Desktop version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/kernel-2.4.21-58.EL.src.rpm">ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/kernel-2.4.21-58.EL.src.rpm</a>
+
+i386:
+kernel-2.4.21-58.EL.athlon.rpm
+kernel-2.4.21-58.EL.i686.rpm
+kernel-BOOT-2.4.21-58.EL.i386.rpm
+kernel-debuginfo-2.4.21-58.EL.athlon.rpm
+kernel-debuginfo-2.4.21-58.EL.i386.rpm
+kernel-debuginfo-2.4.21-58.EL.i686.rpm
+kernel-doc-2.4.21-58.EL.i386.rpm
+kernel-hugemem-2.4.21-58.EL.i686.rpm
+kernel-hugemem-unsupported-2.4.21-58.EL.i686.rpm
+kernel-smp-2.4.21-58.EL.athlon.rpm
+kernel-smp-2.4.21-58.EL.i686.rpm
+kernel-smp-unsupported-2.4.21-58.EL.athlon.rpm
+kernel-smp-unsupported-2.4.21-58.EL.i686.rpm
+kernel-source-2.4.21-58.EL.i386.rpm
+kernel-unsupported-2.4.21-58.EL.athlon.rpm
+kernel-unsupported-2.4.21-58.EL.i686.rpm
+
+x86_64:
+kernel-2.4.21-58.EL.ia32e.rpm
+kernel-2.4.21-58.EL.x86_64.rpm
+kernel-debuginfo-2.4.21-58.EL.ia32e.rpm
+kernel-debuginfo-2.4.21-58.EL.x86_64.rpm
+kernel-doc-2.4.21-58.EL.x86_64.rpm
+kernel-smp-2.4.21-58.EL.x86_64.rpm
+kernel-smp-unsupported-2.4.21-58.EL.x86_64.rpm
+kernel-source-2.4.21-58.EL.x86_64.rpm
+kernel-unsupported-2.4.21-58.EL.ia32e.rpm
+kernel-unsupported-2.4.21-58.EL.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/kernel-2.4.21-58.EL.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/kernel-2.4.21-58.EL.src.rpm</a>
+
+i386:
+kernel-2.4.21-58.EL.athlon.rpm
+kernel-2.4.21-58.EL.i686.rpm
+kernel-BOOT-2.4.21-58.EL.i386.rpm
+kernel-debuginfo-2.4.21-58.EL.athlon.rpm
+kernel-debuginfo-2.4.21-58.EL.i386.rpm
+kernel-debuginfo-2.4.21-58.EL.i686.rpm
+kernel-doc-2.4.21-58.EL.i386.rpm
+kernel-hugemem-2.4.21-58.EL.i686.rpm
+kernel-hugemem-unsupported-2.4.21-58.EL.i686.rpm
+kernel-smp-2.4.21-58.EL.athlon.rpm
+kernel-smp-2.4.21-58.EL.i686.rpm
+kernel-smp-unsupported-2.4.21-58.EL.athlon.rpm
+kernel-smp-unsupported-2.4.21-58.EL.i686.rpm
+kernel-source-2.4.21-58.EL.i386.rpm
+kernel-unsupported-2.4.21-58.EL.athlon.rpm
+kernel-unsupported-2.4.21-58.EL.i686.rpm
+
+ia64:
+kernel-2.4.21-58.EL.ia64.rpm
+kernel-debuginfo-2.4.21-58.EL.ia64.rpm
+kernel-doc-2.4.21-58.EL.ia64.rpm
+kernel-source-2.4.21-58.EL.ia64.rpm
+kernel-unsupported-2.4.21-58.EL.ia64.rpm
+
+x86_64:
+kernel-2.4.21-58.EL.ia32e.rpm
+kernel-2.4.21-58.EL.x86_64.rpm
+kernel-debuginfo-2.4.21-58.EL.ia32e.rpm
+kernel-debuginfo-2.4.21-58.EL.x86_64.rpm
+kernel-doc-2.4.21-58.EL.x86_64.rpm
+kernel-smp-2.4.21-58.EL.x86_64.rpm
+kernel-smp-unsupported-2.4.21-58.EL.x86_64.rpm
+kernel-source-2.4.21-58.EL.x86_64.rpm
+kernel-unsupported-2.4.21-58.EL.ia32e.rpm
+kernel-unsupported-2.4.21-58.EL.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/kernel-2.4.21-58.EL.src.rpm">ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/kernel-2.4.21-58.EL.src.rpm</a>
+
+i386:
+kernel-2.4.21-58.EL.athlon.rpm
+kernel-2.4.21-58.EL.i686.rpm
+kernel-BOOT-2.4.21-58.EL.i386.rpm
+kernel-debuginfo-2.4.21-58.EL.athlon.rpm
+kernel-debuginfo-2.4.21-58.EL.i386.rpm
+kernel-debuginfo-2.4.21-58.EL.i686.rpm
+kernel-doc-2.4.21-58.EL.i386.rpm
+kernel-hugemem-2.4.21-58.EL.i686.rpm
+kernel-hugemem-unsupported-2.4.21-58.EL.i686.rpm
+kernel-smp-2.4.21-58.EL.athlon.rpm
+kernel-smp-2.4.21-58.EL.i686.rpm
+kernel-smp-unsupported-2.4.21-58.EL.athlon.rpm
+kernel-smp-unsupported-2.4.21-58.EL.i686.rpm
+kernel-source-2.4.21-58.EL.i386.rpm
+kernel-unsupported-2.4.21-58.EL.athlon.rpm
+kernel-unsupported-2.4.21-58.EL.i686.rpm
+
+ia64:
+kernel-2.4.21-58.EL.ia64.rpm
+kernel-debuginfo-2.4.21-58.EL.ia64.rpm
+kernel-doc-2.4.21-58.EL.ia64.rpm
+kernel-source-2.4.21-58.EL.ia64.rpm
+kernel-unsupported-2.4.21-58.EL.ia64.rpm
+
+x86_64:
+kernel-2.4.21-58.EL.ia32e.rpm
+kernel-2.4.21-58.EL.x86_64.rpm
+kernel-debuginfo-2.4.21-58.EL.ia32e.rpm
+kernel-debuginfo-2.4.21-58.EL.x86_64.rpm
+kernel-doc-2.4.21-58.EL.x86_64.rpm
+kernel-smp-2.4.21-58.EL.x86_64.rpm
+kernel-smp-unsupported-2.4.21-58.EL.x86_64.rpm
+kernel-source-2.4.21-58.EL.x86_64.rpm
+kernel-unsupported-2.4.21-58.EL.ia32e.rpm
+kernel-unsupported-2.4.21-58.EL.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4210">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4210</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3275">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3275</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0598">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0598</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2136">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2136</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2812">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2812</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6063">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6063</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3525">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3525</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJSMqsXlSAg2UNWIIRAriYAJwML/skLsQgbSxqwjUNsIQFY4WaagCgxOKG
+LAEWBR4C/F8hvHVWkkZiHYw=
+=UChf
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

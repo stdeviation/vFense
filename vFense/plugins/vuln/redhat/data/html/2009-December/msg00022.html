@@ -1,0 +1,237 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1682&#45;01] Important: kdegraphics security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 16 Dec 2009 05:59:17 &#45;0500 -->
+<!--X-Message-Id: 200912161059.nBGAxGxu028408@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1682-01] Important: kdegraphics security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1682-01] Important: kdegraphics security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1682-01] Important: kdegraphics security update</li>
+<li><em>Date</em>: Wed, 16 Dec 2009 05:59:16 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kdegraphics security update
+Advisory ID:       RHSA-2009:1682-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1682.html">https://rhn.redhat.com/errata/RHSA-2009-1682.html</a>
+Issue date:        2009-12-16
+CVE Names:         CVE-2009-4035 
+=====================================================================
+
+1. Summary:
+
+Updated kdegraphics packages that fix a security issue are now available
+for Red Hat Enterprise Linux 4.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+The kdegraphics packages contain applications for the K Desktop
+Environment, including KPDF, a viewer for Portable Document Format (PDF)
+files.
+
+Petr Gajdos and Christian Kornacker of SUSE reported a buffer overflow flaw
+in KPDF's Type 1 font parser. A specially-crafted PDF file with an embedded
+Type 1 font could cause KPDF to crash or, possibly, execute arbitrary code
+when opened. (CVE-2009-4035)
+
+Users are advised to upgrade to these updated packages, which contain a
+backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+541614 - CVE-2009-4035 xpdf: buffer overflow in FoFiType1::parse
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kdegraphics-3.3.1-17.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kdegraphics-3.3.1-17.el4_8.1.src.rpm</a>
+
+i386:
+kdegraphics-3.3.1-17.el4_8.1.i386.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.i386.rpm
+
+ia64:
+kdegraphics-3.3.1-17.el4_8.1.ia64.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.ia64.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.ia64.rpm
+
+ppc:
+kdegraphics-3.3.1-17.el4_8.1.ppc.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.ppc.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.ppc.rpm
+
+s390:
+kdegraphics-3.3.1-17.el4_8.1.s390.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.s390.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.s390.rpm
+
+s390x:
+kdegraphics-3.3.1-17.el4_8.1.s390x.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.s390x.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.s390x.rpm
+
+x86_64:
+kdegraphics-3.3.1-17.el4_8.1.x86_64.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.x86_64.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kdegraphics-3.3.1-17.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kdegraphics-3.3.1-17.el4_8.1.src.rpm</a>
+
+i386:
+kdegraphics-3.3.1-17.el4_8.1.i386.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.i386.rpm
+
+x86_64:
+kdegraphics-3.3.1-17.el4_8.1.x86_64.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.x86_64.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kdegraphics-3.3.1-17.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kdegraphics-3.3.1-17.el4_8.1.src.rpm</a>
+
+i386:
+kdegraphics-3.3.1-17.el4_8.1.i386.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.i386.rpm
+
+ia64:
+kdegraphics-3.3.1-17.el4_8.1.ia64.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.ia64.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.ia64.rpm
+
+x86_64:
+kdegraphics-3.3.1-17.el4_8.1.x86_64.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.x86_64.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kdegraphics-3.3.1-17.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kdegraphics-3.3.1-17.el4_8.1.src.rpm</a>
+
+i386:
+kdegraphics-3.3.1-17.el4_8.1.i386.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.i386.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.i386.rpm
+
+ia64:
+kdegraphics-3.3.1-17.el4_8.1.ia64.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.ia64.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.ia64.rpm
+
+x86_64:
+kdegraphics-3.3.1-17.el4_8.1.x86_64.rpm
+kdegraphics-debuginfo-3.3.1-17.el4_8.1.x86_64.rpm
+kdegraphics-devel-3.3.1-17.el4_8.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4035.html">https://www.redhat.com/security/data/cve/CVE-2009-4035.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLKL1yXlSAg2UNWIIRAmJPAJ9k+u08GsYMCoBLH7pTo/zPdd+NTwCfZ91i
+UK+AP2K8HSHWAC1hcai7pUI=
+=zHfz
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

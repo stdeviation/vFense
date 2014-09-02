@@ -1,0 +1,396 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1569&#45;02] Moderate: wireshark security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Nov 2013 23:22:38 &#45;0500 -->
+<!--X-Message-Id: 201311210422.rAL4MaFu006034@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1569-02] Moderate: wireshark security, bug fix,	and enhanceme</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1569-02] Moderate: wireshark security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1569-02] Moderate: wireshark security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Nov 2013 04:26:08 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: wireshark security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:1569-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1569.html">https://rhn.redhat.com/errata/RHSA-2013-1569.html</a>
+Issue date:        2013-11-21
+Keywords:          Rebase
+CVE Names:         CVE-2012-2392 CVE-2012-3825 CVE-2012-4285 
+                   CVE-2012-4288 CVE-2012-4289 CVE-2012-4290 
+                   CVE-2012-4291 CVE-2012-4292 CVE-2012-5595 
+                   CVE-2012-5597 CVE-2012-5598 CVE-2012-5599 
+                   CVE-2012-5600 CVE-2012-6056 CVE-2012-6059 
+                   CVE-2012-6060 CVE-2012-6061 CVE-2012-6062 
+                   CVE-2013-3557 CVE-2013-3559 CVE-2013-3561 
+                   CVE-2013-4081 CVE-2013-4083 CVE-2013-4927 
+                   CVE-2013-4931 CVE-2013-4932 CVE-2013-4933 
+                   CVE-2013-4934 CVE-2013-4935 CVE-2013-4936 
+                   CVE-2013-5721 
+=====================================================================
+
+1. Summary:
+
+Updated wireshark packages that fix multiple security issues, several bugs,
+and add various enhancements are now available for Red Hat Enterprise
+Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Wireshark, previously known as Ethereal, is a network protocol analyzer.
+It is used to capture and browse the traffic running on a computer network.
+
+Two flaws were found in Wireshark. If Wireshark read a malformed packet off
+a network or opened a malicious dump file, it could crash or, possibly,
+execute arbitrary code as the user running Wireshark. (CVE-2013-3559,
+CVE-2013-4083)
+
+Several denial of service flaws were found in Wireshark. Wireshark could
+crash or stop responding if it read a malformed packet off a network, or
+opened a malicious dump file. (CVE-2012-2392, CVE-2012-3825, CVE-2012-4285,
+CVE-2012-4288, CVE-2012-4289, CVE-2012-4290, CVE-2012-4291, CVE-2012-4292,
+CVE-2012-5595, CVE-2012-5597, CVE-2012-5598, CVE-2012-5599, CVE-2012-5600,
+CVE-2012-6056, CVE-2012-6059, CVE-2012-6060, CVE-2012-6061, CVE-2012-6062,
+CVE-2013-3557, CVE-2013-3561, CVE-2013-4081, CVE-2013-4927, CVE-2013-4931,
+CVE-2013-4932, CVE-2013-4933, CVE-2013-4934, CVE-2013-4935, CVE-2013-4936,
+CVE-2013-5721)
+
+The wireshark packages have been upgraded to upstream version 1.8.10, which
+provides a number of bug fixes and enhancements over the previous versions.
+For more information on the bugs fixed, enhancements included, and
+supported protocols introduced, refer to the Wireshark Release Notes,
+linked to in the References. (BZ#711024)
+
+This update also fixes the following bugs:
+
+* Previously, Wireshark did not parse the RECLAIM-COMPLETE opcode when
+inspecting traffic generated by NFSv4.1. A patch has been provided to
+enable the parsing of the RECLAIM_COMPLETE opcode, and Wireshark is now
+able to properly dissect and handle NFSv4.1 traffic. (BZ#750712)
+
+* Prior to this update, frame arrival times in a text file were reported
+one hour ahead from the timestamps in the packet capture file.
+This resulted in various failures being reported by the dfilter-test.py
+test suite. To fix this bug, frame arrival timestamps have been shifted by
+one hour, thus fixing this bug. (BZ#832021)
+
+* The &quot;tshark -D&quot; command returned output to STDERR instead of STDOUT,
+which could break scripts that are parsing the &quot;tshark -D&quot; output. This bug
+has been fixed, and the &quot;tshark -D&quot; command now writes output data to a
+correct standard stream. (BZ#1004636)
+
+* Due to an array overrun, Wireshark could experience undefined program
+behavior or could unexpectedly terminate. With this update, proper array
+handling ensures Wireshark no longer crashes in the described scenario.
+(BZ#715560)
+
+* Previously, the dftest and randpkt command line utilities lacked manual
+pages. This update adds proper manual pages for both utilities. (BZ#659661)
+
+In addition, this update adds the following enhancements:
+
+* With this update, Wireshark is able to properly dissect and handle
+InfiniBand and GlusterFS traffic. (BZ#699636, BZ#858976)
+
+All Wireshark users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements. All running instances of Wireshark must be restarted for the
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+659661 - dftest and randpkt does not have a man page
+711024 - Rebase wireshark to latest upstream stable release
+715560 - Defects revealed by Coverity scan
+750712 - NFS4.1: parse RECLAIM_COMPLETE opcode
+824411 - CVE-2012-2392 wireshark: Infinite and large loops in ANSI MAP, ASF, IEEE 802.11, IEEE 802.3, and LTP dissectors (wnpa-sec-2012-08)
+832021 - Frame arrival times (pcap) are 1 hour more than timestamps in txt
+836960 - CVE-2012-3825 wireshark: Integer overflows in BACapp and Bluetooth HCI dissectors, leading to DoS (wnpa-sec-2012-08)
+848541 - CVE-2012-4285 wireshark: crash due to zero division in DCP ETSI dissector (wnpa-sec-2012-13)
+848548 - CVE-2012-4288 wireshark: DoS via excessive resource consumption in XTP dissector (wnpa-sec-2012-15)
+848561 - CVE-2012-4289 wireshark: DoS via excessive CPU consumption in AFP dissector (wnpa-sec-2012-17)
+848572 - CVE-2012-4291 wireshark: DoS via excessive system resource consumption in CIP dissector (wnpa-sec-2012-20)
+848575 - CVE-2012-4292 wireshark: crash in STUN dissector (wnpa-sec-2012-21)
+848578 - CVE-2012-4290 wireshark: DoS via excessive CPU consumption in CTDB dissector (wnpa-sec-2012-23)
+881742 - CVE-2012-5600 CVE-2012-6062 wireshark: DoS (infinite loop) in the RTCP dissector (wnpa-sec-2012-38)
+881748 - CVE-2012-5599 CVE-2012-6061 wireshark: DoS (infinite loop) in the WTP dissector (wnpa-sec-2012-37)
+881771 - CVE-2012-5598 CVE-2012-6060 wireshark: DoS (infinite loop) in the iSCSI dissector (wnpa-sec-2012-36)
+881790 - CVE-2012-5597 CVE-2012-6059 wireshark: DoS (crash) in the ISAKMP dissector (wnpa-sec-2012-35)
+881809 - CVE-2012-5595 CVE-2012-6056 wireshark: DoS (infinite loop) in the SCTP dissector (wnpa-sec-2012-33)
+889346 - The NFSv4.1dissectors need to updated to the latest upstream release
+965190 - CVE-2013-3559 wireshark: DoS (crash) in the DCP ETSI dissector (wnpa-sec-2013-27, upstream #8231, #8540, #8541)
+965193 - CVE-2013-3557 wireshark: DoS (crash) in the ASN.1 BER dissector (wnpa-sec-2013-25, upstream #8599)
+966331 - CVE-2013-3561 wireshark: Multiple Denial of Service flaws
+972686 - CVE-2013-4081 wireshark: DoS (infinite loop) in the HTTP dissector (wnpa-sec-2013-39)
+972688 - CVE-2013-4083 wireshark: Invalid free in the DCP ETSI dissector (wnpa-sec-2013-41)
+990166 - CVE-2013-4927 wireshark: Integer signedness error in the Bluetooth SDP dissector (wnpa-sec-2013-45)
+990170 - CVE-2013-4931 wireshark: DoS (infinite loop) in the GSM RR dissector (wnpa-sec-2013-49)
+990172 - CVE-2013-4932 wireshark: Multiple array index errors in the GSM A Common dissector (wnpa-sec-2013-50)
+990175 - CVE-2013-4933 wireshark: DoS (application crash) in the Netmon file parser (wnpa-sec-2013-51)
+990178 - CVE-2013-4934 wireshark: DoS (application crash) in the Netmon file parser (wnpa-sec-2013-51) (A different flaw than CVE-2013-4933)
+990179 - CVE-2013-4935 wireshark: DoS (application crash) in the ASN.1 PER dissector (wnpa-sec-2013-52)
+990180 - CVE-2013-4936 wireshark: DoS (NULL pointer dereference, crash) in the PROFINET Real-Time dissector (wnpa-sec-2013-53)
+1007197 - CVE-2013-5721 wireshark: MQ dissector crash (wnpa-sec-2013-58, upstream bug 9079)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm</a>
+
+i386:
+wireshark-1.8.10-4.el6.i686.rpm
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-gnome-1.8.10-4.el6.i686.rpm
+
+x86_64:
+wireshark-1.8.10-4.el6.i686.rpm
+wireshark-1.8.10-4.el6.x86_64.rpm
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-debuginfo-1.8.10-4.el6.x86_64.rpm
+wireshark-gnome-1.8.10-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm</a>
+
+i386:
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-devel-1.8.10-4.el6.i686.rpm
+
+x86_64:
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-debuginfo-1.8.10-4.el6.x86_64.rpm
+wireshark-devel-1.8.10-4.el6.i686.rpm
+wireshark-devel-1.8.10-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm</a>
+
+i386:
+wireshark-1.8.10-4.el6.i686.rpm
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-gnome-1.8.10-4.el6.i686.rpm
+
+ppc64:
+wireshark-1.8.10-4.el6.ppc.rpm
+wireshark-1.8.10-4.el6.ppc64.rpm
+wireshark-debuginfo-1.8.10-4.el6.ppc.rpm
+wireshark-debuginfo-1.8.10-4.el6.ppc64.rpm
+wireshark-gnome-1.8.10-4.el6.ppc64.rpm
+
+s390x:
+wireshark-1.8.10-4.el6.s390.rpm
+wireshark-1.8.10-4.el6.s390x.rpm
+wireshark-debuginfo-1.8.10-4.el6.s390.rpm
+wireshark-debuginfo-1.8.10-4.el6.s390x.rpm
+wireshark-gnome-1.8.10-4.el6.s390x.rpm
+
+x86_64:
+wireshark-1.8.10-4.el6.i686.rpm
+wireshark-1.8.10-4.el6.x86_64.rpm
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-debuginfo-1.8.10-4.el6.x86_64.rpm
+wireshark-gnome-1.8.10-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm</a>
+
+i386:
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-devel-1.8.10-4.el6.i686.rpm
+
+ppc64:
+wireshark-debuginfo-1.8.10-4.el6.ppc.rpm
+wireshark-debuginfo-1.8.10-4.el6.ppc64.rpm
+wireshark-devel-1.8.10-4.el6.ppc.rpm
+wireshark-devel-1.8.10-4.el6.ppc64.rpm
+
+s390x:
+wireshark-debuginfo-1.8.10-4.el6.s390.rpm
+wireshark-debuginfo-1.8.10-4.el6.s390x.rpm
+wireshark-devel-1.8.10-4.el6.s390.rpm
+wireshark-devel-1.8.10-4.el6.s390x.rpm
+
+x86_64:
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-debuginfo-1.8.10-4.el6.x86_64.rpm
+wireshark-devel-1.8.10-4.el6.i686.rpm
+wireshark-devel-1.8.10-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm</a>
+
+i386:
+wireshark-1.8.10-4.el6.i686.rpm
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-gnome-1.8.10-4.el6.i686.rpm
+
+x86_64:
+wireshark-1.8.10-4.el6.i686.rpm
+wireshark-1.8.10-4.el6.x86_64.rpm
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-debuginfo-1.8.10-4.el6.x86_64.rpm
+wireshark-gnome-1.8.10-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/wireshark-1.8.10-4.el6.src.rpm</a>
+
+i386:
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-devel-1.8.10-4.el6.i686.rpm
+
+x86_64:
+wireshark-debuginfo-1.8.10-4.el6.i686.rpm
+wireshark-debuginfo-1.8.10-4.el6.x86_64.rpm
+wireshark-devel-1.8.10-4.el6.i686.rpm
+wireshark-devel-1.8.10-4.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2392.html">https://www.redhat.com/security/data/cve/CVE-2012-2392.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3825.html">https://www.redhat.com/security/data/cve/CVE-2012-3825.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4285.html">https://www.redhat.com/security/data/cve/CVE-2012-4285.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4288.html">https://www.redhat.com/security/data/cve/CVE-2012-4288.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4289.html">https://www.redhat.com/security/data/cve/CVE-2012-4289.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4290.html">https://www.redhat.com/security/data/cve/CVE-2012-4290.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4291.html">https://www.redhat.com/security/data/cve/CVE-2012-4291.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4292.html">https://www.redhat.com/security/data/cve/CVE-2012-4292.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5595.html">https://www.redhat.com/security/data/cve/CVE-2012-5595.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5597.html">https://www.redhat.com/security/data/cve/CVE-2012-5597.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5598.html">https://www.redhat.com/security/data/cve/CVE-2012-5598.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5599.html">https://www.redhat.com/security/data/cve/CVE-2012-5599.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5600.html">https://www.redhat.com/security/data/cve/CVE-2012-5600.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6056.html">https://www.redhat.com/security/data/cve/CVE-2012-6056.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6059.html">https://www.redhat.com/security/data/cve/CVE-2012-6059.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6060.html">https://www.redhat.com/security/data/cve/CVE-2012-6060.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6061.html">https://www.redhat.com/security/data/cve/CVE-2012-6061.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6062.html">https://www.redhat.com/security/data/cve/CVE-2012-6062.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3557.html">https://www.redhat.com/security/data/cve/CVE-2013-3557.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3559.html">https://www.redhat.com/security/data/cve/CVE-2013-3559.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-3561.html">https://www.redhat.com/security/data/cve/CVE-2013-3561.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4081.html">https://www.redhat.com/security/data/cve/CVE-2013-4081.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4083.html">https://www.redhat.com/security/data/cve/CVE-2013-4083.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4927.html">https://www.redhat.com/security/data/cve/CVE-2013-4927.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4931.html">https://www.redhat.com/security/data/cve/CVE-2013-4931.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4932.html">https://www.redhat.com/security/data/cve/CVE-2013-4932.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4933.html">https://www.redhat.com/security/data/cve/CVE-2013-4933.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4934.html">https://www.redhat.com/security/data/cve/CVE-2013-4934.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4935.html">https://www.redhat.com/security/data/cve/CVE-2013-4935.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4936.html">https://www.redhat.com/security/data/cve/CVE-2013-4936.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5721.html">https://www.redhat.com/security/data/cve/CVE-2013-5721.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.wireshark.org/docs/relnotes/wireshark-1.8.0.html">http://www.wireshark.org/docs/relnotes/wireshark-1.8.0.html</a>
+<a  rel="nofollow" href="http://www.wireshark.org/docs/relnotes/wireshark-1.6.0.html">http://www.wireshark.org/docs/relnotes/wireshark-1.6.0.html</a>
+<a  rel="nofollow" href="http://www.wireshark.org/docs/relnotes/wireshark-1.4.0.html">http://www.wireshark.org/docs/relnotes/wireshark-1.4.0.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSjYqGXlSAg2UNWIIRAnatAJ4hcxmq2lZTiFc7BQntM4OiVMjOSwCgpBbh
+XDje1WsK1vLhvQ0dMlB3Bho=
+=ni2z
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

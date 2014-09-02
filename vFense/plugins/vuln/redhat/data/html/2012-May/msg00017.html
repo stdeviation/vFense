@@ -1,0 +1,269 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0682&#45;01] Moderate: tomcat6 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 21 May 2012 13:22:14 &#45;0400 -->
+<!--X-Message-Id: 201205211722.q4LHM8qc012705@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0682-01] Moderate: tomcat6 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0682-01] Moderate: tomcat6 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0682-01] Moderate: tomcat6 security and bug fix update</li>
+<li><em>Date</em>: Mon, 21 May 2012 17:22:07 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: tomcat6 security and bug fix update
+Advisory ID:       RHSA-2012:0682-01
+Product:           JBoss Enterprise Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0682.html">https://rhn.redhat.com/errata/RHSA-2012-0682.html</a>
+Issue date:        2012-05-21
+CVE Names:         CVE-2011-1184 CVE-2011-2204 CVE-2011-2526 
+                   CVE-2011-3190 CVE-2011-3375 CVE-2011-4858 
+                   CVE-2011-5062 CVE-2011-5063 CVE-2011-5064 
+                   CVE-2012-0022 
+=====================================================================
+
+1. Summary:
+
+Updated tomcat6 packages that fix multiple security issues and three bugs
+are now available for JBoss Enterprise Web Server 1.0.2 for Red Hat
+Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Web Server 1.0 for RHEL 5 Server - noarch
+JBoss Enterprise Web Server 1.0 for RHEL 6 Server - noarch
+
+3. Description:
+
+Apache Tomcat is a servlet container.
+
+JBoss Enterprise Web Server includes the Tomcat Native library, providing
+Apache Portable Runtime (APR) support for Tomcat. References in this text
+to APR refer to the Tomcat Native implementation, not any other apr
+package.
+
+This update fixes the JBPAPP-4873, JBPAPP-6133, and JBPAPP-6852 bugs. It
+also resolves the following security issues:
+
+Multiple flaws weakened the Tomcat HTTP DIGEST authentication
+implementation, subjecting it to some of the weaknesses of HTTP BASIC
+authentication, for example, allowing remote attackers to perform session
+replay attacks. (CVE-2011-1184, CVE-2011-5062, CVE-2011-5063,
+CVE-2011-5064)
+
+A flaw was found in the way the Coyote (org.apache.coyote.ajp.AjpProcessor)
+and APR (org.apache.coyote.ajp.AjpAprProcessor) Tomcat AJP (Apache JServ
+Protocol) connectors processed certain POST requests. An attacker could
+send a specially-crafted request that would cause the connector to treat
+the message body as a new request. This allows arbitrary AJP messages to be
+injected, possibly allowing an attacker to bypass a web application's
+authentication checks and gain access to information they would otherwise
+be unable to access. The JK (org.apache.jk.server.JkCoyoteHandler)
+connector is used by default when the APR libraries are not present. The JK
+connector is not affected by this flaw. (CVE-2011-3190)
+
+A flaw in the way Tomcat recycled objects that contain data from user
+requests (such as IP addresses and HTTP headers) when certain errors
+occurred. If a user sent a request that caused an error to be logged,
+Tomcat would return a reply to the next request (which could be sent by a
+different user) with data from the first user's request, leading to
+information disclosure. Under certain conditions, a remote attacker could
+leverage this flaw to hijack sessions. (CVE-2011-3375)
+
+The Java hashCode() method implementation was susceptible to predictable
+hash collisions. A remote attacker could use this flaw to cause Tomcat to
+use an excessive amount of CPU time by sending an HTTP request with a large
+number of parameters whose names map to the same hash value. This update
+introduces a limit on the number of parameters processed per request to
+mitigate this issue. The default limit is 512 for parameters and 128 for
+headers. These defaults can be changed by setting the
+org.apache.tomcat.util.http.Parameters.MAX_COUNT and
+org.apache.tomcat.util.http.MimeHeaders.MAX_COUNT system properties.
+(CVE-2011-4858)
+
+Tomcat did not handle large numbers of parameters and large parameter
+values efficiently. A remote attacker could make Tomcat use an excessive
+amount of CPU time by sending an HTTP request containing a large number of
+parameters or large parameter values. This update introduces limits on the
+number of parameters and headers processed per request to address this
+issue. Refer to the CVE-2011-4858 description for information about the
+org.apache.tomcat.util.http.Parameters.MAX_COUNT and
+org.apache.tomcat.util.http.MimeHeaders.MAX_COUNT system properties.
+(CVE-2012-0022)
+
+A flaw in the Tomcat MemoryUserDatabase. If a runtime exception occurred
+when creating a new user with a JMX client, that user's password was logged
+to Tomcat log files. Note: By default, only administrators have access to
+such log files. (CVE-2011-2204)
+
+A flaw in the way Tomcat handled sendfile request attributes when using the
+HTTP APR or NIO (Non-Blocking I/O) connector. A malicious web application
+running on a Tomcat instance could use this flaw to bypass security manager
+restrictions and gain access to files it would otherwise be unable to
+access, or possibly terminate the Java Virtual Machine (JVM). The HTTP NIO
+connector is used by default in JBoss Enterprise Web Server.
+(CVE-2011-2526)
+
+Red Hat would like to thank oCERT for reporting CVE-2011-4858, and the
+Apache Tomcat project for reporting CVE-2011-2526. oCERT acknowledges
+Julian Wälde and Alexander Klink as the original reporters of
+CVE-2011-4858.
+
+4. Solution:
+
+Users of Tomcat should upgrade to these updated packages, which
+resolve these issues. Tomcat must be restarted for this update to take
+effect.
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+717013 - CVE-2011-2204 tomcat: password disclosure vulnerability
+720948 - CVE-2011-2526 tomcat: security manager restrictions bypass
+734868 - CVE-2011-3190 tomcat: authentication bypass and information disclosure
+741401 - CVE-2011-1184 CVE-2011-5062 CVE-2011-5063 CVE-2011-5064 tomcat: Multiple weaknesses in HTTP DIGEST authentication
+750521 - CVE-2011-4858 tomcat: hash table collisions CPU usage DoS (oCERT-2011-003)
+782624 - CVE-2011-3375 tomcat: information disclosure due to improper response and request object recycling
+783359 - CVE-2012-0022 tomcat: large number of parameters DoS
+
+6. Package List:
+
+JBoss Enterprise Web Server 1.0 for RHEL 5 Server:
+
+Source:
+tomcat6-6.0.32-24_patch_07.ep5.el5.src.rpm
+
+noarch:
+tomcat6-6.0.32-24_patch_07.ep5.el5.noarch.rpm
+tomcat6-admin-webapps-6.0.32-24_patch_07.ep5.el5.noarch.rpm
+tomcat6-docs-webapp-6.0.32-24_patch_07.ep5.el5.noarch.rpm
+tomcat6-el-1.0-api-6.0.32-24_patch_07.ep5.el5.noarch.rpm
+tomcat6-javadoc-6.0.32-24_patch_07.ep5.el5.noarch.rpm
+tomcat6-jsp-2.1-api-6.0.32-24_patch_07.ep5.el5.noarch.rpm
+tomcat6-lib-6.0.32-24_patch_07.ep5.el5.noarch.rpm
+tomcat6-log4j-6.0.32-24_patch_07.ep5.el5.noarch.rpm
+tomcat6-servlet-2.5-api-6.0.32-24_patch_07.ep5.el5.noarch.rpm
+tomcat6-webapps-6.0.32-24_patch_07.ep5.el5.noarch.rpm
+
+JBoss Enterprise Web Server 1.0 for RHEL 6 Server:
+
+Source:
+tomcat6-6.0.32-24_patch_07.ep5.el6.src.rpm
+
+noarch:
+tomcat6-6.0.32-24_patch_07.ep5.el6.noarch.rpm
+tomcat6-admin-webapps-6.0.32-24_patch_07.ep5.el6.noarch.rpm
+tomcat6-docs-webapp-6.0.32-24_patch_07.ep5.el6.noarch.rpm
+tomcat6-el-1.0-api-6.0.32-24_patch_07.ep5.el6.noarch.rpm
+tomcat6-javadoc-6.0.32-24_patch_07.ep5.el6.noarch.rpm
+tomcat6-jsp-2.1-api-6.0.32-24_patch_07.ep5.el6.noarch.rpm
+tomcat6-lib-6.0.32-24_patch_07.ep5.el6.noarch.rpm
+tomcat6-log4j-6.0.32-24_patch_07.ep5.el6.noarch.rpm
+tomcat6-servlet-2.5-api-6.0.32-24_patch_07.ep5.el6.noarch.rpm
+tomcat6-webapps-6.0.32-24_patch_07.ep5.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1184.html">https://www.redhat.com/security/data/cve/CVE-2011-1184.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2204.html">https://www.redhat.com/security/data/cve/CVE-2011-2204.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2526.html">https://www.redhat.com/security/data/cve/CVE-2011-2526.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3190.html">https://www.redhat.com/security/data/cve/CVE-2011-3190.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3375.html">https://www.redhat.com/security/data/cve/CVE-2011-3375.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4858.html">https://www.redhat.com/security/data/cve/CVE-2011-4858.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-5062.html">https://www.redhat.com/security/data/cve/CVE-2011-5062.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-5063.html">https://www.redhat.com/security/data/cve/CVE-2011-5063.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-5064.html">https://www.redhat.com/security/data/cve/CVE-2011-5064.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0022.html">https://www.redhat.com/security/data/cve/CVE-2012-0022.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://tomcat.apache.org/security-6.html">http://tomcat.apache.org/security-6.html</a>
+<a  rel="nofollow" href="https://issues.jboss.org/browse/JBPAPP-4873">https://issues.jboss.org/browse/JBPAPP-4873</a>
+<a  rel="nofollow" href="https://issues.jboss.org/browse/JBPAPP-6133">https://issues.jboss.org/browse/JBPAPP-6133</a>
+<a  rel="nofollow" href="https://issues.jboss.org/browse/JBPAPP-6852">https://issues.jboss.org/browse/JBPAPP-6852</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPunmrXlSAg2UNWIIRAkA4AKCTaGA0dlkzcdXw8BMDz6i6Kk31iQCbBwk5
+HGbJnvqJAVX57f9/Kpj3+R4=
+=pyZw
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

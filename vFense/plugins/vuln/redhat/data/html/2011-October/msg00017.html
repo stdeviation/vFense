@@ -1,0 +1,254 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1401&#45;01] Moderate: xen security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 24 Oct 2011 13:16:11 &#45;0400 -->
+<!--X-Message-Id: 201110241716.p9OHG6jV003738@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1401-01] Moderate: xen security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1401-01] Moderate: xen security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1401-01] Moderate: xen security and bug fix update</li>
+<li><em>Date</em>: Mon, 24 Oct 2011 17:16:05 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: xen security and bug fix update
+Advisory ID:       RHSA-2011:1401-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1401.html">https://rhn.redhat.com/errata/RHSA-2011-1401.html</a>
+Issue date:        2011-10-24
+CVE Names:         CVE-2011-3346 
+=====================================================================
+
+1. Summary:
+
+Updated xen packages that fix one security issue and three bugs are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - i386, x86_64
+RHEL Virtualization (v. 5 server) - i386, ia64, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The xen packages contain administration tools and the xend service for
+managing the kernel-xen kernel for virtualization on Red Hat Enterprise
+Linux.
+
+A buffer overflow flaw was found in the Xen hypervisor SCSI subsystem
+emulation. An unprivileged, local guest user could provide a large number
+of bytes that are used to zero out a fixed-sized buffer via a SAI READ
+CAPACITY SCSI command, overwriting memory and causing the guest to crash.
+(CVE-2011-3346)
+
+This update also fixes the following bugs:
+
+* Prior to this update, the vif-bridge script used a maximum transmission
+unit (MTU) of 1500 for a new Virtual Interface (VIF). As a result, the MTU
+of the VIF could differ from that of the target bridge. This update fixes
+the VIF hot-plug script so that the default MTU for new VIFs will match
+that of the target Xen hypervisor bridge. In combination with a new enough
+kernel (RHSA-2011:1386), this enables the use of jumbo frames in Xen
+hypervisor guests. (BZ#738608)
+
+* Prior to this update, the network-bridge script set the MTU of the bridge
+to 1500. As a result, the MTU of the Xen hypervisor bridge could differ
+from that of the physical interface. This update fixes the network script
+so the MTU of the bridge can be set higher than 1500, thus also providing
+support for jumbo frames. Now, the MTU of the Xen hypervisor bridge will
+match that of the physical interface. (BZ#738610)
+
+* Red Hat Enterprise Linux 5.6 introduced an optimized migration handling
+that speeds up the migration of guests with large memory. However, the new
+migration procedure can theoretically cause data corruption. While no cases
+were observed in practice, with this update, the xend daemon properly waits
+for correct device release before the guest is started on a destination
+machine, thus fixing this bug. (BZ#743850)
+
+Note: Before a guest is using a new enough kernel (RHSA-2011:1386), the MTU
+of the VIF will drop back to 1500 (if it was set higher) after migration.
+
+All xen users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, the xend service must be restarted for this update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+736038 - CVE-2011-3346 qemu: local DoS with SCSI CD-ROM
+738608 - vif (netback) should take its default MTU from the bridge
+738610 - The network-bridge script does not set the MTU of the bridge to match the MTU of the physical interface
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-132.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-132.el5_7.2.src.rpm</a>
+
+i386:
+xen-debuginfo-3.0.3-132.el5_7.2.i386.rpm
+xen-libs-3.0.3-132.el5_7.2.i386.rpm
+
+x86_64:
+xen-debuginfo-3.0.3-132.el5_7.2.i386.rpm
+xen-debuginfo-3.0.3-132.el5_7.2.x86_64.rpm
+xen-libs-3.0.3-132.el5_7.2.i386.rpm
+xen-libs-3.0.3-132.el5_7.2.x86_64.rpm
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-132.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xen-3.0.3-132.el5_7.2.src.rpm</a>
+
+i386:
+xen-3.0.3-132.el5_7.2.i386.rpm
+xen-debuginfo-3.0.3-132.el5_7.2.i386.rpm
+xen-devel-3.0.3-132.el5_7.2.i386.rpm
+
+x86_64:
+xen-3.0.3-132.el5_7.2.x86_64.rpm
+xen-debuginfo-3.0.3-132.el5_7.2.i386.rpm
+xen-debuginfo-3.0.3-132.el5_7.2.x86_64.rpm
+xen-devel-3.0.3-132.el5_7.2.i386.rpm
+xen-devel-3.0.3-132.el5_7.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-132.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-132.el5_7.2.src.rpm</a>
+
+i386:
+xen-debuginfo-3.0.3-132.el5_7.2.i386.rpm
+xen-libs-3.0.3-132.el5_7.2.i386.rpm
+
+ia64:
+xen-debuginfo-3.0.3-132.el5_7.2.ia64.rpm
+xen-libs-3.0.3-132.el5_7.2.ia64.rpm
+
+x86_64:
+xen-debuginfo-3.0.3-132.el5_7.2.i386.rpm
+xen-debuginfo-3.0.3-132.el5_7.2.x86_64.rpm
+xen-libs-3.0.3-132.el5_7.2.i386.rpm
+xen-libs-3.0.3-132.el5_7.2.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-132.el5_7.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xen-3.0.3-132.el5_7.2.src.rpm</a>
+
+i386:
+xen-3.0.3-132.el5_7.2.i386.rpm
+xen-debuginfo-3.0.3-132.el5_7.2.i386.rpm
+xen-devel-3.0.3-132.el5_7.2.i386.rpm
+
+ia64:
+xen-3.0.3-132.el5_7.2.ia64.rpm
+xen-debuginfo-3.0.3-132.el5_7.2.ia64.rpm
+xen-devel-3.0.3-132.el5_7.2.ia64.rpm
+
+x86_64:
+xen-3.0.3-132.el5_7.2.x86_64.rpm
+xen-debuginfo-3.0.3-132.el5_7.2.i386.rpm
+xen-debuginfo-3.0.3-132.el5_7.2.x86_64.rpm
+xen-devel-3.0.3-132.el5_7.2.i386.rpm
+xen-devel-3.0.3-132.el5_7.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3346.html">https://www.redhat.com/security/data/cve/CVE-2011-3346.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1386.html">https://rhn.redhat.com/errata/RHSA-2011-1386.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOpZ02XlSAg2UNWIIRAp8EAJ4+aNIWB+gsdUuU/679sxt3qx5l0wCbBQRk
+GE8djRuPU/fjUTiaSUEStc0=
+=wChd
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

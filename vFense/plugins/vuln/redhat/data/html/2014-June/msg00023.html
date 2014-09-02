@@ -1,0 +1,331 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0685&#45;01] Important: java&#45;1.6.0&#45;openjdk security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 10 Jun 2014 15:41:11 &#45;0400 -->
+<!--X-Message-Id: 201406101941.s5AJfAS2005540@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0685-01] Important: java-1.6.0-openjdk security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0685-01] Important: java-1.6.0-openjdk security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0685-01] Important: java-1.6.0-openjdk security update</li>
+<li><em>Date</em>: Tue, 10 Jun 2014 19:41:10 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: java-1.6.0-openjdk security update
+Advisory ID:       RHSA-2014:0685-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0685.html">https://rhn.redhat.com/errata/RHSA-2014-0685.html</a>
+Issue date:        2014-06-10
+CVE Names:         CVE-2014-0429 CVE-2014-0446 CVE-2014-0451 
+                   CVE-2014-0452 CVE-2014-0453 CVE-2014-0456 
+                   CVE-2014-0457 CVE-2014-0458 CVE-2014-0460 
+                   CVE-2014-0461 CVE-2014-1876 CVE-2014-2397 
+                   CVE-2014-2398 CVE-2014-2403 CVE-2014-2412 
+                   CVE-2014-2414 CVE-2014-2421 CVE-2014-2423 
+                   CVE-2014-2427 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.6.0-openjdk packages that fix various security issues are
+now available for Red Hat Enterprise Linux 7.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The java-1.6.0-openjdk packages provide the OpenJDK 6 Java Runtime
+Environment and the OpenJDK 6 Java Software Development Kit.
+
+An input validation flaw was discovered in the medialib library in the 2D
+component. A specially crafted image could trigger Java Virtual Machine
+memory corruption when processed. A remote attacker, or an untrusted Java
+application or applet, could possibly use this flaw to execute arbitrary
+code with the privileges of the user running the Java Virtual Machine.
+(CVE-2014-0429)
+
+Multiple flaws were discovered in the Hotspot and 2D components in OpenJDK.
+An untrusted Java application or applet could use these flaws to trigger
+Java Virtual Machine memory corruption and possibly bypass Java sandbox
+restrictions. (CVE-2014-0456, CVE-2014-2397, CVE-2014-2421)
+
+Multiple improper permission check issues were discovered in the Libraries
+component in OpenJDK. An untrusted Java application or applet could use
+these flaws to bypass Java sandbox restrictions. (CVE-2014-0457,
+CVE-2014-0461)
+
+Multiple improper permission check issues were discovered in the AWT,
+JAX-WS, JAXB, Libraries, and Sound components in OpenJDK. An untrusted Java
+application or applet could use these flaws to bypass certain Java sandbox
+restrictions. (CVE-2014-2412, CVE-2014-0451, CVE-2014-0458, CVE-2014-2423,
+CVE-2014-0452, CVE-2014-2414, CVE-2014-0446, CVE-2014-2427)
+
+Multiple flaws were identified in the Java Naming and Directory Interface
+(JNDI) DNS client. These flaws could make it easier for a remote attacker
+to perform DNS spoofing attacks. (CVE-2014-0460)
+
+It was discovered that the JAXP component did not properly prevent access
+to arbitrary files when a SecurityManager was present. This flaw could
+cause a Java application using JAXP to leak sensitive information, or
+affect application availability. (CVE-2014-2403)
+
+It was discovered that the Security component in OpenJDK could leak some
+timing information when performing PKCS#1 unpadding. This could possibly
+lead to the disclosure of some information that was meant to be protected
+by encryption. (CVE-2014-0453)
+
+It was discovered that the fix for CVE-2013-5797 did not properly resolve
+input sanitization flaws in javadoc. When javadoc documentation was
+generated from an untrusted Java source code and hosted on a domain not
+controlled by the code author, these issues could make it easier to perform
+cross-site scripting (XSS) attacks. (CVE-2014-2398)
+
+An insecure temporary file use flaw was found in the way the unpack200
+utility created log files. A local attacker could possibly use this flaw to
+perform a symbolic link attack and overwrite arbitrary files with the
+privileges of the user running unpack200. (CVE-2014-1876)
+
+All users of java-1.6.0-openjdk are advised to upgrade to these updated
+packages, which resolve these issues. All running instances of OpenJDK Java
+must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1060907 - CVE-2014-1876 OpenJDK: insecure temporary file use in unpack200 (Libraries, 8033618)
+1086632 - CVE-2014-2398 OpenJDK: insufficient escaping of window title string (Javadoc, 8026736)
+1086645 - CVE-2014-0453 OpenJDK: RSA unpadding timing issues (Security, 8027766)
+1087409 - CVE-2014-0429 OpenJDK: Incorrect mlib/raster image validation (2D, 8027841)
+1087411 - CVE-2014-0457 OpenJDK: ServiceLoader Exception handling security bypass (Libraries, 8031394)
+1087413 - CVE-2014-0456 OpenJDK: System.arraycopy() element race condition (Hotspot, 8029858)
+1087417 - CVE-2014-2421 OpenJDK: JPEG decoder input stream handling (2D, 8029854)
+1087423 - CVE-2014-2397 OpenJDK: classfile parser invalid BootstrapMethods attribute length (Hotspot, 8034926)
+1087426 - CVE-2014-0461 OpenJDK: Better ScriptEngineManager ScriptEngine management (Libraries, 8036794)
+1087427 - CVE-2014-2412 OpenJDK: AWT thread context handling (AWT, 8025010)
+1087428 - CVE-2014-0451 OpenJDK: AWT incorrect FlavorMap seperation (AWT, 8026797)
+1087430 - CVE-2014-0458 OpenJDK: Activation framework default command map caching (JAX-WS, 8025152)
+1087431 - CVE-2014-2414 OpenJDK: incorrect caching of data initialized via TCCL (JAXB, 8025030)
+1087434 - CVE-2014-2423 OpenJDK: incorrect caching of data initialized via TCCL (JAXWS, 8026188)
+1087436 - CVE-2014-0452 OpenJDK: incorrect caching of data initialized via TCCL (JAXWS, 8026801)
+1087439 - CVE-2014-0446 OpenJDK: Protect logger handlers (Libraries, 8029740)
+1087441 - CVE-2014-2427 OpenJDK: remove insecure Java Sound provider caching (Sound, 8026163)
+1087442 - CVE-2014-0460 OpenJDK: missing randomization of JNDI DNS client query IDs (JNDI, 8030731)
+1087443 - CVE-2014-2403 OpenJDK: JAXP CharInfo file access restriction (JAXP, 8029282)
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+java-1.6.0-openjdk-1.6.0.0-6.1.13.3.el7_0.src.rpm
+
+x86_64:
+java-1.6.0-openjdk-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+java-1.6.0-openjdk-1.6.0.0-6.1.13.3.el7_0.src.rpm
+
+x86_64:
+java-1.6.0-openjdk-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+java-1.6.0-openjdk-1.6.0.0-6.1.13.3.el7_0.src.rpm
+
+ppc64:
+java-1.6.0-openjdk-1.6.0.0-6.1.13.3.el7_0.ppc64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.ppc64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-6.1.13.3.el7_0.ppc64.rpm
+
+s390x:
+java-1.6.0-openjdk-1.6.0.0-6.1.13.3.el7_0.s390x.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.s390x.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-6.1.13.3.el7_0.s390x.rpm
+
+x86_64:
+java-1.6.0-openjdk-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.ppc64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-6.1.13.3.el7_0.ppc64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-6.1.13.3.el7_0.ppc64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-6.1.13.3.el7_0.ppc64.rpm
+
+s390x:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.s390x.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-6.1.13.3.el7_0.s390x.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-6.1.13.3.el7_0.s390x.rpm
+java-1.6.0-openjdk-src-1.6.0.0-6.1.13.3.el7_0.s390x.rpm
+
+x86_64:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+java-1.6.0-openjdk-1.6.0.0-6.1.13.3.el7_0.src.rpm
+
+x86_64:
+java-1.6.0-openjdk-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-6.1.13.3.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0429.html">https://www.redhat.com/security/data/cve/CVE-2014-0429.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0446.html">https://www.redhat.com/security/data/cve/CVE-2014-0446.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0451.html">https://www.redhat.com/security/data/cve/CVE-2014-0451.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0452.html">https://www.redhat.com/security/data/cve/CVE-2014-0452.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0453.html">https://www.redhat.com/security/data/cve/CVE-2014-0453.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0456.html">https://www.redhat.com/security/data/cve/CVE-2014-0456.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0457.html">https://www.redhat.com/security/data/cve/CVE-2014-0457.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0458.html">https://www.redhat.com/security/data/cve/CVE-2014-0458.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0460.html">https://www.redhat.com/security/data/cve/CVE-2014-0460.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0461.html">https://www.redhat.com/security/data/cve/CVE-2014-0461.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-1876.html">https://www.redhat.com/security/data/cve/CVE-2014-1876.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2397.html">https://www.redhat.com/security/data/cve/CVE-2014-2397.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2398.html">https://www.redhat.com/security/data/cve/CVE-2014-2398.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2403.html">https://www.redhat.com/security/data/cve/CVE-2014-2403.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2412.html">https://www.redhat.com/security/data/cve/CVE-2014-2412.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2414.html">https://www.redhat.com/security/data/cve/CVE-2014-2414.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2421.html">https://www.redhat.com/security/data/cve/CVE-2014-2421.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2423.html">https://www.redhat.com/security/data/cve/CVE-2014-2423.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2427.html">https://www.redhat.com/security/data/cve/CVE-2014-2427.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTl19HXlSAg2UNWIIRAq1FAKCcJOeeA+O9uRaaNYj8d3S5wZgMkACgquDr
+jdZt5MYLjqAe9TTREjOCRII=
+=ZIn3
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0602&#45;02] Moderate: Red Hat Certificate System 7.3 security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Aug 2010 10:13:04 &#45;0400 -->
+<!--X-Message-Id: 201008051412.o75ECx9J023255@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0602-02] Moderate: Red Hat Certificate System 7.3 security	up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0602-02] Moderate: Red Hat Certificate System 7.3 security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2010:0602-02] Moderate: Red Hat Certificate System 7.3 security	update</li>
+<li><em>Date</em>: Thu, 5 Aug 2010 08:12:57 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Certificate System 7.3 security update
+Advisory ID:       RHSA-2010:0602-02
+Product:           Red Hat Certificate System
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0602.html">https://rhn.redhat.com/errata/RHSA-2010-0602.html</a>
+Issue date:        2010-08-04
+CVE Names:         CVE-2005-2090 CVE-2005-3510 CVE-2006-3835 
+                   CVE-2006-3918 CVE-2006-5752 CVE-2007-0450 
+                   CVE-2007-1349 CVE-2007-1358 CVE-2007-1863 
+                   CVE-2007-3304 CVE-2007-3382 CVE-2007-3385 
+                   CVE-2007-3847 CVE-2007-4465 CVE-2007-5000 
+                   CVE-2007-5116 CVE-2007-5333 CVE-2007-5461 
+                   CVE-2007-6388 CVE-2008-0005 CVE-2008-0128 
+                   CVE-2008-1232 CVE-2008-1927 CVE-2008-2364 
+                   CVE-2008-2370 CVE-2008-2939 CVE-2008-5515 
+                   CVE-2009-0023 CVE-2009-0033 CVE-2009-0580 
+                   CVE-2009-1891 CVE-2009-1955 CVE-2009-1956 
+                   CVE-2009-2412 CVE-2009-3094 CVE-2009-3095 
+                   CVE-2009-4901 CVE-2010-0407 CVE-2010-0434 
+=====================================================================
+
+1. Summary:
+
+Updated packages that fix multiple security issues and rebase various
+components are now available for Red Hat Certificate System 7.3.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Certificate System 7.3 for 4AS - i386, noarch, x86_64
+Red Hat Certificate System 7.3 for 4ES - i386, noarch, x86_64
+
+3. Description:
+
+Red Hat Certificate System (RHCS) is an enterprise software system designed
+to manage enterprise Public Key Infrastructure (PKI) deployments.
+
+Multiple buffer overflow flaws were discovered in the way the pcscd daemon,
+a resource manager that coordinates communications with smart card readers
+and smart cards connected to the system, handled client requests. A local
+user could create a specially-crafted request that would cause the pcscd
+daemon to crash or, possibly, execute arbitrary code. (CVE-2010-0407,
+CVE-2009-4901)
+
+This erratum updates the Tomcat component shipped as part of Red Hat
+Certificate System to version 5.5.23, to address multiple security issues.
+In a typical operating environment, Tomcat is not exposed to users of
+Certificate System in a vulnerable manner. These security updates will
+reduce risk in unique Certificate System environments. (CVE-2005-2090,
+CVE-2005-3510, CVE-2006-3835, CVE-2007-0450, CVE-2007-1358, CVE-2007-3382,
+CVE-2007-3385, CVE-2007-5461, CVE-2007-5333, CVE-2008-0128, CVE-2008-1232,
+CVE-2008-2370, CVE-2008-5515, CVE-2009-0033, CVE-2009-0580)
+
+This erratum provides updated versions of the following components,
+required by the updated Tomcat version: ant, avalon-logkit, axis,
+classpathx-jaf, classpathx-mail, geronimo-specs, jakarta-commons-modeler,
+log4j, mx4j, xerces-j2, and xml-commons.
+
+A number of components have been updated to fix security issues for users
+of Red Hat Certificate System for the Solaris operating system. These fixes
+are for apr issue CVE-2009-2412; apr-util issues CVE-2009-0023,
+CVE-2009-1955, CVE-2009-1956, and CVE-2009-2412; httpd issues
+CVE-2006-3918, CVE-2006-5752, CVE-2007-1863, CVE-2007-3304, CVE-2007-3847,
+CVE-2007-4465, CVE-2007-5000, CVE-2007-6388, CVE-2008-0005, CVE-2008-2364,
+CVE-2008-2939, CVE-2009-1891, CVE-2009-3094, CVE-2009-3095, and
+CVE-2010-0434; mod_perl issue CVE-2007-1349; and perl issues CVE-2007-5116
+and CVE-2008-1927.
+
+Note: Updated apr, apr-util, httpd, mod_perl, and perl packages were
+previously available to users of Red Hat Certificate System for Red Hat
+Enterprise Linux via the Red Hat Enterprise Linux 4 channels on the Red Hat
+Network.
+
+Additionally, the rhpki-ca, rhpki-kra, rhpki-ocsp, rhpki-tks,
+rhpki-java-tools, and rhpki-native-tools packages were updated to address
+some anomalous behavior on the Solaris operating system. (BZ#600513,
+BZ#605760)
+
+As well, this update provides an updated rhpki-manage package, which
+includes installation and uninstall scripts for Red Hat Certificate System
+that have been updated with the list of packages required by the Tomcat
+component, and an updated dependency on the NSS and NSPR packages.
+
+All users of Red Hat Certificate System are advised to upgrade to these
+updated packages, which correct these issues. Refer to the Red Hat
+Certificate System Administration Guide, linked to in the References, for
+details on how to install the updated packages on the Solaris operating
+system. After installing this update, all Red Hat Certificate System
+subsystems must be restarted (&quot;/etc/init.d/[instance-name] restart&quot;) for
+the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+200732 - CVE-2006-3918 Expect header XSS
+237079 - CVE-2005-2090 tomcat multiple content-length header poisioning
+237080 - CVE-2007-0450 tomcat directory traversal
+237084 - CVE-2006-3835 tomcat directory listing issue
+237085 - CVE-2005-3510 tomcat DoS
+240423 - CVE-2007-1349 mod_perl PerlRun denial of service
+244658 - CVE-2007-1863 httpd mod_cache segfault
+244803 - CVE-2007-1358 tomcat accept-language xss flaw
+245111 - CVE-2007-3304 httpd scoreboard lack of PID protection
+245112 - CVE-2006-5752 httpd mod_status XSS
+247972 - CVE-2007-3382 tomcat handling of cookies
+247976 - CVE-2007-3385 tomcat handling of cookie values
+250731 - CVE-2007-3847 httpd out of bounds read
+289511 - CVE-2007-4465 mod_autoindex XSS
+323571 - CVE-2007-5116 perl regular expression UTF parsing errors
+333791 - CVE-2007-5461 Absolute path traversal Apache Tomcat WEBDAV
+419931 - CVE-2007-5000 mod_imagemap XSS
+427228 - CVE-2007-6388 apache mod_status cross-site scripting
+427739 - CVE-2008-0005 mod_proxy_ftp XSS
+427766 - CVE-2007-5333 Improve cookie parsing for tomcat5
+429821 - CVE-2008-0128 tomcat5 SSO cookie login information disclosure
+443928 - CVE-2008-1927 perl: heap corruption by regular expressions with utf8 characters
+451615 - CVE-2008-2364 httpd: mod_proxy_http DoS via excessive interim responses from the origin server
+457597 - CVE-2008-1232 tomcat: Cross-Site-Scripting enabled by sendError call
+457934 - CVE-2008-2370 tomcat RequestDispatcher information disclosure vulnerability
+458250 - CVE-2008-2939 httpd: mod_proxy_ftp globbing XSS
+493381 - CVE-2009-0033 tomcat6 Denial-Of-Service with AJP connection
+503928 - CVE-2009-0023 apr-util heap buffer underwrite
+503978 - CVE-2009-0580 tomcat6 Information disclosure in authentication classes
+504390 - CVE-2009-1956 apr-util single NULL byte buffer overflow
+504555 - CVE-2009-1955 apr-util billion laughs attack
+504753 - CVE-2008-5515 tomcat request dispatcher information disclosure vulnerability
+509125 - CVE-2009-1891 httpd: possible temporary DoS (CPU consumption) in mod_deflate
+515698 - CVE-2009-2412 apr, apr-util: Integer overflows in memory pool (apr) and relocatable memory (apr-util) management
+521619 - CVE-2009-3094 httpd: NULL pointer defer in mod_proxy_ftp caused by crafted EPSV and PASV reply
+522209 - CVE-2009-3095 httpd: mod_proxy_ftp FTP command injection via Authorization HTTP header
+570171 - CVE-2010-0434 httpd: request header information leak
+596426 - CVE-2009-4901 CVE-2009-4902 CVE-2010-0407 pcsc-lite: Privilege escalation via specially-crafted client to PC/SC Smart Card daemon messages
+
+6. Package List:
+
+Red Hat Certificate System 7.3 for 4AS:
+
+Source:
+ant-1.6.5-1jpp_1rh.src.rpm
+avalon-logkit-1.2-2jpp_4rh.src.rpm
+axis-1.2.1-1jpp_3rh.src.rpm
+classpathx-jaf-1.0-2jpp_6rh.src.rpm
+classpathx-mail-1.1.1-2jpp_8rh.src.rpm
+geronimo-specs-1.0-0.M4.1jpp_10rh.src.rpm
+jakarta-commons-modeler-2.0-3jpp_2rh.src.rpm
+log4j-1.2.12-1jpp_1rh.src.rpm
+mx4j-3.0.1-1jpp_4rh.src.rpm
+pcsc-lite-1.3.3-3.el4.src.rpm
+tomcat5-5.5.23-0jpp_4rh.16.src.rpm
+xerces-j2-2.7.1-1jpp_1rh.src.rpm
+xml-commons-1.3.02-2jpp_1rh.src.rpm
+
+i386:
+pcsc-lite-1.3.3-3.el4.i386.rpm
+pcsc-lite-debuginfo-1.3.3-3.el4.i386.rpm
+pcsc-lite-doc-1.3.3-3.el4.i386.rpm
+pcsc-lite-libs-1.3.3-3.el4.i386.rpm
+rhpki-native-tools-7.3.0-6.el4.i386.rpm
+
+noarch:
+ant-1.6.5-1jpp_1rh.noarch.rpm
+avalon-logkit-1.2-2jpp_4rh.noarch.rpm
+axis-1.2.1-1jpp_3rh.noarch.rpm
+classpathx-jaf-1.0-2jpp_6rh.noarch.rpm
+classpathx-mail-1.1.1-2jpp_8rh.noarch.rpm
+geronimo-ejb-2.1-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-j2ee-1.4-apis-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-j2ee-connector-1.5-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-j2ee-deployment-1.1-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-j2ee-management-1.0-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-jms-1.1-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-jsp-2.0-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-jta-1.0.1B-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-servlet-2.4-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-specs-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-specs-javadoc-1.0-0.M4.1jpp_10rh.noarch.rpm
+jakarta-commons-modeler-2.0-3jpp_2rh.noarch.rpm
+log4j-1.2.12-1jpp_1rh.noarch.rpm
+mx4j-3.0.1-1jpp_4rh.noarch.rpm
+rhpki-ca-7.3.0-20.el4.noarch.rpm
+rhpki-java-tools-7.3.0-10.el4.noarch.rpm
+rhpki-kra-7.3.0-14.el4.noarch.rpm
+rhpki-manage-7.3.0-19.el4.noarch.rpm
+rhpki-ocsp-7.3.0-13.el4.noarch.rpm
+rhpki-tks-7.3.0-13.el4.noarch.rpm
+tomcat5-5.5.23-0jpp_4rh.16.noarch.rpm
+tomcat5-common-lib-5.5.23-0jpp_4rh.16.noarch.rpm
+tomcat5-jasper-5.5.23-0jpp_4rh.16.noarch.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp_4rh.16.noarch.rpm
+tomcat5-server-lib-5.5.23-0jpp_4rh.16.noarch.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp_4rh.16.noarch.rpm
+xerces-j2-2.7.1-1jpp_1rh.noarch.rpm
+xml-commons-1.3.02-2jpp_1rh.noarch.rpm
+xml-commons-apis-1.3.02-2jpp_1rh.noarch.rpm
+
+x86_64:
+pcsc-lite-1.3.3-3.el4.x86_64.rpm
+pcsc-lite-debuginfo-1.3.3-3.el4.x86_64.rpm
+pcsc-lite-doc-1.3.3-3.el4.x86_64.rpm
+pcsc-lite-libs-1.3.3-3.el4.x86_64.rpm
+rhpki-native-tools-7.3.0-6.el4.x86_64.rpm
+
+Red Hat Certificate System 7.3 for 4ES:
+
+Source:
+ant-1.6.5-1jpp_1rh.src.rpm
+avalon-logkit-1.2-2jpp_4rh.src.rpm
+axis-1.2.1-1jpp_3rh.src.rpm
+classpathx-jaf-1.0-2jpp_6rh.src.rpm
+classpathx-mail-1.1.1-2jpp_8rh.src.rpm
+geronimo-specs-1.0-0.M4.1jpp_10rh.src.rpm
+jakarta-commons-modeler-2.0-3jpp_2rh.src.rpm
+log4j-1.2.12-1jpp_1rh.src.rpm
+mx4j-3.0.1-1jpp_4rh.src.rpm
+pcsc-lite-1.3.3-3.el4.src.rpm
+tomcat5-5.5.23-0jpp_4rh.16.src.rpm
+xerces-j2-2.7.1-1jpp_1rh.src.rpm
+xml-commons-1.3.02-2jpp_1rh.src.rpm
+
+i386:
+pcsc-lite-1.3.3-3.el4.i386.rpm
+pcsc-lite-debuginfo-1.3.3-3.el4.i386.rpm
+pcsc-lite-doc-1.3.3-3.el4.i386.rpm
+pcsc-lite-libs-1.3.3-3.el4.i386.rpm
+rhpki-native-tools-7.3.0-6.el4.i386.rpm
+
+noarch:
+ant-1.6.5-1jpp_1rh.noarch.rpm
+avalon-logkit-1.2-2jpp_4rh.noarch.rpm
+axis-1.2.1-1jpp_3rh.noarch.rpm
+classpathx-jaf-1.0-2jpp_6rh.noarch.rpm
+classpathx-mail-1.1.1-2jpp_8rh.noarch.rpm
+geronimo-ejb-2.1-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-j2ee-1.4-apis-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-j2ee-connector-1.5-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-j2ee-deployment-1.1-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-j2ee-management-1.0-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-jms-1.1-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-jsp-2.0-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-jta-1.0.1B-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-servlet-2.4-api-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-specs-1.0-0.M4.1jpp_10rh.noarch.rpm
+geronimo-specs-javadoc-1.0-0.M4.1jpp_10rh.noarch.rpm
+jakarta-commons-modeler-2.0-3jpp_2rh.noarch.rpm
+log4j-1.2.12-1jpp_1rh.noarch.rpm
+mx4j-3.0.1-1jpp_4rh.noarch.rpm
+rhpki-ca-7.3.0-20.el4.noarch.rpm
+rhpki-java-tools-7.3.0-10.el4.noarch.rpm
+rhpki-kra-7.3.0-14.el4.noarch.rpm
+rhpki-manage-7.3.0-19.el4.noarch.rpm
+rhpki-ocsp-7.3.0-13.el4.noarch.rpm
+rhpki-tks-7.3.0-13.el4.noarch.rpm
+tomcat5-5.5.23-0jpp_4rh.16.noarch.rpm
+tomcat5-common-lib-5.5.23-0jpp_4rh.16.noarch.rpm
+tomcat5-jasper-5.5.23-0jpp_4rh.16.noarch.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp_4rh.16.noarch.rpm
+tomcat5-server-lib-5.5.23-0jpp_4rh.16.noarch.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp_4rh.16.noarch.rpm
+xerces-j2-2.7.1-1jpp_1rh.noarch.rpm
+xml-commons-1.3.02-2jpp_1rh.noarch.rpm
+xml-commons-apis-1.3.02-2jpp_1rh.noarch.rpm
+
+x86_64:
+pcsc-lite-1.3.3-3.el4.x86_64.rpm
+pcsc-lite-debuginfo-1.3.3-3.el4.x86_64.rpm
+pcsc-lite-doc-1.3.3-3.el4.x86_64.rpm
+pcsc-lite-libs-1.3.3-3.el4.x86_64.rpm
+rhpki-native-tools-7.3.0-6.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2005-2090.html">https://www.redhat.com/security/data/cve/CVE-2005-2090.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2005-3510.html">https://www.redhat.com/security/data/cve/CVE-2005-3510.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2006-3835.html">https://www.redhat.com/security/data/cve/CVE-2006-3835.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2006-3918.html">https://www.redhat.com/security/data/cve/CVE-2006-3918.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2006-5752.html">https://www.redhat.com/security/data/cve/CVE-2006-5752.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-0450.html">https://www.redhat.com/security/data/cve/CVE-2007-0450.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-1349.html">https://www.redhat.com/security/data/cve/CVE-2007-1349.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-1358.html">https://www.redhat.com/security/data/cve/CVE-2007-1358.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-1863.html">https://www.redhat.com/security/data/cve/CVE-2007-1863.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-3304.html">https://www.redhat.com/security/data/cve/CVE-2007-3304.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-3382.html">https://www.redhat.com/security/data/cve/CVE-2007-3382.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-3385.html">https://www.redhat.com/security/data/cve/CVE-2007-3385.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-3847.html">https://www.redhat.com/security/data/cve/CVE-2007-3847.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-4465.html">https://www.redhat.com/security/data/cve/CVE-2007-4465.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-5000.html">https://www.redhat.com/security/data/cve/CVE-2007-5000.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-5116.html">https://www.redhat.com/security/data/cve/CVE-2007-5116.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-5333.html">https://www.redhat.com/security/data/cve/CVE-2007-5333.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-5461.html">https://www.redhat.com/security/data/cve/CVE-2007-5461.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2007-6388.html">https://www.redhat.com/security/data/cve/CVE-2007-6388.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-0005.html">https://www.redhat.com/security/data/cve/CVE-2008-0005.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-0128.html">https://www.redhat.com/security/data/cve/CVE-2008-0128.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-1232.html">https://www.redhat.com/security/data/cve/CVE-2008-1232.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-1927.html">https://www.redhat.com/security/data/cve/CVE-2008-1927.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-2364.html">https://www.redhat.com/security/data/cve/CVE-2008-2364.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-2370.html">https://www.redhat.com/security/data/cve/CVE-2008-2370.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-2939.html">https://www.redhat.com/security/data/cve/CVE-2008-2939.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2008-5515.html">https://www.redhat.com/security/data/cve/CVE-2008-5515.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-0023.html">https://www.redhat.com/security/data/cve/CVE-2009-0023.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-0033.html">https://www.redhat.com/security/data/cve/CVE-2009-0033.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-0580.html">https://www.redhat.com/security/data/cve/CVE-2009-0580.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1891.html">https://www.redhat.com/security/data/cve/CVE-2009-1891.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1955.html">https://www.redhat.com/security/data/cve/CVE-2009-1955.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-1956.html">https://www.redhat.com/security/data/cve/CVE-2009-1956.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2412.html">https://www.redhat.com/security/data/cve/CVE-2009-2412.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3094.html">https://www.redhat.com/security/data/cve/CVE-2009-3094.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3095.html">https://www.redhat.com/security/data/cve/CVE-2009-3095.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4901.html">https://www.redhat.com/security/data/cve/CVE-2009-4901.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0407.html">https://www.redhat.com/security/data/cve/CVE-2010-0407.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0434.html">https://www.redhat.com/security/data/cve/CVE-2010-0434.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/manuals/cert-system/7.3/html/Administration_Guide/Administration_Guide-Updating_Certificate_System_Packages-Updating_a_Solaris_9_system_using_pkgrm_and_pkgadd.html">http://www.redhat.com/docs/manuals/cert-system/7.3/html/Administration_Guide/Administration_Guide-Updating_Certificate_System_Packages-Updating_a_Solaris_9_system_using_pkgrm_and_pkgadd.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMWsbTXlSAg2UNWIIRAuzwAKC/DlrNX1MWqd+JliAq0NQHwlsYaACfe9h6
+GVFRiSJ0kyldp8T8TONIP18=
+=Txu0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

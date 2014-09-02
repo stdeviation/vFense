@@ -1,0 +1,270 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0267&#45;01] Critical: java&#45;1.6.0&#45;ibm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 19 May 2008 11:31:43 &#45;0400 -->
+<!--X-Message-Id: 200805191531.m4JFVgFP018321@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0267-01] Critical: java-1.6.0-ibm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0267-01] Critical: java-1.6.0-ibm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0267-01] Critical: java-1.6.0-ibm security update</li>
+<li><em>Date</em>: Mon, 19 May 2008 11:31:42 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: java-1.6.0-ibm security update
+Advisory ID:       RHSA-2008:0267-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0267.html">https://rhn.redhat.com/errata/RHSA-2008-0267.html</a>
+Issue date:        2008-05-19
+CVE Names:         CVE-2008-1187 CVE-2008-1188 CVE-2008-1189 
+                   CVE-2008-1190 CVE-2008-1191 CVE-2008-1192 
+                   CVE-2008-1193 CVE-2008-1194 CVE-2008-1195 
+                   CVE-2008-1196 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.6.0-ibm packages that fix several security issues are now
+available for Red Hat Enterprise Linux 5 Supplementary.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Supplementary (v. 5 client) - i386, x86_64
+RHEL Supplementary (v. 5 server) - i386, ppc, s390x, x86_64
+
+3. Description:
+
+IBM's 1.6.0 Java release includes the IBM Java 2 Runtime Environment, and
+the IBM Java 2 Software Development Kit.
+
+A flaw was found in the Java XSLT processing classes. An untrusted
+application or applet could cause a denial of service, or execute arbitrary
+code with the permissions of the user running the JRE. (CVE-2008-1187) 
+
+Several buffer overflow flaws were found in Java Web Start (JWS). An
+untrusted JNLP application could access local files, or execute local
+applications accessible to the user running the JRE. (CVE-2008-1188,
+CVE-2008-1189, CVE-2008-1190, CVE-2008-1191, CVE-2008-1196)
+
+A flaw was found in the Java plug-in. A remote attacker could bypass the
+same origin policy, executing arbitrary code with the permissions of the
+user running the JRE. (CVE-2008-1192)
+
+A flaw was found in the JRE image parsing libraries. An untrusted
+application or applet could cause a denial of service, or possibly execute
+arbitrary code with the permissions of the user running the JRE.
+(CVE-2008-1193)
+
+A flaw was found in the JRE color management library. An untrusted
+application or applet could trigger a denial of service (JVM crash).
+(CVE-2008-1194)
+
+The JRE allowed untrusted JavaScript code to create local network
+connections by the use of Java APIs. A remote attacker could use these
+flaws to access local network services. (CVE-2008-1195)
+
+All users of java-1.6.0-ibm are advised to upgrade to these updated
+packages, that contain IBM's 1.6.0 SR1 Java release, which resolves these
+issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+436030 - CVE-2008-1187 Untrusted applet and application XSLT processing privilege escalation
+436293 - CVE-2008-1188 Buffer overflow security vulnerabilities in Java Web Start (CVE-2008-1189, CVE-2008-1190)
+436295 - CVE-2008-1192 Java Plugin same-origin-policy bypass
+436296 - CVE-2008-1193 JRE image parsing library allows privilege escalation (CVE-2008-1194)
+436299 - CVE-2008-1195 Java-API calls in untrusted Javascript allow network privilege escalation
+436302 - CVE-2008-1196 Buffer overflow security vulnerabilities in Java Web Start
+444746 - CVE-2008-1191 Untrusted Java Web Start arbitrary file creation 
+
+6. Package List:
+
+RHEL Desktop Supplementary (v. 5 client):
+
+i386:
+java-1.6.0-ibm-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-accessibility-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-demo-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-devel-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-javacomm-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-jdbc-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-plugin-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-src-1.6.0.1-1jpp.2.el5.i386.rpm
+
+x86_64:
+java-1.6.0-ibm-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-accessibility-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-demo-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-demo-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-devel-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-devel-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-javacomm-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-javacomm-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-jdbc-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-jdbc-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-plugin-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-src-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-src-1.6.0.1-1jpp.2.el5.x86_64.rpm
+
+RHEL Supplementary (v. 5 server):
+
+i386:
+java-1.6.0-ibm-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-accessibility-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-demo-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-devel-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-javacomm-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-jdbc-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-plugin-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-src-1.6.0.1-1jpp.2.el5.i386.rpm
+
+ppc:
+java-1.6.0-ibm-1.6.0.1-1jpp.2.el5.ppc.rpm
+java-1.6.0-ibm-1.6.0.1-1jpp.2.el5.ppc64.rpm
+java-1.6.0-ibm-accessibility-1.6.0.1-1jpp.2.el5.ppc.rpm
+java-1.6.0-ibm-demo-1.6.0.1-1jpp.2.el5.ppc.rpm
+java-1.6.0-ibm-demo-1.6.0.1-1jpp.2.el5.ppc64.rpm
+java-1.6.0-ibm-devel-1.6.0.1-1jpp.2.el5.ppc.rpm
+java-1.6.0-ibm-devel-1.6.0.1-1jpp.2.el5.ppc64.rpm
+java-1.6.0-ibm-javacomm-1.6.0.1-1jpp.2.el5.ppc.rpm
+java-1.6.0-ibm-javacomm-1.6.0.1-1jpp.2.el5.ppc64.rpm
+java-1.6.0-ibm-jdbc-1.6.0.1-1jpp.2.el5.ppc.rpm
+java-1.6.0-ibm-jdbc-1.6.0.1-1jpp.2.el5.ppc64.rpm
+java-1.6.0-ibm-plugin-1.6.0.1-1jpp.2.el5.ppc.rpm
+java-1.6.0-ibm-src-1.6.0.1-1jpp.2.el5.ppc.rpm
+java-1.6.0-ibm-src-1.6.0.1-1jpp.2.el5.ppc64.rpm
+
+s390x:
+java-1.6.0-ibm-1.6.0.1-1jpp.2.el5.s390.rpm
+java-1.6.0-ibm-1.6.0.1-1jpp.2.el5.s390x.rpm
+java-1.6.0-ibm-accessibility-1.6.0.1-1jpp.2.el5.s390x.rpm
+java-1.6.0-ibm-demo-1.6.0.1-1jpp.2.el5.s390.rpm
+java-1.6.0-ibm-demo-1.6.0.1-1jpp.2.el5.s390x.rpm
+java-1.6.0-ibm-devel-1.6.0.1-1jpp.2.el5.s390.rpm
+java-1.6.0-ibm-devel-1.6.0.1-1jpp.2.el5.s390x.rpm
+java-1.6.0-ibm-jdbc-1.6.0.1-1jpp.2.el5.s390.rpm
+java-1.6.0-ibm-jdbc-1.6.0.1-1jpp.2.el5.s390x.rpm
+java-1.6.0-ibm-src-1.6.0.1-1jpp.2.el5.s390.rpm
+java-1.6.0-ibm-src-1.6.0.1-1jpp.2.el5.s390x.rpm
+
+x86_64:
+java-1.6.0-ibm-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-accessibility-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-demo-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-demo-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-devel-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-devel-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-javacomm-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-javacomm-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-jdbc-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-jdbc-1.6.0.1-1jpp.2.el5.x86_64.rpm
+java-1.6.0-ibm-plugin-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-src-1.6.0.1-1jpp.2.el5.i386.rpm
+java-1.6.0-ibm-src-1.6.0.1-1jpp.2.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1187">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1187</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1188">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1188</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1189">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1189</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1190">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1190</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1191">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1191</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1192">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1192</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1193">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1193</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1194">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1194</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1195">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1195</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1196">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1196</a>
+<a  rel="nofollow" href="http://www-128.ibm.com/developerworks/java/jdk/alerts/">http://www-128.ibm.com/developerworks/java/jdk/alerts/</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIMZ1UXlSAg2UNWIIRAhwoAJ9cu+ref+CxMA888kw2j3ZNDR6Y9QCgu7Di
+1OF8OHR8KLYNh5X0/S+86AQ=
+=NsNv
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

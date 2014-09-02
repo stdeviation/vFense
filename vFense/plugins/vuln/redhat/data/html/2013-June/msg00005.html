@@ -1,0 +1,237 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0886&#45;01] Moderate: rhev 3.2 &#45; vdsm security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 10 Jun 2013 17:01:14 &#45;0400 -->
+<!--X-Message-Id: 201306102101.r5AL1DIE009864@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0886-01] Moderate: rhev 3.2 - vdsm security and bug fix	updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0886-01] Moderate: rhev 3.2 - vdsm security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0886-01] Moderate: rhev 3.2 - vdsm security and bug fix	update</li>
+<li><em>Date</em>: Mon, 10 Jun 2013 21:01:12 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhev 3.2 - vdsm security and bug fix update
+Advisory ID:       RHSA-2013:0886-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0886.html">https://rhn.redhat.com/errata/RHSA-2013-0886.html</a>
+Issue date:        2013-06-10
+CVE Names:         CVE-2013-0167 
+=====================================================================
+
+1. Summary:
+
+Updated vdsm packages that fix one security issue and various bugs are now
+available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Agents (vdsm) - noarch, x86_64
+RHEV-M 3.2 - noarch, x86_64
+
+3. Description:
+
+VDSM is a management module that serves as a Red Hat Enterprise
+Virtualization Manager agent on Red Hat Enterprise Virtualization
+Hypervisor or Red Hat Enterprise Linux hosts.
+
+A flaw was found in the way unexpected fields in guestInfo dictionaries
+were processed. A privileged guest user could potentially use this flaw to
+make the host the guest is running on unavailable to the management
+server. (CVE-2013-0167)
+
+The CVE-2013-0167 issue was discovered by Dan Kenigsberg of the Red Hat
+Enterprise Virtualization team.
+
+This update also fixes various bugs. Refer to the Technical Notes for
+information about these changes:
+
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Technical_Notes/chap-RHSA-2013-0886.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Technical_Notes/chap-RHSA-2013-0886.html</a>
+
+All users managing Red Hat Enterprise Linux Virtualization hosts using Red
+Hat Enterprise Virtualization Manager are advised to install these updated
+packages, which fix these issues.
+
+These updated packages will be provided to users of Red Hat Enterprise
+Virtualization Hypervisor in the next rhev-hypervisor6 errata package.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+834041 - 3.1 - [vdsm] vdsm losses its connection to libvirt socket on certain case
+852956 - 3.2 - prepareForShutdown is not called when connection to libvirt is broken with event: libvirtError: internal error client socket is closed
+861701 - 3.2 - need to sync networks between vdsm and libvirt.
+871616 - Guest agent information is missing after few VM's migrations
+873145 - 3.2 - vdsm [Storage Live Migration]: vm changes state to pause for a few seconds during storage live migration
+875487 - 3.2 Failed to break BOND and attach custom MTU networks while VM is running
+875775 - 3.2.0 - [Storage] Unable to extend storage domain if PV is in use.
+878064 - engine: Error while executing action SetVmTicket: Unexpected exception
+879253 - 3.2 - [vdsm] ConnectStoragePool fail with 2 hosts in NFS due to stale cache
+880961 - 3.2 - [Upgrade] vdsm daemon not responding  after upgrading from  vdsm-4.9-113.4.el6_3 to vdsm-4.9.6-44.0.el6_3
+881947 - 3.2 [vdsm] getDeviceList is failing with vdsm 4.10.2-1
+882276 - 3.2 - [vdsm] Failure upgrading a storage domain to V3 - No space left on device
+882667 - vdsm: master domain is partially inaccessible when umount fails for iso/export domain (only on posix master domain over nfs)
+883327 - 3.2 - vdsm: Unexpected exception when upgrading local/NFS domain from 3.0 to 3.1
+883390 - Attach Storage Domain is failing on FC storage if Create Storage Domain was initiated from Non-Spm host
+885418 - vdsm: error log throws exception in forceIscsiScan when vdsm config minimal or maximal timeout parameters are illegel
+890572 - If RHEV-H host registered from RHEV-M and later re-registered from RHEV-H, the 'Management Server Port' value cannot be changed.
+890983 - vdsm: dumpStorageTable.py exits on KeyError for buildVolumesChain
+893193 - 'vdsm.log' does not report the correct vdsm release for RHEV 3.1 versions.
+893332 - CVE-2013-0167 vdsm: unfiltered guestInfo dictionary DoS
+895912 - Rhevh failed downloading RHEV-M certificate when Register it to RHEV-M via port 80
+905930 - Screen is locked immediately after an user auto-logs into guest via SSO from User Portal
+910445 - Storage Live Migration of thick disk results in corrupted disk
+911209 - vdsm: vm's sent with wipe after delete in NFS storage will not be removed from domain
+911417 - After upgrading to RHEL6.3 NFS images permissions are 440 and qemu user cannot start 2.2 vms
+912308 - vdsm.log ownership is root:root when log rotate run at the same time as supervdsm writes to the same log file
+915068 - vdsm: 'ValueError: field and value cannot include = character' when removing disks
+917363 - vdsm: can't remove/export a vm with exception on getAllVolumes
+918541 - The VM Channels Listener thread appears to stall , blocking all communication between VDSM and the hosted guest agents.
+918666 - Don't fail when a non-existing bond is requested via setupNetworks.
+919201 - Warning when migration is delayed/get stuck due to high guest memory writes.
+919356 - [RHEVM] [vdsm] unexpected exception on VNIC hot unplug with MAC change
+920532 - [scale] Attaching a big number of NFS Storage Domain fails. (fails on too many open files on VDSM side)
+920614 - decrease libvirtd log level
+920671 - [rhevh upgrade] Reporting a 'Failed to upgrade' to engine, while it really succeeded
+920688 - VDSM attribute error exception when trying to write to vdsm  log.
+922515 - vdsm: vdsm fails to recover after restart with 'AttributeError: 'list' object has no attribute 'split'' error
+923773 - vmHotplugDisk failed with &quot;VolumeError: Bad volume specification&quot;
+923964 - vdsm: within few seconds after a live snapshot the volume extension requests might be too large
+925967 - Debug messages show on TUI just after register to rhevm
+925981 - default migration bandwidth capping is not honored anymore
+927143 - [vdsm] ShutdownVM fails after plugging shared disk to 2 vms at once due to 'Bad File Descriptor' in vdsm
+928217 - Vdsm logs are filling filesystem up - logrotation of vdsm logs doesn't work correctly
+928861 - VDSM will fail to start if rsyslogd's configuration is invalid.
+947014 - Vdsm fails to decode application list if an application name containing Non-ASCII character is present on guest
+948346 - vdsm [UPGRADE]: upgrade to v3 fails when the domain links are missing
+948940 - [vdsm] concurrent live storage migration of multiple disks might result in a saveState exception
+949192 - [vdsm] [scale] After libvirt failure vdsm restarts and starts responding to XML-RPC after a big delay
+951057 - vdsm should report the storage domain version in the statistics
+955593 - vdsm errors/Tracebacks when migrating a VM, migration itself is successful
+956683 - The default migration_max_bandwidth (32MiBps) &amp; default max_outgoing_migrations (5) will saturate a 1Gbps link.
+962549 - VM no longer bootable after snapshot removal
+
+6. Package List:
+
+RHEV Agents (vdsm):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/vdsm-4.10.2-22.0.el6ev.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/vdsm-4.10.2-22.0.el6ev.src.rpm</a>
+
+noarch:
+vdsm-cli-4.10.2-22.0.el6ev.noarch.rpm
+vdsm-hook-vhostmd-4.10.2-22.0.el6ev.noarch.rpm
+vdsm-reg-4.10.2-22.0.el6ev.noarch.rpm
+vdsm-xmlrpc-4.10.2-22.0.el6ev.noarch.rpm
+
+x86_64:
+vdsm-4.10.2-22.0.el6ev.x86_64.rpm
+vdsm-debuginfo-4.10.2-22.0.el6ev.x86_64.rpm
+vdsm-python-4.10.2-22.0.el6ev.x86_64.rpm
+
+RHEV-M 3.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/vdsm-4.10.2-22.0.el6ev.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/vdsm-4.10.2-22.0.el6ev.src.rpm</a>
+
+noarch:
+vdsm-bootstrap-4.10.2-22.0.el6ev.noarch.rpm
+
+x86_64:
+vdsm-debuginfo-4.10.2-22.0.el6ev.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0167.html">https://www.redhat.com/security/data/cve/CVE-2013-0167.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Technical_Notes/chap-RHSA-2013-0886.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Technical_Notes/chap-RHSA-2013-0886.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRtj6KXlSAg2UNWIIRAv4xAJoD+HZL3kpjwQjO5nsqg5VhethCngCgqx8o
+aUu6zn0LxAYIhaOi5xeMRIk=
+=V1fc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

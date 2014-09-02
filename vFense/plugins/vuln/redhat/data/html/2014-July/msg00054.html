@@ -1,0 +1,190 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0939&#45;01] Moderate: python&#45;django&#45;horizon security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 24 Jul 2014 13:46:04 &#45;0400 -->
+<!--X-Message-Id: 201407241746.s6OHk3rU010079@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0939-01] Moderate: python-django-horizon security, bug fix,	a</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00053.html">Date Prev</a>][<a href="msg00055.html">Date Next</a>] &nbsp; [<a href="msg00053.html">Thread Prev</a>][<a href="msg00055.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00054">Thread Index</A>]
+[<A HREF="date.html#00054">Date Index</A>]
+[<A HREF="author.html#00054">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0939-01] Moderate: python-django-horizon security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0939-01] Moderate: python-django-horizon security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 24 Jul 2014 17:46:03 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: python-django-horizon security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:0939-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0939.html">https://rhn.redhat.com/errata/RHSA-2014-0939.html</a>
+Issue date:        2014-07-24
+CVE Names:         CVE-2014-3473 CVE-2014-3474 CVE-2014-3475 
+=====================================================================
+
+1. Summary:
+
+Updated python-django-horizon packages that fix three security issues,
+multiple bugs, and add an enhancement are now available for Red Hat
+Enterprise Linux OpenStack Platform 5.0 (Icehouse) for Red Hat Enterprise
+Linux 7.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 5.0 for RHEL 7 - noarch
+
+3. Description:
+
+OpenStack Dashboard (Horizon) provides administrators and users with a
+graphical interface to access, provision, and automate cloud-based
+resources.
+
+A cross-site scripting (XSS) flaw was found in the way orchestration
+templates were handled. An owner of such a template could use this flaw to
+perform XSS attacks against other Horizon users. (CVE-2014-3473)
+
+It was found that network names were not sanitized. A malicious user could
+use this flaw to perform XSS attacks against other Horizon users by
+creating a network with a specially crafted name. (CVE-2014-3474)
+
+It was found that certain email addresses were not sanitized. An
+administrator could use this flaw to perform XSS attacks against other
+Horizon users by storing an email address that has a specially crafted
+name. (CVE-2014-3475)
+
+Red Hat would like to thank the OpenStack project for reporting these
+issues. Upstream acknowledges Jason Hullinger from Hewlett Packard as the
+original reporter of CVE-2014-3473, Craig Lorentzen from Cisco as the
+original reporter of CVE-2014-3474, and Michael Xin from Rackspace as the
+original reporter of CVE-2014-3475.
+
+This update also fixes the following bugs:
+
+* The python-django-horizon package has been updated to upstream version
+2014.1.1. This includes several important bug fixes, including an issue
+that prevented access to Swift pseudo-folders through the Dashboard, and
+an issue that prevented instances from being launched when using the French
+locale (or other locales that use apostrophes). (BZ#1117901)
+
+Lastly, this update also adds the following enhancement:
+
+* A new &quot;Update&quot; option has been added for OpenStack Networking VPNaaS
+support for Dashboard. This makes it easier to use Virtual Private Network
+as a Service (VPNaaS). (BZ#1042030)
+
+All python-django-horizon users are advised to upgrade to these updated
+packages, which correct these issues and add this enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1042030 - [RFE][horizon]: 'Update' options for Neutron VPNaaS Horizon Support
+1116090 - CVE-2014-3473 CVE-2014-3474 CVE-2014-3475 openstack-horizon: multiple XSS flaws
+1117901 - Rebase python-django-horizon to 2014.1.1
+
+6. Package List:
+
+OpenStack 5.0 for RHEL 7:
+
+Source:
+python-django-horizon-2014.1.1-2.el7ost.src.rpm
+
+noarch:
+openstack-dashboard-2014.1.1-2.el7ost.noarch.rpm
+openstack-dashboard-theme-2014.1.1-2.el7ost.noarch.rpm
+python-django-horizon-2014.1.1-2.el7ost.noarch.rpm
+python-django-horizon-doc-2014.1.1-2.el7ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3473.html">https://www.redhat.com/security/data/cve/CVE-2014-3473.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3474.html">https://www.redhat.com/security/data/cve/CVE-2014-3474.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3475.html">https://www.redhat.com/security/data/cve/CVE-2014-3475.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFT0UYAXlSAg2UNWIIRArS5AJ9j+HKJv0kdBoNOV9xK9oEM0RYqZwCglcc5
+rVr4TZIPbLWLsXb1dpHJx2M=
+=i+mY
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00053.html">Date Prev</a>][<a href="msg00055.html">Date Next</a>] &nbsp; [<a href="msg00053.html">Thread Prev</a>][<a href="msg00055.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00054">Thread Index</A>]
+[<A HREF="date.html#00054">Date Index</A>]
+[<A HREF="author.html#00054">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

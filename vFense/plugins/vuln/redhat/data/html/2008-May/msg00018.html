@@ -1,0 +1,219 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0295&#45;01] Low: vsftpd security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 21 May 2008 10:28:52 &#45;0400 -->
+<!--X-Message-Id: 200805211428.m4LESo5Q030019@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0295-01] Low: vsftpd security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0295-01] Low: vsftpd security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0295-01] Low: vsftpd security and bug fix update</li>
+<li><em>Date</em>: Wed, 21 May 2008 10:28:50 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: vsftpd security and bug fix update
+Advisory ID:       RHSA-2008:0295-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0295.html">https://rhn.redhat.com/errata/RHSA-2008-0295.html</a>
+Issue date:        2008-05-21
+CVE Names:         CVE-2007-5962 
+=====================================================================
+
+1. Summary:
+
+An updated vsftpd package that fixes a security issue and several bugs is
+now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The vsftpd package includes a Very Secure File Transfer Protocol (FTP)
+daemon.
+
+A memory leak was discovered in the vsftpd daemon. An attacker who is able
+to connect to an FTP service, either as an authenticated or anonymous user,
+could cause vsftpd to allocate all available memory if the &quot;deny_file&quot;
+option was enabled in vsftpd.conf. (CVE-2007-5962)
+
+As well, this updated package fixes following bugs:
+
+* a race condition could occur even when the &quot;lock_upload_files&quot; option is
+set. When uploading two files simultaneously, the result was a combination
+of the two files. This resulted in uploaded files becoming corrupted. In
+these updated packages, uploading two files simultaneously will result in a
+file that is identical to the last uploaded file.
+
+* when the &quot;userlist_enable&quot; option is used, failed log in attempts as a
+result of the user not being in the list of allowed users, or being in the
+list of denied users, will not be logged. In these updated packages, a new
+&quot;userlist_log=YES&quot; option can be configured in vsftpd.conf, which will log
+failed log in attempts in these situations.
+
+* vsftpd did not support usernames that started with an underscore or a
+period character. Usernames starting with an underscore or a period are
+supported in these updated packages.
+
+* using wildcards in conjunction with the &quot;ls&quot; command did not return all
+the file names it should. For example, if you FTPed into a directory
+containing three files -- A1, A21 and A11 -- and ran the &quot;ls *1&quot; command,
+only the file names A1 and A21 were returned. These updated packages use
+greedier code that continues to speculatively scan for items even after
+matches have been found.
+
+* when the &quot;user_config_dir&quot; option is enabled in vsftpd.conf, and the
+user-specific configuration file did not exist, the following error
+occurred after a user entered their password during the log in process:
+
+500 OOPS: reading non-root config file
+
+This has been resolved in this updated package.
+
+All vsftpd users are advised to upgrade to this updated package, which
+resolves these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+240553 - vsftpd has a create/lock race condition which corrupts uploads
+392181 - vsftpd file listing issue with wildcard
+392231 - Uploaded file corrupted when two connections from same client uploading same file simultaneously
+397011 - CVE-2007-5962 vsftpd: memory leak when deny_file option is set
+400921 - OOPS: reading non-root config file
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/vsftpd-2.0.5-12.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/vsftpd-2.0.5-12.el5.src.rpm</a>
+
+i386:
+vsftpd-2.0.5-12.el5.i386.rpm
+vsftpd-debuginfo-2.0.5-12.el5.i386.rpm
+
+x86_64:
+vsftpd-2.0.5-12.el5.x86_64.rpm
+vsftpd-debuginfo-2.0.5-12.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/vsftpd-2.0.5-12.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/vsftpd-2.0.5-12.el5.src.rpm</a>
+
+i386:
+vsftpd-2.0.5-12.el5.i386.rpm
+vsftpd-debuginfo-2.0.5-12.el5.i386.rpm
+
+ia64:
+vsftpd-2.0.5-12.el5.ia64.rpm
+vsftpd-debuginfo-2.0.5-12.el5.ia64.rpm
+
+ppc:
+vsftpd-2.0.5-12.el5.ppc.rpm
+vsftpd-debuginfo-2.0.5-12.el5.ppc.rpm
+
+s390x:
+vsftpd-2.0.5-12.el5.s390x.rpm
+vsftpd-debuginfo-2.0.5-12.el5.s390x.rpm
+
+x86_64:
+vsftpd-2.0.5-12.el5.x86_64.rpm
+vsftpd-debuginfo-2.0.5-12.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5962">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5962</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFINDGOXlSAg2UNWIIRAvAdAJ9VO+ddDYvcoY8hppyJwzmTHdoGtQCgr6Jg
+lM2d7tmmxF0YKVNo4WLrvWw=
+=XWhK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

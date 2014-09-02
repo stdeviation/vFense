@@ -1,0 +1,316 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0958&#45;01] Important: java&#45;1.7.0&#45;openjdk security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 19 Jun 2013 20:11:10 &#45;0400 -->
+<!--X-Message-Id: 201306200011.r5K0B924015599@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0958-01] Important: java-1.7.0-openjdk security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0958-01] Important: java-1.7.0-openjdk security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0958-01] Important: java-1.7.0-openjdk security update</li>
+<li><em>Date</em>: Thu, 20 Jun 2013 00:11:09 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: java-1.7.0-openjdk security update
+Advisory ID:       RHSA-2013:0958-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0958.html">https://rhn.redhat.com/errata/RHSA-2013-0958.html</a>
+Issue date:        2013-06-19
+CVE Names:         CVE-2013-1500 CVE-2013-1571 CVE-2013-2407 
+                   CVE-2013-2412 CVE-2013-2443 CVE-2013-2444 
+                   CVE-2013-2445 CVE-2013-2446 CVE-2013-2447 
+                   CVE-2013-2448 CVE-2013-2449 CVE-2013-2450 
+                   CVE-2013-2452 CVE-2013-2453 CVE-2013-2454 
+                   CVE-2013-2455 CVE-2013-2456 CVE-2013-2457 
+                   CVE-2013-2458 CVE-2013-2459 CVE-2013-2460 
+                   CVE-2013-2461 CVE-2013-2463 CVE-2013-2465 
+                   CVE-2013-2469 CVE-2013-2470 CVE-2013-2471 
+                   CVE-2013-2472 CVE-2013-2473 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.7.0-openjdk packages that fix various security issues are
+now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+These packages provide the OpenJDK 7 Java Runtime Environment and the
+OpenJDK 7 Software Development Kit.
+
+Multiple flaws were discovered in the ImagingLib and the image attribute,
+channel, layout and raster processing in the 2D component. An untrusted
+Java application or applet could possibly use these flaws to trigger Java
+Virtual Machine memory corruption. (CVE-2013-2470, CVE-2013-2471,
+CVE-2013-2472, CVE-2013-2473, CVE-2013-2463, CVE-2013-2465, CVE-2013-2469)
+
+Integer overflow flaws were found in the way AWT processed certain input.
+An attacker could use these flaws to execute arbitrary code with the
+privileges of the user running an untrusted Java applet or application.
+(CVE-2013-2459)
+
+Multiple improper permission check issues were discovered in the Sound,
+JDBC, Libraries, JMX, and Serviceability components in OpenJDK. An
+untrusted Java application or applet could use these flaws to bypass Java
+sandbox restrictions. (CVE-2013-2448, CVE-2013-2454, CVE-2013-2458,
+CVE-2013-2457, CVE-2013-2453, CVE-2013-2460)
+
+Multiple flaws in the Serialization, Networking, Libraries and CORBA
+components can be exploited by an untrusted Java application or applet to
+gain access to potentially sensitive information. (CVE-2013-2456,
+CVE-2013-2447, CVE-2013-2455, CVE-2013-2452, CVE-2013-2443, CVE-2013-2446)
+
+It was discovered that the Hotspot component did not properly handle
+out-of-memory errors. An untrusted Java application or applet could
+possibly use these flaws to terminate the Java Virtual Machine.
+(CVE-2013-2445)
+
+It was discovered that the AWT component did not properly manage certain
+resources and that the ObjectStreamClass of the Serialization component
+did not properly handle circular references. An untrusted Java application
+or applet could possibly use these flaws to cause a denial of service.
+(CVE-2013-2444, CVE-2013-2450)
+
+It was discovered that the Libraries component contained certain errors
+related to XML security and the class loader. A remote attacker could
+possibly exploit these flaws to bypass intended security mechanisms or
+disclose potentially sensitive information and cause a denial of service.
+(CVE-2013-2407, CVE-2013-2461)
+
+It was discovered that JConsole did not properly inform the user when
+establishing an SSL connection failed. An attacker could exploit this flaw
+to gain access to potentially sensitive information. (CVE-2013-2412)
+
+It was discovered that GnomeFileTypeDetector did not check for read
+permissions when accessing files. An untrusted Java application or applet
+could possibly use this flaw to disclose potentially sensitive information.
+(CVE-2013-2449)
+
+It was found that documentation generated by Javadoc was vulnerable to a
+frame injection attack. If such documentation was accessible over a
+network, and a remote attacker could trick a user into visiting a
+specially-crafted URL, it would lead to arbitrary web content being
+displayed next to the documentation. This could be used to perform a
+phishing attack by providing frame content that spoofed a login form on
+the site hosting the vulnerable documentation. (CVE-2013-1571)
+
+It was discovered that the 2D component created shared memory segments with
+insecure permissions. A local attacker could use this flaw to read or write
+to the shared memory segment. (CVE-2013-1500)
+
+Red Hat would like to thank Tim Brown for reporting CVE-2013-1500, and
+US-CERT for reporting CVE-2013-1571. US-CERT acknowledges Oracle as the
+original reporter of CVE-2013-1571.
+
+This erratum also upgrades the OpenJDK package to IcedTea7 2.3.10. Refer to
+the NEWS file, linked to in the References, for further information.
+
+All users of java-1.7.0-openjdk are advised to upgrade to these updated
+packages, which resolve these issues. All running instances of OpenJDK Java
+must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+973474 - CVE-2013-1571 OpenJDK: Frame injection in generated HTML (Javadoc, 8012375)
+975099 - CVE-2013-2470 OpenJDK: ImagingLib byte lookup processing (2D, 8011243)
+975102 - CVE-2013-2471 OpenJDK: Incorrect IntegerComponentRaster size checks (2D, 8011248)
+975107 - CVE-2013-2472 OpenJDK: Incorrect ShortBandedRaster size checks (2D, 8011253)
+975110 - CVE-2013-2473 OpenJDK: Incorrect ByteBandedRaster size checks (2D, 8011257)
+975115 - CVE-2013-2463 OpenJDK: Incorrect image attribute verification (2D, 8012438)
+975118 - CVE-2013-2465 OpenJDK: Incorrect image channel verification (2D, 8012597)
+975120 - CVE-2013-2469 OpenJDK: Incorrect image layout verification (2D, 8012601)
+975121 - CVE-2013-2459 OpenJDK: Various AWT integer overflow checks (AWT, 8009071)
+975122 - CVE-2013-2460 OpenJDK: tracing insufficient access checks (Serviceability, 8010209)
+975124 - CVE-2013-2445 OpenJDK: Better handling of memory allocation errors (Hotspot, 7158805)
+975125 - CVE-2013-2448 OpenJDK: Better access restrictions (Sound, 8006328)
+975126 - CVE-2013-2461 OpenJDK: Missing check for valid DOMCanonicalizationMethod canonicalization algorithm (Libraries, 8014281)
+975127 - CVE-2013-2407 OpenJDK: Integrate Apache Santuario, rework class loader (Libraries, 6741606, 8008744)
+975129 - CVE-2013-2454 OpenJDK: SerialJavaObject package restriction (JDBC, 8009554)
+975130 - CVE-2013-2458 OpenJDK: Method handles (Libraries, 8009424)
+975131 - CVE-2013-2444 OpenJDK: Resource denial of service (AWT, 8001038)
+975132 - CVE-2013-2446 OpenJDK: output stream access restrictions (CORBA, 8000642)
+975133 - CVE-2013-2457 OpenJDK: Proper class checking (JMX, 8008120)
+975134 - CVE-2013-2453 OpenJDK: MBeanServer Introspector package access (JMX, 8008124)
+975137 - CVE-2013-2443 OpenJDK: AccessControlContext check order issue (Libraries, 8001330)
+975138 - CVE-2013-2452 OpenJDK: Unique VMIDs(Libraries, 8001033)
+975139 - CVE-2013-2455 OpenJDK: getEnclosing* checks (Libraries, 8007812)
+975140 - CVE-2013-2447 OpenJDK: Prevent revealing the local address (Networking, 8001318)
+975141 - CVE-2013-2450 OpenJDK: ObjectStreamClass circular reference denial of service (Serialization, 8000638)
+975142 - CVE-2013-2456 OpenJDK: ObjectOutputStream access checks (Serialization, 8008132)
+975144 - CVE-2013-2412 OpenJDK: JConsole SSL support (Serviceability, 8003703)
+975145 - CVE-2013-2449 OpenJDK: GnomeFileTypeDetector path access check(Libraries, 8004288)
+975148 - CVE-2013-1500 OpenJDK: Insecure shared memory permissions (2D, 8001034)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.25-2.3.10.4.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.25-2.3.10.4.el5_9.src.rpm</a>
+
+i386:
+java-1.7.0-openjdk-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+java-1.7.0-openjdk-demo-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+java-1.7.0-openjdk-devel-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+java-1.7.0-openjdk-javadoc-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+java-1.7.0-openjdk-src-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+
+x86_64:
+java-1.7.0-openjdk-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+java-1.7.0-openjdk-demo-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+java-1.7.0-openjdk-devel-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+java-1.7.0-openjdk-javadoc-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+java-1.7.0-openjdk-src-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.25-2.3.10.4.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/java-1.7.0-openjdk-1.7.0.25-2.3.10.4.el5_9.src.rpm</a>
+
+i386:
+java-1.7.0-openjdk-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+java-1.7.0-openjdk-demo-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+java-1.7.0-openjdk-devel-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+java-1.7.0-openjdk-javadoc-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+java-1.7.0-openjdk-src-1.7.0.25-2.3.10.4.el5_9.i386.rpm
+
+x86_64:
+java-1.7.0-openjdk-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+java-1.7.0-openjdk-debuginfo-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+java-1.7.0-openjdk-demo-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+java-1.7.0-openjdk-devel-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+java-1.7.0-openjdk-javadoc-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+java-1.7.0-openjdk-src-1.7.0.25-2.3.10.4.el5_9.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1500.html">https://www.redhat.com/security/data/cve/CVE-2013-1500.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1571.html">https://www.redhat.com/security/data/cve/CVE-2013-1571.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2407.html">https://www.redhat.com/security/data/cve/CVE-2013-2407.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2412.html">https://www.redhat.com/security/data/cve/CVE-2013-2412.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2443.html">https://www.redhat.com/security/data/cve/CVE-2013-2443.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2444.html">https://www.redhat.com/security/data/cve/CVE-2013-2444.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2445.html">https://www.redhat.com/security/data/cve/CVE-2013-2445.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2446.html">https://www.redhat.com/security/data/cve/CVE-2013-2446.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2447.html">https://www.redhat.com/security/data/cve/CVE-2013-2447.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2448.html">https://www.redhat.com/security/data/cve/CVE-2013-2448.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2449.html">https://www.redhat.com/security/data/cve/CVE-2013-2449.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2450.html">https://www.redhat.com/security/data/cve/CVE-2013-2450.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2452.html">https://www.redhat.com/security/data/cve/CVE-2013-2452.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2453.html">https://www.redhat.com/security/data/cve/CVE-2013-2453.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2454.html">https://www.redhat.com/security/data/cve/CVE-2013-2454.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2455.html">https://www.redhat.com/security/data/cve/CVE-2013-2455.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2456.html">https://www.redhat.com/security/data/cve/CVE-2013-2456.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2457.html">https://www.redhat.com/security/data/cve/CVE-2013-2457.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2458.html">https://www.redhat.com/security/data/cve/CVE-2013-2458.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2459.html">https://www.redhat.com/security/data/cve/CVE-2013-2459.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2460.html">https://www.redhat.com/security/data/cve/CVE-2013-2460.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2461.html">https://www.redhat.com/security/data/cve/CVE-2013-2461.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2463.html">https://www.redhat.com/security/data/cve/CVE-2013-2463.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2465.html">https://www.redhat.com/security/data/cve/CVE-2013-2465.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2469.html">https://www.redhat.com/security/data/cve/CVE-2013-2469.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2470.html">https://www.redhat.com/security/data/cve/CVE-2013-2470.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2471.html">https://www.redhat.com/security/data/cve/CVE-2013-2471.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2472.html">https://www.redhat.com/security/data/cve/CVE-2013-2472.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2473.html">https://www.redhat.com/security/data/cve/CVE-2013-2473.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://icedtea.classpath.org/hg/release/icedtea7-2.3/file/icedtea-2.3.10/NEWS">http://icedtea.classpath.org/hg/release/icedtea7-2.3/file/icedtea-2.3.10/NEWS</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRwkiDXlSAg2UNWIIRAnjwAJ98PjLz3SbQOaaEj3FdaDpw1hM1bACeMKi8
+ONtI1dvFg9XLfy79TqcQq1I=
+=xGMV
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

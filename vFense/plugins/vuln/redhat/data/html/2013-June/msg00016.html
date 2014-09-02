@@ -1,0 +1,199 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0953&#45;01] Important: Red Hat JBoss Portal 5.2.2 security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 18 Jun 2013 11:01:25 &#45;0400 -->
+<!--X-Message-Id: 201306181501.r5IF1NWB016053@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0953-01] Important: Red Hat JBoss Portal 5.2.2 security	updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0953-01] Important: Red Hat JBoss Portal 5.2.2 security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0953-01] Important: Red Hat JBoss Portal 5.2.2 security	update</li>
+<li><em>Date</em>: Tue, 18 Jun 2013 15:01:23 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Portal 5.2.2 security update
+Advisory ID:       RHSA-2013:0953-01
+Product:           Red Hat JBoss Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0953.html">https://rhn.redhat.com/errata/RHSA-2013-0953.html</a>
+Issue date:        2013-06-18
+CVE Names:         CVE-2011-2487 CVE-2011-2730 CVE-2012-5575 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Portal 5.2.2 roll up patch 1, which fixes multiple security
+issues and various bugs, is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Portal is the open source implementation of the Java EE suite
+of services and Portal services running atop Red Hat JBoss Enterprise
+Application Platform.
+
+JBoss Web Services leaked side-channel data when distributing symmetric
+keys (for XML encryption), allowing a remote attacker to recover the entire
+plain text form of a symmetric key. (CVE-2011-2487)
+
+Spring framework could possibly evaluate Expression Language (EL)
+expressions twice, allowing a remote attacker to execute arbitrary code in
+the context of the application server, or to obtain sensitive information
+from the server. (CVE-2011-2730)
+
+Note: Manual action is required to apply the fix for CVE-2011-2730. If your
+system has deployed applications which use Spring framework, the context
+parameter &quot;springJspExpressionSupport&quot; must be set to &quot;false&quot; to mitigate
+CVE-2011-2730, for example, in the application's web.xml file. This will
+prevent the double-evaluation of EL expressions that leads to the flaw.
+Red Hat JBoss Portal will deploy an application using Spring framework if
+JOSSO (Java Open Single Sign-On) is configured.
+
+XML encryption backwards compatibility attacks were found against various
+frameworks, including Apache CXF. An attacker could force a server to use
+insecure, legacy cryptosystems, even when secure cryptosystems were enabled
+on endpoints. By forcing the use of legacy cryptosystems, flaws such as
+CVE-2011-1096 and CVE-2011-2487 would be exposed, allowing plain text to be
+recovered from cryptograms and symmetric keys. This issue only affected
+the JBoss Web Services Native (jbossws-native) stack as Red Hat JBoss
+Portal does not use JBoss Web Services CXF (jbossws-cxf). (CVE-2012-5575)
+
+For jbossws-native, the fix for CVE-2012-5575 is implemented by two new
+configuration parameters in the 'encryption' element. This element can be a
+child of 'requires' in both client and server wsse configuration
+descriptors (set on a per-application basis via the application's
+jboss-wsse-server.xml and jboss-wsse-client.xml files). The new attributes
+are 'algorithms' and 'keyWrapAlgorithms'. These attributes should contain a
+blank space or comma separated list of algorithm IDs that are allowed for
+the encrypted incoming message, both for encryption and private key
+wrapping. For backwards compatibility, no algorithm checks are performed by
+default for empty lists or missing attributes.
+
+For example (do not include the line break in your configuration):
+
+encryption algorithms=&quot;aes-192-gcm aes-256-gcm&quot;
+keyWrapAlgorithms=&quot;rsa_oaep&quot;
+
+Specifies that incoming messages are required to be encrypted, and that the
+only permitted encryption algorithms are AES-192 and 256 in GCM mode, and
+RSA-OAEP only for key wrapping.
+
+Before performing any decryption, the jbossws-native stack will verify that
+each algorithm specified in the incoming messages is included in the
+allowed algorithms lists from these new encryption element attributes. The
+algorithm values to be used for 'algorithms' and 'keyWrapAlgorithms' are
+the same as for 'algorithm' and 'keyWrapAlgorithm' in the 'encrypt'
+element.
+
+Red Hat would like to thank Juraj Somorovsky of Ruhr-University Bochum
+for reporting CVE-2011-2487, and Tibor Jager, Kenneth G. Paterson and Juraj
+Somorovsky of Ruhr-University Bochum for reporting CVE-2012-5575.
+
+Warning: Before applying this update, back up all applications deployed on
+Red Hat JBoss Portal, along with all customized configuration files, and
+any databases and database settings.
+
+All users of Red Hat JBoss Portal 5.2.2 as provided from the Red Hat
+Customer Portal are advised to apply this roll up patch.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up all
+applications deployed on Red Hat JBoss Portal, along with all customized
+configuration files, and any databases and database settings.
+
+Note that it is recommended to halt the Red Hat JBoss Portal server by
+stopping the JBoss Application Server process before installing this
+update, and then after installing the update, restart the Red Hat JBoss
+Portal server by starting the JBoss Application Server process.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+713539 - CVE-2011-2487 jbossws: Prone to Bleichenbacher attack against to be distributed symmetric key
+737608 - CVE-2011-2730 Spring Framework: Information (internal server information, classpath, local working directories, session IDs) disclosure
+880443 - CVE-2012-5575 jbossws-native, jbossws-cxf, apache-cxf: XML encryption backwards compatibility attacks
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2487.html">https://www.redhat.com/security/data/cve/CVE-2011-2487.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2730.html">https://www.redhat.com/security/data/cve/CVE-2011-2730.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5575.html">https://www.redhat.com/security/data/cve/CVE-2012-5575.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=securityPatches&amp;version=5.2.2">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=securityPatches&amp;version=5.2.2</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRwHYmXlSAg2UNWIIRAld7AKCuQ26xnHKGf8fPoHCspcPe2jrndgCdG60w
+PbgYhVppcERfjvRszam4f/A=
+=xmxe
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

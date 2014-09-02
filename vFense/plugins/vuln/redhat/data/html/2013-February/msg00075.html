@@ -1,0 +1,329 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0568&#45;01] Important: dbus&#45;glib security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 26 Feb 2013 14:46:33 &#45;0500 -->
+<!--X-Message-Id: 201302261946.r1QJkWiW010670@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0568-01] Important: dbus-glib security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00074.html">Date Prev</a>][<a href="msg00076.html">Date Next</a>] &nbsp; [<a href="msg00074.html">Thread Prev</a>][<a href="msg00076.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00075">Thread Index</A>]
+[<A HREF="date.html#00075">Date Index</A>]
+[<A HREF="author.html#00075">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0568-01] Important: dbus-glib security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0568-01] Important: dbus-glib security update</li>
+<li><em>Date</em>: Tue, 26 Feb 2013 19:46:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: dbus-glib security update
+Advisory ID:       RHSA-2013:0568-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0568.html">https://rhn.redhat.com/errata/RHSA-2013-0568.html</a>
+Issue date:        2013-02-26
+CVE Names:         CVE-2013-0292 
+=====================================================================
+
+1. Summary:
+
+Updated dbus-glib packages that fix one security issue are now available
+for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+dbus-glib is an add-on library to integrate the standard D-Bus library with
+the GLib main loop and threading model.
+
+A flaw was found in the way dbus-glib filtered the message sender (message
+source subject) when the &quot;NameOwnerChanged&quot; signal was received. This
+could trick a system service using dbus-glib (such as fprintd) into
+believing a signal was sent from a privileged process, when it was not. A
+local attacker could use this flaw to escalate their privileges.
+(CVE-2013-0292)
+
+All dbus-glib users are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue. All running applications
+linked against dbus-glib, such as fprintd and NetworkManager, must be
+restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+911658 - CVE-2013-0292 dbus-glib: Local privilege escalation due improper filtering of message sender when NameOwnerChanged signal received
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/dbus-glib-0.73-11.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/dbus-glib-0.73-11.el5_9.src.rpm</a>
+
+i386:
+dbus-glib-0.73-11.el5_9.i386.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.i386.rpm
+
+x86_64:
+dbus-glib-0.73-11.el5_9.i386.rpm
+dbus-glib-0.73-11.el5_9.x86_64.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.i386.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/dbus-glib-0.73-11.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/dbus-glib-0.73-11.el5_9.src.rpm</a>
+
+i386:
+dbus-glib-debuginfo-0.73-11.el5_9.i386.rpm
+dbus-glib-devel-0.73-11.el5_9.i386.rpm
+
+x86_64:
+dbus-glib-debuginfo-0.73-11.el5_9.i386.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.x86_64.rpm
+dbus-glib-devel-0.73-11.el5_9.i386.rpm
+dbus-glib-devel-0.73-11.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/dbus-glib-0.73-11.el5_9.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/dbus-glib-0.73-11.el5_9.src.rpm</a>
+
+i386:
+dbus-glib-0.73-11.el5_9.i386.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.i386.rpm
+dbus-glib-devel-0.73-11.el5_9.i386.rpm
+
+ia64:
+dbus-glib-0.73-11.el5_9.ia64.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.ia64.rpm
+dbus-glib-devel-0.73-11.el5_9.ia64.rpm
+
+ppc:
+dbus-glib-0.73-11.el5_9.ppc.rpm
+dbus-glib-0.73-11.el5_9.ppc64.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.ppc.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.ppc64.rpm
+dbus-glib-devel-0.73-11.el5_9.ppc.rpm
+dbus-glib-devel-0.73-11.el5_9.ppc64.rpm
+
+s390x:
+dbus-glib-0.73-11.el5_9.s390.rpm
+dbus-glib-0.73-11.el5_9.s390x.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.s390.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.s390x.rpm
+dbus-glib-devel-0.73-11.el5_9.s390.rpm
+dbus-glib-devel-0.73-11.el5_9.s390x.rpm
+
+x86_64:
+dbus-glib-0.73-11.el5_9.i386.rpm
+dbus-glib-0.73-11.el5_9.x86_64.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.i386.rpm
+dbus-glib-debuginfo-0.73-11.el5_9.x86_64.rpm
+dbus-glib-devel-0.73-11.el5_9.i386.rpm
+dbus-glib-devel-0.73-11.el5_9.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm</a>
+
+i386:
+dbus-glib-0.86-6.el6_4.i686.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.i686.rpm
+
+x86_64:
+dbus-glib-0.86-6.el6_4.i686.rpm
+dbus-glib-0.86-6.el6_4.x86_64.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.i686.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm</a>
+
+i386:
+dbus-glib-debuginfo-0.86-6.el6_4.i686.rpm
+dbus-glib-devel-0.86-6.el6_4.i686.rpm
+
+x86_64:
+dbus-glib-debuginfo-0.86-6.el6_4.i686.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.x86_64.rpm
+dbus-glib-devel-0.86-6.el6_4.i686.rpm
+dbus-glib-devel-0.86-6.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm</a>
+
+x86_64:
+dbus-glib-0.86-6.el6_4.i686.rpm
+dbus-glib-0.86-6.el6_4.x86_64.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.i686.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm</a>
+
+x86_64:
+dbus-glib-debuginfo-0.86-6.el6_4.i686.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.x86_64.rpm
+dbus-glib-devel-0.86-6.el6_4.i686.rpm
+dbus-glib-devel-0.86-6.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm</a>
+
+i386:
+dbus-glib-0.86-6.el6_4.i686.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.i686.rpm
+dbus-glib-devel-0.86-6.el6_4.i686.rpm
+
+ppc64:
+dbus-glib-0.86-6.el6_4.ppc.rpm
+dbus-glib-0.86-6.el6_4.ppc64.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.ppc.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.ppc64.rpm
+dbus-glib-devel-0.86-6.el6_4.ppc.rpm
+dbus-glib-devel-0.86-6.el6_4.ppc64.rpm
+
+s390x:
+dbus-glib-0.86-6.el6_4.s390.rpm
+dbus-glib-0.86-6.el6_4.s390x.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.s390.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.s390x.rpm
+dbus-glib-devel-0.86-6.el6_4.s390.rpm
+dbus-glib-devel-0.86-6.el6_4.s390x.rpm
+
+x86_64:
+dbus-glib-0.86-6.el6_4.i686.rpm
+dbus-glib-0.86-6.el6_4.x86_64.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.i686.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.x86_64.rpm
+dbus-glib-devel-0.86-6.el6_4.i686.rpm
+dbus-glib-devel-0.86-6.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/dbus-glib-0.86-6.el6_4.src.rpm</a>
+
+i386:
+dbus-glib-0.86-6.el6_4.i686.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.i686.rpm
+dbus-glib-devel-0.86-6.el6_4.i686.rpm
+
+x86_64:
+dbus-glib-0.86-6.el6_4.i686.rpm
+dbus-glib-0.86-6.el6_4.x86_64.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.i686.rpm
+dbus-glib-debuginfo-0.86-6.el6_4.x86_64.rpm
+dbus-glib-devel-0.86-6.el6_4.i686.rpm
+dbus-glib-devel-0.86-6.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0292.html">https://www.redhat.com/security/data/cve/CVE-2013-0292.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRLREFXlSAg2UNWIIRAqRtAJ9OPHnoiA90tKWCP06vvhS1/beTlwCeIrUz
+Wig/fkylxUDnmMhfXFaAusQ=
+=RC8L
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00074.html">Date Prev</a>][<a href="msg00076.html">Date Next</a>] &nbsp; [<a href="msg00074.html">Thread Prev</a>][<a href="msg00076.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00075">Thread Index</A>]
+[<A HREF="date.html#00075">Date Index</A>]
+[<A HREF="author.html#00075">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

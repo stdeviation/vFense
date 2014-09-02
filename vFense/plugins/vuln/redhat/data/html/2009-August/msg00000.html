@@ -1,0 +1,358 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1193&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Aug 2009 09:26:11 &#45;0400 -->
+<!--X-Message-Id: 200908041326.n74DQBaS009279@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1193-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1193-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1193-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 4 Aug 2009 09:26:11 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2009:1193-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1193.html">https://rhn.redhat.com/errata/RHSA-2009-1193.html</a>
+Issue date:        2009-08-04
+CVE Names:         CVE-2007-5966 CVE-2009-1385 CVE-2009-1388 
+                   CVE-2009-1389 CVE-2009-1895 CVE-2009-2406 
+                   CVE-2009-2407 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix several security issues and several bugs
+are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+Security fixes:
+
+* the possibility of a timeout value overflow was found in the Linux kernel
+high-resolution timers functionality, hrtimers. This could allow a local,
+unprivileged user to execute arbitrary code, or cause a denial of service
+(kernel panic). (CVE-2007-5966, Important)
+
+* a flaw was found in the Intel PRO/1000 network driver in the Linux
+kernel. Frames with sizes near the MTU of an interface may be split across
+multiple hardware receive descriptors. Receipt of such a frame could leak
+through a validation check, leading to a corruption of the length check. A
+remote attacker could use this flaw to send a specially-crafted packet that
+would cause a denial of service or code execution. (CVE-2009-1385,
+Important)
+
+* Michael Tokarev reported a flaw in the Realtek r8169 Ethernet driver in
+the Linux kernel. This driver allowed interfaces using this driver to
+receive frames larger than could be handled, which could lead to a remote
+denial of service or code execution. (CVE-2009-1389, Important)
+
+* the ADDR_COMPAT_LAYOUT and MMAP_PAGE_ZERO flags were not cleared when a
+setuid or setgid program was executed. A local, unprivileged user could use
+this flaw to bypass the mmap_min_addr protection mechanism and perform a
+NULL pointer dereference attack, or bypass the Address Space Layout
+Randomization (ASLR) security feature. (CVE-2009-1895, Important)
+
+* Ramon de Carvalho Valle reported two flaws in the Linux kernel eCryptfs
+implementation. A local attacker with permissions to perform an eCryptfs
+mount could modify the metadata of the files in that eCrypfts mount to
+cause a buffer overflow, leading to a denial of service or privilege
+escalation. (CVE-2009-2406, CVE-2009-2407, Important)
+
+* Konstantin Khlebnikov discovered a race condition in the ptrace
+implementation in the Linux kernel. This race condition can occur when the
+process tracing and the process being traced participate in a core dump. A
+local, unprivileged user could use this flaw to trigger a deadlock,
+resulting in a partial denial of service. (CVE-2009-1388, Moderate)
+
+Bug fixes:
+
+* possible host (dom0) crash when installing a Xen para-virtualized guest
+while another para-virtualized guest was rebooting. (BZ#497812)
+
+* no audit record for a directory removal if the directory and its subtree
+were recursively watched by an audit rule. (BZ#507561)
+
+* running &quot;echo 1 &gt; /proc/sys/vm/drop_caches&quot; on systems under high memory
+load could cause a kernel panic. (BZ#503692)
+
+* on 32-bit systems, core dumps for some multithreaded applications did not
+include all thread information. (BZ#505322)
+
+* a stack buffer used by get_event_name() was not large enough for the nul
+terminator sprintf() writes. This could lead to an invalid pointer or
+kernel panic. (BZ#506906)
+
+* when using the aic94xx driver, a system with SATA drives may not boot due
+to a bug in libsas. (BZ#506029)
+
+* incorrect stylus button handling when moving it away then returning it to
+the tablet for Wacom Cintiq 21UX and Intuos tablets. (BZ#508275)
+
+* CPU &quot;soft lockup&quot; messages and possibly a system hang on systems with
+certain Broadcom network devices and running the Linux kernel from the
+kernel-xen package. (BZ#503689)
+
+* on 64-bit PowerPC, getitimer() failed for programs using the ITIMER_REAL
+timer and that were also compiled for 64-bit systems (this caused such
+programs to abort). (BZ#510018)
+
+* write operations could be blocked even when using O_NONBLOCK. (BZ#510239)
+
+* the &quot;pci=nomsi&quot; option was required for installing and booting Red Hat
+Enterprise Linux 5.2 on systems with VIA VT3364 chipsets. (BZ#507529)
+
+* shutting down, destroying, or migrating Xen guests with large amounts of
+memory could cause other guests to be temporarily unresponsive. (BZ#512311)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+453135 - CVE-2007-5966 kernel: non-root can trigger cpu_idle soft lockup
+497812 - RH5.3 x64 RC2 reboots while installing a virtual machine
+502981 - CVE-2009-1385 kernel: e1000_clean_rx_irq() denial of service
+503689 - Call trace thrown up when stressing the network with bw_tcp
+503692 - Possible panic when drop_pagecache_sb() and prune_icache() run concurrently.
+504263 - CVE-2009-1388 kernel: do_coredump() vs ptrace_start() deadlock
+504726 - CVE-2009-1389 kernel: r8169: fix crash when large packets are received
+505322 - [Reg][RHEL5.3]  Multi-threaded application dumps a core with wrong thread information
+506029 - With Red Hat errata 128.1.6 installed system hangs with SATA drives installed.
+506906 - kernel: TPM: get_event_name stack corruption [rhel-5.3.z]
+507529 - disable MSI on VIA VT3364 chipsets
+507561 - Removal of directory doesn't produce audit record if rule is recursive
+508275 - Wacom driver with Intuos tablet does not report button press after a proximity leave/re-enter
+510018 - setitimer(ITIMER_REAL, ...) failing in 64bit enviroment
+510239 - [5.3]Write operation with O_NONBLOCK flag to TTY terminal is blocked
+511171 - CVE-2009-1895 kernel: personality: fix PER_CLEAR_ON_SETID
+512311 - A Shut down of a 32GB domU's  freezes other domU's for several seconds
+512861 - CVE-2009-2406 kernel: ecryptfs stack overflow in parse_tag_11_packet()
+512885 - CVE-2009-2407 kernel: ecryptfs heap overflow in parse_tag_3_packet()
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-128.4.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-128.4.1.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-128.4.1.el5.i686.rpm
+kernel-PAE-2.6.18-128.4.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-128.4.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-128.4.1.el5.i686.rpm
+kernel-debug-2.6.18-128.4.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-128.4.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-128.4.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-128.4.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-128.4.1.el5.i686.rpm
+kernel-devel-2.6.18-128.4.1.el5.i686.rpm
+kernel-headers-2.6.18-128.4.1.el5.i386.rpm
+kernel-xen-2.6.18-128.4.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-128.4.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-128.4.1.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-128.4.1.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-debug-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-devel-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-headers-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-xen-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-128.4.1.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-128.4.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-128.4.1.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-128.4.1.el5.i686.rpm
+kernel-PAE-2.6.18-128.4.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-128.4.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-128.4.1.el5.i686.rpm
+kernel-debug-2.6.18-128.4.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-128.4.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-128.4.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-128.4.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-128.4.1.el5.i686.rpm
+kernel-devel-2.6.18-128.4.1.el5.i686.rpm
+kernel-headers-2.6.18-128.4.1.el5.i386.rpm
+kernel-xen-2.6.18-128.4.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-128.4.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-128.4.1.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-128.4.1.el5.ia64.rpm
+kernel-debug-2.6.18-128.4.1.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-128.4.1.el5.ia64.rpm
+kernel-debug-devel-2.6.18-128.4.1.el5.ia64.rpm
+kernel-debuginfo-2.6.18-128.4.1.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-128.4.1.el5.ia64.rpm
+kernel-devel-2.6.18-128.4.1.el5.ia64.rpm
+kernel-headers-2.6.18-128.4.1.el5.ia64.rpm
+kernel-xen-2.6.18-128.4.1.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-128.4.1.el5.ia64.rpm
+kernel-xen-devel-2.6.18-128.4.1.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-128.4.1.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-128.4.1.el5.ppc64.rpm
+kernel-debug-2.6.18-128.4.1.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-128.4.1.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-128.4.1.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-128.4.1.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-128.4.1.el5.ppc64.rpm
+kernel-devel-2.6.18-128.4.1.el5.ppc64.rpm
+kernel-headers-2.6.18-128.4.1.el5.ppc.rpm
+kernel-headers-2.6.18-128.4.1.el5.ppc64.rpm
+kernel-kdump-2.6.18-128.4.1.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-128.4.1.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-128.4.1.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-128.4.1.el5.s390x.rpm
+kernel-debug-2.6.18-128.4.1.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-128.4.1.el5.s390x.rpm
+kernel-debug-devel-2.6.18-128.4.1.el5.s390x.rpm
+kernel-debuginfo-2.6.18-128.4.1.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-128.4.1.el5.s390x.rpm
+kernel-devel-2.6.18-128.4.1.el5.s390x.rpm
+kernel-headers-2.6.18-128.4.1.el5.s390x.rpm
+kernel-kdump-2.6.18-128.4.1.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-128.4.1.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-128.4.1.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-debug-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-devel-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-headers-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-xen-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-128.4.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-128.4.1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5966">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5966</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1385">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1385</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1388">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1388</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1389">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1389</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1895">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1895</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2406">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2406</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2407">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2407</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKeDbkXlSAg2UNWIIRAmqMAKCJKaBqvKSxjhzTPrvYnl6GoDkilgCgk75v
+FQC+uctDALS7t4Z+lTcU/hQ=
+=cDeA
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

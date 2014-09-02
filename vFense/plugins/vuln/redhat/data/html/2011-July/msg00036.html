@@ -1,0 +1,312 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1105&#45;01] Moderate: libpng security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 28 Jul 2011 14:27:03 &#45;0400 -->
+<!--X-Message-Id: 201107281826.p6SIQv1i018259@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1105-01] Moderate: libpng security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00035.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00035.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00036">Thread Index</A>]
+[<A HREF="date.html#00036">Date Index</A>]
+[<A HREF="author.html#00036">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1105-01] Moderate: libpng security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1105-01] Moderate: libpng security update</li>
+<li><em>Date</em>: Thu, 28 Jul 2011 18:26:57 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libpng security update
+Advisory ID:       RHSA-2011:1105-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1105.html">https://rhn.redhat.com/errata/RHSA-2011-1105.html</a>
+Issue date:        2011-07-28
+CVE Names:         CVE-2011-2501 CVE-2011-2690 CVE-2011-2692 
+=====================================================================
+
+1. Summary:
+
+Updated libpng packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The libpng packages contain a library of functions for creating and
+manipulating PNG (Portable Network Graphics) image format files.
+
+A buffer overflow flaw was found in the way libpng processed certain PNG
+image files. An attacker could create a specially-crafted PNG image that,
+when opened, could cause an application using libpng to crash or,
+potentially, execute arbitrary code with the privileges of the user running
+the application. (CVE-2011-2690)
+
+Note: The application behavior required to exploit CVE-2011-2690 is rarely
+used. No application shipped with Red Hat Enterprise Linux behaves this
+way, for example.
+
+An out-of-bounds memory read flaw was found in the way libpng processed
+certain PNG image files. An attacker could create a specially-crafted PNG
+image that, when opened, could cause an application using libpng to crash.
+(CVE-2011-2501)
+
+An uninitialized memory read issue was found in the way libpng processed
+certain PNG images that use the Physical Scale (sCAL) extension. An
+attacker could create a specially-crafted PNG image that, when opened,
+could cause an application using libpng to crash. (CVE-2011-2692)
+
+Users of libpng should upgrade to these updated packages, which upgrade
+libpng to version 1.2.46 to correct these issues. All running applications
+using libpng must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+717084 - CVE-2011-2501 libpng: regression of CVE-2004-0421 in 1.2.23+
+720607 - CVE-2011-2690 libpng: buffer overwrite in png_rgb_to_gray
+720612 - CVE-2011-2692 libpng: Invalid read when handling empty sCAL chunks
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm</a>
+
+i386:
+libpng-1.2.46-1.el6_1.i686.rpm
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+
+x86_64:
+libpng-1.2.46-1.el6_1.i686.rpm
+libpng-1.2.46-1.el6_1.x86_64.rpm
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-debuginfo-1.2.46-1.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm</a>
+
+i386:
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-devel-1.2.46-1.el6_1.i686.rpm
+libpng-static-1.2.46-1.el6_1.i686.rpm
+
+x86_64:
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-debuginfo-1.2.46-1.el6_1.x86_64.rpm
+libpng-devel-1.2.46-1.el6_1.i686.rpm
+libpng-devel-1.2.46-1.el6_1.x86_64.rpm
+libpng-static-1.2.46-1.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm</a>
+
+x86_64:
+libpng-1.2.46-1.el6_1.i686.rpm
+libpng-1.2.46-1.el6_1.x86_64.rpm
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-debuginfo-1.2.46-1.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm</a>
+
+x86_64:
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-debuginfo-1.2.46-1.el6_1.x86_64.rpm
+libpng-devel-1.2.46-1.el6_1.i686.rpm
+libpng-devel-1.2.46-1.el6_1.x86_64.rpm
+libpng-static-1.2.46-1.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm</a>
+
+i386:
+libpng-1.2.46-1.el6_1.i686.rpm
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-devel-1.2.46-1.el6_1.i686.rpm
+
+ppc64:
+libpng-1.2.46-1.el6_1.ppc.rpm
+libpng-1.2.46-1.el6_1.ppc64.rpm
+libpng-debuginfo-1.2.46-1.el6_1.ppc.rpm
+libpng-debuginfo-1.2.46-1.el6_1.ppc64.rpm
+libpng-devel-1.2.46-1.el6_1.ppc.rpm
+libpng-devel-1.2.46-1.el6_1.ppc64.rpm
+
+s390x:
+libpng-1.2.46-1.el6_1.s390.rpm
+libpng-1.2.46-1.el6_1.s390x.rpm
+libpng-debuginfo-1.2.46-1.el6_1.s390.rpm
+libpng-debuginfo-1.2.46-1.el6_1.s390x.rpm
+libpng-devel-1.2.46-1.el6_1.s390.rpm
+libpng-devel-1.2.46-1.el6_1.s390x.rpm
+
+x86_64:
+libpng-1.2.46-1.el6_1.i686.rpm
+libpng-1.2.46-1.el6_1.x86_64.rpm
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-debuginfo-1.2.46-1.el6_1.x86_64.rpm
+libpng-devel-1.2.46-1.el6_1.i686.rpm
+libpng-devel-1.2.46-1.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm</a>
+
+i386:
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-static-1.2.46-1.el6_1.i686.rpm
+
+ppc64:
+libpng-debuginfo-1.2.46-1.el6_1.ppc64.rpm
+libpng-static-1.2.46-1.el6_1.ppc64.rpm
+
+s390x:
+libpng-debuginfo-1.2.46-1.el6_1.s390x.rpm
+libpng-static-1.2.46-1.el6_1.s390x.rpm
+
+x86_64:
+libpng-debuginfo-1.2.46-1.el6_1.x86_64.rpm
+libpng-static-1.2.46-1.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm</a>
+
+i386:
+libpng-1.2.46-1.el6_1.i686.rpm
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-devel-1.2.46-1.el6_1.i686.rpm
+
+x86_64:
+libpng-1.2.46-1.el6_1.i686.rpm
+libpng-1.2.46-1.el6_1.x86_64.rpm
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-debuginfo-1.2.46-1.el6_1.x86_64.rpm
+libpng-devel-1.2.46-1.el6_1.i686.rpm
+libpng-devel-1.2.46-1.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libpng-1.2.46-1.el6_1.src.rpm</a>
+
+i386:
+libpng-debuginfo-1.2.46-1.el6_1.i686.rpm
+libpng-static-1.2.46-1.el6_1.i686.rpm
+
+x86_64:
+libpng-debuginfo-1.2.46-1.el6_1.x86_64.rpm
+libpng-static-1.2.46-1.el6_1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2501.html">https://www.redhat.com/security/data/cve/CVE-2011-2501.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2690.html">https://www.redhat.com/security/data/cve/CVE-2011-2690.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2692.html">https://www.redhat.com/security/data/cve/CVE-2011-2692.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOManQXlSAg2UNWIIRAuaqAJ0Sn+1OeUAX7QhB2Kk/SKNByAhTugCgofrB
+950xRIwxHo1aClHvqeU93+Y=
+=APX+
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00035.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00035.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00036">Thread Index</A>]
+[<A HREF="date.html#00036">Date Index</A>]
+[<A HREF="author.html#00036">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

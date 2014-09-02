@@ -1,0 +1,330 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1701&#45;02] Low: sudo security, bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Nov 2013 23:48:15 &#45;0500 -->
+<!--X-Message-Id: 201311210448.rAL4mDNP016154@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1701-02] Low: sudo security, bug fix and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1701-02] Low: sudo security, bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1701-02] Low: sudo security, bug fix and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Nov 2013 04:51:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: sudo security, bug fix and enhancement update
+Advisory ID:       RHSA-2013:1701-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1701.html">https://rhn.redhat.com/errata/RHSA-2013-1701.html</a>
+Issue date:        2013-11-21
+CVE Names:         CVE-2013-1775 CVE-2013-2776 CVE-2013-2777 
+=====================================================================
+
+1. Summary:
+
+An updated sudo package that fixes two security issues, several bugs, and
+adds two enhancements is now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The sudo (superuser do) utility allows system administrators to give
+certain users the ability to run commands as root.
+
+A flaw was found in the way sudo handled time stamp files. An attacker able
+to run code as a local user and with the ability to control the system
+clock could possibly gain additional privileges by running commands that
+the victim user was allowed to run via sudo, without knowing the victim's
+password. (CVE-2013-1775)
+
+It was found that sudo did not properly validate the controlling terminal
+device when the tty_tickets option was enabled in the /etc/sudoers file.
+An attacker able to run code as a local user could possibly gain additional
+privileges by running commands that the victim user was allowed to run via
+sudo, without knowing the victim's password. (CVE-2013-2776, CVE-2013-2777)
+
+This update also fixes the following bugs:
+
+* Previously, sudo did not support netgroup filtering for sources from the
+System Security Services Daemon (SSSD). Consequently, SSSD rules were
+applied to all users even when they did not belong to the specified
+netgroup. With this update, netgroup filtering for SSSD sources has been
+implemented. As a result, rules with a netgroup specification are applied
+only to users that are part of the netgroup. (BZ#880150)
+
+* When the sudo utility set up the environment in which it ran a command,
+it reset the value of the RLIMIT_NPROC resource limit to the parent's value
+of this limit if both the soft (current) and hard (maximum) values of
+RLIMIT_NPROC were not limited. An upstream patch has been provided to
+address this bug and RLIMIT_NPROC can now be set to &quot;unlimited&quot;.
+(BZ#947276)
+
+* Due to the refactoring of the sudo code by upstream, the SUDO_USER
+variable that stores the name of the user running the sudo command was not
+logged to the /var/log/secure file as before. Consequently, user name
+&quot;root&quot; was always recorded instead of the real user name. With this update,
+the previous behavior of sudo has been restored. As a result, the expected
+user name is now written to /var/log/secure. (BZ#973228)
+
+* Due to an error in a loop condition in sudo's rule listing code, a buffer
+overflow could have occurred in certain cases. This condition has been
+fixed and the buffer overflow no longer occurs. (BZ#994626)
+
+In addition, this update adds the following enhancements:
+
+* With this update, sudo has been modified to send debug messages about
+netgroup matching to the debug log. These messages should provide better
+understanding of how sudo matches netgroup database records with values
+from the running system and what the values are exactly. (BZ#848111)
+
+* With this update, sudo has been modified to accept the ipa_hostname value
+from the /etc/sssd/sssd.conf configuration file when matching netgroups.
+(BZ#853542)
+
+All sudo users are advised to upgrade to this updated package, which
+contains backported patches to correct these issues and add
+these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+856901 - Defauts:!&lt;user&gt; syntax in sudoers doesn't seem to work as expected
+880150 - sssd +netgroup sudoUser is always matched
+886648 - Access granted with invalid sudoRunAsUser/sudoRunAsGroup
+916363 - CVE-2013-1775 sudo: authentication bypass via reset system clock
+949751 - CVE-2013-2776 sudo: bypass of tty_tickets constraints
+949753 - CVE-2013-2777 sudo: bypass of tty_tickets constraints
+994563 - Warning in visudo: cycle in Host_Alias even without cycle
+994626 - sudo -u  &lt;user&gt; sudo -l show error: *** glibc detected *** sudo: realloc(): invalid next size: 0x00007f4ae2d10ec0 ***
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm</a>
+
+i386:
+sudo-1.8.6p3-12.el6.i686.rpm
+sudo-debuginfo-1.8.6p3-12.el6.i686.rpm
+
+x86_64:
+sudo-1.8.6p3-12.el6.x86_64.rpm
+sudo-debuginfo-1.8.6p3-12.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm</a>
+
+i386:
+sudo-debuginfo-1.8.6p3-12.el6.i686.rpm
+sudo-devel-1.8.6p3-12.el6.i686.rpm
+
+x86_64:
+sudo-debuginfo-1.8.6p3-12.el6.i686.rpm
+sudo-debuginfo-1.8.6p3-12.el6.x86_64.rpm
+sudo-devel-1.8.6p3-12.el6.i686.rpm
+sudo-devel-1.8.6p3-12.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm</a>
+
+x86_64:
+sudo-1.8.6p3-12.el6.x86_64.rpm
+sudo-debuginfo-1.8.6p3-12.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm</a>
+
+x86_64:
+sudo-debuginfo-1.8.6p3-12.el6.i686.rpm
+sudo-debuginfo-1.8.6p3-12.el6.x86_64.rpm
+sudo-devel-1.8.6p3-12.el6.i686.rpm
+sudo-devel-1.8.6p3-12.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm</a>
+
+i386:
+sudo-1.8.6p3-12.el6.i686.rpm
+sudo-debuginfo-1.8.6p3-12.el6.i686.rpm
+
+ppc64:
+sudo-1.8.6p3-12.el6.ppc64.rpm
+sudo-debuginfo-1.8.6p3-12.el6.ppc64.rpm
+
+s390x:
+sudo-1.8.6p3-12.el6.s390x.rpm
+sudo-debuginfo-1.8.6p3-12.el6.s390x.rpm
+
+x86_64:
+sudo-1.8.6p3-12.el6.x86_64.rpm
+sudo-debuginfo-1.8.6p3-12.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm</a>
+
+i386:
+sudo-debuginfo-1.8.6p3-12.el6.i686.rpm
+sudo-devel-1.8.6p3-12.el6.i686.rpm
+
+ppc64:
+sudo-debuginfo-1.8.6p3-12.el6.ppc.rpm
+sudo-debuginfo-1.8.6p3-12.el6.ppc64.rpm
+sudo-devel-1.8.6p3-12.el6.ppc.rpm
+sudo-devel-1.8.6p3-12.el6.ppc64.rpm
+
+s390x:
+sudo-debuginfo-1.8.6p3-12.el6.s390.rpm
+sudo-debuginfo-1.8.6p3-12.el6.s390x.rpm
+sudo-devel-1.8.6p3-12.el6.s390.rpm
+sudo-devel-1.8.6p3-12.el6.s390x.rpm
+
+x86_64:
+sudo-debuginfo-1.8.6p3-12.el6.i686.rpm
+sudo-debuginfo-1.8.6p3-12.el6.x86_64.rpm
+sudo-devel-1.8.6p3-12.el6.i686.rpm
+sudo-devel-1.8.6p3-12.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm</a>
+
+i386:
+sudo-1.8.6p3-12.el6.i686.rpm
+sudo-debuginfo-1.8.6p3-12.el6.i686.rpm
+
+x86_64:
+sudo-1.8.6p3-12.el6.x86_64.rpm
+sudo-debuginfo-1.8.6p3-12.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sudo-1.8.6p3-12.el6.src.rpm</a>
+
+i386:
+sudo-debuginfo-1.8.6p3-12.el6.i686.rpm
+sudo-devel-1.8.6p3-12.el6.i686.rpm
+
+x86_64:
+sudo-debuginfo-1.8.6p3-12.el6.i686.rpm
+sudo-debuginfo-1.8.6p3-12.el6.x86_64.rpm
+sudo-devel-1.8.6p3-12.el6.i686.rpm
+sudo-devel-1.8.6p3-12.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1775.html">https://www.redhat.com/security/data/cve/CVE-2013-1775.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2776.html">https://www.redhat.com/security/data/cve/CVE-2013-2776.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2777.html">https://www.redhat.com/security/data/cve/CVE-2013-2777.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSjZCHXlSAg2UNWIIRAt3IAJ9vk5ycVQ6pYkHYc7uM6YLFvhsSrgCfVHi+
+H0zICoykOf4KltShaykk1Wo=
+=z/lR
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

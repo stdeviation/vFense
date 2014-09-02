@@ -1,0 +1,230 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0533&#45;01] Important: JBoss Enterprise SOA Platform 5.3.1	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Feb 2013 16:49:04 &#45;0500 -->
+<!--X-Message-Id: 201302202149.r1KLn3Fm008778@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0533-01] Important: JBoss Enterprise SOA Platform 5.3.1	updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00038.html">Date Prev</a>][<a href="msg00040.html">Date Next</a>] &nbsp; [<a href="msg00038.html">Thread Prev</a>][<a href="msg00040.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00039">Thread Index</A>]
+[<A HREF="date.html#00039">Date Index</A>]
+[<A HREF="author.html#00039">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0533-01] Important: JBoss Enterprise SOA Platform 5.3.1	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0533-01] Important: JBoss Enterprise SOA Platform 5.3.1	update</li>
+<li><em>Date</em>: Wed, 20 Feb 2013 21:49:03 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise SOA Platform 5.3.1 update
+Advisory ID:       RHSA-2013:0533-01
+Product:           JBoss Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0533.html">https://rhn.redhat.com/errata/RHSA-2013-0533.html</a>
+Issue date:        2013-02-20
+CVE Names:         CVE-2009-5066 CVE-2011-2487 CVE-2011-2730 
+                   CVE-2011-4575 CVE-2012-0034 CVE-2012-0874 
+                   CVE-2012-3369 CVE-2012-3370 CVE-2012-5370 
+                   CVE-2012-5478 
+=====================================================================
+
+1. Summary:
+
+JBoss Enterprise SOA Platform 5.3.1, which fixes multiple security issues,
+various bugs, and adds enhancements, is now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+This release of JBoss Enterprise SOA Platform 5.3.1 serves as a replacement
+for JBoss Enterprise SOA Platform 5.3.0. It includes various bug fixes and
+enhancements which are detailed in the JBoss Enterprise SOA Platform 5.3.1
+Release Notes. The Release Notes will be available shortly from
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+
+2. Description:
+
+Security:
+
+JBoss Web Services leaked side-channel data when distributing symmetric
+keys (for XML encryption), allowing a remote attacker to recover the entire
+plain text form of a symmetric key. (CVE-2011-2487)
+
+Spring framework could possibly evaluate Expression Language (EL)
+expressions twice, allowing a remote attacker to execute arbitrary code in
+the context of the application server, or to obtain sensitive information
+from the server. (CVE-2011-2730)
+
+Note: Manual action is required to apply the fix for CVE-2011-2730. If your
+system has deployed applications which use Spring framework, the context
+parameter &quot;springJspExpressionSupport&quot; must be set to &quot;false&quot; to mitigate
+this flaw, for example, in the application's web.xml file. This will
+prevent the double-evaluation of EL expressions that led to this flaw.
+
+An XSS flaw allowed a remote attacker to perform an XSS attack against
+victims using the JMX Console. (CVE-2011-4575)
+
+SecurityAssociation.getCredential() returned the previous credential if
+no security context was provided. Depending on the deployed applications,
+this could possibly allow a remote attacker to hijack the credentials of a
+previously-authenticated user. (CVE-2012-3370)
+
+A denial of service flaw was found in the implementation of associative
+arrays (hashes) in JRuby. An attacker able to supply a large number of
+inputs to a JRuby application (such as HTTP POST request parameters sent to
+a web application) that are used as keys when inserting data into an array
+could trigger multiple hash function collisions, making array operations
+take an excessive amount of CPU time. To mitigate this issue, the Murmur
+hash function has been replaced with the Perl hash function.
+(CVE-2012-5370)
+
+Note: JBoss Enterprise SOA Platform only provides JRuby as a dependency of
+the scripting_chain quickstart example application. The CVE-2012-5370 flaw
+is not exposed unless the version of JRuby shipped with that quickstart is
+used by a deployed, custom application.
+
+Configuring the JMX Invoker to restrict access to users with specific
+roles did not actually restrict access, allowing remote attackers with
+valid JMX Invoker credentials to perform JMX operations accessible to
+roles they are not a member of. (CVE-2012-5478)
+
+twiddle.sh accepted credentials as command line arguments, allowing local
+users to view them via a process listing. (CVE-2009-5066)
+
+NonManagedConnectionFactory logged the username and password in plain text
+when an exception was thrown. This could lead to the exposure of
+authentication credentials if local users had permissions to read the log
+file. (CVE-2012-0034)
+
+The JMXInvokerHAServlet and EJBInvokerHAServlet invoker servlets allow
+unauthenticated access by default in some profiles. The security
+interceptor's second layer of authentication prevented direct exploitation
+of this flaw. If the interceptor was misconfigured or inadvertently
+disabled, this flaw could lead to arbitrary code execution in the context
+of the user running the JBoss server. (CVE-2012-0874)
+
+CallerIdentityLoginModule retained the password from the previous call if a
+null password was provided. In non-default configurations this could
+possibly lead to a remote attacker hijacking a previously-authenticated
+user's session. (CVE-2012-3369)
+
+Red Hat would like to thank Juraj Somorovsky of Ruhr-University Bochum
+for reporting CVE-2011-2487, and Tyler Krpata for reporting CVE-2011-4575.
+The CVE-2012-3370 and CVE-2012-3369 issues were discovered by Carlo de Wolf
+of Red Hat; CVE-2012-5478 was discovered by Derek Horton of Red Hat; and 
+CVE-2012-0874 was discovered by David Jorm of the Red Hat Security Response
+Team.
+
+Warning: Before applying the update, back up your existing JBoss Enterprise
+SOA Platform installation (including its databases, applications,
+configuration files, and so on).
+
+All users of JBoss Enterprise SOA Platform 5.3.0 as provided from the Red
+Hat Customer Portal are advised to upgrade to JBoss Enterprise SOA Platform
+5.3.1.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise SOA Platform installation (including its
+databases, applications, configuration files, and so on).
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+713539 - CVE-2011-2487 jbossws: Prone to Bleichenbacher attack against to be distributed symmetric key
+737608 - CVE-2011-2730 Spring Framework: Information (internal server information, classpath, local working directories, session IDs) disclosure
+760387 - CVE-2011-4575 JMX Console: XSS in invoke operation
+772835 - CVE-2012-0034 JBoss Cache: NonManagedConnectionFactory will log password in clear text when an exception occurs
+795645 - CVE-2012-0874 JBoss invoker servlets do not require authentication
+836451 - CVE-2012-3369 JBoss: CallerIdentityLoginModule retaining password from previous call if a null password is provided
+836456 - CVE-2012-3370 JBoss: SecurityAssociation.getCredential() will return the previous credential if no security context is provided
+842477 - CVE-2009-5066 JBoss: twiddle.sh accepts credentials as command line arguments, exposing them to other local users via a process listing
+874349 - CVE-2012-5478 JBoss: AuthorizationInterceptor allows JMX operation to proceed despite authorization failure
+880671 - CVE-2012-5370 jruby: Murmur hash function collisions (oCERT-2012-001)
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-5066.html">https://www.redhat.com/security/data/cve/CVE-2009-5066.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2487.html">https://www.redhat.com/security/data/cve/CVE-2011-2487.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2730.html">https://www.redhat.com/security/data/cve/CVE-2011-2730.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4575.html">https://www.redhat.com/security/data/cve/CVE-2011-4575.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0034.html">https://www.redhat.com/security/data/cve/CVE-2012-0034.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0874.html">https://www.redhat.com/security/data/cve/CVE-2012-0874.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3369.html">https://www.redhat.com/security/data/cve/CVE-2012-3369.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3370.html">https://www.redhat.com/security/data/cve/CVE-2012-3370.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5370.html">https://www.redhat.com/security/data/cve/CVE-2012-5370.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5478.html">https://www.redhat.com/security/data/cve/CVE-2012-5478.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=soaplatform&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=soaplatform&amp;downloadType=distributions</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJUS7XlSAg2UNWIIRAvOuAJ9/CfVEiOKEWkerxwWgoqEsKKDbUQCcDR+m
+06ehbUNl5vzux3t3ubr8fB4=
+=Hz1H
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00038.html">Date Prev</a>][<a href="msg00040.html">Date Next</a>] &nbsp; [<a href="msg00038.html">Thread Prev</a>][<a href="msg00040.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00039">Thread Index</A>]
+[<A HREF="date.html#00039">Date Index</A>]
+[<A HREF="author.html#00039">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

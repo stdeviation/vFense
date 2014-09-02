@@ -1,0 +1,180 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0925&#45;01] Important: rhev&#45;guest&#45;tools&#45;iso security and bug	fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 10 Jun 2013 17:11:07 &#45;0400 -->
+<!--X-Message-Id: 201306102111.r5ALB6di023412@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0925-01] Important: rhev-guest-tools-iso security and bug	fix</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0925-01] Important: rhev-guest-tools-iso security and bug	fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0925-01] Important: rhev-guest-tools-iso security and bug	fix update</li>
+<li><em>Date</em>: Mon, 10 Jun 2013 21:11:06 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-guest-tools-iso security and bug fix update
+Advisory ID:       RHSA-2013:0925-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0925.html">https://rhn.redhat.com/errata/RHSA-2013-0925.html</a>
+Issue date:        2013-06-10
+CVE Names:         CVE-2013-2151 CVE-2013-2152 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-guest-tools-iso package that fixes two security issues and
+two bugs is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.2 - noarch
+
+3. Description:
+
+The rhev-guest-tools-iso package contains tools and drivers. These tools
+and drivers are required by supported Windows guest operating systems
+when installed as guests on Red Hat Enterprise Virtualization.
+
+An unquoted search path flaw was found in the way the Red Hat Enterprise
+Virtualization agent was installed on Windows. Depending on the
+permissions of the directories in the unquoted search path, a local,
+unprivileged user could use this flaw to have a binary of their choosing
+executed with SYSTEM privileges. (CVE-2013-2151)
+
+An unquoted search path flaw was found in the way the SPICE service was
+installed on Windows. Depending on the permissions of the directories in
+the unquoted search path, a local, unprivileged user could use this flaw to
+have a binary of their choosing executed with SYSTEM privileges.
+(CVE-2013-2152)
+
+This update also fixes the following bugs:
+
+* Previously, when trying to uninstall rhev-guest-tools in Windows
+Server 2003 (both 32-bit and 64-bit), an error event was created in the
+event viewer saying &quot;The BalloonService service hung on starting&quot;, even
+though the package was uninstalled correctly. Now, the balloon service
+executable is no longer registered meaning the service is no longer running
+by default and rhev-guest-tools can be uninstalled without any error
+messages. (BZ#860225, BZ#880278)
+
+All Red Hat Enterprise Virtualization users are advised to upgrade to this
+updated rhev-guest-tools-iso package, which resolves these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Follow the upgrade
+procedure in the Red Hat Enterprise Virtualization Installation Guide to
+install these updated packages: 
+
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Installation_Guide/chap-Upgrading_to_Red_Hat_Enterprise_Virtualization_3.2.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Installation_Guide/chap-Upgrading_to_Red_Hat_Enterprise_Virtualization_3.2.html</a>
+
+To install the updated guest tools on individual guests using the image
+provided by the rhev-guest-tools-iso package refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Administration_Guide/sect-Guest_Drivers_and_Agents.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Administration_Guide/sect-Guest_Drivers_and_Agents.html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+860225 - Uninstalling RHEV-Tools in Windows 2003-64bit version creates error event
+962667 - [Windows Guest Tools] TypeError: encode() argument 1 must be string, not Non - 3.2.7 Guest Agent does not report data
+971171 - CVE-2013-2151 rhevm: rhev agent service unquoted search path
+971172 - CVE-2013-2152 rhevm: spice service unquoted search path
+
+6. Package List:
+
+RHEV-M 3.2:
+
+noarch:
+rhev-guest-tools-iso-3.2-8.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2151.html">https://www.redhat.com/security/data/cve/CVE-2013-2151.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2152.html">https://www.redhat.com/security/data/cve/CVE-2013-2152.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Installation_Guide/chap-Upgrading_to_Red_Hat_Enterprise_Virtualization_3.2.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Installation_Guide/chap-Upgrading_to_Red_Hat_Enterprise_Virtualization_3.2.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Administration_Guide/sect-Guest_Drivers_and_Agents.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html/Administration_Guide/sect-Guest_Drivers_and_Agents.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRtkDeXlSAg2UNWIIRAkwCAKC9AHKenN2WjkXWK3C9b5rpVCLeWwCggnvz
+kMZ6rTp1TEgKxLC+HDHq59U=
+=+dy2
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

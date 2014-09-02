@@ -1,0 +1,188 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1090&#45;01] Moderate: rhev&#45;hypervisor security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 27 Jul 2011 10:51:57 &#45;0400 -->
+<!--X-Message-Id: 201107271451.p6REpplp015725@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1090-01] Moderate: rhev-hypervisor security and bug fix	updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1090-01] Moderate: rhev-hypervisor security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1090-01] Moderate: rhev-hypervisor security and bug fix	update</li>
+<li><em>Date</em>: Wed, 27 Jul 2011 14:51:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhev-hypervisor security and bug fix update
+Advisory ID:       RHSA-2011:1090-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1090.html">https://rhn.redhat.com/errata/RHSA-2011-1090.html</a>
+Issue date:        2011-07-27
+CVE Names:         CVE-2011-1576 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor package that fixes one security issue and
+several bugs is now available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-5 - noarch
+
+3. Description:
+
+The rhev-hypervisor package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization
+Hypervisor is a dedicated Kernel-based Virtual Machine (KVM) hypervisor.
+It includes everything necessary to run and manage virtual machines: A
+subset of the Red Hat Enterprise Linux operating environment and the Red
+Hat Enterprise Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+A flaw was found that allowed napi_reuse_skb() to be called on VLAN
+(virtual LAN) packets. An attacker on the local network could trigger this
+flaw by sending specially-crafted packets to a target system, possibly
+causing a denial of service. (CVE-2011-1576)
+
+Red Hat would like to thank Ryan Sweat for reporting CVE-2011-1576.
+
+This updated package provides updated components that include fixes for
+security issues; however, these issues have no security impact for Red Hat
+Enterprise Virtualization Hypervisor. These fixes are for bash issue
+CVE-2008-5374; curl issue CVE-2011-2192; kernel issues CVE-2010-4649,
+CVE-2011-0695, CVE-2011-0711, CVE-2011-1044, CVE-2011-1182, CVE-2011-1573,
+CVE-2011-1593, CVE-2011-1745, CVE-2011-1746, CVE-2011-1776, CVE-2011-1780,
+CVE-2011-1936, CVE-2011-2022, CVE-2011-2213, CVE-2011-2492, CVE-2011-2525,
+and CVE-2011-2689; libvirt issue CVE-2011-2511; and rsync issue
+CVE-2007-6200.
+
+This update also fixes several bugs. Documentation for these bug fixes will
+be available shortly from the Technical Notes document linked to in the
+References section.
+
+As Red Hat Enterprise Virtualization Hypervisor is based on KVM, the bug
+fixes from the KVM update RHBA-2011:1068 have been included in this update:
+
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2011-1068.html">https://rhn.redhat.com/errata/RHBA-2011-1068.html</a>
+
+Users of Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which resolves this issue and fixes the
+bugs noted in the Technical Notes.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+629830 - Wipe metadata on local disks before RHEV-H installs
+633919 - Adding log rotation to /var/log/brcm-iscsi.log
+664378 - Timeout of the registration to RHN Satellite is more than expected
+667434 - RHEV: &quot;single&quot; kernel boot argument should be added to kill list
+681984 - RFE: request to include useful debugging tools
+690691 - Remove rhev-hypervisor-pxe subpackage which is no longer used
+695173 - CVE-2011-1576 kernel: net: Fix memory leak/corruption on VLAN GRO_DROP
+698469 - RFE: systemtap-runtime inclusion
+708959 - dirty install  fail at partition sometimes as race condition
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-5:
+
+noarch:
+rhev-hypervisor-5.7-20110725.1.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1576.html">https://www.redhat.com/security/data/cve/CVE-2011-1576.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Servers/2.2/html/Technical_Notes/index.html">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Servers/2.2/html/Technical_Notes/index.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2011-1068.html">https://rhn.redhat.com/errata/RHBA-2011-1068.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOMCXhXlSAg2UNWIIRArgoAJ0Rv+ZFBSLD7pdKA0d2zbcbzknM7QCbBnpO
+3hbqSM/gd/iksAjKD2s+Nt8=
+=ixKG
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

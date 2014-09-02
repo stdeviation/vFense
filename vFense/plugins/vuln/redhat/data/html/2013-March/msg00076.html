@@ -1,0 +1,355 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0691&#45;01] Important: Red Hat Storage 2.0 security, bug fix,	and enhancement update #4 -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 28 Mar 2013 18:25:34 &#45;0400 -->
+<!--X-Message-Id: 201303282225.r2SMPXbQ020183@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0691-01] Important: Red Hat Storage 2.0 security, bug fix,	an</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00075.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00075.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00076">Thread Index</A>]
+[<A HREF="date.html#00076">Date Index</A>]
+[<A HREF="author.html#00076">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0691-01] Important: Red Hat Storage 2.0 security, bug fix,	and enhancement update #4</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2013:0691-01] Important: Red Hat Storage 2.0 security, bug fix,	and enhancement update #4</li>
+<li><em>Date</em>: Thu, 28 Mar 2013 22:25:33 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Storage 2.0 security, bug fix, and enhancement update #4
+Advisory ID:       RHSA-2013:0691-01
+Product:           Red Hat Storage
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0691.html">https://rhn.redhat.com/errata/RHSA-2013-0691.html</a>
+Issue date:        2013-03-28
+CVE Names:         CVE-2012-4406 CVE-2012-5635 CVE-2012-5638 
+=====================================================================
+
+1. Summary:
+
+Updated Red Hat Storage 2.0 packages that fix multiple security issues,
+several bugs, and add enhancements are now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Storage 2.0 Console - noarch
+Red Hat Storage Native Client for Red Hat Enterprise Linux 5 - x86_64
+Red Hat Storage Native Client for Red Hat Enterprise Linux 6 - x86_64
+Red Hat Storage Server 2.0 - noarch, x86_64
+
+3. Description:
+
+Red Hat Storage is a software only, scale-out storage solution that
+provides flexible and agile unstructured data storage for the enterprise.
+
+A flaw was found in the way the Swift component used Python pickle. This
+could lead to arbitrary code execution. With this update, the JSON
+(JavaScript Object Notation) format is used. (CVE-2012-4406)
+
+Multiple insecure temporary file creation flaws were found in Red Hat
+Storage. A local user on the Red Hat Storage server could use these flaws
+to cause arbitrary files to be overwritten as the root user via a symbolic
+link attack. (CVE-2012-5635)
+
+It was found that sanlock created &quot;/var/run/sanlock/sanlock.pid&quot; with
+world-writable permissions. A local user could use this flaw to make the
+sanlock init script kill an arbitrary process when the sanlock daemon is
+stopped or restarted. Additionally, &quot;/var/log/sanlock.log&quot; was also
+world-writable, allowing local users to modify the contents of the log
+file, or store data within it (bypassing any quotas applied to their
+account). (CVE-2012-5638)
+
+Red Hat would like to thank Sebastian Krahmer of the SUSE Security Team for
+reporting CVE-2012-4406. The CVE-2012-5635 issues were discovered by Kurt
+Seifried of the Red Hat Security Response Team and Michael Scherer of the
+Red Hat Regional IT team, and CVE-2012-5638 was discovered by David
+Teigland of Red Hat.
+
+Bug fixes and enhancements:
+
+* Options to provide POSIX behavior when the O_DIRECT flag is used with
+the open() system call across many translators. (BZ#856156)
+
+* A mount time option provided to make the FUSE module's request queue
+length configurable. (BZ#856206)
+
+* Various fixes in the FUSE module to ensure the 'read-only' (-o ro) mount
+option works. (BZ#858499)
+
+* Various fixes in GlusterFS's rebalance code to handle failures while
+replica pairs are getting connected and disconnected in quick succession.
+(BZ#859387)
+
+* NFS code fixed to ensure proper inode transformation logic when the
+'enable-ino32' option is set. (BZ#864222)
+
+* Fixed the behavior of the posix-locks module per POSIX locking
+semantics. As a result, smb-torture's ping-pong tests now run smoothly on
+top of GlusterFS mounts. (BZ#869724)
+
+* FUSE module enhanced with the enable-ino32 mount option, required by any
+32-bit applications running on top of a GlusterFS mount. (BZ#876679)
+
+* Corrections were made to fd table behavior when both NFS and
+geo-replication are in progress. (BZ#880193)
+
+* With this update, disconnections are now handled better in the
+geo-replication 'gsyncd' process. (BZ#880308)
+
+* With this update, the 'gluster volume geo-replication config checkpoint'
+command returns the output value properly. (BZ#881736)
+
+* With this enhancement, it is possible to set the 'root-squash' volume
+option with Gluster CLI. Red Hat Storage volumes now support NFS's
+root-squashing behavior. (BZ#883590)
+
+* NFS POSIX lock issue fixed when 'root-squash' option is enabled on the
+volume. (BZ#906884)
+
+* Fixed an issue in tracking the changes of Geo-replication when an
+unprivileged user accesses the file system. (BZ#883827)
+
+* Fixed NFS locking manager (NLM) code to handle IP failover successfully.
+(BZ#888286)
+
+* Fixed issue in rebalance code to handle proper pointer dereference.
+(BZ#894237)
+
+* POSIX module made more robust to handle backend brick failures better.
+(BZ#895841)
+
+* Fixed the 'gluster volume geo-replication' command to provide a
+meaningful message when a wrong hostname is entered. (BZ#902213)
+
+* Fixed Console Configuration Script where it added invalid 'security'
+configuration for ENGINEDataSource in JBoss. (BZ#922572)
+
+* Fixed rhsc-setup failure where it does not check for SELinux before
+running setsebool. (BZ#923674)
+
+* Provided an update to the rhn-client-tools package to ensure setup
+defaults to the correct base Red Hat Enterprise Linux (6.2 Extended Update
+Support). (BZ#911777)
+
+Refer to the Release Notes, available shortly from the link in the
+References section, for further information.
+
+4. Solution:
+
+All users of Red Hat Storage are advised to upgrade to these updated
+packages.
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+854757 - CVE-2012-4406 Openstack-Swift: insecure use of python pickle()
+856206 - [FEAT] FUSE queue length needs to be configurable
+859387 - [RHEV-RHS] Rebalance migration  failures are seen when replicate bricks are brought down  and restarted
+869724 - smbtorture's raw.ping-pong test fails against GlusterFS share
+876679 - 32bit support in Fuse, related to special option nfs.enable-ino32
+883590 - Gluster CLI does not allow setting root squashing
+886364 - CVE-2012-5635 GlusterFS: insecure temporary file creation
+887010 - CVE-2012-5638 sanlock world writable /var/log/sanlock.log
+895841 - [glusterfs-3.3.1qa3]: glusterfs client asserted
+902213 - &quot;gluster volume geo-replication .. config&quot; with an incorrect hostname for the source gives a DeprecationWarning
+922572 - Console Configuration Script adds invalid 'security' configuration for ENGINEDataSource in JBoss
+923674 - rhsc-setup fails: does not check for SELinux before running setsebool
+
+6. Package List:
+
+Red Hat Storage Native Client for Red Hat Enterprise Linux 5:
+
+Source:
+glusterfs-3.3.0.7rhs-1.el5.src.rpm
+
+x86_64:
+glusterfs-3.3.0.7rhs-1.el5.x86_64.rpm
+glusterfs-debuginfo-3.3.0.7rhs-1.el5.x86_64.rpm
+glusterfs-devel-3.3.0.7rhs-1.el5.x86_64.rpm
+glusterfs-fuse-3.3.0.7rhs-1.el5.x86_64.rpm
+glusterfs-rdma-3.3.0.7rhs-1.el5.x86_64.rpm
+
+Red Hat Storage Server 2.0:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/appliance-1.7.1-1.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/appliance-1.7.1-1.el6rhs.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/augeas-0.9.0-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/augeas-0.9.0-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/gluster-swift-1.4.8-5.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/gluster-swift-1.4.8-5.el6rhs.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/glusterfs-3.3.0.7rhs-1.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/glusterfs-3.3.0.7rhs-1.el6rhs.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/libvirt-0.9.10-21.el6_3.8.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/libvirt-0.9.10-21.el6_3.8.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/rhn-client-tools-1.0.0-73.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/rhn-client-tools-1.0.0-73.el6rhs.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/sanlock-2.3-4.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/sanlock-2.3-4.el6_3.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/sos-2.2-17.2.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/sos-2.2-17.2.el6rhs.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/vdsm-4.9.6-20.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/vdsm-4.9.6-20.el6rhs.src.rpm</a>
+
+noarch:
+appliance-base-1.7.1-1.el6rhs.noarch.rpm
+gluster-swift-1.4.8-5.el6rhs.noarch.rpm
+gluster-swift-account-1.4.8-5.el6rhs.noarch.rpm
+gluster-swift-container-1.4.8-5.el6rhs.noarch.rpm
+gluster-swift-doc-1.4.8-5.el6rhs.noarch.rpm
+gluster-swift-object-1.4.8-5.el6rhs.noarch.rpm
+gluster-swift-proxy-1.4.8-5.el6rhs.noarch.rpm
+rhn-check-1.0.0-73.el6rhs.noarch.rpm
+rhn-client-tools-1.0.0-73.el6rhs.noarch.rpm
+rhn-setup-1.0.0-73.el6rhs.noarch.rpm
+rhn-setup-gnome-1.0.0-73.el6rhs.noarch.rpm
+sos-2.2-17.2.el6rhs.noarch.rpm
+vdsm-bootstrap-4.9.6-20.el6rhs.noarch.rpm
+vdsm-cli-4.9.6-20.el6rhs.noarch.rpm
+vdsm-debug-plugin-4.9.6-20.el6rhs.noarch.rpm
+vdsm-gluster-4.9.6-20.el6rhs.noarch.rpm
+vdsm-hook-faqemu-4.9.6-20.el6rhs.noarch.rpm
+vdsm-hook-vhostmd-4.9.6-20.el6rhs.noarch.rpm
+vdsm-reg-4.9.6-20.el6rhs.noarch.rpm
+
+x86_64:
+augeas-0.9.0-1.el6.x86_64.rpm
+augeas-debuginfo-0.9.0-1.el6.x86_64.rpm
+augeas-devel-0.9.0-1.el6.x86_64.rpm
+augeas-libs-0.9.0-1.el6.x86_64.rpm
+glusterfs-3.3.0.7rhs-1.el6rhs.x86_64.rpm
+glusterfs-debuginfo-3.3.0.7rhs-1.el6rhs.x86_64.rpm
+glusterfs-devel-3.3.0.7rhs-1.el6rhs.x86_64.rpm
+glusterfs-fuse-3.3.0.7rhs-1.el6rhs.x86_64.rpm
+glusterfs-geo-replication-3.3.0.7rhs-1.el6rhs.x86_64.rpm
+glusterfs-rdma-3.3.0.7rhs-1.el6rhs.x86_64.rpm
+glusterfs-server-3.3.0.7rhs-1.el6rhs.x86_64.rpm
+libvirt-0.9.10-21.el6_3.8.x86_64.rpm
+libvirt-client-0.9.10-21.el6_3.8.x86_64.rpm
+libvirt-debuginfo-0.9.10-21.el6_3.8.x86_64.rpm
+libvirt-devel-0.9.10-21.el6_3.8.x86_64.rpm
+libvirt-lock-sanlock-0.9.10-21.el6_3.8.x86_64.rpm
+libvirt-python-0.9.10-21.el6_3.8.x86_64.rpm
+sanlock-2.3-4.el6_3.x86_64.rpm
+sanlock-debuginfo-2.3-4.el6_3.x86_64.rpm
+sanlock-devel-2.3-4.el6_3.x86_64.rpm
+sanlock-lib-2.3-4.el6_3.x86_64.rpm
+sanlock-python-2.3-4.el6_3.x86_64.rpm
+vdsm-4.9.6-20.el6rhs.x86_64.rpm
+vdsm-debuginfo-4.9.6-20.el6rhs.x86_64.rpm
+vdsm-python-4.9.6-20.el6rhs.x86_64.rpm
+
+Red Hat Storage 2.0 Console:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/rhsc-2.0.techpreview1-4.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/rhsc-2.0.techpreview1-4.el6rhs.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/vdsm-4.9.6-20.el6rhs.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHS/SRPMS/vdsm-4.9.6-20.el6rhs.src.rpm</a>
+
+noarch:
+rhsc-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-backend-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-config-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-dbscripts-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-genericapi-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-jboss-deps-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-notification-service-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-restapi-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-setup-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-tools-common-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-userportal-2.0.techpreview1-4.el6rhs.noarch.rpm
+rhsc-webadmin-portal-2.0.techpreview1-4.el6rhs.noarch.rpm
+vdsm-bootstrap-4.9.6-20.el6rhs.noarch.rpm
+
+Red Hat Storage Native Client for Red Hat Enterprise Linux 6:
+
+Source:
+glusterfs-3.3.0.7rhs-1.el6.src.rpm
+
+x86_64:
+glusterfs-3.3.0.7rhs-1.el6.x86_64.rpm
+glusterfs-debuginfo-3.3.0.7rhs-1.el6.x86_64.rpm
+glusterfs-devel-3.3.0.7rhs-1.el6.x86_64.rpm
+glusterfs-fuse-3.3.0.7rhs-1.el6.x86_64.rpm
+glusterfs-rdma-3.3.0.7rhs-1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4406.html">https://www.redhat.com/security/data/cve/CVE-2012-4406.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5635.html">https://www.redhat.com/security/data/cve/CVE-2012-5635.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5638.html">https://www.redhat.com/security/data/cve/CVE-2012-5638.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/Red_Hat_Storage/">https://access.redhat.com/knowledge/docs/Red_Hat_Storage/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRVMMmXlSAg2UNWIIRAkspAKCS+8QCt8NE+FPUhVObSSvVj5uOSwCfYwBg
+QRicrIKUogFiJcPEpqBgCRo=
+=nAOB
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00075.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00075.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00076">Thread Index</A>]
+[<A HREF="date.html#00076">Date Index</A>]
+[<A HREF="author.html#00076">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

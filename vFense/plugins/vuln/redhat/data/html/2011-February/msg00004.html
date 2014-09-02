@@ -1,0 +1,252 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0199&#45;01] Important: krb5 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Feb 2011 16:57:57 &#45;0500 -->
+<!--X-Message-Id: 201102082157.p18LvqkP025023@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0199-01] Important: krb5 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0199-01] Important: krb5 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0199-01] Important: krb5 security update</li>
+<li><em>Date</em>: Tue, 8 Feb 2011 14:57:52 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: krb5 security update
+Advisory ID:       RHSA-2011:0199-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0199.html">https://rhn.redhat.com/errata/RHSA-2011-0199.html</a>
+Issue date:        2011-02-08
+CVE Names:         CVE-2011-0281 CVE-2011-0282 
+=====================================================================
+
+1. Summary:
+
+Updated krb5 packages that fix two security issues are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Kerberos is a network authentication system which allows clients and
+servers to authenticate to each other using symmetric encryption and a
+trusted third-party, the Key Distribution Center (KDC).
+
+A NULL pointer dereference flaw was found in the way the MIT Kerberos KDC
+processed principal names that were not null terminated, when the KDC was
+configured to use an LDAP back end. A remote attacker could use this flaw
+to crash the KDC via a specially-crafted request. (CVE-2011-0282)
+
+A denial of service flaw was found in the way the MIT Kerberos KDC
+processed certain principal names when the KDC was configured to use an
+LDAP back end. A remote attacker could use this flaw to cause the KDC to
+hang via a specially-crafted request. (CVE-2011-0281)
+
+Red Hat would like to thank the MIT Kerberos Team for reporting these
+issues. Upstream acknowledges Kevin Longfellow of Oracle Corporation as the
+original reporter of the CVE-2011-0281 issue.
+
+All krb5 users should upgrade to these updated packages, which contain a
+backported patch to correct these issues. After installing the updated
+packages, the krb5kdc daemon will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+668719 - CVE-2011-0281 krb5: KDC hang when using LDAP backend caused by special principal name (MITKRB5-SA-2011-002)
+668726 - CVE-2011-0282 krb5: KDC crash when using LDAP backend caused by a special principal name (MITKRB5-SA-2011-002)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-55.el5_6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-55.el5_6.1.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.6.1-55.el5_6.1.i386.rpm
+krb5-libs-1.6.1-55.el5_6.1.i386.rpm
+krb5-workstation-1.6.1-55.el5_6.1.i386.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-55.el5_6.1.i386.rpm
+krb5-debuginfo-1.6.1-55.el5_6.1.x86_64.rpm
+krb5-libs-1.6.1-55.el5_6.1.i386.rpm
+krb5-libs-1.6.1-55.el5_6.1.x86_64.rpm
+krb5-workstation-1.6.1-55.el5_6.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-55.el5_6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/krb5-1.6.1-55.el5_6.1.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.6.1-55.el5_6.1.i386.rpm
+krb5-devel-1.6.1-55.el5_6.1.i386.rpm
+krb5-server-1.6.1-55.el5_6.1.i386.rpm
+krb5-server-ldap-1.6.1-55.el5_6.1.i386.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-55.el5_6.1.i386.rpm
+krb5-debuginfo-1.6.1-55.el5_6.1.x86_64.rpm
+krb5-devel-1.6.1-55.el5_6.1.i386.rpm
+krb5-devel-1.6.1-55.el5_6.1.x86_64.rpm
+krb5-server-1.6.1-55.el5_6.1.x86_64.rpm
+krb5-server-ldap-1.6.1-55.el5_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/krb5-1.6.1-55.el5_6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/krb5-1.6.1-55.el5_6.1.src.rpm</a>
+
+i386:
+krb5-debuginfo-1.6.1-55.el5_6.1.i386.rpm
+krb5-devel-1.6.1-55.el5_6.1.i386.rpm
+krb5-libs-1.6.1-55.el5_6.1.i386.rpm
+krb5-server-1.6.1-55.el5_6.1.i386.rpm
+krb5-server-ldap-1.6.1-55.el5_6.1.i386.rpm
+krb5-workstation-1.6.1-55.el5_6.1.i386.rpm
+
+ia64:
+krb5-debuginfo-1.6.1-55.el5_6.1.i386.rpm
+krb5-debuginfo-1.6.1-55.el5_6.1.ia64.rpm
+krb5-devel-1.6.1-55.el5_6.1.ia64.rpm
+krb5-libs-1.6.1-55.el5_6.1.i386.rpm
+krb5-libs-1.6.1-55.el5_6.1.ia64.rpm
+krb5-server-1.6.1-55.el5_6.1.ia64.rpm
+krb5-server-ldap-1.6.1-55.el5_6.1.ia64.rpm
+krb5-workstation-1.6.1-55.el5_6.1.ia64.rpm
+
+ppc:
+krb5-debuginfo-1.6.1-55.el5_6.1.ppc.rpm
+krb5-debuginfo-1.6.1-55.el5_6.1.ppc64.rpm
+krb5-devel-1.6.1-55.el5_6.1.ppc.rpm
+krb5-devel-1.6.1-55.el5_6.1.ppc64.rpm
+krb5-libs-1.6.1-55.el5_6.1.ppc.rpm
+krb5-libs-1.6.1-55.el5_6.1.ppc64.rpm
+krb5-server-1.6.1-55.el5_6.1.ppc.rpm
+krb5-server-ldap-1.6.1-55.el5_6.1.ppc.rpm
+krb5-workstation-1.6.1-55.el5_6.1.ppc.rpm
+
+s390x:
+krb5-debuginfo-1.6.1-55.el5_6.1.s390.rpm
+krb5-debuginfo-1.6.1-55.el5_6.1.s390x.rpm
+krb5-devel-1.6.1-55.el5_6.1.s390.rpm
+krb5-devel-1.6.1-55.el5_6.1.s390x.rpm
+krb5-libs-1.6.1-55.el5_6.1.s390.rpm
+krb5-libs-1.6.1-55.el5_6.1.s390x.rpm
+krb5-server-1.6.1-55.el5_6.1.s390x.rpm
+krb5-server-ldap-1.6.1-55.el5_6.1.s390x.rpm
+krb5-workstation-1.6.1-55.el5_6.1.s390x.rpm
+
+x86_64:
+krb5-debuginfo-1.6.1-55.el5_6.1.i386.rpm
+krb5-debuginfo-1.6.1-55.el5_6.1.x86_64.rpm
+krb5-devel-1.6.1-55.el5_6.1.i386.rpm
+krb5-devel-1.6.1-55.el5_6.1.x86_64.rpm
+krb5-libs-1.6.1-55.el5_6.1.i386.rpm
+krb5-libs-1.6.1-55.el5_6.1.x86_64.rpm
+krb5-server-1.6.1-55.el5_6.1.x86_64.rpm
+krb5-server-ldap-1.6.1-55.el5_6.1.x86_64.rpm
+krb5-workstation-1.6.1-55.el5_6.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0281.html">https://www.redhat.com/security/data/cve/CVE-2011-0281.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0282.html">https://www.redhat.com/security/data/cve/CVE-2011-0282.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://web.mit.edu/kerberos/advisories/MITKRB5-SA-2011-002.txt">http://web.mit.edu/kerberos/advisories/MITKRB5-SA-2011-002.txt</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNUbtwXlSAg2UNWIIRAl+zAJ9KDJCvdD1J3OGmJq03zG4JvGT6cgCbBKnI
+cFXniSBW0KNU6Bts2a1e2JA=
+=eu30
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

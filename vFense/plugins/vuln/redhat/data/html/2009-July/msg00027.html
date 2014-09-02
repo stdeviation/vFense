@@ -1,0 +1,321 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1186&#45;01] Critical: nspr and nss security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 30 Jul 2009 18:21:05 &#45;0400 -->
+<!--X-Message-Id: 200907302221.n6UML54r021255@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1186-01] Critical: nspr and nss security, bug fix,	and enhanc</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1186-01] Critical: nspr and nss security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1186-01] Critical: nspr and nss security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 30 Jul 2009 18:21:05 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: nspr and nss security, bug fix, and enhancement update
+Advisory ID:       RHSA-2009:1186-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1186.html">https://rhn.redhat.com/errata/RHSA-2009-1186.html</a>
+Issue date:        2009-07-30
+CVE Names:         CVE-2009-2404 CVE-2009-2408 CVE-2009-2409 
+=====================================================================
+
+1. Summary:
+
+Updated nspr and nss packages that fix security issues, bugs, and add an
+enhancement are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+The packages with this update are identical to the packages released by
+RHBA-2009:1161 on the 20th of July 2009. They are being reissued as a Red
+Hat Security Advisory as they fixed a number of security issues that were
+made public today. If you are installing these packages for the first time,
+they also provide a number of bug fixes and add an enhancement, as detailed
+in RHBA-2009:1161. Since the packages are identical, there is no need to
+install this update if RHBA-2009:1161 has already been installed.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+Netscape Portable Runtime (NSPR) provides platform independence for non-GUI
+operating system facilities. These facilities include threads, thread
+synchronization, normal file and network I/O, interval timing, calendar
+time, basic memory management (malloc and free), and shared library linking.
+
+Network Security Services (NSS) is a set of libraries designed to support
+the cross-platform development of security-enabled client and server
+applications. Applications built with NSS can support SSLv2, SSLv3, TLS,
+and other security standards.
+
+These updated packages upgrade NSS from the previous version, 3.12.2, to a
+prerelease of version 3.12.4. The version of NSPR has also been upgraded
+from 4.7.3 to 4.7.4. 
+
+Moxie Marlinspike reported a heap overflow flaw in a regular expression
+parser in the NSS library used by browsers such as Mozilla Firefox to match
+common names in certificates. A malicious website could present a
+carefully-crafted certificate in such a way as to trigger the heap
+overflow, leading to a crash or, possibly, arbitrary code execution with
+the permissions of the user running the browser. (CVE-2009-2404)
+
+Note: in order to exploit this issue without further user interaction in
+Firefox, the carefully-crafted certificate would need to be signed by a
+Certificate Authority trusted by Firefox, otherwise Firefox presents the
+victim with a warning that the certificate is untrusted. Only if the user
+then accepts the certificate will the overflow take place.
+
+Dan Kaminsky discovered flaws in the way browsers such as Firefox handle
+NULL characters in a certificate. If an attacker is able to get a
+carefully-crafted certificate signed by a Certificate Authority trusted by
+Firefox, the attacker could use the certificate during a man-in-the-middle
+attack and potentially confuse Firefox into accepting it by mistake.
+(CVE-2009-2408)
+
+Dan Kaminsky found that browsers still accept certificates with MD2 hash
+signatures, even though MD2 is no longer considered a cryptographically
+strong algorithm. This could make it easier for an attacker to create a
+malicious certificate that would be treated as trusted by a browser. NSS
+now disables the use of MD2 and MD4 algorithms inside signatures by
+default. (CVE-2009-2409)
+
+All users of nspr and nss are advised to upgrade to these updated packages,
+which resolve these issues and add an enhancement.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+510197 - CVE-2009-2409 deprecate MD2 in SSL cert validation (Kaminsky)
+510251 - CVE-2009-2408 firefox/nss: doesn't handle NULL in Common Name properly
+512912 - CVE-2009-2404 nss regexp heap overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.7.4-1.el5_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.7.4-1.el5_3.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.3.99.3-1.el5_3.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.3.99.3-1.el5_3.2.src.rpm</a>
+
+i386:
+nspr-4.7.4-1.el5_3.1.i386.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.i386.rpm
+nss-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-tools-3.12.3.99.3-1.el5_3.2.i386.rpm
+
+x86_64:
+nspr-4.7.4-1.el5_3.1.i386.rpm
+nspr-4.7.4-1.el5_3.1.x86_64.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.i386.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.x86_64.rpm
+nss-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+nss-tools-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.7.4-1.el5_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nspr-4.7.4-1.el5_3.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.3.99.3-1.el5_3.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/nss-3.12.3.99.3-1.el5_3.2.src.rpm</a>
+
+i386:
+nspr-debuginfo-4.7.4-1.el5_3.1.i386.rpm
+nspr-devel-4.7.4-1.el5_3.1.i386.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.i386.rpm
+
+x86_64:
+nspr-debuginfo-4.7.4-1.el5_3.1.i386.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.x86_64.rpm
+nspr-devel-4.7.4-1.el5_3.1.i386.rpm
+nspr-devel-4.7.4-1.el5_3.1.x86_64.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nspr-4.7.4-1.el5_3.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nspr-4.7.4-1.el5_3.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nss-3.12.3.99.3-1.el5_3.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/nss-3.12.3.99.3-1.el5_3.2.src.rpm</a>
+
+i386:
+nspr-4.7.4-1.el5_3.1.i386.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.i386.rpm
+nspr-devel-4.7.4-1.el5_3.1.i386.rpm
+nss-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-tools-3.12.3.99.3-1.el5_3.2.i386.rpm
+
+ia64:
+nspr-4.7.4-1.el5_3.1.i386.rpm
+nspr-4.7.4-1.el5_3.1.ia64.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.i386.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.ia64.rpm
+nspr-devel-4.7.4-1.el5_3.1.ia64.rpm
+nss-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-3.12.3.99.3-1.el5_3.2.ia64.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.ia64.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.ia64.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.ia64.rpm
+nss-tools-3.12.3.99.3-1.el5_3.2.ia64.rpm
+
+ppc:
+nspr-4.7.4-1.el5_3.1.ppc.rpm
+nspr-4.7.4-1.el5_3.1.ppc64.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.ppc.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.ppc64.rpm
+nspr-devel-4.7.4-1.el5_3.1.ppc.rpm
+nspr-devel-4.7.4-1.el5_3.1.ppc64.rpm
+nss-3.12.3.99.3-1.el5_3.2.ppc.rpm
+nss-3.12.3.99.3-1.el5_3.2.ppc64.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.ppc.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.ppc64.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.ppc.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.ppc64.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.ppc.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.ppc64.rpm
+nss-tools-3.12.3.99.3-1.el5_3.2.ppc.rpm
+
+s390x:
+nspr-4.7.4-1.el5_3.1.s390.rpm
+nspr-4.7.4-1.el5_3.1.s390x.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.s390.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.s390x.rpm
+nspr-devel-4.7.4-1.el5_3.1.s390.rpm
+nspr-devel-4.7.4-1.el5_3.1.s390x.rpm
+nss-3.12.3.99.3-1.el5_3.2.s390.rpm
+nss-3.12.3.99.3-1.el5_3.2.s390x.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.s390.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.s390x.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.s390.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.s390x.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.s390.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.s390x.rpm
+nss-tools-3.12.3.99.3-1.el5_3.2.s390x.rpm
+
+x86_64:
+nspr-4.7.4-1.el5_3.1.i386.rpm
+nspr-4.7.4-1.el5_3.1.x86_64.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.i386.rpm
+nspr-debuginfo-4.7.4-1.el5_3.1.x86_64.rpm
+nspr-devel-4.7.4-1.el5_3.1.i386.rpm
+nspr-devel-4.7.4-1.el5_3.1.x86_64.rpm
+nss-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-debuginfo-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-devel-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.i386.rpm
+nss-pkcs11-devel-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+nss-tools-3.12.3.99.3-1.el5_3.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2404">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2404</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2408">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2408</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2409">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2409</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://rhn.redhat.com/errata/RHBA-2009-1161.html">http://rhn.redhat.com/errata/RHBA-2009-1161.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKchzOXlSAg2UNWIIRAsnAAKDDShJh1sq+AagpSz8mAQT9uRaYlQCgjU3a
+h9xMbjaBYt5vrqGr/q5+xtQ=
+=YRmO
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

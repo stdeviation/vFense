@@ -1,0 +1,270 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0333&#45;01] Important: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 23 Feb 2012 16:25:25 &#45;0500 -->
+<!--X-Message-Id: 201202232125.q1NLPJI0001404@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0333-01] Important: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00066.html">Date Prev</a>][<a href="msg00068.html">Date Next</a>] &nbsp; [<a href="msg00066.html">Thread Prev</a>][<a href="msg00068.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00067">Thread Index</A>]
+[<A HREF="date.html#00067">Date Index</A>]
+[<A HREF="author.html#00067">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0333-01] Important: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0333-01] Important: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Thu, 23 Feb 2012 21:25:17 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2012:0333-01
+Product:           Red Hat Enterprise MRG for RHEL-6
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0333.html">https://rhn.redhat.com/errata/RHSA-2012-0333.html</a>
+Issue date:        2012-02-23
+CVE Names:         CVE-2011-2918 CVE-2011-4077 CVE-2011-4097 
+                   CVE-2011-4110 CVE-2011-4127 CVE-2011-4131 
+                   CVE-2011-4132 CVE-2012-0038 CVE-2012-0044 
+                   CVE-2012-0207 CVE-2012-0810 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix multiple security issues and various
+bugs are now available for Red Hat Enterprise MRG 2.1.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 6 Server v.2 - noarch, x86_64
+
+3. Description:
+
+These packages contain the Linux kernel.
+
+Security fixes:
+
+* SG_IO ioctl SCSI requests on partitions or LVM volumes could be passed to
+the underlying block device, allowing a privileged user to bypass
+restrictions and gain read and write access (and be able to issue other
+SCSI commands) to the entire block device. (CVE-2011-4127, Important)
+
+* A local, unprivileged user could use an integer overflow flaw in
+drm_mode_dirtyfb_ioctl() to cause a denial of service or escalate their
+privileges. (CVE-2012-0044, Important)
+
+* A local, unprivileged user could use a flaw in the Performance Events
+implementation to cause a denial of service. (CVE-2011-2918, Moderate)
+
+* A local, unprivileged user could use flaws in the XFS file system
+implementation to cause a denial of service or escalate their privileges by
+mounting a specially-crafted disk. (CVE-2011-4077, CVE-2012-0038, Moderate)
+
+* A local, unprivileged user could use a flaw in the Out of Memory (OOM)
+killer to monopolize memory, have their process skipped by the OOM killer,
+or cause other tasks to be terminated. (CVE-2011-4097, Moderate)
+
+* A local, unprivileged user could use a flaw in the key management
+facility to cause a denial of service. (CVE-2011-4110, Moderate)
+
+* A malicious Network File System version 4 (NFSv4) server could return a
+crafted reply to a GETACL request, causing a denial of service on the
+client. (CVE-2011-4131, Moderate)
+
+* A local attacker could use a flaw in the Journaling Block Device (JBD) to
+crash the system by mounting a specially-crafted ext3 or ext4 disk.
+(CVE-2011-4132, Moderate)
+
+* A flaw in igmp_heard_query() could allow an attacker, who is able to send
+certain IGMP (Internet Group Management Protocol) packets to a target
+system, to cause a denial of service. (CVE-2012-0207, Moderate)
+
+* If lock contention during signal sending occurred when in a software
+interrupt handler that is using the per-CPU debug stack, the task could be
+scheduled out on the realtime kernel, possibly leading to debug stack
+corruption. A local, unprivileged user could use this flaw to cause a
+denial of service. (CVE-2012-0810, Moderate)
+
+Red Hat would like to thank Chen Haogang for reporting CVE-2012-0044;
+Wang Xi for reporting CVE-2012-0038; Shubham Goyal for reporting
+CVE-2011-4097; Andy Adamson for reporting CVE-2011-4131; and Simon McVittie
+for reporting CVE-2012-0207.
+
+Bug fixes:
+
+* When a sleeping task, waiting on a futex (fast userspace mutex), tried to
+get the spin_lock(hb-&gt;lock) RT-mutex, if the owner of the futex released
+the lock, the sleeping task was put on a futex proxy lock. Consequently,
+the sleeping task was blocked on two locks and eventually terminated in the
+BUG_ON() function. With this update, the WAKEUP_INPROGRESS pseudo-lock has
+been added to be used as a proxy lock. This pseudo-lock tells the sleeping
+task that it is being woken up so that the task no longer tries to get the
+second lock. Now, the futex code works as expected and sleeping tasks no
+longer crash in the described scenario. (BZ#784733)
+
+* When the CONFIG_CRYPTO_FIPS configuration option was disabled, some
+services such as sshd and ipsec, while working properly, returned warning
+messages regarding this missing option during start up. With this update,
+CONFIG_CRYPTO_FIPS has been enabled and no warning messages are now
+returned in the described scenario. (BZ#786145)
+
+* Previously, when a read operation on a loop device failed, the data
+successfully read from the device was not cleared and could eventually
+leak. This bug has been fixed and all data are now properly cleared in the
+described scenario. (BZ#761420)
+
+* Due to an assembler-sourced object, the perf utility (from the perf-rt
+package) for AMD64 and Intel 64 architectures contained an executable
+stack. This update adds the &quot;.note.GNU-stack&quot; section definition to the
+bench/mem-memcpy-x86-64-asm.S component of perf, with all flags disabled,
+and perf no longer contains an executable stack, thus fixing this bug.
+(BZ#783570)
+
+4. Solution:
+
+Users should upgrade to these updated packages, which correct these
+issues. The system must be rebooted for this update to take effect.
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+730706 - CVE-2011-2918 kernel: perf: Fix software event overflow
+747106 - CVE-2011-4131 kernel: nfs4_getfacl decoding kernel oops
+749156 - CVE-2011-4077 kernel: xfs: potential buffer overflow in xfs_readlink()
+750399 - CVE-2011-4097 kernel: oom_badness() integer overflow
+751297 - CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
+752375 - CVE-2011-4127 kernel: possible privilege escalation via SG_IO ioctl
+753341 - CVE-2011-4132 kernel: jbd/jbd2: invalid value of first log block leads to oops
+772867 - CVE-2012-0207 kernel: igmp: Avoid zero delay when receiving odd mixture of IGMP queries
+772894 - CVE-2012-0044 kernel: drm: integer overflow in drm_mode_dirtyfb_ioctl()
+773280 - CVE-2012-0038 kernel: xfs heap overflow
+784733 - BUG at kernel/rtmutex.c:472 MRG 2.1 3.0.9-rt26.45.el6rt.x86_64 kernel
+786145 - missing /proc/sys/crypto/fips_enabled in 3.0.9 causes openssh errors
+794557 - CVE-2012-0810 kernel-rt: stack corruption when task gets scheduled out using the debug stack
+
+6. Package List:
+
+MRG Realtime for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/kernel-rt-3.0.18-rt34.53.el6rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/kernel-rt-3.0.18-rt34.53.el6rt.src.rpm</a>
+
+noarch:
+kernel-rt-doc-3.0.18-rt34.53.el6rt.noarch.rpm
+kernel-rt-firmware-3.0.18-rt34.53.el6rt.noarch.rpm
+
+x86_64:
+kernel-rt-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-debug-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-debug-debuginfo-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-debug-devel-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-debuginfo-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-debuginfo-common-x86_64-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-devel-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-trace-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-trace-debuginfo-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-trace-devel-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-vanilla-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-3.0.18-rt34.53.el6rt.x86_64.rpm
+kernel-rt-vanilla-devel-3.0.18-rt34.53.el6rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2918.html">https://www.redhat.com/security/data/cve/CVE-2011-2918.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4077.html">https://www.redhat.com/security/data/cve/CVE-2011-4077.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4097.html">https://www.redhat.com/security/data/cve/CVE-2011-4097.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4110.html">https://www.redhat.com/security/data/cve/CVE-2011-4110.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4127.html">https://www.redhat.com/security/data/cve/CVE-2011-4127.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4131.html">https://www.redhat.com/security/data/cve/CVE-2011-4131.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4132.html">https://www.redhat.com/security/data/cve/CVE-2011-4132.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0038.html">https://www.redhat.com/security/data/cve/CVE-2012-0038.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0044.html">https://www.redhat.com/security/data/cve/CVE-2012-0044.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0207.html">https://www.redhat.com/security/data/cve/CVE-2012-0207.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0810.html">https://www.redhat.com/security/data/cve/CVE-2012-0810.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPRq6hXlSAg2UNWIIRAt+FAKDAOe55OanwpN2Chz5/SqAR71NbqwCgjRkH
+4N4AGuZ6MqEyyMTGo4ZSUFU=
+=XMdE
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00066.html">Date Prev</a>][<a href="msg00068.html">Date Next</a>] &nbsp; [<a href="msg00066.html">Thread Prev</a>][<a href="msg00068.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00067">Thread Index</A>]
+[<A HREF="date.html#00067">Date Index</A>]
+[<A HREF="author.html#00067">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0205&#45;02] Low: dovecot security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 20 Jan 2009 14:31:30 &#45;0500 -->
+<!--X-Message-Id: 200901201931.n0KJVVmu003440@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0205-02] Low: dovecot security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0205-02] Low: dovecot security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0205-02] Low: dovecot security and bug fix update</li>
+<li><em>Date</em>: Tue, 20 Jan 2009 14:31:30 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: dovecot security and bug fix update
+Advisory ID:       RHSA-2009:0205-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0205.html">https://rhn.redhat.com/errata/RHSA-2009-0205.html</a>
+Issue date:        2009-01-20
+Keywords:          initscript
+CVE Names:         CVE-2008-4577 CVE-2008-4870 
+=====================================================================
+
+1. Summary:
+
+An updated dovecot package that corrects two security flaws and various bugs
+is now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+Dovecot is an IMAP server for Linux and UNIX-like systems, primarily
+written with security in mind.
+
+A flaw was found in Dovecot's ACL plug-in. The ACL plug-in treated negative
+access rights as positive rights, which could allow an attacker to bypass
+intended access restrictions. (CVE-2008-4577)
+
+A password disclosure flaw was found with Dovecot's configuration file. If
+a system had the &quot;ssl_key_password&quot; option defined, any local user could
+view the SSL key password. (CVE-2008-4870)
+
+Note: This flaw did not allow the attacker to acquire the contents of the
+SSL key. The password has no value without the key file which arbitrary
+users should not have read access to.
+
+To better protect even this value, however, the dovecot.conf file now
+supports the &quot;!include_try&quot; directive. The ssl_key_password option should
+be moved from dovecot.conf to a new file owned by, and only readable and
+writable by, root (ie 0600). This file should be referenced from
+dovecot.conf by setting the &quot;!include_try [/path/to/password/file]&quot; option.
+
+Additionally, this update addresses the following bugs:
+
+* the dovecot init script -- /etc/rc.d/init.d/dovecot -- did not check if
+the dovecot binary or configuration files existed. It also used the wrong
+pid file for checking the dovecot service's status. This update includes a
+new init script that corrects these errors.
+
+* the %files section of the dovecot spec file did not include &quot;%dir
+%{ssldir}/private&quot;. As a consequence, the /etc/pki/private/ directory was
+not owned by dovecot. (Note: files inside /etc/pki/private/ were and are
+owned by dovecot.) With this update, the missing line has been added to the
+spec file, and the noted directory is now owned by dovecot.
+
+* in some previously released versions of dovecot, the authentication
+process accepted (and passed along un-escaped) passwords containing
+characters that had special meaning to dovecot's internal protocols. This
+updated release prevents such passwords from being passed back, instead
+returning the error, &quot;Attempted login with password having illegal chars&quot;.
+
+Note: dovecot versions previously shipped with Red Hat Enterprise Linux 5
+did not allow this behavior. This update addresses the issue above but said
+issue was only present in versions of dovecot not previously included with
+Red Hat Enterprise Linux 5.
+
+Users of dovecot are advised to upgrade to this updated package, which
+addresses these vulnerabilities and resolves these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+238016 - Wrong init script
+436287 - dovecot.conf is world readable - possible password exposure
+439369 - new dovecot security issues from the dovecot site
+448089 - dovecot should own /etc/pki/dovecot/private directory
+467436 - CVE-2008-4577 dovecot: incorrect handling of negative rights in the ACL plugin
+469659 - CVE-2008-4870 dovecot: ssl_key_password disclosure due to an insecure dovecot.conf permissions
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/dovecot-1.0.7-7.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/dovecot-1.0.7-7.el5.src.rpm</a>
+
+i386:
+dovecot-1.0.7-7.el5.i386.rpm
+dovecot-debuginfo-1.0.7-7.el5.i386.rpm
+
+x86_64:
+dovecot-1.0.7-7.el5.x86_64.rpm
+dovecot-debuginfo-1.0.7-7.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/dovecot-1.0.7-7.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/dovecot-1.0.7-7.el5.src.rpm</a>
+
+i386:
+dovecot-1.0.7-7.el5.i386.rpm
+dovecot-debuginfo-1.0.7-7.el5.i386.rpm
+
+ia64:
+dovecot-1.0.7-7.el5.ia64.rpm
+dovecot-debuginfo-1.0.7-7.el5.ia64.rpm
+
+ppc:
+dovecot-1.0.7-7.el5.ppc.rpm
+dovecot-debuginfo-1.0.7-7.el5.ppc.rpm
+
+s390x:
+dovecot-1.0.7-7.el5.s390x.rpm
+dovecot-debuginfo-1.0.7-7.el5.s390x.rpm
+
+x86_64:
+dovecot-1.0.7-7.el5.x86_64.rpm
+dovecot-debuginfo-1.0.7-7.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4577">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4577</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4870">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4870</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJdiZ+XlSAg2UNWIIRAiwvAKCBSrKaiISaD135RnLb7qreQQ37tgCfaAqu
+Rze6M2u8eTIxTkgOQLDH3EE=
+=632r
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

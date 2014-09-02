@@ -3,7 +3,6 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import time_it
-from vFense.plugins.patching._db_model import FilesKey
 from vFense.plugins.patching._db_files import file_data_exists, \
     update_file_data, insert_file_data
 
@@ -12,15 +11,11 @@ logger = logging.getLogger('rvapi')
 
 
 @time_it
-def add_file_data(app_id, file_data, agent_id=None):
+def add_file_data(file_data):
     """Insert or Update the file data information for application id.
 
     Args:
-        app_id (str): The 64 character hex digest of the application.
-        file_data (list): List of dictionaries
-
-    Kwargs:
-        agent_id (str): The 36 character UUID of the agent.
+        file_data (list): List of Files instances.
 
     Basic Usage:
         >>> from vFense.plugins.patching.file_data import add_file_data
@@ -36,17 +31,24 @@ def add_file_data(app_id, file_data, agent_id=None):
         ]
 
     Returns:
+        Boolean
     """
     data_to_insert = []
-    data_to_update = []
-    for uri in file_data:
-        if file_data_exists(uri[FilesKey.FileName]):
-            data_to_update.append(uri)
+    data_inserted = False
+    for fd in file_data:
+        if file_data_exists(fd.file_name):
+            if fd.agent_ids:
+                update_file_data(fd.file_name, agent_ids=fd.agent_ids)
+                data_inserted = True
+
+            elif fd.app_ids:
+                update_file_data(fd.file_name, app_ids=fd.app_ids)
+                data_inserted = True
         else:
-            data_to_insert.append(uri)
+            fd.fill_in_defaults()
+            data_to_insert.append(fd.to_dict())
 
     if data_to_insert:
-        insert_file_data(app_id, data_to_insert, agent_id)
+        insert_file_data(data_to_insert)
 
-    elif data_to_update:
-        update_file_data(app_id, data_to_update, agent_id)
+    return data_inserted

@@ -1,0 +1,378 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0146&#45;01] Moderate: gd security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 28 Feb 2008 05:15:35 &#45;0500 -->
+<!--X-Message-Id: 200802281015.m1SAFXhL007860@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0146-01] Moderate: gd security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0146-01] Moderate: gd security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0146-01] Moderate: gd security update</li>
+<li><em>Date</em>: Thu, 28 Feb 2008 05:15:33 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: gd security update
+Advisory ID:       RHSA-2008:0146-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0146.html">https://rhn.redhat.com/errata/RHSA-2008-0146.html</a>
+Issue date:        2008-02-28
+CVE Names:         CVE-2006-4484 CVE-2007-0455 CVE-2007-2756 
+                   CVE-2007-3472 CVE-2007-3473 CVE-2007-3475 
+                   CVE-2007-3476 
+=====================================================================
+
+1. Summary:
+
+Updated gd packages that fix multiple security issues are now available for
+Red Hat Enterprise Linux 4 and 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The gd package contains a graphics library used for the dynamic creation of
+images such as PNG and JPEG.
+
+Multiple issues were discovered in the gd GIF image-handling code. A
+carefully-crafted GIF file could cause a crash or possibly execute code
+with the privileges of the application using the gd library.
+(CVE-2006-4484, CVE-2007-3475, CVE-2007-3476)
+
+An integer overflow was discovered in the gdImageCreateTrueColor()
+function, leading to incorrect memory allocations. A carefully crafted
+image could cause a crash or possibly execute code with the privileges of
+the application using the gd library. (CVE-2007-3472)
+
+A buffer over-read flaw was discovered. This could cause a crash in an
+application using the gd library to render certain strings using a
+JIS-encoded font. (CVE-2007-0455)
+
+A flaw was discovered in the gd PNG image handling code. A truncated PNG
+image could cause an infinite loop in an application using the gd library.
+(CVE-2007-2756)
+
+A flaw was discovered in the gd X BitMap (XBM) image-handling code. A
+malformed or truncated XBM image could cause a crash in an application
+using the gd library. (CVE-2007-3473)
+
+Users of gd should upgrade to these updated packages, which contain
+backported patches which resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+224607 - CVE-2007-0455 gd buffer overrun
+242033 - CVE-2007-2756 gd / php-gd ImageCreateFromPng infinite loop caused by truncated PNG
+276751 - CVE-2007-3472 libgd Integer overflow in TrueColor code
+276791 - CVE-2007-3473 libgd NULL pointer dereference when reading a corrupt X bitmap
+277181 - CVE-2007-3475 libgd Denial of service by GIF images without a global color map
+277201 - CVE-2007-3476 libgd Denial of service by corrupted GIF images
+431568 - CVE-2006-4484 gd: GIF handling buffer overflow
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/gd-2.0.28-5.4E.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/gd-2.0.28-5.4E.el4_6.1.src.rpm</a>
+
+i386:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.i386.rpm
+
+ia64:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-2.0.28-5.4E.el4_6.1.ia64.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.ia64.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.ia64.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.ia64.rpm
+
+ppc:
+gd-2.0.28-5.4E.el4_6.1.ppc.rpm
+gd-2.0.28-5.4E.el4_6.1.ppc64.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.ppc.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.ppc64.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.ppc.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.ppc.rpm
+
+s390:
+gd-2.0.28-5.4E.el4_6.1.s390.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.s390.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.s390.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.s390.rpm
+
+s390x:
+gd-2.0.28-5.4E.el4_6.1.s390.rpm
+gd-2.0.28-5.4E.el4_6.1.s390x.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.s390.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.s390x.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.s390x.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.s390x.rpm
+
+x86_64:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/gd-2.0.28-5.4E.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/gd-2.0.28-5.4E.el4_6.1.src.rpm</a>
+
+i386:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.i386.rpm
+
+x86_64:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/gd-2.0.28-5.4E.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/gd-2.0.28-5.4E.el4_6.1.src.rpm</a>
+
+i386:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.i386.rpm
+
+ia64:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-2.0.28-5.4E.el4_6.1.ia64.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.ia64.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.ia64.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.ia64.rpm
+
+x86_64:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/gd-2.0.28-5.4E.el4_6.1.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/gd-2.0.28-5.4E.el4_6.1.src.rpm</a>
+
+i386:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.i386.rpm
+
+ia64:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-2.0.28-5.4E.el4_6.1.ia64.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.ia64.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.ia64.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.ia64.rpm
+
+x86_64:
+gd-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.i386.rpm
+gd-debuginfo-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-devel-2.0.28-5.4E.el4_6.1.x86_64.rpm
+gd-progs-2.0.28-5.4E.el4_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gd-2.0.33-9.4.el5_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gd-2.0.33-9.4.el5_1.1.src.rpm</a>
+
+i386:
+gd-2.0.33-9.4.el5_1.1.i386.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.i386.rpm
+gd-progs-2.0.33-9.4.el5_1.1.i386.rpm
+
+x86_64:
+gd-2.0.33-9.4.el5_1.1.i386.rpm
+gd-2.0.33-9.4.el5_1.1.x86_64.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.i386.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.x86_64.rpm
+gd-progs-2.0.33-9.4.el5_1.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gd-2.0.33-9.4.el5_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gd-2.0.33-9.4.el5_1.1.src.rpm</a>
+
+i386:
+gd-debuginfo-2.0.33-9.4.el5_1.1.i386.rpm
+gd-devel-2.0.33-9.4.el5_1.1.i386.rpm
+
+x86_64:
+gd-debuginfo-2.0.33-9.4.el5_1.1.i386.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.x86_64.rpm
+gd-devel-2.0.33-9.4.el5_1.1.i386.rpm
+gd-devel-2.0.33-9.4.el5_1.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gd-2.0.33-9.4.el5_1.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gd-2.0.33-9.4.el5_1.1.src.rpm</a>
+
+i386:
+gd-2.0.33-9.4.el5_1.1.i386.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.i386.rpm
+gd-devel-2.0.33-9.4.el5_1.1.i386.rpm
+gd-progs-2.0.33-9.4.el5_1.1.i386.rpm
+
+ia64:
+gd-2.0.33-9.4.el5_1.1.ia64.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.ia64.rpm
+gd-devel-2.0.33-9.4.el5_1.1.ia64.rpm
+gd-progs-2.0.33-9.4.el5_1.1.ia64.rpm
+
+ppc:
+gd-2.0.33-9.4.el5_1.1.ppc.rpm
+gd-2.0.33-9.4.el5_1.1.ppc64.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.ppc.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.ppc64.rpm
+gd-devel-2.0.33-9.4.el5_1.1.ppc.rpm
+gd-devel-2.0.33-9.4.el5_1.1.ppc64.rpm
+gd-progs-2.0.33-9.4.el5_1.1.ppc.rpm
+
+s390x:
+gd-2.0.33-9.4.el5_1.1.s390.rpm
+gd-2.0.33-9.4.el5_1.1.s390x.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.s390.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.s390x.rpm
+gd-devel-2.0.33-9.4.el5_1.1.s390.rpm
+gd-devel-2.0.33-9.4.el5_1.1.s390x.rpm
+gd-progs-2.0.33-9.4.el5_1.1.s390x.rpm
+
+x86_64:
+gd-2.0.33-9.4.el5_1.1.i386.rpm
+gd-2.0.33-9.4.el5_1.1.x86_64.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.i386.rpm
+gd-debuginfo-2.0.33-9.4.el5_1.1.x86_64.rpm
+gd-devel-2.0.33-9.4.el5_1.1.i386.rpm
+gd-devel-2.0.33-9.4.el5_1.1.x86_64.rpm
+gd-progs-2.0.33-9.4.el5_1.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4484">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4484</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0455">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0455</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2756">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2756</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3472">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3472</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3473">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3473</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3475">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3475</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3476">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3476</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHxolQXlSAg2UNWIIRAuiAAKCyMvTR6jeDsJxpLsG42TYNX0+w9ACgo1dV
+4SPteBFBtGBNC9bACDW2wac=
+=IEDd
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

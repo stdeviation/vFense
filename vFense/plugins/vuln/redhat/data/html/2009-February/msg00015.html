@@ -1,0 +1,196 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0334&#45;01] Critical: flash&#45;plugin security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 25 Feb 2009 19:03:13 &#45;0500 -->
+<!--X-Message-Id: 200902260003.n1Q03DYU023756@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0334-01] Critical: flash-plugin security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00014.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0334-01] Critical: flash-plugin security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0334-01] Critical: flash-plugin security update</li>
+<li><em>Date</em>: Wed, 25 Feb 2009 19:03:13 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: flash-plugin security update
+Advisory ID:       RHSA-2009:0334-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0334.html">https://rhn.redhat.com/errata/RHSA-2009-0334.html</a>
+Issue date:        2009-02-25
+CVE Names:         CVE-2009-0519 CVE-2009-0520 
+=====================================================================
+
+1. Summary:
+
+An updated Adobe Flash Player package that fixes several security issues is
+now available for Red Hat Enterprise Linux 3 and 4 Extras.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 3 Extras - i386
+Red Hat Desktop version 3 Extras - i386
+Red Hat Enterprise Linux ES version 3 Extras - i386
+Red Hat Enterprise Linux WS version 3 Extras - i386
+Red Hat Enterprise Linux AS version 4 Extras - i386
+Red Hat Desktop version 4 Extras - i386
+Red Hat Enterprise Linux ES version 4 Extras - i386
+Red Hat Enterprise Linux WS version 4 Extras - i386
+
+3. Description:
+
+The flash-plugin package contains a Firefox-compatible Adobe Flash Player
+Web browser plug-in.
+
+Multiple input validation flaws were found in the way Flash Player
+displayed certain SWF (Shockwave Flash) content. An attacker could use
+these flaws to create a specially-crafted SWF file that could cause
+flash-plugin to crash, or, possibly, execute arbitrary code when the victim
+loaded a page containing the specially-crafted SWF content. (CVE-2009-0520,
+CVE-2009-0519)
+
+All users of Adobe Flash Player should install this updated package, which
+upgrades Flash Player to version 9.0.159.0.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+487141 - CVE-2009-0519 flash-plugin: Input validation flaw (DoS)
+487142 - CVE-2009-0520 flash-plugin: Buffer overflow (arbitrary code execution) via crafted SWF file.
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 3 Extras:
+
+i386:
+flash-plugin-9.0.159.0-1.el3.with.oss.i386.rpm
+
+Red Hat Desktop version 3 Extras:
+
+i386:
+flash-plugin-9.0.159.0-1.el3.with.oss.i386.rpm
+
+Red Hat Enterprise Linux ES version 3 Extras:
+
+i386:
+flash-plugin-9.0.159.0-1.el3.with.oss.i386.rpm
+
+Red Hat Enterprise Linux WS version 3 Extras:
+
+i386:
+flash-plugin-9.0.159.0-1.el3.with.oss.i386.rpm
+
+Red Hat Enterprise Linux AS version 4 Extras:
+
+i386:
+flash-plugin-9.0.159.0-1.el4.i386.rpm
+
+Red Hat Desktop version 4 Extras:
+
+i386:
+flash-plugin-9.0.159.0-1.el4.i386.rpm
+
+Red Hat Enterprise Linux ES version 4 Extras:
+
+i386:
+flash-plugin-9.0.159.0-1.el4.i386.rpm
+
+Red Hat Enterprise Linux WS version 4 Extras:
+
+i386:
+flash-plugin-9.0.159.0-1.el4.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0519">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0519</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0520">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0520</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.adobe.com/support/security/bulletins/apsb09-01.html">http://www.adobe.com/support/security/bulletins/apsb09-01.html</a>
+<a  rel="nofollow" href="http://www.adobe.com/products/flashplayer/">http://www.adobe.com/products/flashplayer/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJpdw0XlSAg2UNWIIRApxFAJ0eQA6G6c8ZVO8ocuKT0Gp5mnOMwwCgtn3D
+OIrsYZT9hVUnhPh9leHQtc0=
+=dNzf
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00014.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

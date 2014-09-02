@@ -1,0 +1,247 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0194&#45;01] Important: JBoss Enterprise Application Platform	5.2.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 24 Jan 2013 14:21:59 &#45;0500 -->
+<!--X-Message-Id: 201301241921.r0OJLwBp021747@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0194-01] Important: JBoss Enterprise Application Platform	5.2</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0194-01] Important: JBoss Enterprise Application Platform	5.2.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0194-01] Important: JBoss Enterprise Application Platform	5.2.0 update</li>
+<li><em>Date</em>: Thu, 24 Jan 2013 19:21:58 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: JBoss Enterprise Application Platform 5.2.0 update
+Advisory ID:       RHSA-2013:0194-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0194.html">https://rhn.redhat.com/errata/RHSA-2013-0194.html</a>
+Issue date:        2013-01-24
+CVE Names:         CVE-2009-5066 CVE-2011-1096 CVE-2011-2487 
+                   CVE-2011-2730 CVE-2011-2908 CVE-2011-4575 
+                   CVE-2012-0874 CVE-2012-2377 CVE-2012-2379 
+                   CVE-2012-3369 CVE-2012-3370 CVE-2012-3546 
+                   CVE-2012-5478 
+=====================================================================
+
+1. Summary:
+
+JBoss Enterprise Application Platform 5.2.0, which fixes multiple security
+issues, various bugs, and adds several enhancements, is now available from
+the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+This JBoss Enterprise Application Platform 5.2.0 release serves as a
+replacement for JBoss Enterprise Application Platform 5.1.2, and includes
+bug fixes and enhancements. Refer to the JBoss Enterprise Application
+Platform 5.2.0 Release Notes for information on the most significant of
+these changes. The Release Notes will be available shortly from
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+
+2. Description:
+
+An attack technique against the W3C XML Encryption Standard when block
+ciphers were used in CBC mode could allow a remote attacker to conduct
+chosen-ciphertext attacks, leading to the recovery of the entire plain text
+of a particular cryptogram. (CVE-2011-1096)
+
+JBoss Web Services leaked side-channel data when distributing symmetric
+keys (for XML encryption), allowing a remote attacker to recover the entire
+plain text form of a symmetric key. (CVE-2011-2487)
+
+Spring framework could possibly evaluate Expression Language (EL)
+expressions twice, allowing a remote attacker to execute arbitrary code in
+the context of the application server, or to obtain sensitive information
+from the server. Manual action is required to apply this fix. Refer to the
+Solution section. (CVE-2011-2730)
+
+Apache CXF checked to ensure XML elements were signed or encrypted by a
+Supporting Token, but not whether the correct token was used. A remote
+attacker could transmit confidential information without the appropriate
+security, and potentially circumvent access controls on web services
+exposed via Apache CXF. Refer to the Solution section for details.
+(CVE-2012-2379)
+
+When an application used FORM authentication, along with another component
+that calls request.setUserPrincipal() before the call to
+FormAuthenticator#authenticate() (such as the Single-Sign-On valve), it was
+possible to bypass the security constraint checks in the FORM authenticator
+by appending &quot;/j_security_check&quot; to the end of a URL. (CVE-2012-3546)
+
+The JMX Console was vulnerable to CSRF attacks, allowing a remote attacker
+to hijack the authenticated JMX Console session of an administrator.
+(CVE-2011-2908)
+
+An XSS flaw allowed a remote attacker to perform an XSS attack against
+victims using the JMX Console. (CVE-2011-4575)
+
+SecurityAssociation.getCredential() returned the previous credential if
+no security context was provided. Depending on the deployed applications,
+this could possibly allow a remote attacker to hijack the credentials of a
+previously-authenticated user. (CVE-2012-3370)
+
+Configuring the JMX Invoker to restrict access to users with specific
+roles did not actually restrict access, allowing remote attackers with
+valid JMX Invoker credentials to perform JMX operations accessible to
+roles they are not a member of. (CVE-2012-5478)
+
+twiddle.sh accepted credentials as command line arguments, allowing local
+users to view them via a process listing. (CVE-2009-5066)
+
+The JMXInvokerHAServlet and EJBInvokerHAServlet invoker servlets allow
+unauthenticated access by default in some profiles. The security
+interceptor's second layer of authentication prevented direct exploitation
+of this flaw. If the interceptor was misconfigured or inadvertently
+disabled, this flaw could lead to arbitrary code execution in the context
+of the user running the JBoss server. (CVE-2012-0874)
+
+The JGroups diagnostics service was enabled with no authentication when a
+JGroups channel was started, allowing attackers on the adjacent network to
+read diagnostic information. (CVE-2012-2377)
+
+CallerIdentityLoginModule retained the password from the previous call if a
+null password was provided. In non-default configurations this could
+possibly lead to a remote attacker hijacking a previously-authenticated
+user's session. (CVE-2012-3369)
+
+Red Hat would like to thank Juraj Somorovsky of Ruhr-University Bochum for
+reporting CVE-2011-1096 and CVE-2011-2487; the Apache CXF project for
+reporting CVE-2012-2379; and Tyler Krpata for reporting CVE-2011-4575.
+CVE-2012-3370 and CVE-2012-3369 were discovered by Carlo de Wolf of Red
+Hat; CVE-2012-5478 discovered by Derek Horton of Red Hat; CVE-2012-0874
+discovered by David Jorm of Red Hat; and CVE-2012-2377 was discovered by
+Red Hat.
+
+3. Solution:
+
+Note: Manual action is required to apply the fix for CVE-2011-2730. If your
+system has deployed applications which use Spring framework, the context
+parameter &quot;springJspExpressionSupport&quot; must be set to &quot;false&quot; to mitigate
+this flaw, for example, in the application's web.xml file. This will
+prevent the double-evaluation of EL expressions that led to this flaw.
+
+CVE-2012-2379 has been addressed by disabling the affected configuration in
+this release. If you use the affected configuration, an exception will be
+thrown and the relevant application will not deploy to the server. A patch
+that allows the affected configuration to be used without this
+vulnerability is available in JBoss Enterprise Application Platform 6.0.1.
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Warning: Before applying this update, back
+up your existing JBoss Enterprise Application Platform installation
+(including all applications and configuration files).
+
+All users of JBoss Enterprise Application 5.1.2 as provided from the Red
+Hat Customer Portal are advised to upgrade to JBoss Enterprise Application
+5.2.0.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+681916 - CVE-2011-1096 jbossws: Prone to character encoding pattern attack (XML Encryption flaw)
+713539 - CVE-2011-2487 jbossws: Prone to Bleichenbacher attack against to be distributed symmetric key
+730176 - CVE-2011-2908 CSRF on jmx-console allows invocation of operations on mbeans
+737608 - CVE-2011-2730 Spring Framework: Information (internal server information, classpath, local working directories, session IDs) disclosure
+760387 - CVE-2011-4575 JMX Console: XSS in invoke operation
+795645 - CVE-2012-0874 JBoss invoker servlets do not require authentication
+823392 - CVE-2012-2377 JGroups diagnostics service enabled by default with no authentication when a JGroups channel is started
+826534 - CVE-2012-2379 jbossws-cxf, apache-cxf: Apache CXF does not verify that elements were signed / encrypted by a particular Supporting Token
+836451 - CVE-2012-3369 JBoss: CallerIdentityLoginModule retaining password from previous call if a null password is provided
+836456 - CVE-2012-3370 JBoss: SecurityAssociation.getCredential() will return the previous credential if no security context is provided
+842477 - CVE-2009-5066 JBoss: twiddle.sh accepts credentials as command line arguments, exposing them to other local users via a process listing
+874349 - CVE-2012-5478 JBoss: AuthorizationInterceptor allows JMX operation to proceed despite authorization failure
+883634 - CVE-2012-3546 Tomcat/JBoss Web: Bypass of security constraints
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-5066.html">https://www.redhat.com/security/data/cve/CVE-2009-5066.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1096.html">https://www.redhat.com/security/data/cve/CVE-2011-1096.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2487.html">https://www.redhat.com/security/data/cve/CVE-2011-2487.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2730.html">https://www.redhat.com/security/data/cve/CVE-2011-2730.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2908.html">https://www.redhat.com/security/data/cve/CVE-2011-2908.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4575.html">https://www.redhat.com/security/data/cve/CVE-2011-4575.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0874.html">https://www.redhat.com/security/data/cve/CVE-2012-0874.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2377.html">https://www.redhat.com/security/data/cve/CVE-2012-2377.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2379.html">https://www.redhat.com/security/data/cve/CVE-2012-2379.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3369.html">https://www.redhat.com/security/data/cve/CVE-2012-3369.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3370.html">https://www.redhat.com/security/data/cve/CVE-2012-3370.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3546.html">https://www.redhat.com/security/data/cve/CVE-2012-3546.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5478.html">https://www.redhat.com/security/data/cve/CVE-2012-5478.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/">https://access.redhat.com/knowledge/docs/</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&amp;product=appplatform&amp;version=5.2.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&amp;product=appplatform&amp;version=5.2.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRAYm7XlSAg2UNWIIRAnbPAJ4p3GBreg1cy6/rB+08C0DBRAWdzQCeJd5S
+8Z10Vi8EGYRY1QGXYoDc6lQ=
+=x5SN
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

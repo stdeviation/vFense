@@ -1,0 +1,260 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0237&#45;05] Low: sendmail security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 30 Mar 2010 13:01:47 &#45;0400 -->
+<!--X-Message-Id: 201003301701.o2UH1fBM011827@int&#45;mx04.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0237-05] Low: sendmail security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0237-05] Low: sendmail security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0237-05] Low: sendmail security and bug fix update</li>
+<li><em>Date</em>: Tue, 30 Mar 2010 13:01:40 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: sendmail security and bug fix update
+Advisory ID:       RHSA-2010:0237-05
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0237.html">https://rhn.redhat.com/errata/RHSA-2010-0237.html</a>
+Issue date:        2010-03-30
+CVE Names:         CVE-2006-7176 CVE-2009-4565 
+=====================================================================
+
+1. Summary:
+
+Updated sendmail packages that fix two security issues and several bugs are
+now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Sendmail is a very widely used Mail Transport Agent (MTA). MTAs deliver
+mail from one machine to another. Sendmail is not a client program, but
+rather a behind-the-scenes daemon that moves email over networks or the
+Internet to its final destination.
+
+The configuration of sendmail in Red Hat Enterprise Linux was found to not
+reject the &quot;localhost.localdomain&quot; domain name for email messages that come
+from external hosts. This could allow remote attackers to disguise spoofed
+messages. (CVE-2006-7176)
+
+A flaw was found in the way sendmail handled NUL characters in the
+CommonName field of X.509 certificates. An attacker able to get a
+carefully-crafted certificate signed by a trusted Certificate Authority
+could trick sendmail into accepting it by mistake, allowing the attacker to
+perform a man-in-the-middle attack or bypass intended client certificate
+authentication. (CVE-2009-4565)
+
+Note: The CVE-2009-4565 issue only affected configurations using TLS with
+certificate verification and CommonName checking enabled, which is not a
+typical configuration.
+
+This update also fixes the following bugs:
+
+* sendmail was unable to parse files specified by the ServiceSwitchFile
+option which used a colon as a separator. (BZ#512871)
+
+* sendmail incorrectly returned a zero exit code when free space was low.
+(BZ#299951)
+
+* the sendmail manual page had a blank space between the -qG option and
+parameter. (BZ#250552)
+
+* the comments in the sendmail.mc file specified the wrong path to SSL
+certificates. (BZ#244012)
+
+* the sendmail packages did not provide the MTA capability. (BZ#494408)
+
+All users of sendmail are advised to upgrade to these updated packages,
+which resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+238540 - CVE-2006-7176 sendmail allows external mail with from address xxx localhost localdomain
+244012 - Old path to openssl used in sendmail.mc
+250552 - the description about option '-qG name' should be modified in the manpage
+440616 - there should be %{?dist} instead of %{dist} in the *.spec on the Release: line
+449391 - sendmail allows external mail with from address xxx localhost localdomain
+494408 - Sendmail should provide &quot;MTA&quot;
+552622 - CVE-2009-4565 sendmail: incorrect verification of SSL certificate with NUL in name
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sendmail-8.13.8-8.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sendmail-8.13.8-8.el5.src.rpm</a>
+
+i386:
+sendmail-8.13.8-8.el5.i386.rpm
+sendmail-cf-8.13.8-8.el5.i386.rpm
+sendmail-debuginfo-8.13.8-8.el5.i386.rpm
+sendmail-doc-8.13.8-8.el5.i386.rpm
+
+x86_64:
+sendmail-8.13.8-8.el5.x86_64.rpm
+sendmail-cf-8.13.8-8.el5.x86_64.rpm
+sendmail-debuginfo-8.13.8-8.el5.x86_64.rpm
+sendmail-doc-8.13.8-8.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sendmail-8.13.8-8.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/sendmail-8.13.8-8.el5.src.rpm</a>
+
+i386:
+sendmail-debuginfo-8.13.8-8.el5.i386.rpm
+sendmail-devel-8.13.8-8.el5.i386.rpm
+
+x86_64:
+sendmail-debuginfo-8.13.8-8.el5.i386.rpm
+sendmail-debuginfo-8.13.8-8.el5.x86_64.rpm
+sendmail-devel-8.13.8-8.el5.i386.rpm
+sendmail-devel-8.13.8-8.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/sendmail-8.13.8-8.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/sendmail-8.13.8-8.el5.src.rpm</a>
+
+i386:
+sendmail-8.13.8-8.el5.i386.rpm
+sendmail-cf-8.13.8-8.el5.i386.rpm
+sendmail-debuginfo-8.13.8-8.el5.i386.rpm
+sendmail-devel-8.13.8-8.el5.i386.rpm
+sendmail-doc-8.13.8-8.el5.i386.rpm
+
+ia64:
+sendmail-8.13.8-8.el5.ia64.rpm
+sendmail-cf-8.13.8-8.el5.ia64.rpm
+sendmail-debuginfo-8.13.8-8.el5.ia64.rpm
+sendmail-devel-8.13.8-8.el5.ia64.rpm
+sendmail-doc-8.13.8-8.el5.ia64.rpm
+
+ppc:
+sendmail-8.13.8-8.el5.ppc.rpm
+sendmail-cf-8.13.8-8.el5.ppc.rpm
+sendmail-debuginfo-8.13.8-8.el5.ppc.rpm
+sendmail-debuginfo-8.13.8-8.el5.ppc64.rpm
+sendmail-devel-8.13.8-8.el5.ppc.rpm
+sendmail-devel-8.13.8-8.el5.ppc64.rpm
+sendmail-doc-8.13.8-8.el5.ppc.rpm
+
+s390x:
+sendmail-8.13.8-8.el5.s390x.rpm
+sendmail-cf-8.13.8-8.el5.s390x.rpm
+sendmail-debuginfo-8.13.8-8.el5.s390.rpm
+sendmail-debuginfo-8.13.8-8.el5.s390x.rpm
+sendmail-devel-8.13.8-8.el5.s390.rpm
+sendmail-devel-8.13.8-8.el5.s390x.rpm
+sendmail-doc-8.13.8-8.el5.s390x.rpm
+
+x86_64:
+sendmail-8.13.8-8.el5.x86_64.rpm
+sendmail-cf-8.13.8-8.el5.x86_64.rpm
+sendmail-debuginfo-8.13.8-8.el5.i386.rpm
+sendmail-debuginfo-8.13.8-8.el5.x86_64.rpm
+sendmail-devel-8.13.8-8.el5.i386.rpm
+sendmail-devel-8.13.8-8.el5.x86_64.rpm
+sendmail-doc-8.13.8-8.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2006-7176.html">https://www.redhat.com/security/data/cve/CVE-2006-7176.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4565.html">https://www.redhat.com/security/data/cve/CVE-2009-4565.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLsi5eXlSAg2UNWIIRAlOpAJ4gp1kqN+jdrzeE8qXWBaebBxJahQCgo73H
+n00iMkWN1fCmnabjXrFzOPo=
+=aqpQ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

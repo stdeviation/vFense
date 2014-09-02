@@ -1,0 +1,340 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1814&#45;01] Critical: php security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 11 Dec 2013 00:34:25 &#45;0500 -->
+<!--X-Message-Id: 201312110534.rBB5YMIt024520@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1814-01] Critical: php security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1814-01] Critical: php security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1814-01] Critical: php security update</li>
+<li><em>Date</em>: Wed, 11 Dec 2013 05:38:14 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: php security update
+Advisory ID:       RHSA-2013:1814-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1814.html">https://rhn.redhat.com/errata/RHSA-2013-1814.html</a>
+Issue date:        2013-12-11
+CVE Names:         CVE-2011-1398 CVE-2012-2688 CVE-2013-1643 
+                   CVE-2013-6420 
+=====================================================================
+
+1. Summary:
+
+Updated php packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+PHP is an HTML-embedded scripting language commonly used with the Apache
+HTTP Server.
+
+A memory corruption flaw was found in the way the openssl_x509_parse()
+function of the PHP openssl extension parsed X.509 certificates. A remote
+attacker could use this flaw to provide a malicious self-signed certificate
+or a certificate signed by a trusted authority to a PHP application using
+the aforementioned function, causing the application to crash or, possibly,
+allow the attacker to execute arbitrary code with the privileges of the
+user running the PHP interpreter. (CVE-2013-6420)
+
+It was found that PHP did not check for carriage returns in HTTP headers,
+allowing intended HTTP response splitting protections to be bypassed.
+Depending on the web browser the victim is using, a remote attacker could
+use this flaw to perform HTTP response splitting attacks. (CVE-2011-1398)
+
+An integer signedness issue, leading to a heap-based buffer underflow, was
+found in the PHP scandir() function. If a remote attacker could upload an
+excessively large number of files to a directory the scandir() function
+runs on, it could cause the PHP interpreter to crash or, possibly, execute
+arbitrary code. (CVE-2012-2688)
+
+It was found that the PHP SOAP parser allowed the expansion of external XML
+entities during SOAP message parsing. A remote attacker could possibly use
+this flaw to read arbitrary files that are accessible to a PHP application
+using a SOAP extension. (CVE-2013-1643)
+
+Red Hat would like to thank the PHP project for reporting CVE-2013-6420.
+Upstream acknowledges Stefan Esser as the original reporter.
+
+All php users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, the httpd daemon must be restarted for the update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+828051 - CVE-2012-2688 php: Integer Signedness issues in _php_stream_scandir
+853329 - CVE-2011-1398 PHP: sapi_header_op() %0D sequence handling security bypass
+918187 - CVE-2013-1643 php: Ability to read arbitrary files due use of external entities while parsing SOAP WSDL files
+1036830 - CVE-2013-6420 php: memory corruption in openssl_x509_parse()
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/php-5.1.6-43.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/php-5.1.6-43.el5_10.src.rpm</a>
+
+i386:
+php-5.1.6-43.el5_10.i386.rpm
+php-bcmath-5.1.6-43.el5_10.i386.rpm
+php-cli-5.1.6-43.el5_10.i386.rpm
+php-common-5.1.6-43.el5_10.i386.rpm
+php-dba-5.1.6-43.el5_10.i386.rpm
+php-debuginfo-5.1.6-43.el5_10.i386.rpm
+php-devel-5.1.6-43.el5_10.i386.rpm
+php-gd-5.1.6-43.el5_10.i386.rpm
+php-imap-5.1.6-43.el5_10.i386.rpm
+php-ldap-5.1.6-43.el5_10.i386.rpm
+php-mbstring-5.1.6-43.el5_10.i386.rpm
+php-mysql-5.1.6-43.el5_10.i386.rpm
+php-ncurses-5.1.6-43.el5_10.i386.rpm
+php-odbc-5.1.6-43.el5_10.i386.rpm
+php-pdo-5.1.6-43.el5_10.i386.rpm
+php-pgsql-5.1.6-43.el5_10.i386.rpm
+php-snmp-5.1.6-43.el5_10.i386.rpm
+php-soap-5.1.6-43.el5_10.i386.rpm
+php-xml-5.1.6-43.el5_10.i386.rpm
+php-xmlrpc-5.1.6-43.el5_10.i386.rpm
+
+x86_64:
+php-5.1.6-43.el5_10.x86_64.rpm
+php-bcmath-5.1.6-43.el5_10.x86_64.rpm
+php-cli-5.1.6-43.el5_10.x86_64.rpm
+php-common-5.1.6-43.el5_10.x86_64.rpm
+php-dba-5.1.6-43.el5_10.x86_64.rpm
+php-debuginfo-5.1.6-43.el5_10.x86_64.rpm
+php-devel-5.1.6-43.el5_10.x86_64.rpm
+php-gd-5.1.6-43.el5_10.x86_64.rpm
+php-imap-5.1.6-43.el5_10.x86_64.rpm
+php-ldap-5.1.6-43.el5_10.x86_64.rpm
+php-mbstring-5.1.6-43.el5_10.x86_64.rpm
+php-mysql-5.1.6-43.el5_10.x86_64.rpm
+php-ncurses-5.1.6-43.el5_10.x86_64.rpm
+php-odbc-5.1.6-43.el5_10.x86_64.rpm
+php-pdo-5.1.6-43.el5_10.x86_64.rpm
+php-pgsql-5.1.6-43.el5_10.x86_64.rpm
+php-snmp-5.1.6-43.el5_10.x86_64.rpm
+php-soap-5.1.6-43.el5_10.x86_64.rpm
+php-xml-5.1.6-43.el5_10.x86_64.rpm
+php-xmlrpc-5.1.6-43.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/php-5.1.6-43.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/php-5.1.6-43.el5_10.src.rpm</a>
+
+i386:
+php-5.1.6-43.el5_10.i386.rpm
+php-bcmath-5.1.6-43.el5_10.i386.rpm
+php-cli-5.1.6-43.el5_10.i386.rpm
+php-common-5.1.6-43.el5_10.i386.rpm
+php-dba-5.1.6-43.el5_10.i386.rpm
+php-debuginfo-5.1.6-43.el5_10.i386.rpm
+php-devel-5.1.6-43.el5_10.i386.rpm
+php-gd-5.1.6-43.el5_10.i386.rpm
+php-imap-5.1.6-43.el5_10.i386.rpm
+php-ldap-5.1.6-43.el5_10.i386.rpm
+php-mbstring-5.1.6-43.el5_10.i386.rpm
+php-mysql-5.1.6-43.el5_10.i386.rpm
+php-ncurses-5.1.6-43.el5_10.i386.rpm
+php-odbc-5.1.6-43.el5_10.i386.rpm
+php-pdo-5.1.6-43.el5_10.i386.rpm
+php-pgsql-5.1.6-43.el5_10.i386.rpm
+php-snmp-5.1.6-43.el5_10.i386.rpm
+php-soap-5.1.6-43.el5_10.i386.rpm
+php-xml-5.1.6-43.el5_10.i386.rpm
+php-xmlrpc-5.1.6-43.el5_10.i386.rpm
+
+ia64:
+php-5.1.6-43.el5_10.ia64.rpm
+php-bcmath-5.1.6-43.el5_10.ia64.rpm
+php-cli-5.1.6-43.el5_10.ia64.rpm
+php-common-5.1.6-43.el5_10.ia64.rpm
+php-dba-5.1.6-43.el5_10.ia64.rpm
+php-debuginfo-5.1.6-43.el5_10.ia64.rpm
+php-devel-5.1.6-43.el5_10.ia64.rpm
+php-gd-5.1.6-43.el5_10.ia64.rpm
+php-imap-5.1.6-43.el5_10.ia64.rpm
+php-ldap-5.1.6-43.el5_10.ia64.rpm
+php-mbstring-5.1.6-43.el5_10.ia64.rpm
+php-mysql-5.1.6-43.el5_10.ia64.rpm
+php-ncurses-5.1.6-43.el5_10.ia64.rpm
+php-odbc-5.1.6-43.el5_10.ia64.rpm
+php-pdo-5.1.6-43.el5_10.ia64.rpm
+php-pgsql-5.1.6-43.el5_10.ia64.rpm
+php-snmp-5.1.6-43.el5_10.ia64.rpm
+php-soap-5.1.6-43.el5_10.ia64.rpm
+php-xml-5.1.6-43.el5_10.ia64.rpm
+php-xmlrpc-5.1.6-43.el5_10.ia64.rpm
+
+ppc:
+php-5.1.6-43.el5_10.ppc.rpm
+php-bcmath-5.1.6-43.el5_10.ppc.rpm
+php-cli-5.1.6-43.el5_10.ppc.rpm
+php-common-5.1.6-43.el5_10.ppc.rpm
+php-dba-5.1.6-43.el5_10.ppc.rpm
+php-debuginfo-5.1.6-43.el5_10.ppc.rpm
+php-devel-5.1.6-43.el5_10.ppc.rpm
+php-gd-5.1.6-43.el5_10.ppc.rpm
+php-imap-5.1.6-43.el5_10.ppc.rpm
+php-ldap-5.1.6-43.el5_10.ppc.rpm
+php-mbstring-5.1.6-43.el5_10.ppc.rpm
+php-mysql-5.1.6-43.el5_10.ppc.rpm
+php-ncurses-5.1.6-43.el5_10.ppc.rpm
+php-odbc-5.1.6-43.el5_10.ppc.rpm
+php-pdo-5.1.6-43.el5_10.ppc.rpm
+php-pgsql-5.1.6-43.el5_10.ppc.rpm
+php-snmp-5.1.6-43.el5_10.ppc.rpm
+php-soap-5.1.6-43.el5_10.ppc.rpm
+php-xml-5.1.6-43.el5_10.ppc.rpm
+php-xmlrpc-5.1.6-43.el5_10.ppc.rpm
+
+s390x:
+php-5.1.6-43.el5_10.s390x.rpm
+php-bcmath-5.1.6-43.el5_10.s390x.rpm
+php-cli-5.1.6-43.el5_10.s390x.rpm
+php-common-5.1.6-43.el5_10.s390x.rpm
+php-dba-5.1.6-43.el5_10.s390x.rpm
+php-debuginfo-5.1.6-43.el5_10.s390x.rpm
+php-devel-5.1.6-43.el5_10.s390x.rpm
+php-gd-5.1.6-43.el5_10.s390x.rpm
+php-imap-5.1.6-43.el5_10.s390x.rpm
+php-ldap-5.1.6-43.el5_10.s390x.rpm
+php-mbstring-5.1.6-43.el5_10.s390x.rpm
+php-mysql-5.1.6-43.el5_10.s390x.rpm
+php-ncurses-5.1.6-43.el5_10.s390x.rpm
+php-odbc-5.1.6-43.el5_10.s390x.rpm
+php-pdo-5.1.6-43.el5_10.s390x.rpm
+php-pgsql-5.1.6-43.el5_10.s390x.rpm
+php-snmp-5.1.6-43.el5_10.s390x.rpm
+php-soap-5.1.6-43.el5_10.s390x.rpm
+php-xml-5.1.6-43.el5_10.s390x.rpm
+php-xmlrpc-5.1.6-43.el5_10.s390x.rpm
+
+x86_64:
+php-5.1.6-43.el5_10.x86_64.rpm
+php-bcmath-5.1.6-43.el5_10.x86_64.rpm
+php-cli-5.1.6-43.el5_10.x86_64.rpm
+php-common-5.1.6-43.el5_10.x86_64.rpm
+php-dba-5.1.6-43.el5_10.x86_64.rpm
+php-debuginfo-5.1.6-43.el5_10.x86_64.rpm
+php-devel-5.1.6-43.el5_10.x86_64.rpm
+php-gd-5.1.6-43.el5_10.x86_64.rpm
+php-imap-5.1.6-43.el5_10.x86_64.rpm
+php-ldap-5.1.6-43.el5_10.x86_64.rpm
+php-mbstring-5.1.6-43.el5_10.x86_64.rpm
+php-mysql-5.1.6-43.el5_10.x86_64.rpm
+php-ncurses-5.1.6-43.el5_10.x86_64.rpm
+php-odbc-5.1.6-43.el5_10.x86_64.rpm
+php-pdo-5.1.6-43.el5_10.x86_64.rpm
+php-pgsql-5.1.6-43.el5_10.x86_64.rpm
+php-snmp-5.1.6-43.el5_10.x86_64.rpm
+php-soap-5.1.6-43.el5_10.x86_64.rpm
+php-xml-5.1.6-43.el5_10.x86_64.rpm
+php-xmlrpc-5.1.6-43.el5_10.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1398.html">https://www.redhat.com/security/data/cve/CVE-2011-1398.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2688.html">https://www.redhat.com/security/data/cve/CVE-2012-2688.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1643.html">https://www.redhat.com/security/data/cve/CVE-2013-1643.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6420.html">https://www.redhat.com/security/data/cve/CVE-2013-6420.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSp/lUXlSAg2UNWIIRAg3qAKCLrXnldIIb+gT/ejo0mArGTwf5/wCeKWU6
+7KTGqsotCnj/o6YIFWGea9k=
+=hKGM
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

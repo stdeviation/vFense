@@ -1,0 +1,208 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1302&#45;01] Low: xinetd security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 30 Sep 2013 19:34:24 &#45;0400 -->
+<!--X-Message-Id: 201309302334.r8UNYNKm029235@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1302-01] Low: xinetd security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00048.html">Date Prev</a>][<a href="msg00050.html">Date Next</a>] &nbsp; [<a href="msg00048.html">Thread Prev</a>][<a href="msg00050.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00049">Thread Index</A>]
+[<A HREF="date.html#00049">Date Index</A>]
+[<A HREF="author.html#00049">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1302-01] Low: xinetd security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1302-01] Low: xinetd security and bug fix update</li>
+<li><em>Date</em>: Mon, 30 Sep 2013 23:34:23 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: xinetd security and bug fix update
+Advisory ID:       RHSA-2013:1302-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1302.html">https://rhn.redhat.com/errata/RHSA-2013-1302.html</a>
+Issue date:        2013-09-30
+Keywords:          xinetd
+CVE Names:         CVE-2012-0862 
+=====================================================================
+
+1. Summary:
+
+An updated xinetd package that fixes one security issue and two bugs is now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The xinetd package provides a secure replacement for inetd, the Internet
+services daemon. xinetd provides access control for all services based on
+the address of the remote host and/or on time of access, and can prevent
+denial-of-access attacks.
+
+When xinetd services are configured with the &quot;TCPMUX&quot; or &quot;TCPMUXPLUS&quot; type,
+and the tcpmux-server service is enabled, those services are accessible via
+port 1. It was found that enabling the tcpmux-server service (it is
+disabled by default) allowed every xinetd service, including those that are
+not configured with the &quot;TCPMUX&quot; or &quot;TCPMUXPLUS&quot; type, to be accessible via
+port 1. This could allow a remote attacker to bypass intended firewall
+restrictions. (CVE-2012-0862)
+
+Red Hat would like to thank Thomas Swan of FedEx for reporting this issue.
+
+This update also fixes the following bugs:
+
+* Prior to this update, a file descriptor array in the service.c source
+file was not handled as expected. As a consequence, some of the descriptors
+remained open when xinetd was under heavy load. Additionally, the system
+log was filled with a large number of messages that took up a lot of disk
+space over time. This update modifies the xinetd code to handle the file
+descriptors correctly and messages no longer fill the system log.
+(BZ#852274)
+
+* Prior to this update, services were disabled permanently when their CPS
+limit was reached. As a consequence, a failed bind operation could occur
+when xinetd attempted to restart the service. This update adds additional
+logic that attempts to restart the service. Now, the service is only
+disabled if xinetd cannot restart the service after 30 attempts.
+(BZ#811000)
+
+All users of xinetd are advised to upgrade to this updated package, which
+contains backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+790940 - CVE-2012-0862 xinetd: enables unintentional services over tcpmux port
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xinetd-2.3.14-19.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xinetd-2.3.14-19.el5.src.rpm</a>
+
+i386:
+xinetd-2.3.14-19.el5.i386.rpm
+xinetd-debuginfo-2.3.14-19.el5.i386.rpm
+
+x86_64:
+xinetd-2.3.14-19.el5.x86_64.rpm
+xinetd-debuginfo-2.3.14-19.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xinetd-2.3.14-19.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xinetd-2.3.14-19.el5.src.rpm</a>
+
+i386:
+xinetd-2.3.14-19.el5.i386.rpm
+xinetd-debuginfo-2.3.14-19.el5.i386.rpm
+
+ia64:
+xinetd-2.3.14-19.el5.ia64.rpm
+xinetd-debuginfo-2.3.14-19.el5.ia64.rpm
+
+ppc:
+xinetd-2.3.14-19.el5.ppc.rpm
+xinetd-debuginfo-2.3.14-19.el5.ppc.rpm
+
+s390x:
+xinetd-2.3.14-19.el5.s390x.rpm
+xinetd-debuginfo-2.3.14-19.el5.s390x.rpm
+
+x86_64:
+xinetd-2.3.14-19.el5.x86_64.rpm
+xinetd-debuginfo-2.3.14-19.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0862.html">https://www.redhat.com/security/data/cve/CVE-2012-0862.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSSgpqXlSAg2UNWIIRAvpLAKCbKbjE5Ply5EtEBPXTPPxHFrIxRwCgrg3J
+ttoX9ugY0CfQfNkr1AiTFF0=
+=edRB
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00048.html">Date Prev</a>][<a href="msg00050.html">Date Next</a>] &nbsp; [<a href="msg00048.html">Thread Prev</a>][<a href="msg00050.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00049">Thread Index</A>]
+[<A HREF="date.html#00049">Date Index</A>]
+[<A HREF="author.html#00049">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

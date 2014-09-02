@@ -1,6 +1,5 @@
 import os
 import re
-import sys
 import gc
 import logging
 import logging.config
@@ -11,13 +10,14 @@ from datetime import datetime
 
 from xlrd import open_workbook, xldate_as_tuple
 
-from vFense.plugins.vuln.common import build_bulletin_id
-from vFense.plugins.vuln.windows._db_model import WindowsSecurityBulletinKey
-from vFense.plugins.vuln.windows._constants import WindowsDataDir, \
-    WindowsBulletinStrings
+from vFense.plugins.vuln.windows import Windows, WindowsVulnApp
+from vFense.plugins.vuln.windows._constants import (
+    WindowsVulnSubKeys, WindowsDataDir, WindowsBulletinStrings
+)
 from vFense.plugins.vuln.windows._db import insert_bulletin_data
-from vFense.plugins.vuln.windows.downloader import download_latest_xls_from_msft
-from vFense.db.client import r
+from vFense.plugins.vuln.windows.downloader import (
+    download_latest_xls_from_msft
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
@@ -30,81 +30,77 @@ def parse_spread_sheet(bulletin_file):
     Returns:
         List of dictionairies
     """
-    bulletin_list = []
+    count = 0
+    data_to_store = []
     workbook = open_workbook(bulletin_file)
     sheet = workbook.sheet_by_name(WindowsBulletinStrings.WORKBOOK_SHEET)
     rows = range(sheet.nrows)
     rows.pop(0)
+    vuln = Windows()
+    vuln.fill_in_defaults()
     for i in rows:
         row = sheet.row_values(i)
-        bulletin_dict = {}
-        supercede_list = []
         if row[7] != '':
             row[7] = 'KB' + str(int(row[7]))
 
         if row[2] != '':
             row[2] = 'KB' + str(int(row[2]))
 
-        rows_to_use = (
-            row[1] + row[2] + row[3] + row[4] +
-            row[6] + row[7] + row[8] + row[9]
-        )
-        rows_to_use = \
-            unicode(rows_to_use).encode(sys.stdout.encoding, 'replace')
-        built_id = build_bulletin_id(rows_to_use)
-        bulletin_dict[WindowsSecurityBulletinKey.Id] = built_id
+        if vuln.vulnerability_id != row[1]:
+            if count > 0:
+                data_to_store.append(vuln.to_dict_db())
+            count = count + 1
+            vuln = Windows()
+            vuln.fill_in_defaults()
+
         date = xldate_as_tuple(row[0], workbook.datemode)
         epoch_time = mktime(datetime(*date).timetuple())
-        bulletin_dict[WindowsSecurityBulletinKey.DatePosted] = (
-            r.epoch_time(epoch_time)
-        )
+        vuln.vulnerability_id = row[1]
+        vuln.kb = row[2]
+        vuln.severity = row[3]
+        vuln.impact = row[4]
+        vuln.details = row[5]
+        vuln.date_posted = epoch_time
 
-        # Need to see if I can pull the column names and use that instead
-        # of using the row number
-        bulletin_dict[WindowsSecurityBulletinKey.BulletinId] = row[1]
-        bulletin_dict[WindowsSecurityBulletinKey.BulletinKb] = row[2]
-        bulletin_dict[WindowsSecurityBulletinKey.BulletinSeverity] = row[3]
-        bulletin_dict[WindowsSecurityBulletinKey.BulletinImpact] = row[4]
-        bulletin_dict[WindowsSecurityBulletinKey.Details] = row[5]
-        bulletin_dict[WindowsSecurityBulletinKey.AffectedProduct] = row[6]
-        bulletin_dict[WindowsSecurityBulletinKey.ComponentKb] = row[7]
-        bulletin_dict[WindowsSecurityBulletinKey.AffectedComponent] = row[8]
-        bulletin_dict[WindowsSecurityBulletinKey.ComponentImpact] = row[9]
-        bulletin_dict[WindowsSecurityBulletinKey.ComponentSeverity] = row[10]
+        app = WindowsVulnApp()
+        app.fill_in_defaults()
+        app.product = row[6]
+        app.kb = row[7]
+        app.component = row[8]
+        app.impact = row[9]
+        app.severity = row[10]
 
         if len(row) == 15:
             supercedes = row[12]
             reboot = row[13]
-            cve_ids = row[14]
+            cve_ids = row[14].split(',')
         else:
             supercedes = row[11]
             reboot = row[12]
-            cve_ids = row[13]
+            cve_ids = row[13].split(',')
 
+        vuln.cve_ids = list(set(vuln.cve_ids).intersection(cve_ids))
+        app.reboot = reboot
         info = supercedes.split(',')
         for j in info:
             bulletin_data = j.split('[')
             if len(bulletin_data) > 1:
-                bulletin_id = bulletin_data[0]
-                bulletin_kb = re.sub('^', 'KB', bulletin_data[1][:-1])
+                vulnerability_id = bulletin_data[0]
+                kb = re.sub('^', 'KB', bulletin_data[1][:-1])
             else:
-                bulletin_id = bulletin_data[0]
-                bulletin_kb = None
+                vulnerability_id = bulletin_data[0]
+                kb = None
 
-            supercede_list.append(
-                {
-                    WindowsSecurityBulletinKey.SupersedesBulletinId:
-                        bulletin_id,
-                    WindowsSecurityBulletinKey.SupersedesBulletinKb:
-                        bulletin_kb
-                }
-            )
-        bulletin_dict[WindowsSecurityBulletinKey.Supersedes] = supercede_list
-        bulletin_dict[WindowsSecurityBulletinKey.Reboot] = reboot
-        bulletin_dict[WindowsSecurityBulletinKey.CveIds] = cve_ids.split(',')
-        bulletin_list.append(bulletin_dict)
+            if kb and vulnerability_id:
+                app.supercedes.append(
+                    {
+                        WindowsVulnSubKeys.VULNERABILITY_ID: vulnerability_id,
+                        WindowsVulnSubKeys.KB: kb
+                    }
+                )
+        vuln.apps.append(app.to_dict())
 
-    return(bulletin_list)
+    return(data_to_store)
 
 def parse_bulletin_and_updatedb():
     """Download the Bulletin and parse it and insert into the database
@@ -119,5 +115,3 @@ def parse_bulletin_and_updatedb():
 
     logger.info('finished microsoft security bulletin update process')
     gc.collect()
-
-#parse_bulletin_and_updatedb()

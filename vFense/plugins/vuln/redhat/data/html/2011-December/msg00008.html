@@ -1,0 +1,486 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1533&#45;04] Moderate: ipa security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 6 Dec 2011 10:28:13 &#45;0500 -->
+<!--X-Message-Id: 201112061528.pB6FS5EE030600@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1533-04] Moderate: ipa security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1533-04] Moderate: ipa security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1533-04] Moderate: ipa security and bug fix update</li>
+<li><em>Date</em>: Tue, 6 Dec 2011 15:28:04 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ipa security and bug fix update
+Advisory ID:       RHSA-2011:1533-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1533.html">https://rhn.redhat.com/errata/RHSA-2011-1533.html</a>
+Issue date:        2011-12-06
+CVE Names:         CVE-2011-3636 
+=====================================================================
+
+1. Summary:
+
+Updated ipa packages that fix one security issue and several bugs are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Red Hat Identity Management is a centralized authentication, identity
+management and authorization solution for both traditional and cloud based
+enterprise environments. It integrates components of the Red Hat Directory
+Server, MIT Kerberos, Red Hat Certificate System, NTP and DNS. It provides
+web browser and command-line interfaces. Its administration tools allow an
+administrator to quickly install, set up, and administer a group of domain
+controllers to meet the authentication and identity management requirements
+of large scale Linux and UNIX deployments.
+
+A Cross-Site Request Forgery (CSRF) flaw was found in Red Hat Identity
+Management. If a remote attacker could trick a user, who was logged into
+the management web interface, into visiting a specially-crafted URL, the
+attacker could perform Red Hat Identity Management configuration changes
+with the privileges of the logged in user. (CVE-2011-3636)
+
+Due to the changes required to fix CVE-2011-3636, client tools will need to
+be updated for client systems to communicate with updated Red Hat Identity
+Management servers. New client systems will need to have the updated
+ipa-client package installed to be enrolled. Already enrolled client
+systems will need to have the updated certmonger package installed to be
+able to renew their system certificate. Note that system certificates are
+valid for two years by default.
+
+Updated ipa-client and certmonger packages for Red Hat Enterprise Linux 6
+were released as part of Red Hat Enterprise Linux 6.2. Future updates will
+provide updated packages for Red Hat Enterprise Linux 5.
+
+This update includes several bug fixes. Space precludes documenting all of
+these changes in this advisory. Users are directed to the Red Hat
+Enterprise Linux 6.2 Technical Notes for information on the most
+significant of these changes, linked to in the References section.
+
+Users of Red Hat Identity Management should upgrade to these updated
+packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+680504 - Can not delete reverse DNS record - interactive CLI mode
+681978 - Uninstalling  client if the server is installed should be prevented
+681979 - Man page is not clear for ipa-client-install --on-master option usage
+688925 - IPA Replica Install Hangs if DS port is unreachable by Master Server
+689023 - Can't create password policy via UI
+689810 - Inconsistent Error message attempting to add duplicate user
+690185 - Uninstalling ipa-client doesn't restore some files, if reinstalled with -force option
+690473 - Installing ipa-client indicates DNS is updated for this unknown hostname, but is not on server
+692144 - Uninstalling ipa-client doesn't restore sssd.conf, if previously installed with --no-sssd option
+692950 - Installing ipa server with --no-reverse option sets up reverse zone
+693464 - Make explicit reference to ds-replication package
+693483 - Duplicate GIDs
+693766 - Mismatch in man page and --help for ipa-server-install
+693771 - Preinstall check needed if zonemgr has special char
+696193 - Client install fails on ipa-join when master is down, and replica is running.
+696268 - IPA server install with DNS setup, and with --ip-address cannot resolve hostnames
+696282 - Preinstall check needed if subject is not specified in required format
+697009 - ipa-replica-manage:  man page and help pages do not match
+697878 - IPA server install should wait for Directory Server port to open after every restart of dirsrv
+698219 - Uninstalling ipa-client fails, if it joined replica when being installed
+698421 - IPA Replica Installing failing on during replication update
+700586 - brand name error in ipa-dns-install cli, it still says &amp;quot;FreeIPA Server&amp;quot;
+701325 - Unable to Download Certificate with Browser
+703188 - TPS: Source rebuild Failures on x86_64 client and workstation
+703869 - Managed Entry Configuration Not Setup when installing replica server
+704012 - IPA Replica Installation Fails - reverse address doesn't match error
+705794 - IPA Replica not started on reboot
+705800 - Improve debug logging in ipa-client-install
+707001 - Illegal CL input results in NULL csr when requesting external ca.
+707009 - IPA server with external CA fails with cannot concatenate 'str' and 'NoneType' objects
+707133 - Successful &amp;quot;ipa-nis-manage enable&amp;quot; command has exit status as 1.
+707229 - ipa-server-install with --no-host-dns still checks DNS
+707312 - Add support for loading new zones from LDAP
+708294 - No output while deleting a sudorule.
+709645 - Remaining external hosts not displayed while removing one from a sudorule.
+709665 - Removed external host is displayed in the output when &amp;quot;--all&amp;quot; switch is used.
+710240 - Added option to Sudo rule message is displayed even when the given option already exists.
+710245 - Removed option from Sudo rule message is displayed even when the given option doesn't exist.
+710253 - RunAs group is not displayed in output while adding as sudorule-add-runasuser with --groups swtich.
+710494 - ipa-nis-manage crashes if the specified passwd file does not exist.
+710530 - ipa-nis-manage does not quit when an empty password is entered.
+710592 - ipa sudocmd-add accepts blank spaces as sudo commands.
+710598 - ipa sudocmdgroup-add accepts blank spaces as sudocmdgroup name.
+710601 - ipa sudorule-add accepts blank spaces as sudorule name.
+711667 - Comma separated values for --runasexternaluser option in sudorule-mod are accepted as a single value.
+711671 - Comma separated values for --runasexternalgroup option in sudorule-mod are accepted as a single value.
+711761 - Internal error while removing sudorule option without &amp;quot;--sudooption&amp;quot;.
+711786 - sudorunasgroup automatically picks up incorrect value while adding a sudorunasuser.
+712889 - Internal Error: ipa cert-remove-hold ; revocation reason 7
+713069 - Comma separated values for --externaluser option in sudorule-mod are accepted as a single value.
+713374 - Misleading purpose statement for &amp;quot;ipa help sudorule-remove-runasuser&amp;quot;
+713380 - RunAs group is not displayed in output while removing as sudorule-add-runasuser with --groups swtich.
+713385 - Missing label for &amp;quot;ipasudorunas_group&amp;quot;.
+713481 - Removed  &amp;quot;RunAs External Group&amp;quot; is displayed in the output when &amp;quot;--all&amp;quot; switch is used.
+713501 - Inconsistency in how &amp;quot;runas&amp;quot; is termed.
+713531 - [ipa webui] error msg does not match with UI label
+713549 - [ipa webui] Deleting more than 2 elements leaves the Delete prompt open
+713603 - [ipa webui] inconsistent user member list
+713798 - Set allow-recursion by default in IPA DNS
+714238 - --sizelimit unhelpful error with *-find commands
+714597 - ipa-client-install adds duplicate information to krb5.conf
+714600 - ipa-client-install should configure sssd to store password if offline
+714919 - ipa-client-install should configure hostname
+714924 - ipa-client-install complains about non-existing nss_ldap
+715112 - Managed Entries:  mep_mod_post_op: Unable to update mapped attributes from origin entry
+716287 - ipa host-mod --setattr should not allow enrolledBy to be changed
+716432 - when directory server debugging enabled, ipactl should not display debugging
+716462 - IPA with integrated DNS - reverse zone is now being added incorrectly
+717020 - [ipa webui] When deactivating user, it updates the user, without having to click on &amp;quot;update&amp;quot; btn
+717625 - [ipa webui] Unable to update config changes
+717724 - [ipa webui] Config: Certificate Subject Base - Should not be Editable
+717726 - [ipa webui] Config: Name on the configuration page is irrelevant and means nothing to an admin
+717729 - [ipa webui] Config:  Missing configurable options
+717732 - [ipa webui] Config: Page Needs Better Organization
+717965 - ipa config-show : should display new &amp;quot;Password Expiration Notification&amp;quot;
+718062 - When admin resets a user's password with &amp;quot;ipa passwd&amp;quot; user's failed log in count is not reset
+719656 - Disabling ipa-nis-manage removes netgroup compat suffix in DS.
+720011 - [ipa webui] Add Host: dns zone filter replaces text already typed in hostname.
+720013 - [ipa webui] Add Host: dns zone filter should not list reverse zones
+720336 - WebUI not displaying admin options if the user is admin, but only via nested group
+720711 - Users are not matched from sudo client.
+722228 - [ipa webui] Force Add Host with IP address - Allows cancel but still adds host and dns record
+722468 - [ipa webui] Host Edit Page lists Host Name twice
+723027 - [ipa webui] Host Edit Page Missing Fields
+723233 - HBAC rule :: invalid error message now that deny rule is deprecated and help needs update
+723241 - Unexpected error message with krb Failure Count Interval on i386
+723622 - Need an arch-specific Requires on cyrus-sasl-gssapi
+723624 - Regression:  Internal Error:  Adding Host Groups
+723778 - No output while deleting an automount location.
+723781 - Missing message summary while adding an automount location.
+723882 - [ipa webui] Host OTP from previously added host appears in new host's edit page
+723969 - Regression: Incorrect Error message returned attempting to add user with uid 0
+723990 - Can not create replication package with ipa-replica-prepare
+724036 - Internal error revoking certificate - default revocation reason
+725433 - automountmap gets added even though the return code is 1.
+725763 - Incorrect message summary while adding an automountkey.
+726028 - Automountkey value doesn't get renamed.
+726123 - Unable to use &amp;quot;--continue&amp;quot; option with &amp;quot;ipa automountkey-del&amp;quot;.
+726454 - [ipa webui] After setting an OTP the Web UI does not indicate one was set
+726526 - Reduce number of ports used by CS in IPA by default
+726715 - Importing /etc/auto.master does not detect and import /etc/auto.direct.
+726722 - Error message states 'automountlocationcn' while add/mod/del automountmap or automountkey with empty location.
+726725 - Error message states 'automountmapautomountmapname' while add/mod/del automountkey with empty automountmap name.
+726751 - [ipa webui] Hostgroups :: enroll :: Error 'cn' required when attempting to filter groups with hide already enrolled unchecked
+726943 - IPA should enable configurable ports for its management web interface
+727282 - [ipa webui] Can not get or view host certificate - Regression
+727691 - [IPA WebUI] Identity-&amp;gt;DNS : why there is &amp;quot;member&amp;quot; and &amp;quot;setting&amp;quot; under DNS operation
+727921 - [ipa webui] Hostgroup :: No memberOf Net Groups Tab
+728118 - Regression: Unknown attribute 'ipasudorunasgroup_group&amp;quot; displayed while adding sudo runasgroup.
+728614 - el61 - ipa-replica-install does not check for dbus, fails on certmonger
+728950 - IPA should start even if certs are expired
+729089 - [ipa webui] Does not return appropriate error when deleting an external host but checking update dns
+729166 - ipa-server-install creates wrong reverse zone record in LDAP
+729245 - Regression: Missing message summary while adding sudooption.
+729246 - Regression: Missing message summary while removing sudooption.
+729377 - ipa-server-install fails on DNS errors when no DNS check is required
+729665 - [ipa webui] Checking/Unchecking &amp;quot;Hide already enrolled&amp;quot; doesn't change list;
+730436 - use slapi_rwlock instead of NSPR PR_RWLock directly
+730713 - [ipa webui] Checkbox stays checked after deleting a list of objects
+730751 - [ipa webui] inconsistency in enabling &amp;quot;delete&amp;quot; buttons
+731784 - Add Requires on subscription-manager for entitlements
+731804 - [IPA] When upgrading ipa from 2.0.0-23 to 2.1.0-1 uninstall is leaving leftovers and reinstall fails.
+731805 - [ipa webui] in-consistency error msg
+732084 - IPA 2.1 won't start if SELinux is disabled
+732088 - IPA man page is unclear about allowed combinations of arguments
+732468 - ipa-client-install should set LDAPSASL_NOCANON when calling ipa-getkeytab
+732521 - ipa entitle-register : prompts for rhsm password twice like you are trying to set a new password
+732803 - Rebase IPA to upstream 2.1.1
+732996 - Access denied by HBAC rules while using the default ftp hbac service.
+733009 - ipa-client-install says system configured after an unsuccessful run
+733436 - IPA does not always properly detect its configuration status
+734013 - ipa-client-install breaks network configuration
+734706 - ipa hbactest does not evaluate users from groups in an hbacrule.
+734725 - Incorrect service name in examples of ipa help hbactest.
+735187 - [ipa webui] Sudo Rule has extra User group section in &amp;quot;As Whom&amp;quot; section
+736276 - ipa hbactest fails if sourcehost is external.
+736455 - [ipa webui] Sudo Rule includes indirect hosts and users members in its list to add
+736617 - ipa-client-install mishandles ntp service configuration
+736684 - ipa-client-install should sync time before kinit
+736787 - ipa-client-install fails to join ipa server.
+737048 - ipa-client-install calls authconfig with wrong parameters
+737516 - ipa-server files with incorrect selinux context
+737581 - ipa host-add  Allowed to add host - hostname trailing space
+737994 - File parameter fails if prompted for
+737997 - should enforce some naming constraints on users and groups
+738038 - [ipa webui] Remove  Category info from HBAC and Sudo pages
+738053 - ipa-ldap-updater : Not an end user utility and the man pages should reflect this
+738339 - [ipa webui] Encode special chars in values when displaying
+738693 - user is not prompted to enter current password when changing to a new password
+739040 - Traceback message displayed while installing ipa client on IPv6 machine.
+739060 - Disable entitlement plugin and CAL counting
+739061 - Disable entitlement plugin in Web UI
+739089 - Unable to add ipa user on IPv6 machine.
+739195 - [ipa webui] Unprovisioning keytab does not have cancel option
+739604 - ipa-server-install :: failing to configure CA :: restorecon returning 1 when changing context
+739640 - [ipa webui] Allowed to add service without defining service name
+739650 - [ipa webui] IPA Server Configuration :: Issue with Default Size Limit and Default User Group
+740320 - [ipa webui] Posix checkbox for group-add has no effect
+740830 - Intermittently see &amp;quot;search criteria was not specific enough.&amp;quot; while adding a hbacrule
+740838 - Missing additional info while adding a non-existing service to an hbacrule.
+740844 - Missing additional info while removing a non-existing service from an hbacrule.
+740850 - hbactest does not resolve canonical names during simulation.
+740854 - Inconsistency in the error output while providing an invalid rule name.
+740879 - [ipa webui] In adder_dialog, an object can be selected to be added multiple times.
+740880 - [ipa webui] In adder_dialog, change order of &amp;gt;&amp;gt; and &amp;lt;&amp;lt;
+740885 - [ipa webui] In adder_dialog, no error indicated when choosing to enroll without selecting an object
+740891 - [ipa webui] Deleting a host in HBAC Rule without selecting it, throws a browser error instead of an IPA error
+741050 - Unable to configure IPA client against IPA server with anonymous bind disabled
+741277 - [ipa webui] IN HBAC &amp;amp; Sudo, when a category is set to 'All', entries in that category are not deleted
+741677 - ipa-client-install --password=$PASSWORD will cause /var/log/ipaclient-install.log to contain the password.
+741808 - ipa migrate-ds does not migrate all groups that are expected to migrate
+742024 - [ipa webui] Missing option in Config tab to set default shell
+742327 - Default DNS Administration Role  -  Permissions missing
+742616 - IPA man pages should be more clear about the meaning of --selfsign
+742875 - named fails to start after installing ipa server when short hostname preceeds fqdn in /etc/hosts.
+743253 - duplicate hostgroup and netgroup
+743295 - [ipa webui] If adding non-posix group, unchecking posix box should disable GID field
+743788 - Title is missing while configuring browser first time
+743936 - [ipa webui] Unable to access Webui
+743955 - Cert error when accessing host in webui or cli
+744024 - ipa-client-install return code indicates a success, even though it failed
+744074 - [ipa webui] global password policy should not be able to be deleted
+744101 - Client install fails when anonymous bind is disabled
+744234 - Internal Server Error adding invalid reverse DNS zone
+744264 - [ipa webui] missing fields in password policy page
+744306 - Unable to add Windows Synchronization Agreement
+744410 - ipa hbactest does not evaluate indirect members from groups.
+744422 - Leaks KDC password and master password via command line arguments
+744798 - Traceback when upgrading from ipa-server-2.1.1-1 to ipa-server-2.1.2-2
+745392 - ipa-client-install hangs if the discovered server is unresponsive
+745575 - [ipa webui] Config - User search fields - if blank, throws error - an internal error has occurred
+745698 - --forwarder option of ipa-dns-install allows invalid IP address.
+745957 - [ipa webui] As a Host Administrator, user does not have access to the Host tab
+746056 - [ipa webui] Unable to add external user for RunAs User for Sudo rules
+746199 - typo in error message while adding invalid ptr record.
+746227 - hbactest fails while you have svcgroup in hbacrule.
+746229 - ipa-server-install fails with latest dev build
+746276 - Error when using ipa-client-install with --no-sssd option
+746298 - installation fails if sssd.conf exists and is already configured
+746717 - Disable automember functionality
+747028 - Fix minor problems in help system
+747443 - Certmonger fail to issue host certificate when IPA client is outside of the IPA domain.
+747710 - CVE-2011-3636 FreeIPA: CSRF vulnerability
+748754 - &amp;quot;krb5kdc: line 1: 7: command not found&amp;quot; message displayed during ipactl restart on multi-cpu system.
+749352 - users not in ypcat netgroup output
+751179 - [ipa webui] Unable to change password, misleading error
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm</a>
+
+i386:
+ipa-client-2.1.3-9.el6.i686.rpm
+ipa-debuginfo-2.1.3-9.el6.i686.rpm
+ipa-python-2.1.3-9.el6.i686.rpm
+
+x86_64:
+ipa-client-2.1.3-9.el6.x86_64.rpm
+ipa-debuginfo-2.1.3-9.el6.x86_64.rpm
+ipa-python-2.1.3-9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm</a>
+
+i386:
+ipa-admintools-2.1.3-9.el6.i686.rpm
+ipa-debuginfo-2.1.3-9.el6.i686.rpm
+ipa-server-2.1.3-9.el6.i686.rpm
+ipa-server-selinux-2.1.3-9.el6.i686.rpm
+
+x86_64:
+ipa-admintools-2.1.3-9.el6.x86_64.rpm
+ipa-debuginfo-2.1.3-9.el6.x86_64.rpm
+ipa-server-2.1.3-9.el6.x86_64.rpm
+ipa-server-selinux-2.1.3-9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm</a>
+
+x86_64:
+ipa-client-2.1.3-9.el6.x86_64.rpm
+ipa-debuginfo-2.1.3-9.el6.x86_64.rpm
+ipa-python-2.1.3-9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm</a>
+
+x86_64:
+ipa-admintools-2.1.3-9.el6.x86_64.rpm
+ipa-debuginfo-2.1.3-9.el6.x86_64.rpm
+ipa-server-2.1.3-9.el6.x86_64.rpm
+ipa-server-selinux-2.1.3-9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm</a>
+
+i386:
+ipa-admintools-2.1.3-9.el6.i686.rpm
+ipa-client-2.1.3-9.el6.i686.rpm
+ipa-debuginfo-2.1.3-9.el6.i686.rpm
+ipa-python-2.1.3-9.el6.i686.rpm
+ipa-server-2.1.3-9.el6.i686.rpm
+ipa-server-selinux-2.1.3-9.el6.i686.rpm
+
+ppc64:
+ipa-admintools-2.1.3-9.el6.ppc64.rpm
+ipa-client-2.1.3-9.el6.ppc64.rpm
+ipa-debuginfo-2.1.3-9.el6.ppc64.rpm
+ipa-python-2.1.3-9.el6.ppc64.rpm
+
+s390x:
+ipa-admintools-2.1.3-9.el6.s390x.rpm
+ipa-client-2.1.3-9.el6.s390x.rpm
+ipa-debuginfo-2.1.3-9.el6.s390x.rpm
+ipa-python-2.1.3-9.el6.s390x.rpm
+
+x86_64:
+ipa-admintools-2.1.3-9.el6.x86_64.rpm
+ipa-client-2.1.3-9.el6.x86_64.rpm
+ipa-debuginfo-2.1.3-9.el6.x86_64.rpm
+ipa-python-2.1.3-9.el6.x86_64.rpm
+ipa-server-2.1.3-9.el6.x86_64.rpm
+ipa-server-selinux-2.1.3-9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ipa-2.1.3-9.el6.src.rpm</a>
+
+i386:
+ipa-admintools-2.1.3-9.el6.i686.rpm
+ipa-client-2.1.3-9.el6.i686.rpm
+ipa-debuginfo-2.1.3-9.el6.i686.rpm
+ipa-python-2.1.3-9.el6.i686.rpm
+ipa-server-2.1.3-9.el6.i686.rpm
+ipa-server-selinux-2.1.3-9.el6.i686.rpm
+
+x86_64:
+ipa-admintools-2.1.3-9.el6.x86_64.rpm
+ipa-client-2.1.3-9.el6.x86_64.rpm
+ipa-debuginfo-2.1.3-9.el6.x86_64.rpm
+ipa-python-2.1.3-9.el6.x86_64.rpm
+ipa-server-2.1.3-9.el6.x86_64.rpm
+ipa-server-selinux-2.1.3-9.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3636.html">https://www.redhat.com/security/data/cve/CVE-2011-3636.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.2_Technical_Notes/ipa.html#RHBA-2011-1533">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.2_Technical_Notes/ipa.html#RHBA-2011-1533</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFO3jRbXlSAg2UNWIIRAjqXAKCN5/08O/An67Ch8i/qPfMRIsPt4QCeI3Ua
+N5S8TXQ0nTnPJAM5XKZ/Bfo=
+=SQxq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

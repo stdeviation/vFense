@@ -1,0 +1,451 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0862&#45;02] Low: nss security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 10 Nov 2010 14:32:50 &#45;0500 -->
+<!--X-Message-Id: 201011101932.oAAJWiQ8031233@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0862-02] Low: nss security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0862-02] Low: nss security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0862-02] Low: nss security update</li>
+<li><em>Date</em>: Wed, 10 Nov 2010 12:32:44 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: nss security update
+Advisory ID:       RHSA-2010:0862-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0862.html">https://rhn.redhat.com/errata/RHSA-2010-0862.html</a>
+Issue date:        2010-11-10
+CVE Names:         CVE-2010-3170 
+=====================================================================
+
+1. Summary:
+
+Updated nss packages that fix one security issue are now available for Red
+Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Network Security Services (NSS) is a set of libraries designed to support
+the development of security-enabled client and server applications.
+
+A flaw was found in the way NSS matched SSL certificates when the
+certificates had a Common Name containing a wildcard and a partial IP
+address. NSS incorrectly accepted connections to IP addresses that fell
+within the SSL certificate's wildcard range as valid SSL connections,
+possibly allowing an attacker to conduct a man-in-the-middle attack.
+(CVE-2010-3170)
+
+All NSS users should upgrade to these updated packages, which provide NSS
+version 3.12.8 to resolve this issue. After installing the update,
+applications using NSS must be restarted for the changes to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+630047 - CVE-2010-3170 firefox/nss: doesn't handle IP-based wildcards in X509 certificates safely
+642410 - nss update needed for firefox
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm</a>
+
+i386:
+nss-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-3.12.8-1.el6_0.i686.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.i686.rpm
+nss-sysinit-3.12.8-1.el6_0.i686.rpm
+nss-tools-3.12.8-1.el6_0.i686.rpm
+nss-util-3.12.8-1.el6_0.i686.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.i686.rpm
+
+x86_64:
+nss-3.12.8-1.el6_0.i686.rpm
+nss-3.12.8-1.el6_0.x86_64.rpm
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-3.12.8-1.el6_0.i686.rpm
+nss-softokn-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.i686.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.x86_64.rpm
+nss-sysinit-3.12.8-1.el6_0.x86_64.rpm
+nss-tools-3.12.8-1.el6_0.x86_64.rpm
+nss-util-3.12.8-1.el6_0.i686.rpm
+nss-util-3.12.8-1.el6_0.x86_64.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm</a>
+
+i386:
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-devel-3.12.8-1.el6_0.i686.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.i686.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-devel-3.12.8-1.el6_0.i686.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-util-devel-3.12.8-1.el6_0.i686.rpm
+
+x86_64:
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-devel-3.12.8-1.el6_0.i686.rpm
+nss-devel-3.12.8-1.el6_0.x86_64.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.i686.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-devel-3.12.8-1.el6_0.i686.rpm
+nss-softokn-devel-3.12.8-1.el6_0.x86_64.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-util-devel-3.12.8-1.el6_0.i686.rpm
+nss-util-devel-3.12.8-1.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm</a>
+
+x86_64:
+nss-3.12.8-1.el6_0.i686.rpm
+nss-3.12.8-1.el6_0.x86_64.rpm
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-3.12.8-1.el6_0.i686.rpm
+nss-softokn-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.i686.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.x86_64.rpm
+nss-sysinit-3.12.8-1.el6_0.x86_64.rpm
+nss-tools-3.12.8-1.el6_0.x86_64.rpm
+nss-util-3.12.8-1.el6_0.i686.rpm
+nss-util-3.12.8-1.el6_0.x86_64.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm</a>
+
+x86_64:
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-devel-3.12.8-1.el6_0.i686.rpm
+nss-devel-3.12.8-1.el6_0.x86_64.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.i686.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-devel-3.12.8-1.el6_0.i686.rpm
+nss-softokn-devel-3.12.8-1.el6_0.x86_64.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-util-devel-3.12.8-1.el6_0.i686.rpm
+nss-util-devel-3.12.8-1.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm</a>
+
+i386:
+nss-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-devel-3.12.8-1.el6_0.i686.rpm
+nss-softokn-3.12.8-1.el6_0.i686.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-devel-3.12.8-1.el6_0.i686.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.i686.rpm
+nss-sysinit-3.12.8-1.el6_0.i686.rpm
+nss-tools-3.12.8-1.el6_0.i686.rpm
+nss-util-3.12.8-1.el6_0.i686.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-util-devel-3.12.8-1.el6_0.i686.rpm
+
+ppc64:
+nss-3.12.8-1.el6_0.ppc.rpm
+nss-3.12.8-1.el6_0.ppc64.rpm
+nss-debuginfo-3.12.8-1.el6_0.ppc.rpm
+nss-debuginfo-3.12.8-1.el6_0.ppc64.rpm
+nss-devel-3.12.8-1.el6_0.ppc.rpm
+nss-devel-3.12.8-1.el6_0.ppc64.rpm
+nss-softokn-3.12.8-1.el6_0.ppc.rpm
+nss-softokn-3.12.8-1.el6_0.ppc64.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.ppc.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.ppc64.rpm
+nss-softokn-devel-3.12.8-1.el6_0.ppc.rpm
+nss-softokn-devel-3.12.8-1.el6_0.ppc64.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.ppc.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.ppc64.rpm
+nss-sysinit-3.12.8-1.el6_0.ppc64.rpm
+nss-tools-3.12.8-1.el6_0.ppc64.rpm
+nss-util-3.12.8-1.el6_0.ppc.rpm
+nss-util-3.12.8-1.el6_0.ppc64.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.ppc.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.ppc64.rpm
+nss-util-devel-3.12.8-1.el6_0.ppc.rpm
+nss-util-devel-3.12.8-1.el6_0.ppc64.rpm
+
+s390x:
+nss-3.12.8-1.el6_0.s390.rpm
+nss-3.12.8-1.el6_0.s390x.rpm
+nss-debuginfo-3.12.8-1.el6_0.s390.rpm
+nss-debuginfo-3.12.8-1.el6_0.s390x.rpm
+nss-devel-3.12.8-1.el6_0.s390.rpm
+nss-devel-3.12.8-1.el6_0.s390x.rpm
+nss-softokn-3.12.8-1.el6_0.s390.rpm
+nss-softokn-3.12.8-1.el6_0.s390x.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.s390.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.s390x.rpm
+nss-softokn-devel-3.12.8-1.el6_0.s390.rpm
+nss-softokn-devel-3.12.8-1.el6_0.s390x.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.s390.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.s390x.rpm
+nss-sysinit-3.12.8-1.el6_0.s390x.rpm
+nss-tools-3.12.8-1.el6_0.s390x.rpm
+nss-util-3.12.8-1.el6_0.s390.rpm
+nss-util-3.12.8-1.el6_0.s390x.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.s390.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.s390x.rpm
+nss-util-devel-3.12.8-1.el6_0.s390.rpm
+nss-util-devel-3.12.8-1.el6_0.s390x.rpm
+
+x86_64:
+nss-3.12.8-1.el6_0.i686.rpm
+nss-3.12.8-1.el6_0.x86_64.rpm
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-devel-3.12.8-1.el6_0.i686.rpm
+nss-devel-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-3.12.8-1.el6_0.i686.rpm
+nss-softokn-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-devel-3.12.8-1.el6_0.i686.rpm
+nss-softokn-devel-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.i686.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.x86_64.rpm
+nss-sysinit-3.12.8-1.el6_0.x86_64.rpm
+nss-tools-3.12.8-1.el6_0.x86_64.rpm
+nss-util-3.12.8-1.el6_0.i686.rpm
+nss-util-3.12.8-1.el6_0.x86_64.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-util-devel-3.12.8-1.el6_0.i686.rpm
+nss-util-devel-3.12.8-1.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm</a>
+
+i386:
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.i686.rpm
+
+ppc64:
+nss-debuginfo-3.12.8-1.el6_0.ppc.rpm
+nss-debuginfo-3.12.8-1.el6_0.ppc64.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.ppc.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.ppc64.rpm
+
+s390x:
+nss-debuginfo-3.12.8-1.el6_0.s390.rpm
+nss-debuginfo-3.12.8-1.el6_0.s390x.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.s390.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.s390x.rpm
+
+x86_64:
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.i686.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-softokn-3.12.8-1.el6_0.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-util-3.12.8-1.el6_0.src.rpm</a>
+
+i386:
+nss-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-devel-3.12.8-1.el6_0.i686.rpm
+nss-softokn-3.12.8-1.el6_0.i686.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-devel-3.12.8-1.el6_0.i686.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.i686.rpm
+nss-sysinit-3.12.8-1.el6_0.i686.rpm
+nss-tools-3.12.8-1.el6_0.i686.rpm
+nss-util-3.12.8-1.el6_0.i686.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-util-devel-3.12.8-1.el6_0.i686.rpm
+
+x86_64:
+nss-3.12.8-1.el6_0.i686.rpm
+nss-3.12.8-1.el6_0.x86_64.rpm
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-devel-3.12.8-1.el6_0.i686.rpm
+nss-devel-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-3.12.8-1.el6_0.i686.rpm
+nss-softokn-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-softokn-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-devel-3.12.8-1.el6_0.i686.rpm
+nss-softokn-devel-3.12.8-1.el6_0.x86_64.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.i686.rpm
+nss-softokn-freebl-3.12.8-1.el6_0.x86_64.rpm
+nss-sysinit-3.12.8-1.el6_0.x86_64.rpm
+nss-tools-3.12.8-1.el6_0.x86_64.rpm
+nss-util-3.12.8-1.el6_0.i686.rpm
+nss-util-3.12.8-1.el6_0.x86_64.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-util-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-util-devel-3.12.8-1.el6_0.i686.rpm
+nss-util-devel-3.12.8-1.el6_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/nss-3.12.8-1.el6_0.src.rpm</a>
+
+i386:
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.i686.rpm
+
+x86_64:
+nss-debuginfo-3.12.8-1.el6_0.i686.rpm
+nss-debuginfo-3.12.8-1.el6_0.x86_64.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.i686.rpm
+nss-pkcs11-devel-3.12.8-1.el6_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3170.html">https://www.redhat.com/security/data/cve/CVE-2010-3170.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM2vNDXlSAg2UNWIIRApQNAJ9Kr9KIIJnTX9BN4i7oYBBGPLKBWACfbyS1
+wgSRoNeOv95ypUW44Fm3sNs=
+=ef0G
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

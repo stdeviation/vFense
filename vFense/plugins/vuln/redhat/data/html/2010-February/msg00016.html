@@ -1,0 +1,437 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0119&#45;01] Low: JBoss Enterprise Web Server 1.0.1 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 23 Feb 2010 15:25:55 &#45;0500 -->
+<!--X-Message-Id: 201002232025.o1NKPlVk001658@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0119-01] Low: JBoss Enterprise Web Server 1.0.1 update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0119-01] Low: JBoss Enterprise Web Server 1.0.1 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0119-01] Low: JBoss Enterprise Web Server 1.0.1 update</li>
+<li><em>Date</em>: Tue, 23 Feb 2010 15:25:47 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: JBoss Enterprise Web Server 1.0.1 update
+Advisory ID:       RHSA-2010:0119-01
+Product:           JBoss Enterprise Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0119.html">https://rhn.redhat.com/errata/RHSA-2010-0119.html</a>
+Issue date:        2010-02-23
+CVE Names:         CVE-2009-2693 CVE-2009-2902 CVE-2009-3555 
+=====================================================================
+
+1. Summary:
+
+JBoss Enterprise Web Server 1.0.1 is now available for Red Hat Enterprise
+Linux 4 and 5.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Web Server 1.0.0 for RHEL 4 AS - i386, noarch, x86_64
+JBoss Enterprise Web Server 1.0.0 for RHEL 4 ES - i386, noarch, x86_64
+JBoss Enterprise Web Server 1.0.0 for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+JBoss Enterprise Web Server is a fully integrated and certified set
+of components for hosting Java web applications. It is comprised of the
+industry's leading web server (Apache HTTP Server), the popular Apache
+Tomcat servlet container, as well as the mod_jk connector and the Tomcat
+Native library.
+
+This 1.0.1 release of JBoss Enterprise Web Server serves as a replacement
+to JBoss Enterprise Web Server 1.0.0 GA. These updated packages include
+a number of bug fixes. For detailed component, installation, and bug fix
+information, refer to the JBoss Enterprise Web Server 1.0.1 Release Notes,
+available shortly from the link in the References section of this erratum.
+
+The following security issues are also fixed with this release:
+
+A directory traversal flaw was found in the Tomcat deployment process. An
+attacker could create a specially-crafted WAR file, which once deployed
+by a local, unsuspecting user, would lead to attacker-controlled content
+being deployed outside of the web root, into directories accessible to the
+Tomcat process. (CVE-2009-2693)
+
+A second directory traversal flaw was found in the Tomcat deployment
+process. WAR file names were not sanitized, which could allow an attacker
+to create a specially-crafted WAR file that could delete files in the
+Tomcat host's work directory. (CVE-2009-2902)
+
+A flaw was found in the way the TLS/SSL (Transport Layer Security/Secure
+Sockets Layer) protocols handle session renegotiation. A man-in-the-middle
+attacker could use this flaw to prefix arbitrary plain text to a client's
+session (for example, an HTTPS connection to a website). This could force
+the server to process an attacker's request as if authenticated using the
+victim's credentials. (CVE-2009-3555)
+
+This update provides a mitigation for this flaw in the following
+components:
+
+tomcat5 and tomcat6: A new attribute, allowUnsafeLegacyRenegotiation, is
+available for the blocking IO (BIO) connector using JSSE, to enable or
+disable TLS session renegotiation. The default value is &quot;false&quot;, meaning
+session renegotiation, both client- and server-initiated, is disabled by
+default.
+
+tomcat-native: Client-initiated renegotiation is now rejected by the native
+connector. Server-initiated renegotiation is still allowed.
+
+Refer to the following Knowledgebase article for additional details about
+the CVE-2009-3555 flaw: <a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+
+All users of JBoss Enterprise Web Server 1.0.0 on Red Hat Enterprise Linux
+4 and 5 are advised to upgrade to these updated packages.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+533125 - CVE-2009-3555 TLS: MITM attacks via session renegotiation
+558872 - JBEWS 1.0.1 release tracker bug for RHEL 4
+558873 - JBEWS 1.0.1 release tracker bug for RHEL-5
+559738 - CVE-2009-2693 tomcat: unexpected file deletion and/or alteration
+559761 - CVE-2009-2902 tomcat: unexpected file deletion in work directory
+
+6. Package List:
+
+JBoss Enterprise Web Server 1.0.0 for RHEL 4 AS:
+
+Source:
+glassfish-jsf-1.2_13-2.ep5.el4.src.rpm
+httpd22-2.2.14-4.ep5.el4.src.rpm
+jakarta-commons-chain-1.2-2.1.ep5.el4.src.rpm
+jakarta-commons-digester-1.8.1-7.ep5.el4.src.rpm
+jakarta-commons-io-1.4-1.ep5.el4.src.rpm
+jakarta-commons-modeler-2.0-3.3.ep5.el4.src.rpm
+jakarta-commons-validator-1.3.1-7.4.ep5.el4.src.rpm
+jakarta-oro-2.0.8-3jpp.ep1.3.ep5.el4.src.rpm
+jboss-javaee-5.0.1-2.3.ep5.el4.src.rpm
+mod_jk-1.2.28-4.ep5.el4.src.rpm
+struts12-1.2.9-2.ep5.el4.src.rpm
+tomcat-native-1.1.19-2.0.ep5.el4.src.rpm
+tomcat5-5.5.28-7.ep5.el4.src.rpm
+tomcat6-6.0.24-2.ep5.el4.src.rpm
+xerces-j2-2.9.1-2.2_patch_01.ep5.el4.src.rpm
+xml-commons-resolver12-1.2-1.1.ep5.el4.src.rpm
+
+i386:
+httpd22-2.2.14-4.ep5.el4.i386.rpm
+httpd22-apr-2.2.14-4.ep5.el4.i386.rpm
+httpd22-apr-devel-2.2.14-4.ep5.el4.i386.rpm
+httpd22-apr-util-2.2.14-4.ep5.el4.i386.rpm
+httpd22-apr-util-devel-2.2.14-4.ep5.el4.i386.rpm
+httpd22-debuginfo-2.2.14-4.ep5.el4.i386.rpm
+httpd22-devel-2.2.14-4.ep5.el4.i386.rpm
+httpd22-manual-2.2.14-4.ep5.el4.i386.rpm
+mod_jk-ap20-1.2.28-4.ep5.el4.i386.rpm
+mod_jk-debuginfo-1.2.28-4.ep5.el4.i386.rpm
+mod_jk-manual-1.2.28-4.ep5.el4.i386.rpm
+mod_ssl22-2.2.14-4.ep5.el4.i386.rpm
+tomcat-native-1.1.19-2.0.ep5.el4.i386.rpm
+tomcat-native-debuginfo-1.1.19-2.0.ep5.el4.i386.rpm
+
+noarch:
+glassfish-jsf-1.2_13-2.ep5.el4.noarch.rpm
+jakarta-commons-chain-1.2-2.1.ep5.el4.noarch.rpm
+jakarta-commons-digester-1.8.1-7.ep5.el4.noarch.rpm
+jakarta-commons-io-1.4-1.ep5.el4.noarch.rpm
+jakarta-commons-modeler-2.0-3.3.ep5.el4.noarch.rpm
+jakarta-commons-validator-1.3.1-7.4.ep5.el4.noarch.rpm
+jakarta-oro-2.0.8-3jpp.ep1.3.ep5.el4.noarch.rpm
+jboss-javaee-poms-5.0.1-2.3.ep5.el4.noarch.rpm
+jboss-transaction-1.0.1-api-5.0.1-2.3.ep5.el4.noarch.rpm
+struts12-1.2.9-2.ep5.el4.noarch.rpm
+tomcat5-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-admin-webapps-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-common-lib-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-jasper-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-jasper-eclipse-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-jasper-javadoc-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-jsp-2.0-api-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-parent-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-server-lib-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-servlet-2.4-api-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-webapps-5.5.28-7.ep5.el4.noarch.rpm
+tomcat6-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-admin-webapps-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-docs-webapp-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-el-1.0-api-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-javadoc-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-jsp-2.1-api-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-lib-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-log4j-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-servlet-2.5-api-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-webapps-6.0.24-2.ep5.el4.noarch.rpm
+xerces-j2-2.9.1-2.2_patch_01.ep5.el4.noarch.rpm
+xml-commons-resolver12-1.2-1.1.ep5.el4.noarch.rpm
+
+x86_64:
+httpd22-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-apr-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-apr-devel-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-apr-util-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-apr-util-devel-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-debuginfo-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-devel-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-manual-2.2.14-4.ep5.el4.x86_64.rpm
+mod_jk-ap20-1.2.28-4.ep5.el4.x86_64.rpm
+mod_jk-debuginfo-1.2.28-4.ep5.el4.x86_64.rpm
+mod_jk-manual-1.2.28-4.ep5.el4.x86_64.rpm
+mod_ssl22-2.2.14-4.ep5.el4.x86_64.rpm
+tomcat-native-1.1.19-2.0.ep5.el4.x86_64.rpm
+tomcat-native-debuginfo-1.1.19-2.0.ep5.el4.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0.0 for RHEL 4 ES:
+
+Source:
+glassfish-jsf-1.2_13-2.ep5.el4.src.rpm
+httpd22-2.2.14-4.ep5.el4.src.rpm
+jakarta-commons-chain-1.2-2.1.ep5.el4.src.rpm
+jakarta-commons-digester-1.8.1-7.ep5.el4.src.rpm
+jakarta-commons-io-1.4-1.ep5.el4.src.rpm
+jakarta-commons-modeler-2.0-3.3.ep5.el4.src.rpm
+jakarta-commons-validator-1.3.1-7.4.ep5.el4.src.rpm
+jakarta-oro-2.0.8-3jpp.ep1.3.ep5.el4.src.rpm
+jboss-javaee-5.0.1-2.3.ep5.el4.src.rpm
+mod_jk-1.2.28-4.ep5.el4.src.rpm
+struts12-1.2.9-2.ep5.el4.src.rpm
+tomcat-native-1.1.19-2.0.ep5.el4.src.rpm
+tomcat5-5.5.28-7.ep5.el4.src.rpm
+tomcat6-6.0.24-2.ep5.el4.src.rpm
+xerces-j2-2.9.1-2.2_patch_01.ep5.el4.src.rpm
+xml-commons-resolver12-1.2-1.1.ep5.el4.src.rpm
+
+i386:
+httpd22-2.2.14-4.ep5.el4.i386.rpm
+httpd22-apr-2.2.14-4.ep5.el4.i386.rpm
+httpd22-apr-devel-2.2.14-4.ep5.el4.i386.rpm
+httpd22-apr-util-2.2.14-4.ep5.el4.i386.rpm
+httpd22-apr-util-devel-2.2.14-4.ep5.el4.i386.rpm
+httpd22-debuginfo-2.2.14-4.ep5.el4.i386.rpm
+httpd22-devel-2.2.14-4.ep5.el4.i386.rpm
+httpd22-manual-2.2.14-4.ep5.el4.i386.rpm
+mod_jk-ap20-1.2.28-4.ep5.el4.i386.rpm
+mod_jk-debuginfo-1.2.28-4.ep5.el4.i386.rpm
+mod_jk-manual-1.2.28-4.ep5.el4.i386.rpm
+mod_ssl22-2.2.14-4.ep5.el4.i386.rpm
+tomcat-native-1.1.19-2.0.ep5.el4.i386.rpm
+tomcat-native-debuginfo-1.1.19-2.0.ep5.el4.i386.rpm
+
+noarch:
+glassfish-jsf-1.2_13-2.ep5.el4.noarch.rpm
+jakarta-commons-chain-1.2-2.1.ep5.el4.noarch.rpm
+jakarta-commons-digester-1.8.1-7.ep5.el4.noarch.rpm
+jakarta-commons-io-1.4-1.ep5.el4.noarch.rpm
+jakarta-commons-modeler-2.0-3.3.ep5.el4.noarch.rpm
+jakarta-commons-validator-1.3.1-7.4.ep5.el4.noarch.rpm
+jakarta-oro-2.0.8-3jpp.ep1.3.ep5.el4.noarch.rpm
+jboss-javaee-poms-5.0.1-2.3.ep5.el4.noarch.rpm
+jboss-transaction-1.0.1-api-5.0.1-2.3.ep5.el4.noarch.rpm
+struts12-1.2.9-2.ep5.el4.noarch.rpm
+tomcat5-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-admin-webapps-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-common-lib-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-jasper-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-jasper-eclipse-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-jasper-javadoc-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-jsp-2.0-api-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-parent-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-server-lib-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-servlet-2.4-api-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.28-7.ep5.el4.noarch.rpm
+tomcat5-webapps-5.5.28-7.ep5.el4.noarch.rpm
+tomcat6-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-admin-webapps-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-docs-webapp-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-el-1.0-api-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-javadoc-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-jsp-2.1-api-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-lib-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-log4j-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-servlet-2.5-api-6.0.24-2.ep5.el4.noarch.rpm
+tomcat6-webapps-6.0.24-2.ep5.el4.noarch.rpm
+xerces-j2-2.9.1-2.2_patch_01.ep5.el4.noarch.rpm
+xml-commons-resolver12-1.2-1.1.ep5.el4.noarch.rpm
+
+x86_64:
+httpd22-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-apr-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-apr-devel-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-apr-util-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-apr-util-devel-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-debuginfo-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-devel-2.2.14-4.ep5.el4.x86_64.rpm
+httpd22-manual-2.2.14-4.ep5.el4.x86_64.rpm
+mod_jk-ap20-1.2.28-4.ep5.el4.x86_64.rpm
+mod_jk-debuginfo-1.2.28-4.ep5.el4.x86_64.rpm
+mod_jk-manual-1.2.28-4.ep5.el4.x86_64.rpm
+mod_ssl22-2.2.14-4.ep5.el4.x86_64.rpm
+tomcat-native-1.1.19-2.0.ep5.el4.x86_64.rpm
+tomcat-native-debuginfo-1.1.19-2.0.ep5.el4.x86_64.rpm
+
+JBoss Enterprise Web Server 1.0.0 for RHEL 5 Server:
+
+Source:
+glassfish-jsf-1.2_13-3.ep5.el5.src.rpm
+httpd-2.2.14-1.2.1.ep5.el5.src.rpm
+jakarta-commons-chain-1.2-2.1.1.ep5.el5.src.rpm
+jakarta-commons-io-1.4-1.1.ep5.el5.src.rpm
+jakarta-oro-2.0.8-3.1.ep5.el5.src.rpm
+mod_jk-1.2.28-4.1.ep5.el5.src.rpm
+struts12-1.2.9-2.ep5.el5.src.rpm
+tomcat-native-1.1.19-2.0.1.ep5.el5.src.rpm
+tomcat5-5.5.28-7.1.ep5.el5.src.rpm
+tomcat6-6.0.24-2.1.ep5.el5.src.rpm
+
+i386:
+httpd-2.2.14-1.2.1.ep5.el5.i386.rpm
+httpd-debuginfo-2.2.14-1.2.1.ep5.el5.i386.rpm
+httpd-devel-2.2.14-1.2.1.ep5.el5.i386.rpm
+httpd-manual-2.2.14-1.2.1.ep5.el5.i386.rpm
+mod_jk-ap20-1.2.28-4.1.ep5.el5.i386.rpm
+mod_jk-debuginfo-1.2.28-4.1.ep5.el5.i386.rpm
+mod_jk-manual-1.2.28-4.1.ep5.el5.i386.rpm
+mod_ssl-2.2.14-1.2.1.ep5.el5.i386.rpm
+tomcat-native-1.1.19-2.0.1.ep5.el5.i386.rpm
+tomcat-native-debuginfo-1.1.19-2.0.1.ep5.el5.i386.rpm
+
+noarch:
+glassfish-jsf-1.2_13-3.ep5.el5.noarch.rpm
+jakarta-commons-chain-1.2-2.1.1.ep5.el5.noarch.rpm
+jakarta-commons-io-1.4-1.1.ep5.el5.noarch.rpm
+jakarta-oro-2.0.8-3.1.ep5.el5.noarch.rpm
+struts12-1.2.9-2.ep5.el5.noarch.rpm
+tomcat5-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-admin-webapps-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-common-lib-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-jasper-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-jasper-eclipse-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-jasper-javadoc-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-jsp-2.0-api-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-parent-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-server-lib-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-servlet-2.4-api-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat5-webapps-5.5.28-7.1.ep5.el5.noarch.rpm
+tomcat6-6.0.24-2.1.ep5.el5.noarch.rpm
+tomcat6-admin-webapps-6.0.24-2.1.ep5.el5.noarch.rpm
+tomcat6-docs-webapp-6.0.24-2.1.ep5.el5.noarch.rpm
+tomcat6-el-1.0-api-6.0.24-2.1.ep5.el5.noarch.rpm
+tomcat6-javadoc-6.0.24-2.1.ep5.el5.noarch.rpm
+tomcat6-jsp-2.1-api-6.0.24-2.1.ep5.el5.noarch.rpm
+tomcat6-lib-6.0.24-2.1.ep5.el5.noarch.rpm
+tomcat6-log4j-6.0.24-2.1.ep5.el5.noarch.rpm
+tomcat6-servlet-2.5-api-6.0.24-2.1.ep5.el5.noarch.rpm
+tomcat6-webapps-6.0.24-2.1.ep5.el5.noarch.rpm
+
+x86_64:
+httpd-2.2.14-1.2.1.ep5.el5.x86_64.rpm
+httpd-debuginfo-2.2.14-1.2.1.ep5.el5.x86_64.rpm
+httpd-devel-2.2.14-1.2.1.ep5.el5.x86_64.rpm
+httpd-manual-2.2.14-1.2.1.ep5.el5.x86_64.rpm
+mod_jk-ap20-1.2.28-4.1.ep5.el5.x86_64.rpm
+mod_jk-debuginfo-1.2.28-4.1.ep5.el5.x86_64.rpm
+mod_jk-manual-1.2.28-4.1.ep5.el5.x86_64.rpm
+mod_ssl-2.2.14-1.2.1.ep5.el5.x86_64.rpm
+tomcat-native-1.1.19-2.0.1.ep5.el5.x86_64.rpm
+tomcat-native-debuginfo-1.1.19-2.0.1.ep5.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2693.html">https://www.redhat.com/security/data/cve/CVE-2009-2693.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2902.html">https://www.redhat.com/security/data/cve/CVE-2009-2902.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3555.html">https://www.redhat.com/security/data/cve/CVE-2009-3555.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Web_Server/1.0.1/html-single/Release_Notes/index.html">http://www.redhat.com/docs/en-US/JBoss_Enterprise_Web_Server/1.0.1/html-single/Release_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLhDm1XlSAg2UNWIIRAr7CAJ4syLe9gdEVccyHPvFBl/LMvzG9LQCfTawT
+OnSBEYLrz9TFZdMuNLXkWj0=
+=R6Ya
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

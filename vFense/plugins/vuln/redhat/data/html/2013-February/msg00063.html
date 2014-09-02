@@ -1,0 +1,320 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0525&#45;02] Moderate: pcsc&#45;lite security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:52:19 &#45;0500 -->
+<!--X-Message-Id: 201302210652.r1L6qHTN030686@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0525-02] Moderate: pcsc-lite security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00062.html">Date Prev</a>][<a href="msg00064.html">Date Next</a>] &nbsp; [<a href="msg00062.html">Thread Prev</a>][<a href="msg00064.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00063">Thread Index</A>]
+[<A HREF="date.html#00063">Date Index</A>]
+[<A HREF="author.html#00063">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0525-02] Moderate: pcsc-lite security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0525-02] Moderate: pcsc-lite security and bug fix update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:41:15 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: pcsc-lite security and bug fix update
+Advisory ID:       RHSA-2013:0525-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0525.html">https://rhn.redhat.com/errata/RHSA-2013-0525.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2010-4531 
+=====================================================================
+
+1. Summary:
+
+Updated pcsc-lite packages that fix one security issue and three bugs are
+now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+PC/SC Lite provides a Windows SCard compatible interface for communicating
+with smart cards, smart card readers, and other security tokens.
+
+A stack-based buffer overflow flaw was found in the way pcsc-lite decoded
+certain attribute values of Answer-to-Reset (ATR) messages. A local
+attacker could use this flaw to execute arbitrary code with the privileges
+of the user running the pcscd daemon (root, by default), by inserting a
+specially-crafted smart card. (CVE-2010-4531)
+
+This update also fixes the following bugs:
+
+* Due to an error in the init script, the chkconfig utility did not
+automatically place the pcscd init script after the start of the HAL
+daemon. Consequently, the pcscd service did not start automatically at boot
+time. With this update, the pcscd init script has been changed to
+explicitly start only after HAL is up, thus fixing this bug. (BZ#788474,
+BZ#814549)
+
+* Because the chkconfig settings and the startup files in the /etc/rc.d/
+directory were not changed during the update described in the
+RHBA-2012:0990 advisory, the user had to update the chkconfig settings
+manually to fix the problem. Now, the chkconfig settings and the startup
+files in the /etc/rc.d/ directory are automatically updated as expected.
+(BZ#834803)
+
+* Previously, the SCardGetAttrib() function did not work properly and
+always returned the &quot;SCARD_E_INSUFFICIENT_BUFFER&quot; error regardless of the
+actual buffer size. This update applies a patch to fix this bug and the
+SCardGetAttrib() function now works as expected. (BZ#891852)
+
+All users of pcsc-lite are advised to upgrade to these updated packages,
+which fix these issues. After installing this update, the pcscd daemon will
+be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+664999 - CVE-2010-4531 pcsc-lite: Stack-based buffer overflow in Answer-to-Reset (ATR) decoder
+834803 - Update of pcsc-lite does not fix problems addressed in BUG 812469
+891852 - pcsc-lite: incorrect check in SCardGetAttrib and SCardSetAttrib handling
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm</a>
+
+i386:
+pcsc-lite-1.5.2-11.el6.i686.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-libs-1.5.2-11.el6.i686.rpm
+
+x86_64:
+pcsc-lite-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-libs-1.5.2-11.el6.i686.rpm
+pcsc-lite-libs-1.5.2-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm</a>
+
+i386:
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-devel-1.5.2-11.el6.i686.rpm
+pcsc-lite-doc-1.5.2-11.el6.i686.rpm
+
+x86_64:
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-devel-1.5.2-11.el6.i686.rpm
+pcsc-lite-devel-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-doc-1.5.2-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm</a>
+
+x86_64:
+pcsc-lite-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-devel-1.5.2-11.el6.i686.rpm
+pcsc-lite-devel-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-doc-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-libs-1.5.2-11.el6.i686.rpm
+pcsc-lite-libs-1.5.2-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm</a>
+
+i386:
+pcsc-lite-1.5.2-11.el6.i686.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-libs-1.5.2-11.el6.i686.rpm
+
+ppc64:
+pcsc-lite-1.5.2-11.el6.ppc64.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.ppc.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.ppc64.rpm
+pcsc-lite-libs-1.5.2-11.el6.ppc.rpm
+pcsc-lite-libs-1.5.2-11.el6.ppc64.rpm
+
+s390x:
+pcsc-lite-1.5.2-11.el6.s390x.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.s390.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.s390x.rpm
+pcsc-lite-libs-1.5.2-11.el6.s390.rpm
+pcsc-lite-libs-1.5.2-11.el6.s390x.rpm
+
+x86_64:
+pcsc-lite-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-libs-1.5.2-11.el6.i686.rpm
+pcsc-lite-libs-1.5.2-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm</a>
+
+i386:
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-devel-1.5.2-11.el6.i686.rpm
+pcsc-lite-doc-1.5.2-11.el6.i686.rpm
+
+ppc64:
+pcsc-lite-debuginfo-1.5.2-11.el6.ppc.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.ppc64.rpm
+pcsc-lite-devel-1.5.2-11.el6.ppc.rpm
+pcsc-lite-devel-1.5.2-11.el6.ppc64.rpm
+pcsc-lite-doc-1.5.2-11.el6.ppc64.rpm
+
+s390x:
+pcsc-lite-debuginfo-1.5.2-11.el6.s390.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.s390x.rpm
+pcsc-lite-devel-1.5.2-11.el6.s390.rpm
+pcsc-lite-devel-1.5.2-11.el6.s390x.rpm
+pcsc-lite-doc-1.5.2-11.el6.s390x.rpm
+
+x86_64:
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-devel-1.5.2-11.el6.i686.rpm
+pcsc-lite-devel-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-doc-1.5.2-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm</a>
+
+i386:
+pcsc-lite-1.5.2-11.el6.i686.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-libs-1.5.2-11.el6.i686.rpm
+
+x86_64:
+pcsc-lite-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-libs-1.5.2-11.el6.i686.rpm
+pcsc-lite-libs-1.5.2-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/pcsc-lite-1.5.2-11.el6.src.rpm</a>
+
+i386:
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-devel-1.5.2-11.el6.i686.rpm
+pcsc-lite-doc-1.5.2-11.el6.i686.rpm
+
+x86_64:
+pcsc-lite-debuginfo-1.5.2-11.el6.i686.rpm
+pcsc-lite-debuginfo-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-devel-1.5.2-11.el6.i686.rpm
+pcsc-lite-devel-1.5.2-11.el6.x86_64.rpm
+pcsc-lite-doc-1.5.2-11.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4531.html">https://www.redhat.com/security/data/cve/CVE-2010-4531.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJcQdXlSAg2UNWIIRAhrdAJ9qoaSgTfY2GPTVbBXxKWjuEcrzcACfUHuy
+zZAX1DrqQb5TOtv+6PIYQUw=
+=uh3T
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00062.html">Date Prev</a>][<a href="msg00064.html">Date Next</a>] &nbsp; [<a href="msg00062.html">Thread Prev</a>][<a href="msg00064.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00063">Thread Index</A>]
+[<A HREF="date.html#00063">Date Index</A>]
+[<A HREF="author.html#00063">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

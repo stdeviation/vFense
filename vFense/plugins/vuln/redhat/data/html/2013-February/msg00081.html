@@ -1,0 +1,227 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0579&#45;01] Important: rhev&#45;hypervisor6 security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 28 Feb 2013 14:10:34 &#45;0500 -->
+<!--X-Message-Id: 201302281910.r1SJAXRf032408@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0579-01] Important: rhev-hypervisor6 security, bug fix,	and e</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00080.html">Date Prev</a>][<a href="msg00082.html">Date Next</a>] &nbsp; [<a href="msg00080.html">Thread Prev</a>][<a href="msg00082.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00081">Thread Index</A>]
+[<A HREF="date.html#00081">Date Index</A>]
+[<A HREF="author.html#00081">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0579-01] Important: rhev-hypervisor6 security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0579-01] Important: rhev-hypervisor6 security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 28 Feb 2013 19:10:33 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor6 security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:0579-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0579.html">https://rhn.redhat.com/errata/RHSA-2013-0579.html</a>
+Issue date:        2013-02-28
+CVE Names:         CVE-2012-3411 CVE-2012-4542 CVE-2013-0311 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor6 package that fixes three security issues,
+various bugs, and adds an enhancement is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-6 - noarch
+
+3. Description:
+
+The rhev-hypervisor6 package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization Hypervisor
+is a dedicated Kernel-based Virtual Machine (KVM) hypervisor. It includes
+everything necessary to run and manage virtual machines: A subset of the
+Red Hat Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+A flaw was found in the way the vhost kernel module handled descriptors
+that spanned multiple regions. A privileged guest user could use this flaw
+to crash the host or, potentially, escalate their privileges on the host.
+(CVE-2013-0311)
+
+It was found that the default SCSI command filter does not accommodate
+commands that overlap across device classes. A privileged guest user could
+potentially use this flaw to write arbitrary data to a LUN that is
+passed-through as read-only. (CVE-2012-4542)
+
+It was discovered that dnsmasq, when used in combination with certain
+libvirtd configurations, could incorrectly process network packets from
+network interfaces that were intended to be prohibited. A remote,
+unauthenticated attacker could exploit this flaw to cause a denial of
+service via DNS amplification attacks. (CVE-2012-3411)
+
+The CVE-2012-4542 issue was discovered by Paolo Bonzini of Red Hat.
+
+This updated package provides updated components that include fixes for
+several security issues. These issues had no security impact on Red Hat
+Enterprise Virtualization Hypervisor itself, however. The security fixes
+included in this update address the following CVE numbers:
+
+CVE-2012-3955 (dhcp issue)
+
+CVE-2011-4355 (gdb issue)
+
+CVE-2012-4508, CVE-2013-0190, CVE-2013-0309, and CVE-2013-0310 (kernel
+issues)
+
+CVE-2012-5536 (openssh issue)
+
+CVE-2011-3148 and CVE-2011-3149 (pam issues)
+
+CVE-2013-0157 (util-linux-ng issue)
+
+This updated Red Hat Enterprise Virtualization Hypervisor package also
+fixes the following bugs:
+
+* Previously, the Administration Portal would always display the option to
+upgrade the Red Hat Enterprise Virtualization Hypervisor ISO regardless of
+whether or not the selected host was up-to-date. Now, the VDSM version
+compatibility is considered and the upgrade message only displays if there
+is an upgrade relevant to the host available. (BZ#853092)
+
+* An out of date version of libvirt was included in the Red Hat Enterprise
+Virtualization Hypervisor 6.4 package. As a result, virtual machines with
+supported CPU models were not being properly parsed by libvirt and failed
+to start. A more recent version of libvirt has been included in this
+updated hypervisor package. Virtual machines now start normally.
+(BZ#895078)
+
+As well, this update adds the following enhancement:
+
+* Hypervisor packages now take advantage of the installonlypkg function
+provided by yum. This allows for multiple versions of the hypervisor
+package to be installed on a system concurrently without making changes to
+the yum configuration as was previously required. (BZ#863579)
+
+This update includes the ovirt-node build from RHBA-2013:0556:
+
+    <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2013-0556.html">https://rhn.redhat.com/errata/RHBA-2013-0556.html</a>
+
+Users of the Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which fixes these issues and adds this
+enhancement.
+
+4. Solution:
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+To upgrade Hypervisors in Red Hat Enterprise Virtualization
+environments using the disk image provided by this package, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+833033 - CVE-2012-3411 libvirt+dnsmasq: DNS configured to answer DNS queries from non-virtual networks
+835162 - rhev-hypervisor 6.4 release
+853092 - rhev-h: supported vdsm compatibility versions should be supplied along with rhev-h ISOs
+863579 - RFE: Support installonlypkgs functionality for rhev-hypervisor packages
+875360 - CVE-2012-4542 kernel: block: default SCSI command filter does not accomodate commands overlap across device classes
+912905 - CVE-2013-0311 kernel: vhost: fix length for cross region descriptor
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-6:
+
+noarch:
+rhev-hypervisor6-6.4-20130221.0.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3411.html">https://www.redhat.com/security/data/cve/CVE-2012-3411.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4542.html">https://www.redhat.com/security/data/cve/CVE-2012-4542.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0311.html">https://www.redhat.com/security/data/cve/CVE-2013-0311.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2013-0556.html">https://rhn.redhat.com/errata/RHBA-2013-0556.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Hypervisor_Deployment_Guide/chap-Deployment_Guide-Upgrading_Red_Hat_Enterprise_Virtualization_Hypervisors.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRL6uDXlSAg2UNWIIRAjO7AJoCxB2PNHA57KoU9inIjLlLPLuoagCfYMBW
+30cXyVJo9axV5X5eUL5ZAgk=
+=EDIj
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00080.html">Date Prev</a>][<a href="msg00082.html">Date Next</a>] &nbsp; [<a href="msg00080.html">Thread Prev</a>][<a href="msg00082.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00081">Thread Index</A>]
+[<A HREF="date.html#00081">Date Index</A>]
+[<A HREF="author.html#00081">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

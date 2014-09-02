@@ -1,0 +1,255 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0882&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Fri, 12 Nov 2010 04:38:00 &#45;0500 -->
+<!--X-Message-Id: 201011120937.oAC9brol031041@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0882-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0882-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0882-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Fri, 12 Nov 2010 09:37:53 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2010:0882-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0882.html">https://rhn.redhat.com/errata/RHSA-2010-0882.html</a>
+Issue date:        2010-11-12
+CVE Names:         CVE-2009-3080 CVE-2009-3620 CVE-2009-4536 
+                   CVE-2010-1188 CVE-2010-2240 CVE-2010-3081 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix several security issues and one bug are
+now available for Red Hat Enterprise Linux 3 Extended Life Cycle Support
+(ELS).
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS (v. 3 ELS) - i386
+Red Hat Enterprise Linux ES (v. 3 ELS) - i386
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* An array index error was found in the gdth driver in the Linux kernel. A
+local user could send a specially-crafted IOCTL request that would cause a
+denial of service or, possibly, privilege escalation. (CVE-2009-3080,
+Important)
+
+* NULL pointer dereference flaws were found in the r128 driver in the Linux
+kernel. Checks to test if the Concurrent Command Engine state was
+initialized were missing in private IOCTL functions. An attacker could use
+these flaws to cause a local denial of service or escalate their
+privileges. (CVE-2009-3620, Important)
+
+* A flaw was found in the Intel PRO/1000 Linux driver, e1000, in the Linux
+kernel. A remote attacker using packets larger than the MTU could bypass
+the existing fragment check, resulting in partial, invalid frames being
+passed to the network stack. This flaw could also possibly be used to
+trigger a remote denial of service. (CVE-2009-4536, Important)
+
+* A use-after-free flaw was found in the tcp_rcv_state_process() function
+in the Linux kernel TCP/IP protocol suite implementation. If a system using
+IPv6 had the IPV6_PKTINFO option set on a listening socket, a remote
+attacker could send an IPv6 packet to that system, causing a kernel panic
+(denial of service). (CVE-2010-1188, Important)
+
+* When an application has a stack overflow, the stack could silently
+overwrite another memory mapped area instead of a segmentation fault
+occurring, which could cause an application to execute arbitrary code,
+possibly leading to privilege escalation. It is known that the X Window
+System server can be used to trigger this flaw. (CVE-2010-2240, Important)
+
+* The compat_alloc_user_space() function in the Linux kernel 32/64-bit
+compatibility layer implementation was missing sanity checks. This function
+could be abused in other areas of the Linux kernel. On 64-bit systems, a
+local, unprivileged user could use this flaw to escalate their privileges.
+(CVE-2010-3081, Important)
+
+Red Hat would like to thank the X.Org security team for reporting the
+CVE-2010-2240 issue, with upstream acknowledging Rafal Wojtczuk as the
+original reporter; and Ben Hawkes for reporting the CVE-2010-3081 issue.
+
+This update also fixes the following bug:
+
+* The RHSA-2009:1550 kernel update introduced a regression that prevented
+certain custom kernel modules from loading, failing with &quot;unresolved
+symbol&quot; errors. This update corrects this issue, allowing the affected
+modules to load as expected. (BZ#556909)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+529597 - CVE-2009-3620 kernel: r128 IOCTL NULL pointer dereferences when CCE state is uninitialised
+539414 - CVE-2009-3080 kernel: gdth: Prevent negative offsets in ioctl
+552126 - CVE-2009-4536 kernel: e1000 issue reported at 26c3
+556909 - unresolved symbol sock_recvmsg_Rsmp_4c34ff14
+577711 - CVE-2010-1188 kernel: ipv6: skb is unexpectedly freed
+606611 - CVE-2010-2240 kernel: mm: keep a guard page below a grow-down stack segment
+634457 - CVE-2010-3081 kernel: 64-bit Compatibility Mode Stack Pointer Underflow
+
+6. Package List:
+
+Red Hat Enterprise Linux AS (v. 3 ELS):
+
+Source:
+kernel-2.4.21-66.EL.src.rpm
+
+i386:
+kernel-2.4.21-66.EL.athlon.rpm
+kernel-2.4.21-66.EL.i686.rpm
+kernel-BOOT-2.4.21-66.EL.i386.rpm
+kernel-debuginfo-2.4.21-66.EL.athlon.rpm
+kernel-debuginfo-2.4.21-66.EL.i386.rpm
+kernel-debuginfo-2.4.21-66.EL.i686.rpm
+kernel-doc-2.4.21-66.EL.i386.rpm
+kernel-hugemem-2.4.21-66.EL.i686.rpm
+kernel-hugemem-unsupported-2.4.21-66.EL.i686.rpm
+kernel-smp-2.4.21-66.EL.athlon.rpm
+kernel-smp-2.4.21-66.EL.i686.rpm
+kernel-smp-unsupported-2.4.21-66.EL.athlon.rpm
+kernel-smp-unsupported-2.4.21-66.EL.i686.rpm
+kernel-source-2.4.21-66.EL.i386.rpm
+kernel-unsupported-2.4.21-66.EL.athlon.rpm
+kernel-unsupported-2.4.21-66.EL.i686.rpm
+
+Red Hat Enterprise Linux ES (v. 3 ELS):
+
+Source:
+kernel-2.4.21-66.EL.src.rpm
+
+i386:
+kernel-2.4.21-66.EL.athlon.rpm
+kernel-2.4.21-66.EL.i686.rpm
+kernel-BOOT-2.4.21-66.EL.i386.rpm
+kernel-debuginfo-2.4.21-66.EL.athlon.rpm
+kernel-debuginfo-2.4.21-66.EL.i386.rpm
+kernel-debuginfo-2.4.21-66.EL.i686.rpm
+kernel-doc-2.4.21-66.EL.i386.rpm
+kernel-hugemem-2.4.21-66.EL.i686.rpm
+kernel-hugemem-unsupported-2.4.21-66.EL.i686.rpm
+kernel-smp-2.4.21-66.EL.athlon.rpm
+kernel-smp-2.4.21-66.EL.i686.rpm
+kernel-smp-unsupported-2.4.21-66.EL.athlon.rpm
+kernel-smp-unsupported-2.4.21-66.EL.i686.rpm
+kernel-source-2.4.21-66.EL.i386.rpm
+kernel-unsupported-2.4.21-66.EL.athlon.rpm
+kernel-unsupported-2.4.21-66.EL.i686.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3080.html">https://www.redhat.com/security/data/cve/CVE-2009-3080.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3620.html">https://www.redhat.com/security/data/cve/CVE-2009-3620.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4536.html">https://www.redhat.com/security/data/cve/CVE-2009-4536.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1188.html">https://www.redhat.com/security/data/cve/CVE-2010-1188.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2240.html">https://www.redhat.com/security/data/cve/CVE-2010-2240.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3081.html">https://www.redhat.com/security/data/cve/CVE-2010-3081.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-40265">https://access.redhat.com/kb/docs/DOC-40265</a>
+<a  rel="nofollow" href="http://www.redhat.com/rhel/server/extended_lifecycle_support/">http://www.redhat.com/rhel/server/extended_lifecycle_support/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM3QrWXlSAg2UNWIIRAoRoAKCeqXq98m3zfAgZbR7mi6KuhSsjuACfS8hW
+hGzOl6G3TKuLORoaC9qF3zQ=
+=jMer
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

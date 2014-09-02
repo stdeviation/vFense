@@ -1,0 +1,201 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1176&#45;01] Important: autofs security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 20 Dec 2007 14:34:14 &#45;0500 -->
+<!--X-Message-Id: 200712201934.lBKJYDZ0005045@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1176-01] Important: autofs security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1176-01] Important: autofs security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1176-01] Important: autofs security update</li>
+<li><em>Date</em>: Thu, 20 Dec 2007 14:34:13 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Important: autofs security update
+Advisory ID:       RHSA-2007:1176-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1176.html">https://rhn.redhat.com/errata/RHSA-2007-1176.html</a>
+Issue date:        2007-12-20
+Updated on:        2007-12-20
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-6285 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated autofs packages that fix a security issue are now available for Red
+Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Problem description:
+
+The autofs utility controls the operation of the automount daemon, which
+automatically mounts file systems when you use them, and unmounts them when
+you are not using them. This can include network file systems and CD-ROMs.
+
+There was a security issue with the default configuration of autofs version
+5, whereby the entry for the &quot;-hosts&quot; map did not specify the &quot;nodev&quot; mount
+option. A local user with control of a remote NFS server could create
+special device files on the remote file system, that if mounted using the
+default &quot;-hosts&quot; map, could allow the user to access important system
+devices. (CVE-2007-6285)
+
+This issue is similar to CVE-2007-5964, which fixed a missing &quot;nosuid&quot;
+mount option in autofs. Both the &quot;nodev&quot; and &quot;nosuid&quot; options should be
+enabled to prevent a possible compromise of machine integrity.
+
+Due to the fact that autofs always mounted &quot;-hosts&quot; map entries &quot;dev&quot; by
+default, autofs has now been altered to always use the &quot;nodev&quot; option when
+mounting from the default &quot;-hosts&quot; map. The &quot;dev&quot; option must be explicitly
+given in the master map entry to revert to the old behavior. This change
+affects only the &quot;-hosts&quot; map which corresponds to the &quot;/net&quot; entry in the
+default configuration.
+
+All autofs users are advised to upgrade to these updated packages, which
+resolve this issue.
+
+Red Hat would like to thank Tim Baum for reporting this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+426218 - CVE-2007-6285 autofs default doesn't set nodev in /net
+
+6. RPMs required:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/autofs-5.0.1-0.rc2.55.el5.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/autofs-5.0.1-0.rc2.55.el5.2.src.rpm</a>
+5f5504a6ca34b5f5c1bf957d6dae5887  autofs-5.0.1-0.rc2.55.el5.2.src.rpm
+
+i386:
+2777273dbfe56fe6949958b003c7a536  autofs-5.0.1-0.rc2.55.el5.2.i386.rpm
+d316563c861ea92642fe9220fec3268b  autofs-debuginfo-5.0.1-0.rc2.55.el5.2.i386.rpm
+
+x86_64:
+382f81f678643f3ef989007ef9023110  autofs-5.0.1-0.rc2.55.el5.2.x86_64.rpm
+fb511a6ab5a5acdcae2c460aa5fe95e1  autofs-debuginfo-5.0.1-0.rc2.55.el5.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+SRPMS:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/autofs-5.0.1-0.rc2.55.el5.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/autofs-5.0.1-0.rc2.55.el5.2.src.rpm</a>
+5f5504a6ca34b5f5c1bf957d6dae5887  autofs-5.0.1-0.rc2.55.el5.2.src.rpm
+
+i386:
+2777273dbfe56fe6949958b003c7a536  autofs-5.0.1-0.rc2.55.el5.2.i386.rpm
+d316563c861ea92642fe9220fec3268b  autofs-debuginfo-5.0.1-0.rc2.55.el5.2.i386.rpm
+
+ia64:
+7f11526720a9288b3c95193c97c02788  autofs-5.0.1-0.rc2.55.el5.2.ia64.rpm
+c2a6a0b39aab22452797b486f71a4cbb  autofs-debuginfo-5.0.1-0.rc2.55.el5.2.ia64.rpm
+
+ppc:
+d5caec9515a94c2588d8be40d3a021c3  autofs-5.0.1-0.rc2.55.el5.2.ppc.rpm
+4f00e9d1b2f8d4d166bf91a013ebe7da  autofs-debuginfo-5.0.1-0.rc2.55.el5.2.ppc.rpm
+
+s390x:
+2c79053af040b63b7cd835b85778df7f  autofs-5.0.1-0.rc2.55.el5.2.s390x.rpm
+43a0d008743fdccb6689056166b19bea  autofs-debuginfo-5.0.1-0.rc2.55.el5.2.s390x.rpm
+
+x86_64:
+382f81f678643f3ef989007ef9023110  autofs-5.0.1-0.rc2.55.el5.2.x86_64.rpm
+fb511a6ab5a5acdcae2c460aa5fe95e1  autofs-debuginfo-5.0.1-0.rc2.55.el5.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6285">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6285</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHasNbXlSAg2UNWIIRAiLrAKCbycPrUTe402quflWjy9bfPanKOQCfcJFE
+WB5eSRw0eCeemj/GLXZbMgA=
+=M5cd
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

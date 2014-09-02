@@ -1,0 +1,275 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0313&#45;03] Low: samba security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Feb 2012 23:42:10 &#45;0500 -->
+<!--X-Message-Id: 201202210442.q1L4g3Gf010235@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0313-03] Low: samba security, bug fix,	and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0313-03] Low: samba security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0313-03] Low: samba security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 21 Feb 2012 04:42:03 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: samba security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:0313-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0313.html">https://rhn.redhat.com/errata/RHSA-2012-0313.html</a>
+Issue date:        2012-02-21
+CVE Names:         CVE-2010-0926 
+=====================================================================
+
+1. Summary:
+
+Updated samba packages that fix one security issue, one bug, and add one
+enhancement are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Samba is an open-source implementation of the Server Message Block (SMB) or
+Common Internet File System (CIFS) protocol, which allows PC-compatible
+machines to share files, printers, and other information.
+
+The default Samba server configuration enabled both the &quot;wide links&quot; and
+&quot;unix extensions&quot; options, allowing Samba clients with write access to a
+share to create symbolic links that point to any location on the file
+system. Clients connecting with CIFS UNIX extensions disabled could have
+such links resolved on the server, allowing them to access and possibly
+overwrite files outside of the share. With this update, &quot;wide links&quot; is
+set to &quot;no&quot; by default. In addition, the update ensures &quot;wide links&quot; is
+disabled for shares that have &quot;unix extensions&quot; enabled. (CVE-2010-0926)
+
+Warning: This update may cause files and directories that are only linked
+to Samba shares using symbolic links to become inaccessible to Samba
+clients. In deployments where support for CIFS UNIX extensions is not
+needed (such as when files are exported to Microsoft Windows clients),
+administrators may prefer to set the &quot;unix extensions&quot; option to &quot;no&quot; to
+allow the use of symbolic links to access files out of the shared
+directories. All existing symbolic links in a share should be reviewed
+before re-enabling &quot;wide links&quot;.
+
+These updated samba packages also fix the following bug:
+
+* The smbclient tool sometimes failed to return the proper exit status
+code. Consequently, using smbclient in a script caused some scripts to
+fail. With this update, an upstream patch has been applied and smbclient
+now returns the correct exit status. (BZ#768908)
+
+In addition, these updated samba packages provide the following
+enhancement:
+
+* With this update, support for Windows Server 2008 R2 domains has been
+added. (BZ#736124)
+
+Users are advised to upgrade to these updated samba packages, which correct
+these issues and add this enhancement. After installing this update, the
+smb service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+562568 - CVE-2010-0926 samba: insecure &quot;wide links&quot; default
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.37.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.37.el5.src.rpm</a>
+
+i386:
+libsmbclient-3.0.33-3.37.el5.i386.rpm
+samba-3.0.33-3.37.el5.i386.rpm
+samba-client-3.0.33-3.37.el5.i386.rpm
+samba-common-3.0.33-3.37.el5.i386.rpm
+samba-debuginfo-3.0.33-3.37.el5.i386.rpm
+samba-swat-3.0.33-3.37.el5.i386.rpm
+
+x86_64:
+libsmbclient-3.0.33-3.37.el5.i386.rpm
+libsmbclient-3.0.33-3.37.el5.x86_64.rpm
+samba-3.0.33-3.37.el5.x86_64.rpm
+samba-client-3.0.33-3.37.el5.x86_64.rpm
+samba-common-3.0.33-3.37.el5.i386.rpm
+samba-common-3.0.33-3.37.el5.x86_64.rpm
+samba-debuginfo-3.0.33-3.37.el5.i386.rpm
+samba-debuginfo-3.0.33-3.37.el5.x86_64.rpm
+samba-swat-3.0.33-3.37.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.37.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.37.el5.src.rpm</a>
+
+i386:
+libsmbclient-devel-3.0.33-3.37.el5.i386.rpm
+samba-debuginfo-3.0.33-3.37.el5.i386.rpm
+
+x86_64:
+libsmbclient-devel-3.0.33-3.37.el5.i386.rpm
+libsmbclient-devel-3.0.33-3.37.el5.x86_64.rpm
+samba-debuginfo-3.0.33-3.37.el5.i386.rpm
+samba-debuginfo-3.0.33-3.37.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba-3.0.33-3.37.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba-3.0.33-3.37.el5.src.rpm</a>
+
+i386:
+libsmbclient-3.0.33-3.37.el5.i386.rpm
+libsmbclient-devel-3.0.33-3.37.el5.i386.rpm
+samba-3.0.33-3.37.el5.i386.rpm
+samba-client-3.0.33-3.37.el5.i386.rpm
+samba-common-3.0.33-3.37.el5.i386.rpm
+samba-debuginfo-3.0.33-3.37.el5.i386.rpm
+samba-swat-3.0.33-3.37.el5.i386.rpm
+
+ia64:
+libsmbclient-3.0.33-3.37.el5.ia64.rpm
+libsmbclient-devel-3.0.33-3.37.el5.ia64.rpm
+samba-3.0.33-3.37.el5.ia64.rpm
+samba-client-3.0.33-3.37.el5.ia64.rpm
+samba-common-3.0.33-3.37.el5.ia64.rpm
+samba-debuginfo-3.0.33-3.37.el5.ia64.rpm
+samba-swat-3.0.33-3.37.el5.ia64.rpm
+
+ppc:
+libsmbclient-3.0.33-3.37.el5.ppc.rpm
+libsmbclient-3.0.33-3.37.el5.ppc64.rpm
+libsmbclient-devel-3.0.33-3.37.el5.ppc.rpm
+libsmbclient-devel-3.0.33-3.37.el5.ppc64.rpm
+samba-3.0.33-3.37.el5.ppc.rpm
+samba-client-3.0.33-3.37.el5.ppc.rpm
+samba-common-3.0.33-3.37.el5.ppc.rpm
+samba-common-3.0.33-3.37.el5.ppc64.rpm
+samba-debuginfo-3.0.33-3.37.el5.ppc.rpm
+samba-debuginfo-3.0.33-3.37.el5.ppc64.rpm
+samba-swat-3.0.33-3.37.el5.ppc.rpm
+
+s390x:
+libsmbclient-3.0.33-3.37.el5.s390.rpm
+libsmbclient-3.0.33-3.37.el5.s390x.rpm
+libsmbclient-devel-3.0.33-3.37.el5.s390.rpm
+libsmbclient-devel-3.0.33-3.37.el5.s390x.rpm
+samba-3.0.33-3.37.el5.s390x.rpm
+samba-client-3.0.33-3.37.el5.s390x.rpm
+samba-common-3.0.33-3.37.el5.s390.rpm
+samba-common-3.0.33-3.37.el5.s390x.rpm
+samba-debuginfo-3.0.33-3.37.el5.s390.rpm
+samba-debuginfo-3.0.33-3.37.el5.s390x.rpm
+samba-swat-3.0.33-3.37.el5.s390x.rpm
+
+x86_64:
+libsmbclient-3.0.33-3.37.el5.i386.rpm
+libsmbclient-3.0.33-3.37.el5.x86_64.rpm
+libsmbclient-devel-3.0.33-3.37.el5.i386.rpm
+libsmbclient-devel-3.0.33-3.37.el5.x86_64.rpm
+samba-3.0.33-3.37.el5.x86_64.rpm
+samba-client-3.0.33-3.37.el5.x86_64.rpm
+samba-common-3.0.33-3.37.el5.i386.rpm
+samba-common-3.0.33-3.37.el5.x86_64.rpm
+samba-debuginfo-3.0.33-3.37.el5.i386.rpm
+samba-debuginfo-3.0.33-3.37.el5.x86_64.rpm
+samba-swat-3.0.33-3.37.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0926.html">https://www.redhat.com/security/data/cve/CVE-2010-0926.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPQyCNXlSAg2UNWIIRAlTUAKCk1/N54SxUUnojLGXfDI/tO2LzsQCdGJ/d
+NMPYOHz4hMzsKcqrPVWO/xg=
+=gznF
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

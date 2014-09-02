@@ -1,0 +1,256 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1411&#45;01] Moderate: glibc security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Oct 2013 12:31:28 &#45;0400 -->
+<!--X-Message-Id: 201310081631.r98GVRth024093@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1411-01] Moderate: glibc security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1411-01] Moderate: glibc security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1411-01] Moderate: glibc security and bug fix update</li>
+<li><em>Date</em>: Tue, 8 Oct 2013 16:31:27 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: glibc security and bug fix update
+Advisory ID:       RHSA-2013:1411-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1411.html">https://rhn.redhat.com/errata/RHSA-2013-1411.html</a>
+Issue date:        2013-10-08
+CVE Names:         CVE-2013-4332 
+=====================================================================
+
+1. Summary:
+
+Updated glibc packages that fix one security issue and one bug are now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The glibc packages provide the standard C libraries (libc), POSIX thread
+libraries (libpthread), standard math libraries (libm), and the Name Server
+Caching Daemon (nscd) used by multiple programs on the system. Without
+these libraries, the Linux system cannot function correctly.
+
+Multiple integer overflow flaws, leading to heap-based buffer overflows,
+were found in glibc's memory allocator functions (pvalloc, valloc, and
+memalign). If an application used such a function, it could cause the
+application to crash or, potentially, execute arbitrary code with the
+privileges of the user running the application. (CVE-2013-4332)
+
+This update also fixes the following bug:
+
+* Prior to this update, the size of the L3 cache in certain CPUs for SMP
+(Symmetric Multiprocessing) servers was not correctly detected. The
+incorrect cache size detection resulted in less than optimal performance
+for routines that used this information, including the memset() function.
+To fix this bug, the cache size detection has been corrected and core
+routines including memset() have their performance restored to expected
+levels. (BZ#1011424)
+
+All glibc users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+1007545 - CVE-2013-4332 glibc: three integer overflows in memory allocator
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glibc-2.5-118.el5_10.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/glibc-2.5-118.el5_10.2.src.rpm</a>
+
+i386:
+glibc-2.5-118.el5_10.2.i386.rpm
+glibc-2.5-118.el5_10.2.i686.rpm
+glibc-common-2.5-118.el5_10.2.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.2.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.2.i686.rpm
+glibc-debuginfo-common-2.5-118.el5_10.2.i386.rpm
+glibc-devel-2.5-118.el5_10.2.i386.rpm
+glibc-headers-2.5-118.el5_10.2.i386.rpm
+glibc-utils-2.5-118.el5_10.2.i386.rpm
+nscd-2.5-118.el5_10.2.i386.rpm
+
+x86_64:
+glibc-2.5-118.el5_10.2.i686.rpm
+glibc-2.5-118.el5_10.2.x86_64.rpm
+glibc-common-2.5-118.el5_10.2.x86_64.rpm
+glibc-debuginfo-2.5-118.el5_10.2.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.2.i686.rpm
+glibc-debuginfo-2.5-118.el5_10.2.x86_64.rpm
+glibc-debuginfo-common-2.5-118.el5_10.2.i386.rpm
+glibc-devel-2.5-118.el5_10.2.i386.rpm
+glibc-devel-2.5-118.el5_10.2.x86_64.rpm
+glibc-headers-2.5-118.el5_10.2.x86_64.rpm
+glibc-utils-2.5-118.el5_10.2.x86_64.rpm
+nscd-2.5-118.el5_10.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/glibc-2.5-118.el5_10.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/glibc-2.5-118.el5_10.2.src.rpm</a>
+
+i386:
+glibc-2.5-118.el5_10.2.i386.rpm
+glibc-2.5-118.el5_10.2.i686.rpm
+glibc-common-2.5-118.el5_10.2.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.2.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.2.i686.rpm
+glibc-debuginfo-common-2.5-118.el5_10.2.i386.rpm
+glibc-devel-2.5-118.el5_10.2.i386.rpm
+glibc-headers-2.5-118.el5_10.2.i386.rpm
+glibc-utils-2.5-118.el5_10.2.i386.rpm
+nscd-2.5-118.el5_10.2.i386.rpm
+
+ia64:
+glibc-2.5-118.el5_10.2.i686.rpm
+glibc-2.5-118.el5_10.2.ia64.rpm
+glibc-common-2.5-118.el5_10.2.ia64.rpm
+glibc-debuginfo-2.5-118.el5_10.2.i686.rpm
+glibc-debuginfo-2.5-118.el5_10.2.ia64.rpm
+glibc-debuginfo-common-2.5-118.el5_10.2.i386.rpm
+glibc-devel-2.5-118.el5_10.2.ia64.rpm
+glibc-headers-2.5-118.el5_10.2.ia64.rpm
+glibc-utils-2.5-118.el5_10.2.ia64.rpm
+nscd-2.5-118.el5_10.2.ia64.rpm
+
+ppc:
+glibc-2.5-118.el5_10.2.ppc.rpm
+glibc-2.5-118.el5_10.2.ppc64.rpm
+glibc-common-2.5-118.el5_10.2.ppc.rpm
+glibc-debuginfo-2.5-118.el5_10.2.ppc.rpm
+glibc-debuginfo-2.5-118.el5_10.2.ppc64.rpm
+glibc-devel-2.5-118.el5_10.2.ppc.rpm
+glibc-devel-2.5-118.el5_10.2.ppc64.rpm
+glibc-headers-2.5-118.el5_10.2.ppc.rpm
+glibc-utils-2.5-118.el5_10.2.ppc.rpm
+nscd-2.5-118.el5_10.2.ppc.rpm
+
+s390x:
+glibc-2.5-118.el5_10.2.s390.rpm
+glibc-2.5-118.el5_10.2.s390x.rpm
+glibc-common-2.5-118.el5_10.2.s390x.rpm
+glibc-debuginfo-2.5-118.el5_10.2.s390.rpm
+glibc-debuginfo-2.5-118.el5_10.2.s390x.rpm
+glibc-devel-2.5-118.el5_10.2.s390.rpm
+glibc-devel-2.5-118.el5_10.2.s390x.rpm
+glibc-headers-2.5-118.el5_10.2.s390x.rpm
+glibc-utils-2.5-118.el5_10.2.s390x.rpm
+nscd-2.5-118.el5_10.2.s390x.rpm
+
+x86_64:
+glibc-2.5-118.el5_10.2.i686.rpm
+glibc-2.5-118.el5_10.2.x86_64.rpm
+glibc-common-2.5-118.el5_10.2.x86_64.rpm
+glibc-debuginfo-2.5-118.el5_10.2.i386.rpm
+glibc-debuginfo-2.5-118.el5_10.2.i686.rpm
+glibc-debuginfo-2.5-118.el5_10.2.x86_64.rpm
+glibc-debuginfo-common-2.5-118.el5_10.2.i386.rpm
+glibc-devel-2.5-118.el5_10.2.i386.rpm
+glibc-devel-2.5-118.el5_10.2.x86_64.rpm
+glibc-headers-2.5-118.el5_10.2.x86_64.rpm
+glibc-utils-2.5-118.el5_10.2.x86_64.rpm
+nscd-2.5-118.el5_10.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4332.html">https://www.redhat.com/security/data/cve/CVE-2013-4332.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSVDNBXlSAg2UNWIIRAmYPAJ4kwUy2PEBwIQdfan7y01QGHinPGQCfYBMh
+omiZGiWAXG2i8uqm1RgxPrs=
+=d1xX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

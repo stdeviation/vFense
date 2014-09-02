@@ -1,0 +1,260 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0997&#45;01] Moderate: 389&#45;ds&#45;base security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jun 2012 07:42:46 &#45;0400 -->
+<!--X-Message-Id: 201206201142.q5KBgdLC027048@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0997-01] Moderate: 389-ds-base security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0997-01] Moderate: 389-ds-base security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0997-01] Moderate: 389-ds-base security update</li>
+<li><em>Date</em>: Wed, 20 Jun 2012 11:38:33 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: 389-ds-base security update
+Advisory ID:       RHSA-2012:0997-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0997.html">https://rhn.redhat.com/errata/RHSA-2012-0997.html</a>
+Issue date:        2012-06-20
+CVE Names:         CVE-2012-2678 CVE-2012-2746 
+=====================================================================
+
+1. Summary:
+
+Updated 389-ds-base packages that fix two security issues are now available
+for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The 389 Directory Server is an LDAPv3 compliant server. The base packages
+include the Lightweight Directory Access Protocol (LDAP) server and
+command-line utilities for server administration.
+
+A flaw was found in the way 389 Directory Server handled password changes.
+If an LDAP user has changed their password, and the directory server has
+not been restarted since that change, an attacker able to bind to the
+directory server could obtain the plain text version of that user's
+password via the &quot;unhashed#user#password&quot; attribute. (CVE-2012-2678)
+
+It was found that when the password for an LDAP user was changed, and audit
+logging was enabled (it is disabled by default), the new password was
+written to the audit log in plain text form. This update introduces a new
+configuration parameter, &quot;nsslapd-auditlog-logging-hide-unhashed-pw&quot;, which
+when set to &quot;on&quot; (the default option), prevents 389 Directory Server from
+writing plain text passwords to the audit log. This option can be
+configured in &quot;/etc/dirsrv/slapd-[ID]/dse.ldif&quot;. (CVE-2012-2746)
+
+All users of 389-ds-base are advised to upgrade to these updated packages,
+which resolve these issues. After installing this update, the 389 server
+service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+829933 - CVE-2012-2678 rhds/389: plaintext password disclosure flaw
+833482 - CVE-2012-2746 rhds/389: plaintext password disclosure in audit log
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm</a>
+
+i386:
+389-ds-base-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.i686.rpm
+
+x86_64:
+389-ds-base-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm</a>
+
+x86_64:
+389-ds-base-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm</a>
+
+i386:
+389-ds-base-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.i686.rpm
+
+x86_64:
+389-ds-base-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm</a>
+
+i386:
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.i686.rpm
+
+x86_64:
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm</a>
+
+i386:
+389-ds-base-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.i686.rpm
+
+x86_64:
+389-ds-base-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-libs-1.2.10.2-18.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.10.2-18.el6_3.src.rpm</a>
+
+i386:
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.i686.rpm
+
+x86_64:
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-debuginfo-1.2.10.2-18.el6_3.x86_64.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.i686.rpm
+389-ds-base-devel-1.2.10.2-18.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2678.html">https://www.redhat.com/security/data/cve/CVE-2012-2678.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2746.html">https://www.redhat.com/security/data/cve/CVE-2012-2746.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4bceXlSAg2UNWIIRAlr8AJ4nn/6Wp8SdYhN5+ukkZWAzdhAFVQCgrr2C
+kJiFAS86mDpRcaHMP+rIiNw=
+=OBpk
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

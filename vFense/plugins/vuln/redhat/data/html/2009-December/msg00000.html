@@ -1,0 +1,223 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1635&#45;01] Important: kernel&#45;rt security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 3 Dec 2009 06:30:37 &#45;0500 -->
+<!--X-Message-Id: 200912031130.nB3BUa6G031649@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1635-01] Important: kernel-rt security, bug fix,	and enhancem</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1635-01] Important: kernel-rt security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1635-01] Important: kernel-rt security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 3 Dec 2009 06:30:36 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security, bug fix, and enhancement update
+Advisory ID:       RHSA-2009:1635-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1635.html">https://rhn.redhat.com/errata/RHSA-2009-1635.html</a>
+Issue date:        2009-12-03
+CVE Names:         CVE-2009-3726 CVE-2009-3889 CVE-2009-3939 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix security issues, two bugs, and add two
+enhancements are now available for Red Hat Enterprise MRG 1.2.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+These updated packages fix the following security issues:
+
+* a NULL pointer dereference flaw was found in the NFSv4 implementation in
+the Linux kernel. Several of the NFSv4 file locking functions failed to
+check whether a file had been opened on the server before performing
+locking operations on it. A local user on a system with an NFSv4 share
+mounted could possibly use this flaw to cause a denial of service or
+escalate their privileges. (CVE-2009-3726, Important)
+
+* permission issues were found in the megaraid_sas driver (for SAS based
+RAID controllers) in the Linux kernel. The &quot;dbg_lvl&quot; and &quot;poll_mode_io&quot;
+files on the sysfs file system (&quot;/sys/&quot;) had world-writable permissions.
+This could allow local, unprivileged users to change the behavior of the
+driver. (CVE-2009-3889, CVE-2009-3939, Moderate)
+
+These updated packages also fix the following bugs:
+
+* a problem existed with the i5000_edac driver under some topologies. In
+some cases, this driver failed to export memory devices via sysfs,
+preventing the ibm-prtm service from starting. With this update, the memory
+devices are accessible, allowing the ibm-prtm service to start, and
+therefore perform SMI remediation as expected. (BZ#527421)
+
+* the &quot;/proc/sys/vm/mmap_min_addr&quot; tunable helps prevent unprivileged
+users from creating new memory mappings below the minimum address. The
+sysctl value for mmap_min_addr could be changed by a process or user that
+has an effective user ID (euid) of 0, even if the process or user does not
+have the CAP_SYS_RAWIO capability. This update adds a capability check for
+the CAP_SYS_RAWIO capability before allowing the mmap_min_addr value to be
+changed. (BZ#534019)
+
+As well, these updated packages add the following enhancements:
+
+* the Intel ixgbe driver was updated to upstream version 2.0.16-k2.
+(BZ#537505)
+
+* the InfiniBand OFED driver was updated to upstream version 1.4.1.
+(BZ#537500)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues and add these enhancements. The system must
+be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+526068 - CVE-2009-3889 CVE-2009-3939 kernel: megaraid_sas permissions in sysfs
+527421 - HS21xm i5000_edac kernel topology fix
+529227 - CVE-2009-3726 kernel: nfsv4: kernel panic in nfs4_proc_lock()
+534019 - kernel: sysctl: require CAP_SYS_RAWIO to set mmap_min_addr [mrg-1]
+537500 - Update Infiniband system to OFED 1.4.1
+537505 - update Intel ixgbe driver to latest upstream version
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-139.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-139.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-139.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-139.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-139.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-139.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-139.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3726">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3726</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3889">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3889</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3939">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3939</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLF6E1XlSAg2UNWIIRAisyAJ4uKfntAdxoAedtpw+G7Mp4Pj//EACeMvHG
+6pXIaBdqaQjSrFylTNmczRs=
+=A2wF
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

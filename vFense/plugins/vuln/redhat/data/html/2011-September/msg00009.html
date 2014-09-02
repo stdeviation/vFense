@@ -1,0 +1,311 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1250&#45;01] Moderate: Red Hat Enterprise MRG Grid 2.0	security, bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 7 Sep 2011 13:18:38 &#45;0400 -->
+<!--X-Message-Id: 201109071718.p87HIVE9019862@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1250-01] Moderate: Red Hat Enterprise MRG Grid 2.0	security, </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1250-01] Moderate: Red Hat Enterprise MRG Grid 2.0	security, bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1250-01] Moderate: Red Hat Enterprise MRG Grid 2.0	security, bug fix and enhancement update</li>
+<li><em>Date</em>: Wed, 7 Sep 2011 17:18:30 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Enterprise MRG Grid 2.0 security, bug fix and enhancement update
+Advisory ID:       RHSA-2011:1250-01
+Product:           Red Hat Enterprise MRG for RHEL-6
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1250.html">https://rhn.redhat.com/errata/RHSA-2011-1250.html</a>
+Issue date:        2011-09-07
+CVE Names:         CVE-2011-2925 
+=====================================================================
+
+1. Summary:
+
+Updated Grid component packages that fix one security issue, multiple bugs,
+and add various enhancements are now available for Red Hat Enterprise MRG
+2.0 for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+MRG Grid Execute Node for RHEL 6 Server v.2 - i386, noarch, x86_64
+MRG Grid for RHEL 6 Server v.2 - i386, noarch, x86_64
+MRG Management for RHEL 6 Server v.2 - noarch
+
+3. Description:
+
+Red Hat Enterprise MRG (Messaging, Realtime, and Grid) is a next-generation
+IT infrastructure for enterprise computing. MRG offers increased
+performance, reliability, interoperability, and faster computing for
+enterprise customers.
+
+MRG Grid provides high-throughput computing and enables enterprises to
+achieve higher peak computing capacity as well as improved infrastructure
+utilization by leveraging their existing technology to build high
+performance grids. MRG Grid provides a job-queueing mechanism, scheduling
+policy, and a priority scheme, as well as resource monitoring and resource
+management. Users submit their jobs to MRG Grid, where they are placed into
+a queue. MRG Grid then chooses when and where to run the jobs based upon a
+policy, carefully monitors their progress, and ultimately informs the user
+upon completion.
+
+A flaw was discovered in Cumin where it would log broker authentication
+credentials to the Cumin log file. A local user exploiting this flaw could
+connect to the broker outside of Cumin's control and perform certain
+operations such as scheduling jobs, setting attributes on jobs, as well as
+holding, releasing or removing jobs. The user could also use this to,
+depending on the defined ACLs of the broker, manipulate message queues and
+other privileged operations. (CVE-2011-2925)
+
+In addition, these updated packages for Red Hat Enterprise Linux 6 provide
+numerous bug fixes and enhancements for the Grid component of MRG. Some of
+the most important enhancements include:
+
+* Expanded support of EC2 features, including EBS and VPC.
+
+* Improved negotiation performance.
+
+* Reduced shadow memory usage.
+
+* Integrated configuration and management experience, including real-time
+monitoring, diagnostics, and configuration templates.
+
+Release Notes:
+
+* When MRG Grid ran on a node with multiple network interfaces, it tried to
+estimate the correct interface for its communications with the remaining
+MRG Grid nodes. As a consequence, the node could have failed to communicate
+with other parts of MRG Grid correctly if the wrong interface had been
+chosen. As a workaround to this issue, MRG Grid can be forced to use a
+specific network interface by setting the NETWORK_INTERFACE parameter to
+the IP address of that interface. To determine which interface was used by
+MRG Grid when it fails to communicate with other parts of the grid, include
+the D_HOSTNAME variable in the logging configuration of the corresponding
+daemon. (BZ#728285)
+
+* The remote configuration database requires an update to include changes
+for MRG Grid version 2.0.1. But the database snapshot provided with MRG
+only contains a basic configuration, and thus loading the database snapshot
+would replace the existing pool configuration. To solve this issue, the
+upgrade-wallaby-db tool which upgrades an existing deployment's database
+has to be used. This tool can be downloaded from the following page:
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-58404">https://access.redhat.com/kb/docs/DOC-58404</a>
+
+* With this update, the Elastic Compute Cloud Grid ASCII Helper Protocol
+(EC2 GAHP) is preferred over AMAZON GAHP. The condor-ec2-enhanced-hooks
+package has been updated to detect the correct GAHP for the EC2 Enhanced
+feature based upon what GAHPs are available on the scheduler. To ensure
+that jobs are routed to the proper resources, the 'set_gridresource =
+&quot;amazon&quot;; \' setting should be removed from all existing EC2 Enhanced
+routes in a MRG Grid's configuration. (BZ#688717)
+
+Space precludes documenting all of these changes in this advisory. Refer to
+the Red Hat Enterprise MRG 2.0 Technical Notes document for information on
+these changes:
+
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/2.0/html/Technica">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/2.0/html/Technica</a>
+l_Notes/index.html
+
+All users of the Grid capabilities of Red Hat Enterprise MRG 2.0 are
+advised to upgrade to these updated packages, which resolve the issues and
+add the enhancements noted in the Red Hat Enterprise MRG 2.0 Technical
+Notes.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+731574 - CVE-2011-2925 cumin: broker username/password appears in the log file
+
+6. Package List:
+
+MRG Grid for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-7.6.3-0.3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-7.6.3-0.3.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-ec2-enhanced-1.2-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-ec2-enhanced-1.2-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-ec2-enhanced-hooks-1.2-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-ec2-enhanced-hooks-1.2-3.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-job-hooks-1.5-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-job-hooks-1.5-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-low-latency-1.2-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-low-latency-1.2-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-wallaby-4.1-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-wallaby-4.1-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-wallaby-base-db-1.14-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-wallaby-base-db-1.14-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/ruby-rhubarb-0.4.0-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/ruby-rhubarb-0.4.0-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/wallaby-0.10.5-6.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/wallaby-0.10.5-6.el6.src.rpm</a>
+
+i386:
+condor-7.6.3-0.3.el6.i686.rpm
+condor-aviary-7.6.3-0.3.el6.i686.rpm
+condor-classads-7.6.3-0.3.el6.i686.rpm
+condor-debuginfo-7.6.3-0.3.el6.i686.rpm
+condor-kbdd-7.6.3-0.3.el6.i686.rpm
+condor-qmf-7.6.3-0.3.el6.i686.rpm
+
+noarch:
+condor-ec2-enhanced-1.2-2.el6.noarch.rpm
+condor-ec2-enhanced-hooks-1.2-3.el6.noarch.rpm
+condor-job-hooks-1.5-4.el6.noarch.rpm
+condor-low-latency-1.2-2.el6.noarch.rpm
+condor-wallaby-base-db-1.14-1.el6.noarch.rpm
+condor-wallaby-client-4.1-4.el6.noarch.rpm
+condor-wallaby-tools-4.1-4.el6.noarch.rpm
+python-condorec2e-1.2-3.el6.noarch.rpm
+python-condorutils-1.5-4.el6.noarch.rpm
+python-wallabyclient-4.1-4.el6.noarch.rpm
+ruby-rhubarb-0.4.0-1.el6.noarch.rpm
+ruby-wallaby-0.10.5-6.el6.noarch.rpm
+wallaby-0.10.5-6.el6.noarch.rpm
+wallaby-utils-0.10.5-6.el6.noarch.rpm
+
+x86_64:
+condor-7.6.3-0.3.el6.x86_64.rpm
+condor-aviary-7.6.3-0.3.el6.x86_64.rpm
+condor-classads-7.6.3-0.3.el6.x86_64.rpm
+condor-debuginfo-7.6.3-0.3.el6.x86_64.rpm
+condor-kbdd-7.6.3-0.3.el6.x86_64.rpm
+condor-qmf-7.6.3-0.3.el6.x86_64.rpm
+condor-vm-gahp-7.6.3-0.3.el6.x86_64.rpm
+
+MRG Grid Execute Node for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-7.6.3-0.3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-7.6.3-0.3.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-ec2-enhanced-1.2-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-ec2-enhanced-1.2-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-ec2-enhanced-hooks-1.2-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-ec2-enhanced-hooks-1.2-3.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-job-hooks-1.5-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-job-hooks-1.5-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-low-latency-1.2-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-low-latency-1.2-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-wallaby-4.1-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-wallaby-4.1-4.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-wallaby-base-db-1.14-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/condor-wallaby-base-db-1.14-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/ruby-rhubarb-0.4.0-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/ruby-rhubarb-0.4.0-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/wallaby-0.10.5-6.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/wallaby-0.10.5-6.el6.src.rpm</a>
+
+i386:
+condor-7.6.3-0.3.el6.i686.rpm
+condor-classads-7.6.3-0.3.el6.i686.rpm
+condor-debuginfo-7.6.3-0.3.el6.i686.rpm
+condor-kbdd-7.6.3-0.3.el6.i686.rpm
+condor-qmf-7.6.3-0.3.el6.i686.rpm
+
+noarch:
+condor-ec2-enhanced-1.2-2.el6.noarch.rpm
+condor-job-hooks-1.5-4.el6.noarch.rpm
+condor-low-latency-1.2-2.el6.noarch.rpm
+condor-wallaby-base-db-1.14-1.el6.noarch.rpm
+condor-wallaby-client-4.1-4.el6.noarch.rpm
+condor-wallaby-tools-4.1-4.el6.noarch.rpm
+python-condorec2e-1.2-3.el6.noarch.rpm
+python-condorutils-1.5-4.el6.noarch.rpm
+python-wallabyclient-4.1-4.el6.noarch.rpm
+ruby-rhubarb-0.4.0-1.el6.noarch.rpm
+ruby-wallaby-0.10.5-6.el6.noarch.rpm
+wallaby-utils-0.10.5-6.el6.noarch.rpm
+
+x86_64:
+condor-7.6.3-0.3.el6.x86_64.rpm
+condor-classads-7.6.3-0.3.el6.x86_64.rpm
+condor-debuginfo-7.6.3-0.3.el6.x86_64.rpm
+condor-kbdd-7.6.3-0.3.el6.x86_64.rpm
+condor-qmf-7.6.3-0.3.el6.x86_64.rpm
+condor-vm-gahp-7.6.3-0.3.el6.x86_64.rpm
+
+MRG Management for RHEL 6 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/cumin-0.1.4916-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEMRG-RHEL6/SRPMS/cumin-0.1.4916-1.el6.src.rpm</a>
+
+noarch:
+cumin-0.1.4916-1.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2925.html">https://www.redhat.com/security/data/cve/CVE-2011-2925.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-58404">https://access.redhat.com/kb/docs/DOC-58404</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/2.0/html/Technical_Notes/index.html">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/2.0/html/Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOZ6cwXlSAg2UNWIIRAl1MAJ0ZNJ158NPIhZ2UJIfHXHLasBN1TACgstdp
+JeW59kYXJDjX1OJ8PILhpP8=
+=raRR
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

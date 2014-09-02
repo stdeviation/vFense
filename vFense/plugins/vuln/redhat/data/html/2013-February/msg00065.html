@@ -1,0 +1,428 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0528&#45;02] Low: ipa security, bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:53:12 &#45;0500 -->
+<!--X-Message-Id: 201302210653.r1L6rAhL032655@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0528-02] Low: ipa security, bug fix and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00064.html">Date Prev</a>][<a href="msg00066.html">Date Next</a>] &nbsp; [<a href="msg00064.html">Thread Prev</a>][<a href="msg00066.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00065">Thread Index</A>]
+[<A HREF="date.html#00065">Date Index</A>]
+[<A HREF="author.html#00065">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0528-02] Low: ipa security, bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0528-02] Low: ipa security, bug fix and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:42:08 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: ipa security, bug fix and enhancement update
+Advisory ID:       RHSA-2013:0528-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0528.html">https://rhn.redhat.com/errata/RHSA-2013-0528.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2012-4546 
+=====================================================================
+
+1. Summary:
+
+Updated ipa packages that fix one security issue, several bugs, and add
+various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Red Hat Identity Management is a centralized authentication, identity
+management and authorization solution for both traditional and cloud-based
+enterprise environments. It integrates components of the Red Hat Directory
+Server, MIT Kerberos, Red Hat Certificate System, NTP, and DNS. It provides
+web browser and command-line interfaces. Its administration tools allow an
+administrator to quickly install, set up, and administer a group of domain
+controllers to meet the authentication and identity management requirements
+of large-scale Linux and UNIX deployments.
+
+It was found that the current default configuration of IPA servers did not
+publish correct CRLs (Certificate Revocation Lists). The default
+configuration specifies that every replica is to generate its own CRL;
+however, this can result in inconsistencies in the CRL contents provided to
+clients from different Identity Management replicas. More specifically, if
+a certificate is revoked on one Identity Management replica, it will not
+show up on another Identity Management replica. (CVE-2012-4546)
+
+These updated ipa packages also include numerous bug fixes and
+enhancements. Space precludes documenting all of these changes in this
+advisory. Users are directed to the Red Hat Enterprise Linux 6.4 Technical
+Notes, linked to in the References, for information on the most significant
+of these changes.
+
+Users are advised to upgrade to these updated ipa packages, which fix these
+issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+748987 - If  master has leftover replica agreement from a previous failed attempt, next replica install can fail
+766095 - [RFE] UI for SELinux user mapping
+767723 - [RFE] Implement ipa web GUI to create trusts
+768510 - migrate-ds : misleading error message when invalid objectclass defined
+773490 - dns discovery domain needs to be added to sssd.conf
+781208 - ipa user-find --manager does not find matches
+782847 - ipa permission-mod prompts for all parameters
+782981 - [RFE] Form based auth page needs to support password changes too
+783274 - [RFE] Create NIS map for ethers table
+784378 - Run CLEANRUV task when completely deleting a replica
+784621 - [ipa webui] Reset password link is enabled for a user without permission to change it
+785251 - ipa permisison-find --name brings back all permissions
+785254 - ipa permission-find --subtree brings back all permissions
+785257 - ipa permission-find --sizelimit is disregarded
+786199 - [RFE] CLI session support (Store session cookie in ccache for cli users)
+796390 - ipa netgroup-add with both --desc and --addattr=description returns internal error
+798355 - Fill DNS update policy by default
+798363 - [RFE] add in UI of &quot;create password policy&quot; measurement unit examples
+798365 - defect: add in UI of &quot;policy&quot; -&gt; &quot;kerberos ticket policy&quot; measurement unit examples
+798493 - adding reverse zones in gui fails to create correct zone
+801931 - [RFE] Expand current 'update dns entries' permission to be per-domain level?
+804619 - DNS zone serial number is not updated
+805203 - set ipa_hostname for sssd.conf
+805233 - [RFE] Prevent deletion of the last admin
+805430 - IPA dnszone-add does not accept the utmost valid serial number.
+807018 - ipa config-mod should not be allowed to modify certificate subject base
+809562 - Constraints for CNAME records are not enforced
+809565 - Cannot change DNS name without recreating it
+811207 - [ipa webui] When permission Type is updated, attributes should reflect new Type
+811211 - [ipa webui] Refresh issue with re-adding objects with same name as deleted objects
+811295 - Installation fails when CN is set in certificate subject base
+813325 - ipa netgroup-mod addattr and setattr allow invalid characters for externalHost
+813402 - [RFE] Warn users in UI when password is going to expire in n days
+814785 - [ipa webui] Update Unsaved Changes for Netgroups
+815364 - [ipa webui] DNS permissions not listed and are in lowercase
+815481 - hostgroup and netgroup names with one letter not allowed
+815494 - [ipa webui]  Netgroups page does not have members listed as links
+815830 - [WebUI] Unsaved changes dialog appers more than once in some cases
+815849 - ipa-server-install unhandled exception with unclear error messages (inside DNS check)
+816574 - ipa permission-add throws internal server error when --addattr or --setattr is blank
+816624 - ipa privilege-remove-permission with blank permission throws internal error
+817075 - ipa-server-install: s/calculated/determined/
+817080 - ipa-server-install --uninstall doesn't clear certmonger dirs, which leads to install failing
+817407 - [Web UI] Password policies are not sorted properly
+817412 - there is no permission/privilege for modifying automount keys
+817413 - validate that domain name uses only valid characters
+817821 - ipa config-mod --delattr misleading invalid error messages
+817831 - ipa config-mod --delattr user and group search fields returns internal server error
+817865 - we should not influence ip address family selection (traceback when IPv6 disabled)
+817869 - Clean keytabs before installing new keys into them
+817885 - Internal error : ipa config-mod addattr on user and group objectclasses
+818665 - [ipa webui] Unprovisioning keytab does not have cancel option
+818714 - [ipa webui] Instructions to generate cert should include specifying size of private key
+818836 - ipa pwpolicy-find displays incorrect max and min lifetime.
+819629 - Enable persistent search in bind-dyndb-ldap during IPA upgrade
+819635 - Fix help string for DNS zone --forwarder option
+820983 - Nested search facets have wrong tab name
+821448 - RFE: Browser config javascript should check to see if sending Referer is enabled
+822608 - Passwords cannot be migrated
+823657 - ipa-replica-manage connect fails with GSSAPI error after delete if using previous kerberos ticket
+824074 - Create ipaserver-upgrade.log on upgrades
+824488 - Add 'disable_last_success' and 'disable_lockout' to the ipadb.so dblibrary
+824490 - WinSync users who have First.Last casing creates users who can have their password set
+824492 - Cannot re-connect replica to previously disconnected master
+826152 - zonemgr is set to default for reverse zone even with --zonemgr
+826677 - IPA cannot remove disconnected replica data to reconnect
+827162 - ipa-client uninstall causes a crash after installing using --preserve-sssd
+827321 - ipa-server-install does not fill the default value for --subject option and it crashes later.
+827392 - Host OTP :: Random password characters should be limited.
+827583 - [ipa webui] DNS Zones - Add - on IE does not open a Add window, and instead writes on top on existing page
+828687 - Unable to update dns when deleting host
+829070 - ipa-server-install --uninstall does not remove /var/lib/sss/pubconf/kdcinfo.$REALM
+829746 - [ipa webui] IE  - Add members dialog box cannot be resized
+829899 - [ipa webui] IE - Attribute listing when adding permission or delegation is not displayed same as FF
+830598 - ipa-server-install --uninstall not stopping sssd and seeing ipa-replica-conncheck kinit errors
+830817 - [ipa webui] IE - Add permission of type Subtree, has a smaller textarea for subtree than FF
+831010 - [RFE] ipa-client-install always adds _srv_ entry to sssd.conf even when server specified.
+831227 - [ipa webui] IE - Unable to Edit Service, and intermittently add service fails
+831299 - [ipa webui] IE -Scrollbar jumps back when checkbox'ing an object
+831313 - ipa-replica-install enable GSSAPI for replication list index out of range failure
+831661 - ipa-replica-manage re-initialize update failed due to named ldap timeout
+832243 - Sporadic JSON errors under MSIE
+833505 - ipa-client-install crashes when --hostname is given
+833515 - permissions of replica files should be 0600
+833516 - Ipactl exception not handled well in ipactl
+833517 - [RFE] [Web UI] Add support for DNS per-domain permissions
+835642 - mail attribute not automatically populated
+837357 - Attributelevelrights differs in permission-show and permission-mod for the same permission
+837358 - Don't display: Logged in as: user FREEIPA ORG
+837365 - CLEANALLRUV must deal with offline replicas and older replicas
+837380 - Add group external member support to Web UI
+839008 - Indirect roles not checked for in WebUI
+839638 - ipa-replica-manage allows disconnect of last connection for a single replica
+840657 - sshpubkey not accepting ssh keys in the right format for user
+845405 - ipa-replica-install httpd restart failed
+845691 - ipa-client-install Failed to obtain host TGT
+846309 - Prevent disabling last admin
+852480 - automountkey is not indexed
+854321 - Password policies are sorted lexicographically instead of numerically
+854325 - Time synchronization is disabled in ipa-client-install
+855278 - I'm getting jQuery error when adding command includes &quot;??&quot; into the sudo commands field in IPA web interface.
+856282 - [Web UI] Improve instructions to generate certificate
+856293 - Nameserver does not have a corresponding A/AAAA record while creating new dns zone
+856294 - Instructions to uninstall are unclear
+859968 - IPA browser configuration won't work on Firefox &gt;= 15
+860683 - group-mod should not be allowed to rename or modify admins account
+864533 - Forbidden access to IPA published CRL
+866572 - ipa-adtrust-install checks for /usr/bin/smbpasswd, which is not required
+866966 - httpd needs restart post ipa-adtrust-install
+866977 - Inform user when ipa-upgradeconfig reports errors
+866978 - ipa-server-install --setup-dns always installs reverse zone
+867447 - ipa-adtrust-install does not reset all information when re-run
+867676 - extdom plugin does not handle Posix UID and GID request
+868956 - Adding dnsone using name-server and ipaddress, adds zone with incorrect data
+869279 - Bad link to Web UI config page after session is expired
+869616 - Issues when adding AD user as member of external group
+869656 - Improve information on passsync user in man page, command help
+869658 - It is not possible to disable forwarding on per-zone basics
+869741 - Re-adding an existing entry in trust, does not throw exception.
+870053 - Default SELinuxusermaporder needs to mapped with default selinux users list
+870234 - CVE-2012-4546 ipa: servers do not publish correct CRLs
+870446 - multi operations with attribute manipulation not returning error
+872707 - ipa-server dependency on krb5-server is not adequate
+874935 - ipa-server installation fails to find A/AAAA record for IPA hostname
+875261 - IPA WebUI login for AD Trusted User fails
+877324 - Missing Option to add SSH Public Key in Web UI after upgrade
+877434 - not exact error message show up when adding an AD member to an external type group  while the time difference between ad and ipa is too great
+878288 - IPA users are not available after ipa-server-install because sssd not running
+878462 - Special case NFS related ticket to avoid attaching MS-PACs
+878480 - Lookup user SIDs in external groups
+878485 - ipa trust-add prints misleading information about required DNS setting
+878969 - Write replacement for python-crypto
+880655 - Regression in default value of group type in user group adder dialog
+888124 - ipa install does not enable sssd start on boot
+888524 - ipa delegation-find --group option returns internal error
+888915 - cookie library does not parse nor generate expires attribute correctly when locale is not english
+888956 - Cannot install an IPA Replica server with PKI-CA/Dogtag from a master with a large CRL
+889583 - ipa server install failing when realm differs from domain
+891980 - Make the root CA lifetime at least 15 years
+893187 - Installing IPA with a single realm component sometimes fails
+893722 - ipa-server upgrade ERROR Cannot move CRL file to new directory
+893827 - ipa permission-find using valid targetgroup throws internal error
+894090 - Internal Server Error during ldap Migration
+894131 - ipa-replica-install fails to add idnssoaserial for a new zone
+894143 - ipa-replica-prepare fails when reverse zone does not have SOA serial data
+895298 - IPA upgrade error restarting named when dirsrv off before upgrade
+895561 - IPA install in pure IPv6 environment fails with &quot;Can't contact LDAP server&quot; error
+903758 - upgrading IPA from 2.2 to 3.0 sees certmonger errors
+905594 - Unable to install ipa-server-trust-ad pkg on 32-bit platform
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm</a>
+
+i386:
+ipa-client-3.0.0-25.el6.i686.rpm
+ipa-debuginfo-3.0.0-25.el6.i686.rpm
+ipa-python-3.0.0-25.el6.i686.rpm
+
+x86_64:
+ipa-client-3.0.0-25.el6.x86_64.rpm
+ipa-debuginfo-3.0.0-25.el6.x86_64.rpm
+ipa-python-3.0.0-25.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm</a>
+
+i386:
+ipa-admintools-3.0.0-25.el6.i686.rpm
+ipa-debuginfo-3.0.0-25.el6.i686.rpm
+ipa-server-3.0.0-25.el6.i686.rpm
+ipa-server-selinux-3.0.0-25.el6.i686.rpm
+ipa-server-trust-ad-3.0.0-25.el6.i686.rpm
+
+x86_64:
+ipa-admintools-3.0.0-25.el6.x86_64.rpm
+ipa-debuginfo-3.0.0-25.el6.x86_64.rpm
+ipa-server-3.0.0-25.el6.x86_64.rpm
+ipa-server-selinux-3.0.0-25.el6.x86_64.rpm
+ipa-server-trust-ad-3.0.0-25.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm</a>
+
+x86_64:
+ipa-client-3.0.0-25.el6.x86_64.rpm
+ipa-debuginfo-3.0.0-25.el6.x86_64.rpm
+ipa-python-3.0.0-25.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm</a>
+
+x86_64:
+ipa-admintools-3.0.0-25.el6.x86_64.rpm
+ipa-debuginfo-3.0.0-25.el6.x86_64.rpm
+ipa-server-3.0.0-25.el6.x86_64.rpm
+ipa-server-selinux-3.0.0-25.el6.x86_64.rpm
+ipa-server-trust-ad-3.0.0-25.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm</a>
+
+i386:
+ipa-admintools-3.0.0-25.el6.i686.rpm
+ipa-client-3.0.0-25.el6.i686.rpm
+ipa-debuginfo-3.0.0-25.el6.i686.rpm
+ipa-python-3.0.0-25.el6.i686.rpm
+ipa-server-3.0.0-25.el6.i686.rpm
+ipa-server-selinux-3.0.0-25.el6.i686.rpm
+ipa-server-trust-ad-3.0.0-25.el6.i686.rpm
+
+ppc64:
+ipa-admintools-3.0.0-25.el6.ppc64.rpm
+ipa-client-3.0.0-25.el6.ppc64.rpm
+ipa-debuginfo-3.0.0-25.el6.ppc64.rpm
+ipa-python-3.0.0-25.el6.ppc64.rpm
+
+s390x:
+ipa-admintools-3.0.0-25.el6.s390x.rpm
+ipa-client-3.0.0-25.el6.s390x.rpm
+ipa-debuginfo-3.0.0-25.el6.s390x.rpm
+ipa-python-3.0.0-25.el6.s390x.rpm
+
+x86_64:
+ipa-admintools-3.0.0-25.el6.x86_64.rpm
+ipa-client-3.0.0-25.el6.x86_64.rpm
+ipa-debuginfo-3.0.0-25.el6.x86_64.rpm
+ipa-python-3.0.0-25.el6.x86_64.rpm
+ipa-server-3.0.0-25.el6.x86_64.rpm
+ipa-server-selinux-3.0.0-25.el6.x86_64.rpm
+ipa-server-trust-ad-3.0.0-25.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ipa-3.0.0-25.el6.src.rpm</a>
+
+i386:
+ipa-admintools-3.0.0-25.el6.i686.rpm
+ipa-client-3.0.0-25.el6.i686.rpm
+ipa-debuginfo-3.0.0-25.el6.i686.rpm
+ipa-python-3.0.0-25.el6.i686.rpm
+ipa-server-3.0.0-25.el6.i686.rpm
+ipa-server-selinux-3.0.0-25.el6.i686.rpm
+ipa-server-trust-ad-3.0.0-25.el6.i686.rpm
+
+x86_64:
+ipa-admintools-3.0.0-25.el6.x86_64.rpm
+ipa-client-3.0.0-25.el6.x86_64.rpm
+ipa-debuginfo-3.0.0-25.el6.x86_64.rpm
+ipa-python-3.0.0-25.el6.x86_64.rpm
+ipa-server-3.0.0-25.el6.x86_64.rpm
+ipa-server-selinux-3.0.0-25.el6.x86_64.rpm
+ipa-server-trust-ad-3.0.0-25.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4546.html">https://www.redhat.com/security/data/cve/CVE-2012-4546.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/solutions/295843">https://access.redhat.com/knowledge/solutions/295843</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/ipa.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/ipa.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJcRRXlSAg2UNWIIRAm4oAKCsm/WirW2ZH2MW2pmRr0OgmMK4uwCgpeo8
+bRWdqug5mCZ26EHFE3PuYMY=
+=Aoyw
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00064.html">Date Prev</a>][<a href="msg00066.html">Date Next</a>] &nbsp; [<a href="msg00064.html">Thread Prev</a>][<a href="msg00066.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00065">Thread Index</A>]
+[<A HREF="date.html#00065">Date Index</A>]
+[<A HREF="author.html#00065">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

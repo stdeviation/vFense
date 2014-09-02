@@ -1,0 +1,246 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0007&#45;01] Moderate: rhpki security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 29 Jan 2009 04:38:09 &#45;0500 -->
+<!--X-Message-Id: 200901290938.n0T9cBMR016293@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0007-01] Moderate: rhpki security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0007-01] Moderate: rhpki security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0007-01] Moderate: rhpki security and bug fix update</li>
+<li><em>Date</em>: Thu, 29 Jan 2009 04:38:10 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhpki security and bug fix update
+Advisory ID:       RHSA-2009:0007-01
+Product:           Red Hat Certificate System
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0007.html">https://rhn.redhat.com/errata/RHSA-2009-0007.html</a>
+Issue date:        2009-01-29
+CVE Names:         CVE-2008-2367 CVE-2008-2368 CVE-2008-5082 
+=====================================================================
+
+1. Summary:
+
+Updated rhpki-common packages that fix security issues are now available
+for Red Hat Certificate System 7.3.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Certificate System 7.3 for 4AS - i386, noarch, x86_64
+Red Hat Certificate System 7.3 for 4ES - i386, noarch, x86_64
+
+3. Description:
+
+Red Hat Certificate System (RHCS) is an enterprise software system designed
+to manage enterprise Public Key Infrastructure (PKI) deployments.
+
+It was discovered that Red Hat Certificate System used insecure default
+file permissions on certain configuration files (for example,
+password.conf) that may contain authentication credentials. These 
+credentials should only be accessible to administrative and service users. 
+A local user could use this flaw to read Red Hat Certificate System 
+configuration files containing sensitive information. (CVE-2008-2367)
+
+It was discovered that Red Hat Certificate System stored plain text
+passwords in multiple debug log files with insufficient access restrictions
+(for example, the UserDirEnrollment log and the RA wizard installer log). A
+local user could use this flaw to extract plain text passwords from the Red
+Hat Certificate System debug log files. (CVE-2008-2368)
+
+It was discovered that the Token Processing System (TPS) component of the
+Red Hat Certificate System did not properly verify the challenge response
+received during the enrollment of a new security token. An attacker with
+access to a blank token known to the TPS component and with privileges to
+perform new token enrollments could use this flaw to complete the
+enrollment procedure with a software-generated key instead of the key
+stored in the hardware token. (CVE-2008-5082)
+
+These updated packages fix the following bugs:
+
+* The end-entities enrollment pages have been updated to support the 
+certenroll.dll library used on Microsoft Vista, so Internet Explorer can 
+be used on to enroll certificates on Vista.
+
+* The password used by the LDAP publisher was improperly stored in the CA 
+configuration. This essentially required that the LDAP publishing password
+had to be the same as the internal database (LDAP directory) password, or 
+LDAP publishing would break. A new parameter was added to the CA CS.cfg 
+file to define an LDAP publishing password parameter in the CA's 
+password.conf file.
+
+* The secure ports used by subsystem interfaces — the administrative 
+console, agent pages, and end-entities pages — are, by default, the same. 
+It is possible with this errata to run those services on separate port,
+which provides additional protection by prohibiting agents and users from
+accessing the same TCP port and web services directory.
+
+* The certificate policies extension was not processed by CMSServlet.
+
+* Any IP Address defined in a certificate's SubjectAltName parameter was 
+improperly coded as an 8-byte number, with the last 4 bytes trailing zeros 
+(00 00 00 00).
+
+* The subject name uniqueness plug-in in the CA profiles, which enforces 
+unique names for all active certificates, would reject a certificate 
+request which reused a subject name even if the previous certificate had 
+been revoked or expired.
+
+* The TPS dependences have been changed from MozLDAP5 to MozLDAP6.
+
+All users of Red Hat Certificate System 7.3 should upgrade to these updated
+packages, which resolves these issues.
+
+4. Solution:
+
+Users running Red Hat Certificate System on Red Hat Enterprise Linux:
+
+Before applying this update, make sure that all previously-released errata
+relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use the Red
+Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+Users running Red Hat Certificate System on Sun Solaris:
+
+Updated Solaris packages, in .pkg format, are available in the Red Hat
+Certificate System Solaris channels on the Red Hat Network. This packages
+should be installed or upgraded using Solaris-native package management
+tools.
+
+For detailed installation instructions, see Chapter 2, &quot;Installation and
+Configuration&quot;, of the Red Hat Certificate System 7.3 Administration Guide:
+<a  rel="nofollow" href="http://redhat.com/docs/manuals/cert-system/7.3/html/Administration_Guide/Administration_Guide-Installation_and_Configuration.html">http://redhat.com/docs/manuals/cert-system/7.3/html/Administration_Guide/Administration_Guide-Installation_and_Configuration.html</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+451998 - CVE-2008-2367 Certificate System: insecure config file permissions
+452000 - CVE-2008-2368 Certificate System: plain text passwords stored in debug log
+459049 - rhcs71 - IP Address in Subject Alt Name is Incorrectly Coded with padding
+475998 - CVE-2008-5082 Certificate System: missing public key challenge proof verification in the TPS component
+
+6. Package List:
+
+Red Hat Certificate System 7.3 for 4AS:
+
+i386:
+rhpki-tps-7.3.0-23.el4.i386.rpm
+
+noarch:
+pkisetup-7.3.0-14.el4.noarch.rpm
+rhpki-ca-7.3.0-17.el4.noarch.rpm
+rhpki-common-7.3.0-40.el4.noarch.rpm
+rhpki-kra-7.3.0-13.el4.noarch.rpm
+rhpki-ocsp-7.3.0-11.el4.noarch.rpm
+rhpki-ra-7.3.0-67.el4.noarch.rpm
+rhpki-tks-7.3.0-12.el4.noarch.rpm
+rhpki-util-7.3.0-20.el4.noarch.rpm
+
+x86_64:
+rhpki-tps-7.3.0-23.el4.x86_64.rpm
+
+Red Hat Certificate System 7.3 for 4ES:
+
+i386:
+rhpki-tps-7.3.0-23.el4.i386.rpm
+
+noarch:
+pkisetup-7.3.0-14.el4.noarch.rpm
+rhpki-ca-7.3.0-17.el4.noarch.rpm
+rhpki-common-7.3.0-40.el4.noarch.rpm
+rhpki-kra-7.3.0-13.el4.noarch.rpm
+rhpki-ocsp-7.3.0-11.el4.noarch.rpm
+rhpki-ra-7.3.0-67.el4.noarch.rpm
+rhpki-tks-7.3.0-12.el4.noarch.rpm
+rhpki-util-7.3.0-20.el4.noarch.rpm
+
+x86_64:
+rhpki-tps-7.3.0-23.el4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2367">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2367</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2368">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2368</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5082">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5082</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJgXjrXlSAg2UNWIIRAhGuAJ0dEfUOTN/WO+vbFhZsYJKTevuc+QCguNMl
+T9bf6uLn6lZmgQ8eSElgub4=
+=TuBi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

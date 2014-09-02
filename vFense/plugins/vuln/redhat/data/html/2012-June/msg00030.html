@@ -1,0 +1,367 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0874&#45;04] Low: mysql security and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jun 2012 05:28:55 &#45;0400 -->
+<!--X-Message-Id: 201206200928.q5K9SmOx027449@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0874-04] Low: mysql security and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0874-04] Low: mysql security and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0874-04] Low: mysql security and enhancement update</li>
+<li><em>Date</em>: Wed, 20 Jun 2012 09:24:43 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: mysql security and enhancement update
+Advisory ID:       RHSA-2012:0874-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0874.html">https://rhn.redhat.com/errata/RHSA-2012-0874.html</a>
+Issue date:        2012-06-20
+CVE Names:         CVE-2012-2102 
+=====================================================================
+
+1. Summary:
+
+Updated mysql packages that fix one security issue and add one enhancement
+are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+MySQL is a multi-user, multi-threaded SQL database server. It consists of
+the MySQL server daemon (mysqld) and many client programs and libraries.
+
+A flaw was found in the way MySQL processed HANDLER READ NEXT statements
+after deleting a record. A remote, authenticated attacker could use this
+flaw to provide such requests, causing mysqld to crash. This issue only
+caused a temporary denial of service, as mysqld was automatically restarted
+after the crash. (CVE-2012-2102)
+
+This update also adds the following enhancement:
+
+* The InnoDB storage engine is built-in for all architectures. This update
+adds InnoDB Plugin, the InnoDB storage engine as a plug-in for the 32-bit
+x86, AMD64, and Intel 64 architectures. The plug-in offers additional
+features and better performance than when using the built-in InnoDB storage
+engine. Refer to the MySQL documentation, linked to in the References
+section, for information about enabling the plug-in. (BZ#740224)
+
+All MySQL users should upgrade to these updated packages, which add this
+enhancement and contain a backported patch to correct this issue. After
+installing this update, the MySQL server daemon (mysqld) will be restarted
+automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+740224 - Enabling MySQL InnoDB Plugin
+812431 - CVE-2012-2102 mysql: Server crash on HANDLER READ NEXT after DELETE
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm</a>
+
+i386:
+mysql-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-libs-5.1.61-4.el6.i686.rpm
+mysql-server-5.1.61-4.el6.i686.rpm
+
+x86_64:
+mysql-5.1.61-4.el6.x86_64.rpm
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.x86_64.rpm
+mysql-libs-5.1.61-4.el6.i686.rpm
+mysql-libs-5.1.61-4.el6.x86_64.rpm
+mysql-server-5.1.61-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm</a>
+
+i386:
+mysql-bench-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-devel-5.1.61-4.el6.i686.rpm
+mysql-embedded-5.1.61-4.el6.i686.rpm
+mysql-embedded-devel-5.1.61-4.el6.i686.rpm
+mysql-test-5.1.61-4.el6.i686.rpm
+
+x86_64:
+mysql-bench-5.1.61-4.el6.x86_64.rpm
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.x86_64.rpm
+mysql-devel-5.1.61-4.el6.i686.rpm
+mysql-devel-5.1.61-4.el6.x86_64.rpm
+mysql-embedded-5.1.61-4.el6.i686.rpm
+mysql-embedded-5.1.61-4.el6.x86_64.rpm
+mysql-embedded-devel-5.1.61-4.el6.i686.rpm
+mysql-embedded-devel-5.1.61-4.el6.x86_64.rpm
+mysql-test-5.1.61-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm</a>
+
+x86_64:
+mysql-5.1.61-4.el6.x86_64.rpm
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.x86_64.rpm
+mysql-libs-5.1.61-4.el6.i686.rpm
+mysql-libs-5.1.61-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm</a>
+
+x86_64:
+mysql-bench-5.1.61-4.el6.x86_64.rpm
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.x86_64.rpm
+mysql-devel-5.1.61-4.el6.i686.rpm
+mysql-devel-5.1.61-4.el6.x86_64.rpm
+mysql-embedded-5.1.61-4.el6.i686.rpm
+mysql-embedded-5.1.61-4.el6.x86_64.rpm
+mysql-embedded-devel-5.1.61-4.el6.i686.rpm
+mysql-embedded-devel-5.1.61-4.el6.x86_64.rpm
+mysql-server-5.1.61-4.el6.x86_64.rpm
+mysql-test-5.1.61-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm</a>
+
+i386:
+mysql-5.1.61-4.el6.i686.rpm
+mysql-bench-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-devel-5.1.61-4.el6.i686.rpm
+mysql-libs-5.1.61-4.el6.i686.rpm
+mysql-server-5.1.61-4.el6.i686.rpm
+mysql-test-5.1.61-4.el6.i686.rpm
+
+ppc64:
+mysql-5.1.61-4.el6.ppc64.rpm
+mysql-bench-5.1.61-4.el6.ppc64.rpm
+mysql-debuginfo-5.1.61-4.el6.ppc.rpm
+mysql-debuginfo-5.1.61-4.el6.ppc64.rpm
+mysql-devel-5.1.61-4.el6.ppc.rpm
+mysql-devel-5.1.61-4.el6.ppc64.rpm
+mysql-libs-5.1.61-4.el6.ppc.rpm
+mysql-libs-5.1.61-4.el6.ppc64.rpm
+mysql-server-5.1.61-4.el6.ppc64.rpm
+mysql-test-5.1.61-4.el6.ppc64.rpm
+
+s390x:
+mysql-5.1.61-4.el6.s390x.rpm
+mysql-bench-5.1.61-4.el6.s390x.rpm
+mysql-debuginfo-5.1.61-4.el6.s390.rpm
+mysql-debuginfo-5.1.61-4.el6.s390x.rpm
+mysql-devel-5.1.61-4.el6.s390.rpm
+mysql-devel-5.1.61-4.el6.s390x.rpm
+mysql-libs-5.1.61-4.el6.s390.rpm
+mysql-libs-5.1.61-4.el6.s390x.rpm
+mysql-server-5.1.61-4.el6.s390x.rpm
+mysql-test-5.1.61-4.el6.s390x.rpm
+
+x86_64:
+mysql-5.1.61-4.el6.x86_64.rpm
+mysql-bench-5.1.61-4.el6.x86_64.rpm
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.x86_64.rpm
+mysql-devel-5.1.61-4.el6.i686.rpm
+mysql-devel-5.1.61-4.el6.x86_64.rpm
+mysql-libs-5.1.61-4.el6.i686.rpm
+mysql-libs-5.1.61-4.el6.x86_64.rpm
+mysql-server-5.1.61-4.el6.x86_64.rpm
+mysql-test-5.1.61-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm</a>
+
+i386:
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-embedded-5.1.61-4.el6.i686.rpm
+mysql-embedded-devel-5.1.61-4.el6.i686.rpm
+
+ppc64:
+mysql-debuginfo-5.1.61-4.el6.ppc.rpm
+mysql-debuginfo-5.1.61-4.el6.ppc64.rpm
+mysql-embedded-5.1.61-4.el6.ppc.rpm
+mysql-embedded-5.1.61-4.el6.ppc64.rpm
+mysql-embedded-devel-5.1.61-4.el6.ppc.rpm
+mysql-embedded-devel-5.1.61-4.el6.ppc64.rpm
+
+s390x:
+mysql-debuginfo-5.1.61-4.el6.s390.rpm
+mysql-debuginfo-5.1.61-4.el6.s390x.rpm
+mysql-embedded-5.1.61-4.el6.s390.rpm
+mysql-embedded-5.1.61-4.el6.s390x.rpm
+mysql-embedded-devel-5.1.61-4.el6.s390.rpm
+mysql-embedded-devel-5.1.61-4.el6.s390x.rpm
+
+x86_64:
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.x86_64.rpm
+mysql-embedded-5.1.61-4.el6.i686.rpm
+mysql-embedded-5.1.61-4.el6.x86_64.rpm
+mysql-embedded-devel-5.1.61-4.el6.i686.rpm
+mysql-embedded-devel-5.1.61-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm</a>
+
+i386:
+mysql-5.1.61-4.el6.i686.rpm
+mysql-bench-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-devel-5.1.61-4.el6.i686.rpm
+mysql-libs-5.1.61-4.el6.i686.rpm
+mysql-server-5.1.61-4.el6.i686.rpm
+mysql-test-5.1.61-4.el6.i686.rpm
+
+x86_64:
+mysql-5.1.61-4.el6.x86_64.rpm
+mysql-bench-5.1.61-4.el6.x86_64.rpm
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.x86_64.rpm
+mysql-devel-5.1.61-4.el6.i686.rpm
+mysql-devel-5.1.61-4.el6.x86_64.rpm
+mysql-libs-5.1.61-4.el6.i686.rpm
+mysql-libs-5.1.61-4.el6.x86_64.rpm
+mysql-server-5.1.61-4.el6.x86_64.rpm
+mysql-test-5.1.61-4.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mysql-5.1.61-4.el6.src.rpm</a>
+
+i386:
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-embedded-5.1.61-4.el6.i686.rpm
+mysql-embedded-devel-5.1.61-4.el6.i686.rpm
+
+x86_64:
+mysql-debuginfo-5.1.61-4.el6.i686.rpm
+mysql-debuginfo-5.1.61-4.el6.x86_64.rpm
+mysql-embedded-5.1.61-4.el6.i686.rpm
+mysql-embedded-5.1.61-4.el6.x86_64.rpm
+mysql-embedded-devel-5.1.61-4.el6.i686.rpm
+mysql-embedded-devel-5.1.61-4.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2102.html">https://www.redhat.com/security/data/cve/CVE-2012-2102.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="http://dev.mysql.com/doc/refman/5.1/en/replacing-builtin-innodb.html">http://dev.mysql.com/doc/refman/5.1/en/replacing-builtin-innodb.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4ZfMXlSAg2UNWIIRAjKzAJ9yLiRH+CNRmsM1yhL9TXgdb0T9qgCcCoSw
+3VNRyscXarmejLBdkwgsnto=
+=/Uk0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00029.html">Date Prev</a>][<a href="msg00031.html">Date Next</a>] &nbsp; [<a href="msg00029.html">Thread Prev</a>][<a href="msg00031.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

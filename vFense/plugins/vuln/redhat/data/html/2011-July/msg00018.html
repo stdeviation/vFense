@@ -1,0 +1,272 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1083&#45;01] Moderate: fuse security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jul 2011 14:25:40 &#45;0400 -->
+<!--X-Message-Id: 201107201825.p6KIPYrC027010@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1083-01] Moderate: fuse security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1083-01] Moderate: fuse security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1083-01] Moderate: fuse security update</li>
+<li><em>Date</em>: Wed, 20 Jul 2011 18:25:34 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: fuse security update
+Advisory ID:       RHSA-2011:1083-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1083.html">https://rhn.redhat.com/errata/RHSA-2011-1083.html</a>
+Issue date:        2011-07-20
+CVE Names:         CVE-2010-3879 CVE-2011-0541 CVE-2011-0542 
+                   CVE-2011-0543 
+=====================================================================
+
+1. Summary:
+
+Updated fuse packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+FUSE (Filesystem in Userspace) can implement a fully functional file system
+in a user-space program. These packages provide the mount utility,
+fusermount, the tool used to mount FUSE file systems.
+
+Multiple flaws were found in the way fusermount handled the mounting and
+unmounting of directories when symbolic links were present. A local user in
+the fuse group could use these flaws to unmount file systems, which they
+would otherwise not be able to unmount and that were not mounted using
+FUSE, via a symbolic link attack. (CVE-2010-3879, CVE-2011-0541,
+CVE-2011-0542, CVE-2011-0543)
+
+Note: The util-linux-ng RHBA-2011:0699 update must also be installed to
+fully correct the above flaws.
+
+All users should upgrade to these updated packages, which contain
+backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+651183 - CVE-2010-3879 CVE-2011-0541 CVE-2011-0542 CVE-2011-0543 fuse: unprivileged user can unmount arbitrary locations via symlink attack
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm</a>
+
+i386:
+fuse-2.8.3-3.el6_1.i686.rpm
+fuse-debuginfo-2.8.3-3.el6_1.i686.rpm
+fuse-libs-2.8.3-3.el6_1.i686.rpm
+
+x86_64:
+fuse-2.8.3-3.el6_1.x86_64.rpm
+fuse-debuginfo-2.8.3-3.el6_1.i686.rpm
+fuse-debuginfo-2.8.3-3.el6_1.x86_64.rpm
+fuse-libs-2.8.3-3.el6_1.i686.rpm
+fuse-libs-2.8.3-3.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm</a>
+
+i386:
+fuse-debuginfo-2.8.3-3.el6_1.i686.rpm
+fuse-devel-2.8.3-3.el6_1.i686.rpm
+
+x86_64:
+fuse-debuginfo-2.8.3-3.el6_1.i686.rpm
+fuse-debuginfo-2.8.3-3.el6_1.x86_64.rpm
+fuse-devel-2.8.3-3.el6_1.i686.rpm
+fuse-devel-2.8.3-3.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm</a>
+
+x86_64:
+fuse-debuginfo-2.8.3-3.el6_1.x86_64.rpm
+fuse-libs-2.8.3-3.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm</a>
+
+x86_64:
+fuse-2.8.3-3.el6_1.x86_64.rpm
+fuse-debuginfo-2.8.3-3.el6_1.i686.rpm
+fuse-debuginfo-2.8.3-3.el6_1.x86_64.rpm
+fuse-devel-2.8.3-3.el6_1.i686.rpm
+fuse-devel-2.8.3-3.el6_1.x86_64.rpm
+fuse-libs-2.8.3-3.el6_1.i686.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm</a>
+
+i386:
+fuse-2.8.3-3.el6_1.i686.rpm
+fuse-debuginfo-2.8.3-3.el6_1.i686.rpm
+fuse-devel-2.8.3-3.el6_1.i686.rpm
+fuse-libs-2.8.3-3.el6_1.i686.rpm
+
+ppc64:
+fuse-2.8.3-3.el6_1.ppc64.rpm
+fuse-debuginfo-2.8.3-3.el6_1.ppc.rpm
+fuse-debuginfo-2.8.3-3.el6_1.ppc64.rpm
+fuse-devel-2.8.3-3.el6_1.ppc.rpm
+fuse-devel-2.8.3-3.el6_1.ppc64.rpm
+fuse-libs-2.8.3-3.el6_1.ppc.rpm
+fuse-libs-2.8.3-3.el6_1.ppc64.rpm
+
+s390x:
+fuse-2.8.3-3.el6_1.s390x.rpm
+fuse-debuginfo-2.8.3-3.el6_1.s390.rpm
+fuse-debuginfo-2.8.3-3.el6_1.s390x.rpm
+fuse-devel-2.8.3-3.el6_1.s390.rpm
+fuse-devel-2.8.3-3.el6_1.s390x.rpm
+fuse-libs-2.8.3-3.el6_1.s390.rpm
+fuse-libs-2.8.3-3.el6_1.s390x.rpm
+
+x86_64:
+fuse-2.8.3-3.el6_1.x86_64.rpm
+fuse-debuginfo-2.8.3-3.el6_1.i686.rpm
+fuse-debuginfo-2.8.3-3.el6_1.x86_64.rpm
+fuse-devel-2.8.3-3.el6_1.i686.rpm
+fuse-devel-2.8.3-3.el6_1.x86_64.rpm
+fuse-libs-2.8.3-3.el6_1.i686.rpm
+fuse-libs-2.8.3-3.el6_1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/fuse-2.8.3-3.el6_1.src.rpm</a>
+
+i386:
+fuse-2.8.3-3.el6_1.i686.rpm
+fuse-debuginfo-2.8.3-3.el6_1.i686.rpm
+fuse-devel-2.8.3-3.el6_1.i686.rpm
+fuse-libs-2.8.3-3.el6_1.i686.rpm
+
+x86_64:
+fuse-2.8.3-3.el6_1.x86_64.rpm
+fuse-debuginfo-2.8.3-3.el6_1.i686.rpm
+fuse-debuginfo-2.8.3-3.el6_1.x86_64.rpm
+fuse-devel-2.8.3-3.el6_1.i686.rpm
+fuse-devel-2.8.3-3.el6_1.x86_64.rpm
+fuse-libs-2.8.3-3.el6_1.i686.rpm
+fuse-libs-2.8.3-3.el6_1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3879.html">https://www.redhat.com/security/data/cve/CVE-2010-3879.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0541.html">https://www.redhat.com/security/data/cve/CVE-2011-0541.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0542.html">https://www.redhat.com/security/data/cve/CVE-2011-0542.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0543.html">https://www.redhat.com/security/data/cve/CVE-2011-0543.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2011-0699.html">https://rhn.redhat.com/errata/RHBA-2011-0699.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOJx2RXlSAg2UNWIIRAk6bAKCyMvXD1zybttx43g4pOCFNdioBxwCfcnrb
+Il4ASTA04l2l0QYBfSRG3FE=
+=u6xH
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

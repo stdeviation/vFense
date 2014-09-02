@@ -1,0 +1,232 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0545&#45;01] Critical: thunderbird security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 20 Jul 2010 21:45:34 &#45;0400 -->
+<!--X-Message-Id: 201007210145.o6L1jS6k028224@int&#45;mx04.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0545-01] Critical: thunderbird security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0545-01] Critical: thunderbird security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0545-01] Critical: thunderbird security update</li>
+<li><em>Date</em>: Tue, 20 Jul 2010 21:45:27 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: thunderbird security update
+Advisory ID:       RHSA-2010:0545-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0545.html">https://rhn.redhat.com/errata/RHSA-2010-0545.html</a>
+Issue date:        2010-07-20
+CVE Names:         CVE-2010-0174 CVE-2010-0175 CVE-2010-0176 
+                   CVE-2010-0177 CVE-2010-1197 CVE-2010-1198 
+                   CVE-2010-1199 CVE-2010-1200 CVE-2010-1205 
+                   CVE-2010-1211 CVE-2010-1214 CVE-2010-2753 
+                   CVE-2010-2754 
+=====================================================================
+
+1. Summary:
+
+An updated thunderbird package that fixes several security issues is now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Optional Productivity Applications (v. 5 server) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Mozilla Thunderbird is a standalone mail and newsgroup client.
+
+A memory corruption flaw was found in the way Thunderbird decoded certain
+PNG images. An attacker could create a mail message containing a
+specially-crafted PNG image that, when opened, could cause Thunderbird to
+crash or, potentially, execute arbitrary code with the privileges of the
+user running Thunderbird. (CVE-2010-1205)
+
+Several flaws were found in the processing of malformed HTML mail content.
+An HTML mail message containing malicious content could cause Thunderbird
+to crash or, potentially, execute arbitrary code with the privileges of the
+user running Thunderbird. (CVE-2010-0174, CVE-2010-1200, CVE-2010-1211,
+CVE-2010-1214, CVE-2010-2753)
+
+An integer overflow flaw was found in the processing of malformed HTML mail
+content. An HTML mail message containing malicious content could cause
+Thunderbird to crash or, potentially, execute arbitrary code with the
+privileges of the user running Thunderbird. (CVE-2010-1199)
+
+Several use-after-free flaws were found in Thunderbird. Viewing an HTML
+mail message containing malicious content could result in Thunderbird
+executing arbitrary code with the privileges of the user running
+Thunderbird. (CVE-2010-0175, CVE-2010-0176, CVE-2010-0177)
+
+A flaw was found in the way Thunderbird plug-ins interact. It was possible
+for a plug-in to reference the freed memory from a different plug-in,
+resulting in the execution of arbitrary code with the privileges of the
+user running Thunderbird. (CVE-2010-1198)
+
+A flaw was found in the way Thunderbird handled the &quot;Content-Disposition:
+attachment&quot; HTTP header when the &quot;Content-Type: multipart&quot; HTTP header was
+also present. Loading remote HTTP content that allows arbitrary uploads and
+relies on the &quot;Content-Disposition: attachment&quot; HTTP header to prevent
+content from being displayed inline, could be used by an attacker to serve
+malicious content to users. (CVE-2010-1197)
+
+A same-origin policy bypass flaw was found in Thunderbird. Remote HTML
+content could steal private data from different remote HTML content
+Thunderbird has loaded. (CVE-2010-2754)
+
+All Thunderbird users should upgrade to this updated package, which
+resolves these issues. All running instances of Thunderbird must be
+restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+578147 - CVE-2010-0174 Mozilla crashes with evidence of memory corruption
+578149 - CVE-2010-0175 Mozilla remote code execution with use-after-free in nsTreeSelection
+578150 - CVE-2010-0176 Mozilla Dangling pointer vulnerability in nsTreeContentView
+578152 - CVE-2010-0177 Mozilla Dangling pointer vulnerability in nsPluginArray
+590804 - CVE-2010-1200 Mozilla Crashes with evidence of memory corruption
+590828 - CVE-2010-1198 Mozilla Freed object reuse across plugin instances
+590833 - CVE-2010-1199 Mozilla Integer Overflow in XSLT Node Sorting
+590850 - CVE-2010-1197 Mozilla Content-Disposition: attachment ignored if Content-Type: multipart also present
+608238 - CVE-2010-1205 libpng: out-of-bounds memory write
+615455 - CVE-2010-1211 Mozilla miscellaneous memory safety hazards
+615462 - CVE-2010-1214 Mozilla Plugin parameter EnsureCachedAttrParamArrays remote code execution vulnerability
+615466 - CVE-2010-2753 Mozilla nsTreeSelection dangling pointer remote code execution vulnerability
+615488 - CVE-2010-2754 Mozilla Cross-origin data leakage from script filename in error messages
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/thunderbird-2.0.0.24-6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/thunderbird-2.0.0.24-6.el5.src.rpm</a>
+
+i386:
+thunderbird-2.0.0.24-6.el5.i386.rpm
+thunderbird-debuginfo-2.0.0.24-6.el5.i386.rpm
+
+x86_64:
+thunderbird-2.0.0.24-6.el5.x86_64.rpm
+thunderbird-debuginfo-2.0.0.24-6.el5.x86_64.rpm
+
+RHEL Optional Productivity Applications (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/thunderbird-2.0.0.24-6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/thunderbird-2.0.0.24-6.el5.src.rpm</a>
+
+i386:
+thunderbird-2.0.0.24-6.el5.i386.rpm
+thunderbird-debuginfo-2.0.0.24-6.el5.i386.rpm
+
+x86_64:
+thunderbird-2.0.0.24-6.el5.x86_64.rpm
+thunderbird-debuginfo-2.0.0.24-6.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0174.html">https://www.redhat.com/security/data/cve/CVE-2010-0174.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0175.html">https://www.redhat.com/security/data/cve/CVE-2010-0175.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0176.html">https://www.redhat.com/security/data/cve/CVE-2010-0176.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0177.html">https://www.redhat.com/security/data/cve/CVE-2010-0177.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1197.html">https://www.redhat.com/security/data/cve/CVE-2010-1197.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1198.html">https://www.redhat.com/security/data/cve/CVE-2010-1198.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1199.html">https://www.redhat.com/security/data/cve/CVE-2010-1199.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1200.html">https://www.redhat.com/security/data/cve/CVE-2010-1200.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1205.html">https://www.redhat.com/security/data/cve/CVE-2010-1205.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1211.html">https://www.redhat.com/security/data/cve/CVE-2010-1211.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1214.html">https://www.redhat.com/security/data/cve/CVE-2010-1214.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2753.html">https://www.redhat.com/security/data/cve/CVE-2010-2753.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2754.html">https://www.redhat.com/security/data/cve/CVE-2010-2754.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMRlEGXlSAg2UNWIIRAm74AKDAZ6vNVbJPrvaVeoY8F/+I3vjO4wCfZSjo
+q5mE2Lj5iUbueLA6T4ExIqE=
+=7eMl
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

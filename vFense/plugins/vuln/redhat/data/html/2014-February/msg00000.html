@@ -1,0 +1,325 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0126&#45;01] Moderate: openldap security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 3 Feb 2014 13:58:50 &#45;0500 -->
+<!--X-Message-Id: 201402031858.s13IwmDg018902@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0126-01] Moderate: openldap security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0126-01] Moderate: openldap security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0126-01] Moderate: openldap security and bug fix update</li>
+<li><em>Date</em>: Mon, 3 Feb 2014 18:58:48 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openldap security and bug fix update
+Advisory ID:       RHSA-2014:0126-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0126.html">https://rhn.redhat.com/errata/RHSA-2014-0126.html</a>
+Issue date:        2014-02-03
+CVE Names:         CVE-2013-4449 
+=====================================================================
+
+1. Summary:
+
+Updated openldap packages that fix one security issue and one bug are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+OpenLDAP is an open source suite of Lightweight Directory Access Protocol
+(LDAP) applications and development tools. LDAP is a set of protocols used
+to access and maintain distributed directory information services over an
+IP network. The openldap package contains configuration files, libraries,
+and documentation for OpenLDAP.
+
+A denial of service flaw was found in the way the OpenLDAP server daemon
+(slapd) performed reference counting when using the rwm (rewrite/remap)
+overlay. A remote attacker able to query the OpenLDAP server could use this
+flaw to crash the server by immediately unbinding from the server after
+sending a search request. (CVE-2013-4449)
+
+Red Hat would like to thank Michael Vishchers from Seven Principles AG for
+reporting this issue.
+
+This update also fixes the following bug:
+
+* Previously, OpenLDAP did not properly handle a number of simultaneous
+updates. As a consequence, sending a number of parallel update requests to
+the server could cause a deadlock. With this update, a superfluous locking
+mechanism causing the deadlock has been removed, thus fixing the bug.
+(BZ#1056124)
+
+All openldap users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1019490 - CVE-2013-4449 openldap: segfault on certain queries with rwm overlay
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm</a>
+
+i386:
+openldap-2.4.23-34.el6_5.1.i686.rpm
+openldap-clients-2.4.23-34.el6_5.1.i686.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+
+x86_64:
+openldap-2.4.23-34.el6_5.1.i686.rpm
+openldap-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-clients-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm</a>
+
+i386:
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-devel-2.4.23-34.el6_5.1.i686.rpm
+openldap-servers-2.4.23-34.el6_5.1.i686.rpm
+openldap-servers-sql-2.4.23-34.el6_5.1.i686.rpm
+
+x86_64:
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-devel-2.4.23-34.el6_5.1.i686.rpm
+openldap-devel-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-servers-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-servers-sql-2.4.23-34.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm</a>
+
+x86_64:
+openldap-2.4.23-34.el6_5.1.i686.rpm
+openldap-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-clients-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm</a>
+
+x86_64:
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-devel-2.4.23-34.el6_5.1.i686.rpm
+openldap-devel-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-servers-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-servers-sql-2.4.23-34.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm</a>
+
+i386:
+openldap-2.4.23-34.el6_5.1.i686.rpm
+openldap-clients-2.4.23-34.el6_5.1.i686.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-devel-2.4.23-34.el6_5.1.i686.rpm
+openldap-servers-2.4.23-34.el6_5.1.i686.rpm
+
+ppc64:
+openldap-2.4.23-34.el6_5.1.ppc.rpm
+openldap-2.4.23-34.el6_5.1.ppc64.rpm
+openldap-clients-2.4.23-34.el6_5.1.ppc64.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.ppc.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.ppc64.rpm
+openldap-devel-2.4.23-34.el6_5.1.ppc.rpm
+openldap-devel-2.4.23-34.el6_5.1.ppc64.rpm
+openldap-servers-2.4.23-34.el6_5.1.ppc64.rpm
+
+s390x:
+openldap-2.4.23-34.el6_5.1.s390.rpm
+openldap-2.4.23-34.el6_5.1.s390x.rpm
+openldap-clients-2.4.23-34.el6_5.1.s390x.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.s390.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.s390x.rpm
+openldap-devel-2.4.23-34.el6_5.1.s390.rpm
+openldap-devel-2.4.23-34.el6_5.1.s390x.rpm
+openldap-servers-2.4.23-34.el6_5.1.s390x.rpm
+
+x86_64:
+openldap-2.4.23-34.el6_5.1.i686.rpm
+openldap-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-clients-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-devel-2.4.23-34.el6_5.1.i686.rpm
+openldap-devel-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-servers-2.4.23-34.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm</a>
+
+i386:
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-servers-sql-2.4.23-34.el6_5.1.i686.rpm
+
+ppc64:
+openldap-debuginfo-2.4.23-34.el6_5.1.ppc64.rpm
+openldap-servers-sql-2.4.23-34.el6_5.1.ppc64.rpm
+
+s390x:
+openldap-debuginfo-2.4.23-34.el6_5.1.s390x.rpm
+openldap-servers-sql-2.4.23-34.el6_5.1.s390x.rpm
+
+x86_64:
+openldap-debuginfo-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-servers-sql-2.4.23-34.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm</a>
+
+i386:
+openldap-2.4.23-34.el6_5.1.i686.rpm
+openldap-clients-2.4.23-34.el6_5.1.i686.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-devel-2.4.23-34.el6_5.1.i686.rpm
+openldap-servers-2.4.23-34.el6_5.1.i686.rpm
+
+x86_64:
+openldap-2.4.23-34.el6_5.1.i686.rpm
+openldap-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-clients-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-debuginfo-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-devel-2.4.23-34.el6_5.1.i686.rpm
+openldap-devel-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-servers-2.4.23-34.el6_5.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openldap-2.4.23-34.el6_5.1.src.rpm</a>
+
+i386:
+openldap-debuginfo-2.4.23-34.el6_5.1.i686.rpm
+openldap-servers-sql-2.4.23-34.el6_5.1.i686.rpm
+
+x86_64:
+openldap-debuginfo-2.4.23-34.el6_5.1.x86_64.rpm
+openldap-servers-sql-2.4.23-34.el6_5.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4449.html">https://www.redhat.com/security/data/cve/CVE-2013-4449.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS7+a6XlSAg2UNWIIRAo7pAJoD62cPaHSs1QnOQpCamTBTTAA8WgCeJNrm
+ADC5IUuqWpTL81X5s75NRFg=
+=mHJG
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

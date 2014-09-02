@@ -1,0 +1,282 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1540&#45;01] Important: kernel&#45;rt security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 3 Nov 2009 14:18:41 &#45;0500 -->
+<!--X-Message-Id: 200911031918.nA3JIeMv018390@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1540-01] Important: kernel-rt security, bug fix,	and enhancem</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1540-01] Important: kernel-rt security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1540-01] Important: kernel-rt security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 3 Nov 2009 14:18:40 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security, bug fix, and enhancement update
+Advisory ID:       RHSA-2009:1540-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1540.html">https://rhn.redhat.com/errata/RHSA-2009-1540.html</a>
+Issue date:        2009-11-03
+CVE Names:         CVE-2009-1895 CVE-2009-2691 CVE-2009-2695 
+                   CVE-2009-2849 CVE-2009-2910 CVE-2009-3002 
+                   CVE-2009-3228 CVE-2009-3547 CVE-2009-3612 
+                   CVE-2009-3613 CVE-2009-3620 CVE-2009-3621 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix several security issues, multiple bugs,
+and add enhancements are now available for Red Hat Enterprise MRG 1.1.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+Security fixes:
+
+* the ADDR_COMPAT_LAYOUT and MMAP_PAGE_ZERO flags were not cleared when a
+setuid or setgid program was executed. A local, unprivileged user could use
+this flaw to bypass the mmap_min_addr protection mechanism and perform a
+NULL pointer dereference attack, or bypass the Address Space Layout
+Randomization (ASLR) security feature. (CVE-2009-1895, Important)
+
+* a system with SELinux enforced was more permissive in allowing local
+users in the unconfined_t domain to map low memory areas even if the
+mmap_min_addr restriction was enabled. This could aid in the local
+exploitation of NULL pointer dereference bugs. (CVE-2009-2695, Important)
+
+* missing initialization flaws were found in getname() implementations in
+numerous network protocol implementations in the Linux kernel. Certain
+data structures in these getname() implementations were not initialized
+properly before being copied to user-space. These flaws could lead to an
+information leak. (CVE-2009-3002, Important)
+
+* a NULL pointer dereference flaw was found in each of the following
+functions in the Linux kernel: pipe_read_open(), pipe_write_open(), and
+pipe_rdwr_open(). When the mutex lock is not held, the i_pipe pointer could
+be released by other processes before it is used to update the pipe's
+reader and writer counters. This could lead to a local denial of service or
+privilege escalation. (CVE-2009-3547, Important)
+
+* a flaw was found in the Realtek r8169 Ethernet driver in the Linux
+kernel. pci_unmap_single() presented a memory leak that could lead to IOMMU
+space exhaustion and a system crash. An attacker on the local network could
+abuse this flaw by using jumbo frames for large amounts of network traffic.
+(CVE-2009-3613, Important)
+
+* NULL pointer dereference flaws were found in the r128 driver in the
+Linux kernel. Checks to test if the Concurrent Command Engine state was
+initialized were missing in private IOCTL functions. An attacker could use
+these flaws to cause a local denial of service or escalate their
+privileges. (CVE-2009-3620, Important)
+
+* Kees Cook and Steve Beattie discovered a race condition in the /proc
+code in the Linux kernel. This could lead to information in the
+&quot;/proc/[pid]/maps&quot; and &quot;/proc/[pid]/smaps&quot; files being leaked to users (who
+would otherwise not have access to this information) during ELF loading.
+This could help a local attacker bypass the ASLR security feature.
+(CVE-2009-2691, Moderate)
+
+* a NULL pointer dereference flaw was found in the md driver in the Linux
+kernel. If the suspend_lo or suspend_hi file in &quot;/sys/&quot; is modified when
+the disk array is inactive, it could lead to a local denial of service or
+privilege escalation. By default, only root can write to these two files.
+(CVE-2009-2849, Moderate)
+
+* an information leak was found in the Linux kernel. On AMD64 systems,
+32-bit processes could access and read certain 64-bit registers by
+temporarily switching themselves to 64-bit mode. (CVE-2009-2910, Moderate)
+
+* padding data in several core network structures was not initialized
+properly before being sent to user-space, possibly leading to information
+leaks. (CVE-2009-3228, CVE-2009-3612, Moderate)
+
+* the unix_stream_connect() function in the Linux kernel did not check if a
+UNIX domain socket was in the shutdown state. This could lead to a
+deadlock. A local, unprivileged user could use this flaw to cause a denial
+of service. (CVE-2009-3621, Moderate)
+
+These updated packages also include bug fixes and enhancements. Users are
+directed to the Realtime Security Update Release Notes for version 1.1 for
+information on these changes, which will be available shortly from: 
+
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/">http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/</a>
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues and add enhancements. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+511171 - CVE-2009-1895 kernel: personality: fix PER_CLEAR_ON_SETID
+516171 - CVE-2009-2691 kernel: /proc/$pid/maps visible during initial setuid ELF loading
+517830 - CVE-2009-2695 kernel: SELinux and mmap_min_addr
+518132 - CVE-2009-2849 kernel: md: NULL pointer deref when accessing suspend_* sysfs attributes
+518160 - [FOCUS] Boot hang with x3950 using MRG's -108 kernel
+519305 - CVE-2009-3001, CVE-2009-3002 kernel: numerous getname() infoleaks
+520990 - CVE-2009-3228 kernel: tc: uninitialised kernel memory leak
+521999 - ip_tables: connlimit match: invalid size 32 != 24
+522359 - MRG 1.1 SMI remeidation support for HS22 and Rackmounts
+522501 - Turn off IPX protocol module
+522503 - Turn off AppleTalk protocol module in realtime kernel
+523986 - kernel: ipt_recent: sanity check hit count [mrg-1]
+526788 - CVE-2009-2910 kernel: x86_64 32 bit process register leak
+528139 - FTRACE: check for failure for all conversions, tracing: correct module boundaries for ftrace_release
+528868 - CVE-2009-3612 kernel: tcf_fill_node() infoleak due to typo in 9ef1d4c7
+529137 - CVE-2009-3613 kernel: flood ping cause out-of-iommu error and panic when mtu larger than 1500
+529597 - CVE-2009-3620 kernel: r128 IOCTL NULL pointer dereferences when CCE state is uninitialised
+529626 - CVE-2009-3621 kernel: AF_UNIX: Fix deadlock on connecting to shutdown socket
+530490 - CVE-2009-3547 kernel: fs: pipe.c null pointer dereference
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-137.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-137.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-137.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-137.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-137.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-137.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-137.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1895">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1895</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2691">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2691</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2695">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2695</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2849">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2849</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2910">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2910</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3002">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3002</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3228">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3228</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3547">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3547</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3612">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3612</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3613">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3613</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3620">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3620</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3621">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3621</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-18042">http://kbase.redhat.com/faq/docs/DOC-18042</a>
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-17866">http://kbase.redhat.com/faq/docs/DOC-17866</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/">http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFK8IH9XlSAg2UNWIIRAoXjAKC8JqO1mR+ZMWpACdn/M13k/mUAYACeJIFP
+G87fP0mndnWlj6GTX9t3IP0=
+=emIg
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

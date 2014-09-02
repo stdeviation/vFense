@@ -1,0 +1,242 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0615&#45;01] Low: libvirt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 10 Aug 2010 15:25:37 &#45;0400 -->
+<!--X-Message-Id: 201008101925.o7AJPVtt004994@int&#45;mx05.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0615-01] Low: libvirt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0615-01] Low: libvirt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0615-01] Low: libvirt security and bug fix update</li>
+<li><em>Date</em>: Tue, 10 Aug 2010 13:25:30 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: libvirt security and bug fix update
+Advisory ID:       RHSA-2010:0615-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0615.html">https://rhn.redhat.com/errata/RHSA-2010-0615.html</a>
+Issue date:        2010-08-10
+CVE Names:         CVE-2010-2239 CVE-2010-2242 
+=====================================================================
+
+1. Summary:
+
+Updated libvirt packages that fix two security issues and three bugs are
+now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - i386, x86_64
+RHEL Virtualization (v. 5 server) - i386, ia64, x86_64
+
+3. Description:
+
+The libvirt library is a C API for managing and interacting with the
+virtualization capabilities of Linux and other operating systems. In
+addition, libvirt provides tools for remotely managing virtualized systems.
+
+It was found that libvirt did not set the user-defined backing store format
+when creating a new image, possibly resulting in applications having to
+probe the backing store to discover the format. A privileged guest user
+could use this flaw to read arbitrary files on the host. (CVE-2010-2239)
+
+It was found that libvirt created insecure iptables rules on the host when
+a guest system was configured for IP masquerading, allowing the guest to
+use privileged ports on the host when accessing network resources. A
+privileged guest user could use this flaw to access network resources that
+would otherwise not be accessible to the guest. (CVE-2010-2242)
+
+Red Hat would like to thank Jeremy Nickurak for reporting the CVE-2010-2242
+issue.
+
+This update also fixes the following bugs:
+
+* a Linux software bridge assumes the MAC address of the enslaved interface
+with the numerically lowest MAC address. When the bridge changes its MAC
+address, for a period of time it does not relay packets across network
+segments, resulting in a temporary network &quot;blackout&quot;. The bridge should
+thus avoid changing its MAC address in order not to disrupt network
+communications.
+
+The Linux kernel assigns network TAP devices a random MAC address.
+Occasionally, this random MAC address is lower than that of the physical
+interface which is enslaved (for example, eth0 or eth1), which causes the
+bridge to change its MAC address, thereby disrupting network communications
+for a period of time.
+
+With this update, libvirt now sets an explicit MAC address for all TAP
+devices created using the configured MAC address from the XML, but with the
+high bit set to 0xFE. The result is that TAP device MAC addresses are now
+numerically greater than those for physical interfaces, and bridges should
+no longer attempt to switch their MAC address to that of the TAP device,
+thus avoiding potential spurious network disruptions. (BZ#617243)
+
+* a memory leak in the libvirt driver for the Xen hypervisor has been fixed
+with this update. (BZ#619711)
+
+* the xm and virsh management user interfaces for virtual guests can be
+called on the command line to list the number of active guests. However,
+under certain circumstances, running the &quot;virsh list&quot; command resulted in
+virsh not listing all of the virtual guests that were active (that is,
+running) at the time. This update incorporates a fix that matches the logic
+used for determining active guests with that of &quot;xm list&quot;, such that both
+commands should now list the same number of active virtual guests under all
+circumstances. (BZ#618200)
+
+All users of libvirt are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. After installing
+the updated packages, the system must be rebooted for the update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+602455 - CVE-2010-2242 libvirt: improperly mapped source privileged ports may allow for obtaining privileged resources on the host
+607812 - CVE-2010-2239 libvirt: not setting user defined backing store format when creating new image
+617243 - libvirt should not use the MAC address assigned to tap devices/vnet interfaces by the TAP/TUN driver.
+618200 - Discrepancy  between xm and virsh output when listing active Xen domains
+619711 - Memory leak in libvirtd
+
+6. Package List:
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libvirt-0.6.3-33.el5_5.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libvirt-0.6.3-33.el5_5.3.src.rpm</a>
+
+i386:
+libvirt-0.6.3-33.el5_5.3.i386.rpm
+libvirt-debuginfo-0.6.3-33.el5_5.3.i386.rpm
+libvirt-devel-0.6.3-33.el5_5.3.i386.rpm
+libvirt-python-0.6.3-33.el5_5.3.i386.rpm
+
+x86_64:
+libvirt-0.6.3-33.el5_5.3.i386.rpm
+libvirt-0.6.3-33.el5_5.3.x86_64.rpm
+libvirt-debuginfo-0.6.3-33.el5_5.3.i386.rpm
+libvirt-debuginfo-0.6.3-33.el5_5.3.x86_64.rpm
+libvirt-devel-0.6.3-33.el5_5.3.i386.rpm
+libvirt-devel-0.6.3-33.el5_5.3.x86_64.rpm
+libvirt-python-0.6.3-33.el5_5.3.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libvirt-0.6.3-33.el5_5.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libvirt-0.6.3-33.el5_5.3.src.rpm</a>
+
+i386:
+libvirt-0.6.3-33.el5_5.3.i386.rpm
+libvirt-debuginfo-0.6.3-33.el5_5.3.i386.rpm
+libvirt-devel-0.6.3-33.el5_5.3.i386.rpm
+libvirt-python-0.6.3-33.el5_5.3.i386.rpm
+
+ia64:
+libvirt-0.6.3-33.el5_5.3.ia64.rpm
+libvirt-debuginfo-0.6.3-33.el5_5.3.ia64.rpm
+libvirt-devel-0.6.3-33.el5_5.3.ia64.rpm
+libvirt-python-0.6.3-33.el5_5.3.ia64.rpm
+
+x86_64:
+libvirt-0.6.3-33.el5_5.3.i386.rpm
+libvirt-0.6.3-33.el5_5.3.x86_64.rpm
+libvirt-debuginfo-0.6.3-33.el5_5.3.i386.rpm
+libvirt-debuginfo-0.6.3-33.el5_5.3.x86_64.rpm
+libvirt-devel-0.6.3-33.el5_5.3.i386.rpm
+libvirt-devel-0.6.3-33.el5_5.3.x86_64.rpm
+libvirt-python-0.6.3-33.el5_5.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2239.html">https://www.redhat.com/security/data/cve/CVE-2010-2239.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2242.html">https://www.redhat.com/security/data/cve/CVE-2010-2242.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMYaeYXlSAg2UNWIIRAiMhAKC9NOblB6+ntyNm4pMkTFJdpXe5HwCgjy7d
+aOGOS9n/wH1DFTpZxk4flnk=
+=RVmp
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

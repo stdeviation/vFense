@@ -1,0 +1,443 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0486&#45;01] Moderate: xmlsec1 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 4 May 2011 20:26:53 &#45;0400 -->
+<!--X-Message-Id: 201105050026.p450QlA7014394@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0486-01] Moderate: xmlsec1 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0486-01] Moderate: xmlsec1 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0486-01] Moderate: xmlsec1 security and bug fix update</li>
+<li><em>Date</em>: Wed, 4 May 2011 18:26:47 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: xmlsec1 security and bug fix update
+Advisory ID:       RHSA-2011:0486-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0486.html">https://rhn.redhat.com/errata/RHSA-2011-0486.html</a>
+Issue date:        2011-05-04
+CVE Names:         CVE-2011-1425 
+=====================================================================
+
+1. Summary:
+
+Updated xmlsec1 packages that fix one security issue and one bug are now
+available for Red Hat Enterprise Linux 4 and 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+The XML Security Library is a C library based on libxml2 and OpenSSL that
+implements the XML Digital Signature and XML Encryption standards.
+
+A flaw was found in the way xmlsec1 handled XML files that contain an XSLT
+transformation specification. A specially-crafted XML file could cause
+xmlsec1 to create or overwrite an arbitrary file while performing the
+verification of a file's digital signature. (CVE-2011-1425)
+
+Red Hat would like to thank Nicolas Grégoire and Aleksey Sanin for
+reporting this issue.
+
+This update also fixes the following bug:
+
+* xmlsec1 previously used an incorrect search path when searching for
+crypto plug-in libraries, possibly trying to access such libraries using a
+relative path. (BZ#558480, BZ#700467)
+
+Users of xmlsec1 should upgrade to these updated packages, which contain
+backported patches to correct these issues. After installing the update,
+all running applications that use the xmlsec1 library must be restarted for
+the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+558480 - xmlsec1: bogus lt_dlopen() search path [rhel-4]
+692133 - CVE-2011-1425 xmlsec1: arbitrary file creation when verifying signatures
+700467 - xmlsec1: bogus lt_dlopen() search path [rhel-5]
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/xmlsec1-1.2.6-3.2.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/xmlsec1-1.2.6-3.2.src.rpm</a>
+
+i386:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-devel-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.i386.rpm
+
+ia64:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-1.2.6-3.2.ia64.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.ia64.rpm
+xmlsec1-devel-1.2.6-3.2.ia64.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.ia64.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.ia64.rpm
+
+ppc:
+xmlsec1-1.2.6-3.2.ppc.rpm
+xmlsec1-1.2.6-3.2.ppc64.rpm
+xmlsec1-debuginfo-1.2.6-3.2.ppc.rpm
+xmlsec1-debuginfo-1.2.6-3.2.ppc64.rpm
+xmlsec1-devel-1.2.6-3.2.ppc.rpm
+xmlsec1-openssl-1.2.6-3.2.ppc.rpm
+xmlsec1-openssl-1.2.6-3.2.ppc64.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.ppc.rpm
+
+s390:
+xmlsec1-1.2.6-3.2.s390.rpm
+xmlsec1-debuginfo-1.2.6-3.2.s390.rpm
+xmlsec1-devel-1.2.6-3.2.s390.rpm
+xmlsec1-openssl-1.2.6-3.2.s390.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.s390.rpm
+
+s390x:
+xmlsec1-1.2.6-3.2.s390.rpm
+xmlsec1-1.2.6-3.2.s390x.rpm
+xmlsec1-debuginfo-1.2.6-3.2.s390.rpm
+xmlsec1-debuginfo-1.2.6-3.2.s390x.rpm
+xmlsec1-devel-1.2.6-3.2.s390x.rpm
+xmlsec1-openssl-1.2.6-3.2.s390.rpm
+xmlsec1-openssl-1.2.6-3.2.s390x.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.s390x.rpm
+
+x86_64:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-1.2.6-3.2.x86_64.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.x86_64.rpm
+xmlsec1-devel-1.2.6-3.2.x86_64.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.x86_64.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/xmlsec1-1.2.6-3.2.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/xmlsec1-1.2.6-3.2.src.rpm</a>
+
+i386:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-devel-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.i386.rpm
+
+x86_64:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-1.2.6-3.2.x86_64.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.x86_64.rpm
+xmlsec1-devel-1.2.6-3.2.x86_64.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.x86_64.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/xmlsec1-1.2.6-3.2.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/xmlsec1-1.2.6-3.2.src.rpm</a>
+
+i386:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-devel-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.i386.rpm
+
+ia64:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-1.2.6-3.2.ia64.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.ia64.rpm
+xmlsec1-devel-1.2.6-3.2.ia64.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.ia64.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.ia64.rpm
+
+x86_64:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-1.2.6-3.2.x86_64.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.x86_64.rpm
+xmlsec1-devel-1.2.6-3.2.x86_64.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.x86_64.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/xmlsec1-1.2.6-3.2.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/xmlsec1-1.2.6-3.2.src.rpm</a>
+
+i386:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-devel-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.i386.rpm
+
+ia64:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-1.2.6-3.2.ia64.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.ia64.rpm
+xmlsec1-devel-1.2.6-3.2.ia64.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.ia64.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.ia64.rpm
+
+x86_64:
+xmlsec1-1.2.6-3.2.i386.rpm
+xmlsec1-1.2.6-3.2.x86_64.rpm
+xmlsec1-debuginfo-1.2.6-3.2.i386.rpm
+xmlsec1-debuginfo-1.2.6-3.2.x86_64.rpm
+xmlsec1-devel-1.2.6-3.2.x86_64.rpm
+xmlsec1-openssl-1.2.6-3.2.i386.rpm
+xmlsec1-openssl-1.2.6-3.2.x86_64.rpm
+xmlsec1-openssl-devel-1.2.6-3.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xmlsec1-1.2.9-8.1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xmlsec1-1.2.9-8.1.2.src.rpm</a>
+
+i386:
+xmlsec1-1.2.9-8.1.2.i386.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.i386.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.i386.rpm
+xmlsec1-nss-1.2.9-8.1.2.i386.rpm
+xmlsec1-openssl-1.2.9-8.1.2.i386.rpm
+
+x86_64:
+xmlsec1-1.2.9-8.1.2.i386.rpm
+xmlsec1-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.i386.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.i386.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-nss-1.2.9-8.1.2.i386.rpm
+xmlsec1-nss-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-openssl-1.2.9-8.1.2.i386.rpm
+xmlsec1-openssl-1.2.9-8.1.2.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xmlsec1-1.2.9-8.1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xmlsec1-1.2.9-8.1.2.src.rpm</a>
+
+i386:
+xmlsec1-debuginfo-1.2.9-8.1.2.i386.rpm
+xmlsec1-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.i386.rpm
+
+x86_64:
+xmlsec1-debuginfo-1.2.9-8.1.2.i386.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-devel-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xmlsec1-1.2.9-8.1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xmlsec1-1.2.9-8.1.2.src.rpm</a>
+
+i386:
+xmlsec1-1.2.9-8.1.2.i386.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.i386.rpm
+xmlsec1-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.i386.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-nss-1.2.9-8.1.2.i386.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-openssl-1.2.9-8.1.2.i386.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.i386.rpm
+
+ia64:
+xmlsec1-1.2.9-8.1.2.ia64.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.ia64.rpm
+xmlsec1-devel-1.2.9-8.1.2.ia64.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.ia64.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.ia64.rpm
+xmlsec1-nss-1.2.9-8.1.2.ia64.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.ia64.rpm
+xmlsec1-openssl-1.2.9-8.1.2.ia64.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.ia64.rpm
+
+ppc:
+xmlsec1-1.2.9-8.1.2.ppc.rpm
+xmlsec1-1.2.9-8.1.2.ppc64.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.ppc.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.ppc64.rpm
+xmlsec1-devel-1.2.9-8.1.2.ppc.rpm
+xmlsec1-devel-1.2.9-8.1.2.ppc64.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.ppc.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.ppc64.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.ppc.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.ppc64.rpm
+xmlsec1-nss-1.2.9-8.1.2.ppc.rpm
+xmlsec1-nss-1.2.9-8.1.2.ppc64.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.ppc.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.ppc64.rpm
+xmlsec1-openssl-1.2.9-8.1.2.ppc.rpm
+xmlsec1-openssl-1.2.9-8.1.2.ppc64.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.ppc.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.ppc64.rpm
+
+s390x:
+xmlsec1-1.2.9-8.1.2.s390.rpm
+xmlsec1-1.2.9-8.1.2.s390x.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.s390.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.s390x.rpm
+xmlsec1-devel-1.2.9-8.1.2.s390.rpm
+xmlsec1-devel-1.2.9-8.1.2.s390x.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.s390.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.s390x.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.s390.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.s390x.rpm
+xmlsec1-nss-1.2.9-8.1.2.s390.rpm
+xmlsec1-nss-1.2.9-8.1.2.s390x.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.s390.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.s390x.rpm
+xmlsec1-openssl-1.2.9-8.1.2.s390.rpm
+xmlsec1-openssl-1.2.9-8.1.2.s390x.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.s390.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.s390x.rpm
+
+x86_64:
+xmlsec1-1.2.9-8.1.2.i386.rpm
+xmlsec1-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.i386.rpm
+xmlsec1-debuginfo-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-devel-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.i386.rpm
+xmlsec1-gnutls-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-gnutls-devel-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-nss-1.2.9-8.1.2.i386.rpm
+xmlsec1-nss-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-nss-devel-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-openssl-1.2.9-8.1.2.i386.rpm
+xmlsec1-openssl-1.2.9-8.1.2.x86_64.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.i386.rpm
+xmlsec1-openssl-devel-1.2.9-8.1.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1425.html">https://www.redhat.com/security/data/cve/CVE-2011-1425.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNwe6nXlSAg2UNWIIRAt03AJ9kIXZ9pSJD2MQvjEbjQf1frXFAWACgrV8L
+d75lCKqCYRNa7Kms5qwLLAc=
+=5V8A
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

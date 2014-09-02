@@ -1,0 +1,186 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1794&#45;01] Moderate: Red Hat Network Satellite server	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 7 Dec 2011 14:13:59 &#45;0500 -->
+<!--X-Message-Id: 201112071913.pB7JDs4R002832@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1794-01] Moderate: Red Hat Network Satellite server	security </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1794-01] Moderate: Red Hat Network Satellite server	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2011:1794-01] Moderate: Red Hat Network Satellite server	security update</li>
+<li><em>Date</em>: Wed, 7 Dec 2011 19:13:54 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Network Satellite server security update
+Advisory ID:       RHSA-2011:1794-01
+Product:           Red Hat Network Satellite Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1794.html">https://rhn.redhat.com/errata/RHSA-2011-1794.html</a>
+Issue date:        2011-12-07
+CVE Names:         CVE-2011-4346 
+=====================================================================
+
+1. Summary:
+
+Updated packages that fix one security issue are now available for
+Red Hat Network Satellite 5.4.1 for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Network Satellite Server 5.4 (RHEL v.5) - noarch
+Red Hat Network Satellite Server 5.4 (RHEL v.6) - noarch
+
+3. Description:
+
+Red Hat Network (RHN) Satellite provides a solution to organizations
+requiring absolute control over and privacy of the maintenance and package
+deployment of their servers. It allows organizations to utilize the
+benefits of the Red Hat Network without having to provide public Internet
+access to their servers or other client systems.
+
+A cross-site scripting (XSS) flaw was found in the RHN Satellite web
+interface. An authenticated RHN Satellite user could use this flaw to
+perform a cross-site scripting attack against other authenticated users who
+are using the RHN Satellite web interface. (CVE-2011-4346)
+
+Red Hat would like to thank William Hoffmann for reporting this issue.
+
+Users of Red Hat Network Satellite 5.4.1 are advised to upgrade to these
+updated packages, which contain a patch to correct this issue. For this
+update to take effect, Red Hat Network Satellite must be restarted. Refer
+to the Solution section for details.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+Run the following command to restart the Red Hat Network Satellite
+server:
+
+# rhn-satellite restart
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+742050 - EMBARGOED CVE-2011-4346 satellite: XSS flaw in custom system information key handling
+
+6. Package List:
+
+Red Hat Network Satellite Server 5.4 (RHEL v.5):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-web-1.2.7-21.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNSAT/SRPMS/spacewalk-web-1.2.7-21.el5sat.src.rpm</a>
+
+noarch:
+spacewalk-base-1.2.7-21.el5sat.noarch.rpm
+spacewalk-base-minimal-1.2.7-21.el5sat.noarch.rpm
+spacewalk-dobby-1.2.7-21.el5sat.noarch.rpm
+spacewalk-grail-1.2.7-21.el5sat.noarch.rpm
+spacewalk-html-1.2.7-21.el5sat.noarch.rpm
+spacewalk-pxt-1.2.7-21.el5sat.noarch.rpm
+spacewalk-sniglets-1.2.7-21.el5sat.noarch.rpm
+
+Red Hat Network Satellite Server 5.4 (RHEL v.6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNSAT/SRPMS/spacewalk-web-1.2.7-21.el6sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNSAT/SRPMS/spacewalk-web-1.2.7-21.el6sat.src.rpm</a>
+
+noarch:
+spacewalk-base-1.2.7-21.el6sat.noarch.rpm
+spacewalk-base-minimal-1.2.7-21.el6sat.noarch.rpm
+spacewalk-dobby-1.2.7-21.el6sat.noarch.rpm
+spacewalk-grail-1.2.7-21.el6sat.noarch.rpm
+spacewalk-html-1.2.7-21.el6sat.noarch.rpm
+spacewalk-pxt-1.2.7-21.el6sat.noarch.rpm
+spacewalk-sniglets-1.2.7-21.el6sat.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4346.html">https://www.redhat.com/security/data/cve/CVE-2011-4346.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFO37rmXlSAg2UNWIIRAomXAKCeLJEAUZf/b96l0PoA4PX2trFifACghpDz
+vrQoE0mD4A3lBvG1Zh+93lg=
+=5aLR
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

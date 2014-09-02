@@ -1,0 +1,170 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0265&#45;01] Moderate: tomcat6 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 19 Feb 2013 18:44:23 &#45;0500 -->
+<!--X-Message-Id: 201302192344.r1JNiMsx017425@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0265-01] Moderate: tomcat6 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0265-01] Moderate: tomcat6 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0265-01] Moderate: tomcat6 security update</li>
+<li><em>Date</em>: Tue, 19 Feb 2013 23:44:22 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: tomcat6 security update
+Advisory ID:       RHSA-2013:0265-01
+Product:           JBoss Enterprise Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0265.html">https://rhn.redhat.com/errata/RHSA-2013-0265.html</a>
+Issue date:        2013-02-19
+CVE Names:         CVE-2012-2733 CVE-2012-4431 CVE-2012-4534 
+                   CVE-2012-5885 CVE-2012-5886 CVE-2012-5887 
+=====================================================================
+
+1. Summary:
+
+An update for the Apache Tomcat 6 component for JBoss Enterprise Web Server
+2.0.0 that fixes multiple security issues is now available from the Red Hat
+Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Description:
+
+Apache Tomcat is a servlet container.
+
+It was found that sending a request without a session identifier to a
+protected resource could bypass the Cross-Site Request Forgery (CSRF)
+prevention filter. A remote attacker could use this flaw to perform
+CSRF attacks against applications that rely on the CSRF prevention filter
+and do not contain internal mitigation for CSRF. (CVE-2012-4431)
+
+A flaw was found in the way Tomcat handled sendfile operations when using
+the HTTP NIO (Non-Blocking I/O) connector and HTTPS. A remote attacker
+could use this flaw to cause a denial of service (infinite loop). The HTTP
+NIO connector is used by default in JBoss Enterprise Web Server. The Apache
+Portable Runtime (APR) connector from the Tomcat Native library was not
+affected by this flaw. (CVE-2012-4534)
+
+Multiple weaknesses were found in the Tomcat DIGEST authentication
+implementation, effectively reducing the security normally provided by
+DIGEST authentication. A remote attacker could use these flaws to perform
+replay attacks in some circumstances. (CVE-2012-5885, CVE-2012-5886,
+CVE-2012-5887)
+
+A denial of service flaw was found in the way the Tomcat HTTP NIO connector
+enforced limits on the permitted size of request headers. A remote attacker
+could use this flaw to trigger an OutOfMemoryError by sending a
+specially-crafted request with very large headers. The HTTP NIO connector
+is used by default in JBoss Enterprise Web Server. The APR connector from
+the Tomcat Native library was not affected by this flaw. (CVE-2012-2733)
+
+Warning: Before applying the update, back up your existing JBoss Enterprise
+Web Server installation (including all applications and configuration
+files).
+
+All users of JBoss Enterprise Web Server 2.0.0 as provided from the Red Hat
+Customer Portal are advised to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing JBoss Enterprise Web Server installation (including all
+applications and configuration files).
+
+Tomcat must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+873664 - CVE-2012-5885 CVE-2012-5886 CVE-2012-5887 tomcat: three DIGEST authentication implementation issues
+873695 - CVE-2012-2733 tomcat: HTTP NIO connector OOM DoS via a request with large headers
+883636 - CVE-2012-4431 Tomcat/JBoss Web - Bypass of CSRF prevention filter
+883637 - CVE-2012-4534 Tomcat - Denial Of Service when using NIO+SSL+sendfile
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2733.html">https://www.redhat.com/security/data/cve/CVE-2012-2733.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4431.html">https://www.redhat.com/security/data/cve/CVE-2012-4431.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4534.html">https://www.redhat.com/security/data/cve/CVE-2012-4534.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5885.html">https://www.redhat.com/security/data/cve/CVE-2012-5885.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5886.html">https://www.redhat.com/security/data/cve/CVE-2012-5886.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5887.html">https://www.redhat.com/security/data/cve/CVE-2012-5887.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=webserver&amp;version=2.0.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=webserver&amp;version=2.0.0</a>
+<a  rel="nofollow" href="http://tomcat.apache.org/security-6.html">http://tomcat.apache.org/security-6.html</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJA4hXlSAg2UNWIIRAkoNAJ4jwFMtCaZTAxGjQJrsz7jVjy9TCwCgtlgA
+B9QpCX/gtW2/gCJXhNyRGRc=
+=xRE1
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

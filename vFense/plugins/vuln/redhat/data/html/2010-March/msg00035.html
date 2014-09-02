@@ -1,0 +1,260 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0271&#45;04] Important: kvm security,	bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 30 Mar 2010 13:04:45 &#45;0400 -->
+<!--X-Message-Id: 201003301704.o2UH4djk007027@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0271-04] Important: kvm security,	bug fix and enhancement upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0271-04] Important: kvm security,	bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0271-04] Important: kvm security,	bug fix and enhancement update</li>
+<li><em>Date</em>: Tue, 30 Mar 2010 13:04:39 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kvm security, bug fix and enhancement update
+Advisory ID:       RHSA-2010:0271-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0271.html">https://rhn.redhat.com/errata/RHSA-2010-0271.html</a>
+Issue date:        2010-03-30
+CVE Names:         CVE-2010-0741 
+=====================================================================
+
+1. Summary:
+
+Updated kvm packages that fix one security issue, multiple bugs, and add
+enhancements are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - x86_64
+RHEL Virtualization (v. 5 server) - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. KVM is a Linux kernel module built for
+the standard Red Hat Enterprise Linux kernel.
+
+A flaw was found in the way QEMU-KVM handled erroneous data provided by
+the Linux virtio-net driver, used by guest operating systems. Due to a
+deficiency in the TSO (TCP segment offloading) implementation, a guest's
+virtio-net driver would transmit improper data to a certain QEMU-KVM
+process on the host, causing the guest to crash. A remote attacker could
+use this flaw to send specially-crafted data to a target guest system,
+causing that guest to crash. (CVE-2010-0741)
+
+Additionally, these updated packages include numerous bug fixes and
+enhancements. Refer to the KVM chapter of the Red Hat Enterprise Linux 5.5
+Technical Notes for details:
+
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5.5/html/Technical_Notes/kvm.html">http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5.5/html/Technical_Notes/kvm.html</a>       
+
+All KVM users should upgrade to these updated packages, which resolve this
+issue as well as fixing the bugs and adding the enhancements noted in the
+Technical Notes. Note: The procedure in the Solution section must be
+performed before this update will take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+The following procedure must be performed before this update will take
+effect:
+
+1) Stop all KVM guest virtual machines.
+
+2) Either reboot the hypervisor machine or, as the root user, remove (using
+&quot;modprobe -r [module]&quot;) and reload (using &quot;modprobe [module]&quot;) all of the
+following modules which are currently running (determined using &quot;lsmod&quot;):
+kvm, ksm, kvm-intel or kvm-amd.
+
+3) Restart the KVM guest virtual machines.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+508040 - Windows XP not using all CPUS
+510706 - qemu-kvm segfault when using i82551 vnic
+511072 - KVM - qemu-img fail to copy a RAW format image over FCP storage
+512672 - Remove initrd warning message
+515549 - upstream qemu issues on rhel 5.4
+515655 - Add result test to prevent Infinite loop in raw_pread, reading too large offset
+515749 - Remove warnings from kvm compilation
+516545 - qemu-kvm crashed when setting 32bitwin28k with 64G ram
+516672 - Disable unused/unsupported features on qemu-kvm
+516762 - qemu aborted when restart 32bitwin23k with more than 4G mem in intel host.
+517223 - BUG: warning at /builddir/build/BUILD/kvm-83-maint-snapshot-20090205/kernel-/x86/x86.c:240/kvm_queue_exception_e() (Tainted: G     )
+518090 - [RFE] KVM should be able to export advanced cpu flags to the guest
+518169 - Bad qcow2 performance with cache=off
+519397 - KVM: MMU: make __kvm_mmu_free_some_pages handle empty list (upstream backport)
+520285 - windows 64 bit does vmexit on each cr8 access.
+521025 - rtc-td-hack stopped working. Time drifts in windows
+521749 - Guest Window2008-R2-datacenter installation is stopped at  step &quot;Setup will continue after restarting your computer&quot; (AMD host only)
+521835 - German keymap using KVM+VNC missing some keys
+522887 - Call to migrate_set_speed after a migrate_cancel causes segmentation fault in kvm
+524970 - Guest single-cpu IPI leads to a global IPI on host
+525323 - QEMU terminates without warning with virtio-net and SMP enabled
+525699 - x86_64 guest hang when set guest's cpu1 online on AMD host
+526124 - ne model failed to get ip address
+526837 - KVM: x86: verify MTRR/PAT validity (upstream backport)
+527722 - Build tree for RHEL 5.X and RHEL 5.4.z contains build bugs
+528310 - when kvm is load, Kernel panic on rebooting after implement suspend and resume
+529694 - -initrd is broken with &gt; 4GB guests
+530134 - RFE - In-place backing file format change
+530533 - debug message is displayed when save VM state into a compressed file
+531631 - Windows XP unattended install doesn't get an IP address after rebooting, if using -net user
+531701 - pvclock msr values are not preserved across remote migration
+531827 - O/S Filesystem Corruption with RHEL-5.4 on a RHEV Guest
+532086 - Rhev-Block driver causes  'unhandled vm exit' with 32bit win2k3r2sp2 Guest VM  on restart
+533059 - kvm modules can't be built against latest kernel-devel package
+533197 - kvm kmod package should filter only some specific ksym dependencies
+533390 - RHEL5.4 VM image corruption with an IDE v-disk
+533453 - kvm kmod package should require a compatible kernel version
+537075 - qcow2: infinite recursion on grow_refcount_table() error handling
+537077 - error codes aren't always propagated up through the block layer (e.g. -ENOSPC)
+537646 - backports of qemu barrier support
+537655 - qemu-img: error creating a new preallocated volume image on FCP storage
+537888 - fix unsafe device data handling
+539250 - Cannot eject cd-rom when configured to host cd-rom
+539589 - kvm can't build against kernel-2.6.18-174.el5
+540893 - qemu-img: snapshot info error
+541084 - KVM: x86: Add KVM_GET/SET_VCPU_EVENTS
+541731 - kvm: migration: mechanism to make older savevm versions to be emitted on some cases
+542923 - Get segmentation fault when running with ide block on kvm-83-136.el5
+543137 - time drift in win2k364 KVM guest
+543979 - gPXE fails to PXE boot on e1000 virtual NIC
+545136 - CVE-2010-0741 whitelist host virtio networking features
+545194 - Discrepancy between man page and source code for qcow2 with regards to default value used when no explicit caching is specified
+546019 - kvm: use gpxe PXE roms if available
+546039 - [FEAT] Supported KVM guests for RHEL5.5
+549938 - Maintain barrier state after migration
+550053 - require newer etherboot package that is compatible with new pxe ROM paths
+550265 - gPXE fails to PXE boot on e1000 virtual NIC
+550755 - Hypercall driver doesn't reset device on power-down
+552487 - Guest image corruption after RHEV-H update to 5.4-2.1.3.el5_4rhev2_1 using virtio-blk
+553187 - Add rhel-5.4.4 support to rhel5.5.0
+555780 - iozone test can not finish when using virtio_blk in RHEL5u4 guest.
+557327 - migration failed with -M rhel5.4.4 between host 5.5 and host 5.4.4
+558195 - kvm: NFS : kvm-qemu-img convert failure on RAW/Sparse template with COW/Sparse snapshot
+559163 - migration failed host 5.5 with -M rhel5.5.0 to host 5.5 with -M rhel5.5.0.
+559509 - KVM:Wake up from hibernation operation failed ( migration to file )
+563141 - qemu-img re-base subcommand got Segmentation fault
+569762 - 'qemu-img re-base' broken on block devices
+577218 - CVE-2010-0741 qemu: Improper handling of erroneous data provided by Linux virtio-net driver
+
+6. Package List:
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kvm-83-164.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kvm-83-164.el5.src.rpm</a>
+
+x86_64:
+kmod-kvm-83-164.el5.x86_64.rpm
+kvm-83-164.el5.x86_64.rpm
+kvm-debuginfo-83-164.el5.x86_64.rpm
+kvm-qemu-img-83-164.el5.x86_64.rpm
+kvm-tools-83-164.el5.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kvm-83-164.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kvm-83-164.el5.src.rpm</a>
+
+x86_64:
+kmod-kvm-83-164.el5.x86_64.rpm
+kvm-83-164.el5.x86_64.rpm
+kvm-debuginfo-83-164.el5.x86_64.rpm
+kvm-qemu-img-83-164.el5.x86_64.rpm
+kvm-tools-83-164.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0741.html">https://www.redhat.com/security/data/cve/CVE-2010-0741.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLsi8fXlSAg2UNWIIRAgfYAJ9LZwTOO4UlmeSOQJZQ7zotl0ZBLQCfeLn2
+lByI1aSKVsI9RnlzTJqYoIY=
+=CCMj
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

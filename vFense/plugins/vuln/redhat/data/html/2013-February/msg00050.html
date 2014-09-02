@@ -1,0 +1,537 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0508&#45;02] Low: sssd security, bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:38:27 &#45;0500 -->
+<!--X-Message-Id: 201302210638.r1L6cPXd026625@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0508-02] Low: sssd security, bug fix and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00049.html">Date Prev</a>][<a href="msg00051.html">Date Next</a>] &nbsp; [<a href="msg00049.html">Thread Prev</a>][<a href="msg00051.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00050">Thread Index</A>]
+[<A HREF="date.html#00050">Date Index</A>]
+[<A HREF="author.html#00050">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0508-02] Low: sssd security, bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0508-02] Low: sssd security, bug fix and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:27:23 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: sssd security, bug fix and enhancement update
+Advisory ID:       RHSA-2013:0508-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0508.html">https://rhn.redhat.com/errata/RHSA-2013-0508.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2013-0219 CVE-2013-0220 
+=====================================================================
+
+1. Summary:
+
+Updated sssd packages that fix two security issues, multiple bugs, and add
+various enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The System Security Services Daemon (SSSD) provides a set of daemons to
+manage access to remote directories and authentication mechanisms. It
+provides an NSS and PAM interface toward the system and a pluggable
+back-end system to connect to multiple different account sources. It is
+also the basis to provide client auditing and policy services for projects
+such as FreeIPA.
+
+A race condition was found in the way SSSD copied and removed user home
+directories. A local attacker who is able to write into the home directory
+of a different user who is being removed could use this flaw to perform
+symbolic link attacks, possibly allowing them to modify and delete
+arbitrary files with the privileges of the root user. (CVE-2013-0219)
+
+Multiple out-of-bounds memory read flaws were found in the way the autofs
+and SSH service responders parsed certain SSSD packets. An attacker could
+spend a specially-crafted packet that, when processed by the autofs or SSH
+service responders, would cause SSSD to crash. This issue only caused a
+temporary denial of service, as SSSD was automatically restarted by the
+monitor process after the crash. (CVE-2013-0220)
+
+The CVE-2013-0219 and CVE-2013-0220 issues were discovered by Florian
+Weimer of the Red Hat Product Security Team.
+
+These updated sssd packages also include numerous bug fixes and
+enhancements. Space precludes documenting all of these changes in this
+advisory. Users are directed to the Red Hat Enterprise Linux 6.4 Technical
+Notes, linked to in the References, for information on the most significant
+of these changes.
+
+All SSSD users are advised to upgrade to these updated packages, which
+upgrade SSSD to upstream version 1.9 to correct these issues, fix these
+bugs and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+743505 - [RFE] Implement &quot;AD friendly&quot; schema mapping
+761573 - [RFE] Integrate with SUDO utility
+766000 - [RFE]Add support for central management of the SELinux user mappings
+768165 - [RFE] Support range retrievals
+768168 - [RFE] Allow Constructing uid from Active Directory objectSid
+789470 - [RFE] Introduce the concept of a Primary Server in SSSD
+789507 - [RFE] SSSD should provide fast in memory cache to provide similar functionality as NSCD currently provides
+790105 - Filter out inappropriate IP addresses from IPA dynamic DNS update
+790107 - Document sss_tools better
+799009 - Warn to syslog when dereference requests fail
+799928 - [RFE] Hash the hostname/port information in the known_hosts file.
+801431 - [RFE] sudo: send username and uid while requesting default options
+801719 - &quot;Error looking up public keys&quot; while ssh to replica using IP address.
+802718 - Unable to lookup user aliases with proxy provider.
+805920 - [RFE] Introduce concept of Ghost User instead of using Fake User
+805921 - Document the expectations about ghost users showing in the lookups
+808307 - No info in sssd manpages for &quot;ldap_sasl_minssf&quot;
+811987 - autofs: maximum key name must be PATH_MAX
+813327 - [RFE] support looking up autofs maps via SSSD
+814249 - [RFE] for faster SSSD startup
+822404 - sssd does not provide maps for automounter when custom schema is being used
+824244 - sssd does not warn into sssd.log for broken configurations
+827036 - Add support for terminating idle connections in sssd_nss
+829740 - Init script reports complete before sssd is actually working
+832103 - [RFE] Optimize memberOf search criteria with AD
+832120 - [RFE] Add AD provider
+845251 - sssd does not try another server when unable to resolve hostname
+845253 - Fail over does not work correctly when IPA server is establishing a GSSAPI-encrypted LDAP connection
+848547 - [TECH PREVIEW] Support DIR: credential caches for multiple TGT support
+852948 - ldap_chpass_update_last_change is not included in the manual page
+854619 - SSSD cannot cope with empty naming context coming from Novell eDirectory
+854997 - Add details about TGT validation to sssd-krb5 man page
+857047 - [abrt] sssd-1.8.4-13.fc16: __GI_exit: Process /usr/libexec/sssd/sssd_pam was killed by signal 6 (SIGABRT)
+860667 - [man sssd-ldap] 'ldap_access_filter'  description needs to be updated
+861075 - SSSD_NSS failure to gracefully restart after sbus failure
+861076 - Flip the default value of ldap_initgroups_use_matching_rule_in_chain
+861079 - Collect Krb5 Trace on High Debug Levels
+861082 - Manpage has ldap_autofs_search_base as experimental feature
+861091 - pam_sss report System Error on wrong password
+863131 - sssd_nss process hangs, stuck in loop; &quot;self restart&quot; does recover, but old process hangs around using 100% CPU
+866542 - sssd_be crashes while looking up users
+867932 - Selinuxusermap rule is not honoured
+867933 - invalidating the memcache with sss_cache doesn't work if the sssd is not running
+869013 - Sudo smart refresh doesn't occur on time
+869071 - Password authentication for users from trusted domains does not work
+869150 - ldap_child crashes on using invalid keytab during gssapi connection
+869443 - The sssd_nss process grows the memory consumption over time
+869678 - sssd not granting access for AD trusted user in HBAC rule
+870039 - sss_cache says 'Wrong DB version'
+870045 - always reread the master map from LDAP
+870060 - SSH host keys are not being removed from the cache
+870238 - IPA client cannot change AD Trusted User password
+870278 - ipa client setup should configure host properly in a trust is in place
+870280 - ipa reconfigure functionality needed for fixing clients to support trusts
+870505 - sss_cache: Multiple domains not handled properly
+871160 - sudo failing for ad trusted user in IPA environment
+871576 - sssd does not resolve group names from AD
+871843 - Nested groups are not retrieved appropriately from cache
+872110 - User appears twice on looking up a nested group
+872180 - subdomains: Invalid sub-domain request type.
+872324 - pam: fd leak when writing the selinux login file in the pam responder
+872683 - sssd_be segfaults with enumeration enabled and anonymous LDAP access disabled
+873032 - Move sss_cache to the main subpackage
+873988 - Man page issue to list  'force_timeout' as an option for the [sssd] section
+874579 - sssd caching not working as expected for selinux usermap contexts
+874616 - Silence the DEBUG messages when ID mapping code skips a built-in group
+874618 - sss_cache: fqdn not accepted
+874673 - user id lookup fails using proxy provider
+875677 - password expiry warning message doesn't appear during auth
+875738 - offline authentication failure always returns System Error
+875740 - &quot;defaults&quot; entry ignored
+875851 - sysdb upgrade failed converting db to 0.11
+876531 - sss_cache does not work for automount maps
+877126 - subdomains code does not save the proper user/group name
+877130 - LDAP provider fails to save empty groups
+877354 - ldap_connection_expire_timeout doesn't expire ldap connections
+877972 - ldap_sasl_authid no longer accepts full principal
+877974 - updating top-level group does not reflect ghost members correctly
+878262 - ipa password auth failing for user principal name when shorter than IPA Realm name
+878419 - sss_userdel doesn't remove entries from in-memory cache
+878420 - SIGSEGV in IPA provider when ldap_sasl_authid is not set
+878583 - IPA Trust does not show secondary groups for AD Users for commands like id and getent
+880140 - sssd hangs at startup with broken configurations
+880159 - delete operation is not implemented for ghost users
+880176 - memberUid required for primary groups to match sudo rule
+880546 - krb5_kpasswd failover doesn't work
+880956 - Primary server status is not always reset after failover to backup server happened
+881773 - mmap cache needs update after db changes
+882076 - SSSD crashes when c-ares returns success but an empty hostent during the DNS update
+882221 - Offline sudo denies access with expired entry_cache_timeout
+882290 - arithmetic bug in the SSSD causes netgroup midpoint refresh to be always set to 10 seconds
+882923 - Negative cache timeout is not working for proxy provider
+883336 - sssd crashes during start if id_provider is not mentioned
+883408 - Make it clear that ldap_sudo_include_regexp can only handle wildcards
+884254 - CVE-2013-0219 sssd: TOCTOU race conditions by copying and removing directory trees
+884480 - user is not removed from group membership during initgroups
+884600 - ldap_chpass_uri failover fails on using same hostname
+884601 - CVE-2013-0220 sssd: Out-of-bounds read flaws in autofs and ssh services responders
+884666 - sudo: if first full refresh fails, schedule another first full refresh
+885078 - sssd_nss crashes during enumeration if the enumeration is taking too long
+885105 - sudo denies access with disabled ldap_sudo_use_host_filter
+886038 - sssd components seem to mishandle sighup
+886091 - Disallow root SSH public key authentication
+886848 - user id lookup fails for case sensitive users using proxy provider
+887961 - AD provider: getgrgid removes nested group memberships
+888614 - Failure in memberof can lead to failed database update
+888800 - MEmory leak in new memcache initgr cleanup function
+889168 - krb5 ticket renewal does not read the renewable tickets from cache
+889182 - crash in memory cache
+890520 - Failover to krb5_backup_kpasswd doesn't work
+891356 - Smart refresh doesn't notice &quot;defaults&quot; addition with OpenLDAP
+892197 - Incorrect principal searched for in keytab
+894302 - sssd fails to update to changes on autofs maps
+894381 - memory cache is not updated after user is deleted from ldb cache
+894428 - wrong filter for autofs maps in sss_cache
+894738 - Failover to ldap_chpass_backup_uri doesn't work
+894997 - sssd_be crashes looking up members with groups outside the nesting limit
+895132 - Modifications using sss_usermod tool are not reflected in memory cache
+895615 - ipa-client-automount: autofs failed in s390x and ppc64 platform
+896476 - SSSD should warn when pam_pwd_expiration_warning value is higher than passwordWarning LDAP attribute.
+902436 - possible segfault when backend callback is removed
+902716 - Rule mismatch isn't noticed before smart refresh on ppc64 and s390x
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm</a>
+
+i386:
+libipa_hbac-1.9.2-82.el6.i686.rpm
+libipa_hbac-python-1.9.2-82.el6.i686.rpm
+libsss_autofs-1.9.2-82.el6.i686.rpm
+libsss_idmap-1.9.2-82.el6.i686.rpm
+libsss_sudo-1.9.2-82.el6.i686.rpm
+sssd-1.9.2-82.el6.i686.rpm
+sssd-client-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+
+x86_64:
+libipa_hbac-1.9.2-82.el6.i686.rpm
+libipa_hbac-1.9.2-82.el6.x86_64.rpm
+libipa_hbac-python-1.9.2-82.el6.x86_64.rpm
+libsss_autofs-1.9.2-82.el6.x86_64.rpm
+libsss_idmap-1.9.2-82.el6.x86_64.rpm
+libsss_sudo-1.9.2-82.el6.x86_64.rpm
+sssd-1.9.2-82.el6.x86_64.rpm
+sssd-client-1.9.2-82.el6.i686.rpm
+sssd-client-1.9.2-82.el6.x86_64.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm</a>
+
+i386:
+libipa_hbac-devel-1.9.2-82.el6.i686.rpm
+libsss_idmap-devel-1.9.2-82.el6.i686.rpm
+libsss_sudo-devel-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-tools-1.9.2-82.el6.i686.rpm
+
+x86_64:
+libipa_hbac-devel-1.9.2-82.el6.i686.rpm
+libipa_hbac-devel-1.9.2-82.el6.x86_64.rpm
+libsss_idmap-1.9.2-82.el6.i686.rpm
+libsss_idmap-devel-1.9.2-82.el6.i686.rpm
+libsss_idmap-devel-1.9.2-82.el6.x86_64.rpm
+libsss_sudo-devel-1.9.2-82.el6.i686.rpm
+libsss_sudo-devel-1.9.2-82.el6.x86_64.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.x86_64.rpm
+sssd-tools-1.9.2-82.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm</a>
+
+x86_64:
+libipa_hbac-1.9.2-82.el6.i686.rpm
+libipa_hbac-1.9.2-82.el6.x86_64.rpm
+libipa_hbac-python-1.9.2-82.el6.x86_64.rpm
+libsss_autofs-1.9.2-82.el6.x86_64.rpm
+libsss_idmap-1.9.2-82.el6.x86_64.rpm
+libsss_sudo-1.9.2-82.el6.x86_64.rpm
+sssd-1.9.2-82.el6.x86_64.rpm
+sssd-client-1.9.2-82.el6.x86_64.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm</a>
+
+x86_64:
+libipa_hbac-devel-1.9.2-82.el6.i686.rpm
+libipa_hbac-devel-1.9.2-82.el6.x86_64.rpm
+libsss_idmap-1.9.2-82.el6.i686.rpm
+libsss_idmap-devel-1.9.2-82.el6.i686.rpm
+libsss_idmap-devel-1.9.2-82.el6.x86_64.rpm
+libsss_sudo-devel-1.9.2-82.el6.i686.rpm
+libsss_sudo-devel-1.9.2-82.el6.x86_64.rpm
+sssd-client-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.x86_64.rpm
+sssd-tools-1.9.2-82.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm</a>
+
+i386:
+libipa_hbac-1.9.2-82.el6.i686.rpm
+libipa_hbac-python-1.9.2-82.el6.i686.rpm
+libsss_autofs-1.9.2-82.el6.i686.rpm
+libsss_idmap-1.9.2-82.el6.i686.rpm
+libsss_sudo-1.9.2-82.el6.i686.rpm
+sssd-1.9.2-82.el6.i686.rpm
+sssd-client-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+
+ppc64:
+libipa_hbac-1.9.2-82.el6.ppc.rpm
+libipa_hbac-1.9.2-82.el6.ppc64.rpm
+libipa_hbac-python-1.9.2-82.el6.ppc64.rpm
+libsss_autofs-1.9.2-82.el6.ppc64.rpm
+libsss_idmap-1.9.2-82.el6.ppc64.rpm
+libsss_sudo-1.9.2-82.el6.ppc64.rpm
+sssd-1.9.2-82.el6.ppc64.rpm
+sssd-client-1.9.2-82.el6.ppc.rpm
+sssd-client-1.9.2-82.el6.ppc64.rpm
+sssd-debuginfo-1.9.2-82.el6.ppc.rpm
+sssd-debuginfo-1.9.2-82.el6.ppc64.rpm
+
+s390x:
+libipa_hbac-1.9.2-82.el6.s390.rpm
+libipa_hbac-1.9.2-82.el6.s390x.rpm
+libipa_hbac-python-1.9.2-82.el6.s390x.rpm
+libsss_autofs-1.9.2-82.el6.s390x.rpm
+libsss_idmap-1.9.2-82.el6.s390x.rpm
+libsss_sudo-1.9.2-82.el6.s390x.rpm
+sssd-1.9.2-82.el6.s390x.rpm
+sssd-client-1.9.2-82.el6.s390.rpm
+sssd-client-1.9.2-82.el6.s390x.rpm
+sssd-debuginfo-1.9.2-82.el6.s390.rpm
+sssd-debuginfo-1.9.2-82.el6.s390x.rpm
+
+x86_64:
+libipa_hbac-1.9.2-82.el6.i686.rpm
+libipa_hbac-1.9.2-82.el6.x86_64.rpm
+libipa_hbac-python-1.9.2-82.el6.x86_64.rpm
+libsss_autofs-1.9.2-82.el6.x86_64.rpm
+libsss_idmap-1.9.2-82.el6.i686.rpm
+libsss_idmap-1.9.2-82.el6.x86_64.rpm
+libsss_sudo-1.9.2-82.el6.x86_64.rpm
+sssd-1.9.2-82.el6.x86_64.rpm
+sssd-client-1.9.2-82.el6.i686.rpm
+sssd-client-1.9.2-82.el6.x86_64.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm</a>
+
+i386:
+libipa_hbac-devel-1.9.2-82.el6.i686.rpm
+libsss_idmap-devel-1.9.2-82.el6.i686.rpm
+libsss_sudo-devel-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-tools-1.9.2-82.el6.i686.rpm
+
+ppc64:
+libipa_hbac-devel-1.9.2-82.el6.ppc.rpm
+libipa_hbac-devel-1.9.2-82.el6.ppc64.rpm
+libsss_idmap-1.9.2-82.el6.ppc.rpm
+libsss_idmap-devel-1.9.2-82.el6.ppc.rpm
+libsss_idmap-devel-1.9.2-82.el6.ppc64.rpm
+libsss_sudo-devel-1.9.2-82.el6.ppc.rpm
+libsss_sudo-devel-1.9.2-82.el6.ppc64.rpm
+sssd-debuginfo-1.9.2-82.el6.ppc.rpm
+sssd-debuginfo-1.9.2-82.el6.ppc64.rpm
+sssd-tools-1.9.2-82.el6.ppc64.rpm
+
+s390x:
+libipa_hbac-devel-1.9.2-82.el6.s390.rpm
+libipa_hbac-devel-1.9.2-82.el6.s390x.rpm
+libsss_idmap-1.9.2-82.el6.s390.rpm
+libsss_idmap-devel-1.9.2-82.el6.s390.rpm
+libsss_idmap-devel-1.9.2-82.el6.s390x.rpm
+libsss_sudo-devel-1.9.2-82.el6.s390.rpm
+libsss_sudo-devel-1.9.2-82.el6.s390x.rpm
+sssd-debuginfo-1.9.2-82.el6.s390.rpm
+sssd-debuginfo-1.9.2-82.el6.s390x.rpm
+sssd-tools-1.9.2-82.el6.s390x.rpm
+
+x86_64:
+libipa_hbac-devel-1.9.2-82.el6.i686.rpm
+libipa_hbac-devel-1.9.2-82.el6.x86_64.rpm
+libsss_idmap-devel-1.9.2-82.el6.i686.rpm
+libsss_idmap-devel-1.9.2-82.el6.x86_64.rpm
+libsss_sudo-devel-1.9.2-82.el6.i686.rpm
+libsss_sudo-devel-1.9.2-82.el6.x86_64.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.x86_64.rpm
+sssd-tools-1.9.2-82.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm</a>
+
+i386:
+libipa_hbac-1.9.2-82.el6.i686.rpm
+libipa_hbac-python-1.9.2-82.el6.i686.rpm
+libsss_autofs-1.9.2-82.el6.i686.rpm
+libsss_idmap-1.9.2-82.el6.i686.rpm
+libsss_sudo-1.9.2-82.el6.i686.rpm
+sssd-1.9.2-82.el6.i686.rpm
+sssd-client-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+
+x86_64:
+libipa_hbac-1.9.2-82.el6.i686.rpm
+libipa_hbac-1.9.2-82.el6.x86_64.rpm
+libipa_hbac-python-1.9.2-82.el6.x86_64.rpm
+libsss_autofs-1.9.2-82.el6.x86_64.rpm
+libsss_idmap-1.9.2-82.el6.i686.rpm
+libsss_idmap-1.9.2-82.el6.x86_64.rpm
+libsss_sudo-1.9.2-82.el6.x86_64.rpm
+sssd-1.9.2-82.el6.x86_64.rpm
+sssd-client-1.9.2-82.el6.i686.rpm
+sssd-client-1.9.2-82.el6.x86_64.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/sssd-1.9.2-82.el6.src.rpm</a>
+
+i386:
+libipa_hbac-devel-1.9.2-82.el6.i686.rpm
+libsss_idmap-devel-1.9.2-82.el6.i686.rpm
+libsss_sudo-devel-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-tools-1.9.2-82.el6.i686.rpm
+
+x86_64:
+libipa_hbac-devel-1.9.2-82.el6.i686.rpm
+libipa_hbac-devel-1.9.2-82.el6.x86_64.rpm
+libsss_idmap-devel-1.9.2-82.el6.i686.rpm
+libsss_idmap-devel-1.9.2-82.el6.x86_64.rpm
+libsss_sudo-devel-1.9.2-82.el6.i686.rpm
+libsss_sudo-devel-1.9.2-82.el6.x86_64.rpm
+sssd-debuginfo-1.9.2-82.el6.i686.rpm
+sssd-debuginfo-1.9.2-82.el6.x86_64.rpm
+sssd-tools-1.9.2-82.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0219.html">https://www.redhat.com/security/data/cve/CVE-2013-0219.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0220.html">https://www.redhat.com/security/data/cve/CVE-2013-0220.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/sssd.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/sssd.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJcDZXlSAg2UNWIIRAhnEAJ9XdwmO6Lj3pGoiRkr7pvnys8bNngCgjIdk
+YqzxidbE7UcfmsItAyPQUNY=
+=+H1I
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00049.html">Date Prev</a>][<a href="msg00051.html">Date Next</a>] &nbsp; [<a href="msg00049.html">Thread Prev</a>][<a href="msg00051.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00050">Thread Index</A>]
+[<A HREF="date.html#00050">Date Index</A>]
+[<A HREF="author.html#00050">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

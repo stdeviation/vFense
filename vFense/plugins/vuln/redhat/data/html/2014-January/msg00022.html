@@ -1,0 +1,363 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0097&#45;01] Important: java&#45;1.6.0&#45;openjdk security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 27 Jan 2014 14:57:59 &#45;0500 -->
+<!--X-Message-Id: 201401271957.s0RJvwbt001513@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0097-01] Important: java-1.6.0-openjdk security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0097-01] Important: java-1.6.0-openjdk security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0097-01] Important: java-1.6.0-openjdk security update</li>
+<li><em>Date</em>: Mon, 27 Jan 2014 19:57:58 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: java-1.6.0-openjdk security update
+Advisory ID:       RHSA-2014:0097-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0097.html">https://rhn.redhat.com/errata/RHSA-2014-0097.html</a>
+Issue date:        2014-01-27
+CVE Names:         CVE-2013-5878 CVE-2013-5884 CVE-2013-5896 
+                   CVE-2013-5907 CVE-2013-5910 CVE-2014-0368 
+                   CVE-2014-0373 CVE-2014-0376 CVE-2014-0411 
+                   CVE-2014-0416 CVE-2014-0422 CVE-2014-0423 
+                   CVE-2014-0428 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.6.0-openjdk packages that fix various security issues are
+now available for Red Hat Enterprise Linux 5 and 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+These packages provide the OpenJDK 6 Java Runtime Environment and the
+OpenJDK 6 Java Software Development Kit.
+
+An input validation flaw was discovered in the font layout engine in the 2D
+component. A specially crafted font file could trigger a Java Virtual
+Machine memory corruption when processed. An untrusted Java application or
+applet could possibly use this flaw to bypass Java sandbox restrictions.
+(CVE-2013-5907)
+
+Multiple improper permission check issues were discovered in the CORBA and
+JNDI components in OpenJDK. An untrusted Java application or applet could
+use these flaws to bypass Java sandbox restrictions. (CVE-2014-0428,
+CVE-2014-0422)
+
+Multiple improper permission check issues were discovered in the
+Serviceability, Security, CORBA, JAAS, JAXP, and Networking components in
+OpenJDK. An untrusted Java application or applet could use these flaws to
+bypass certain Java sandbox restrictions. (CVE-2014-0373, CVE-2013-5878,
+CVE-2013-5910, CVE-2013-5896, CVE-2013-5884, CVE-2014-0416, CVE-2014-0376,
+CVE-2014-0368)
+
+It was discovered that the Beans component did not restrict processing of
+XML external entities. This flaw could cause a Java application using Beans
+to leak sensitive information, or affect application availability.
+(CVE-2014-0423)
+
+It was discovered that the JSSE component could leak timing information
+during the TLS/SSL handshake. This could possibly lead to a disclosure of
+information about the used encryption keys. (CVE-2014-0411)
+
+All users of java-1.6.0-openjdk are advised to upgrade to these updated
+packages, which resolve these issues. All running instances of OpenJDK Java
+must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1051519 - CVE-2014-0428 OpenJDK: insufficient security checks in IIOP streams (CORBA, 8025767)
+1051528 - CVE-2014-0422 OpenJDK: insufficient package access checks in the Naming component (JNDI, 8025758)
+1051699 - CVE-2014-0373 OpenJDK: SnmpStatusException handling issues (Serviceability, 7068126)
+1051823 - CVE-2013-5878 OpenJDK: null xmlns handling issue (Security, 8025026)
+1051911 - CVE-2013-5884 OpenJDK: insufficient security checks in CORBA stub factories (CORBA, 8026193)
+1051912 - CVE-2014-0416 OpenJDK: insecure subject principals set handling (JAAS, 8024306)
+1051923 - CVE-2014-0376 OpenJDK: document builder missing security checks (JAXP, 8027201, 8025018)
+1052915 - CVE-2013-5907 ICU: Layout Engine LookupProcessor insufficient input checks (JDK 2D, 8025034)
+1052919 - CVE-2014-0368 OpenJDK: insufficient Socket checkListen checks (Networking, 8011786)
+1052942 - CVE-2013-5910 OpenJDK: XML canonicalizer mutable strings passed to untrusted code (Security, 8026417)
+1053010 - CVE-2014-0411 OpenJDK: TLS/SSL handshake timing issues (JSSE, 8023069)
+1053066 - CVE-2014-0423 OpenJDK: XXE issue in decoder (Beans, 8023245)
+1053266 - CVE-2013-5896 OpenJDK: com.sun.corba.se. should be restricted package (CORBA, 8025022)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el5_10.src.rpm</a>
+
+i386:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+
+x86_64:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el5_10.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el5_10.src.rpm</a>
+
+i386:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el5_10.i386.rpm
+
+x86_64:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el5_10.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm</a>
+
+i386:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+
+x86_64:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm</a>
+
+i386:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+
+x86_64:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm</a>
+
+x86_64:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm</a>
+
+x86_64:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm</a>
+
+i386:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+
+x86_64:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm</a>
+
+i386:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+
+x86_64:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm</a>
+
+i386:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+
+x86_64:
+java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-devel-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-javadoc-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/java-1.6.0-openjdk-1.6.0.0-3.1.13.1.el6_5.src.rpm</a>
+
+i386:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el6_5.i686.rpm
+
+x86_64:
+java-1.6.0-openjdk-debuginfo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-demo-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+java-1.6.0-openjdk-src-1.6.0.0-3.1.13.1.el6_5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5878.html">https://www.redhat.com/security/data/cve/CVE-2013-5878.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5884.html">https://www.redhat.com/security/data/cve/CVE-2013-5884.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5896.html">https://www.redhat.com/security/data/cve/CVE-2013-5896.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5907.html">https://www.redhat.com/security/data/cve/CVE-2013-5907.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-5910.html">https://www.redhat.com/security/data/cve/CVE-2013-5910.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0368.html">https://www.redhat.com/security/data/cve/CVE-2014-0368.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0373.html">https://www.redhat.com/security/data/cve/CVE-2014-0373.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0376.html">https://www.redhat.com/security/data/cve/CVE-2014-0376.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0411.html">https://www.redhat.com/security/data/cve/CVE-2014-0411.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0416.html">https://www.redhat.com/security/data/cve/CVE-2014-0416.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0422.html">https://www.redhat.com/security/data/cve/CVE-2014-0422.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0423.html">https://www.redhat.com/security/data/cve/CVE-2014-0423.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0428.html">https://www.redhat.com/security/data/cve/CVE-2014-0428.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS5roaXlSAg2UNWIIRAtyjAJ9Xx3+FZVkWSCQ5/EmokFTTF8GolACeILg1
+yB5/DPd5clczwxw/bljRnJo=
+=qDKh
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

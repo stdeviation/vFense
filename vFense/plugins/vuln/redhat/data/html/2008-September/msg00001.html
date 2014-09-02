@@ -1,0 +1,212 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0860&#45;02] Important: ipa security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 10 Sep 2008 14:23:33 &#45;0400 -->
+<!--X-Message-Id: 200809101823.m8AINWSn003844@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0860-02] Important: ipa security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0860-02] Important: ipa security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0860-02] Important: ipa security update</li>
+<li><em>Date</em>: Wed, 10 Sep 2008 14:23:32 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: ipa security update
+Advisory ID:       RHSA-2008:0860-02
+Product:           Red Hat Enterprise IPA
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0860.html">https://rhn.redhat.com/errata/RHSA-2008-0860.html</a>
+Issue date:        2008-09-10
+CVE Names:         CVE-2008-3274 
+=====================================================================
+
+1. Summary:
+
+Updated ipa packages that fix a security flaw are now available for Red Hat
+Enterprise IPA.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat IPA 1 for RHEL 5 Server - i386, x86_64
+
+3. Description:
+
+Red Hat Enterprise IPA is an integrated solution to provide
+centrally-managed Identity (machines, users, virtual machines, groups,
+authentication credentials), Policy (configuration settings, access control
+information) and Audit (events, logs, analysis) services.
+
+A flaw was found in the Red Hat Enterprise IPA installation procedure. The
+master Kerberos password was set up in the LDAP server in such a way that
+it was possible to retrieve the password via an anonymous LDAP connection.
+(CVE-2008-3274)
+
+Note: the master Kerberos password is used to encrypt keys. This flaw does
+not lead to individual keys being exposed.
+
+Users of Red Hat IPA should upgrade to these updated packages and perform
+the operations explained in the solution to resolve this issue.
+
+4. Solution:
+
+To fully resolve this problem, you need to manually perform the following
+steps after installing the updated packages:
+
+Disclaimer: The following procedure performs critical, low-level operations
+on your IPA system, and it is imperative that you back up your system
+before carrying out any of the following steps. A failure during this
+procedure may compromise the readability of all or part of your Kerberos
+keys.
+
+1. Upgrade all of your servers (masters and replicas) and restart the
+dirsrv service on all of them. No other daemon needs to be restarted at
+this stage.
+
+2. On one master server, run the following tool:
+    $ ipa-fix-2008-3274 --check
+
+This should report that the system is vulnerable.
+
+3. On the same master server, run the following tool:
+    $ ipa-fix-2008-3274 --fix
+
+This should dump all Kerberos principals, reload them, and then return a 
+message stating that the operation completed successfully. If not, you
+should contact Red Hat GSS for immediate assistance.
+
+This step should also create a .gpg file symmetrically-encrypted with the 
+Directory Manager password. This file contains a backup of all Kerberos 
+key material and is written to /var/lib/ipa/.
+
+Attention: DO NOT RUN THIS COMMAND ON ANY OTHER SERVER. See the next step.
+
+4. On all other IPA servers, run the following tool:
+    $ ipa-fix-2008-3274 --fix-replica
+
+This will report that the system is NOT vulnerable and will then download
+the master key for the local KDC instance. This command will restart the
+KDC service.
+
+If the command reports a system as anything other than not vulnerable,
+verify that replication between masters is working correctly. The procedure
+will not successfully complete until replication failures are addressed.
+
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+457835 - CVE-2008-3274 IPA Kerberos master password disclosure
+
+6. Package List:
+
+Red Hat IPA 1 for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEIPA/SRPMS/ipa-1.0.0-23.el5ipa.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEIPA/SRPMS/ipa-1.0.0-23.el5ipa.src.rpm</a>
+
+i386:
+ipa-admintools-1.0.0-23.el5ipa.i386.rpm
+ipa-client-1.0.0-23.el5ipa.i386.rpm
+ipa-debuginfo-1.0.0-23.el5ipa.i386.rpm
+ipa-python-1.0.0-23.el5ipa.i386.rpm
+ipa-server-1.0.0-23.el5ipa.i386.rpm
+ipa-server-selinux-1.0.0-23.el5ipa.i386.rpm
+
+x86_64:
+ipa-admintools-1.0.0-23.el5ipa.x86_64.rpm
+ipa-client-1.0.0-23.el5ipa.x86_64.rpm
+ipa-debuginfo-1.0.0-23.el5ipa.x86_64.rpm
+ipa-python-1.0.0-23.el5ipa.x86_64.rpm
+ipa-server-1.0.0-23.el5ipa.x86_64.rpm
+ipa-server-selinux-1.0.0-23.el5ipa.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3274">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3274</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIyBCTXlSAg2UNWIIRAif0AJ9+hCW+FlJ273eJYu3z8TDGA09q2QCgj7mo
+e7nybW8PRkBVPKCP7HE3qO8=
+=yV2h
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

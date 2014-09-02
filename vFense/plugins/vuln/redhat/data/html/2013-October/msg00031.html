@@ -1,0 +1,192 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1474&#45;01] Important: qspice security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 29 Oct 2013 17:18:58 &#45;0400 -->
+<!--X-Message-Id: 201310292118.r9TLIvxF028293@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1474-01] Important: qspice security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1474-01] Important: qspice security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1474-01] Important: qspice security update</li>
+<li><em>Date</em>: Tue, 29 Oct 2013 21:18:57 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: qspice security update
+Advisory ID:       RHSA-2013:1474-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1474.html">https://rhn.redhat.com/errata/RHSA-2013-1474.html</a>
+Issue date:        2013-10-29
+CVE Names:         CVE-2013-4282 
+=====================================================================
+
+1. Summary:
+
+Updated qspice packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - x86_64
+RHEL Virtualization (v. 5 server) - x86_64
+Red Hat Enterprise Linux (v. 5 server) - x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - x86_64
+
+3. Description:
+
+The Simple Protocol for Independent Computing Environments (SPICE) is a
+remote display protocol for virtual environments. SPICE users can access a
+virtualized desktop or server from the local system or any system with
+network access to the server. SPICE is used in Red Hat Enterprise Linux for
+viewing virtualized guests running on the Kernel-based Virtual Machine
+(KVM) hypervisor or on Red Hat Enterprise Virtualization Hypervisors.
+
+A stack-based buffer overflow flaw was found in the way the
+reds_handle_ticket() function in the spice-server library handled
+decryption of ticket data provided by the client. A remote user able to
+initiate a SPICE connection to an application acting as a SPICE server
+could use this flaw to crash the application. (CVE-2013-4282)
+
+This issue was discovered by Tomas Jamrisko of Red Hat.
+
+All qspice users are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+1000443 - CVE-2013-4282 spice: stack buffer overflow in reds_handle_ticket() function
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/qspice-0.3.0-56.el5_10.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/qspice-0.3.0-56.el5_10.1.src.rpm</a>
+
+x86_64:
+qspice-debuginfo-0.3.0-56.el5_10.1.x86_64.rpm
+qspice-libs-0.3.0-56.el5_10.1.x86_64.rpm
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/qspice-0.3.0-56.el5_10.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/qspice-0.3.0-56.el5_10.1.src.rpm</a>
+
+x86_64:
+qspice-0.3.0-56.el5_10.1.x86_64.rpm
+qspice-debuginfo-0.3.0-56.el5_10.1.x86_64.rpm
+qspice-libs-devel-0.3.0-56.el5_10.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/qspice-0.3.0-56.el5_10.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/qspice-0.3.0-56.el5_10.1.src.rpm</a>
+
+x86_64:
+qspice-debuginfo-0.3.0-56.el5_10.1.x86_64.rpm
+qspice-libs-0.3.0-56.el5_10.1.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/qspice-0.3.0-56.el5_10.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/qspice-0.3.0-56.el5_10.1.src.rpm</a>
+
+x86_64:
+qspice-0.3.0-56.el5_10.1.x86_64.rpm
+qspice-debuginfo-0.3.0-56.el5_10.1.x86_64.rpm
+qspice-libs-devel-0.3.0-56.el5_10.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4282.html">https://www.redhat.com/security/data/cve/CVE-2013-4282.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFScCYuXlSAg2UNWIIRAvkqAJ9g398p99BWrseQm2kXDbMdZmWkhgCfXNFI
+eBg/eGmTuCsTailEOfb8PnI=
+=pc2q
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

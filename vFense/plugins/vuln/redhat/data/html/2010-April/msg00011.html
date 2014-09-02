@@ -1,0 +1,167 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0362&#45;01] Important: scsi&#45;target&#45;utils security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 20 Apr 2010 11:58:47 &#45;0400 -->
+<!--X-Message-Id: 201004201558.o3KFwfKS004873@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0362-01] Important: scsi-target-utils security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0362-01] Important: scsi-target-utils security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0362-01] Important: scsi-target-utils security update</li>
+<li><em>Date</em>: Tue, 20 Apr 2010 09:58:41 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: scsi-target-utils security update
+Advisory ID:       RHSA-2010:0362-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0362.html">https://rhn.redhat.com/errata/RHSA-2010-0362.html</a>
+Issue date:        2010-04-20
+CVE Names:         CVE-2010-0743 
+=====================================================================
+
+1. Summary:
+
+An updated scsi-target-utils package that fixes one security issue is now
+available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Cluster-Storage (v. 5 server) - i386, ia64, ppc, x86_64
+
+3. Description:
+
+The scsi-target-utils package contains the daemon and tools to set up and
+monitor SCSI targets. Currently, iSCSI software and iSER targets are
+supported.
+
+A format string flaw was found in scsi-target-utils' tgtd daemon. A
+remote attacker could trigger this flaw by sending a carefully-crafted
+Internet Storage Name Service (iSNS) request, causing the tgtd daemon to
+crash. (CVE-2010-0743)
+
+All scsi-target-utils users should upgrade to this updated package, which
+contains a backported patch to correct this issue. All running
+scsi-target-utils services must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+576359 - CVE-2010-0743 scsi-target-utils: format string vulnerability
+
+6. Package List:
+
+RHEL Cluster-Storage (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/scsi-target-utils-0.0-6.20091205snap.el5_5.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/scsi-target-utils-0.0-6.20091205snap.el5_5.2.src.rpm</a>
+
+i386:
+scsi-target-utils-0.0-6.20091205snap.el5_5.2.i386.rpm
+scsi-target-utils-debuginfo-0.0-6.20091205snap.el5_5.2.i386.rpm
+
+ia64:
+scsi-target-utils-0.0-6.20091205snap.el5_5.2.ia64.rpm
+scsi-target-utils-debuginfo-0.0-6.20091205snap.el5_5.2.ia64.rpm
+
+ppc:
+scsi-target-utils-0.0-6.20091205snap.el5_5.2.ppc.rpm
+scsi-target-utils-debuginfo-0.0-6.20091205snap.el5_5.2.ppc.rpm
+
+x86_64:
+scsi-target-utils-0.0-6.20091205snap.el5_5.2.x86_64.rpm
+scsi-target-utils-debuginfo-0.0-6.20091205snap.el5_5.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0743.html">https://www.redhat.com/security/data/cve/CVE-2010-0743.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLzc8hXlSAg2UNWIIRAmVwAJ9hMFToD11H4WnezfL/+SY9K0jr/ACgm+ad
+AByacWFtACU+GmhmA0Ojsqo=
+=iKfO
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

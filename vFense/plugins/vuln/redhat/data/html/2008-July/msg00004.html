@@ -1,0 +1,385 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0505&#45;01] Moderate: Red Hat Application Stack v2.1	security and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 2 Jul 2008 09:17:21 &#45;0400 -->
+<!--X-Message-Id: 200807021317.m62DHJaA009852@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0505-01] Moderate: Red Hat Application Stack v2.1	security an</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0505-01] Moderate: Red Hat Application Stack v2.1	security and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0505-01] Moderate: Red Hat Application Stack v2.1	security and enhancement update</li>
+<li><em>Date</em>: Wed, 2 Jul 2008 09:17:19 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Application Stack v2.1 security and enhancement update
+Advisory ID:       RHSA-2008:0505-01
+Product:           Red Hat Application Stack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0505.html">https://rhn.redhat.com/errata/RHSA-2008-0505.html</a>
+Issue date:        2008-07-02
+CVE Names:         CVE-2008-2079 CVE-2008-2051 CVE-2007-5898 
+                   CVE-2007-5899 CVE-2007-4782 CVE-2008-2107 
+                   CVE-2008-2108 CVE-2008-0599 
+=====================================================================
+
+1. Summary:
+
+Red Hat Application Stack v2.1 is now available. This update fixes various
+security issues and adds several enhancements.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Application Stack v2 for Enterprise Linux (v.5) - i386, noarch, x86_64
+
+3. Description:
+
+The Red Hat Application Stack is an integrated open source application
+stack, and includes JBoss Enterprise Application Platform (EAP).
+
+Starting with this update, JBoss EAP is no longer provided via the
+Application Stack channels. Instead, all Application Stack customers are
+automatically entitled to the JBoss EAP channels. This ensures all users
+have immediate access to JBoss EAP packages when they are released,
+ensuring lesser wait for security and critical patches.
+
+As a result, you must MANUALLY subscribe to the appropriate JBoss EAP
+channel, as all further JBoss EAP updates will only go to that channel.
+
+This update also entitles all customers to the JBoss EAP 4.3.0 channels.
+Users receive support for JBoss EAP 4.3.0 if they choose to install it.
+Important: downgrading from JBoss EAP 4.3.0 to 4.2.0 is unsupported.
+
+PHP was updated to version 5.2.6, fixing the following security issues:
+
+It was discovered that the PHP escapeshellcmd() function did not properly
+escape multi-byte characters which are not valid in the locale used by the
+script. This could allow an attacker to bypass quoting restrictions imposed
+by escapeshellcmd() and execute arbitrary commands if the PHP script was
+using certain locales. Scripts using the default UTF-8 locale are not
+affected by this issue. (CVE-2008-2051)
+
+The PHP functions htmlentities() and htmlspecialchars() did not properly
+recognize partial multi-byte sequences. Certain sequences of bytes could be
+passed through these functions without being correctly HTML-escaped.
+Depending on the browser being used, an attacker could use this flaw to
+conduct cross-site scripting attacks. (CVE-2007-5898)
+
+A PHP script which used the transparent session ID configuration option, or
+which used the output_add_rewrite_var() function, could leak session
+identifiers to external web sites. If a page included an HTML form with an
+ACTION attribute referencing a non-local URL, the user's session ID would
+be included in the form data passed to that URL. (CVE-2007-5899)
+
+It was discovered that the PHP fnmatch() function did not restrict the
+length of the string argument. An attacker could use this flaw to crash the
+PHP interpreter where a script used fnmatch() on untrusted input data.
+(CVE-2007-4782)
+
+It was discovered that PHP did not properly seed its pseudo-random number
+generator used by functions such as rand() and mt_rand(), possibly allowing
+an attacker to easily predict the generated pseudo-random values.
+(CVE-2008-2107, CVE-2008-2108)
+
+A flaw was found in PHP's CGI server API. If the web server did not set
+DOCUMENT_ROOT environment variable for PHP (e.g. when running PHP in the
+FastCGI server mode), an attacker could cause a crash of the PHP child
+process, causing a temporary denial of service. (CVE-2008-0599)
+
+MySQL was updated to version 5.0.50sp1a, fixing the following security
+issue:
+
+MySQL did not correctly check directories used as arguments for the DATA
+DIRECTORY and INDEX DIRECTORY directives. Using this flaw, an authenticated
+attacker could elevate their access privileges to tables created by other
+database users. Note: this attack does not work on existing tables. An
+attacker can only elevate their access to another user's tables as the
+tables are created. As well, the names of these created tables need to be
+predicted correctly for this attack to succeed. (CVE-2008-2079)
+
+The following packages are updated:
+
+* httpd to 2.2.8
+* mod_jk to 1.2.26
+* mod_perl to 2.0.4
+* the MySQL Connector/ODBC to 3.51.24r1071
+* the MySQL Connector/J (JDBC driver) to 5.0.8
+* perl-DBD-MySQL to 4.006
+* perl-DBI to 1.604
+* postgresql to 8.2.7
+* postgresql-jdbc to 8.2.508
+* postgresqlclient81 to 8.1.11
+* postgresql-odbc to 8.02.0500
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+285881 - CVE-2007-4782 php crash in glob() and fnmatch() functions
+382411 - CVE-2007-5898 php htmlentities/htmlspecialchars multibyte sequences
+382431 - CVE-2007-5899 php session ID leakage
+445003 - CVE-2008-0599 php: buffer overflow in a CGI path translation
+445006 - CVE-2008-2051 PHP multibyte shell escape flaw
+445222 - CVE-2008-2079 mysql: privilege escalation via DATA/INDEX DIRECTORY directives
+445684 - CVE-2008-2107 PHP 32 bit weak random seed
+445685 - CVE-2008-2108 PHP weak 64 bit random seed
+
+6. Package List:
+
+Red Hat Application Stack v2 for Enterprise Linux (v.5):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/httpd-2.2.8-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/httpd-2.2.8-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mod_jk-1.2.26-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mod_jk-1.2.26-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mod_perl-2.0.4-3.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mod_perl-2.0.4-3.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mysql-5.0.50sp1a-2.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mysql-5.0.50sp1a-2.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mysql-connector-odbc-3.51.24r1071-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mysql-connector-odbc-3.51.24r1071-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mysql-jdbc-5.0.8-1jpp.1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mysql-jdbc-5.0.8-1jpp.1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBD-MySQL-4.006-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBD-MySQL-4.006-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBI-1.604-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBI-1.604-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/php-5.2.6-2.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/php-5.2.6-2.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-8.2.9-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-8.2.9-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-jdbc-8.2.508-1jpp.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-jdbc-8.2.508-1jpp.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-odbc-08.02.0500-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-odbc-08.02.0500-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresqlclient81-8.1.11-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresqlclient81-8.1.11-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/unixODBC-2.2.12-8.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/unixODBC-2.2.12-8.el5s2.src.rpm</a>
+
+i386:
+httpd-2.2.8-1.el5s2.i386.rpm
+httpd-debuginfo-2.2.8-1.el5s2.i386.rpm
+httpd-devel-2.2.8-1.el5s2.i386.rpm
+httpd-manual-2.2.8-1.el5s2.i386.rpm
+mod_jk-ap20-1.2.26-1.el5s2.i386.rpm
+mod_jk-debuginfo-1.2.26-1.el5s2.i386.rpm
+mod_perl-2.0.4-3.el5s2.i386.rpm
+mod_perl-debuginfo-2.0.4-3.el5s2.i386.rpm
+mod_perl-devel-2.0.4-3.el5s2.i386.rpm
+mod_ssl-2.2.8-1.el5s2.i386.rpm
+mysql-5.0.50sp1a-2.el5s2.i386.rpm
+mysql-bench-5.0.50sp1a-2.el5s2.i386.rpm
+mysql-cluster-5.0.50sp1a-2.el5s2.i386.rpm
+mysql-connector-odbc-3.51.24r1071-1.el5s2.i386.rpm
+mysql-connector-odbc-debuginfo-3.51.24r1071-1.el5s2.i386.rpm
+mysql-debuginfo-5.0.50sp1a-2.el5s2.i386.rpm
+mysql-devel-5.0.50sp1a-2.el5s2.i386.rpm
+mysql-libs-5.0.50sp1a-2.el5s2.i386.rpm
+mysql-server-5.0.50sp1a-2.el5s2.i386.rpm
+mysql-test-5.0.50sp1a-2.el5s2.i386.rpm
+perl-DBD-MySQL-4.006-1.el5s2.i386.rpm
+perl-DBD-MySQL-debuginfo-4.006-1.el5s2.i386.rpm
+perl-DBI-1.604-1.el5s2.i386.rpm
+perl-DBI-debuginfo-1.604-1.el5s2.i386.rpm
+php-5.2.6-2.el5s2.i386.rpm
+php-bcmath-5.2.6-2.el5s2.i386.rpm
+php-cli-5.2.6-2.el5s2.i386.rpm
+php-common-5.2.6-2.el5s2.i386.rpm
+php-dba-5.2.6-2.el5s2.i386.rpm
+php-debuginfo-5.2.6-2.el5s2.i386.rpm
+php-devel-5.2.6-2.el5s2.i386.rpm
+php-gd-5.2.6-2.el5s2.i386.rpm
+php-imap-5.2.6-2.el5s2.i386.rpm
+php-ldap-5.2.6-2.el5s2.i386.rpm
+php-mbstring-5.2.6-2.el5s2.i386.rpm
+php-mysql-5.2.6-2.el5s2.i386.rpm
+php-ncurses-5.2.6-2.el5s2.i386.rpm
+php-odbc-5.2.6-2.el5s2.i386.rpm
+php-pdo-5.2.6-2.el5s2.i386.rpm
+php-pgsql-5.2.6-2.el5s2.i386.rpm
+php-snmp-5.2.6-2.el5s2.i386.rpm
+php-soap-5.2.6-2.el5s2.i386.rpm
+php-xml-5.2.6-2.el5s2.i386.rpm
+php-xmlrpc-5.2.6-2.el5s2.i386.rpm
+postgresql-8.2.9-1.el5s2.i386.rpm
+postgresql-contrib-8.2.9-1.el5s2.i386.rpm
+postgresql-debuginfo-8.2.9-1.el5s2.i386.rpm
+postgresql-devel-8.2.9-1.el5s2.i386.rpm
+postgresql-docs-8.2.9-1.el5s2.i386.rpm
+postgresql-jdbc-8.2.508-1jpp.el5s2.i386.rpm
+postgresql-jdbc-debuginfo-8.2.508-1jpp.el5s2.i386.rpm
+postgresql-libs-8.2.9-1.el5s2.i386.rpm
+postgresql-odbc-08.02.0500-1.el5s2.i386.rpm
+postgresql-odbc-debuginfo-08.02.0500-1.el5s2.i386.rpm
+postgresql-plperl-8.2.9-1.el5s2.i386.rpm
+postgresql-plpython-8.2.9-1.el5s2.i386.rpm
+postgresql-pltcl-8.2.9-1.el5s2.i386.rpm
+postgresql-python-8.2.9-1.el5s2.i386.rpm
+postgresql-server-8.2.9-1.el5s2.i386.rpm
+postgresql-tcl-8.2.9-1.el5s2.i386.rpm
+postgresql-test-8.2.9-1.el5s2.i386.rpm
+postgresqlclient81-8.1.11-1.el5s2.i386.rpm
+postgresqlclient81-debuginfo-8.1.11-1.el5s2.i386.rpm
+unixODBC-2.2.12-8.el5s2.i386.rpm
+unixODBC-debuginfo-2.2.12-8.el5s2.i386.rpm
+unixODBC-devel-2.2.12-8.el5s2.i386.rpm
+unixODBC-kde-2.2.12-8.el5s2.i386.rpm
+
+noarch:
+mysql-jdbc-5.0.8-1jpp.1.el5s2.noarch.rpm
+
+x86_64:
+httpd-2.2.8-1.el5s2.x86_64.rpm
+httpd-debuginfo-2.2.8-1.el5s2.x86_64.rpm
+httpd-devel-2.2.8-1.el5s2.x86_64.rpm
+httpd-manual-2.2.8-1.el5s2.x86_64.rpm
+mod_jk-ap20-1.2.26-1.el5s2.x86_64.rpm
+mod_jk-debuginfo-1.2.26-1.el5s2.x86_64.rpm
+mod_perl-2.0.4-3.el5s2.x86_64.rpm
+mod_perl-debuginfo-2.0.4-3.el5s2.x86_64.rpm
+mod_perl-devel-2.0.4-3.el5s2.x86_64.rpm
+mod_ssl-2.2.8-1.el5s2.x86_64.rpm
+mysql-5.0.50sp1a-2.el5s2.x86_64.rpm
+mysql-bench-5.0.50sp1a-2.el5s2.x86_64.rpm
+mysql-cluster-5.0.50sp1a-2.el5s2.x86_64.rpm
+mysql-connector-odbc-3.51.24r1071-1.el5s2.x86_64.rpm
+mysql-connector-odbc-debuginfo-3.51.24r1071-1.el5s2.x86_64.rpm
+mysql-debuginfo-5.0.50sp1a-2.el5s2.x86_64.rpm
+mysql-devel-5.0.50sp1a-2.el5s2.x86_64.rpm
+mysql-libs-5.0.50sp1a-2.el5s2.x86_64.rpm
+mysql-server-5.0.50sp1a-2.el5s2.x86_64.rpm
+mysql-test-5.0.50sp1a-2.el5s2.x86_64.rpm
+perl-DBD-MySQL-4.006-1.el5s2.x86_64.rpm
+perl-DBD-MySQL-debuginfo-4.006-1.el5s2.x86_64.rpm
+perl-DBI-1.604-1.el5s2.x86_64.rpm
+perl-DBI-debuginfo-1.604-1.el5s2.x86_64.rpm
+php-5.2.6-2.el5s2.x86_64.rpm
+php-bcmath-5.2.6-2.el5s2.x86_64.rpm
+php-cli-5.2.6-2.el5s2.x86_64.rpm
+php-common-5.2.6-2.el5s2.x86_64.rpm
+php-dba-5.2.6-2.el5s2.x86_64.rpm
+php-debuginfo-5.2.6-2.el5s2.x86_64.rpm
+php-devel-5.2.6-2.el5s2.x86_64.rpm
+php-gd-5.2.6-2.el5s2.x86_64.rpm
+php-imap-5.2.6-2.el5s2.x86_64.rpm
+php-ldap-5.2.6-2.el5s2.x86_64.rpm
+php-mbstring-5.2.6-2.el5s2.x86_64.rpm
+php-mysql-5.2.6-2.el5s2.x86_64.rpm
+php-ncurses-5.2.6-2.el5s2.x86_64.rpm
+php-odbc-5.2.6-2.el5s2.x86_64.rpm
+php-pdo-5.2.6-2.el5s2.x86_64.rpm
+php-pgsql-5.2.6-2.el5s2.x86_64.rpm
+php-snmp-5.2.6-2.el5s2.x86_64.rpm
+php-soap-5.2.6-2.el5s2.x86_64.rpm
+php-xml-5.2.6-2.el5s2.x86_64.rpm
+php-xmlrpc-5.2.6-2.el5s2.x86_64.rpm
+postgresql-8.2.9-1.el5s2.x86_64.rpm
+postgresql-contrib-8.2.9-1.el5s2.x86_64.rpm
+postgresql-debuginfo-8.2.9-1.el5s2.x86_64.rpm
+postgresql-devel-8.2.9-1.el5s2.x86_64.rpm
+postgresql-docs-8.2.9-1.el5s2.x86_64.rpm
+postgresql-jdbc-8.2.508-1jpp.el5s2.x86_64.rpm
+postgresql-jdbc-debuginfo-8.2.508-1jpp.el5s2.x86_64.rpm
+postgresql-libs-8.2.9-1.el5s2.x86_64.rpm
+postgresql-odbc-08.02.0500-1.el5s2.x86_64.rpm
+postgresql-odbc-debuginfo-08.02.0500-1.el5s2.x86_64.rpm
+postgresql-plperl-8.2.9-1.el5s2.x86_64.rpm
+postgresql-plpython-8.2.9-1.el5s2.x86_64.rpm
+postgresql-pltcl-8.2.9-1.el5s2.x86_64.rpm
+postgresql-python-8.2.9-1.el5s2.x86_64.rpm
+postgresql-server-8.2.9-1.el5s2.x86_64.rpm
+postgresql-tcl-8.2.9-1.el5s2.x86_64.rpm
+postgresql-test-8.2.9-1.el5s2.x86_64.rpm
+postgresqlclient81-8.1.11-1.el5s2.x86_64.rpm
+postgresqlclient81-debuginfo-8.1.11-1.el5s2.x86_64.rpm
+unixODBC-2.2.12-8.el5s2.x86_64.rpm
+unixODBC-debuginfo-2.2.12-8.el5s2.x86_64.rpm
+unixODBC-devel-2.2.12-8.el5s2.x86_64.rpm
+unixODBC-kde-2.2.12-8.el5s2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2079">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2079</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2051">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2051</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5898">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5898</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5899">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5899</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4782">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4782</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2107">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2107</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2108">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2108</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0599">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0599</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Application_Stack/2.1/html-single/Release_Notes/">http://www.redhat.com/docs/en-US/Red_Hat_Application_Stack/2.1/html-single/Release_Notes/</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIa39+XlSAg2UNWIIRAhWAAJ9sMvdJoV3iUoms2ggLAsIS3G2WuACfUID0
+a66OVz+Vp0VuKf8vME1+XYo=
+=qDIz
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

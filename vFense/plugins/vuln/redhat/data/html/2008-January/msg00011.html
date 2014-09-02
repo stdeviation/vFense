@@ -1,0 +1,257 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0031&#45;01] Important: xorg&#45;x11&#45;server security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 17 Jan 2008 15:48:09 &#45;0500 -->
+<!--X-Message-Id: 200801172048.m0HKm8Mp023073@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0031-01] Important: xorg-x11-server security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0031-01] Important: xorg-x11-server security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0031-01] Important: xorg-x11-server security update</li>
+<li><em>Date</em>: Thu, 17 Jan 2008 15:48:08 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: xorg-x11-server security update
+Advisory ID:       RHSA-2008:0031-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0031.html">https://rhn.redhat.com/errata/RHSA-2008-0031.html</a>
+Issue date:        2008-01-17
+CVE Names:         CVE-2007-5760 CVE-2007-5958 CVE-2007-6427 
+                   CVE-2007-6428 CVE-2007-6429 
+=====================================================================
+
+1. Summary:
+
+Updated xorg-x11-server packages that fix several security issues are now
+available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+X.Org is an open source implementation of the X Window System. It provides
+basic low-level functionality that full-fledged graphical user interfaces
+are designed upon.
+
+Two integer overflow flaws were found in the X.Org server's EVI and MIT-SHM
+modules. A malicious authorized client could exploit these issues to cause
+a denial of service (crash), or potentially execute arbitrary code with
+root privileges on the X.Org server. (CVE-2007-6429)
+
+A memory corruption flaw was found in the X.Org server's XInput extension.
+A malicious authorized client could exploit this issue to cause a denial of
+service (crash), or potentially execute arbitrary code with root privileges
+on the X.Org server. (CVE-2007-6427)
+
+An input validation flaw was found in the X.Org server's XFree86-Misc
+extension. A malicious authorized client could exploit this issue to cause
+a denial of service (crash), or potentially execute arbitrary code with
+root privileges on the X.Org server. (CVE-2007-5760)
+
+An information disclosure flaw was found in the X.Org server's TOG-CUP
+extension. A malicious authorized client could exploit this issue to cause
+a denial of service (crash), or potentially view arbitrary memory content
+within the X server's address space. (CVE-2007-6428)
+
+A flaw was found in the X.Org server's XC-SECURITY extension, that could
+have allowed a local user to verify the existence of an arbitrary file,
+even in directories that are not normally accessible to that user.
+(CVE-2007-5958)
+
+Users of xorg-x11-server should upgrade to these updated packages, which
+contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+391841 - CVE-2007-5958 Xorg / XFree86 file existence disclosure vulnerability
+413721 - CVE-2007-6429 xorg / xfree86: integer overflow in EVI extension
+413741 - CVE-2007-6429 xorg / xfree86: integer overflow in MIT-SHM extension
+413791 - CVE-2007-6428 xorg / xfree86: information disclosure via TOG-CUP extension
+413811 - CVE-2007-6427 xorg / xfree86: memory corruption via XInput extension
+414031 - CVE-2007-5760 xorg: invalid array indexing in XFree86-Misc extension
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xorg-x11-server-1.1.1-48.26.el5_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xorg-x11-server-1.1.1-48.26.el5_1.4.src.rpm</a>
+
+i386:
+xorg-x11-server-Xdmx-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-Xephyr-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-Xnest-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-Xorg-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-Xvfb-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-debuginfo-1.1.1-48.26.el5_1.4.i386.rpm
+
+x86_64:
+xorg-x11-server-Xdmx-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-Xephyr-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-Xnest-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-Xorg-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-Xvfb-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-debuginfo-1.1.1-48.26.el5_1.4.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xorg-x11-server-1.1.1-48.26.el5_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/xorg-x11-server-1.1.1-48.26.el5_1.4.src.rpm</a>
+
+i386:
+xorg-x11-server-debuginfo-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-sdk-1.1.1-48.26.el5_1.4.i386.rpm
+
+x86_64:
+xorg-x11-server-debuginfo-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-sdk-1.1.1-48.26.el5_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xorg-x11-server-1.1.1-48.26.el5_1.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/xorg-x11-server-1.1.1-48.26.el5_1.4.src.rpm</a>
+
+i386:
+xorg-x11-server-Xdmx-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-Xephyr-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-Xnest-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-Xorg-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-Xvfb-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-debuginfo-1.1.1-48.26.el5_1.4.i386.rpm
+xorg-x11-server-sdk-1.1.1-48.26.el5_1.4.i386.rpm
+
+ia64:
+xorg-x11-server-Xdmx-1.1.1-48.26.el5_1.4.ia64.rpm
+xorg-x11-server-Xephyr-1.1.1-48.26.el5_1.4.ia64.rpm
+xorg-x11-server-Xnest-1.1.1-48.26.el5_1.4.ia64.rpm
+xorg-x11-server-Xorg-1.1.1-48.26.el5_1.4.ia64.rpm
+xorg-x11-server-Xvfb-1.1.1-48.26.el5_1.4.ia64.rpm
+xorg-x11-server-debuginfo-1.1.1-48.26.el5_1.4.ia64.rpm
+xorg-x11-server-sdk-1.1.1-48.26.el5_1.4.ia64.rpm
+
+ppc:
+xorg-x11-server-Xdmx-1.1.1-48.26.el5_1.4.ppc.rpm
+xorg-x11-server-Xephyr-1.1.1-48.26.el5_1.4.ppc.rpm
+xorg-x11-server-Xnest-1.1.1-48.26.el5_1.4.ppc.rpm
+xorg-x11-server-Xorg-1.1.1-48.26.el5_1.4.ppc.rpm
+xorg-x11-server-Xvfb-1.1.1-48.26.el5_1.4.ppc.rpm
+xorg-x11-server-debuginfo-1.1.1-48.26.el5_1.4.ppc.rpm
+xorg-x11-server-sdk-1.1.1-48.26.el5_1.4.ppc.rpm
+
+s390x:
+xorg-x11-server-Xephyr-1.1.1-48.26.el5_1.4.s390x.rpm
+xorg-x11-server-Xnest-1.1.1-48.26.el5_1.4.s390x.rpm
+xorg-x11-server-Xvfb-1.1.1-48.26.el5_1.4.s390x.rpm
+xorg-x11-server-debuginfo-1.1.1-48.26.el5_1.4.s390x.rpm
+
+x86_64:
+xorg-x11-server-Xdmx-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-Xephyr-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-Xnest-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-Xorg-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-Xvfb-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-debuginfo-1.1.1-48.26.el5_1.4.x86_64.rpm
+xorg-x11-server-sdk-1.1.1-48.26.el5_1.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5760">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5760</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5958">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5958</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6427">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6427</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6428">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6428</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6429">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6429</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHj778XlSAg2UNWIIRAsusAJ9MVjaYy+HK5kMv3JEity9nUL22UQCff7bn
+i1LhoKdGO6Oiimc/X4Iv9Ug=
+=k7qA
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

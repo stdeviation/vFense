@@ -1,0 +1,352 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1104&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 19 Dec 2007 13:36:25 &#45;0500 -->
+<!--X-Message-Id: 200712191836.lBJIaOaY014055@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1104-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1104-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1104-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Wed, 19 Dec 2007 13:36:24 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2007:1104-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1104.html">https://rhn.redhat.com/errata/RHSA-2007-1104.html</a>
+Issue date:        2007-12-19
+Updated on:        2007-12-19
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-4997 CVE-2007-5494 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated kernel packages that fix various security issues and several bugs
+in the Red Hat Enterprise Linux 4 kernel are now available.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, noarch, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, noarch, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, noarch, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, noarch, x86_64
+
+3. Problem description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system. 
+
+These updated packages fix the following security issues:
+
+A flaw was found in the handling of IEEE 802.11 frames, which affected
+several wireless LAN modules. In certain situations, a remote attacker
+could trigger this flaw by sending a malicious packet over a wireless
+network, causing a denial of service (kernel crash).
+(CVE-2007-4997, Important)
+
+A memory leak was found in the Red Hat Content Accelerator kernel patch.
+A local user could use this flaw to cause a denial of service (memory
+exhaustion). (CVE-2007-5494, Important)
+
+Additionally, the following bugs were fixed:
+
+* when running the &quot;ls -la&quot; command on an NFSv4 mount point, incorrect
+file attributes, and outdated file size and timestamp information were
+returned. As well, symbolic links may have been displayed as actual files.
+
+* a bug which caused the cmirror write path to appear deadlocked after a
+successful recovery, which may have caused syncing to hang, has been
+resolved.
+
+* a kernel panic which occurred when manually configuring LCS interfaces on
+the IBM S/390 has been resolved.
+
+* when running a 32-bit binary on a 64-bit system, it was possible to
+mmap page at address 0 without flag MAP_FIXED set. This has been
+resolved in these updated packages.
+
+* the Non-Maskable Interrupt (NMI) Watchdog did not increment the NMI
+interrupt counter in &quot;/proc/interrupts&quot; on systems running an AMD Opteron
+CPU. This caused systems running NMI Watchdog to restart at regular
+intervals.
+
+* a bug which caused the diskdump utility to run very slowly on devices
+using Fusion MPT has been resolved.
+
+All users are advised to upgrade to these updated packages, which resolve
+these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+315051 - CVE-2007-5494 open(O_ATOMICLOOKUP) leaks dentry
+346341 - CVE-2007-4997 kernel ieee80211 off-by-two integer underflow
+371551 - NFS problem#3 of IT 106473 - 32-bit jiffy wrap around - NFS inode
+399661 - cmirror write path appears deadlocked after recovery is successful
+400801 - LTC39618-kernel panic making lcs interfaces online on LPAR
+400811 - [RHEL4] Odd behaviour in mmap
+404741 - [RHEL4] NMI Watchdog Not Working in RHEL 4 U6 Opteron Systems
+404781 - RHEL4.6 [REGRESSION] diskdump works with mpt fusion too slow.
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-67.0.1.EL.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-67.0.1.EL.src.rpm</a>
+71fae31e5352c4fa4d12582938f123c2  kernel-2.6.9-67.0.1.EL.src.rpm
+
+i386:
+96af80cf2b6b13ba697d531e011a6ab2  kernel-2.6.9-67.0.1.EL.i686.rpm
+12212428cfdfe849651d208562490155  kernel-debuginfo-2.6.9-67.0.1.EL.i686.rpm
+e005130561e2d1380bb9b79b10d0d422  kernel-devel-2.6.9-67.0.1.EL.i686.rpm
+8f842eb0377b68e100dc8ecfe6060a8d  kernel-hugemem-2.6.9-67.0.1.EL.i686.rpm
+5f2fc9b922a6540e01afc4e18e57a765  kernel-hugemem-devel-2.6.9-67.0.1.EL.i686.rpm
+45ef47bce33ee702b1c381a9a9a494e5  kernel-smp-2.6.9-67.0.1.EL.i686.rpm
+93d4eb42f17ad51cae8b5463a1959a30  kernel-smp-devel-2.6.9-67.0.1.EL.i686.rpm
+931ac692f6b6438cf275c7382af80d4e  kernel-xenU-2.6.9-67.0.1.EL.i686.rpm
+ac066af710b0239ac02167369edcdfe7  kernel-xenU-devel-2.6.9-67.0.1.EL.i686.rpm
+
+ia64:
+bddf17442cd069545b65a001e9f48222  kernel-2.6.9-67.0.1.EL.ia64.rpm
+2a976e19539a629858593bfbb4a76549  kernel-debuginfo-2.6.9-67.0.1.EL.ia64.rpm
+6b7d32cc452549b2cbb87b44d7030e78  kernel-devel-2.6.9-67.0.1.EL.ia64.rpm
+02b8601db5e4b8744d6194b3aa2c2a8b  kernel-largesmp-2.6.9-67.0.1.EL.ia64.rpm
+04eda6a8381f80643143fbb95288f8a8  kernel-largesmp-devel-2.6.9-67.0.1.EL.ia64.rpm
+
+noarch:
+ca0869512f974a15b88bdbff99d6e082  kernel-doc-2.6.9-67.0.1.EL.noarch.rpm
+
+ppc:
+3c8b3a2172b6b5c3413c500d9ee59fab  kernel-2.6.9-67.0.1.EL.ppc64.rpm
+a86799da3b862116afbe4e83cab98350  kernel-2.6.9-67.0.1.EL.ppc64iseries.rpm
+87481c83294d92b78d7d55b0744e40a6  kernel-debuginfo-2.6.9-67.0.1.EL.ppc64.rpm
+210acd0cc9f415932e48b4586eef46ac  kernel-debuginfo-2.6.9-67.0.1.EL.ppc64iseries.rpm
+8b54d9b8547ce5041eff9f0b8e15ab36  kernel-devel-2.6.9-67.0.1.EL.ppc64.rpm
+127846bbd02521d943b0bfe719f50601  kernel-devel-2.6.9-67.0.1.EL.ppc64iseries.rpm
+3c2611015a419854022266e26cd0cf28  kernel-largesmp-2.6.9-67.0.1.EL.ppc64.rpm
+a1c2d8fb4c3df31b3b170d31e9293c57  kernel-largesmp-devel-2.6.9-67.0.1.EL.ppc64.rpm
+
+s390:
+2a9e942f01c3c9736765a69fc7035594  kernel-2.6.9-67.0.1.EL.s390.rpm
+21fa686d2b6ab4061ef734a9b45eed46  kernel-debuginfo-2.6.9-67.0.1.EL.s390.rpm
+d2a8868e7b0785995605dbd38a884359  kernel-devel-2.6.9-67.0.1.EL.s390.rpm
+
+s390x:
+a55409e46a6b6f8d949fee6743f74e30  kernel-2.6.9-67.0.1.EL.s390x.rpm
+9defe3074472da19e7c68e080471ff19  kernel-debuginfo-2.6.9-67.0.1.EL.s390x.rpm
+5992ce2a1bcb195a7b23416782406092  kernel-devel-2.6.9-67.0.1.EL.s390x.rpm
+
+x86_64:
+db06d45fdecf81276cf310d96c365c50  kernel-2.6.9-67.0.1.EL.x86_64.rpm
+d491438e388754f4756011a91f541d56  kernel-debuginfo-2.6.9-67.0.1.EL.x86_64.rpm
+9c20fdf6c2b8ca3e7383bcc998d9ded1  kernel-devel-2.6.9-67.0.1.EL.x86_64.rpm
+be9a35b125804c2f6b2ac2881aad97a7  kernel-largesmp-2.6.9-67.0.1.EL.x86_64.rpm
+3eee37ba0eb4e8b742ac0b12048cd04f  kernel-largesmp-devel-2.6.9-67.0.1.EL.x86_64.rpm
+ae76bb975de66c52043944b76f88b935  kernel-smp-2.6.9-67.0.1.EL.x86_64.rpm
+246d932e69b533808041a9c179090944  kernel-smp-devel-2.6.9-67.0.1.EL.x86_64.rpm
+29991e5a6a46a077eeccb9cb4dc0684e  kernel-xenU-2.6.9-67.0.1.EL.x86_64.rpm
+ae91a97d112bfb7af7e4465fbd9bd871  kernel-xenU-devel-2.6.9-67.0.1.EL.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-67.0.1.EL.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-67.0.1.EL.src.rpm</a>
+71fae31e5352c4fa4d12582938f123c2  kernel-2.6.9-67.0.1.EL.src.rpm
+
+i386:
+96af80cf2b6b13ba697d531e011a6ab2  kernel-2.6.9-67.0.1.EL.i686.rpm
+12212428cfdfe849651d208562490155  kernel-debuginfo-2.6.9-67.0.1.EL.i686.rpm
+e005130561e2d1380bb9b79b10d0d422  kernel-devel-2.6.9-67.0.1.EL.i686.rpm
+8f842eb0377b68e100dc8ecfe6060a8d  kernel-hugemem-2.6.9-67.0.1.EL.i686.rpm
+5f2fc9b922a6540e01afc4e18e57a765  kernel-hugemem-devel-2.6.9-67.0.1.EL.i686.rpm
+45ef47bce33ee702b1c381a9a9a494e5  kernel-smp-2.6.9-67.0.1.EL.i686.rpm
+93d4eb42f17ad51cae8b5463a1959a30  kernel-smp-devel-2.6.9-67.0.1.EL.i686.rpm
+931ac692f6b6438cf275c7382af80d4e  kernel-xenU-2.6.9-67.0.1.EL.i686.rpm
+ac066af710b0239ac02167369edcdfe7  kernel-xenU-devel-2.6.9-67.0.1.EL.i686.rpm
+
+noarch:
+ca0869512f974a15b88bdbff99d6e082  kernel-doc-2.6.9-67.0.1.EL.noarch.rpm
+
+x86_64:
+db06d45fdecf81276cf310d96c365c50  kernel-2.6.9-67.0.1.EL.x86_64.rpm
+d491438e388754f4756011a91f541d56  kernel-debuginfo-2.6.9-67.0.1.EL.x86_64.rpm
+9c20fdf6c2b8ca3e7383bcc998d9ded1  kernel-devel-2.6.9-67.0.1.EL.x86_64.rpm
+be9a35b125804c2f6b2ac2881aad97a7  kernel-largesmp-2.6.9-67.0.1.EL.x86_64.rpm
+3eee37ba0eb4e8b742ac0b12048cd04f  kernel-largesmp-devel-2.6.9-67.0.1.EL.x86_64.rpm
+ae76bb975de66c52043944b76f88b935  kernel-smp-2.6.9-67.0.1.EL.x86_64.rpm
+246d932e69b533808041a9c179090944  kernel-smp-devel-2.6.9-67.0.1.EL.x86_64.rpm
+29991e5a6a46a077eeccb9cb4dc0684e  kernel-xenU-2.6.9-67.0.1.EL.x86_64.rpm
+ae91a97d112bfb7af7e4465fbd9bd871  kernel-xenU-devel-2.6.9-67.0.1.EL.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-67.0.1.EL.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-67.0.1.EL.src.rpm</a>
+71fae31e5352c4fa4d12582938f123c2  kernel-2.6.9-67.0.1.EL.src.rpm
+
+i386:
+96af80cf2b6b13ba697d531e011a6ab2  kernel-2.6.9-67.0.1.EL.i686.rpm
+12212428cfdfe849651d208562490155  kernel-debuginfo-2.6.9-67.0.1.EL.i686.rpm
+e005130561e2d1380bb9b79b10d0d422  kernel-devel-2.6.9-67.0.1.EL.i686.rpm
+8f842eb0377b68e100dc8ecfe6060a8d  kernel-hugemem-2.6.9-67.0.1.EL.i686.rpm
+5f2fc9b922a6540e01afc4e18e57a765  kernel-hugemem-devel-2.6.9-67.0.1.EL.i686.rpm
+45ef47bce33ee702b1c381a9a9a494e5  kernel-smp-2.6.9-67.0.1.EL.i686.rpm
+93d4eb42f17ad51cae8b5463a1959a30  kernel-smp-devel-2.6.9-67.0.1.EL.i686.rpm
+931ac692f6b6438cf275c7382af80d4e  kernel-xenU-2.6.9-67.0.1.EL.i686.rpm
+ac066af710b0239ac02167369edcdfe7  kernel-xenU-devel-2.6.9-67.0.1.EL.i686.rpm
+
+ia64:
+bddf17442cd069545b65a001e9f48222  kernel-2.6.9-67.0.1.EL.ia64.rpm
+2a976e19539a629858593bfbb4a76549  kernel-debuginfo-2.6.9-67.0.1.EL.ia64.rpm
+6b7d32cc452549b2cbb87b44d7030e78  kernel-devel-2.6.9-67.0.1.EL.ia64.rpm
+02b8601db5e4b8744d6194b3aa2c2a8b  kernel-largesmp-2.6.9-67.0.1.EL.ia64.rpm
+04eda6a8381f80643143fbb95288f8a8  kernel-largesmp-devel-2.6.9-67.0.1.EL.ia64.rpm
+
+noarch:
+ca0869512f974a15b88bdbff99d6e082  kernel-doc-2.6.9-67.0.1.EL.noarch.rpm
+
+x86_64:
+db06d45fdecf81276cf310d96c365c50  kernel-2.6.9-67.0.1.EL.x86_64.rpm
+d491438e388754f4756011a91f541d56  kernel-debuginfo-2.6.9-67.0.1.EL.x86_64.rpm
+9c20fdf6c2b8ca3e7383bcc998d9ded1  kernel-devel-2.6.9-67.0.1.EL.x86_64.rpm
+be9a35b125804c2f6b2ac2881aad97a7  kernel-largesmp-2.6.9-67.0.1.EL.x86_64.rpm
+3eee37ba0eb4e8b742ac0b12048cd04f  kernel-largesmp-devel-2.6.9-67.0.1.EL.x86_64.rpm
+ae76bb975de66c52043944b76f88b935  kernel-smp-2.6.9-67.0.1.EL.x86_64.rpm
+246d932e69b533808041a9c179090944  kernel-smp-devel-2.6.9-67.0.1.EL.x86_64.rpm
+29991e5a6a46a077eeccb9cb4dc0684e  kernel-xenU-2.6.9-67.0.1.EL.x86_64.rpm
+ae91a97d112bfb7af7e4465fbd9bd871  kernel-xenU-devel-2.6.9-67.0.1.EL.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-67.0.1.EL.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-67.0.1.EL.src.rpm</a>
+71fae31e5352c4fa4d12582938f123c2  kernel-2.6.9-67.0.1.EL.src.rpm
+
+i386:
+96af80cf2b6b13ba697d531e011a6ab2  kernel-2.6.9-67.0.1.EL.i686.rpm
+12212428cfdfe849651d208562490155  kernel-debuginfo-2.6.9-67.0.1.EL.i686.rpm
+e005130561e2d1380bb9b79b10d0d422  kernel-devel-2.6.9-67.0.1.EL.i686.rpm
+8f842eb0377b68e100dc8ecfe6060a8d  kernel-hugemem-2.6.9-67.0.1.EL.i686.rpm
+5f2fc9b922a6540e01afc4e18e57a765  kernel-hugemem-devel-2.6.9-67.0.1.EL.i686.rpm
+45ef47bce33ee702b1c381a9a9a494e5  kernel-smp-2.6.9-67.0.1.EL.i686.rpm
+93d4eb42f17ad51cae8b5463a1959a30  kernel-smp-devel-2.6.9-67.0.1.EL.i686.rpm
+931ac692f6b6438cf275c7382af80d4e  kernel-xenU-2.6.9-67.0.1.EL.i686.rpm
+ac066af710b0239ac02167369edcdfe7  kernel-xenU-devel-2.6.9-67.0.1.EL.i686.rpm
+
+ia64:
+bddf17442cd069545b65a001e9f48222  kernel-2.6.9-67.0.1.EL.ia64.rpm
+2a976e19539a629858593bfbb4a76549  kernel-debuginfo-2.6.9-67.0.1.EL.ia64.rpm
+6b7d32cc452549b2cbb87b44d7030e78  kernel-devel-2.6.9-67.0.1.EL.ia64.rpm
+02b8601db5e4b8744d6194b3aa2c2a8b  kernel-largesmp-2.6.9-67.0.1.EL.ia64.rpm
+04eda6a8381f80643143fbb95288f8a8  kernel-largesmp-devel-2.6.9-67.0.1.EL.ia64.rpm
+
+noarch:
+ca0869512f974a15b88bdbff99d6e082  kernel-doc-2.6.9-67.0.1.EL.noarch.rpm
+
+x86_64:
+db06d45fdecf81276cf310d96c365c50  kernel-2.6.9-67.0.1.EL.x86_64.rpm
+d491438e388754f4756011a91f541d56  kernel-debuginfo-2.6.9-67.0.1.EL.x86_64.rpm
+9c20fdf6c2b8ca3e7383bcc998d9ded1  kernel-devel-2.6.9-67.0.1.EL.x86_64.rpm
+be9a35b125804c2f6b2ac2881aad97a7  kernel-largesmp-2.6.9-67.0.1.EL.x86_64.rpm
+3eee37ba0eb4e8b742ac0b12048cd04f  kernel-largesmp-devel-2.6.9-67.0.1.EL.x86_64.rpm
+ae76bb975de66c52043944b76f88b935  kernel-smp-2.6.9-67.0.1.EL.x86_64.rpm
+246d932e69b533808041a9c179090944  kernel-smp-devel-2.6.9-67.0.1.EL.x86_64.rpm
+29991e5a6a46a077eeccb9cb4dc0684e  kernel-xenU-2.6.9-67.0.1.EL.x86_64.rpm
+ae91a97d112bfb7af7e4465fbd9bd871  kernel-xenU-devel-2.6.9-67.0.1.EL.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4997">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4997</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5494">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5494</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHaWSXXlSAg2UNWIIRAnPZAJ0ajKzlUFAcrrURwiv8njLB30Gt/wCePQL/
+5Skt8JQ+SiRw9AXoueHc3O8=
+=9+Uv
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

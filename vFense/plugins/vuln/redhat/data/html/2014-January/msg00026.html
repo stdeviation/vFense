@@ -1,0 +1,199 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0112&#45;01] Moderate: openstack&#45;nova security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 30 Jan 2014 15:29:14 &#45;0500 -->
+<!--X-Message-Id: 201401302029.s0UKTCiE028321@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0112-01] Moderate: openstack-nova security and bug fix	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0112-01] Moderate: openstack-nova security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0112-01] Moderate: openstack-nova security and bug fix	update</li>
+<li><em>Date</em>: Thu, 30 Jan 2014 20:29:18 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-nova security and bug fix update
+Advisory ID:       RHSA-2014:0112-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0112.html">https://rhn.redhat.com/errata/RHSA-2014-0112.html</a>
+Issue date:        2014-01-30
+CVE Names:         CVE-2013-4463 CVE-2013-6491 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-nova packages that fix two security issues and three bugs
+are now available for Red Hat Enterprise Linux OpenStack Platform 3.0.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 3 - noarch
+
+3. Description:
+
+The openstack-nova packages provide OpenStack Compute (nova), which
+provides services for provisioning, managing, and using virtual
+machine instances.
+
+It was discovered that enabling &quot;qpid_protocol = ssl&quot; in the nova.conf file
+did not result in nova using SSL to communicate to Qpid. If Qpid was not
+configured to enforce SSL this could lead to sensitive information being
+sent unencrypted over the communication channel. (CVE-2013-6491)
+
+A flaw was found in the way OpenStack Compute controlled the size of disk
+images. An authenticated remote user could use malicious compressed qcow2
+disk images to consume large amounts of disk space, potentially causing a
+denial of service on the OpenStack Compute nodes. (CVE-2013-4463)
+
+Red Hat would like to thank the OpenStack project for reporting
+CVE-2013-4463. Upstream acknowledges Bernhard M. Wiedemann of SuSE as the
+original reporter of this issue.
+
+This update also fixes the following bugs:
+
+* When using GroupAntiAffinityFilter, the scheduler was not filtering
+instances in the group, which could cause an instance to not be scheduled
+at all if a group was specified on boot. With this fix, groups are taken
+into account and the instance is scheduled as expected. (BZ#1014948)
+
+* If an exchange had not been created previously by a consumer, the
+publisher would crash because it could not find the specified exchange.
+This resulted from Qpid's direct publisher using the wrong exchange type
+'Direct'. With this fix, the exchange type in the publisher has been
+changed to 'direct'. (BZ#1042055)
+
+* Unhandled errors in the Qpid consuming thread could kill it silently and
+isolate the component from the rest of the system. To fix this, the
+consuming thread has been made more resilient to errors by ensuring it does
+not die on an unhandled error. Compute now logs the error and retries the
+consuming thread. (BZ#1050213)
+
+All openstack-nova users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+996766 - CVE-2013-6491: Setting Qpid SSL protocol sets wrong variable [openstack-3]
+1014948 - GroupAntiAffinityFilter filters are broken
+1023239 - CVE-2013-4463 OpenStack Nova: Compressed disk image DoS
+1044562 - booting an instance with swap or ephemeral secondary disks doesn't work
+1050213 - Thread consuming qpid messages can die silently
+1059504 - CVE-2013-6491 Openstack nova: qpid SSL configuration
+
+6. Package List:
+
+OpenStack 3:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-nova-2013.1.4-4.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-nova-2013.1.4-4.el6ost.src.rpm</a>
+
+noarch:
+openstack-nova-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-api-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-cells-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-cert-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-common-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-compute-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-conductor-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-console-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-doc-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-network-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-objectstore-2013.1.4-4.el6ost.noarch.rpm
+openstack-nova-scheduler-2013.1.4-4.el6ost.noarch.rpm
+python-nova-2013.1.4-4.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4463.html">https://www.redhat.com/security/data/cve/CVE-2013-4463.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6491.html">https://www.redhat.com/security/data/cve/CVE-2013-6491.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFS6rWfXlSAg2UNWIIRAjNQAJ4imHqsxUofj0gu/HKdu5rb2ILXnACdEsIu
+sI/icPgJFzG44tTOka9O2pI=
+=iRE5
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00025.html">Date Prev</a>][<a href="msg00027.html">Date Next</a>] &nbsp; [<a href="msg00025.html">Thread Prev</a>][<a href="msg00027.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00026">Thread Index</A>]
+[<A HREF="date.html#00026">Date Index</A>]
+[<A HREF="author.html#00026">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

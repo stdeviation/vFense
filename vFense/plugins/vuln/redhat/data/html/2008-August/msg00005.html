@@ -1,0 +1,182 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0789&#45;01] Moderate: dnsmasq security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 11 Aug 2008 13:03:32 &#45;0400 -->
+<!--X-Message-Id: 200808111703.m7BH3VQa026667@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0789-01] Moderate: dnsmasq security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0789-01] Moderate: dnsmasq security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0789-01] Moderate: dnsmasq security update</li>
+<li><em>Date</em>: Mon, 11 Aug 2008 13:03:31 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: dnsmasq security update
+Advisory ID:       RHSA-2008:0789-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0789.html">https://rhn.redhat.com/errata/RHSA-2008-0789.html</a>
+Issue date:        2008-08-11
+CVE Names:         CVE-2008-1447 
+=====================================================================
+
+1. Summary:
+
+An updated dnsmasq package that implements UDP source-port randomization
+is now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+Dnsmasq is lightweight DNS forwarder and DHCP server. It is designed to
+provide DNS and, optionally, DHCP, to a small network.
+
+The dnsmasq DNS resolver used a fixed source UDP port. This could have made
+DNS spoofing attacks easier. dnsmasq has been updated to use random UDP
+source ports, helping to make DNS spoofing attacks harder. (CVE-2008-1447)
+
+All dnsmasq users are advised to upgrade to this updated package, that
+upgrades dnsmasq to version 2.45, which resolves this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+449345 - CVE-2008-1447 implement source UDP port randomization (CERT VU#800113)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/dnsmasq-2.45-1.el5_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/dnsmasq-2.45-1.el5_2.1.src.rpm</a>
+
+i386:
+dnsmasq-2.45-1.el5_2.1.i386.rpm
+dnsmasq-debuginfo-2.45-1.el5_2.1.i386.rpm
+
+x86_64:
+dnsmasq-2.45-1.el5_2.1.x86_64.rpm
+dnsmasq-debuginfo-2.45-1.el5_2.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/dnsmasq-2.45-1.el5_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/dnsmasq-2.45-1.el5_2.1.src.rpm</a>
+
+i386:
+dnsmasq-2.45-1.el5_2.1.i386.rpm
+dnsmasq-debuginfo-2.45-1.el5_2.1.i386.rpm
+
+ia64:
+dnsmasq-2.45-1.el5_2.1.ia64.rpm
+dnsmasq-debuginfo-2.45-1.el5_2.1.ia64.rpm
+
+ppc:
+dnsmasq-2.45-1.el5_2.1.ppc.rpm
+dnsmasq-debuginfo-2.45-1.el5_2.1.ppc.rpm
+
+s390x:
+dnsmasq-2.45-1.el5_2.1.s390x.rpm
+dnsmasq-debuginfo-2.45-1.el5_2.1.s390x.rpm
+
+x86_64:
+dnsmasq-2.45-1.el5_2.1.x86_64.rpm
+dnsmasq-debuginfo-2.45-1.el5_2.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1447">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1447</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.thekelleys.org.uk/dnsmasq/CHANGELOG">http://www.thekelleys.org.uk/dnsmasq/CHANGELOG</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIoHCZXlSAg2UNWIIRAus2AJ9jMmf+E9RFFrC5FfXhCdEpJpxRaQCeIHu3
+eLCw8SUQ204PyZI8K02NTEk=
+=p1Ic
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0657&#45;01] Moderate: openstack&#45;nova security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Mar 2013 14:28:37 &#45;0400 -->
+<!--X-Message-Id: 201303211828.r2LISaIk017750@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0657-01] Moderate: openstack-nova security, bug fix,	and enha</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00058.html">Date Prev</a>][<a href="msg00060.html">Date Next</a>] &nbsp; [<a href="msg00058.html">Thread Prev</a>][<a href="msg00060.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00059">Thread Index</A>]
+[<A HREF="date.html#00059">Date Index</A>]
+[<A HREF="author.html#00059">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0657-01] Moderate: openstack-nova security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0657-01] Moderate: openstack-nova security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Mar 2013 18:28:36 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-nova security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:0657-01
+Product:           Red Hat OpenStack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0657.html">https://rhn.redhat.com/errata/RHSA-2013-0657.html</a>
+Issue date:        2013-03-21
+CVE Names:         CVE-2013-1664 CVE-2013-1665 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-nova packages that fix two security issues, several bugs,
+and add an enhancement are now available for Red Hat OpenStack Folsom.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+OpenStack Folsom - noarch
+
+3. Description:
+
+The openstack-nova packages provide OpenStack Compute (code name Nova),
+which provides services for provisioning, managing, and using virtual
+machine instances.
+
+A denial of service flaw was found in the Extensible Markup Language (XML)
+parser used by Nova. A remote attacker could use this flaw to send a
+specially-crafted request to a Nova API, causing Nova to consume an
+excessive amount of CPU and memory. (CVE-2013-1664)
+
+A flaw was found in the XML parser used by Nova. If a remote attacker
+sent a specially-crafted request to a Nova API, it could cause Nova to
+connect to external entities, causing a large amount of system load, or
+allow an attacker to read files on the Nova server that are accessible to
+the user running Nova. (CVE-2013-1665)
+
+This update also fixes several bugs. The following are noteworthy changes:
+
+* In single node, all-in-one environments where all services (such as
+Nova, Glance, and Keystone) are installed and run on a single system, after
+a host reboot, some instances may have automatically started again, but
+soon after, automatically shut down. &quot;Instance shutdown by itself. Calling
+the stop API&quot; messages were logged to Nova logs (in &quot;/var/log/nova/&quot;) in
+these cases. (BZ#890512)
+
+* In environments using Quantum, after creating a network with two
+subnets, removing an IP address (using &quot;nova remove-fixed-ip&quot;), and then
+adding a fixed address (using &quot;nova add-fixed-ip&quot;), resulted in the
+virtual machine having two IP addresses. (BZ#908373)
+
+* Prior to this update, after converting a downloaded image to raw, the
+original, downloaded image (a large .part file) was not removed. After
+installing this update, the following three options must be configured in
+&quot;/etc/nova/nova.conf&quot; to correctly resolve this issue:
+
+remove_unused_base_images=true
+remove_unused_resized_minimum_age_seconds=60
+remove_unused_original_minimum_age_seconds=60
+
+(BZ#911103)
+
+Additionally, this update adds the following enhancement:
+
+* The RHSA-2013:0658 openstack-cinder update implemented a Cinder driver
+that allows Red Hat Storage to be used as a back-end for Cinder volumes.
+This update adds a libvirt connector to Nova, which is a requirement for
+using the new Cinder driver. Note that you must manually install the
+glusterfs and glusterfs-fuse packages on the Nova nodes.
+
+Additionally, when running Security-Enhanced Linux (SELinux) in Enforcing
+mode, the latest selinux-policy packages provided by RHBA-2013:0618 must be
+installed, otherwise denials will be logged when attempting to mount Red
+Hat Storage volumes. (BZ#912384)
+
+All users of openstack-nova are advised to upgrade to these updated
+packages, which correct these issues and add this enhancement. After
+installing the updated packages, the Nova running services will be
+restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+889868 - dnsmasq DHCP request blocked by default firewall rules
+890512 - Some Instances are shutoff after host reboot
+891347 - Use fallocate when copying disk images around in _base to improve copy performance and out of space errors
+891420 - Change default for compute node to poll for database connection indefinitely
+902409 - Network disassociation from a project doesn't work
+905113 - Backport qpid_hosts option - nova
+906783 - Quantum/Nova does not work with nova.virt.firewall.NoopFirewallDriver
+907178 - Deletion of the &quot;default&quot; security group fails without error
+908373 - Quantum: adding fixed ip to an instance on a network with two subnets using NOVA will results with two ip address
+910224 - CVE-2013-1664 CVE-2013-1665 OpenStack nova: XML entity parsing
+911103 - libvirt leaves large stale .part files on disk when downloading non raw images
+912384 - Backport GlusterFS connector from Grizzly
+912982 - CVE-2013-1665 Python xml bindings: External entity expansion in Python XML libraries inflicts potential security flaws and DoS vulnerabilities
+913613 - Some Instances are shutoff after they're suspended externally to nova
+913808 - CVE-2013-1664 Python xml bindings: Internal entity expansion in Python XML libraries inflicts DoS vulnerabilities
+914759 - nova-dhcpbridge does not support nova.conf and nova-dist.conf at the same time
+916241 - nova-dhcpbridge fails to startup
+
+6. Package List:
+
+OpenStack Folsom:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-nova-2012.2.3-4.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-nova-2012.2.3-4.el6ost.src.rpm</a>
+
+noarch:
+openstack-nova-2012.2.3-4.el6ost.noarch.rpm
+openstack-nova-api-2012.2.3-4.el6ost.noarch.rpm
+openstack-nova-cert-2012.2.3-4.el6ost.noarch.rpm
+openstack-nova-common-2012.2.3-4.el6ost.noarch.rpm
+openstack-nova-compute-2012.2.3-4.el6ost.noarch.rpm
+openstack-nova-console-2012.2.3-4.el6ost.noarch.rpm
+openstack-nova-doc-2012.2.3-4.el6ost.noarch.rpm
+openstack-nova-network-2012.2.3-4.el6ost.noarch.rpm
+openstack-nova-objectstore-2012.2.3-4.el6ost.noarch.rpm
+openstack-nova-scheduler-2012.2.3-4.el6ost.noarch.rpm
+openstack-nova-volume-2012.2.3-4.el6ost.noarch.rpm
+python-nova-2012.2.3-4.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1664.html">https://www.redhat.com/security/data/cve/CVE-2013-1664.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1665.html">https://www.redhat.com/security/data/cve/CVE-2013-1665.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0658.html">https://rhn.redhat.com/errata/RHSA-2013-0658.html</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2013-0618.html">https://rhn.redhat.com/errata/RHBA-2013-0618.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRS1EhXlSAg2UNWIIRAvjYAJkBOtoEQU0Oi0i9BUPl21HASWP5FACgns5i
+ei9nr9ngjqmnWQBphufqT4g=
+=Y4Xk
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00058.html">Date Prev</a>][<a href="msg00060.html">Date Next</a>] &nbsp; [<a href="msg00058.html">Thread Prev</a>][<a href="msg00060.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00059">Thread Index</A>]
+[<A HREF="date.html#00059">Date Index</A>]
+[<A HREF="author.html#00059">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

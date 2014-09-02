@@ -1,0 +1,223 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:1001&#45;01] Important: tog&#45;pegasus security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 25 Nov 2008 04:46:25 &#45;0500 -->
+<!--X-Message-Id: 200811250946.mAP9kNKW028943@ns3.rdu.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:1001-01] Important: tog-pegasus security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00015.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:1001-01] Important: tog-pegasus security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:1001-01] Important: tog-pegasus security update</li>
+<li><em>Date</em>: Tue, 25 Nov 2008 04:46:23 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: tog-pegasus security update
+Advisory ID:       RHSA-2008:1001-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-1001.html">https://rhn.redhat.com/errata/RHSA-2008-1001.html</a>
+Issue date:        2008-11-25
+CVE Names:         CVE-2008-4313 CVE-2008-4315 
+=====================================================================
+
+1. Summary:
+
+Updated tog-pegasus packages that fix security issues are now available
+for Red Hat Enterprise Linux 5.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team. 
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The tog-pegasus packages provide OpenPegasus Web-Based Enterprise
+Management (WBEM) services. WBEM is a platform and resource independent
+Distributed Management Task Force (DMTF) standard that defines a common
+information model and communication protocol for monitoring and controlling
+resources.
+
+Red Hat defines additional security enhancements for OpenGroup Pegasus WBEM
+services in addition to those defined by the upstream OpenGroup Pegasus
+release. For details regarding these enhancements, refer to the file
+&quot;README.RedHat.Security&quot;, included in the Red Hat tog-pegasus package.
+
+After re-basing to version 2.7.0 of the OpenGroup Pegasus code, these
+additional security enhancements were no longer being applied. As a
+consequence, access to OpenPegasus WBEM services was not restricted to the
+dedicated users as described in README.RedHat.Security. An attacker able to
+authenticate using a valid user account could use this flaw to send
+requests to WBEM services. (CVE-2008-4313)
+
+Note: default SELinux policy prevents tog-pegasus from modifying system
+files. This flaw's impact depends on whether or not tog-pegasus is confined
+by SELinux, and on any additional CMPI providers installed and enabled on a
+particular system.
+
+Failed authentication attempts against the OpenPegasus CIM server were not
+logged to the system log as documented in README.RedHat.Security. An
+attacker could use this flaw to perform password guessing attacks against a
+user account without leaving traces in the system log. (CVE-2008-4315)
+
+All tog-pegasus users are advised to upgrade to these updated packages,
+which contain patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+459217 - CVE-2008-4313 tog-pegasus: WBEM services access not restricted to dedicated user after 2.7.0 rebase
+472017 - CVE-2008-4315 tog-pegasus: failed authentication attempts not logged via PAM
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/tog-pegasus-2.7.0-2.el5_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/tog-pegasus-2.7.0-2.el5_2.1.src.rpm</a>
+
+i386:
+tog-pegasus-2.7.0-2.el5_2.1.i386.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.i386.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.i386.rpm
+
+x86_64:
+tog-pegasus-2.7.0-2.el5_2.1.i386.rpm
+tog-pegasus-2.7.0-2.el5_2.1.x86_64.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.i386.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.x86_64.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.i386.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/tog-pegasus-2.7.0-2.el5_2.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/tog-pegasus-2.7.0-2.el5_2.1.src.rpm</a>
+
+i386:
+tog-pegasus-2.7.0-2.el5_2.1.i386.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.i386.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.i386.rpm
+
+ia64:
+tog-pegasus-2.7.0-2.el5_2.1.ia64.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.ia64.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.ia64.rpm
+
+ppc:
+tog-pegasus-2.7.0-2.el5_2.1.ppc.rpm
+tog-pegasus-2.7.0-2.el5_2.1.ppc64.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.ppc.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.ppc64.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.ppc.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.ppc64.rpm
+
+s390x:
+tog-pegasus-2.7.0-2.el5_2.1.s390.rpm
+tog-pegasus-2.7.0-2.el5_2.1.s390x.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.s390.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.s390x.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.s390.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.s390x.rpm
+
+x86_64:
+tog-pegasus-2.7.0-2.el5_2.1.i386.rpm
+tog-pegasus-2.7.0-2.el5_2.1.x86_64.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.i386.rpm
+tog-pegasus-debuginfo-2.7.0-2.el5_2.1.x86_64.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.i386.rpm
+tog-pegasus-devel-2.7.0-2.el5_2.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4313">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4313</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4315">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4315</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJK8lqXlSAg2UNWIIRAn7QAJ4449rpWWajJ+cszCFpZLNsILUbUACgmDs3
+hGhO+GoY6u9ptfumG0UShhE=
+=uX6C
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00015.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

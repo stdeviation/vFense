@@ -1,0 +1,234 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0215&#45;01] Critical: cfme security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 11 Mar 2014 13:28:52 &#45;0400 -->
+<!--X-Message-Id: 201403111728.s2BHSpLV015519@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0215-01] Critical: cfme security, bug fix,	and enhancement up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0215-01] Critical: cfme security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:0215-01] Critical: cfme security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 11 Mar 2014 17:28:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: cfme security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:0215-01
+Product:           Red Hat CloudForms
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0215.html">https://rhn.redhat.com/errata/RHSA-2014-0215.html</a>
+Issue date:        2014-03-11
+CVE Names:         CVE-2013-4164 CVE-2014-0057 CVE-2014-0081 
+                   CVE-2014-0082 
+=====================================================================
+
+1. Summary:
+
+Updated cfme packages that fix multiple security issues, several bugs, and
+add various enhancements are now available for Red Hat CloudForms 3.0.
+
+The Red Hat Security Response Team has rated this update as having Critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Management Engine - noarch, x86_64
+
+3. Description:
+
+Red Hat CloudForms Management Engine delivers the insight, control, and
+automation enterprises need to address the challenges of managing virtual
+environments, which are far more complex than physical ones. This
+technology enables enterprises with existing virtual infrastructures
+to improve visibility and control, and those just starting virtualization
+deployments to build and operate a well-managed virtual infrastructure.
+
+A buffer overflow flaw was found in the way Ruby parsed floating point
+numbers from their text representation. If an application using Ruby
+accepted untrusted input strings and converted them to floating point
+numbers, an attacker able to provide such input could cause the application
+to crash or, possibly, execute arbitrary code with the privileges of the
+application. (CVE-2013-4164)
+
+It was found that Red Hat CloudForms Management Engine did not properly
+sanitize user-supplied values in the ServiceController. A remote attacker
+could invoke arbitrary method calls in the application controller that, due
+to a lack of sanitization, could allow access to private methods that could
+possibly allow the attacker to execute arbitrary code on the host system.
+(CVE-2014-0057)
+
+It was found that several number conversion helpers in Action View did not
+properly escape all their parameters. An attacker could use these flaws to
+perform a cross-site scripting (XSS) attack on an application that uses
+data submitted by a user as parameters to the affected helpers.
+(CVE-2014-0081)
+
+A memory consumption issue was discovered in the text rendering component
+of Action View. A remote attacker could use this flaw to perform a denial
+of service attack by sending specially crafted queries that would result in
+the creation of Ruby symbols that were never garbage collected.
+(CVE-2014-0082)
+
+Red Hat would like to thank the Ruby on Rails Project for reporting
+CVE-2014-0081 and CVE-2014-0082. Upstream acknowledges Kevin Reintjes as
+the original reporter of CVE-2014-0081, and Toby Hsieh of SlideShare as the
+original reporter of CVE-2014-0082. The CVE-2014-0057 issue was discovered
+by Jan Rusnacko of the Red Hat Product Security Team.
+
+This update fixes several bugs and adds multiple enhancements.
+Documentation for these changes will be available shortly from the Red Hat
+CloudForms 3.0 Management Engine 5.2 Technical Notes linked to in the
+References section.
+
+All users of Red Hat CloudForms are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues and add
+these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1033460 - CVE-2013-4164 ruby: heap overflow in floating point parsing
+1064140 - CVE-2014-0057 CFME: Dangerous send in ServiceController
+1065520 - CVE-2014-0081 rubygem-actionpack: number_to_currency, number_to_percentage and number_to_human XSS vulnerability
+1065538 - CVE-2014-0082 rubygem-actionpack: Action View string handling denial of service
+
+6. Package List:
+
+Management Engine:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/cfme-5.2.2.3-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/cfme-5.2.2.3-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-ruby-1.9.3.448-40.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-ruby-1.9.3.448-40.1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-actionpack-3.2.13-5.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-actionpack-3.2.13-5.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-amq-protocol-1.9.2-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-amq-protocol-1.9.2-3.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-bunny-1.0.7-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-bunny-1.0.7-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-excon-0.31.0-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-excon-0.31.0-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-fog-1.19.0-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-fog-1.19.0-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-linux_admin-0.7.0-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-linux_admin-0.7.0-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-more_core_extensions-1.1.2-1.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-more_core_extensions-1.1.2-1.el6cf.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-nokogiri-1.5.6-3.el6cf.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/CloudForms/SRPMS/ruby193-rubygem-nokogiri-1.5.6-3.el6cf.src.rpm</a>
+
+noarch:
+ruby193-ruby-irb-1.9.3.448-40.1.el6.noarch.rpm
+ruby193-rubygem-actionpack-3.2.13-5.el6cf.noarch.rpm
+ruby193-rubygem-amq-protocol-1.9.2-3.el6cf.noarch.rpm
+ruby193-rubygem-amq-protocol-doc-1.9.2-3.el6cf.noarch.rpm
+ruby193-rubygem-bunny-1.0.7-1.el6cf.noarch.rpm
+ruby193-rubygem-bunny-doc-1.0.7-1.el6cf.noarch.rpm
+ruby193-rubygem-excon-0.31.0-1.el6cf.noarch.rpm
+ruby193-rubygem-fog-1.19.0-1.el6cf.noarch.rpm
+ruby193-rubygem-linux_admin-0.7.0-1.el6cf.noarch.rpm
+ruby193-rubygem-more_core_extensions-1.1.2-1.el6cf.noarch.rpm
+ruby193-rubygems-1.8.23-40.1.el6.noarch.rpm
+ruby193-rubygems-devel-1.8.23-40.1.el6.noarch.rpm
+
+x86_64:
+cfme-5.2.2.3-1.el6cf.x86_64.rpm
+cfme-appliance-5.2.2.3-1.el6cf.x86_64.rpm
+cfme-debuginfo-5.2.2.3-1.el6cf.x86_64.rpm
+cfme-lib-5.2.2.3-1.el6cf.x86_64.rpm
+mingw32-cfme-host-5.2.2.3-1.el6cf.x86_64.rpm
+ruby193-ruby-1.9.3.448-40.1.el6.x86_64.rpm
+ruby193-ruby-debuginfo-1.9.3.448-40.1.el6.x86_64.rpm
+ruby193-ruby-devel-1.9.3.448-40.1.el6.x86_64.rpm
+ruby193-ruby-libs-1.9.3.448-40.1.el6.x86_64.rpm
+ruby193-ruby-tcltk-1.9.3.448-40.1.el6.x86_64.rpm
+ruby193-rubygem-bigdecimal-1.1.0-40.1.el6.x86_64.rpm
+ruby193-rubygem-io-console-0.3-40.1.el6.x86_64.rpm
+ruby193-rubygem-nokogiri-1.5.6-3.el6cf.x86_64.rpm
+ruby193-rubygem-nokogiri-debuginfo-1.5.6-3.el6cf.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4164.html">https://www.redhat.com/security/data/cve/CVE-2013-4164.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0057.html">https://www.redhat.com/security/data/cve/CVE-2014-0057.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0081.html">https://www.redhat.com/security/data/cve/CVE-2014-0081.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0082.html">https://www.redhat.com/security/data/cve/CVE-2014-0082.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/CloudForms/3.0/html/Management_Engine_5.2_Technical_Notes/index.html">https://access.redhat.com/site/documentation/en-US/CloudForms/3.0/html/Management_Engine_5.2_Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTH0emXlSAg2UNWIIRAiKuAJwL5EJD7SME/nm5B5C6m3SU3QrDAQCdEW3i
+mWyq+epIWnVm/Pfa1suA2vA=
+=bQO5
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1321&#45;01] Moderate: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 20 Sep 2011 13:56:04 &#45;0400 -->
+<!--X-Message-Id: 201109201755.p8KHtw41002642@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1321-01] Moderate: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1321-01] Moderate: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1321-01] Moderate: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 20 Sep 2011 17:55:58 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel security and bug fix update
+Advisory ID:       RHSA-2011:1321-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1321.html">https://rhn.redhat.com/errata/RHSA-2011-1321.html</a>
+Issue date:        2011-09-20
+CVE Names:         CVE-2011-2723 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix one security issue and several bugs are
+now available for Red Hat Enterprise Linux 5.6 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel.
+
+Security fix:
+
+* A flaw in skb_gro_header_slow() in the Linux kernel could lead to GRO
+(Generic Receive Offload) fields being left in an inconsistent state. An
+attacker on the local network could use this flaw to trigger a denial of
+service. (CVE-2011-2723, Moderate)
+
+Red Hat would like to thank Brent Meshier for reporting this issue.
+
+Bug fixes:
+
+* When reading a file from a subdirectory in /proc/bus/pci/ while
+hot-unplugging the device related to that file, the system will crash. Now,
+the kernel correctly handles the simultaneous removal of a device and
+access to the representation of that device in the proc file system.
+(BZ#713454)
+
+* RHSA-2011:0017 introduced a regression: Non-disk SCSI devices (except for
+tape drives) such as enclosure or CD-ROM devices were hidden when attached
+to a SAS based RAID controller that uses the megaraid_sas driver. With this
+update, such devices are accessible, as expected. (BZ#726487)
+
+* The fix for CVE-2010-3432 provided in RHSA-2011:0004 introduced a
+regression: Information in sctp_packet_config(), which was called before
+appending data chunks to a packet, was not reset, causing considerably poor
+SCTP (Stream Control Transmission Protocol) performance. With this update,
+the packet information is reset after transmission. (BZ#727591)
+
+* Certain systems do not correctly set the ACPI FADT APIC mode bit. They
+set the bit to &quot;cluster&quot; mode instead of &quot;physical&quot; mode which caused these
+systems to boot without the TSC (Time Stamp Counter). With this update, the
+ACPI FADT check has been removed due to its unreliability. (BZ#728162)
+
+* Performance when invalidating and rereading cached data as a glock moves
+around the cluster with GFS2 is improved. (BZ#729082)
+
+* Performance issues occurred when multiple nodes attempted to call mmap()
+on the same inode at the same time on a GFS2 file system, as it was using
+an exclusive glock. With this update, a shared lock is used when &quot;noatime&quot;
+is set on the mount, allowing mmap() operations to occur in parallel,
+fixing this bug. Note that this issue only refers to mmap() system calls,
+and not to subsequent page faults. (BZ#729090)
+
+* Some of the functions in the GFS2 file system were not reserving enough
+space for the resource group header in a transaction and for resource
+groups bit blocks that get added when a memory allocation is performed.
+That resulted in failed write and allocation operations. With this update,
+GFS2 makes sure to reserve space in the described scenario, using the new
+gfs2_rg_blocks() inline function. (BZ#729092)
+
+* When GFS2 grew the file system, it never reread the rindex file during
+the grow. This is necessary for large grows when the file system is almost
+full, and GFS2 needs to use some of the space allocated earlier in the grow
+to complete it. Now, if GFS2 fails to reserve the necessary space and the
+rindex data is not up-to-date, it rereads it. (BZ#729094)
+
+* Previously, when the Xen hypervisor split a 2 MB page into 4 KB pages, it
+linked the new page from PDE (Page Directory Entry) before it filled
+entries of the page with appropriate data. Consequently, when doing a live
+migration with EPT (Extended Page Tables) enabled on a non-idle guest
+running with more than two virtual CPUs, the guest often terminated
+unexpectedly. With this update, the Xen hypervisor prepares the page table
+entry first, and then links it in. (BZ#730684)
+
+* Changes made to TSC as a clock source for IRQs caused virtual machines
+running under the VMware ESX or ESXi hypervisors to become unresponsive
+during the initial kernel boot process. With this update, the
+enable_tsc_timer flag enables the do_timer_tsc_timekeeping() function to be
+called in the do_timer_interrupt_hook() function, preventing a deadlock in
+the timer interrupt handler. (BZ#730688)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+726552 - CVE-2011-2723 kernel: gro: only reset frag0 when skb can be pulled
+729090 - mmapping a read only file on a gfs2 filesystem incorrectly acquires an exclusive glock
+729092 - GFS2: Not enough space reserved in gfs2_write_begin and possibly elsewhere.
+729094 - GFS2: Kernel changes necessary to allow growing completely full filesystems.
+
+6. Package List:
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+kernel-2.6.18-238.27.1.el5.src.rpm
+
+i386:
+kernel-2.6.18-238.27.1.el5.i686.rpm
+kernel-PAE-2.6.18-238.27.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-238.27.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-238.27.1.el5.i686.rpm
+kernel-debug-2.6.18-238.27.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-238.27.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-238.27.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-238.27.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-238.27.1.el5.i686.rpm
+kernel-devel-2.6.18-238.27.1.el5.i686.rpm
+kernel-headers-2.6.18-238.27.1.el5.i386.rpm
+kernel-xen-2.6.18-238.27.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-238.27.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-238.27.1.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-238.27.1.el5.ia64.rpm
+kernel-debug-2.6.18-238.27.1.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-238.27.1.el5.ia64.rpm
+kernel-debug-devel-2.6.18-238.27.1.el5.ia64.rpm
+kernel-debuginfo-2.6.18-238.27.1.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-238.27.1.el5.ia64.rpm
+kernel-devel-2.6.18-238.27.1.el5.ia64.rpm
+kernel-headers-2.6.18-238.27.1.el5.ia64.rpm
+kernel-xen-2.6.18-238.27.1.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-238.27.1.el5.ia64.rpm
+kernel-xen-devel-2.6.18-238.27.1.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-238.27.1.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-238.27.1.el5.ppc64.rpm
+kernel-debug-2.6.18-238.27.1.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-238.27.1.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-238.27.1.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-238.27.1.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-238.27.1.el5.ppc64.rpm
+kernel-devel-2.6.18-238.27.1.el5.ppc64.rpm
+kernel-headers-2.6.18-238.27.1.el5.ppc.rpm
+kernel-headers-2.6.18-238.27.1.el5.ppc64.rpm
+kernel-kdump-2.6.18-238.27.1.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-238.27.1.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-238.27.1.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-238.27.1.el5.s390x.rpm
+kernel-debug-2.6.18-238.27.1.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-238.27.1.el5.s390x.rpm
+kernel-debug-devel-2.6.18-238.27.1.el5.s390x.rpm
+kernel-debuginfo-2.6.18-238.27.1.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-238.27.1.el5.s390x.rpm
+kernel-devel-2.6.18-238.27.1.el5.s390x.rpm
+kernel-headers-2.6.18-238.27.1.el5.s390x.rpm
+kernel-kdump-2.6.18-238.27.1.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-238.27.1.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-238.27.1.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-238.27.1.el5.x86_64.rpm
+kernel-debug-2.6.18-238.27.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-238.27.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-238.27.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-238.27.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-238.27.1.el5.x86_64.rpm
+kernel-devel-2.6.18-238.27.1.el5.x86_64.rpm
+kernel-headers-2.6.18-238.27.1.el5.x86_64.rpm
+kernel-xen-2.6.18-238.27.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-238.27.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-238.27.1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2723.html">https://www.redhat.com/security/data/cve/CVE-2011-2723.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOeNOfXlSAg2UNWIIRAuD/AKCPLlBb/lR2p2PKXQGw04z92cTe1QCfTy/R
+CvpPf99efqe7jE5kA3+wqXk=
+=kMLb
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00033.html">Date Prev</a>][<a href="msg00035.html">Date Next</a>] &nbsp; [<a href="msg00033.html">Thread Prev</a>][<a href="msg00035.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00034">Thread Index</A>]
+[<A HREF="date.html#00034">Date Index</A>]
+[<A HREF="author.html#00034">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

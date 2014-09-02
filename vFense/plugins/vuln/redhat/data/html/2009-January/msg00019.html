@@ -1,0 +1,723 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0225&#45;02] Important: Red Hat Enterprise Linux 5.3 kernel	security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 20 Jan 2009 14:35:12 &#45;0500 -->
+<!--X-Message-Id: 200901201935.n0KJZDxh006140@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0225-02] Important: Red Hat Enterprise Linux 5.3 kernel	secur</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0225-02] Important: Red Hat Enterprise Linux 5.3 kernel	security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0225-02] Important: Red Hat Enterprise Linux 5.3 kernel	security and bug fix update</li>
+<li><em>Date</em>: Tue, 20 Jan 2009 14:35:12 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Enterprise Linux 5.3 kernel security and bug fix update
+Advisory ID:       RHSA-2009:0225-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0225.html">https://rhn.redhat.com/errata/RHSA-2009-0225.html</a>
+Issue date:        2009-01-20
+Keywords:          kernel update
+CVE Names:         CVE-2008-5029 CVE-2008-5079 CVE-2008-5182 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix three security issues, address several
+hundred bugs and add numerous enhancements are now available as part of the
+ongoing support and maintenance of Red Hat Enterprise Linux version 5. This
+is the third regular update.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+
+3. Description:
+
+The Linux kernel (the core of the Linux operating system)
+
+These updated packages contain 730 bug fixes and enhancements for the Linux
+kernel. Space precludes a detailed description of each of these changes in
+this advisory and users are therefore directed to the release notes for Red
+Hat Enterprise Linux 5.3 for information on 97 of the most significant of
+these changes. 
+
+Details of three security-related bug fixes are set out below, along with
+notes on other broad categories of change not covered in the release notes.
+For more detailed information on specific bug fixes or enhancements, please
+consult the Bugzilla numbers listed in this advisory.
+
+* when fput() was called to close a socket, the __scm_destroy() function  
+in the Linux kernel could make indirect recursive calls to itself. This  
+could, potentially, lead to a denial of service issue. (CVE-2008-5029,  
+Important)
+
+* a flaw was found in the Asynchronous Transfer Mode (ATM) subsystem. A
+local, unprivileged user could use the flaw to listen on the same socket
+more than once, possibly causing a denial of service. (CVE-2008-5079,
+Important)
+
+* a race condition was found in the Linux kernel &quot;inotify&quot; watch removal
+and umount implementation. This could allow a local, unprivileged user  
+to cause a privilege escalation or a denial of service. (CVE-2008-5182,  
+Important)
+
+* Bug fixes and enhancements are provided for:
+
+* support for specific NICs, including products from the following
+manufacturers:
+Broadcom
+Chelsio
+Cisco
+Intel
+Marvell
+NetXen
+Realtek
+Sun
+
+* Fiber Channel support, including support for Qlogic qla2xxx,
+qla4xxx, and qla84xx HBAs and the FCoE, FCP, and zFCP protocols.
+
+* support for various CPUs, including:
+AMD Opteron processors with 45 nm SOI (&quot;Shanghai&quot;)
+AMD Turion Ultra processors
+Cell processors
+Intel Core i7 processors
+
+* Xen support, including issues specific to the IA64 platform, systems
+using AMD processors, and Dell Optiplex GX280 systems
+
+* ext3, ext4, GFS2, NFS, and SPUFS
+
+* Infiniband (including eHCA, eHEA, and IPoIB) support
+
+* common I/O (CIO), direct I/O (DIO), and queued direct I/O (qdio) support
+
+* the kernel distributed lock manager (DLM)
+
+* hardware issues with: SCSI, IEEE 1394 (FireWire), RAID (including issues
+specific to Adaptec controllers), SATA (including NCQ), PCI, audio, serial
+connections, tape-drives, and USB
+
+* ACPI, some of a general nature and some related to specific hardware
+including: certain Lenovo Thinkpad notebooks, HP DC7700 systems, and
+certain machines based on Intel Centrino processor technology.
+
+* CIFS, including Kerberos support and a tech-preview of DFS support
+
+* networking support, including IPv6, PPPoE, and IPSec
+
+* support for Intel chipsets, including:
+Intel Cantiga chipsets
+Intel Eagle Lake chipsets
+Intel i915 chipsets
+Intel i965 chipsets
+Intel Ibex Peak chipsets
+Intel chipsets offering QuickPath Interconnects (QPI)
+
+* device mapping issues, including some in device mapper itself
+
+* various issues specific to IA64 and PPC
+
+* CCISS, including support for Compaq SMART Array controllers P711m and
+P712m and other new hardware
+
+* various issues affecting specific HP systems, including:
+DL785G5
+XW4800
+XW8600
+XW8600
+XW9400
+
+* IOMMU support, including specific
+issues with AMD and IBM Calgary hardware
+
+* the audit subsystem
+
+* DASD support
+
+* iSCSI support, including issues specific to Chelsio T3 adapters
+
+* LVM issues
+
+* SCTP management information base (MIB) support
+
+* issues with: autofs, kdump, kobject_add, libata, lpar, ptrace, and utrace
+
+* platforms using Intel Enhanced Error Handling (EEH)
+
+* EDAC issues for AMD K8 and Intel i5000
+
+* ALSA, including support for new hardware
+
+* futex support
+
+* hugepage support
+
+* Intelligent Platform Management Interface (IPMI) support
+
+* issues affecting NEC/Stratus servers
+
+* OFED support
+
+* SELinux 
+
+* various Virtio issues
+
+All users are advised to upgrade to these updated packages, which resolve
+these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+228836 - acpi processor  module displays errors if hyperthreading disabled
+231369 - GFS2 will panic if you misspell any mount options
+236750 - When bonding is used and IPV6 is enabled the message of 'kernel: bond0: duplicate address detected!' is output
+239604 - [RHEL5] console: kobject_add failed
+243526 - IPv6 default route does not work
+244135 - audit tty input
+249726 - Misspellings in RPM description, suggested clarifications
+250104 - RHEL5 Kernel patches for blktap statistics
+254195 - use after free in nlm subsystem
+350281 - IPSec Packet has no Non-ESP marker
+370471 - [RFE] Add support for Wacom PTZ-431W to kernel
+376831 - Read from /proc/ppc64/rtas/error_log does not honor O_NONBLOCK
+382491 - duplicate packet from ipt_CLUSTERIP module
+390601 - [RHEL5] EDAC k8 MC0: extended error code: GART error
+406051 - Marvell NIC using skge driver loses promiscuous mode on rewiring
+412691 - kernel-xen panic when X shuts down
+420961 - Driver sky2 lost support for Marvell 88E8056 network controller
+423521 - memory leak on size-8192 buckets with NFSV4
+425341 - Please add vscnprintf and down_write_trylock to KABI Whitelist
+425955 - resize2fs online resize fails with small journal
+426096 - Xenoprof check_ctrs/start/stop fixes for intel family 6
+426895 - fix default route doesn't work.
+428275 - Need EOE (End of Event) audit message sent from kernel.
+428277 - Audit subsystem SIGUSR2 support
+428696 - nVidia MCP55 MCP55 Ethernet (rev a3) not functional on kernel 2.6.18-53.1.4
+428720 - [RHEL5 U2] Connectathon RHEL5 client to RHEL4 server, Connectathon failure
+429054 - soft lockup while unmounting a read-only filesystem with errors
+429142 - RHEL5.2: ecryptfs oops after lower persistent file creation failure
+429337 - Make dm interfaces available for external modules.
+429941 - [RHEL5 U2] Audit fails to shutdown properly
+429950 - [firewire] unable to use disk (giving up on config rom)
+429951 - [firewire] unable to use disk (fw_sbp2: failed to login to ...)
+430300 - [firewire] ohci iso receive support incomplete
+431183 - utrace: PTRACE_POKEUSR_AREA corrupts ACR0
+431365 - SCSI IO errors do not propagate properly with certain SCSI devices
+431868 - mounting CIFS subshare doesn't autoconvert prepath delimiters
+432057 - GFS2: d_doio stuck in readv() waiting for pagelock.
+432867 - memory corruption due to portmap call succeeding after parent rpc_clnt has been freed
+433661 - kernel panic with voip traffic (h323)
+434538 - sr #1768018 : numlock led does not reflect the status of numlock
+434800 - xenkbd can crash when probe fails
+434998 - utrace: ERESTARTSYS from calling a function from a debugger
+435110 - fix up remaining sctp MIB problems
+435115 - kernel freezes when running script which features ecryptfs parts of kernel
+435144 - whitelist: iounmap(ia64) - Failed ABI dependencies for IA64 mpt SCSI drivers
+435291 - LTC41974-Pages of a memory mapped NFS file get corrupted.
+436004 - 50-75 % drop in nfs-server rewrite performance compared to rhel 4.6+
+436068 - [Areca 5.3 feat] Update arcmsr to version 1.20.00.15.RH1
+436686 - tg3.c does not build on sparc with &amp;gt; 2.6.18-53.el5
+436966 - e1000_clean_tx_irq: Detected Tx Unit Hang - 82546EB
+437129 - Rpm install fails due to missing symbols required in myri10ge-kmod x86_64 rpm
+437479 - remove extraneous error field from nfs_readdir_descriptor_t
+437544 - fix bad merge in nfs3_write_done and nfs3_commit_done
+437579 - batch kprobe unregister
+437803 - gfs2 crash - BUG: unable to handle kernel NULL pointer dereference at virtual address
+437882 - utrace: orig_rax 0x00000000ffffffff not recognized as -1
+437958 - /proc/&amp;lt;pid&amp;gt;/environ not always accessible when receiving PTRACE_EVENT_EXIT
+438153 - Poor LVM mirroring performance
+438230 - ia64: suspecious compile warning in brew
+438423 - backport patch to RHEL5 have it flip to synchronous writes when there is a write error
+438761 - LTC:5.4:201049:DM-MP SCSI Hardware Handlers
+439193 - Assertion failure in journal_next_log_block
+439194 - Assertion failure in journal_start() at fs/jbd/transaction.c:274: 'handle-&amp;gt;h_transaction-&amp;gt;t_journal == journal'
+439899 - [RFE] Add uvcvideo module to the kernel.
+439917 - kernel: splice: fix bad unlock_page() in error case [rhel-5.3]
+439918 - kernel: dio: zero struct dio with kzalloc instead of manually [rhel-5.3]
+440261 - xen/ia64 asm missing srlz instruction
+440413 - ecryptfs module incorrectly checks error codes in process_request_key_err
+440506 - panic in aoe:aoecmd_ata_rsp during direct I/O to lvm [snap,mirror,stripe]
+441615 - HP DC7700 ACPI problem
+441640 - RHEL 5.1 will incorrectly mark SCSI devices as offline due to improper error handling
+441716 - Fake ARP dropped after migration leading to loss of network connectivity
+441832 - mptscsi race between hotremove and mptscsih_bus_reset
+442426 - do not limit locked memory when RLIMIT_MEMLOCK is RLIM_INFINITY
+442577 - Backport fix for possible data corruption in mark_buffer_dirty on SMP
+442661 - [5.2][kdump][xen] crash failed to read vmcore from Dom0 Kernel
+442723 - Xen Support more than 16 disk devices (kernel)
+442736 - launching too many guests panics with &quot;No available IRQ to bind to: increase NR_IRQS!&quot;
+442820 - IPV6DOD: ESP with 3des-cbc for encrypt and authentication set to &quot;null&quot;
+442906 - libata: sata_nv - disable ADMA by default
+442991 - Include xenpv-driver in bare metal kernel rpm.
+443043 - fix setuid/setgid clearing by knfsd
+443395 - cp -p does not copy mtime to CIFS share
+443522 - ls shows two /proc/[pid]/limits files for every process
+443618 - [REG][Xen][5.2beta] cannot open a vmcore of xen-kdump with crash
+443627 - kernel dm snapshot: PPC64: kernel OOPS during activation of snapshot with small chunksize
+443645 - ST Driver causing kernel panic condition
+443853 - RHEL 5.3 NULL pointer dereferenced in powernowk8_init
+443896 - RFE: [Ext4 enabler] backport vfs helpers to facilitate ext4 backport and testing
+444582 - IPV6DOD: all MCAST_* socket options fail  with 32-bit app, 64-bit kernel due to padding
+444589 - xentop - incompatibility between HV and userspace toolset
+444611 - kernel doesn't honor ADDR_NO_RANDOMIZE for stack
+444759 - high I/O wait using 3w-9xxx
+444776 - iBFT target info not parsed properly by the iscsi_ibft module
+444865 - oops in cifs module while trying to stop a thread (kthread_stop) during filesystem mount
+444961 - softlockup when repeatedly dropping caches
+445095 - BusLogic module can't compile in the rhel 5.2 beta kernel
+445211 - [RFE] DTR/DSR flow control
+445422 - Feature: allow panic on softlockup warnings
+445522 - clean up CIFS build warnings
+445649 - [PATCH][RHEL5.1] Performance Improvement of fdatasync(2) in case of Overwrite
+445674 - Direct I/O cache invalidation after sync writes
+445787 - debugfs: file/directory creation error
+446068 - [RHEL5] k8_edac: typo in 'EDAC k8 MC0: GART TLB errorr: '
+446076 - [RHEL5 U2] iwl4965 -&amp;gt; compat module taints kernel
+446142 - CIFS: slab error in kmem_cache_destroy(): cache `cifs_request': Can't free all objects
+446188 - BUG: Don't reserve crashkernel memory &amp;gt; 4 GB on ia64
+446250 - IPV6DOD: xfrm reverse icmp feature does not seem to work correctly.
+446599 - jbd races lead to EIO for O_DIRECT
+446707 - Add support for filetype option in audit subsystem
+446962 - Access to firewire devices is still allowed after the device is removed from the bus.
+447400 - CIFS VFS: Send error in FindClose = -9
+447586 - DM failing path due to a communication failure on a single i/o
+447742 - JBD: Fix typo that could result in filesystem corruption.
+447748 - GFS2: lock_dlm is not always delivering callbacks in the right order
+448328 - ssh connection hangs when running command producing large text output after running &quot;service iptables restart&quot;
+448762 - FEAT: Update ieee80211 component and associated drivers
+448763 - FEAT: Add rt2x00 drivers
+448764 - FEAT: Add rtl818x drivers
+449668 - RHEL5.3: update ecryptfs kernelspace to 2.6.26 codebase
+449787 - FEAT: RHEL5.3 update acpi-cpufreq driver
+449945 - Guest OS install causes host machine to crash
+449948 - Add gate.lds to Documentation/dontdiff
+450130 - dlm: fixes for mixed endian cluster
+450132 - dlm: fixes for recovery of user lockspace
+450133 - dlm: keep cached master rsbs during recovery
+450135 - dlm: save master info after failed no-queue request
+450136 - dlm: check for null in device_write [rhel-5.3]
+450137 - dlm: fix basts for granted CW waiting PR/CW
+450138 - dlm: move plock code from gfs2
+450184 - Ensure that 'noac' and/or 'actimeo=0' turn off attribute caching
+450219 - bonding driver can leave rtnl_lock unbalanced
+450276 - GFS2: cannot use fifo nodes (named pipes)
+450566 - FEAT: RHEL5.3 backport fallocate syscall
+450786 - [Stratus 5.3 bug] kernel NULL pointer dereference at usbdev_read
+450855 - Unbalance reference count in ndisc_recv_ns
+450921 - s2io intr_type documentation inaccurate
+451007 - FEAT: RHEL 5.3 HDA ALSA driver update from mainstream
+451008 - Rpmbuild generates incorrect packages due to typos in the kernel-2.6.spec file.
+451157 - [Stratus 5.3][2/2] ttyS1 lost interrupt and it stops transmitting
+451196 - ip tunnel can't be bound to another device
+451317 - deadlock when rpc_malloc tries to flush NFS pages
+451586 - RHEL5.3: SB600/700 SATA controller PMP support
+451591 - Handle invalid ACPI SLIT table
+451593 - Multiple outstanding ptc.g instruction support
+451745 - a check for a buggy HP SAL caused problems booting as a guest in a virtual machine
+451945 - Update 3w-xxxx to version 1.26.03.000-2.6.18RH
+451946 - Update 3w-9xxx to version 2.26.08.003-2.6.18RH
+452004 - gfs2: BUG: unable to handle kernel paging request at ffff81002690e000
+452175 - kernel BUG at arch/i386/mm/highmem-xen.c:43! with errata/RHBA-2008-0314 installed
+452535 - CONFIG_AUDITSYSCALL requires SELinux
+452577 - Actual &amp;amp; placeholder funcs have differing param counts
+452761 - r8169 driver broken in 2.6.18-92+ kernels.
+453038 - Missing functions in UP kernel
+453094 - deadlock when lockd tries to take f_sema that it already has
+453394 - [RHEL5.2]: Running strace with a bad syscall doesn't return -ENOSYS
+453441 - [QLogic 5.3 bug] qla2xxx- provide additional statistics to user
+453462 - update CIFS for RHEL5.3
+453472 - [aacraid] aac_srb: aac_fib_send failed with status 8195
+453563 - RTL8111/8168B network card does not work
+453574 - virtual ethernet device stops working on reception of duplicate backend state change signals
+453680 - Error in the uhci code causes usb not to work with iommu=calgary boot option
+453685 - [QLogic 5.3 feat] [1/n] qla2xxx- Upstream updates: 8.01.07-k7
+453711 - [5.2][nfs] ls -l shows outdated timestamp
+453990 - [RHEL5.3] LTP test failure in inotify02 testcase
+454711 - 'xm info' does not show correct info in 'node_to_cpu' field on ia64
+454792 - document divider= option in kernel docs
+455060 - PTRACE_KILL does not kill the child process, rather than the child starts running freely.
+455230 - v4l2 ioctl debug messages cannot be turned off
+455238 - IPsec memory leak
+455308 - Altix Partitioned System
+455424 - x86: show apicid for cpu in proc
+455425 - x86: don't call MP_processor_info for disabled cpu
+455427 - x86: don't call MP_processor_info for disabled cpu (64bit)
+455434 - x86: fix PAE pmd_bad bootup warning
+455447 - FEAT: RHEL 5.3: (1/2) Increase deep idle state residency on idle platforms using Nehalem class processors
+455449 - FEAT: RHEL 5.3: (2/2) Increase deep idle state residency on idle platforms using Nehalem class processors
+455452 - RFE: delalloc helpers for ext4
+455460 - kernel NULL pointer dereference in kobject_get_path
+455471 - [NEC/Stratus 5.3 bug] various crashes in md - rdev removed in the middle of ITERATE_RDEV
+455478 - 2.6.26 backport of &quot;check physical address range in ioremap&quot; into RHEL5-U3
+455491 - backport of fix endless page faults in mount_block_root for Linux 2.6 from 2.6.26 to RHEL5-U3
+455504 - Backport of don't use large pages to map the first 2/4MB of memory form 2.6.26 to RHEL5-U3
+455729 - close system call returns -ERESTARTSYS
+455813 - Under heavy memory usage dma_alloc_coherent does not return aligned address
+455900 - [QLogic 5.3 feat] qla2xxx - mgmt. API, CT pass thru
+456052 - kernel: fix array out of bounds when mounting with selinux options [rhel-5.3]
+456169 - Need to add 3 dlm symbols to the kernel whitelist
+456215 - RHEL 5.3 HDA ALSA driver update from upstream 2008-07-22 (fixes and support for new hw)
+456218 - kernel: serial open/close loop disables irq [rhel-5.3]
+456300 - IPMI: Restrict keyboard io port reservation
+456334 - GFS2: glock dumping misses out some glocks
+456453 - GFS2: d_rwdirectempty fails with short read
+456638 - [Kdump] not work on HP-XW8600
+456900 - [QLogic 5.3 feat] [0/n] qla2xxx- Netlink, FCoE management API
+457006 - ipv6: use timer pending to fix bridge reference count problem [rhel-5.3]
+457013 - pppoe: Check packet length on all receive paths [rhel-5.3]
+457018 - pppoe: Unshare skb before anything else [rhel-5.3]
+457025 - ide-cd: fix oops when using growisofs [rhel-5.3]
+457058 - ecryptfs page-sized memory allocations can corrupt memory
+457137 - [IA64] Fix SMP-unsafe with XENMEM_add_to_physmap on HVM
+457143 - RHEL5.3: misc ecryptfs fixes from 2.6.27
+457300 - hang in ad_rx_machine due to second attempt to lock spin_lock
+457569 - dlm get_comm() uses NULL pointer
+457798 - GFS2 : gfs2meta is FUBAR
+457892 - RTL8101E performance problem
+457958 - Backport NetXen nic driver from upstream kernel to RHEL5.3
+457961 - kprobes remove causing kernel panic on ia64 with 2.6.18-92.1.10.el5 kernel
+458019 - kernel: random32: seeding improvement [rhel-5.3]
+458270 - [TAHI] DAD test failure when ipv6_autoconf=yes
+458289 - GFS2: rm on multiple nodes causes panic
+458360 - enable userspace kernel header check
+458368 - [5.0] kdump hangs up by Sysrq+C trigger
+458441 - Make oprofile recognize Nehalem
+458620 - Problem with aic79xx
+458684 - GFS2: glock deadlock in page fault path
+458718 - FEAT: RHEL 5.3 ext4 tech preview
+458749 - autofs problem with symbolic links
+458760 - kernel: dlm: dlm/user.c input validation fixes [rhel-5.3]
+458774 - Kernel BUG at fs/nfs/namespace.c:103 (:nfs:nfs_follow_mountpoint)
+458824 - Oprofile need to enable/disable all the counters for intel family 6
+458936 - write barriers not supported, ext3 does not complain
+458988 - Panic while using pci=use_crs for resource allocation
+459062 - pppoe: Fix skb_unshare_check call position [rhel-5.3]
+459092 - kernel dm mpath: fix several problems in dm-mapth target error paths
+459095 - kernel dm crypt: use cond_resched
+459107 - [RHEL5.3]: Hang when booting an i386 domU on an i386 HV
+459221 - RHEL5.3: Patch to support new AMD HDMI Audio
+459337 - dm-snap.c: Data read from snapshot may be corrupt if origin is being written to simultaneously
+459436 - ext4 assembly bitops failures on s390
+459460 - kernel: cpufreq: fix format string bug [rhel-5.3]
+459463 - kernel: binfmt_misc.c: avoid potential kernel stack overflow [rhel-5.3]
+459527 - Performance degradation due to excessive spinlocking in the block layer when using logical volume that spans too many physical volumes
+459556 - [TAHI] no echo reply for loopback address
+459585 - dlm_recoverd in D state when using IPv6 to comunicate between nodes
+459722 - [QLogic 5.3 feat] [3/n] qla2xxx - Upstream updates: 8.02.00-k5 to 8.02.00-k6
+459738 - GFS2: Multiple writer performance issue.
+459786 - utrace signal handling bug interferes with systemtap uprobes
+459812 - IPsec crash with MAC longer than 16 bytes
+459876 - network hangs and BUG() message at boot with -105.el5debug kernel
+460047 - Kernel obsoletes existing Driver Updates on install
+460063 - CIFS option forcedirectio fails to allow the appending of text to files.
+460103 - kernel: alsa: asoc: fix double free and memory leak in many codec drivers [rhel-5.3]
+460135 - CIFS: enable DFS support as tech-preview in RHEL5.3
+460195 - Need SCSI transport and LLD netlink support.
+460593 - backport upstream kernel support for private futexes to RHEL 5.3 kernel
+460845 - Nested LVM can cause deadlock due to kcopyd
+460846 - Deadlock possibility with nested LVMs with snapshots
+460857 - kernel: devmem: add range_is_allowed() check to mmap_mem() [rhel-5.3]
+461184 - Significant regression in time() performance
+461414 - [QLogic 5.3 bug] qla2xxx/qla84xx: Fix 128Kb limitation in netlink messages;
+461532 - /proc/xen on bare-metal and FV guests causes multiple issues
+461537 - crypto: hmac(md5) self-test panics system
+461671 - [RHEL5] nmi: crash during kdump kernel boot
+461866 - net: Enable TSO if supported by at least one device
+462109 - [qlogic 5.3 bug] qla2xxx - Set rport dev loss timeout consistently
+462117 - [QLogic 5.3 bug] qla2xxx - Additional residual-count corrections during UNDERRUN handling.
+462354 - dlm: add old plock interface
+462416 - [QLogic 5.3 bug] Update qla2xxx - PCI EE error handling support
+462441 - Fix NUL handling in TTY input auditing
+462500 - BUG: warning when pata_sil680 loaded
+462622 - spufs in RHEL5.3: missing context switch notification log
+462663 - Netboot image for ppc too large
+462743 - libata: rmmod pata_sil680 never returns from ata_port_detach
+463206 - Regression: Tape commands are possibly retried if there is a loss of connectivity while it is running
+463277 - RHEL5.3: ext4 warning on x86 build
+463416 - RHEL 5.3: fix scsi regression causing udev to hang loading sr_mod
+463470 - Regression: multipath was setting the REQ_FAILFAST flags which caused a performance drop
+463478 - RHEL5.3: ecryptfs memory corruption
+463500 - [RHEL5.3] Kernel-xen Oops EIP is at range_straddles_page_boundary+0x2c/0xd9
+463503 - EEPROM/NVM of the e1000e becomes corrupted
+464445 - xm trigger &amp;lt;domain&amp;gt; init causes kernel panic.
+464681 - [QLogic 5.3 bug] qla2xxx/qla84xxx: Advertise qla84xx firmware rev. fix netlink code
+464868 - incorrect ATA7 handing in kernel causing ABRT errors
+465023 - [QLogic 5.3 bug] Update qla2xxx version to meet open source standards.
+465396 - [5.3] makedumpfile: Can't get necessary symbols for excluding free pages.
+465825 - panic in kcopyd during snapshot I/O
+465856 - GFS2: recovery stuck
+466167 - RHEL5.3: posix-timers race condition causes timer to seize up
+466240 - Question for LUKS device passhprase unreadable when using Xen
+466246 - Interactive installation fails with ext4dev root partition
+466307 - /dev/agpart missing for intel i965 HW/82G965 Graphics
+466422 - RHEL5.3: Modify SATA IDE mode quirk
+466774 - [RHEL5.3] kernel kernel BUG at kernel/exit.c:1129!
+467153 - [QLogic 5.3 bug] latest qlogic driver takes several minutes to find LUNs on older qla2xx controller
+467216 - avc:  denied  { sys_resource } when using ext4dev partitions
+467244 - On RHEL 5.2 32 bit rmmod bonding results in a kernel panic when configured in balance-tlb mode
+467689 - GFS2: Hang when shrink_slab calls gfs2_delete_inode (the GFP_NOFS bit)
+467845 - RHEL 5.3: allow tcp socket buffers grow to larger than a page size
+467927 - [RHEL5] patch enabling deep C states makes a RHTS machine hang on boot
+468034 - RHEL 5.3: minor virtio_net_fixes
+468083 - kernel-xen doesn't boot on Dell Optiplex GX280
+468148 - getsockopt() returning incorrectly in PPC
+468187 - [autofs4] Incorrect &quot;active offset mount&quot; messages in syslog
+468192 - writing data to file can fail and cause panic sometimes when using xattr on ecryptfs
+468538 - dlm: add dlm_posix_set_fsid to kABI
+468547 - RHEL5.3: Regression in ext3/jbd
+468555 - [QLogic 5.3 bug] qla2xxx - restore disable by default of MSI, MSI-X
+468573 - [QLogic 5.3 bug] qla2xxx - Correct Atmel flash-part handling
+468870 - initscripts upgrade from 8.45.17 to 8.45.19 breaks arp_ip_target
+468873 - [QLogic 5.3 bug] qla2xxx - fails to report Option Rom version information
+468915 - [Stratus/NEC 5.3 bug] System can crash when removing input device
+468922 - bnx2x + 57711 MCA on BL870c
+468967 - iwlagn (Montevina &amp;amp; Santa Rosa) fails to get associated with AP by NetworkManager frequently
+469414 - [QLogic 5.3 bug] qla3xxx, qla4xxx- Update version numbers and use new format.
+469444 - [All Partners 5.3 bug] allow both ACPI code paths to use the same blacklist dmi_table correctly
+469710 - Various firewire bugs fixed upstream
+469711 - firewire module unload hangs
+469715 - libata: avoid overflow in ata_tf_to_lba48() when tf-&amp;gt;hba_lbal&amp;gt; 127
+469754 - kernel panic seen in ptrace_induce_signal in run of rhts test /tools/gdb/gdb-any/
+469774 - RHEL53 Beta1: network installation through cxgb3 interface failed if the adapter firmware doesn't match the cxgb3 device driver requst firmware level in rhel53.
+470201 - CVE-2008-5029 kernel: Unix sockets kernel panic
+470267 - cifs: data corruption due to interleaved partial writes timing out
+470449 - system-config-soundcard is not working on RHEL5.3 GA-snapshot1
+470610 - [Emulex 5.3 bug] Update lpfc to version 8.2.0.33.3p
+470625 - Netdump not functioning w/ bnx2 &amp;gt;= v1.8h (Broadcom Netxtreme II Network Card)
+471112 - gdb on ppc hangs, then panics with a kill -9
+471269 - [QLogic 5.3 bug] qla2xxx - No NPIV for Loop connections.
+471576 - libata: Avoid overflow in ata_tf_read_block() when tf-&amp;gt;hba_lbal &amp;gt; 127
+471639 - max_phys_segments violation with dm-linear + md raid1 + cciss
+471801 - statically linked uuid segfaults in uuid_generate() on Xen kernel
+471871 - dlm: fix up memory allocation flags
+471903 - [Broadcom 5.3 bug] bnx2: add PCI-IDs for 5716s
+471933 - [Brocade/Dell 5.3 bug] hts failing memory test with EDAC i5000 Non-Fatal error
+472095 - RHEL5.3 e1000e: enable ECC correction on 82571 silicon
+472325 - CVE-2008-5182 kernel: fix inotify watch removal/umount races
+472382 - [QLogic 5.3 bug] qla2xx/qla84xx - Failure to establish link.
+472504 - Need to build xen-platform-pci as a module and not into the kernel
+472844 - kernel panic when modprobe -r acpi_cpufreq on centrino platform with kernel newer than 2.6.18-118
+473110 - RHEL 5.3: allow tun/tap support larger MTU sizes
+473114 - RHEL 5.3: allow virtio_net support larger MTU sizes
+473120 - RHEL 5.3: implement virtio_net mergeable receive buffer allocate scheme
+473696 - CVE-2008-5079 Linux Kernel 'atm module' Local Denial of Service
+474465 - RHEL5.3: Calgary DMA errors on IBM systems
+474736 - [QLogic 5.3 bug] qla4xxx - Add checks for &amp;lt;TargetName, ISID, TargetPortGroupTag&amp;gt;
+474935 - fcoe: fix terminate_rport_io related problems
+475652 - kdump panic introduced by hpet fix on systems without HPET
+475778 - [RHEL 5.3 Xen]: Guest hang on FV save/restore
+476184 - RHEL5.3 pv guests crash randomly on reboot orders.
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-128.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kernel-2.6.18-128.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-128.el5.i686.rpm
+kernel-PAE-2.6.18-128.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-128.el5.i686.rpm
+kernel-PAE-devel-2.6.18-128.el5.i686.rpm
+kernel-debug-2.6.18-128.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-128.el5.i686.rpm
+kernel-debug-devel-2.6.18-128.el5.i686.rpm
+kernel-debuginfo-2.6.18-128.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-128.el5.i686.rpm
+kernel-devel-2.6.18-128.el5.i686.rpm
+kernel-headers-2.6.18-128.el5.i386.rpm
+kernel-xen-2.6.18-128.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-128.el5.i686.rpm
+kernel-xen-devel-2.6.18-128.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-128.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-128.el5.x86_64.rpm
+kernel-debug-2.6.18-128.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-128.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-128.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-128.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-128.el5.x86_64.rpm
+kernel-devel-2.6.18-128.el5.x86_64.rpm
+kernel-headers-2.6.18-128.el5.x86_64.rpm
+kernel-xen-2.6.18-128.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-128.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-128.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-128.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kernel-2.6.18-128.el5.src.rpm</a>
+
+i386:
+kernel-2.6.18-128.el5.i686.rpm
+kernel-PAE-2.6.18-128.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-128.el5.i686.rpm
+kernel-PAE-devel-2.6.18-128.el5.i686.rpm
+kernel-debug-2.6.18-128.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-128.el5.i686.rpm
+kernel-debug-devel-2.6.18-128.el5.i686.rpm
+kernel-debuginfo-2.6.18-128.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-128.el5.i686.rpm
+kernel-devel-2.6.18-128.el5.i686.rpm
+kernel-headers-2.6.18-128.el5.i386.rpm
+kernel-xen-2.6.18-128.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-128.el5.i686.rpm
+kernel-xen-devel-2.6.18-128.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-128.el5.ia64.rpm
+kernel-debug-2.6.18-128.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-128.el5.ia64.rpm
+kernel-debug-devel-2.6.18-128.el5.ia64.rpm
+kernel-debuginfo-2.6.18-128.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-128.el5.ia64.rpm
+kernel-devel-2.6.18-128.el5.ia64.rpm
+kernel-headers-2.6.18-128.el5.ia64.rpm
+kernel-xen-2.6.18-128.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-128.el5.ia64.rpm
+kernel-xen-devel-2.6.18-128.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-128.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-128.el5.ppc64.rpm
+kernel-debug-2.6.18-128.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-128.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-128.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-128.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-128.el5.ppc64.rpm
+kernel-devel-2.6.18-128.el5.ppc64.rpm
+kernel-headers-2.6.18-128.el5.ppc.rpm
+kernel-headers-2.6.18-128.el5.ppc64.rpm
+kernel-kdump-2.6.18-128.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-128.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-128.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-128.el5.s390x.rpm
+kernel-debug-2.6.18-128.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-128.el5.s390x.rpm
+kernel-debug-devel-2.6.18-128.el5.s390x.rpm
+kernel-debuginfo-2.6.18-128.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-128.el5.s390x.rpm
+kernel-devel-2.6.18-128.el5.s390x.rpm
+kernel-headers-2.6.18-128.el5.s390x.rpm
+kernel-kdump-2.6.18-128.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-128.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-128.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-128.el5.x86_64.rpm
+kernel-debug-2.6.18-128.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-128.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-128.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-128.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-128.el5.x86_64.rpm
+kernel-devel-2.6.18-128.el5.x86_64.rpm
+kernel-headers-2.6.18-128.el5.x86_64.rpm
+kernel-xen-2.6.18-128.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-128.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-128.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5029">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5029</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5079">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5079</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5182">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5182</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJdidIXlSAg2UNWIIRAvOeAJ4thof68NeyZeV/g1VIJ+7Dcxo4zQCfXLZJ
+4Qvvy7k7wDkU3g0nuPVW/Mo=
+=mJJC
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

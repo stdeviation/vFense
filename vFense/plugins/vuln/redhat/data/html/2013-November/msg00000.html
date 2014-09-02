@@ -1,0 +1,276 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1500&#45;01] Moderate: gc security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 4 Nov 2013 13:21:23 &#45;0500 -->
+<!--X-Message-Id: 201311041821.rA4ILMfB011328@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1500-01] Moderate: gc security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1500-01] Moderate: gc security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1500-01] Moderate: gc security update</li>
+<li><em>Date</em>: Mon, 4 Nov 2013 18:21:22 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: gc security update
+Advisory ID:       RHSA-2013:1500-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1500.html">https://rhn.redhat.com/errata/RHSA-2013-1500.html</a>
+Issue date:        2013-11-04
+CVE Names:         CVE-2012-2673 
+=====================================================================
+
+1. Summary:
+
+Updated gc packages that fix one security issue are now available for Red
+Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+gc is a Boehm-Demers-Weiser conservative garbage collector for C and C++.
+
+It was discovered that gc's implementation of the malloc() and calloc()
+routines did not properly perform parameter sanitization when allocating
+memory. If an application using gc did not implement application-level
+validity checks for the malloc() and calloc() routines, a remote attacker
+could provide specially crafted application-specific input, which, when
+processed by the application, could lead to an application crash or,
+potentially, arbitrary code execution with the privileges of the user
+running the application. (CVE-2012-2673)
+
+Users of gc are advised to upgrade to these updated packages, which contain
+backported patches to correct this issue. Applications using gc must be
+restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+828878 - CVE-2012-2673 gc: malloc() and calloc() overflows
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm</a>
+
+i386:
+gc-7.1-12.el6_4.i686.rpm
+gc-debuginfo-7.1-12.el6_4.i686.rpm
+
+x86_64:
+gc-7.1-12.el6_4.x86_64.rpm
+gc-debuginfo-7.1-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm</a>
+
+i386:
+gc-debuginfo-7.1-12.el6_4.i686.rpm
+gc-devel-7.1-12.el6_4.i686.rpm
+
+x86_64:
+gc-7.1-12.el6_4.i686.rpm
+gc-debuginfo-7.1-12.el6_4.i686.rpm
+gc-debuginfo-7.1-12.el6_4.x86_64.rpm
+gc-devel-7.1-12.el6_4.i686.rpm
+gc-devel-7.1-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm</a>
+
+x86_64:
+gc-7.1-12.el6_4.i686.rpm
+gc-7.1-12.el6_4.x86_64.rpm
+gc-debuginfo-7.1-12.el6_4.i686.rpm
+gc-debuginfo-7.1-12.el6_4.x86_64.rpm
+gc-devel-7.1-12.el6_4.i686.rpm
+gc-devel-7.1-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm</a>
+
+i386:
+gc-7.1-12.el6_4.i686.rpm
+gc-debuginfo-7.1-12.el6_4.i686.rpm
+
+ppc64:
+gc-7.1-12.el6_4.ppc64.rpm
+gc-debuginfo-7.1-12.el6_4.ppc64.rpm
+
+s390x:
+gc-7.1-12.el6_4.s390x.rpm
+gc-debuginfo-7.1-12.el6_4.s390x.rpm
+
+x86_64:
+gc-7.1-12.el6_4.x86_64.rpm
+gc-debuginfo-7.1-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm</a>
+
+i386:
+gc-debuginfo-7.1-12.el6_4.i686.rpm
+gc-devel-7.1-12.el6_4.i686.rpm
+
+ppc64:
+gc-7.1-12.el6_4.ppc.rpm
+gc-debuginfo-7.1-12.el6_4.ppc.rpm
+gc-debuginfo-7.1-12.el6_4.ppc64.rpm
+gc-devel-7.1-12.el6_4.ppc.rpm
+gc-devel-7.1-12.el6_4.ppc64.rpm
+
+s390x:
+gc-7.1-12.el6_4.s390.rpm
+gc-debuginfo-7.1-12.el6_4.s390.rpm
+gc-debuginfo-7.1-12.el6_4.s390x.rpm
+gc-devel-7.1-12.el6_4.s390.rpm
+gc-devel-7.1-12.el6_4.s390x.rpm
+
+x86_64:
+gc-7.1-12.el6_4.i686.rpm
+gc-debuginfo-7.1-12.el6_4.i686.rpm
+gc-debuginfo-7.1-12.el6_4.x86_64.rpm
+gc-devel-7.1-12.el6_4.i686.rpm
+gc-devel-7.1-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm</a>
+
+i386:
+gc-7.1-12.el6_4.i686.rpm
+gc-debuginfo-7.1-12.el6_4.i686.rpm
+
+x86_64:
+gc-7.1-12.el6_4.x86_64.rpm
+gc-debuginfo-7.1-12.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gc-7.1-12.el6_4.src.rpm</a>
+
+i386:
+gc-debuginfo-7.1-12.el6_4.i686.rpm
+gc-devel-7.1-12.el6_4.i686.rpm
+
+x86_64:
+gc-7.1-12.el6_4.i686.rpm
+gc-debuginfo-7.1-12.el6_4.i686.rpm
+gc-debuginfo-7.1-12.el6_4.x86_64.rpm
+gc-devel-7.1-12.el6_4.i686.rpm
+gc-devel-7.1-12.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2673.html">https://www.redhat.com/security/data/cve/CVE-2012-2673.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSd+WTXlSAg2UNWIIRAmX7AJ49PV3EOFF1T25T+NRTu9+gjkZqdACggayQ
+/qIA8TtBiBXNBkja+HT5U1o=
+=E9XU
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

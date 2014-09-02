@@ -1,0 +1,309 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1813&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 13 Dec 2011 17:08:16 &#45;0500 -->
+<!--X-Message-Id: 201112132208.pBDM8Bxp009125@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1813-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1813-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1813-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 13 Dec 2011 22:08:10 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2011:1813-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1813.html">https://rhn.redhat.com/errata/RHSA-2011-1813.html</a>
+Issue date:        2011-12-13
+CVE Names:         CVE-2011-2482 CVE-2011-2491 CVE-2011-2495 
+                   CVE-2011-2517 CVE-2011-2519 CVE-2011-2901 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix several security issues and various bugs
+are now available for Red Hat Enterprise Linux 5.6 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux EUS (v. 5.6 server) - i386, ia64, noarch, ppc, s390x, x86_64
+
+3. Description:
+
+These packages contain the Linux kernel.
+
+This update fixes the following security issues:
+
+* A flaw in the Stream Control Transmission Protocol (SCTP) implementation
+could allow a remote attacker to cause a denial of service by sending a
+specially-crafted SCTP packet to a target system. (CVE-2011-2482,
+Important)
+
+If you do not run applications that use SCTP, you can prevent the sctp
+module from being loaded by adding the following to the end of the
+&quot;/etc/modprobe.d/blacklist.conf&quot; file:
+
+blacklist sctp
+
+This way, the sctp module cannot be loaded accidentally, which may occur
+if an application that requires SCTP is started. A reboot is not necessary
+for this change to take effect.
+
+* A flaw in the client-side NFS Lock Manager (NLM) implementation could
+allow a local, unprivileged user to cause a denial of service.
+(CVE-2011-2491, Important)
+
+* Flaws in the netlink-based wireless configuration interface could allow
+a local user, who has the CAP_NET_ADMIN capability, to cause a denial of
+service or escalate their privileges on systems that have an active
+wireless interface. (CVE-2011-2517, Important)
+
+* A flaw was found in the way the Linux kernel's Xen hypervisor
+implementation emulated the SAHF instruction. When using a
+fully-virtualized guest on a host that does not use hardware assisted
+paging (HAP), such as those running CPUs that do not have support for (or
+those that have it disabled) Intel Extended Page Tables (EPT) or AMD
+Virtualization (AMD-V) Rapid Virtualization Indexing (RVI), a privileged
+guest user could trigger this flaw to cause the hypervisor to crash.
+(CVE-2011-2519, Moderate)
+
+* A flaw in the __addr_ok() macro in the Linux kernel's Xen hypervisor
+implementation when running on 64-bit systems could allow a privileged
+guest user to crash the hypervisor. (CVE-2011-2901, Moderate)
+
+* /proc/[PID]/io is world-readable by default. Previously, these files
+could be read without any further restrictions. A local, unprivileged user
+could read these files, belonging to other, possibly privileged processes
+to gather confidential information, such as the length of a password used
+in a process. (CVE-2011-2495, Low)
+
+Red Hat would like to thank Vasily Averin for reporting CVE-2011-2491, and
+Vasiliy Kulikov of Openwall for reporting CVE-2011-2495.
+
+This update also fixes the following bugs:
+
+* On Broadcom PCI cards that use the tg3 driver, the operational state of a
+network device, represented by the value in
+&quot;/sys/class/net/ethX/operstate&quot;, was not initialized by default.
+Consequently, the state was reported as &quot;unknown&quot; when the tg3 network
+device was actually in the &quot;up&quot; state. This update modifies the tg3 driver
+to properly set the operstate value. (BZ#744699)
+
+* A KVM (Kernel-based Virtual Machine) guest can get preempted by the host,
+when a higher priority process needs to run. When a guest is not running
+for several timer interrupts in a row, ticks could be lost, resulting in
+the jiffies timer advancing slower than expected and timeouts taking longer
+than expected. To correct for the issue of lost ticks,
+do_timer_tsc_timekeeping() checks a reference clock source (kvm-clock when
+running as a KVM guest) to see if timer interrupts have been missed. If so,
+jiffies is incremented by the number of missed timer interrupts, ensuring
+that programs are woken up on time. (BZ#747874)
+
+* When a block device object was allocated, the bd_super field was not
+being explicitly initialized to NULL. Previously, users of the block device
+object could set bd_super to NULL when the object was released by calling
+the kill_block_super() function. Certain third-party file systems do not
+always use this function, and bd_super could therefore become uninitialized
+when the object was allocated again. This could cause a kernel panic in the
+blkdev_releasepage() function, when the uninitialized bd_super field was
+dereferenced. Now, bd_super is properly initialized in the bdget()
+function, and the kernel panic no longer occurs. (BZ#751137)
+
+4. Solution:
+
+Users should upgrade to these updated packages, which contain
+backported patches to resolve these issues. The system must be
+rebooted for this update to take effect.
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+709393 - CVE-2011-2491 kernel: rpc task leak after flock()ing  NFS share
+714867 - CVE-2011-2482 kernel: sctp dos
+716825 - CVE-2011-2495 kernel: /proc/PID/io infoleak
+718152 - CVE-2011-2517 kernel: nl80211: missing check for valid SSID size in scan operations
+718882 - CVE-2011-2519 kernel: xen: x86_emulate: fix SAHF emulation
+728042 - CVE-2011-2901 kernel: xen: off-by-one shift in x86_64 __addr_ok()
+
+6. Package List:
+
+Red Hat Enterprise Linux EUS (v. 5.6 server):
+
+Source:
+kernel-2.6.18-238.31.1.el5.src.rpm
+
+i386:
+kernel-2.6.18-238.31.1.el5.i686.rpm
+kernel-PAE-2.6.18-238.31.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-238.31.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-238.31.1.el5.i686.rpm
+kernel-debug-2.6.18-238.31.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-238.31.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-238.31.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-238.31.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-238.31.1.el5.i686.rpm
+kernel-devel-2.6.18-238.31.1.el5.i686.rpm
+kernel-headers-2.6.18-238.31.1.el5.i386.rpm
+kernel-xen-2.6.18-238.31.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-238.31.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-238.31.1.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-238.31.1.el5.ia64.rpm
+kernel-debug-2.6.18-238.31.1.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-238.31.1.el5.ia64.rpm
+kernel-debug-devel-2.6.18-238.31.1.el5.ia64.rpm
+kernel-debuginfo-2.6.18-238.31.1.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-238.31.1.el5.ia64.rpm
+kernel-devel-2.6.18-238.31.1.el5.ia64.rpm
+kernel-headers-2.6.18-238.31.1.el5.ia64.rpm
+kernel-xen-2.6.18-238.31.1.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-238.31.1.el5.ia64.rpm
+kernel-xen-devel-2.6.18-238.31.1.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-238.31.1.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-238.31.1.el5.ppc64.rpm
+kernel-debug-2.6.18-238.31.1.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-238.31.1.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-238.31.1.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-238.31.1.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-238.31.1.el5.ppc64.rpm
+kernel-devel-2.6.18-238.31.1.el5.ppc64.rpm
+kernel-headers-2.6.18-238.31.1.el5.ppc.rpm
+kernel-headers-2.6.18-238.31.1.el5.ppc64.rpm
+kernel-kdump-2.6.18-238.31.1.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-238.31.1.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-238.31.1.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-238.31.1.el5.s390x.rpm
+kernel-debug-2.6.18-238.31.1.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-238.31.1.el5.s390x.rpm
+kernel-debug-devel-2.6.18-238.31.1.el5.s390x.rpm
+kernel-debuginfo-2.6.18-238.31.1.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-238.31.1.el5.s390x.rpm
+kernel-devel-2.6.18-238.31.1.el5.s390x.rpm
+kernel-headers-2.6.18-238.31.1.el5.s390x.rpm
+kernel-kdump-2.6.18-238.31.1.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-238.31.1.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-238.31.1.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-238.31.1.el5.x86_64.rpm
+kernel-debug-2.6.18-238.31.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-238.31.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-238.31.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-238.31.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-238.31.1.el5.x86_64.rpm
+kernel-devel-2.6.18-238.31.1.el5.x86_64.rpm
+kernel-headers-2.6.18-238.31.1.el5.x86_64.rpm
+kernel-xen-2.6.18-238.31.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-238.31.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-238.31.1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2482.html">https://www.redhat.com/security/data/cve/CVE-2011-2482.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2491.html">https://www.redhat.com/security/data/cve/CVE-2011-2491.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2495.html">https://www.redhat.com/security/data/cve/CVE-2011-2495.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2517.html">https://www.redhat.com/security/data/cve/CVE-2011-2517.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2519.html">https://www.redhat.com/security/data/cve/CVE-2011-2519.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2901.html">https://www.redhat.com/security/data/cve/CVE-2011-2901.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFO58y+XlSAg2UNWIIRAvRlAKC0Qm0s8J9L86DbHpZvJxkh5tjOiwCeOHjb
+MFFoSfPI/5HPPNKuMt6pwRw=
+=eZIl
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

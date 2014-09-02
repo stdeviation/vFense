@@ -1,0 +1,304 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:1180&#45;01] Moderate: gimp security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Aug 2012 10:05:11 &#45;0400 -->
+<!--X-Message-Id: 201208201405.q7KE54ZG029097@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:1180-01] Moderate: gimp security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:1180-01] Moderate: gimp security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:1180-01] Moderate: gimp security update</li>
+<li><em>Date</em>: Mon, 20 Aug 2012 14:05:04 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: gimp security update
+Advisory ID:       RHSA-2012:1180-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-1180.html">https://rhn.redhat.com/errata/RHSA-2012-1180.html</a>
+Issue date:        2012-08-20
+CVE Names:         CVE-2011-2896 CVE-2012-3403 CVE-2012-3481 
+=====================================================================
+
+1. Summary:
+
+Updated gimp packages that fix three security issues are now available for
+Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The GIMP (GNU Image Manipulation Program) is an image composition and
+editing program.
+
+An integer overflow flaw, leading to a heap-based buffer overflow, was
+found in the GIMP's GIF image format plug-in. An attacker could create a
+specially-crafted GIF image file that, when opened, could cause the GIF
+plug-in to crash or, potentially, execute arbitrary code with the
+privileges of the user running the GIMP. (CVE-2012-3481)
+
+A heap-based buffer overflow flaw was found in the Lempel-Ziv-Welch (LZW)
+decompression algorithm implementation used by the GIMP's GIF image format
+plug-in. An attacker could create a specially-crafted GIF image file that,
+when opened, could cause the GIF plug-in to crash or, potentially, execute
+arbitrary code with the privileges of the user running the GIMP.
+(CVE-2011-2896)
+
+A heap-based buffer overflow flaw was found in the GIMP's KiSS CEL file
+format plug-in. An attacker could create a specially-crafted KiSS palette
+file that, when opened, could cause the CEL plug-in to crash or,
+potentially, execute arbitrary code with the privileges of the user running
+the GIMP. (CVE-2012-3403)
+
+Red Hat would like to thank Matthias Weckbecker of the SUSE Security Team
+for reporting the CVE-2012-3481 issue.
+
+Users of the GIMP are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The GIMP must be
+restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+727800 - CVE-2011-2896 David Koblas' GIF decoder LZW decoder buffer overflow
+839020 - CVE-2012-3403 gimp (CEL plug-in): heap buffer overflow when loading external palette files
+847303 - CVE-2012-3481 Gimp (GIF plug-in): Heap-based buffer overflow by loading certain GIF images
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm</a>
+
+i386:
+gimp-2.6.9-4.el6_3.3.i686.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.i686.rpm
+gimp-help-browser-2.6.9-4.el6_3.3.i686.rpm
+gimp-libs-2.6.9-4.el6_3.3.i686.rpm
+
+x86_64:
+gimp-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-help-browser-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-libs-2.6.9-4.el6_3.3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm</a>
+
+i386:
+gimp-debuginfo-2.6.9-4.el6_3.3.i686.rpm
+gimp-devel-2.6.9-4.el6_3.3.i686.rpm
+gimp-devel-tools-2.6.9-4.el6_3.3.i686.rpm
+
+x86_64:
+gimp-debuginfo-2.6.9-4.el6_3.3.i686.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-devel-2.6.9-4.el6_3.3.i686.rpm
+gimp-devel-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-devel-tools-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-libs-2.6.9-4.el6_3.3.i686.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm</a>
+
+i386:
+gimp-2.6.9-4.el6_3.3.i686.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.i686.rpm
+gimp-help-browser-2.6.9-4.el6_3.3.i686.rpm
+gimp-libs-2.6.9-4.el6_3.3.i686.rpm
+
+ppc64:
+gimp-2.6.9-4.el6_3.3.ppc64.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.ppc64.rpm
+gimp-help-browser-2.6.9-4.el6_3.3.ppc64.rpm
+gimp-libs-2.6.9-4.el6_3.3.ppc64.rpm
+
+s390x:
+gimp-2.6.9-4.el6_3.3.s390x.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.s390x.rpm
+gimp-help-browser-2.6.9-4.el6_3.3.s390x.rpm
+gimp-libs-2.6.9-4.el6_3.3.s390x.rpm
+
+x86_64:
+gimp-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-help-browser-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-libs-2.6.9-4.el6_3.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm</a>
+
+i386:
+gimp-debuginfo-2.6.9-4.el6_3.3.i686.rpm
+gimp-devel-2.6.9-4.el6_3.3.i686.rpm
+gimp-devel-tools-2.6.9-4.el6_3.3.i686.rpm
+
+ppc64:
+gimp-debuginfo-2.6.9-4.el6_3.3.ppc.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.ppc64.rpm
+gimp-devel-2.6.9-4.el6_3.3.ppc.rpm
+gimp-devel-2.6.9-4.el6_3.3.ppc64.rpm
+gimp-devel-tools-2.6.9-4.el6_3.3.ppc64.rpm
+gimp-libs-2.6.9-4.el6_3.3.ppc.rpm
+
+s390x:
+gimp-debuginfo-2.6.9-4.el6_3.3.s390.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.s390x.rpm
+gimp-devel-2.6.9-4.el6_3.3.s390.rpm
+gimp-devel-2.6.9-4.el6_3.3.s390x.rpm
+gimp-devel-tools-2.6.9-4.el6_3.3.s390x.rpm
+gimp-libs-2.6.9-4.el6_3.3.s390.rpm
+
+x86_64:
+gimp-debuginfo-2.6.9-4.el6_3.3.i686.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-devel-2.6.9-4.el6_3.3.i686.rpm
+gimp-devel-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-devel-tools-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-libs-2.6.9-4.el6_3.3.i686.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm</a>
+
+i386:
+gimp-2.6.9-4.el6_3.3.i686.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.i686.rpm
+gimp-help-browser-2.6.9-4.el6_3.3.i686.rpm
+gimp-libs-2.6.9-4.el6_3.3.i686.rpm
+
+x86_64:
+gimp-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-help-browser-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-libs-2.6.9-4.el6_3.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gimp-2.6.9-4.el6_3.3.src.rpm</a>
+
+i386:
+gimp-debuginfo-2.6.9-4.el6_3.3.i686.rpm
+gimp-devel-2.6.9-4.el6_3.3.i686.rpm
+gimp-devel-tools-2.6.9-4.el6_3.3.i686.rpm
+
+x86_64:
+gimp-debuginfo-2.6.9-4.el6_3.3.i686.rpm
+gimp-debuginfo-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-devel-2.6.9-4.el6_3.3.i686.rpm
+gimp-devel-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-devel-tools-2.6.9-4.el6_3.3.x86_64.rpm
+gimp-libs-2.6.9-4.el6_3.3.i686.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2896.html">https://www.redhat.com/security/data/cve/CVE-2011-2896.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3403.html">https://www.redhat.com/security/data/cve/CVE-2012-3403.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3481.html">https://www.redhat.com/security/data/cve/CVE-2012-3481.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQMkPOXlSAg2UNWIIRAoioAJ4jHFJUK62fFEbsjc4kWIxKdF923wCgt8C0
+1dStfvwHDmdvSZrya8DZ/LA=
+=Lo3d
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0796&#45;04] Moderate: rsyslog security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jun 2012 04:31:58 &#45;0400 -->
+<!--X-Message-Id: 201206200831.q5K8VpAw013052@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0796-04] Moderate: rsyslog security, bug fix,	and enhancement</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0796-04] Moderate: rsyslog security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0796-04] Moderate: rsyslog security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 20 Jun 2012 08:27:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rsyslog security, bug fix, and enhancement update
+Advisory ID:       RHSA-2012:0796-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0796.html">https://rhn.redhat.com/errata/RHSA-2012-0796.html</a>
+Issue date:        2012-06-20
+CVE Names:         CVE-2011-4623 
+=====================================================================
+
+1. Summary:
+
+Updated rsyslog packages that fix one security issue, multiple bugs, and
+add two enhancements are now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The rsyslog packages provide an enhanced, multi-threaded syslog daemon.
+
+A numeric truncation error, leading to a heap-based buffer overflow, was
+found in the way the rsyslog imfile module processed text files containing
+long lines. An attacker could use this flaw to crash the rsyslogd daemon
+or, possibly, execute arbitrary code with the privileges of rsyslogd, if
+they are able to cause a long line to be written to a log file that
+rsyslogd monitors with imfile. The imfile module is not enabled by default.
+(CVE-2011-4623)
+
+Bug fixes:
+
+* Several variables were incorrectly deinitialized with Transport Layer
+Security (TLS) transport and keys in PKCS#8 format. The rsyslogd daemon
+aborted with a segmentation fault when keys in this format were provided.
+Now, the variables are correctly deinitialized. (BZ#727380)
+
+* Previously, the imgssapi plug-in initialization was incomplete. As a
+result, the rsyslogd daemon aborted when configured to provide a GSSAPI
+listener. Now, the plug-in is correctly initialized. (BZ#756664)
+
+* The fully qualified domain name (FQDN) for the localhost used in messages
+was the first alias found. This did not always produce the expected result
+on multihomed hosts. With this update, the algorithm uses the alias that
+corresponds to the hostname. (BZ#767527)
+
+* The gtls module leaked a file descriptor every time it was loaded due to
+an error in the GnuTLS library. No new files or network connections could
+be opened when the limit for the file descriptor count was reached. This
+update modifies the gtls module so that it is not unloaded during the
+process lifetime. (BZ#803550)
+
+* rsyslog could not override the hostname to set an alternative hostname
+for locally generated messages. Now, the local hostname can be overridden.
+(BZ#805424)
+
+* The rsyslogd init script did not pass the lock file path to the 'status'
+action. As a result, the lock file was ignored and a wrong exit code was
+returned. This update modifies the init script to pass the lock file to
+the 'status' action. Now, the correct exit code is returned. (BZ#807608)
+
+* Data could be incorrectly deinitialized when rsyslogd was supplied with
+malformed spool files. The rsyslogd daemon could be aborted with a
+segmentation fault. This update modifies the underlying code to correctly
+deinitialize the data. (BZ#813079)
+
+* Previously, deinitialization of non-existent data could, in certain error
+cases, occur. As a result, rsyslogd could abort with a segmentation fault
+when rsyslog was configured to use a disk assisted queue without specifying
+a spool file. With this update, the error cases are handled gracefully.
+(BZ#813084)
+
+* The manual page wrongly stated that the '-d' option to turn on debugging
+caused the daemon to run in the foreground, which was misleading as the
+current behavior is to run in the background. Now, the manual page reflects
+the correct behavior. (BZ#820311)
+
+* rsyslog attempted to write debugging messages to standard output even
+when run in the background. This resulted in the debugging information
+being written to some other output. This was corrected and the debug
+messages are no longer written to standard output when run in the
+background. (BZ#820996)
+
+* The string buffer to hold the distinguished name (DN) of a certificate
+was too small. DNs with more than 128 characters were not displayed. This
+update enlarges the buffer to process longer DNs. (BZ#822118)
+
+Enhancements:
+
+* Support for rate limiting and multi-line message capability. Now,
+rsyslogd can limit the number of messages it accepts through a UNIX socket.
+(BZ#672182)
+
+* The addition of the &quot;/etc/rsyslog.d/&quot; configuration directory to supply
+syslog configuration files. (BZ#740420)
+
+All users of rsyslog are advised to upgrade to these updated packages,
+which upgrade rsyslog to version 5.8.10 and correct these issues and add
+these enhancements. After installing this update, the rsyslog daemon will
+be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+740420 - Add a /etc/rsyslog.d config directory
+769822 - CVE-2011-4623 rsyslog: DoS due integer signedness error while extending rsyslog counted string buffer
+803550 - rsyslog fails to initialize gtls driver because of too many open files
+813079 - rsyslog segfaults attempting to read a malformed / old format spool file
+813084 - rsyslog segfaults when configured with disk queue with non-existent (unnamed) spool file
+820311 - Manpage: rsyslogd does the fork in debug mode while manpage says otherwise
+820996 - rsyslog writes debug messages to fd 1 even after forking
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm</a>
+
+i386:
+rsyslog-5.8.10-2.el6.i686.rpm
+rsyslog-debuginfo-5.8.10-2.el6.i686.rpm
+rsyslog-gnutls-5.8.10-2.el6.i686.rpm
+rsyslog-gssapi-5.8.10-2.el6.i686.rpm
+rsyslog-relp-5.8.10-2.el6.i686.rpm
+
+x86_64:
+rsyslog-5.8.10-2.el6.x86_64.rpm
+rsyslog-debuginfo-5.8.10-2.el6.x86_64.rpm
+rsyslog-gnutls-5.8.10-2.el6.x86_64.rpm
+rsyslog-gssapi-5.8.10-2.el6.x86_64.rpm
+rsyslog-relp-5.8.10-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm</a>
+
+i386:
+rsyslog-debuginfo-5.8.10-2.el6.i686.rpm
+rsyslog-mysql-5.8.10-2.el6.i686.rpm
+rsyslog-pgsql-5.8.10-2.el6.i686.rpm
+rsyslog-snmp-5.8.10-2.el6.i686.rpm
+
+x86_64:
+rsyslog-debuginfo-5.8.10-2.el6.x86_64.rpm
+rsyslog-mysql-5.8.10-2.el6.x86_64.rpm
+rsyslog-pgsql-5.8.10-2.el6.x86_64.rpm
+rsyslog-snmp-5.8.10-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm</a>
+
+x86_64:
+rsyslog-5.8.10-2.el6.x86_64.rpm
+rsyslog-debuginfo-5.8.10-2.el6.x86_64.rpm
+rsyslog-gnutls-5.8.10-2.el6.x86_64.rpm
+rsyslog-gssapi-5.8.10-2.el6.x86_64.rpm
+rsyslog-relp-5.8.10-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm</a>
+
+x86_64:
+rsyslog-debuginfo-5.8.10-2.el6.x86_64.rpm
+rsyslog-mysql-5.8.10-2.el6.x86_64.rpm
+rsyslog-pgsql-5.8.10-2.el6.x86_64.rpm
+rsyslog-snmp-5.8.10-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm</a>
+
+i386:
+rsyslog-5.8.10-2.el6.i686.rpm
+rsyslog-debuginfo-5.8.10-2.el6.i686.rpm
+rsyslog-gnutls-5.8.10-2.el6.i686.rpm
+rsyslog-gssapi-5.8.10-2.el6.i686.rpm
+rsyslog-mysql-5.8.10-2.el6.i686.rpm
+rsyslog-pgsql-5.8.10-2.el6.i686.rpm
+rsyslog-relp-5.8.10-2.el6.i686.rpm
+
+ppc64:
+rsyslog-5.8.10-2.el6.ppc64.rpm
+rsyslog-debuginfo-5.8.10-2.el6.ppc64.rpm
+rsyslog-gnutls-5.8.10-2.el6.ppc64.rpm
+rsyslog-gssapi-5.8.10-2.el6.ppc64.rpm
+rsyslog-mysql-5.8.10-2.el6.ppc64.rpm
+rsyslog-pgsql-5.8.10-2.el6.ppc64.rpm
+rsyslog-relp-5.8.10-2.el6.ppc64.rpm
+
+s390x:
+rsyslog-5.8.10-2.el6.s390x.rpm
+rsyslog-debuginfo-5.8.10-2.el6.s390x.rpm
+rsyslog-gnutls-5.8.10-2.el6.s390x.rpm
+rsyslog-gssapi-5.8.10-2.el6.s390x.rpm
+rsyslog-mysql-5.8.10-2.el6.s390x.rpm
+rsyslog-pgsql-5.8.10-2.el6.s390x.rpm
+rsyslog-relp-5.8.10-2.el6.s390x.rpm
+
+x86_64:
+rsyslog-5.8.10-2.el6.x86_64.rpm
+rsyslog-debuginfo-5.8.10-2.el6.x86_64.rpm
+rsyslog-gnutls-5.8.10-2.el6.x86_64.rpm
+rsyslog-gssapi-5.8.10-2.el6.x86_64.rpm
+rsyslog-mysql-5.8.10-2.el6.x86_64.rpm
+rsyslog-pgsql-5.8.10-2.el6.x86_64.rpm
+rsyslog-relp-5.8.10-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm</a>
+
+i386:
+rsyslog-debuginfo-5.8.10-2.el6.i686.rpm
+rsyslog-snmp-5.8.10-2.el6.i686.rpm
+
+ppc64:
+rsyslog-debuginfo-5.8.10-2.el6.ppc64.rpm
+rsyslog-snmp-5.8.10-2.el6.ppc64.rpm
+
+s390x:
+rsyslog-debuginfo-5.8.10-2.el6.s390x.rpm
+rsyslog-snmp-5.8.10-2.el6.s390x.rpm
+
+x86_64:
+rsyslog-debuginfo-5.8.10-2.el6.x86_64.rpm
+rsyslog-snmp-5.8.10-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm</a>
+
+i386:
+rsyslog-5.8.10-2.el6.i686.rpm
+rsyslog-debuginfo-5.8.10-2.el6.i686.rpm
+rsyslog-gnutls-5.8.10-2.el6.i686.rpm
+rsyslog-gssapi-5.8.10-2.el6.i686.rpm
+rsyslog-mysql-5.8.10-2.el6.i686.rpm
+rsyslog-pgsql-5.8.10-2.el6.i686.rpm
+rsyslog-relp-5.8.10-2.el6.i686.rpm
+
+x86_64:
+rsyslog-5.8.10-2.el6.x86_64.rpm
+rsyslog-debuginfo-5.8.10-2.el6.x86_64.rpm
+rsyslog-gnutls-5.8.10-2.el6.x86_64.rpm
+rsyslog-gssapi-5.8.10-2.el6.x86_64.rpm
+rsyslog-mysql-5.8.10-2.el6.x86_64.rpm
+rsyslog-pgsql-5.8.10-2.el6.x86_64.rpm
+rsyslog-relp-5.8.10-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/rsyslog-5.8.10-2.el6.src.rpm</a>
+
+i386:
+rsyslog-debuginfo-5.8.10-2.el6.i686.rpm
+rsyslog-snmp-5.8.10-2.el6.i686.rpm
+
+x86_64:
+rsyslog-debuginfo-5.8.10-2.el6.x86_64.rpm
+rsyslog-snmp-5.8.10-2.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4623.html">https://www.redhat.com/security/data/cve/CVE-2011-4623.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4YpyXlSAg2UNWIIRAj37AJ0aCt34AhiGAlp+8cGlA9wcczi3WgCgvyHt
+9pnAdPo1W4pu4Vc1qX4xS1w=
+=Skcj
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

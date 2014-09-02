@@ -1,0 +1,436 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0564&#45;01] Low: Red Hat Enterprise MRG Grid 2.3 security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 6 Mar 2013 15:03:00 &#45;0500 -->
+<!--X-Message-Id: 201303062002.r26K2xVd031209@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0564-01] Low: Red Hat Enterprise MRG Grid 2.3 security	update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0564-01] Low: Red Hat Enterprise MRG Grid 2.3 security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0564-01] Low: Red Hat Enterprise MRG Grid 2.3 security	update</li>
+<li><em>Date</em>: Wed, 6 Mar 2013 20:02:59 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat Enterprise MRG Grid 2.3 security update
+Advisory ID:       RHSA-2013:0564-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0564.html">https://rhn.redhat.com/errata/RHSA-2013-0564.html</a>
+Issue date:        2013-03-06
+CVE Names:         CVE-2012-4462 
+=====================================================================
+
+1. Summary:
+
+Updated Grid component packages that fix one security issue, multiple bugs,
+and add various enhancements are now available for Red Hat Enterprise MRG
+2.3 for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+MRG Grid Execute Node for RHEL 5 Server v.2 - i386, noarch, x86_64
+MRG Grid for RHEL 5 Server v.2 - i386, noarch, x86_64
+MRG Management for RHEL 5 Server v.2 - i386, noarch, x86_64
+Red Hat MRG Messaging for RHEL 5 Server v.2 - i386, x86_64
+
+3. Description:
+
+Red Hat Enterprise MRG (Messaging, Realtime, and Grid) is a next-generation
+IT infrastructure for enterprise computing. MRG offers increased
+performance, reliability, interoperability, and faster computing for
+enterprise customers.
+
+MRG Grid provides high-throughput computing and enables enterprises to
+achieve higher peak computing capacity as well as improved infrastructure
+utilization by leveraging their existing technology to build high
+performance grids. MRG Grid provides a job-queueing mechanism, scheduling
+policy, and a priority scheme, as well as resource monitoring and resource
+management. Users submit their jobs to MRG Grid, where they are placed into
+a queue. MRG Grid then chooses when and where to run the jobs based upon a
+policy, carefully monitors their progress, and ultimately informs the user
+upon completion.
+
+It was found that attempting to remove a job via
+&quot;/usr/share/condor/aviary/jobcontrol.py&quot; with CPROC in square brackets
+caused condor_schedd to crash. If aviary_query_server was configured to
+listen to public interfaces, this could allow a remote attacker to cause a
+denial of service condition in condor_schedd. While condor_schedd was
+restarted by the condor_master process after each exit, condor_master would
+throttle back restarts after each crash. This would slowly increment to the
+defined MASTER_BACKOFF_CEILING value (3600 seconds/1 hour, by default).
+(CVE-2012-4462)
+
+The CVE-2012-4462 issue was discovered by Daniel Horak of the Red Hat
+Enterprise MRG Quality Engineering Team.
+
+These updated packages for Red Hat Enterprise Linux 5 provide numerous
+enhancements and bug fixes for the Grid component of MRG. Some of the most
+important enhancements include:
+
+* Release of HTCondor 7.8
+* OS integration with control groups (cgroups)
+* Kerberos integration and HTML5 interactivity in the management console
+* Historical data reporting in the management console as Technology Preview
+* Job data availability from MongoDB as Technology Preview
+* Updated EC2 AMI and instance tagging support
+* Enhanced negotiation and accounting
+* Enhanced DAG workflow management
+* Enhancements to configuration inspection, node inventory, and
+configuration of walk-in or dynamic resources
+* High availability for Aviary
+
+Space precludes documenting all of these changes in this advisory. Refer to
+the Red Hat Enterprise MRG 2 Technical Notes document, available shortly
+from the link in the References section, for information on these changes.
+
+All users of the Grid capabilities of Red Hat Enterprise MRG are advised
+to upgrade to these updated packages, which correct this issue, and fix
+the bugs and add the enhancements noted in the Red Hat Enterprise MRG 2
+Technical Notes.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+486480 - [RFE] Master should send obituary from .old logs if necessary
+635207 - Cumin: Edit Dynamic Group Quota chart should allow editing subshares
+703859 - Add chart(s) showing grid utilization by accounting group [RFE]
+732388 - aviary query 'getSubmissionSummary'  - match for owner
+733498 - Expose suspend/continue controls for jobs through Aviary
+733515 - lookup or discovery capability so that cumin can find Aviary endpoints
+733516 - support for proposed Aviary endpoint lookup feature
+739219 - Aviary does not handle job output filenames that do not contain explicit paths
+740774 - Condor doesn't run jobs with real number in RequestMemory classad
+746005 - [RFE] wallaby plumage feature
+748053 - preemption does not work when group quotas are in effect
+749569 - [RFE] the skeleton group support in ccp/s
+750196 - Timer to dismiss invocation banners [RFE]
+750818 - SELinux error (setattr) for VM/KVM universe jobs (RHEL5 only)
+751013 - Job receive twice signal SIGCONT after condor_continue command.
+752732 - list of OSes is out of frame
+753822 - Make condor_job_server default submission publisher
+755765 - RFE: Gracefully handle MAX_..._LOG configuration errors
+756096 - [RFE]change UNHIBERNATE default value to not wake up all the machines
+756384 - RFE: Add suspend/continue job operations
+760567 - Change of DynamicQuota causes KeyError on empty data
+766612 - condor_schedd.init - stop should return 0 if there is not service executable
+768298 - Display supported browsers in cumin [RFE]
+768319 - provide information of suspended jobs
+768328 - there is no suspend and transfer states in ns0:JobStatusType
+772587 - openmpiscript - A deprecated MCA parameter value 'plm_rsh_agent' (on RHEL 6.2)
+773434 - Some condor_ commands with valid parameter '-help' return non zero exit code
+782054 - VM without VNC console doesn't start
+782132 - openmpiscript - Command mpirun needs parameter --prefix for correct run (on RHEL 6.2)
+782359 - Condor HFS quota example returns &quot;Unknown config:&quot; from QMF
+782552 - Use idempotent EC2 RunInstances
+782553 - [RFE] Add support for EC2 Instance Resource Tagging
+782816 - warning messages of wallaby shell
+783139 - Remove job using aviary isn't handled properly
+783267 - [RFE] ssh_to_job for VM/Java/Sched/Local universe
+785283 - RFE: expose accounting group negotiation-ordering to configuration
+785289 - RFE: Alter semantic of GROUP_AUTOREGROUP to replicate legacy behavior
+786020 - condor_configure_pool + required parameters
+786801 - Rotation of wallaby agent logs wrongly affects old logs
+786815 - Time borders have no effect for list of resources, groups, users
+786825 - plumage_stats parameter for server raise exception
+787138 - Add time-stamp to yellow banner [RFE]
+788452 - Java issue on updated packages from condor-7.6.3-0.3 to condor-7.6.5-0.11
+789351 - Change cumin's charting tools to a non-flash-based solution [RFE]
+796406 - wallaby doesn't recognize node config change when group deleted
+796798 - [RFE] Make grid persona default for Cumin
+799129 - [RFE] Add Kerberos authentication for Cumin
+799382 - Grid - Quotas - CSV - 'loading' values
+799404 - Grid - Limits - CSV - html metadata
+800065 - Cumin processes sometimes do not exit and must be killed from master with SIGKILL
+800079 - Provide API and implementation to query submissions using a page size and age
+800660 - Updates for new Aviary locator support
+801047 - [RFE] Change default value of sasl-mech-list to 'ANONYMOUS' or 'PLAIN DIGEST-MD5' with credentials
+801287 - service cumin start missing pid file
+801632 - [RFE] wallaby shell should have a means to delete a snapshot
+802704 - Inventory - Filters for a value in a column in a table
+802799 - wallaby shell replace-* commands with empty args should clear the value in the store
+802821 - Support description metadata for features and snapshots in wallaby store
+803359 - [RFE]change UNHIBERNATE default value to not wake up all the machines
+803897 - RFE: advertise the accounting group that a running job matched under on the resource ad
+805029 - Remove slotvis functionality from cumin [RFE]
+805448 - bad submitter limit
+805581 - Number of group quota exceeded
+807398 - Endpoint updating for HA configurations
+807820 - Update wallaby packaging to use wallaby assigned uid/gid
+807838 - Use plumage data to provide initial reporting capabilities [RFE]
+809006 - Double escaping html strings
+809551 - [RFE] Add the ability to use keypair by name
+809732 - PU job is runned before slots are cleaned from previous (removed) job
+810982 - Enable locator support for QueryServer in RHHAv2 tools
+813807 - Jobs submitted from cumin through aviary show 'unknown' for enqueued column
+814386 - Integration of aviary for job control, submission, and job/submission queries [RFE]
+815820 - condor_configd is using QMF_BROKER_AUTH_MECHANISM instead of QMF_BROKER_AUTH_MECH
+820419 - RFE: new command show-node-config
+828983 - condor resource agent start operation should have verification of startup
+831709 - SharedPort should depend on Master
+831725 - Cleanup ALLOW_NEGOTIATOR* params
+831756 - Add ALLOW_NEGOTIATOR to the ExecuteNode feature
+833095 - total local resources per slot for dynamic slots is always zero
+833611 - The cluster-* commands always ask for a password even if only acting on the store
+840076 - Job history collection daemon and tool
+845567 - new PRE_SKIP key word in DAGMan
+846955 - unexpected error message from condor init.d script
+848344 - Problem submitting jobs from cumin via Aviary when commands have no arguments
+850205 - traceback when bad option is provided to wallaby
+850392 - RFE Update Hunting+Splitting+Defaults algorithm
+850555 - RFE Add  new -expand option to condor_config_val
+850567 - RFE Improved  the output of condor_userprio to better support hierarchical groups
+850838 - RFE copy PRIORITY values from the DAG input file to the JobPrio attribute in the job ClassAd
+851205 - schedulers list is bigger than its parent
+851217 - wallaby shell should detect if there are more wallaby agents on broker
+851222 - configd should detect if there are more wallaby agents on broker
+855449 - getSubmissionID by qdate with scan mode &quot;AFTER&quot; does not work unless the qdate supplied is an exact match of an existing qdate
+856646 - getSubmissionID() by qdate returning duplicates
+860308 - condor SEGFAULT after upgrade while using custom hostname
+860850 - CVE-2012-4462 condor: DoS when removing jobs via jobcontrol.py when job id is in square brackets
+862550 - schedd crash on local universe condor_suspend+condor_continue job
+864091 - wallaby list-users prints READ_ONLY instead of READ
+864637 - 'condor_restart -subsystem had' causes had and negotiator to shutdown
+867989 - Cumin missing scheduler stats
+871080 - Queryserver is not visible in locator
+881366 - Wallaby shell modify-* commands do not accept empty strings as arguments
+885787 - Wallaby agent exception while running in memory
+886448 - Aviary api examples: option --timeout leads to Traceback
+
+6. Package List:
+
+MRG Grid for RHEL 5 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.8.8-0.4.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.8.8-0.4.1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-1.3.0-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-1.3.0-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-hooks-1.3.0-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-hooks-1.3.0-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-job-hooks-1.5-6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-job-hooks-1.5-6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-low-latency-1.2-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-low-latency-1.2-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-5.0.5-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-5.0.5-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-base-db-1.25-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-base-db-1.25-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/cumin-0.1.5675-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/cumin-0.1.5675-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-boto-2.3.0-1.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-boto-2.3.0-1.1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-rhubarb-0.4.3-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-rhubarb-0.4.3-5.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-spqr-0.3.6-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-spqr-0.3.6-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/sesame-1.0-7.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/sesame-1.0-7.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/wallaby-0.16.3-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/wallaby-0.16.3-1.el5.src.rpm</a>
+
+i386:
+condor-7.8.8-0.4.1.el5.i386.rpm
+condor-aviary-7.8.8-0.4.1.el5.i386.rpm
+condor-classads-7.8.8-0.4.1.el5.i386.rpm
+condor-debuginfo-7.8.8-0.4.1.el5.i386.rpm
+condor-kbdd-7.8.8-0.4.1.el5.i386.rpm
+condor-qmf-7.8.8-0.4.1.el5.i386.rpm
+condor-vm-gahp-7.8.8-0.4.1.el5.i386.rpm
+sesame-1.0-7.el5.i386.rpm
+sesame-debuginfo-1.0-7.el5.i386.rpm
+
+noarch:
+condor-ec2-enhanced-1.3.0-2.el5.noarch.rpm
+condor-ec2-enhanced-hooks-1.3.0-3.el5.noarch.rpm
+condor-job-hooks-1.5-6.el5.noarch.rpm
+condor-low-latency-1.2-3.el5.noarch.rpm
+condor-wallaby-base-db-1.25-1.el5.noarch.rpm
+condor-wallaby-client-5.0.5-2.el5.noarch.rpm
+condor-wallaby-tools-5.0.5-2.el5.noarch.rpm
+cumin-0.1.5675-1.el5.noarch.rpm
+python-boto-2.3.0-1.1.el5.noarch.rpm
+python-condorec2e-1.3.0-3.el5.noarch.rpm
+python-condorutils-1.5-6.el5.noarch.rpm
+python-wallaby-0.16.3-1.el5.noarch.rpm
+python-wallabyclient-5.0.5-2.el5.noarch.rpm
+ruby-condor-wallaby-5.0.5-2.el5.noarch.rpm
+ruby-rhubarb-0.4.3-5.el5.noarch.rpm
+ruby-spqr-0.3.6-3.el5.noarch.rpm
+ruby-wallaby-0.16.3-1.el5.noarch.rpm
+spqr-gen-0.3.6-3.el5.noarch.rpm
+wallaby-0.16.3-1.el5.noarch.rpm
+wallaby-utils-0.16.3-1.el5.noarch.rpm
+
+x86_64:
+condor-7.8.8-0.4.1.el5.x86_64.rpm
+condor-aviary-7.8.8-0.4.1.el5.x86_64.rpm
+condor-classads-7.8.8-0.4.1.el5.x86_64.rpm
+condor-debuginfo-7.8.8-0.4.1.el5.x86_64.rpm
+condor-kbdd-7.8.8-0.4.1.el5.x86_64.rpm
+condor-qmf-7.8.8-0.4.1.el5.x86_64.rpm
+condor-vm-gahp-7.8.8-0.4.1.el5.x86_64.rpm
+sesame-1.0-7.el5.x86_64.rpm
+sesame-debuginfo-1.0-7.el5.x86_64.rpm
+
+MRG Grid Execute Node for RHEL 5 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.8.8-0.4.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.8.8-0.4.1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-1.3.0-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-1.3.0-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-hooks-1.3.0-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-hooks-1.3.0-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-job-hooks-1.5-6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-job-hooks-1.5-6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-low-latency-1.2-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-low-latency-1.2-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-5.0.5-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-5.0.5-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-base-db-1.25-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-base-db-1.25-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-boto-2.3.0-1.1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-boto-2.3.0-1.1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-rhubarb-0.4.3-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-rhubarb-0.4.3-5.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-spqr-0.3.6-3.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-spqr-0.3.6-3.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/wallaby-0.16.3-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/wallaby-0.16.3-1.el5.src.rpm</a>
+
+i386:
+condor-7.8.8-0.4.1.el5.i386.rpm
+condor-classads-7.8.8-0.4.1.el5.i386.rpm
+condor-debuginfo-7.8.8-0.4.1.el5.i386.rpm
+condor-kbdd-7.8.8-0.4.1.el5.i386.rpm
+condor-qmf-7.8.8-0.4.1.el5.i386.rpm
+condor-vm-gahp-7.8.8-0.4.1.el5.i386.rpm
+
+noarch:
+condor-ec2-enhanced-1.3.0-2.el5.noarch.rpm
+condor-job-hooks-1.5-6.el5.noarch.rpm
+condor-low-latency-1.2-3.el5.noarch.rpm
+condor-wallaby-base-db-1.25-1.el5.noarch.rpm
+condor-wallaby-client-5.0.5-2.el5.noarch.rpm
+condor-wallaby-tools-5.0.5-2.el5.noarch.rpm
+python-boto-2.3.0-1.1.el5.noarch.rpm
+python-condorec2e-1.3.0-3.el5.noarch.rpm
+python-condorutils-1.5-6.el5.noarch.rpm
+python-wallabyclient-5.0.5-2.el5.noarch.rpm
+ruby-condor-wallaby-5.0.5-2.el5.noarch.rpm
+ruby-rhubarb-0.4.3-5.el5.noarch.rpm
+ruby-spqr-0.3.6-3.el5.noarch.rpm
+ruby-wallaby-0.16.3-1.el5.noarch.rpm
+spqr-gen-0.3.6-3.el5.noarch.rpm
+wallaby-utils-0.16.3-1.el5.noarch.rpm
+
+x86_64:
+condor-7.8.8-0.4.1.el5.x86_64.rpm
+condor-classads-7.8.8-0.4.1.el5.x86_64.rpm
+condor-debuginfo-7.8.8-0.4.1.el5.x86_64.rpm
+condor-kbdd-7.8.8-0.4.1.el5.x86_64.rpm
+condor-qmf-7.8.8-0.4.1.el5.x86_64.rpm
+condor-vm-gahp-7.8.8-0.4.1.el5.x86_64.rpm
+
+MRG Management for RHEL 5 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/cumin-0.1.5675-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/cumin-0.1.5675-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/sesame-1.0-7.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/sesame-1.0-7.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/wallaby-0.16.3-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/wallaby-0.16.3-1.el5.src.rpm</a>
+
+i386:
+sesame-1.0-7.el5.i386.rpm
+sesame-debuginfo-1.0-7.el5.i386.rpm
+
+noarch:
+cumin-0.1.5675-1.el5.noarch.rpm
+python-wallaby-0.16.3-1.el5.noarch.rpm
+
+x86_64:
+sesame-1.0-7.el5.x86_64.rpm
+sesame-debuginfo-1.0-7.el5.x86_64.rpm
+
+Red Hat MRG Messaging for RHEL 5 Server v.2:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/sesame-1.0-7.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/sesame-1.0-7.el5.src.rpm</a>
+
+i386:
+sesame-1.0-7.el5.i386.rpm
+sesame-debuginfo-1.0-7.el5.i386.rpm
+
+x86_64:
+sesame-1.0-7.el5.x86_64.rpm
+sesame-debuginfo-1.0-7.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4462.html">https://www.redhat.com/security/data/cve/CVE-2012-4462.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_MRG/2/html/Technical_Notes/RHSA-2013-0564.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_MRG/2/html/Technical_Notes/RHSA-2013-0564.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRN6DXXlSAg2UNWIIRAg/DAKCUcUHpUN4Q6JGmfAl+iidS8/0lhACfe683
+/pL+9MvkiMIAqn7oVMEph6g=
+=M9NR
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00009.html">Date Prev</a>][<a href="msg00011.html">Date Next</a>] &nbsp; [<a href="msg00009.html">Thread Prev</a>][<a href="msg00011.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00010">Thread Index</A>]
+[<A HREF="date.html#00010">Date Index</A>]
+[<A HREF="author.html#00010">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

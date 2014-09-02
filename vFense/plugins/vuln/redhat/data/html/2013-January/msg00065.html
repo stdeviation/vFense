@@ -1,0 +1,191 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0218&#45;01] Moderate: xorg&#45;x11&#45;drv&#45;qxl security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 31 Jan 2013 16:58:46 &#45;0500 -->
+<!--X-Message-Id: 201301312158.r0VLwkDh018242@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0218-01] Moderate: xorg-x11-drv-qxl security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00064.html">Date Prev</a>][<a href="msg00066.html">Date Next</a>] &nbsp; [<a href="msg00064.html">Thread Prev</a>][<a href="msg00066.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00065">Thread Index</A>]
+[<A HREF="date.html#00065">Date Index</A>]
+[<A HREF="author.html#00065">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0218-01] Moderate: xorg-x11-drv-qxl security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0218-01] Moderate: xorg-x11-drv-qxl security update</li>
+<li><em>Date</em>: Thu, 31 Jan 2013 21:58:45 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: xorg-x11-drv-qxl security update
+Advisory ID:       RHSA-2013:0218-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0218.html">https://rhn.redhat.com/errata/RHSA-2013-0218.html</a>
+Issue date:        2013-01-31
+CVE Names:         CVE-2013-0241 
+=====================================================================
+
+1. Summary:
+
+An updated xorg-x11-drv-qxl package that fixes one security issue is now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The xorg-x11-drv-qxl package provides an X11 video driver for the QEMU QXL
+video accelerator. This driver makes it possible to use Red Hat Enterprise
+Linux 6 as a guest operating system under the KVM kernel module and the
+QEMU multi-platform emulator, using the SPICE protocol.
+
+A flaw was found in the way the host's qemu-kvm qxl driver and the guest's
+X.Org qxl driver interacted when a SPICE connection terminated. A user able
+to initiate a SPICE connection to a guest could use this flaw to make the
+guest temporarily unavailable or, potentially (if the sysctl
+kernel.softlockup_panic variable was set to &quot;1&quot; in the guest), crash the
+guest. (CVE-2013-0241)
+
+All users of xorg-x11-drv-qxl are advised to upgrade to this updated
+package, which contains a backported patch to correct this issue. All
+running X.Org server instances using the qxl driver must be restarted for
+this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+906032 - CVE-2013-0241 qxl: synchronous io guest DoS
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xorg-x11-drv-qxl-0.0.14-14.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/xorg-x11-drv-qxl-0.0.14-14.el6_3.src.rpm</a>
+
+i386:
+xorg-x11-drv-qxl-0.0.14-14.el6_3.i686.rpm
+xorg-x11-drv-qxl-debuginfo-0.0.14-14.el6_3.i686.rpm
+
+x86_64:
+xorg-x11-drv-qxl-0.0.14-14.el6_3.x86_64.rpm
+xorg-x11-drv-qxl-debuginfo-0.0.14-14.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xorg-x11-drv-qxl-0.0.14-14.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/xorg-x11-drv-qxl-0.0.14-14.el6_3.src.rpm</a>
+
+i386:
+xorg-x11-drv-qxl-0.0.14-14.el6_3.i686.rpm
+xorg-x11-drv-qxl-debuginfo-0.0.14-14.el6_3.i686.rpm
+
+x86_64:
+xorg-x11-drv-qxl-0.0.14-14.el6_3.x86_64.rpm
+xorg-x11-drv-qxl-debuginfo-0.0.14-14.el6_3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xorg-x11-drv-qxl-0.0.14-14.el6_3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/xorg-x11-drv-qxl-0.0.14-14.el6_3.src.rpm</a>
+
+i386:
+xorg-x11-drv-qxl-0.0.14-14.el6_3.i686.rpm
+xorg-x11-drv-qxl-debuginfo-0.0.14-14.el6_3.i686.rpm
+
+x86_64:
+xorg-x11-drv-qxl-0.0.14-14.el6_3.x86_64.rpm
+xorg-x11-drv-qxl-debuginfo-0.0.14-14.el6_3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-0241.html">https://www.redhat.com/security/data/cve/CVE-2013-0241.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRCukIXlSAg2UNWIIRAjRwAKCxXl/mUqFo5NnrZfIVbvy7AtcCbgCfZ+79
+43PvIABd3aP3eKRuSahL2A8=
+=U0Db
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00064.html">Date Prev</a>][<a href="msg00066.html">Date Next</a>] &nbsp; [<a href="msg00064.html">Thread Prev</a>][<a href="msg00066.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00065">Thread Index</A>]
+[<A HREF="date.html#00065">Date Index</A>]
+[<A HREF="author.html#00065">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

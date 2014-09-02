@@ -1,0 +1,372 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2007:1049&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 3 Dec 2007 10:38:09 &#45;0500 -->
+<!--X-Message-Id: 200712031538.lB3Fc8ro013087@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2007:1049-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2007:1049-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2007:1049-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Mon, 3 Dec 2007 10:38:08 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- ---------------------------------------------------------------------
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2007:1049-01
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2007-1049.html">https://rhn.redhat.com/errata/RHSA-2007-1049.html</a>
+Issue date:        2007-12-03
+Updated on:        2007-12-03
+Product:           Red Hat Enterprise Linux
+CVE Names:         CVE-2007-2172  CVE-2007-3848 
+                   CVE-2006-4538 CVE-2007-3739  
+                   CVE-2007-4308 
+- ---------------------------------------------------------------------
+
+1. Summary:
+
+Updated kernel packages that fix several security issues and a bug in the
+Red Hat Enterprise Linux 3 kernel are now available.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 3 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Desktop version 3 - i386, x86_64
+Red Hat Enterprise Linux ES version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 3 - i386, ia64, x86_64
+
+3. Problem description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system. 
+
+A flaw was found in the handling of process death signals. This allowed a
+local user to send arbitrary signals to the suid-process executed by that
+user. A successful exploitation of this flaw depends on the structure of
+the suid-program and its signal handling. (CVE-2007-3848, Important)
+
+A flaw was found in the IPv4 forwarding base. This allowed a local user to
+cause a denial of service. (CVE-2007-2172, Important) 
+
+A flaw was found where a corrupted executable file could cause cross-region
+memory mappings on Itanium systems. This allowed a local user to cause a
+denial of service. (CVE-2006-4538, Moderate) 
+
+A flaw was found in the stack expansion when using the hugetlb kernel on
+PowerPC systems. This allowed a local user to cause a denial of service.
+(CVE-2007-3739, Moderate) 
+
+A flaw was found in the aacraid SCSI driver. This allowed a local user to
+make ioctl calls to the driver that should be restricted to privileged
+users. (CVE-2007-4308, Moderate) 
+
+As well, these updated packages fix the following bug:
+
+* a bug in the TCP header prediction code may have caused &quot;TCP: Treason
+uncloaked!&quot; messages to be logged. In certain situations this may have lead
+to TCP connections hanging or aborting.
+
+Red Hat Enterprise Linux 3 users are advised to upgrade to these updated
+packages, which contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bug IDs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+249237 - IPV4 'Treason uncloaked' message - hints at a more general kernel/net bug
+250429 - CVE-2007-2172 fib_semantics.c out of bounds access vulnerability
+250972 - CVE-2007-3848 Privilege escalation via PR_SET_PDEATHSIG
+252309 - CVE-2007-4308 Missing ioctl() permission checks in aacraid driver
+289151 - CVE-2006-4538 Local DoS with corrupted ELF
+294941 - CVE-2007-3739 LTC36188-Don't allow the stack to grow into hugetlb reserved regions
+
+6. RPMs required:
+
+Red Hat Enterprise Linux AS version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/kernel-2.4.21-53.EL.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/kernel-2.4.21-53.EL.src.rpm</a>
+f6b14b96032c8e6ef0b6bf0ceb50f658  kernel-2.4.21-53.EL.src.rpm
+
+i386:
+5ed3ebaa27fe3523e6287afe9da778df  kernel-2.4.21-53.EL.athlon.rpm
+aaaa37a37c4d9d50f85c3d33ea75c2d5  kernel-2.4.21-53.EL.i686.rpm
+c750ed31d9402c48bb0831443947b1b3  kernel-BOOT-2.4.21-53.EL.i386.rpm
+958895eee3ffc86db1744b59b18b2ed4  kernel-debuginfo-2.4.21-53.EL.athlon.rpm
+6da92dd3c05cdef87a3afe85cf76ffcf  kernel-debuginfo-2.4.21-53.EL.i386.rpm
+c7cc1996634c81fe969dfd6f1c228bd2  kernel-debuginfo-2.4.21-53.EL.i686.rpm
+2ca9bf21f2bbbf0bcbcb2501ca972f4e  kernel-doc-2.4.21-53.EL.i386.rpm
+c3e41830403b446d494e0fcb0668ffb6  kernel-hugemem-2.4.21-53.EL.i686.rpm
+125a006ee18d4a5afc652547252f77b4  kernel-hugemem-unsupported-2.4.21-53.EL.i686.rpm
+b6966cff1cca0a9b4c53f7ac8bc7c8ec  kernel-smp-2.4.21-53.EL.athlon.rpm
+874b032f5f12e35a66842966dfe615fc  kernel-smp-2.4.21-53.EL.i686.rpm
+e1f6b9b5f82534206d68de57173cebc7  kernel-smp-unsupported-2.4.21-53.EL.athlon.rpm
+7ee65541e62b6e76a0f0c8c8ffacfe7b  kernel-smp-unsupported-2.4.21-53.EL.i686.rpm
+25eb44031ca51e13c3518cbfa5d14868  kernel-source-2.4.21-53.EL.i386.rpm
+38292e5677afeca19eff46011643b687  kernel-unsupported-2.4.21-53.EL.athlon.rpm
+8e81ce663a85ccdb323ae10be861965e  kernel-unsupported-2.4.21-53.EL.i686.rpm
+
+ia64:
+58ce57bce8a0f72f8239b4412ec5f0d0  kernel-2.4.21-53.EL.ia64.rpm
+3da16c323c512d3c6aca21db7e50a35c  kernel-debuginfo-2.4.21-53.EL.ia64.rpm
+85811f0f247d9bb01e1b823de7fb429b  kernel-doc-2.4.21-53.EL.ia64.rpm
+dcc30f9dd34cf5c7666d71b2fae6d975  kernel-source-2.4.21-53.EL.ia64.rpm
+66e70d213977984f6a3f189a74ad0963  kernel-unsupported-2.4.21-53.EL.ia64.rpm
+
+ppc:
+82bba5f9f376ee007a6354df6af87778  kernel-2.4.21-53.EL.ppc64iseries.rpm
+dcb788cdc164cb2c51e462734d8ffeca  kernel-2.4.21-53.EL.ppc64pseries.rpm
+4afa2676f02b6121e450f1dc2df4e263  kernel-debuginfo-2.4.21-53.EL.ppc64.rpm
+b68f959c2976aa66f3ff3e32e8ba4faa  kernel-debuginfo-2.4.21-53.EL.ppc64iseries.rpm
+0d7766cf63a102296ca82ea788546a15  kernel-debuginfo-2.4.21-53.EL.ppc64pseries.rpm
+1447344d9ebee027257d495c074b244e  kernel-doc-2.4.21-53.EL.ppc64.rpm
+fb387166670d7fd1f1ca034d6bbfc371  kernel-source-2.4.21-53.EL.ppc64.rpm
+a2e26fe734de4d356d68dbdd08c64548  kernel-unsupported-2.4.21-53.EL.ppc64iseries.rpm
+53fa6a0d16093346fac2db9f490cbc87  kernel-unsupported-2.4.21-53.EL.ppc64pseries.rpm
+
+s390:
+7651727c8b05c762c4efae0a224f92c3  kernel-2.4.21-53.EL.s390.rpm
+d513754b73947f7b8601668d3c88c5d3  kernel-debuginfo-2.4.21-53.EL.s390.rpm
+93fc7baca88bb36556780aaf66416f90  kernel-doc-2.4.21-53.EL.s390.rpm
+21a066b295363b8e22d671603e1ab5dd  kernel-source-2.4.21-53.EL.s390.rpm
+8d1da2180806c3654af48587948a5994  kernel-unsupported-2.4.21-53.EL.s390.rpm
+
+s390x:
+795d3ac785caab9befd45edb9f98f787  kernel-2.4.21-53.EL.s390x.rpm
+04e28c359ab663a936d48ace4d83cd39  kernel-debuginfo-2.4.21-53.EL.s390x.rpm
+bbe1dcab582e792a3200ff69557cf7bf  kernel-doc-2.4.21-53.EL.s390x.rpm
+cc0f24530dd8b0adf53378f702107e71  kernel-source-2.4.21-53.EL.s390x.rpm
+e710ac2b4a5263884f7f63ace4c402a8  kernel-unsupported-2.4.21-53.EL.s390x.rpm
+
+x86_64:
+22267331e595689b6b7c6ddbc92b3e66  kernel-2.4.21-53.EL.ia32e.rpm
+66cdd20c8c8059e92593b2acdbb1357d  kernel-2.4.21-53.EL.x86_64.rpm
+6899921e5b7d613eb378d62adb0fdfb6  kernel-debuginfo-2.4.21-53.EL.ia32e.rpm
+cfc8f90e4c202958d99c4a76df0055ce  kernel-debuginfo-2.4.21-53.EL.x86_64.rpm
+4e281964dadc7aa8afcf7364102cf8d6  kernel-doc-2.4.21-53.EL.x86_64.rpm
+65ef6c81fad4acbff6a4626888e49c6c  kernel-smp-2.4.21-53.EL.x86_64.rpm
+0f8c0fd98410071fafa0b892c22a075b  kernel-smp-unsupported-2.4.21-53.EL.x86_64.rpm
+bf9539cde0b3e4a42c95e2302c2568aa  kernel-source-2.4.21-53.EL.x86_64.rpm
+595d8cee6a98e3813fb29a3eaa3a51f4  kernel-unsupported-2.4.21-53.EL.ia32e.rpm
+bc60307faf9dd46e819e0e67cb9bbf2d  kernel-unsupported-2.4.21-53.EL.x86_64.rpm
+
+Red Hat Desktop version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/kernel-2.4.21-53.EL.src.rpm">ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/kernel-2.4.21-53.EL.src.rpm</a>
+f6b14b96032c8e6ef0b6bf0ceb50f658  kernel-2.4.21-53.EL.src.rpm
+
+i386:
+5ed3ebaa27fe3523e6287afe9da778df  kernel-2.4.21-53.EL.athlon.rpm
+aaaa37a37c4d9d50f85c3d33ea75c2d5  kernel-2.4.21-53.EL.i686.rpm
+c750ed31d9402c48bb0831443947b1b3  kernel-BOOT-2.4.21-53.EL.i386.rpm
+958895eee3ffc86db1744b59b18b2ed4  kernel-debuginfo-2.4.21-53.EL.athlon.rpm
+6da92dd3c05cdef87a3afe85cf76ffcf  kernel-debuginfo-2.4.21-53.EL.i386.rpm
+c7cc1996634c81fe969dfd6f1c228bd2  kernel-debuginfo-2.4.21-53.EL.i686.rpm
+2ca9bf21f2bbbf0bcbcb2501ca972f4e  kernel-doc-2.4.21-53.EL.i386.rpm
+c3e41830403b446d494e0fcb0668ffb6  kernel-hugemem-2.4.21-53.EL.i686.rpm
+125a006ee18d4a5afc652547252f77b4  kernel-hugemem-unsupported-2.4.21-53.EL.i686.rpm
+b6966cff1cca0a9b4c53f7ac8bc7c8ec  kernel-smp-2.4.21-53.EL.athlon.rpm
+874b032f5f12e35a66842966dfe615fc  kernel-smp-2.4.21-53.EL.i686.rpm
+e1f6b9b5f82534206d68de57173cebc7  kernel-smp-unsupported-2.4.21-53.EL.athlon.rpm
+7ee65541e62b6e76a0f0c8c8ffacfe7b  kernel-smp-unsupported-2.4.21-53.EL.i686.rpm
+25eb44031ca51e13c3518cbfa5d14868  kernel-source-2.4.21-53.EL.i386.rpm
+38292e5677afeca19eff46011643b687  kernel-unsupported-2.4.21-53.EL.athlon.rpm
+8e81ce663a85ccdb323ae10be861965e  kernel-unsupported-2.4.21-53.EL.i686.rpm
+
+x86_64:
+22267331e595689b6b7c6ddbc92b3e66  kernel-2.4.21-53.EL.ia32e.rpm
+66cdd20c8c8059e92593b2acdbb1357d  kernel-2.4.21-53.EL.x86_64.rpm
+6899921e5b7d613eb378d62adb0fdfb6  kernel-debuginfo-2.4.21-53.EL.ia32e.rpm
+cfc8f90e4c202958d99c4a76df0055ce  kernel-debuginfo-2.4.21-53.EL.x86_64.rpm
+4e281964dadc7aa8afcf7364102cf8d6  kernel-doc-2.4.21-53.EL.x86_64.rpm
+65ef6c81fad4acbff6a4626888e49c6c  kernel-smp-2.4.21-53.EL.x86_64.rpm
+0f8c0fd98410071fafa0b892c22a075b  kernel-smp-unsupported-2.4.21-53.EL.x86_64.rpm
+bf9539cde0b3e4a42c95e2302c2568aa  kernel-source-2.4.21-53.EL.x86_64.rpm
+595d8cee6a98e3813fb29a3eaa3a51f4  kernel-unsupported-2.4.21-53.EL.ia32e.rpm
+bc60307faf9dd46e819e0e67cb9bbf2d  kernel-unsupported-2.4.21-53.EL.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/kernel-2.4.21-53.EL.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/kernel-2.4.21-53.EL.src.rpm</a>
+f6b14b96032c8e6ef0b6bf0ceb50f658  kernel-2.4.21-53.EL.src.rpm
+
+i386:
+5ed3ebaa27fe3523e6287afe9da778df  kernel-2.4.21-53.EL.athlon.rpm
+aaaa37a37c4d9d50f85c3d33ea75c2d5  kernel-2.4.21-53.EL.i686.rpm
+c750ed31d9402c48bb0831443947b1b3  kernel-BOOT-2.4.21-53.EL.i386.rpm
+958895eee3ffc86db1744b59b18b2ed4  kernel-debuginfo-2.4.21-53.EL.athlon.rpm
+6da92dd3c05cdef87a3afe85cf76ffcf  kernel-debuginfo-2.4.21-53.EL.i386.rpm
+c7cc1996634c81fe969dfd6f1c228bd2  kernel-debuginfo-2.4.21-53.EL.i686.rpm
+2ca9bf21f2bbbf0bcbcb2501ca972f4e  kernel-doc-2.4.21-53.EL.i386.rpm
+c3e41830403b446d494e0fcb0668ffb6  kernel-hugemem-2.4.21-53.EL.i686.rpm
+125a006ee18d4a5afc652547252f77b4  kernel-hugemem-unsupported-2.4.21-53.EL.i686.rpm
+b6966cff1cca0a9b4c53f7ac8bc7c8ec  kernel-smp-2.4.21-53.EL.athlon.rpm
+874b032f5f12e35a66842966dfe615fc  kernel-smp-2.4.21-53.EL.i686.rpm
+e1f6b9b5f82534206d68de57173cebc7  kernel-smp-unsupported-2.4.21-53.EL.athlon.rpm
+7ee65541e62b6e76a0f0c8c8ffacfe7b  kernel-smp-unsupported-2.4.21-53.EL.i686.rpm
+25eb44031ca51e13c3518cbfa5d14868  kernel-source-2.4.21-53.EL.i386.rpm
+38292e5677afeca19eff46011643b687  kernel-unsupported-2.4.21-53.EL.athlon.rpm
+8e81ce663a85ccdb323ae10be861965e  kernel-unsupported-2.4.21-53.EL.i686.rpm
+
+ia64:
+58ce57bce8a0f72f8239b4412ec5f0d0  kernel-2.4.21-53.EL.ia64.rpm
+3da16c323c512d3c6aca21db7e50a35c  kernel-debuginfo-2.4.21-53.EL.ia64.rpm
+85811f0f247d9bb01e1b823de7fb429b  kernel-doc-2.4.21-53.EL.ia64.rpm
+dcc30f9dd34cf5c7666d71b2fae6d975  kernel-source-2.4.21-53.EL.ia64.rpm
+66e70d213977984f6a3f189a74ad0963  kernel-unsupported-2.4.21-53.EL.ia64.rpm
+
+x86_64:
+22267331e595689b6b7c6ddbc92b3e66  kernel-2.4.21-53.EL.ia32e.rpm
+66cdd20c8c8059e92593b2acdbb1357d  kernel-2.4.21-53.EL.x86_64.rpm
+6899921e5b7d613eb378d62adb0fdfb6  kernel-debuginfo-2.4.21-53.EL.ia32e.rpm
+cfc8f90e4c202958d99c4a76df0055ce  kernel-debuginfo-2.4.21-53.EL.x86_64.rpm
+4e281964dadc7aa8afcf7364102cf8d6  kernel-doc-2.4.21-53.EL.x86_64.rpm
+65ef6c81fad4acbff6a4626888e49c6c  kernel-smp-2.4.21-53.EL.x86_64.rpm
+0f8c0fd98410071fafa0b892c22a075b  kernel-smp-unsupported-2.4.21-53.EL.x86_64.rpm
+bf9539cde0b3e4a42c95e2302c2568aa  kernel-source-2.4.21-53.EL.x86_64.rpm
+595d8cee6a98e3813fb29a3eaa3a51f4  kernel-unsupported-2.4.21-53.EL.ia32e.rpm
+bc60307faf9dd46e819e0e67cb9bbf2d  kernel-unsupported-2.4.21-53.EL.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 3:
+
+SRPMS:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/kernel-2.4.21-53.EL.src.rpm">ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/kernel-2.4.21-53.EL.src.rpm</a>
+f6b14b96032c8e6ef0b6bf0ceb50f658  kernel-2.4.21-53.EL.src.rpm
+
+i386:
+5ed3ebaa27fe3523e6287afe9da778df  kernel-2.4.21-53.EL.athlon.rpm
+aaaa37a37c4d9d50f85c3d33ea75c2d5  kernel-2.4.21-53.EL.i686.rpm
+c750ed31d9402c48bb0831443947b1b3  kernel-BOOT-2.4.21-53.EL.i386.rpm
+958895eee3ffc86db1744b59b18b2ed4  kernel-debuginfo-2.4.21-53.EL.athlon.rpm
+6da92dd3c05cdef87a3afe85cf76ffcf  kernel-debuginfo-2.4.21-53.EL.i386.rpm
+c7cc1996634c81fe969dfd6f1c228bd2  kernel-debuginfo-2.4.21-53.EL.i686.rpm
+2ca9bf21f2bbbf0bcbcb2501ca972f4e  kernel-doc-2.4.21-53.EL.i386.rpm
+c3e41830403b446d494e0fcb0668ffb6  kernel-hugemem-2.4.21-53.EL.i686.rpm
+125a006ee18d4a5afc652547252f77b4  kernel-hugemem-unsupported-2.4.21-53.EL.i686.rpm
+b6966cff1cca0a9b4c53f7ac8bc7c8ec  kernel-smp-2.4.21-53.EL.athlon.rpm
+874b032f5f12e35a66842966dfe615fc  kernel-smp-2.4.21-53.EL.i686.rpm
+e1f6b9b5f82534206d68de57173cebc7  kernel-smp-unsupported-2.4.21-53.EL.athlon.rpm
+7ee65541e62b6e76a0f0c8c8ffacfe7b  kernel-smp-unsupported-2.4.21-53.EL.i686.rpm
+25eb44031ca51e13c3518cbfa5d14868  kernel-source-2.4.21-53.EL.i386.rpm
+38292e5677afeca19eff46011643b687  kernel-unsupported-2.4.21-53.EL.athlon.rpm
+8e81ce663a85ccdb323ae10be861965e  kernel-unsupported-2.4.21-53.EL.i686.rpm
+
+ia64:
+58ce57bce8a0f72f8239b4412ec5f0d0  kernel-2.4.21-53.EL.ia64.rpm
+3da16c323c512d3c6aca21db7e50a35c  kernel-debuginfo-2.4.21-53.EL.ia64.rpm
+85811f0f247d9bb01e1b823de7fb429b  kernel-doc-2.4.21-53.EL.ia64.rpm
+dcc30f9dd34cf5c7666d71b2fae6d975  kernel-source-2.4.21-53.EL.ia64.rpm
+66e70d213977984f6a3f189a74ad0963  kernel-unsupported-2.4.21-53.EL.ia64.rpm
+
+x86_64:
+22267331e595689b6b7c6ddbc92b3e66  kernel-2.4.21-53.EL.ia32e.rpm
+66cdd20c8c8059e92593b2acdbb1357d  kernel-2.4.21-53.EL.x86_64.rpm
+6899921e5b7d613eb378d62adb0fdfb6  kernel-debuginfo-2.4.21-53.EL.ia32e.rpm
+cfc8f90e4c202958d99c4a76df0055ce  kernel-debuginfo-2.4.21-53.EL.x86_64.rpm
+4e281964dadc7aa8afcf7364102cf8d6  kernel-doc-2.4.21-53.EL.x86_64.rpm
+65ef6c81fad4acbff6a4626888e49c6c  kernel-smp-2.4.21-53.EL.x86_64.rpm
+0f8c0fd98410071fafa0b892c22a075b  kernel-smp-unsupported-2.4.21-53.EL.x86_64.rpm
+bf9539cde0b3e4a42c95e2302c2568aa  kernel-source-2.4.21-53.EL.x86_64.rpm
+595d8cee6a98e3813fb29a3eaa3a51f4  kernel-unsupported-2.4.21-53.EL.ia32e.rpm
+bc60307faf9dd46e819e0e67cb9bbf2d  kernel-unsupported-2.4.21-53.EL.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2172">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2172</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=">http://cve.mitre.org/cgi-bin/cvename.cgi?name=</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3848">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3848</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4538">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2006-4538</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3739">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3739</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=">http://cve.mitre.org/cgi-bin/cvename.cgi?name=</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4308">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4308</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2007 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHVCLdXlSAg2UNWIIRArWGAJ9cq2/UtXFTLJENT+XXaMy7GQJXcACghuqK
+bMaRlCFgjP/F0CTi828wOhw=
+=53Xo
+-----END PGP SIGNATURE-----
+
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

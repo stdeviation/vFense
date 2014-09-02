@@ -1,0 +1,337 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0503&#45;03] Moderate: 389&#45;ds&#45;base security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Feb 2013 01:32:37 &#45;0500 -->
+<!--X-Message-Id: 201302210632.r1L6WYwr020737@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0503-03] Moderate: 389-ds-base security, bug fix,	and enhance</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0503-03] Moderate: 389-ds-base security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0503-03] Moderate: 389-ds-base security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Feb 2013 06:21:32 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: 389-ds-base security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:0503-03
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0503.html">https://rhn.redhat.com/errata/RHSA-2013-0503.html</a>
+Issue date:        2013-02-21
+CVE Names:         CVE-2012-4450 
+=====================================================================
+
+1. Summary:
+
+Updated 389-ds-base packages that fix one security issue, numerous bugs,
+and add various enhancements are now available for Red Hat Enterprise
+Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The 389-ds-base packages provide 389 Directory Server, which is an LDAPv3
+compliant server. The base packages include the Lightweight Directory
+Access Protocol (LDAP) server and command-line utilities for server
+administration.
+
+A flaw was found in the way 389 Directory Server enforced ACLs after
+performing an LDAP modify relative distinguished name (modrdn) operation.
+After modrdn was used to move part of a tree, the ACLs defined on the moved
+(Distinguished Name) were not properly enforced until the server was
+restarted. This could allow LDAP users to access information that should be
+restricted by the defined ACLs. (CVE-2012-4450)
+
+This issue was discovered by Noriko Hosoi of Red Hat.
+
+These updated 389-ds-base packages include numerous bug fixes and
+enhancements. Space precludes documenting all of these changes in this
+advisory. Users are directed to the Red Hat Enterprise Linux 6.4
+Technical Notes, linked to in the References, for information on the most
+significant of these changes.
+
+All users of 389-ds-base are advised to upgrade to these updated packages,
+which correct this issue and provide numerous bug fixes and enhancements.
+After installing this update, the 389 server service will be restarted
+automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+742054 - SASL/PLAIN binds do not work
+746642 - [RFE] define pam_passthru service per subtree
+757836 - logconv.pl restarts count on conn=0 instead of conn=1
+768084 - [RFE] Allow automember to work on entries that have already been added
+782975 - krbExtraData is being null modified and replicated on each ssh login
+800051 - Rebase 389-ds-base to 1.2.11
+818762 - winsync should not delete entry that appears to be out of scope
+830256 - Audit log - clear text password in user changes
+830331 - ns-slapd exits/crashes if /var fills up
+830335 - restore of replica ldif file on second master after deleting two records shows only 1 deletion
+830336 - db deadlock return should not log error
+830337 - usn + mmr = deletions are not replicated
+830338 - Change DS to purge ticket from krb cache in case of authentication error
+830340 - Make the CLEANALLRUV task one step
+830343 - managed entry sometimes doesn't delete the managed entry
+830344 - [RFE] Improve replication agreement status messages
+830346 - ADD operations not in audit log
+830347 - 389 DS does not support multiple paging controls on a single connection
+830348 - Slow shutdown when you have 100+ replication agreements
+830349 - cannot use &amp; in a sasl map search filter
+830353 - valgrind reported memleaks and mem errors
+830355 - [RFE] improve cleanruv functionality
+830356 - coverity 12625-12629 - leaks, dead code, unchecked return
+832560 - [abrt] 389-ds-base-1.2.10.6-1.fc16: slapi_attr_value_cmp: Process /usr/sbin/ns-slapd was killed by signal 11 (SIGSEGV)
+833202 - transaction retries need to be cache aware
+833218 - ldapmodify returns Operations error
+833222 - memberOf attribute and plugin behaviour between sub-suffixes
+834046 - [RFE] Add nsTLS1 attribute to schema and objectclass nsEncryptionConfig
+834047 - Fine Grained Password policy: if passwordHistory is on, deleting the password fails.
+834049 - [RFE] Add schema for DNA plugin
+834052 - [RFE] limiting Directory Manager (nsslapd-rootdn) bind access by source host (e.g. 127.0.0.1)
+834053 - [RFE] Plugins - ability to control behavior of modifyTimestamp/modifiersName
+834054 - Should only update modifyTimestamp/modifiersName on MODIFY ops
+834056 - Automembership plugin fails in a MMR setup, if data and config area mixed in the plugin configuration
+834057 - ldap-agent crashes on start with signal SIGSEGV
+834058 - [RFE] logconv.pl : use of getopts to parse commandline options
+834060 - passwordMaxFailure should lockout password one sooner - and should be configurable to avoid regressions
+834061 - [RFE] RHDS: Implement SO_KEEPALIVE in network calls.
+834063 - [RFE] enable attribute that tracks when a password was last set on an entry in the LDAP store
+834064 - dnaNextValue gets incremented even if the user addition fails
+834065 - Adding Replication agreement should complain if required nsds5ReplicaCredentials not supplied
+834074 - [RFE] Disable replication agreements
+834075 - logconv.pl reporting unindexed search with different search base than shown in access logs
+835238 - Account Usability Control Not Working
+836386 - slapi_ldap_bind() doesn't check bind results
+838706 - referint modrdn not working if case is different
+840153 - Impossible to rename entry (modrdn) with Attribute Uniqueness plugin enabled
+841600 - Referential integrity plug-in does not work when update interval is not zero
+842437 - dna memleak reported by valgrind
+842438 - Report during startup if nsslapd-cachememsize is too small
+842440 - memberof performance enhancement
+842441 - &quot;Server is unwilling to perform&quot; when running ldapmodify on nsds5ReplicaStripAttrs
+847868 - [RFE] support posix schema for user and group sync
+850683 - nsds5ReplicaEnabled can be set with any invalid values.
+852087 - [RFE] add attribute nsslapd-readonly so we can reference it in acis
+852088 - server to server ssl client auth broken with latest openldap
+852202 - Ipa master system initiated more than a dozen simultaneous replication sessions, shut itself down and wiped out its db
+852839 - variable dn should not be used in ldbm_back_delete
+855438 - CLEANALLRUV task gets stuck on winsync replication agreement
+860603 - CVE-2012-4450 389-ds-base: Change on SLAPI_MODRDN_NEWSUPERIOR is not evaluated in ACL (ACL rules bypass possible)
+860772 - Change on SLAPI_MODRDN_NEWSUPERIOR is not evaluated in acl
+863576 - Dirsrv deadlock locking up IPA
+864594 - anonymous limits are being applied to directory manager
+868841 - Newly created users with organizationalPerson objectClass fails to sync from AD to DS with missing attribute error
+868853 - Winsync: DS error logs report wrong version of Windows AD when winsync is configured.
+870158 - slapd entered to infinite loop during new index addition
+870162 - Cannot abandon simple paged result search
+875862 - crash in DNA if no dnamagicregen is specified
+876694 - RedHat Directory Server crashes (segfaults) when moving ldap entry
+878111 - ns-slapd segfaults if it cannot rename the logs
+880305 - spec file missing dependencies for x86_64 6ComputeNode
+887855 - RootDN Access Control plugin is missing after upgrade from RHEL63 to RHEL64
+889083 - For modifiersName/internalModifiersName feature, internalModifiersname is not working for DNA plugin
+891930 - DNA plugin no longer reports additional info when range is depleted
+896256 - updating package touches configuration files
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm</a>
+
+i386:
+389-ds-base-1.2.11.15-11.el6.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-devel-1.2.11.15-11.el6.i686.rpm
+389-ds-base-libs-1.2.11.15-11.el6.i686.rpm
+
+x86_64:
+389-ds-base-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-devel-1.2.11.15-11.el6.i686.rpm
+389-ds-base-devel-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-libs-1.2.11.15-11.el6.i686.rpm
+389-ds-base-libs-1.2.11.15-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm</a>
+
+x86_64:
+389-ds-base-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-devel-1.2.11.15-11.el6.i686.rpm
+389-ds-base-devel-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-libs-1.2.11.15-11.el6.i686.rpm
+389-ds-base-libs-1.2.11.15-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm</a>
+
+i386:
+389-ds-base-1.2.11.15-11.el6.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-libs-1.2.11.15-11.el6.i686.rpm
+
+x86_64:
+389-ds-base-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-libs-1.2.11.15-11.el6.i686.rpm
+389-ds-base-libs-1.2.11.15-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm</a>
+
+i386:
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-devel-1.2.11.15-11.el6.i686.rpm
+
+x86_64:
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-devel-1.2.11.15-11.el6.i686.rpm
+389-ds-base-devel-1.2.11.15-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm</a>
+
+i386:
+389-ds-base-1.2.11.15-11.el6.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-libs-1.2.11.15-11.el6.i686.rpm
+
+x86_64:
+389-ds-base-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-libs-1.2.11.15-11.el6.i686.rpm
+389-ds-base-libs-1.2.11.15-11.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/389-ds-base-1.2.11.15-11.el6.src.rpm</a>
+
+i386:
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-devel-1.2.11.15-11.el6.i686.rpm
+
+x86_64:
+389-ds-base-debuginfo-1.2.11.15-11.el6.i686.rpm
+389-ds-base-debuginfo-1.2.11.15-11.el6.x86_64.rpm
+389-ds-base-devel-1.2.11.15-11.el6.i686.rpm
+389-ds-base-devel-1.2.11.15-11.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4450.html">https://www.redhat.com/security/data/cve/CVE-2012-4450.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/pkg-389-ds-base.html">https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.4_Technical_Notes/pkg-389-ds-base.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRJb9wXlSAg2UNWIIRAkz7AJ94maizfWfNoheueWxwd+xNb1P7fwCfWohG
+kr7Rk9Yh8AetFdSPH8k+AH0=
+=gywk
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

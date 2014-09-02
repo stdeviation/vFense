@@ -1,0 +1,286 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1196&#45;01] Moderate: system&#45;config&#45;printer security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 23 Aug 2011 10:49:12 &#45;0400 -->
+<!--X-Message-Id: 201108231449.p7NEn6KW005278@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1196-01] Moderate: system-config-printer security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1196-01] Moderate: system-config-printer security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1196-01] Moderate: system-config-printer security update</li>
+<li><em>Date</em>: Tue, 23 Aug 2011 14:49:05 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: system-config-printer security update
+Advisory ID:       RHSA-2011:1196-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1196.html">https://rhn.redhat.com/errata/RHSA-2011-1196.html</a>
+Issue date:        2011-08-23
+CVE Names:         CVE-2011-2899 
+=====================================================================
+
+1. Summary:
+
+Updated system-config-printer packages that fix one security issue are now
+available for Red Hat Enterprise Linux 4 and 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+system-config-printer is a print queue configuration tool with a graphical
+user interface.
+
+It was found that system-config-printer did not properly sanitize NetBIOS
+and workgroup names when searching for network printers. A remote attacker
+could use this flaw to execute arbitrary code with the privileges of the
+user running system-config-printer. (CVE-2011-2899)
+
+All users of system-config-printer are advised to upgrade to these updated
+packages, which contain a backported patch to resolve this issue. Running
+instances of system-config-printer must be restarted for this update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+728348 - CVE-2011-2899 system-config-printer: possible arbitrary code execution in pysmb.py due to improper escaping of hostnames
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/system-config-printer-0.6.116.10-1.6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/system-config-printer-0.6.116.10-1.6.el4.src.rpm</a>
+
+i386:
+system-config-printer-0.6.116.10-1.6.el4.i386.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.i386.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.i386.rpm
+
+ia64:
+system-config-printer-0.6.116.10-1.6.el4.ia64.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.ia64.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.ia64.rpm
+
+ppc:
+system-config-printer-0.6.116.10-1.6.el4.ppc.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.ppc.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.ppc.rpm
+
+s390:
+system-config-printer-0.6.116.10-1.6.el4.s390.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.s390.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.s390.rpm
+
+s390x:
+system-config-printer-0.6.116.10-1.6.el4.s390x.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.s390x.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.s390x.rpm
+
+x86_64:
+system-config-printer-0.6.116.10-1.6.el4.x86_64.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.x86_64.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/system-config-printer-0.6.116.10-1.6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/system-config-printer-0.6.116.10-1.6.el4.src.rpm</a>
+
+i386:
+system-config-printer-0.6.116.10-1.6.el4.i386.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.i386.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.i386.rpm
+
+x86_64:
+system-config-printer-0.6.116.10-1.6.el4.x86_64.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.x86_64.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/system-config-printer-0.6.116.10-1.6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/system-config-printer-0.6.116.10-1.6.el4.src.rpm</a>
+
+i386:
+system-config-printer-0.6.116.10-1.6.el4.i386.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.i386.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.i386.rpm
+
+ia64:
+system-config-printer-0.6.116.10-1.6.el4.ia64.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.ia64.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.ia64.rpm
+
+x86_64:
+system-config-printer-0.6.116.10-1.6.el4.x86_64.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.x86_64.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/system-config-printer-0.6.116.10-1.6.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/system-config-printer-0.6.116.10-1.6.el4.src.rpm</a>
+
+i386:
+system-config-printer-0.6.116.10-1.6.el4.i386.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.i386.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.i386.rpm
+
+ia64:
+system-config-printer-0.6.116.10-1.6.el4.ia64.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.ia64.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.ia64.rpm
+
+x86_64:
+system-config-printer-0.6.116.10-1.6.el4.x86_64.rpm
+system-config-printer-debuginfo-0.6.116.10-1.6.el4.x86_64.rpm
+system-config-printer-gui-0.6.116.10-1.6.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/system-config-printer-0.7.32.10-1.el5_7.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/system-config-printer-0.7.32.10-1.el5_7.1.src.rpm</a>
+
+i386:
+system-config-printer-0.7.32.10-1.el5_7.1.i386.rpm
+system-config-printer-debuginfo-0.7.32.10-1.el5_7.1.i386.rpm
+system-config-printer-libs-0.7.32.10-1.el5_7.1.i386.rpm
+
+x86_64:
+system-config-printer-0.7.32.10-1.el5_7.1.x86_64.rpm
+system-config-printer-debuginfo-0.7.32.10-1.el5_7.1.x86_64.rpm
+system-config-printer-libs-0.7.32.10-1.el5_7.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/system-config-printer-0.7.32.10-1.el5_7.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/system-config-printer-0.7.32.10-1.el5_7.1.src.rpm</a>
+
+i386:
+system-config-printer-0.7.32.10-1.el5_7.1.i386.rpm
+system-config-printer-debuginfo-0.7.32.10-1.el5_7.1.i386.rpm
+system-config-printer-libs-0.7.32.10-1.el5_7.1.i386.rpm
+
+ia64:
+system-config-printer-0.7.32.10-1.el5_7.1.ia64.rpm
+system-config-printer-debuginfo-0.7.32.10-1.el5_7.1.ia64.rpm
+system-config-printer-libs-0.7.32.10-1.el5_7.1.ia64.rpm
+
+ppc:
+system-config-printer-0.7.32.10-1.el5_7.1.ppc.rpm
+system-config-printer-debuginfo-0.7.32.10-1.el5_7.1.ppc.rpm
+system-config-printer-libs-0.7.32.10-1.el5_7.1.ppc.rpm
+
+s390x:
+system-config-printer-0.7.32.10-1.el5_7.1.s390x.rpm
+system-config-printer-debuginfo-0.7.32.10-1.el5_7.1.s390x.rpm
+system-config-printer-libs-0.7.32.10-1.el5_7.1.s390x.rpm
+
+x86_64:
+system-config-printer-0.7.32.10-1.el5_7.1.x86_64.rpm
+system-config-printer-debuginfo-0.7.32.10-1.el5_7.1.x86_64.rpm
+system-config-printer-libs-0.7.32.10-1.el5_7.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2899.html">https://www.redhat.com/security/data/cve/CVE-2011-2899.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOU73QXlSAg2UNWIIRAtaOAJ4oVWJE3+Im60upiHPtmPVeJkRb0QCfc8tF
+stTz73xLpDfC+ZVI/tlNOsA=
+=up1e
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

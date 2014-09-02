@@ -1,0 +1,192 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0077&#45;01] Important: jbossweb security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 31 Jan 2012 20:14:38 &#45;0500 -->
+<!--X-Message-Id: 201202010114.q111EWn5019631@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0077-01] Important: jbossweb security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0077-01] Important: jbossweb security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0077-01] Important: jbossweb security update</li>
+<li><em>Date</em>: Wed, 1 Feb 2012 01:14:32 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: jbossweb security update
+Advisory ID:       RHSA-2012:0077-01
+Product:           JBoss Enterprise Web Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0077.html">https://rhn.redhat.com/errata/RHSA-2012-0077.html</a>
+Issue date:        2012-01-31
+CVE Names:         CVE-2011-1184 CVE-2011-2526 CVE-2011-4610 
+                   CVE-2011-4858 CVE-2011-5062 CVE-2011-5063 
+                   CVE-2011-5064 CVE-2012-0022 
+=====================================================================
+
+1. Summary:
+
+An update for JBoss Enterprise Web Platform 5.1.2 that fixes multiple
+security issues is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+JBoss Web is a web container based on Apache Tomcat. It provides a single
+deployment platform for the JavaServer Pages (JSP) and Java Servlet
+technologies.
+
+A flaw was found in the way JBoss Web handled UTF-8 surrogate pair
+characters. If JBoss Web was hosting an application with UTF-8 character
+encoding enabled, or that included user-supplied UTF-8 strings in a
+response, a remote attacker could use this flaw to cause a denial of
+service (infinite loop) on the JBoss Web server. (CVE-2011-4610)
+
+It was found that the Java hashCode() method implementation was susceptible
+to predictable hash collisions. A remote attacker could use this flaw to
+cause JBoss Web to use an excessive amount of CPU time by sending an HTTP
+request with a large number of parameters whose names map to the same hash
+value. This update introduces a limit on the number of parameters and
+headers processed per request to mitigate this issue. The default limit is
+512 for parameters and 128 for headers. These defaults can be changed by
+setting the &quot;-Dorg.apache.tomcat.util.http.Parameters.MAX_COUNT=x&quot; and
+&quot;-Dorg.apache.tomcat.util.http.MimeHeaders.MAX_COUNT=x&quot; system properties
+as JAVA_OPTS entries in &quot;jboss-as-web/bin/run.conf&quot;. (CVE-2011-4858)
+
+It was found that JBoss Web did not handle large numbers of parameters and
+large parameter values efficiently. A remote attacker could make a JBoss
+Web server use an excessive amount of CPU time by sending an HTTP request
+containing a large number of parameters or large parameter values. This
+update introduces limits on the number of parameters and headers processed
+per request to address this issue. Refer to the CVE-2011-4858 description
+for information about the org.apache.tomcat.util.http.Parameters.MAX_COUNT
+and org.apache.tomcat.util.http.MimeHeaders.MAX_COUNT system properties.
+(CVE-2012-0022)
+
+Multiple flaws were found in the way JBoss Web handled HTTP DIGEST
+authentication. These flaws weakened the JBoss Web HTTP DIGEST
+authentication implementation, subjecting it to some of the weaknesses of
+HTTP BASIC authentication, for example, allowing remote attackers to
+perform session replay attacks. (CVE-2011-1184, CVE-2011-5062,
+CVE-2011-5063, CVE-2011-5064)
+
+A flaw was found in the way JBoss Web handled sendfile request attributes
+when using the HTTP APR (Apache Portable Runtime) or NIO (Non-Blocking I/O)
+connector. A malicious web application running on a JBoss Web instance
+could use this flaw to bypass security manager restrictions and gain access
+to files it would otherwise be unable to access, or possibly terminate the
+Java Virtual Machine (JVM). (CVE-2011-2526)
+
+Red Hat would like to thank NTT OSSC for reporting CVE-2011-4610; oCERT for
+reporting CVE-2011-4858; and the Apache Tomcat project for reporting
+CVE-2011-2526. oCERT acknowledges Julian Wälde and Alexander Klink as the
+original reporters of CVE-2011-4858.
+
+Warning: Before applying this update, back up your JBoss Enterprise Web
+Platform's &quot;jboss-as-web/server/[PROFILE]/deploy/&quot; directory and any other
+customized configuration files.
+
+All users of JBoss Enterprise Web Platform 5.1.2 as provided from the Red
+Hat Customer Portal are advised to install this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update).
+
+The JBoss server process must be restarted for this update to take effect.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+720948 - CVE-2011-2526 tomcat: security manager restrictions bypass
+741401 - CVE-2011-1184 CVE-2011-5062 CVE-2011-5063 CVE-2011-5064 tomcat: Multiple weaknesses in HTTP DIGEST authentication
+750521 - CVE-2011-4858 tomcat: hash table collisions CPU usage DoS (oCERT-2011-003)
+767871 - CVE-2011-4610 JBoss Web remote denial of service when surrogate pair character is placed at buffer boundary
+783359 - CVE-2012-0022 tomcat: large number of parameters DoS
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1184.html">https://www.redhat.com/security/data/cve/CVE-2011-1184.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2526.html">https://www.redhat.com/security/data/cve/CVE-2011-2526.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4610.html">https://www.redhat.com/security/data/cve/CVE-2011-4610.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4858.html">https://www.redhat.com/security/data/cve/CVE-2011-4858.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-5062.html">https://www.redhat.com/security/data/cve/CVE-2011-5062.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-5063.html">https://www.redhat.com/security/data/cve/CVE-2011-5063.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-5064.html">https://www.redhat.com/security/data/cve/CVE-2011-5064.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0022.html">https://www.redhat.com/security/data/cve/CVE-2012-0022.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=enterpriseweb.platform&amp;downloadType=securityPatches&amp;version=5.1.2">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=enterpriseweb.platform&amp;downloadType=securityPatches&amp;version=5.1.2</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPKJHmXlSAg2UNWIIRAvTIAKCGwTfBEwxhEcWsJw+C7QErSayCBwCgrFgR
+XvClJkt9GADpgONdnx4u7NE=
+=iJ8F
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0635&#45;01] Important: Red Hat High Performance Computing	(HPC) Solution 5.5 -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 Aug 2010 22:47:27 &#45;0400 -->
+<!--X-Message-Id: 201008200247.o7K2lMBx021836@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0635-01] Important: Red Hat High Performance Computing	(HPC) </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0635-01] Important: Red Hat High Performance Computing	(HPC) Solution 5.5</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2010:0635-01] Important: Red Hat High Performance Computing	(HPC) Solution 5.5</li>
+<li><em>Date</em>: Thu, 19 Aug 2010 20:47:21 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat High Performance Computing (HPC) Solution 5.5
+Advisory ID:       RHSA-2010:0635-01
+Product:           Red Hat HPC Solution
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0635.html">https://rhn.redhat.com/errata/RHSA-2010-0635.html</a>
+Issue date:        2010-08-19
+CVE Names:         CVE-2009-4032 CVE-2010-1431 CVE-2010-1644 
+                   CVE-2010-1645 CVE-2010-2092 CVE-2010-2544 
+                   CVE-2010-2545 
+=====================================================================
+
+1. Summary:
+
+The Red Hat High Performance Computing (HPC) Solution version 5.5 for Red
+Hat Enterprise Linux 5.5, or RHHPC 5.5, is now available, fixing multiple
+security issues, multiple bugs, and adding several enhancements.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat HPC Solution for RHEL 5 Server - noarch, x86_64
+
+3. Description:
+
+The Red Hat HPC Solution is a low-cost, end-to-end software stack for high
+performance computing. It provides all the tools needed to deploy, run, and
+manage an HPC cluster in one easy-to-install package. It is designed to
+power departmental clusters running industry-standard x86 64-bit hardware.
+
+This update introduces the Red Hat HPC Solution version 5.5 for Red Hat
+Enterprise Linux 5.5, RHHPC 5.5. (BZ#599419)
+
+RHHPC 5.5 changes include:
+
+* add-on kits updated according to the new upstream released version.
+
+* many bug fixes for PCM, and enhancements for image/diskless provisioning.
+
+The Cacti RRD graphing tool was updated to version 0.8.7g, fixing multiple
+security flaws:
+
+Multiple SQL injection flaws were discovered in Cacti. An unauthenticated,
+or authenticated user with certain administrative privileges, could use
+these flaws to execute arbitrary SQL queries. (CVE-2010-2092,
+CVE-2010-1431)
+
+Multiple command injection flaws were discovered in Cacti. An authenticated
+user with certain administrative privileges could use these flaws to
+execute arbitrary commands on the Cacti server with the privileges of the
+web server user. (CVE-2010-1645)
+
+Multiple cross-site scripting (XSS) flaws were discovered in Cacti. An
+unauthenticated, or authenticated user with certain administrative
+privileges, could perform an XSS attack against victims viewing Cacti web
+pages. (CVE-2009-4032, CVE-2010-1644, CVE-2010-2544, CVE-2010-2545)
+
+Users wanting to run the Red Hat HPC Solution on Red Hat Enterprise Linux
+5.5 should install these packages.
+
+4. Solution:
+
+Refer to the RHHPC installation guide for information on performing a
+fresh install of a new RHHPC system, or upgrading from a previous
+RHHPC system:
+
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/hpc/1.0/html-single/">http://www.redhat.com/docs/en-US/hpc/1.0/html-single/</a>
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+459105 - CVE-2010-2544 cacti: XSS in utilities.php log file viewer search pattern
+459229 - CVE-2010-2545 cacti: XSS via various object names or descriptions
+541279 - CVE-2009-4032 CVE-2010-2543 cacti: Multiple cross-site scripting flaws
+585401 - CVE-2010-1431 cacti: SQL injection vulnerability (BONSAI-2010-0104)
+599419 - HPC product is out of date for RHEL 5.5
+609076 - CVE-2010-2092 cacti: graph.php rra_id SQL injection vulnerability (MOPS-2010-023)
+609093 - CVE-2010-1644 cacti: XSS issues in host.php and data_sources.php (VUPEN/ADV-2010-1203)
+609115 - CVE-2010-1645 cacti: multiple command injection flaws (BONSAI-2010-0105)
+
+6. Package List:
+
+Red Hat HPC Solution for RHEL 5 Server:
+
+Source:
+GeoIP-1.4.7-0.1.20090931cvs.el5.src.rpm
+blacs-mvapich1-gnu-20000224-7.src.rpm
+blacs-openmpi-gnu-20000224-9.src.rpm
+component-RHEL-OFED-5.5-2.src.rpm
+component-RHEL-OFED-devel-5.5-1.src.rpm
+component-base-installer-5.5-1.src.rpm
+component-base-node-5.5-1.src.rpm
+component-ganglia-agent-v3_0-3.0-3.el5.src.rpm
+component-ganglia-server-v3_0-3.0-3.src.rpm
+component-gnome-desktop-5.5-1.src.rpm
+component-icr-facilitator-5.5-1.src.rpm
+component-lava-compute-v1_0-1.0-6.src.rpm
+component-mvapich1-libraries-0.1-4.src.rpm
+component-nagios-installer-v2_12-2.12-4.src.rpm
+component-ntop-v3_3-3.3-12.src.rpm
+environment-modules-3.2.7b-7.el5.src.rpm
+initrd-templates-5.5-1.src.rpm
+iozone-3-5.el5.src.rpm
+kit-base-5.5-1.src.rpm
+kit-cacti-0.8.7-47.src.rpm
+kit-ganglia-3.0-8.src.rpm
+kit-hpc-0.1-5.src.rpm
+kit-lava-1.0-11.src.rpm
+kit-nagios-2.12-6.src.rpm
+kit-ntop-3.3-13.src.rpm
+kit-rhel-ofed-5.5-1.src.rpm
+kit-rhel_java-1.6.0-3.el5.src.rpm
+kusu-appglobals-tool-5.5-1.el5.src.rpm
+kusu-autoinstall-5.5-1.src.rpm
+kusu-base-installer-5.5-2.src.rpm
+kusu-base-node-5.5-1.src.rpm
+kusu-boot-5.5-1.src.rpm
+kusu-buildkit-5.5-1.src.rpm
+kusu-core-5.5-1.src.rpm
+kusu-driverpatch-5.5-1.src.rpm
+kusu-hardware-5.5-1.src.rpm
+kusu-installer-5.5-1.src.rpm
+kusu-kitops-5.5-1.src.rpm
+kusu-md5crypt-5.5-1.src.rpm
+kusu-net-tool-5.5-1.src.rpm
+kusu-networktool-5.5-1.src.rpm
+kusu-nodeinstaller-5.5-1.src.rpm
+kusu-nodeinstaller-patchfiles-5.5-1.src.rpm
+kusu-path-5.5-1.src.rpm
+kusu-release-5.5-1.src.rpm
+kusu-repoman-5.5-1.src.rpm
+kusu-ui-5.5-1.src.rpm
+kusu-util-5.5-1.src.rpm
+lava-1.0-10.src.rpm
+linpack-mvapich1-gnu-1.0a-7.src.rpm
+linpack-openmpi-gnu-1.0a-6.src.rpm
+nagios-plugins-1.4.14-1.1.el5.src.rpm
+netcdf-3.6.2-7.el5.src.rpm
+nrpe-2.12-12.1.el5.src.rpm
+ntop-3.3.9-7.1.el5.src.rpm
+pcm-1.2-6.src.rpm
+pcm-kit-base-1.2-4.src.rpm
+pcm-kit-hpc-1.0-22.src.rpm
+pcm-kit-ntop-1.1-2.src.rpm
+platform_mvapich-1.2.0-0.3635.1.el5.src.rpm
+primitive-0.1.1-2.src.rpm
+python-IPy-0.70-1.el5.src.rpm
+python-psycopg2-2.0.14-1.el5.src.rpm
+scalapack-mvapich1-gnu-1.8.0-9.src.rpm
+scalapack-openmpi-gnu-1.8.0-9.src.rpm
+cacti-0.8.7g-1.1.el5.src.rpm
+component-cacti-0.1-49.src.rpm
+
+noarch:
+cacti-0.8.7g-1.1.el5.noarch.rpm
+component-RHEL-OFED-5.5-2.noarch.rpm
+component-RHEL-OFED-devel-5.5-1.noarch.rpm
+component-base-installer-5.5-1.noarch.rpm
+component-base-node-5.5-1.noarch.rpm
+component-cacti-0.1-49.noarch.rpm
+component-ganglia-agent-v3_0-3.0-3.el5.noarch.rpm
+component-ganglia-server-v3_0-3.0-3.noarch.rpm
+component-gnome-desktop-5.5-1.noarch.rpm
+component-icr-facilitator-5.5-1.noarch.rpm
+component-lava-compute-v1_0-1.0-6.noarch.rpm
+component-mvapich1-libraries-0.1-4.noarch.rpm
+component-nagios-installer-v2_12-2.12-4.noarch.rpm
+component-ntop-v3_3-3.3-12.noarch.rpm
+initrd-templates-5.5-1.noarch.rpm
+kit-base-5.5-1.noarch.rpm
+kit-cacti-0.8.7-47.noarch.rpm
+kit-ganglia-3.0-8.noarch.rpm
+kit-lava-1.0-11.noarch.rpm
+kit-nagios-2.12-6.noarch.rpm
+kit-ntop-3.3-13.noarch.rpm
+kit-rhel-ofed-5.5-1.noarch.rpm
+kit-rhel_java-1.6.0-3.el5.noarch.rpm
+kusu-appglobals-tool-5.5-1.el5.noarch.rpm
+kusu-autoinstall-5.5-1.noarch.rpm
+kusu-base-installer-5.5-2.noarch.rpm
+kusu-boot-5.5-1.noarch.rpm
+kusu-buildkit-5.5-1.noarch.rpm
+kusu-core-5.5-1.noarch.rpm
+kusu-driverpatch-5.5-1.noarch.rpm
+kusu-hardware-5.5-1.noarch.rpm
+kusu-installer-5.5-1.noarch.rpm
+kusu-kitops-5.5-1.noarch.rpm
+kusu-md5crypt-5.5-1.noarch.rpm
+kusu-net-tool-5.5-1.noarch.rpm
+kusu-networktool-5.5-1.noarch.rpm
+kusu-nodeinstaller-5.5-1.noarch.rpm
+kusu-nodeinstaller-patchfiles-5.5-1.noarch.rpm
+kusu-path-5.5-1.noarch.rpm
+kusu-release-5.5-1.noarch.rpm
+kusu-repoman-5.5-1.noarch.rpm
+kusu-ui-5.5-1.noarch.rpm
+kusu-util-5.5-1.noarch.rpm
+pcm-1.2-6.noarch.rpm
+pcm-kit-base-1.2-4.noarch.rpm
+pcm-kit-hpc-1.0-22.noarch.rpm
+pcm-kit-ntop-1.1-2.noarch.rpm
+primitive-0.1.1-2.noarch.rpm
+python-IPy-0.70-1.el5.noarch.rpm
+
+x86_64:
+GeoIP-1.4.7-0.1.20090931cvs.el5.x86_64.rpm
+GeoIP-debuginfo-1.4.7-0.1.20090931cvs.el5.x86_64.rpm
+GeoIP-devel-1.4.7-0.1.20090931cvs.el5.x86_64.rpm
+blacs-mvapich1-gnu-20000224-7.x86_64.rpm
+blacs-mvapich1-gnu-debuginfo-20000224-7.x86_64.rpm
+blacs-openmpi-gnu-20000224-9.x86_64.rpm
+blacs-openmpi-gnu-debuginfo-20000224-9.x86_64.rpm
+environment-modules-3.2.7b-7.el5.x86_64.rpm
+environment-modules-debuginfo-3.2.7b-7.el5.x86_64.rpm
+iozone-3-5.el5.x86_64.rpm
+iozone-debuginfo-3-5.el5.x86_64.rpm
+kit-hpc-0.1-5.x86_64.rpm
+kusu-base-node-5.5-1.x86_64.rpm
+kusu-base-node-debuginfo-5.5-1.x86_64.rpm
+lava-1.0-10.x86_64.rpm
+lava-debuginfo-1.0-10.x86_64.rpm
+lava-devel-1.0-10.x86_64.rpm
+lava-master-config-1.0-10.x86_64.rpm
+lava-static-1.0-10.x86_64.rpm
+linpack-mvapich1-gnu-1.0a-7.x86_64.rpm
+linpack-openmpi-gnu-1.0a-6.x86_64.rpm
+nagios-plugins-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-all-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-apt-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-breeze-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-by_ssh-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-cluster-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-debuginfo-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-dhcp-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-dig-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-disk-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-disk_smb-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-dns-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-dummy-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-file_age-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-flexlm-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-fping-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-hpjd-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-http-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-icmp-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-ide_smart-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-ifoperstatus-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-ifstatus-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-ircd-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-ldap-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-linux_raid-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-load-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-log-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-mailq-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-mrtg-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-mrtgtraf-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-mysql-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-nagios-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-nrpe-2.12-12.1.el5.x86_64.rpm
+nagios-plugins-nt-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-ntp-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-nwstat-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-oracle-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-overcr-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-perl-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-pgsql-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-ping-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-procs-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-radius-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-real-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-rpc-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-sensors-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-smtp-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-snmp-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-ssh-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-swap-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-tcp-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-time-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-udp-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-ups-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-users-1.4.14-1.1.el5.x86_64.rpm
+nagios-plugins-wave-1.4.14-1.1.el5.x86_64.rpm
+netcdf-3.6.2-7.el5.x86_64.rpm
+netcdf-debuginfo-3.6.2-7.el5.x86_64.rpm
+netcdf-devel-3.6.2-7.el5.x86_64.rpm
+nrpe-2.12-12.1.el5.x86_64.rpm
+nrpe-debuginfo-2.12-12.1.el5.x86_64.rpm
+ntop-3.3.9-7.1.el5.x86_64.rpm
+ntop-debuginfo-3.3.9-7.1.el5.x86_64.rpm
+platform_mvapich-1.2.0-0.3635.1.el5.x86_64.rpm
+python-psycopg2-2.0.14-1.el5.x86_64.rpm
+python-psycopg2-debuginfo-2.0.14-1.el5.x86_64.rpm
+python-psycopg2-doc-2.0.14-1.el5.x86_64.rpm
+python-psycopg2-zope-2.0.14-1.el5.x86_64.rpm
+scalapack-mvapich1-gnu-1.8.0-9.x86_64.rpm
+scalapack-mvapich1-gnu-debuginfo-1.8.0-9.x86_64.rpm
+scalapack-openmpi-gnu-1.8.0-9.x86_64.rpm
+scalapack-openmpi-gnu-debuginfo-1.8.0-9.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4032.html">https://www.redhat.com/security/data/cve/CVE-2009-4032.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1431.html">https://www.redhat.com/security/data/cve/CVE-2010-1431.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1644.html">https://www.redhat.com/security/data/cve/CVE-2010-1644.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1645.html">https://www.redhat.com/security/data/cve/CVE-2010-1645.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2092.html">https://www.redhat.com/security/data/cve/CVE-2010-2092.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2544.html">https://www.redhat.com/security/data/cve/CVE-2010-2544.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2545.html">https://www.redhat.com/security/data/cve/CVE-2010-2545.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMbeynXlSAg2UNWIIRAvu6AJ0XpEloLpi0DbHDms/T9B4WwRYt0wCeP0t0
+aOMpzW+R6p3x4+Yzq7jJ+M4=
+=0HY5
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

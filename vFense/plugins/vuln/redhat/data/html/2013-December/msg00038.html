@@ -1,0 +1,181 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1862&#45;01] Important: Fuse ESB Enterprise/Fuse MQ Enterprise	7.1.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 Dec 2013 18:41:04 &#45;0500 -->
+<!--X-Message-Id: 201312192341.rBJNf3hQ007602@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1862-01] Important: Fuse ESB Enterprise/Fuse MQ Enterprise	7.</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1862-01] Important: Fuse ESB Enterprise/Fuse MQ Enterprise	7.1.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1862-01] Important: Fuse ESB Enterprise/Fuse MQ Enterprise	7.1.0 update</li>
+<li><em>Date</em>: Thu, 19 Dec 2013 23:41:02 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Fuse ESB Enterprise/Fuse MQ Enterprise 7.1.0 update
+Advisory ID:       RHSA-2013:1862-01
+Product:           Fuse Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1862.html">https://rhn.redhat.com/errata/RHSA-2013-1862.html</a>
+Issue date:        2013-12-19
+CVE Names:         CVE-2013-1768 CVE-2013-4221 CVE-2013-4271 
+                   CVE-2013-4330 CVE-2013-4372 
+=====================================================================
+
+1. Summary:
+
+Fuse ESB Enterprise/MQ Enterprise 7.1.0 R1 P1 (Patch 1 on Rollup Patch 1),
+which contains several bug fixes and addresses several security issues, is
+now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+Fuse ESB Enterprise is an integration platform based on Apache ServiceMix.
+Fuse MQ Enterprise, based on Apache ActiveMQ, is a standards compliant
+messaging system that is tailored for use in mission critical applications.
+
+This release of Fuse ESB Enterprise/MQ Enterprise 7.1.0 R1 P1 is an update
+to Fuse ESB Enterprise 7.1.0 and Fuse MQ Enterprise 7.1.0. It includes bug
+fixes. Refer to the readme file included with the patch files for
+information about the bug fixes.
+
+The following security issues are also fixed with this release:
+
+A flaw was found in the logging performed during deserialization of the
+BrokerFactory class in Apache OpenJPA. A remote attacker able to supply a
+serialized instance of the BrokerFactory class, which will be deserialized
+on a server, could use this flaw to write an executable file to the
+server's file system. (CVE-2013-1768)
+
+Restlet applications, which used ObjectRepresentation to map HTTP request
+data directly to an object, deserialized arbitrary user-provided XML using
+XMLDecoder. XMLDecoder deserialized an attacker-provided definition of a
+class and executed its methods. A remote attacker could use this flaw to
+perform remote code execution in the context of the server running the
+Restlet application. (CVE-2013-4221)
+
+A flaw was found in the way Restlet handled deserialization.
+Restlet applications, which used ObjectRepresentation to map HTTP request
+data directly to an object, deserialized arbitrary user-provided serialized
+data. A remote attacker could use this flaw to trigger the execution of the
+deserialization methods in any serializable class deployed on the server.
+This could lead to a variety of security impacts depending on the
+deserialization logic of these classes. (CVE-2013-4271)
+
+A flaw was found in Apache Camel's parsing of the FILE_NAME header.
+A remote attacker able to submit messages to a Camel route, which would
+write the provided message to a file, could provide expression language
+(EL) expressions in the FILE_NAME header, which would be evaluated on the
+server. This could lead to arbitrary remote code execution in the context
+of the Camel server process. (CVE-2013-4330)
+
+Multiple stored cross-site scripting (XSS) flaws were found in the Fuse
+Management Console. A remote attacker could use this flaw to perform an XSS
+attack against other users of the Fuse Management Console. (CVE-2013-4372)
+
+The CVE-2013-4271 issue was discovered by David Jorm of the Red Hat
+Security Response Team.
+
+All users of Fuse ESB Enterprise/MQ Enterprise 7.1.0 as provided from the
+Red Hat Customer Portal are advised to upgrade to Fuse ESB Enterprise/MQ
+Enterprise 7.1.0 R1 P1.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update).
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+984034 - CVE-2013-1768 openjpa: Remote arbitrary code execution by creating a serialized object and leveraging improperly secured server programs
+995275 - CVE-2013-4221 Restlet: remote code execution due to insecure XML deserialization
+999735 - CVE-2013-4271 Restlet: remote code execution due to insecure deserialization
+1011726 - CVE-2013-4330 Camel: remote code execution via header field manipulation
+1011736 - CVE-2013-4372 Fuse Management Console: Stored cross-site scripting (XSS)
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1768.html">https://www.redhat.com/security/data/cve/CVE-2013-1768.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4221.html">https://www.redhat.com/security/data/cve/CVE-2013-4221.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4271.html">https://www.redhat.com/security/data/cve/CVE-2013-4271.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4330.html">https://www.redhat.com/security/data/cve/CVE-2013-4330.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4372.html">https://www.redhat.com/security/data/cve/CVE-2013-4372.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=fuse.esb.enterprise&amp;downloadType=securityPatches&amp;version=7.1.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=fuse.esb.enterprise&amp;downloadType=securityPatches&amp;version=7.1.0</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=fuse.mq.enterprise&amp;downloadType=securityPatches&amp;version=7.1.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=fuse.mq.enterprise&amp;downloadType=securityPatches&amp;version=7.1.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSs4OAXlSAg2UNWIIRAo8jAJ9UPehPbrPh9Rwta5l8FAWxOR6qfwCeKd+H
+VvNFcXWzlgfzq8KyZq9SvuY=
+=VQ4p
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

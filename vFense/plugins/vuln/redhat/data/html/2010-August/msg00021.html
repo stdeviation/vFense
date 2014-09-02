@@ -1,0 +1,229 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0627&#45;01] Important: kvm security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 Aug 2010 18:11:31 &#45;0400 -->
+<!--X-Message-Id: 201008192211.o7JMBP5k019927@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0627-01] Important: kvm security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0627-01] Important: kvm security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0627-01] Important: kvm security and bug fix update</li>
+<li><em>Date</em>: Thu, 19 Aug 2010 16:11:25 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kvm security and bug fix update
+Advisory ID:       RHSA-2010:0627-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0627.html">https://rhn.redhat.com/errata/RHSA-2010-0627.html</a>
+Issue date:        2010-08-19
+CVE Names:         CVE-2010-0431 CVE-2010-0435 CVE-2010-2784 
+=====================================================================
+
+1. Summary:
+
+Updated kvm packages that fix three security issues and multiple bugs are
+now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - x86_64
+RHEL Virtualization (v. 5 server) - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. KVM is a Linux kernel module built for
+the standard Red Hat Enterprise Linux kernel.
+
+It was found that QEMU-KVM on the host did not validate all pointers
+provided from a guest system's QXL graphics card driver. A privileged guest
+user could use this flaw to cause the host to dereference an invalid
+pointer, causing the guest to crash (denial of service) or, possibly,
+resulting in the privileged guest user escalating their privileges on the
+host. (CVE-2010-0431)
+
+A flaw was found in QEMU-KVM, allowing the guest some control over the
+index used to access the callback array during sub-page MMIO
+initialization. A privileged guest user could use this flaw to crash the
+guest (denial of service) or, possibly, escalate their privileges on the
+host. (CVE-2010-2784)
+
+A NULL pointer dereference flaw was found when the host system had a
+processor with the Intel VT-x extension enabled. A privileged guest user
+could use this flaw to trick the host into emulating a certain instruction,
+which could crash the host (denial of service). (CVE-2010-0435)
+
+This update also fixes the following bugs:
+
+* running a &quot;qemu-img&quot; check on a faulty virtual machine image ended with a
+segmentation fault. With this update, the segmentation fault no longer
+occurs when running the &quot;qemu-img&quot; check. (BZ#610342)
+
+* when attempting to transfer a file between two guests that were joined in
+the same virtual LAN (VLAN), the receiving guest unexpectedly quit. With
+this update, the transfer completes successfully. (BZ#610343)
+
+* installation of a system was occasionally failing in KVM. This was caused
+by KVM using wrong permissions for large guest pages. With this update, the
+installation completes successfully. (BZ#616796)
+
+* previously, the migration process would fail for a virtual machine
+because the virtual machine could not map all the memory. This was caused
+by a conflict that was initiated when a virtual machine was initially run
+and then migrated right away. With this update, the conflict no longer
+occurs and the migration process no longer fails. (BZ#618205)
+
+* using a thinly provisioned VirtIO disk on iSCSI storage and performing a
+&quot;qemu-img&quot; check during an &quot;e_no_space&quot; event returned cluster errors. With
+this update, the errors no longer appear. (BZ#618206)
+
+All KVM users should upgrade to these updated packages, which contain
+backported patches to resolve these issues. Note: The procedure in the
+Solution section must be performed before this update will take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+The following procedure must be performed before this update will take
+effect:
+
+1) Stop all KVM guest virtual machines.
+
+2) Either reboot the hypervisor machine or, as the root user, remove (using
+&quot;modprobe -r [module]&quot;) and reload (using &quot;modprobe [module]&quot;) all of the
+following modules which are currently running (determined using &quot;lsmod&quot;):
+kvm, ksm, kvm-intel or kvm-amd.
+
+3) Restart the KVM guest virtual machines.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+568809 - CVE-2010-0431 qemu: Insufficient guest provided pointers validation
+570528 - CVE-2010-0435 kvm: vmx null pointer dereference
+610342 - [kvm] segmentation fault when running qemu-img check on faulty image
+610343 - Virtio: Transfer file caused guest in same vlan abnormally quit
+616796 - KVM uses wrong permissions for large guest pages
+618205 - SPICE - race in KVM/Spice would cause migration to fail (slots are not registered properly?)
+618206 - [kvm] qemu image check returns cluster errors when using virtIO block (thinly provisioned) during e_no_space events (along with EIO errors)
+619411 - CVE-2010-2784 qemu: insufficient constraints checking in exec.c:subpage_register()
+
+6. Package List:
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kvm-83-164.el5_5.21.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/kvm-83-164.el5_5.21.src.rpm</a>
+
+x86_64:
+kmod-kvm-83-164.el5_5.21.x86_64.rpm
+kvm-83-164.el5_5.21.x86_64.rpm
+kvm-debuginfo-83-164.el5_5.21.x86_64.rpm
+kvm-qemu-img-83-164.el5_5.21.x86_64.rpm
+kvm-tools-83-164.el5_5.21.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kvm-83-164.el5_5.21.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/kvm-83-164.el5_5.21.src.rpm</a>
+
+x86_64:
+kmod-kvm-83-164.el5_5.21.x86_64.rpm
+kvm-83-164.el5_5.21.x86_64.rpm
+kvm-debuginfo-83-164.el5_5.21.x86_64.rpm
+kvm-qemu-img-83-164.el5_5.21.x86_64.rpm
+kvm-tools-83-164.el5_5.21.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0431.html">https://www.redhat.com/security/data/cve/CVE-2010-0431.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0435.html">https://www.redhat.com/security/data/cve/CVE-2010-0435.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2784.html">https://www.redhat.com/security/data/cve/CVE-2010-2784.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMbav8XlSAg2UNWIIRAhycAKC9A5TMRmlLN5RdnsKUNQgr5R28sgCghviN
+JRGic7F5Jx0wmM1NkDkGIqo=
+=8Gbv
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

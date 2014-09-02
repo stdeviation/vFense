@@ -1,0 +1,242 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0054&#45;01] Moderate: openssl security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 19 Jan 2010 19:25:09 &#45;0500 -->
+<!--X-Message-Id: 201001200025.o0K0P3N0007596@int&#45;mx04.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0054-01] Moderate: openssl security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0054-01] Moderate: openssl security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0054-01] Moderate: openssl security update</li>
+<li><em>Date</em>: Tue, 19 Jan 2010 19:25:03 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openssl security update
+Advisory ID:       RHSA-2010:0054-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0054.html">https://rhn.redhat.com/errata/RHSA-2010-0054.html</a>
+Issue date:        2010-01-19
+CVE Names:         CVE-2009-2409 CVE-2009-4355 
+=====================================================================
+
+1. Summary:
+
+Updated openssl packages that fix two security issues are now available for
+Red Hat Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+OpenSSL is a toolkit that implements the Secure Sockets Layer (SSL v2/v3)
+and Transport Layer Security (TLS v1) protocols, as well as a
+full-strength, general purpose cryptography library.
+
+It was found that the OpenSSL library did not properly re-initialize its
+internal state in the SSL_library_init() function after previous calls to
+the CRYPTO_cleanup_all_ex_data() function, which would cause a memory leak
+for each subsequent SSL connection. This flaw could cause server
+applications that call those functions during reload, such as a combination
+of the Apache HTTP Server, mod_ssl, PHP, and cURL, to consume all available
+memory, resulting in a denial of service. (CVE-2009-4355)
+
+Dan Kaminsky found that browsers could accept certificates with MD2 hash
+signatures, even though MD2 is no longer considered a cryptographically
+strong algorithm. This could make it easier for an attacker to create a
+malicious certificate that would be treated as trusted by a browser.
+OpenSSL now disables the use of the MD2 algorithm inside signatures by
+default. (CVE-2009-2409)
+
+All OpenSSL users should upgrade to these updated packages, which contain
+backported patches to resolve these issues. For the update to take effect,
+all services linked to the OpenSSL library must be restarted, or the system
+rebooted.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+510197 - CVE-2009-2409 deprecate MD2 in SSL cert validation (Kaminsky)
+546707 - CVE-2009-4355 openssl significant memory leak in certain SSLv3 requests (DoS)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openssl-0.9.8e-12.el5_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openssl-0.9.8e-12.el5_4.1.src.rpm</a>
+
+i386:
+openssl-0.9.8e-12.el5_4.1.i386.rpm
+openssl-0.9.8e-12.el5_4.1.i686.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.i386.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.i686.rpm
+openssl-perl-0.9.8e-12.el5_4.1.i386.rpm
+
+x86_64:
+openssl-0.9.8e-12.el5_4.1.i686.rpm
+openssl-0.9.8e-12.el5_4.1.x86_64.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.i686.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.x86_64.rpm
+openssl-perl-0.9.8e-12.el5_4.1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openssl-0.9.8e-12.el5_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/openssl-0.9.8e-12.el5_4.1.src.rpm</a>
+
+i386:
+openssl-debuginfo-0.9.8e-12.el5_4.1.i386.rpm
+openssl-devel-0.9.8e-12.el5_4.1.i386.rpm
+
+x86_64:
+openssl-debuginfo-0.9.8e-12.el5_4.1.i386.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.x86_64.rpm
+openssl-devel-0.9.8e-12.el5_4.1.i386.rpm
+openssl-devel-0.9.8e-12.el5_4.1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/openssl-0.9.8e-12.el5_4.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/openssl-0.9.8e-12.el5_4.1.src.rpm</a>
+
+i386:
+openssl-0.9.8e-12.el5_4.1.i386.rpm
+openssl-0.9.8e-12.el5_4.1.i686.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.i386.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.i686.rpm
+openssl-devel-0.9.8e-12.el5_4.1.i386.rpm
+openssl-perl-0.9.8e-12.el5_4.1.i386.rpm
+
+ia64:
+openssl-0.9.8e-12.el5_4.1.i686.rpm
+openssl-0.9.8e-12.el5_4.1.ia64.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.i686.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.ia64.rpm
+openssl-devel-0.9.8e-12.el5_4.1.ia64.rpm
+openssl-perl-0.9.8e-12.el5_4.1.ia64.rpm
+
+ppc:
+openssl-0.9.8e-12.el5_4.1.ppc.rpm
+openssl-0.9.8e-12.el5_4.1.ppc64.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.ppc.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.ppc64.rpm
+openssl-devel-0.9.8e-12.el5_4.1.ppc.rpm
+openssl-devel-0.9.8e-12.el5_4.1.ppc64.rpm
+openssl-perl-0.9.8e-12.el5_4.1.ppc.rpm
+
+s390x:
+openssl-0.9.8e-12.el5_4.1.s390.rpm
+openssl-0.9.8e-12.el5_4.1.s390x.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.s390.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.s390x.rpm
+openssl-devel-0.9.8e-12.el5_4.1.s390.rpm
+openssl-devel-0.9.8e-12.el5_4.1.s390x.rpm
+openssl-perl-0.9.8e-12.el5_4.1.s390x.rpm
+
+x86_64:
+openssl-0.9.8e-12.el5_4.1.i686.rpm
+openssl-0.9.8e-12.el5_4.1.x86_64.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.i386.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.i686.rpm
+openssl-debuginfo-0.9.8e-12.el5_4.1.x86_64.rpm
+openssl-devel-0.9.8e-12.el5_4.1.i386.rpm
+openssl-devel-0.9.8e-12.el5_4.1.x86_64.rpm
+openssl-perl-0.9.8e-12.el5_4.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2409.html">https://www.redhat.com/security/data/cve/CVE-2009-2409.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-4355.html">https://www.redhat.com/security/data/cve/CVE-2009-4355.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLVk1RXlSAg2UNWIIRAjJMAJ9g5P3w6KtQOXf25XUcd8WMcG+2gQCgpSOc
+Dm+xt2ADLQrYB9Fs1j89aAk=
+=EXs7
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

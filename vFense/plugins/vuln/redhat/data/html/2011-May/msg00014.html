@@ -1,0 +1,658 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0542&#45;01] Important: Red Hat Enterprise Linux 6.1 kernel	security, bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 May 2011 08:14:06 &#45;0400 -->
+<!--X-Message-Id: 201105191214.p4JCE0Fl030781@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0542-01] Important: Red Hat Enterprise Linux 6.1 kernel	secur</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0542-01] Important: Red Hat Enterprise Linux 6.1 kernel	security, bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0542-01] Important: Red Hat Enterprise Linux 6.1 kernel	security, bug fix and enhancement update</li>
+<li><em>Date</em>: Thu, 19 May 2011 12:13:59 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Enterprise Linux 6.1 kernel security, bug fix and enhancement update
+Advisory ID:       RHSA-2011:0542-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0542.html">https://rhn.redhat.com/errata/RHSA-2011-0542.html</a>
+Issue date:        2011-05-19
+CVE Names:         CVE-2010-4251 CVE-2011-0999 CVE-2011-1010 
+                   CVE-2011-1023 CVE-2011-1082 CVE-2011-1090 
+                   CVE-2011-1163 CVE-2011-1170 CVE-2011-1171 
+                   CVE-2011-1172 CVE-2011-1494 CVE-2011-1495 
+                   CVE-2011-1581 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues, address several
+hundred bugs and add numerous enhancements are now available as part of the
+ongoing support and maintenance of Red Hat Enterprise Linux version 6. This
+is the first regular update.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* Multiple buffer overflow flaws were found in the Linux kernel's
+Management Module Support for Message Passing Technology (MPT) based
+controllers. A local, unprivileged user could use these flaws to cause a
+denial of service, an information leak, or escalate their privileges.
+(CVE-2011-1494, CVE-2011-1495, Important)
+
+* A flaw was found in the Linux kernel's Ethernet bonding driver
+implementation. Packets coming in from network devices that have more
+than 16 receive queues to a bonding interface could cause a denial of
+service. (CVE-2011-1581, Important)
+
+* A flaw was found in the Linux kernel's networking subsystem. If the
+number of packets received exceeded the receiver's buffer limit, they were
+queued in a backlog, consuming memory, instead of being discarded. A remote
+attacker could abuse this flaw to cause a denial of service (out-of-memory
+condition). (CVE-2010-4251, Moderate)
+
+* A flaw was found in the Linux kernel's Transparent Huge Pages (THP)
+implementation. A local, unprivileged user could abuse this flaw to allow
+the user stack (when it is using huge pages) to grow and cause a denial of
+service. (CVE-2011-0999, Moderate)
+
+* A flaw was found in the transmit methods (xmit) for the loopback and
+InfiniBand transports in the Linux kernel's Reliable Datagram Sockets (RDS)
+implementation. A local, unprivileged user could use this flaw to cause a
+denial of service. (CVE-2011-1023, Moderate)
+
+* A flaw in the Linux kernel's Event Poll (epoll) implementation could
+allow a local, unprivileged user to cause a denial of service.
+(CVE-2011-1082, Moderate)
+
+* An inconsistency was found in the interaction between the Linux kernel's
+method for allocating NFSv4 (Network File System version 4) ACL data and
+the method by which it was freed. This inconsistency led to a kernel panic
+which could be triggered by a local, unprivileged user with files owned by
+said user on an NFSv4 share. (CVE-2011-1090, Moderate)
+
+* A missing validation check was found in the Linux kernel's
+mac_partition() implementation, used for supporting file systems created
+on Mac OS operating systems. A local attacker could use this flaw to cause
+a denial of service by mounting a disk that contains specially-crafted
+partitions. (CVE-2011-1010, Low)
+
+* A buffer overflow flaw in the DEC Alpha OSF partition implementation in
+the Linux kernel could allow a local attacker to cause an information leak
+by mounting a disk that contains specially-crafted partition tables.
+(CVE-2011-1163, Low)
+
+* Missing validations of null-terminated string data structure elements in
+the do_replace(), compat_do_replace(), do_ipt_get_ctl(), do_ip6t_get_ctl(),
+and do_arpt_get_ctl() functions could allow a local user who has the
+CAP_NET_ADMIN capability to cause an information leak. (CVE-2011-1170,
+CVE-2011-1171, CVE-2011-1172, Low)
+
+Red Hat would like to thank Dan Rosenberg for reporting CVE-2011-1494 and
+CVE-2011-1495; Nelson Elhage for reporting CVE-2011-1082; Timo Warns for
+reporting CVE-2011-1010 and CVE-2011-1163; and Vasiliy Kulikov for
+reporting CVE-2011-1170, CVE-2011-1171, and CVE-2011-1172.
+
+This update also fixes several hundred bugs and adds enhancements. Refer to
+the Red Hat Enterprise Linux 6.1 Release Notes for information on the most
+significant of these changes, and the Technical Notes for further
+information, both linked to in the References.
+
+All Red Hat Enterprise Linux 6 users are advised to install these updated
+packages, which correct these issues, and fix the bugs and add the
+enhancements noted in the Red Hat Enterprise Linux 6.1 Release Notes and
+Technical Notes. The system must be rebooted for this update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+463842 - [LTC 6.0 FEAT] 201227:NFS over RDMA support
+519467 - new ext4 ioctls, tunables etc undocumented
+550724 - xen PV guest kernel 2.6.32 processes lock up in D state
+583064 - Virtio Net/Disk block devices get wrong parent in node device info
+588638 - [abrt] crash in kernel: Your BIOS is broken; DMAR reported at address fed90000 returns all ones!
+590404 - Garbled image with zc3xx-based webcam
+591335 - IPv6 tproxy support is not present in RHEL 6 Beta
+591466 - [abrt] WARNING: at fs/buffer.c:1159 mark_buffer_dirty+0x82/0xa0()
+593766 - ACPI Error: Illegal I/O port address/length above 64K
+597333 - CDTRDSR missing from &lt;asm/termios.h&gt;
+601849 - bonding: backport code to allow user-controlled output slave detection.
+607262 - Read from /proc/xen/xenbus does not honor O_NONBLOCK
+610237 - [6u0] Bonding in ALB mode sends ARP in loop
+612436 - udevd report unexpected exit when guest boot up with nmi_watchdog = 1 and using debugfs tracing KVM (AMD)
+616105 - problems with 64b division on 32b platforms.
+616296 - guest kernel panic when boot with nmi_watchdog=1
+616660 - mrg buffers: migration breaks between systems with/without vhost
+617199 - make exclusively owned pages belong to the local anon_vma on swapin
+618175 - cifs: NT_STATUS_MEDIA_WRITE_PROTECTED not being mapped appropriately to POSIX error
+618440 - jbd2/ocfs2: Fix block checksumming when a buffer is used in several transactions
+618602 - core_pattern handler truncates parameters
+619426 - RHEL UV: kernel patch for kexec
+619430 - Intel HDA audio: popping/clicking sound distortion
+619455 - Host kernel oops after a series of virsh {attach,detach}-device
+621103 - backport wireless 2.6.32-longterm fixes
+622575 - networking may go away after migration due to missing arp update
+623199 - Bonded and vlan tagged network does not work in KVM guest
+623201 - [RHEL6][Kernel] BUG: spinlock wrong CPU on CPU#2, modprobe/713 (Not tainted)
+623968 - K10 temp support in lm_sensors
+624069 - Upgrading NFS client to 2.6.36 release.
+624628 - read from virtio-serial returns if the host side is not connect to pipe
+625173 - [RHEL6][Kernel] FATAL: Error inserting ipv6, Cannot allocate memory, causes panic
+626561 - GFS2: [RFE] fallocate support for GFS2
+626989 - block IO controller: Pull in Group idle tunable patches from upstream
+627926 - [RHEL6.0] e1000e devices fail to initialize interrupts properly
+627958 - be2net: A bad assert in processing async messages from NIC
+628805 - Fix hot-unplug handling of virtio-console ports
+629178 - kernel: Problem with execve(2) reintroduced [rhel-6.1]
+629197 - i8259 state is corrupted during migration
+629418 - modpost segmentation fault
+629423 - module signing failing on cross-builds due to linker misuse
+629629 - groups_search() cannot handle large gid correctly
+629715 - kernel ABI whitelist request for kspice-usb driver [Red Hat]
+629920 - GFS1 vs GFS2 performance issue
+630562 - kernel: additional stack guard patches [rhel-6.1]
+631833 - Big performance regression found on connect/request/response test through IPSEC (openswan) transport
+632021 - Cannot unplug emulated ide and rtl8139 devices in RHEL6 HVM xen guest
+632631 - block: fix s390 tape block driver crash that occurs when it switches the IO scheduler
+632745 - [6.1 FEAT] KVM Network Performance: mergeable rx buffers support in vhost-net
+633825 - kswapd0 100%
+634100 - migrate_cancel under STRESS caused guest to hang
+634232 - PATCH: virtio_console: Fix poll blocking even though there is data to read
+634303 - audit filtering on selinux label of userspace audit messages
+634316 - tg3: Disable TSS
+635041 - GFS2: inode glock stuck without holder
+635535 - Disallow 0-sized writes to virtio ports to go through to host (leading to VM crash)
+635537 - Disable lseek(2) for virtio ports
+635539 - WinXP BSOD when boot up with -cpu Penryn
+635853 - ptrace: the tracee can get the extra trap after PTRACE_DETACH
+636291 - [LSI 6.1 bug] RHEL 6.0 iSCSI offload (cxgb3i) sessions do not log back in after several controller reset cycles [LSI CR184419]
+636906 - 32bit compat vectored aio routines are broken
+636994 - [NetApp 6.1 bug] SCSI ALUA handler fails to handle ALUA transitioning properly
+637278 - Bug fixes to the 2.6.36 NFS Client
+637279 - Bug fixes to the 2.6.36 NFS Server
+637972 - GFS2: Not enough space reserved in gfs2_write_begin and possibly elsewhere.
+638133 - Panic when inserting tcrypt in fips mode
+638176 - Replies to broadcast SNMP and NetBIOS queries are dropped
+638269 - NFS4 clients cannot reclaim locks after server reboot
+638657 - GFS2 fatal: filesystem consistency error on rename
+639815 - Ensure we detect removed symbols in check-kabi
+640690 - Bonded interface doesn't issue IGMP report (join) on slave interface during failover
+641315 - Backport upstream cacheing fix for optimizing reads from /proc/vmcore
+642206 - /proc/bus/usb/devices formatting error
+643236 - iscsi: get nopout and conn errors.
+643237 - [NetApp 6.1 bug] regression: allow offlined devs to be set to running
+643290 - sysctl: bad user of proc_doulongvec_minmax() can oops the kernel
+643750 - virtio_console driver never returns from selecting for write when the queue is full
+643751 - writing to a virtio serial port while no one is listening on the host side hangs the guest
+644903 - Kernel divide by zero in find_busiest_group
+644987 - Enable extraction of hugepage pfn(s) from /proc/&lt;pid&gt;/pagemap
+645287 - [PATCH] fix size checks for mmap() on /proc/bus/pci files
+645793 - Backport support for TCP thin-streams
+645800 - Expose hw packet timestamps to network packet capture utilities - backport from 2.6.36
+645824 - ext4: Don't error out the fs if the user tries to make a file too big
+645898 - [6.1 FEAT] Port KVM bug fixes for cr_access to RHEL 6
+646223 - cifs: multiuser mount support
+646369 - [kvm] VIRT-IO NIC state is reported as 'unknown' on vm running over RHEL6 host
+646384 - kernel BUG at mm/migrate.c:113!
+646498 - [6.0] write system call returns with 0 when it should return with EFBIG.
+646505 - Kernel warning at boot:  i7core_edac: probe of 0000:80:14.0 failed with error -22
+647334 - Allow KSM to split hugepages
+647367 - kvm: guest stale memory after migration
+647440 - install_process_keyring() may return wrong error code
+648632 - ext4: writeback performance fixes
+649248 - ethtool: Provide a default implementation of ethtool_ops::get_drvinfo
+651005 - Excessive fpu swap entering and exiting kvm from host userspace
+651021 - Enable discard/UNMAP/WRITE_SAME for enterprise class arrays
+651332 - RHEL6.1: EHCI: AMD periodic frame list table quirk
+651373 - NULL pointer dereference in reading vs. truncating race
+651584 - GFS2: BUG_ON kernel panic in gfs2_glock_hold on 2.6.18-226
+651639 - On AMD host, running an F14 guest with 2 cores assigned hangs for &quot;a long time&quot; (several 10's of minutes) at start of boot
+651865 - cifs: bug fixes for 6.1
+651878 - cifs: mfsymlinks support
+652013 - If EXT4_EXTENTS_FL flag is not set, the max file size of write() is different than seek().
+652371 - temporary loss of path to SAN results in persistent EIO with msync
+653066 - Upgrading NFS client to 2.6.37 release
+653068 - Upgrading NFS server to 2.6.37 release
+653245 - kernel: restrict unprivileged access to kernel syslog [rhel-6.1]
+654532 - Guest BSOD during installation
+654665 - EFI/UEFI page table initialization is incorrect for x86_64 in physical mode.
+655231 - kernel 2.6.32-84.el6 breaks systemtap
+655521 - e1000 driver tracebacks when running under VMware ESX4
+655718 - Win2008 and Win7 fail to load files at the beginning of installation
+655875 - jbd2_stats_proc_init has wrong location.
+655889 - kabitool blocks custom kernel builds when kernel version &gt; 2.6.18-53.1.21.el5
+655935 - [Emulex 6.1] Update lpfc driver to 8.3.5.28
+656042 - [RFE] Include autogroup patch to aid in automatic creation of cgroups
+656461 - cifs: fix problems with filehandle management and reporting of writeback errors
+656835 - Memory leak in virtio-console driver if driver probe routine fails
+656939 - GFS2: [RFE] glock scalability patches
+657261 - Guest kernels need 'noapic' to get kexec working with virtio-blk
+657303 - CVE-2010-4251 kernel: unlimited socket backlog DoS
+657553 - [xfstests 243] ext4 incosistency with EOFBLOCK_FL
+658248 - [Emulex 6.1 feat] add BSG and FC Transport patches from Upstream
+658437 - guest kernel panic when transfering file from host to guest during migration
+658482 - block IO controller: Allow creation of cgroup hierarchies
+658518 - neighbour update causes an Oops when using tunnel device
+658590 - GFS2: Use 512 B block sizes to communicate with userland quota tools
+659119 - khugepaged numa memcg minor memleak
+659137 - GFS2: Kernel changes necessary to allow growing completely full filesystems.
+659480 - UV: WAR for interrupt-IOPort deadlock
+660674 - (Mellanox) Add CX3 PCI IDs to mlx4 driver
+660680 - iw_cxgb3 advertises incorrect max cq depth causing stalls on large MPI clusters
+661048 - fsck.gfs2 reported statfs error after gfs2_grow
+661172 - MCP55 message on screen at boot even with quiet
+662125 - lldpad is generating selinux errors on 6.0-RC-4.
+662589 - nfs4 callback from client returned to wrong address
+662660 - OS halt on the login screen
+662782 - Bug fixes to the 2.6.37 NFS Client
+663042 - gfs2 FIEMAP oops
+663119 - [Emulex 6.1 feat] Update lpfc driver to 8.3.5.30
+663222 - [Cisco 6.1 bug] Fix memory leak in fnic and bump version to 1.5.0.1
+663280 - Update drivers/media to 2.6.38 codebase
+663448 - Bug fixes to the 2.6.37 NFS Server
+663538 - Add AES to CPUID ext_features recognized by kvm..
+663749 - Btrfs: update to latest upstream
+663755 - RHEL6 Xen domU freeze after migrate to lower (MHz) CPU
+663864 - kernel: restrict access to /proc/kcore to just elf headers [rhel-6.1]
+663994 - kernels don't build on make-3.82
+664364 - [6.0] System reset when changing EFI variable on large memory system
+664772 - THP updates from -mm
+665110 - System panic in pskb_expand_head When arp_validate option is specified in bonding ARP monitor mode
+665169 - kexec: limit root to call kexec_load()
+665360 - vhost-net/kvm lacks fixes/optimizations in net-next as of Dec 23
+665970 - KVM crashes inside SeaBIOS when attempting to boot MS-DOS
+666264 - ftrace: kernel/trace/ring_buffer.c:1987 rb_reserve_next_event
+667186 - Add upstream performance enhancement to reduce time page fault handler holds mmap_sem semaphore.
+667281 - Bug for patches outside AGP/DRM required for AGP/DRM backport.
+667328 - lib: fix vscnprintf() if @size is == 0
+667340 - kexec: Make sure to stop all CPUs before exiting the kernel
+667354 - PV cdrom should be disabled on HVM guests
+667356 - xen: unplug the emulated devices at resume time
+667359 - forward port xen pvops changes for evtchn
+667361 - xenfs: enable for HVM domains too
+667654 - cifs.upcall not called when mounting second CIFS share from same server using different krb5 credentials
+667661 - [NetApp 6.1 Bug] Include new NetApp PID entry to the alua_dev_list array in the ALUA hardware handler
+667686 - update Documentation/vm/page-types.c to latest upstream
+668114 - fcoe fails to login with Cisco Eaglehawk switch firmware on VFC shut/no shut
+668340 - NUMA is not recognized for nec-em25.rhts.eng.bos.redhat.com
+668478 - PCI sysfs rom file needs owner write access
+668825 - Server cannot boot with kernel-2.6.32-85
+668915 - setfacl does not update ctime when changing file permission on ext3/4
+669252 - [XEN]RHEL6 guest fail to save/restore
+669272 - xfs: need upstream unaligned aio/dio data corruption fixes
+669373 - ath9k: inconsistent lock state
+669418 - khugepaged blocking on page locks
+669737 - net: add receive functions that return GRO result codes
+669749 - netif_vdbg() is broken, does not compile if VERBOSE_DEBUG is not defined
+669773 - disable NUMA for Xen PV guests
+669787 - Additional upstream functions that make backporting easier
+669813 - [Broadcom 6.1 feat] bnx2: Update firmware to 6.2.1+
+669877 - GFS2: Blocks not marked free on delete
+670063 - pages stuck in ksm pages_volatile
+670572 - [NetApp 6.0 Bug] Erroneous TPG ID check in SCSI ALUA Handler
+670734 - kernel panic at __rpc_create_common() when mounting nfs
+670907 - [RHEL6.1][Kernel] BUG: unable to handle kernel NULL pointer dereference, IP: [&lt;ffffffff814115f0&gt;] get_rps_cpu+0x290/0x340
+671147 - xen 64-bit PV guests fail to save-restore with kernels &gt;= -95
+671161 - xen microcode WARN on save-restore
+671267 - GFS2: allow gfs2 to update quota usage through quotactl
+671477 - [RHEL6.1] possible vmalloc_sync_all() bug
+672234 - add POLLPRI to sock_def_readable()
+672305 - Repeatable NFS mount hang
+672600 - GFS2: recovery stuck on transaction lock
+672844 - section mismatch due to wrong annotation of hugetlb_sysfs_add_hstate()
+672937 - backport set_iounmap_nonlazy() to speedup reading of /proc/vmcore
+673496 - DOMU-HVM FULLVIRT Guest issue
+673532 - sfc: the rss_cpus module parameter is ignored
+674064 - [RHEL6] panic in scsi_init_io() during connectathon
+674147 - SPECsfs NFS V3 workload on RHEL6 running kernels 2.6.32-85 have a massive performance regression due to compact-kswap behavior
+674286 - mmapping a read only file on a gfs2 filesystem incorrectly acquires an exclusive glock
+674409 - usb: latest xhci fixes
+675102 - kernel-headers 2.6.32-112.el6 broken
+675270 - GFS2: Fails to clear glocks during unmount
+675294 - [RHEL6.1] s/390x hang while running LTP test
+675299 - 'tail -f' waits forever for inotify
+675304 - Fix potential deadlock in intel-iommu
+675745 - GFS2: panics on quotacheck update
+675815 - Back port Bug fixes from the 2.6.38 NFS Client to the RHEL6 Client
+675998 - /dev/crash does not require CAP_SYS_RAWIO for access
+676009 - xen fix save/restore: unmask event channel for IRQF_TIMER
+676099 - ip_gre module throws slab corruption errors upon removal from the kernel
+676134 - [Cisco 6.1 Bug Fix] enic: Update enic driver to latest upstream version 2.1.1.10
+676346 - drivers/xen/events.c clean up section mismatch warning
+676579 - virtio_net: missing schedule on oom
+676875 - ixgbe: update to 3.0.12-k2  causing a panic on boot
+676948 - [RFE][6.1] sched: Try not to migrate higher priority RT tasks
+677314 - system_reset cause KVM internal error. Suberror: 2
+677532 - [kdump] WARNING: at kernel/watchdog.c:229 watchdog_overflow_callback+0xa9/0xd0() (Not tainted
+677786 - Panic in get_rps_cpu+0x1ad/0x320 on kvm guest when attempting to run LTP containers test.
+678067 - qeth: allow channel path changes in recovery
+678209 - CVE-2011-0999 kernel: thp: prevent hugepages during args/env copying into the user stack
+678357 - online disk resizing may cause data corruption
+678429 - [RHEL6.1] [Kernel] When booting previous kernel we are missing the firmware
+679002 - Wifi connection speed is very slow (intel PRO/Wireless 3945ABG), caused by plcp check
+679021 - semantic difference between mapped file counters of memcg and global VM
+679025 - memcg: upstream backport of various race condition fixes
+679096 - md: Do not replace request queue lock internally
+679282 - CVE-2011-1010 kernel: fs/partitions: Validate map_count in Mac partition tables
+679514 - qeth: remove needless IPA-commands in offline
+680105 - [ext4/xfstests] kernel BUG at fs/jbd2/transaction.c:1027!
+680126 - kernel: BUG: warning at drivers/char/tty_audit.c:55/tty_audit_buf_free()
+680140 - emc_clariion error handler panics with multiple failures
+680345 - CVE-2011-1023 kernel: BUG_ON() in rds_send_xmit()
+681017 - 82576 stuck after PCI AER error
+681133 - RHEL 5.6 32bit SMP guest hang at boot up
+681306 - tape: deadlock on global work queue
+681360 - block IO controller: Do not use kblockd workqueue for throttle work
+681439 - [ext4/xfstests] 133 task blocked for more than 120 seconds
+681575 - CVE-2011-1082 kernel: potential kernel deadlock when creating circular epoll file structures
+682110 - kdump dont't work on megaraid_sas
+682265 - [RHEL 6] libsas: flush initial device discovery before completing -&gt;scan_finished()
+682641 - CVE-2011-1090 kernel: nfs4: Ensure that ACL pages sent over NFS were not allocated from the slab
+682726 - fix skb leak in iwlwifi
+682742 - iwlagn: Support new 5000 microcode
+682831 - Bad ext4 sync performance on 16 TB GPT partition
+682951 - GFS2: umount stuck on gfs2_gl_hash_clear
+683073 - page_referenced() sometime ignores young bits with THP
+684008 - pE for /sbin/init has special logic that makes it unboundable
+684705 - missed unlock_page() in gfs2_write_begin()
+684719 - Windows guests hang when rebooting with kernel-2.6.32-121.el6
+684816 - occasional NVS 3100 X server lockups
+684957 - RHEL6.1-Alpha: kABI breakage on UV
+685161 - memcg: premature oom-kill with transparent huge pages
+687918 - thp+memcg-numa: fix BUG at include/linux/mm.h:370!
+687921 - nfsv4 server leaking struct file on every lock operation
+688021 - CVE-2011-1163 kernel: fs/partitions: Corrupted OSF partition table infoleak
+688547 - RHEL6.1-20110316.1 dell-pe2800 NMI received for unknown reason
+689321 - CVE-2011-1170 ipv4: netfilter: arp_tables: fix infoleak to userspace
+689327 - CVE-2011-1171 ipv4: netfilter: ip_tables: fix infoleak to userspace
+689345 - CVE-2011-1172 ipv6: netfilter: ip6_tables: fix infoleak to userspace
+689551 - cfq-iosched: Fix a potential crash upon frequent group weight change
+689566 - mark drivers as tech preview
+690224 - Veritas SF 5.1 disagrees about version of symbol aio_complete
+690754 - NFS4 with sec=krb5 does not work with 6.1 beta
+690865 - kernel BUG at drivers/gpu/drm/i915/i915_gem.c:4238!
+690900 - slab corruption after seeing some nfs-related BUG: warning
+690921 - Fix compaction deadlock with SLUB and loop over tmpfs
+691339 - RHEL6.1 HVM guest with hda+hdc or hdb+hdd crashes; plus hdb/hdd are mapped incorrectly to xvde
+692515 - sha512hmac expects different checksum, fails on PPC64
+694021 - CVE-2011-1494 CVE-2011-1495 kernel: drivers/scsi/mpt2sas: prevent heap overflows
+695585 - [regression] fix be2iscsi rmmod
+696029 - CVE-2011-1581 kernel: bonding: Incorrect TX queue offset
+696275 - [Broadcom 6.1 feat] Support bnx2i hba-mode and non-hba mode for boot in kernel
+696337 - Bond interface flapping and increasing rx_missed_errors
+696376 - server BUG() on receipt of bad NFSv4 lock request
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-131.0.15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/kernel-2.6.32-131.0.15.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-131.0.15.el6.i686.rpm
+kernel-debug-2.6.32-131.0.15.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-131.0.15.el6.i686.rpm
+kernel-debug-devel-2.6.32-131.0.15.el6.i686.rpm
+kernel-debuginfo-2.6.32-131.0.15.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-131.0.15.el6.i686.rpm
+kernel-devel-2.6.32-131.0.15.el6.i686.rpm
+kernel-headers-2.6.32-131.0.15.el6.i686.rpm
+perf-2.6.32-131.0.15.el6.i686.rpm
+perf-debuginfo-2.6.32-131.0.15.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-131.0.15.el6.noarch.rpm
+kernel-firmware-2.6.32-131.0.15.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-devel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-headers-2.6.32-131.0.15.el6.x86_64.rpm
+perf-2.6.32-131.0.15.el6.x86_64.rpm
+perf-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-131.0.15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/kernel-2.6.32-131.0.15.el6.src.rpm</a>
+
+noarch:
+kernel-doc-2.6.32-131.0.15.el6.noarch.rpm
+kernel-firmware-2.6.32-131.0.15.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-devel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-headers-2.6.32-131.0.15.el6.x86_64.rpm
+perf-2.6.32-131.0.15.el6.x86_64.rpm
+perf-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-131.0.15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/kernel-2.6.32-131.0.15.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-131.0.15.el6.i686.rpm
+kernel-debug-2.6.32-131.0.15.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-131.0.15.el6.i686.rpm
+kernel-debug-devel-2.6.32-131.0.15.el6.i686.rpm
+kernel-debuginfo-2.6.32-131.0.15.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-131.0.15.el6.i686.rpm
+kernel-devel-2.6.32-131.0.15.el6.i686.rpm
+kernel-headers-2.6.32-131.0.15.el6.i686.rpm
+perf-2.6.32-131.0.15.el6.i686.rpm
+perf-debuginfo-2.6.32-131.0.15.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-131.0.15.el6.noarch.rpm
+kernel-firmware-2.6.32-131.0.15.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-131.0.15.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-131.0.15.el6.ppc64.rpm
+kernel-debug-2.6.32-131.0.15.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-131.0.15.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-131.0.15.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-131.0.15.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-131.0.15.el6.ppc64.rpm
+kernel-devel-2.6.32-131.0.15.el6.ppc64.rpm
+kernel-headers-2.6.32-131.0.15.el6.ppc64.rpm
+perf-2.6.32-131.0.15.el6.ppc64.rpm
+perf-debuginfo-2.6.32-131.0.15.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-131.0.15.el6.s390x.rpm
+kernel-debug-2.6.32-131.0.15.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-131.0.15.el6.s390x.rpm
+kernel-debug-devel-2.6.32-131.0.15.el6.s390x.rpm
+kernel-debuginfo-2.6.32-131.0.15.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-131.0.15.el6.s390x.rpm
+kernel-devel-2.6.32-131.0.15.el6.s390x.rpm
+kernel-headers-2.6.32-131.0.15.el6.s390x.rpm
+kernel-kdump-2.6.32-131.0.15.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-131.0.15.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-131.0.15.el6.s390x.rpm
+perf-2.6.32-131.0.15.el6.s390x.rpm
+perf-debuginfo-2.6.32-131.0.15.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-devel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-headers-2.6.32-131.0.15.el6.x86_64.rpm
+perf-2.6.32-131.0.15.el6.x86_64.rpm
+perf-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-131.0.15.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/kernel-2.6.32-131.0.15.el6.src.rpm</a>
+
+i386:
+kernel-2.6.32-131.0.15.el6.i686.rpm
+kernel-debug-2.6.32-131.0.15.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-131.0.15.el6.i686.rpm
+kernel-debug-devel-2.6.32-131.0.15.el6.i686.rpm
+kernel-debuginfo-2.6.32-131.0.15.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-131.0.15.el6.i686.rpm
+kernel-devel-2.6.32-131.0.15.el6.i686.rpm
+kernel-headers-2.6.32-131.0.15.el6.i686.rpm
+perf-2.6.32-131.0.15.el6.i686.rpm
+perf-debuginfo-2.6.32-131.0.15.el6.i686.rpm
+
+noarch:
+kernel-doc-2.6.32-131.0.15.el6.noarch.rpm
+kernel-firmware-2.6.32-131.0.15.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-devel-2.6.32-131.0.15.el6.x86_64.rpm
+kernel-headers-2.6.32-131.0.15.el6.x86_64.rpm
+perf-2.6.32-131.0.15.el6.x86_64.rpm
+perf-debuginfo-2.6.32-131.0.15.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4251.html">https://www.redhat.com/security/data/cve/CVE-2010-4251.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0999.html">https://www.redhat.com/security/data/cve/CVE-2011-0999.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1010.html">https://www.redhat.com/security/data/cve/CVE-2011-1010.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1023.html">https://www.redhat.com/security/data/cve/CVE-2011-1023.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1082.html">https://www.redhat.com/security/data/cve/CVE-2011-1082.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1090.html">https://www.redhat.com/security/data/cve/CVE-2011-1090.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1163.html">https://www.redhat.com/security/data/cve/CVE-2011-1163.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1170.html">https://www.redhat.com/security/data/cve/CVE-2011-1170.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1171.html">https://www.redhat.com/security/data/cve/CVE-2011-1171.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1172.html">https://www.redhat.com/security/data/cve/CVE-2011-1172.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1494.html">https://www.redhat.com/security/data/cve/CVE-2011-1494.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1495.html">https://www.redhat.com/security/data/cve/CVE-2011-1495.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1581.html">https://www.redhat.com/security/data/cve/CVE-2011-1581.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html-single/6.1_Release_Notes/index.html">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html-single/6.1_Release_Notes/index.html</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html-single/6.1_Technical_Notes/index.html">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html-single/6.1_Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFN1QkdXlSAg2UNWIIRAhHgAJkB4GapVEpsipKlOJSB0yGXSL4mvQCggcJX
+JghBB2a5H0tlXvtvBrmcZ6s=
+=KPsX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

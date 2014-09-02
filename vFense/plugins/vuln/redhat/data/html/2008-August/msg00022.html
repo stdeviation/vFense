@@ -1,0 +1,228 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0596&#45;01] Critical: Red Hat Directory Server 7.1 Service	Pack 7 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 27 Aug 2008 17:13:24 &#45;0400 -->
+<!--X-Message-Id: 200808272113.m7RLDKnh025952@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0596-01] Critical: Red Hat Directory Server 7.1 Service	Pack </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0596-01] Critical: Red Hat Directory Server 7.1 Service	Pack 7 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0596-01] Critical: Red Hat Directory Server 7.1 Service	Pack 7 security update</li>
+<li><em>Date</em>: Wed, 27 Aug 2008 17:13:20 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: Red Hat Directory Server 7.1 Service Pack 7 security update
+Advisory ID:       RHSA-2008:0596-01
+Product:           Red Hat Directory Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0596.html">https://rhn.redhat.com/errata/RHSA-2008-0596.html</a>
+Issue date:        2008-08-27
+CVE Names:         CVE-2008-2928 CVE-2008-2929 CVE-2008-2930 
+                   CVE-2008-3283 
+=====================================================================
+
+1. Summary:
+
+An updated redhat-ds package that fixes various security issues is now
+available as Red Hat Directory Server 7.1, Service Pack 7.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Directory Server 7.1 (for AS v. 3) - i386
+RHEL 3 Directory Server ES - i386
+RHEL 4 Directory Server AS - i386
+RHEL 4 Directory Server ES - i386
+
+3. Description:
+
+Red Hat Directory Server is an LDAPv3-compliant directory server.
+
+Multiple CGI applications distributed with Red Hat Directory Server were
+affected by a buffer overflow flaw in the routine used to parse
+Accept-Language HTTP headers. A remote attacker with access to the
+Administration Server web interface could use this flaw to crash these CGI
+applications or, potentially, execute arbitrary code with the privileges of
+the Administration Server. Note: Red Hat Directory Server 7.1 runs the
+Administration Server as the root user. (CVE-2008-2928)
+
+Multiple cross-site scripting flaws were discovered in the Directory Server
+Administration Express and Directory Server Gateway (DSGW) web interface,
+caused by an incorrect parsing of &quot;%&quot; character-escaped user-provided
+values. A remote attacker could use these flaws to conduct cross-site
+scripting attacks against Directory Server users or administrators using
+these web services. (CVE-2008-2929)
+
+Multiple memory leaks were identified in the Directory Server. An
+unauthenticated remote attacker could use these flaws to trigger high
+memory consumption in the Directory Server, possibly causing it to crash or
+terminate unexpectedly when running out of available memory. (CVE-2008-3283)
+
+Ulf Weltman of Hewlett Packard discovered a flaw in the way Directory
+Server handled LDAP search requests with patterns. A remote attacker with
+access to the LDAP service could create a search request that, when the
+search pattern was matched against specially crafted data records, caused
+Directory Server to use a large amount of CPU time. Directory Server did
+not impose time limits on such search requests. In this updated package,
+Directory Server imposes a configurable limit on the pattern-search query
+run time, with the default limit set to 30 seconds. (CVE-2008-2930)
+
+In addition to these security fixes, the following bugs have been fixed in
+Red Hat Directory Server 7.1, Service Pack 7:
+
+* A modified accountUnlockTime attribute caused by multiple single-user
+login failures caused replication to fail, requiring administrator
+intervention. Red Hat Directory Server 7.1 Service Pack 7 solves the
+replication failure issue in these situations.
+
+* The change sequence numbers in multi-master replication had a built-in
+time skew to accommodate differences in the clocks on master servers. Under
+certain circumstances, this skew exceeded the maximum allowable skew,
+causing replication to stop entirely. In Service Pack 7, this has been fixed.
+
+* In replication scenarios, if an attribute value was scheduled to be
+deleted and also was indexed or had an attribute subtype which was indexed,
+the Directory Server would crash during the index operation.
+
+* The stack memory size limit used on 64-bit systems was limited to 256KB.
+Directory Server could use all the stack memory while performing regular
+operations, resulting in slapd daemon crash. 
+
+For more information about Service Pack 7, including upgrade and
+installation instructions for users running Red Hat Directory Server 7.1 on
+Solaris, refer to the Red Hat Directory Server 7.1 SP7 release notes, which
+are linked to in the &quot;References&quot; section of this erratum.
+
+All users of Red Hat Directory Server 7.1 should upgrade to Service Pack 7,
+which resolves these issues. 
+
+4. Solution:
+
+This update is available via Red Hat Network.
+
+Users running Red Hat Directory Server 7.1 on Red Hat Enterprise Linux
+should consult the following Knowledge Base article for instruction on how
+to install updated RPM packages: 
+
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+Users running Red Hat Directory Server 7.1 on Solaris should consult the
+Service Pack 7 release notes for installation and upgrade instructions.
+These release notes are linked to in the &quot;References&quot; section of this erratum.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+453916 - CVE-2008-2928 Directory Server: CGI accept language buffer overflow
+454065 - CVE-2008-2930 Directory Server: temporary DoS via crafted pattern searches
+454621 - CVE-2008-2929 Directory Server: multiple XSS issues
+458977 - CVE-2008-3283 Directory Server: multiple memory leaks
+
+6. Package List:
+
+Red Hat Directory Server 7.1 (for AS v. 3):
+
+i386:
+redhat-ds-7.1SP7-14.RHEL3.i386.rpm
+
+RHEL 3 Directory Server ES:
+
+i386:
+redhat-ds-7.1SP7-14.RHEL3.i386.rpm
+
+RHEL 4 Directory Server AS:
+
+i386:
+redhat-ds-7.1SP7-14.RHEL4.i386.rpm
+
+RHEL 4 Directory Server ES:
+
+i386:
+redhat-ds-7.1SP7-14.RHEL4.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2928">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2928</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2929">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2929</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2930">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2930</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3283">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3283</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/manuals/dir-server/release-notes/7.1SP7/index.html">http://www.redhat.com/docs/manuals/dir-server/release-notes/7.1SP7/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFItcNdXlSAg2UNWIIRAqBlAJ0YGWi7lvYS4BmKImnx0ux/KtWLkgCgsQ53
+/B4CkWecabo7XZu0Pz0ybow=
+=gdu9
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

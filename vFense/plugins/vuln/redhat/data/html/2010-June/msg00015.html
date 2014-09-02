@@ -1,0 +1,160 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0478&#45;01] Moderate: Red Hat Enterprise Virtualization	Manager security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 22 Jun 2010 09:55:35 &#45;0400 -->
+<!--X-Message-Id: 201006221355.o5MDtTVA021778@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0478-01] Moderate: Red Hat Enterprise Virtualization	Manager </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0478-01] Moderate: Red Hat Enterprise Virtualization	Manager security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0478-01] Moderate: Red Hat Enterprise Virtualization	Manager security update</li>
+<li><em>Date</em>: Tue, 22 Jun 2010 15:55:29 +0200</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Enterprise Virtualization Manager security update
+Advisory ID:       RHSA-2010:0478-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0478.html">https://rhn.redhat.com/errata/RHSA-2010-0478.html</a>
+Issue date:        2010-06-22
+CVE Names:         CVE-2010-2224 
+=====================================================================
+
+1. Summary:
+
+Red Hat Enterprise Virtualization Manager 2.2 is now available for Red Hat
+Enterprise Virtualization.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Description:
+
+Red Hat Enterprise Virtualization Manager is a visual tool for centrally
+managing collections of virtual servers running Red Hat Enterprise Linux
+and Microsoft Windows. This package also includes the Red Hat Enterprise
+Virtualization Manager API, a set of scriptable commands that give
+administrators the ability to perform queries and operations on Red Hat
+Enterprise Virtualization Manager. Major changes in version 2.2 include an
+import and export capability, and desktop support (VDI).
+
+It was found that Red Hat Enterprise Virtualization Manager did not
+correctly pass the postzero parameter for deleted volumes after snapshot
+merging. This resulted in such volumes not being securely deleted as
+expected. A guest user in a new, raw virtual machine (VM), created in a
+data domain that has had VMs deleted from it, could use this flaw to read
+limited data from those deleted VMs, potentially disclosing sensitive
+information. (CVE-2010-2224)
+
+This update provides updated components that include fixes for security
+issues; however, these issues have no security impact for Red Hat
+Enterprise Virtualization Manager. These fixes are for expat issues
+CVE-2009-3560 and CVE-2009-3720; libpng issues CVE-2007-5266,
+CVE-2007-5267, CVE-2007-5268, CVE-2007-5269, CVE-2008-1382, CVE-2008-5907,
+CVE-2008-6218, CVE-2009-0040, CVE-2009-2042, and CVE-2010-0205; and openssl
+issues CVE-2008-5077, CVE-2009-0590, CVE-2009-1377, CVE-2009-1378,
+CVE-2009-1379, CVE-2009-1386, CVE-2009-1387, CVE-2009-2409, CVE-2009-3555,
+CVE-2009-4355, and CVE-2010-0433.
+
+This update also fixes several bugs and adds several enhancements.
+Documentation for these bug fixes and enhancements is available from
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization/2.2/html">http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization/2.2/html</a>
+/Servers-Manager_Security_Update
+
+All Red Hat Enterprise Virtualization Manager users should install this
+updated package, which corrects this issue, and fixes the bugs and adds the
+enhancements noted in the &quot;Manager Security Update&quot; document, linked to in
+the References.
+
+3. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+606774 - CVE-2010-2224 rhev-m: merge snapshot does not pass postzero parameter for deleted volumes
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2224.html">https://www.redhat.com/security/data/cve/CVE-2010-2224.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization/2.2/html/Servers-Manager_Security_Update">http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization/2.2/html/Servers-Manager_Security_Update</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMIMCaXlSAg2UNWIIRAkerAJ0RLOcPbgflx/pmBplqjSrH6GPVJwCfaLil
+MHpoP12H0ehkaNc7K5cF7Vo=
+=Aq+d
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

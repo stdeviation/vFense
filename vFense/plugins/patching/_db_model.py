@@ -61,7 +61,10 @@ class AppsKey():
     VendorSeverity = 'vendor_severity'
     VendorName = 'vendor_name'
     FilesDownloadStatus = 'files_download_status'
+    FileData = 'file_data'
     Arch = 'arch'
+    Uninstallable = 'uninstallable'
+    Repo = 'repo'
     VulnerabilityId = 'vulnerability_id'
     VulnerabilityCategories = 'vulnerability_categories'
     CveIds = 'cve_ids'
@@ -79,19 +82,20 @@ class AppsIndexes():
 
 
 class AppsPerAgentKey():
-    AppId = 'app_id'
     Id = 'id'
+    AppId = 'app_id'
     InstallDate = 'install_date'
     Status = 'status'
-    Hidden = 'hidden'
     AgentId = 'agent_id'
     Dependencies = 'dependencies'
     LastModifiedTime = 'last_modified_time'
     Update = 'update'
-    CveIds = 'cve_ids'
     OsCode = 'os_code'
-    OsStrings = 'os_strings'
+    OsString = 'os_string'
     Views = 'views'
+    VulnerabilityId = 'vulnerability_id'
+    VulnerabilityCategories = 'vulnerability_categories'
+    CveIds = 'cve_ids'
 
 
 class AppsPerAgentIndexes():

@@ -1,0 +1,348 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1067&#45;01] Moderate: Red Hat Application Stack v2.3	security and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 26 May 2009 13:43:11 &#45;0400 -->
+<!--X-Message-Id: 200905261743.n4QHhAXL029240@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1067-01] Moderate: Red Hat Application Stack v2.3	security an</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1067-01] Moderate: Red Hat Application Stack v2.3	security and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1067-01] Moderate: Red Hat Application Stack v2.3	security and enhancement update</li>
+<li><em>Date</em>: Tue, 26 May 2009 13:43:10 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Application Stack v2.3 security and enhancement update
+Advisory ID:       RHSA-2009:1067-01
+Product:           Red Hat Application Stack
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1067.html">https://rhn.redhat.com/errata/RHSA-2009-1067.html</a>
+Issue date:        2009-05-26
+CVE Names:         CVE-2008-3963 CVE-2008-4098 CVE-2009-0663 
+                   CVE-2009-0922 CVE-2009-1341 
+=====================================================================
+
+1. Summary:
+
+Red Hat Application Stack v2.3 is now available. This update fixes several
+security issues and adds various enhancements.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Application Stack v2 for Enterprise Linux (v.5) - i386, x86_64
+
+3. Description:
+
+Red Hat Application Stack v2.3 is an integrated open source application
+stack, that includes Red Hat Enterprise Linux 5 and JBoss Enterprise
+Application Platform (EAP). JBoss EAP is provided through the JBoss EAP
+channels on the Red Hat Network.
+
+This update fixes the following security issues:
+
+A heap-based buffer overflow flaw was discovered in the perl-DBD-Pg
+pg_getline function implementation. If the pg_getline or getline functions
+read large, untrusted records from a database, it could cause an
+application using these functions to crash or, possibly, execute arbitrary
+code. (CVE-2009-0663)
+
+Note: After installing this update, pg_getline may return more data than
+specified by its second argument, as this argument will be ignored. This is
+consistent with current upstream behavior. Previously, the length limit
+(the second argument) was not enforced, allowing a buffer overflow.
+
+A memory leak flaw was found in the perl-DBD-Pg function performing the
+de-quoting of BYTEA type values acquired from a database. An attacker able
+to cause an application using perl-DBD-Pg to perform a large number of SQL
+queries returning BYTEA records, could cause the application to use
+excessive amounts of memory or, possibly, crash. (CVE-2009-1341)
+
+MySQL was updated to version 5.0.79, fixing the following security issues:
+
+A flaw was found in the way MySQL handles an empty bit-string literal. A
+remote, authenticated attacker could crash the MySQL server daemon (mysqld)
+if they used an empty bit-string literal in an SQL statement. This issue
+only caused a temporary denial of service, as the MySQL daemon was
+automatically restarted after the crash. (CVE-2008-3963)
+
+It was discovered that the Red Hat Security Advisory RHSA-2008:0505, for
+Red Hat Application Stack v2.1, provided an incomplete fix for the flaw
+where MySQL did not correctly check directories used as arguments for the
+DATA DIRECTORY and INDEX DIRECTORY directives. Using this flaw, an
+authenticated attacker could elevate their access privileges to tables
+created by other database users. Note: This attack does not work on
+existing tables. An attacker can only elevate their access to another
+user's tables as the tables are created. As well, the names of these
+created tables need to be predicted correctly for this attack to succeed.
+(CVE-2008-4098)
+
+PostgreSQL was updated to version 8.2.13, fixing the following security
+issue:
+
+A flaw was found in the way PostgreSQL handles encoding conversion. A
+remote, authenticated user could trigger an encoding conversion failure,
+possibly leading to a temporary denial of service. (CVE-2009-0922)
+
+Also, the following packages have been updated:
+
+* httpd to 2.2.11
+* mysql-connector-odbc to 3.51.27r695
+* perl-DBD-MySQL to 4.010-1.el5s2
+* php to 5.2.9
+* postgresql-jdbc to 8.2.509
+* postgresqlclient81 to 8.1.17
+
+All users should upgrade to these updated packages, which resolve these
+issues. Users must restart the individual services, including postgresql,
+mysqld, and httpd, for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+454077 - CVE-2008-4098 mysql: incomplete upstream fix for CVE-2008-2079
+462071 - CVE-2008-3963 MySQL: Using an empty binary value leads to server crash
+488156 - CVE-2009-0922 postgresql: potential DoS due to conversion functions
+497367 - CVE-2009-0663 perl-DBD-Pg: pg_getline buffer overflow
+497503 - CVE-2009-1341 perl-DBD-Pg: dequote_bytea memory leak
+
+6. Package List:
+
+Red Hat Application Stack v2 for Enterprise Linux (v.5):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/httpd-2.2.11-2.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/httpd-2.2.11-2.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mod_jk-1.2.28-2.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mod_jk-1.2.28-2.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mysql-connector-odbc-3.51.27r695-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/mysql-connector-odbc-3.51.27r695-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBD-MySQL-4.010-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBD-MySQL-4.010-1.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBD-Pg-1.49-5.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/perl-DBD-Pg-1.49-5.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/php-5.2.9-2.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/php-5.2.9-2.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-8.2.13-2.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-8.2.13-2.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-jdbc-8.2.509-2jpp.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresql-jdbc-8.2.509-2jpp.el5s2.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresqlclient81-8.1.17-1.el5s2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHWAS/SRPMS/postgresqlclient81-8.1.17-1.el5s2.src.rpm</a>
+
+i386:
+httpd-2.2.11-2.el5s2.i386.rpm
+httpd-debuginfo-2.2.11-2.el5s2.i386.rpm
+httpd-devel-2.2.11-2.el5s2.i386.rpm
+httpd-manual-2.2.11-2.el5s2.i386.rpm
+mod_jk-ap20-1.2.28-2.el5s2.i386.rpm
+mod_jk-debuginfo-1.2.28-2.el5s2.i386.rpm
+mod_ssl-2.2.11-2.el5s2.i386.rpm
+mysql-5.0.79-2.el5s2.i386.rpm
+mysql-bench-5.0.79-2.el5s2.i386.rpm
+mysql-cluster-5.0.79-2.el5s2.i386.rpm
+mysql-connector-odbc-3.51.27r695-1.el5s2.i386.rpm
+mysql-connector-odbc-debuginfo-3.51.27r695-1.el5s2.i386.rpm
+mysql-debuginfo-5.0.79-2.el5s2.i386.rpm
+mysql-devel-5.0.79-2.el5s2.i386.rpm
+mysql-libs-5.0.79-2.el5s2.i386.rpm
+mysql-server-5.0.79-2.el5s2.i386.rpm
+mysql-test-5.0.79-2.el5s2.i386.rpm
+perl-DBD-MySQL-4.010-1.el5s2.i386.rpm
+perl-DBD-MySQL-debuginfo-4.010-1.el5s2.i386.rpm
+perl-DBD-Pg-1.49-5.el5s2.i386.rpm
+perl-DBD-Pg-debuginfo-1.49-5.el5s2.i386.rpm
+php-5.2.9-2.el5s2.i386.rpm
+php-bcmath-5.2.9-2.el5s2.i386.rpm
+php-cli-5.2.9-2.el5s2.i386.rpm
+php-common-5.2.9-2.el5s2.i386.rpm
+php-dba-5.2.9-2.el5s2.i386.rpm
+php-debuginfo-5.2.9-2.el5s2.i386.rpm
+php-devel-5.2.9-2.el5s2.i386.rpm
+php-gd-5.2.9-2.el5s2.i386.rpm
+php-imap-5.2.9-2.el5s2.i386.rpm
+php-ldap-5.2.9-2.el5s2.i386.rpm
+php-mbstring-5.2.9-2.el5s2.i386.rpm
+php-mysql-5.2.9-2.el5s2.i386.rpm
+php-ncurses-5.2.9-2.el5s2.i386.rpm
+php-odbc-5.2.9-2.el5s2.i386.rpm
+php-pdo-5.2.9-2.el5s2.i386.rpm
+php-pgsql-5.2.9-2.el5s2.i386.rpm
+php-snmp-5.2.9-2.el5s2.i386.rpm
+php-soap-5.2.9-2.el5s2.i386.rpm
+php-xml-5.2.9-2.el5s2.i386.rpm
+php-xmlrpc-5.2.9-2.el5s2.i386.rpm
+postgresql-8.2.13-2.el5s2.i386.rpm
+postgresql-contrib-8.2.13-2.el5s2.i386.rpm
+postgresql-debuginfo-8.2.13-2.el5s2.i386.rpm
+postgresql-devel-8.2.13-2.el5s2.i386.rpm
+postgresql-docs-8.2.13-2.el5s2.i386.rpm
+postgresql-jdbc-8.2.509-2jpp.el5s2.i386.rpm
+postgresql-jdbc-debuginfo-8.2.509-2jpp.el5s2.i386.rpm
+postgresql-libs-8.2.13-2.el5s2.i386.rpm
+postgresql-plperl-8.2.13-2.el5s2.i386.rpm
+postgresql-plpython-8.2.13-2.el5s2.i386.rpm
+postgresql-pltcl-8.2.13-2.el5s2.i386.rpm
+postgresql-python-8.2.13-2.el5s2.i386.rpm
+postgresql-server-8.2.13-2.el5s2.i386.rpm
+postgresql-tcl-8.2.13-2.el5s2.i386.rpm
+postgresql-test-8.2.13-2.el5s2.i386.rpm
+postgresqlclient81-8.1.17-1.el5s2.i386.rpm
+postgresqlclient81-debuginfo-8.1.17-1.el5s2.i386.rpm
+
+x86_64:
+httpd-2.2.11-2.el5s2.x86_64.rpm
+httpd-debuginfo-2.2.11-2.el5s2.i386.rpm
+httpd-debuginfo-2.2.11-2.el5s2.x86_64.rpm
+httpd-devel-2.2.11-2.el5s2.i386.rpm
+httpd-devel-2.2.11-2.el5s2.x86_64.rpm
+httpd-manual-2.2.11-2.el5s2.x86_64.rpm
+mod_jk-ap20-1.2.28-2.el5s2.x86_64.rpm
+mod_jk-debuginfo-1.2.28-2.el5s2.x86_64.rpm
+mod_ssl-2.2.11-2.el5s2.x86_64.rpm
+mysql-5.0.79-2.el5s2.i386.rpm
+mysql-5.0.79-2.el5s2.x86_64.rpm
+mysql-bench-5.0.79-2.el5s2.x86_64.rpm
+mysql-cluster-5.0.79-2.el5s2.x86_64.rpm
+mysql-connector-odbc-3.51.27r695-1.el5s2.x86_64.rpm
+mysql-connector-odbc-debuginfo-3.51.27r695-1.el5s2.x86_64.rpm
+mysql-debuginfo-5.0.79-2.el5s2.i386.rpm
+mysql-debuginfo-5.0.79-2.el5s2.x86_64.rpm
+mysql-devel-5.0.79-2.el5s2.i386.rpm
+mysql-devel-5.0.79-2.el5s2.x86_64.rpm
+mysql-libs-5.0.79-2.el5s2.i386.rpm
+mysql-libs-5.0.79-2.el5s2.x86_64.rpm
+mysql-server-5.0.79-2.el5s2.x86_64.rpm
+mysql-test-5.0.79-2.el5s2.x86_64.rpm
+perl-DBD-MySQL-4.010-1.el5s2.x86_64.rpm
+perl-DBD-MySQL-debuginfo-4.010-1.el5s2.x86_64.rpm
+perl-DBD-Pg-1.49-5.el5s2.x86_64.rpm
+perl-DBD-Pg-debuginfo-1.49-5.el5s2.x86_64.rpm
+php-5.2.9-2.el5s2.x86_64.rpm
+php-bcmath-5.2.9-2.el5s2.x86_64.rpm
+php-cli-5.2.9-2.el5s2.x86_64.rpm
+php-common-5.2.9-2.el5s2.x86_64.rpm
+php-dba-5.2.9-2.el5s2.x86_64.rpm
+php-debuginfo-5.2.9-2.el5s2.x86_64.rpm
+php-devel-5.2.9-2.el5s2.x86_64.rpm
+php-gd-5.2.9-2.el5s2.x86_64.rpm
+php-imap-5.2.9-2.el5s2.x86_64.rpm
+php-ldap-5.2.9-2.el5s2.x86_64.rpm
+php-mbstring-5.2.9-2.el5s2.x86_64.rpm
+php-mysql-5.2.9-2.el5s2.x86_64.rpm
+php-ncurses-5.2.9-2.el5s2.x86_64.rpm
+php-odbc-5.2.9-2.el5s2.x86_64.rpm
+php-pdo-5.2.9-2.el5s2.x86_64.rpm
+php-pgsql-5.2.9-2.el5s2.x86_64.rpm
+php-snmp-5.2.9-2.el5s2.x86_64.rpm
+php-soap-5.2.9-2.el5s2.x86_64.rpm
+php-xml-5.2.9-2.el5s2.x86_64.rpm
+php-xmlrpc-5.2.9-2.el5s2.x86_64.rpm
+postgresql-8.2.13-2.el5s2.x86_64.rpm
+postgresql-contrib-8.2.13-2.el5s2.x86_64.rpm
+postgresql-debuginfo-8.2.13-2.el5s2.i386.rpm
+postgresql-debuginfo-8.2.13-2.el5s2.x86_64.rpm
+postgresql-devel-8.2.13-2.el5s2.i386.rpm
+postgresql-devel-8.2.13-2.el5s2.x86_64.rpm
+postgresql-docs-8.2.13-2.el5s2.x86_64.rpm
+postgresql-jdbc-8.2.509-2jpp.el5s2.x86_64.rpm
+postgresql-jdbc-debuginfo-8.2.509-2jpp.el5s2.x86_64.rpm
+postgresql-libs-8.2.13-2.el5s2.i386.rpm
+postgresql-libs-8.2.13-2.el5s2.x86_64.rpm
+postgresql-plperl-8.2.13-2.el5s2.x86_64.rpm
+postgresql-plpython-8.2.13-2.el5s2.x86_64.rpm
+postgresql-pltcl-8.2.13-2.el5s2.x86_64.rpm
+postgresql-python-8.2.13-2.el5s2.x86_64.rpm
+postgresql-server-8.2.13-2.el5s2.x86_64.rpm
+postgresql-tcl-8.2.13-2.el5s2.x86_64.rpm
+postgresql-test-8.2.13-2.el5s2.x86_64.rpm
+postgresqlclient81-8.1.17-1.el5s2.i386.rpm
+postgresqlclient81-8.1.17-1.el5s2.x86_64.rpm
+postgresqlclient81-debuginfo-8.1.17-1.el5s2.i386.rpm
+postgresqlclient81-debuginfo-8.1.17-1.el5s2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3963">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3963</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4098">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4098</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0663">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0663</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0922">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0922</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1341">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1341</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKHCmoXlSAg2UNWIIRAupAAJ4vMxFqUdphdOG/7P/3lS7z3S/1twCfe3bJ
+fMo7KqCYDMTARro6tAQY1cI=
+=2EKN
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0439&#45;01] Moderate: rhev&#45;hypervisor security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 13 Apr 2011 11:03:57 &#45;0400 -->
+<!--X-Message-Id: 201104131503.p3DF3qNF014426@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0439-01] Moderate: rhev-hypervisor security and bug fix	updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0439-01] Moderate: rhev-hypervisor security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0439-01] Moderate: rhev-hypervisor security and bug fix	update</li>
+<li><em>Date</em>: Wed, 13 Apr 2011 09:03:51 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhev-hypervisor security and bug fix update
+Advisory ID:       RHSA-2011:0439-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0439.html">https://rhn.redhat.com/errata/RHSA-2011-0439.html</a>
+Issue date:        2011-04-13
+CVE Names:         CVE-2011-1478 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor package that fixes one security issue and one
+bug is now available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-5 - noarch
+
+3. Description:
+
+The rhev-hypervisor package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization Hypervisor
+is a dedicated Kernel-based Virtual Machine (KVM) hypervisor. It includes
+everything necessary to run and manage virtual machines: A subset of the
+Red Hat Enterprise Linux operating environment and the Red Hat Enterprise
+Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+A NULL pointer dereference flaw was found in the Generic Receive Offload
+(GRO) functionality in the Linux kernel's networking implementation. If
+both GRO and promiscuous mode were enabled on an interface in a virtual LAN
+(VLAN), it could result in a denial of service when a malformed VLAN frame
+is received on that interface. (CVE-2011-1478)
+
+Red Hat would like to thank Ryan Sweat for reporting CVE-2011-1478.
+
+This updated package provides updated components that include fixes for
+security issues; however, these issues have no security impact for Red Hat
+Enterprise Virtualization Hypervisor. These fixes are for dbus issue
+CVE-2010-4352; kernel issues CVE-2010-4346, CVE-2011-0521, CVE-2011-0710,
+CVE-2011-1010, and CVE-2011-1090; libvirt issue CVE-2011-1146; and openldap
+issue CVE-2011-1024.
+
+This update also fixes the following bug:
+
+* Previously, network drivers that had Large Receive Offload (LRO) enabled
+by default caused the system to run slow when using software bridging. With
+this update, Red Hat Enterprise Virtualization Hypervisor disables LRO as a
+part of a modprobe configuration. (BZ#692864)
+
+Also in this erratum, the rhev-hypervisor-pxe RPM has been dropped.
+
+As Red Hat Enterprise Virtualization Hypervisor includes Red Hat Enterprise
+Virtualization Manager Agent (VDSM), the bug fixes from the VDSM update
+RHBA-2011:0424 have been included in this update:
+
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2011-0424.html">https://rhn.redhat.com/errata/RHBA-2011-0424.html</a>
+
+Users of Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which resolves these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+691270 - CVE-2011-1478 kernel: gro: reset dev and skb_iff on skb reuse
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-5:
+
+noarch:
+rhev-hypervisor-5.6-10.2.el5_6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1478.html">https://www.redhat.com/security/data/cve/CVE-2011-1478.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHBA-2011-0424.html">https://rhn.redhat.com/errata/RHBA-2011-0424.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNpbs1XlSAg2UNWIIRAnsVAKCgBUq3ub3Ck8t9jKQMblRciM+PuQCfZsgn
+LnVA0i2aFPqiI+7mB8jJt8E=
+=eVH5
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0395&#45;01] Moderate: gdm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 28 Mar 2011 15:00:25 &#45;0400 -->
+<!--X-Message-Id: 201103281900.p2SJ0JDb006586@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0395-01] Moderate: gdm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00044.html">Date Prev</a>][<a href="msg00046.html">Date Next</a>] &nbsp; [<a href="msg00044.html">Thread Prev</a>][<a href="msg00046.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00045">Thread Index</A>]
+[<A HREF="date.html#00045">Date Index</A>]
+[<A HREF="author.html#00045">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0395-01] Moderate: gdm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0395-01] Moderate: gdm security update</li>
+<li><em>Date</em>: Mon, 28 Mar 2011 15:00:19 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: gdm security update
+Advisory ID:       RHSA-2011:0395-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0395.html">https://rhn.redhat.com/errata/RHSA-2011-0395.html</a>
+Issue date:        2011-03-28
+CVE Names:         CVE-2011-0727 
+=====================================================================
+
+1. Summary:
+
+Updated gdm packages that fix one security issue are now available for Red
+Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The GNOME Display Manager (GDM) provides the graphical login screen, shown
+shortly after boot up, log out, and when user-switching.
+
+A race condition flaw was found in the way GDM handled the cache
+directories used to store users' dmrc and face icon files. A local attacker
+could use this flaw to trick GDM into changing the ownership of an
+arbitrary file via a symbolic link attack, allowing them to escalate their
+privileges. (CVE-2011-0727)
+
+Red Hat would like to thank Sebastian Krahmer of the SuSE Security Team for
+reporting this issue.
+
+All users should upgrade to these updated packages, which contain a
+backported patch to correct this issue. GDM must be restarted for this
+update to take effect. Rebooting achieves this, but changing the runlevel
+from 5 to 3 and back to 5 also restarts GDM.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+688323 - CVE-2011-0727 gdm: privilege escalation vulnerability
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gdm-2.30.4-21.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/gdm-2.30.4-21.el6_0.1.src.rpm</a>
+
+i386:
+gdm-2.30.4-21.el6_0.1.i686.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.i686.rpm
+gdm-libs-2.30.4-21.el6_0.1.i686.rpm
+gdm-plugin-fingerprint-2.30.4-21.el6_0.1.i686.rpm
+gdm-plugin-smartcard-2.30.4-21.el6_0.1.i686.rpm
+gdm-user-switch-applet-2.30.4-21.el6_0.1.i686.rpm
+
+x86_64:
+gdm-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.i686.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-libs-2.30.4-21.el6_0.1.i686.rpm
+gdm-libs-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-plugin-fingerprint-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-plugin-smartcard-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-user-switch-applet-2.30.4-21.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gdm-2.30.4-21.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/gdm-2.30.4-21.el6_0.1.src.rpm</a>
+
+x86_64:
+gdm-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.i686.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-libs-2.30.4-21.el6_0.1.i686.rpm
+gdm-libs-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-plugin-fingerprint-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-plugin-smartcard-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-user-switch-applet-2.30.4-21.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gdm-2.30.4-21.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/gdm-2.30.4-21.el6_0.1.src.rpm</a>
+
+i386:
+gdm-2.30.4-21.el6_0.1.i686.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.i686.rpm
+gdm-libs-2.30.4-21.el6_0.1.i686.rpm
+gdm-plugin-fingerprint-2.30.4-21.el6_0.1.i686.rpm
+gdm-plugin-smartcard-2.30.4-21.el6_0.1.i686.rpm
+gdm-user-switch-applet-2.30.4-21.el6_0.1.i686.rpm
+
+ppc64:
+gdm-2.30.4-21.el6_0.1.ppc64.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.ppc.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.ppc64.rpm
+gdm-libs-2.30.4-21.el6_0.1.ppc.rpm
+gdm-libs-2.30.4-21.el6_0.1.ppc64.rpm
+gdm-plugin-fingerprint-2.30.4-21.el6_0.1.ppc64.rpm
+gdm-plugin-smartcard-2.30.4-21.el6_0.1.ppc64.rpm
+gdm-user-switch-applet-2.30.4-21.el6_0.1.ppc64.rpm
+
+s390x:
+gdm-2.30.4-21.el6_0.1.s390x.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.s390.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.s390x.rpm
+gdm-libs-2.30.4-21.el6_0.1.s390.rpm
+gdm-libs-2.30.4-21.el6_0.1.s390x.rpm
+gdm-plugin-fingerprint-2.30.4-21.el6_0.1.s390x.rpm
+gdm-plugin-smartcard-2.30.4-21.el6_0.1.s390x.rpm
+gdm-user-switch-applet-2.30.4-21.el6_0.1.s390x.rpm
+
+x86_64:
+gdm-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.i686.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-libs-2.30.4-21.el6_0.1.i686.rpm
+gdm-libs-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-plugin-fingerprint-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-plugin-smartcard-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-user-switch-applet-2.30.4-21.el6_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gdm-2.30.4-21.el6_0.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/gdm-2.30.4-21.el6_0.1.src.rpm</a>
+
+i386:
+gdm-2.30.4-21.el6_0.1.i686.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.i686.rpm
+gdm-libs-2.30.4-21.el6_0.1.i686.rpm
+gdm-plugin-fingerprint-2.30.4-21.el6_0.1.i686.rpm
+gdm-plugin-smartcard-2.30.4-21.el6_0.1.i686.rpm
+gdm-user-switch-applet-2.30.4-21.el6_0.1.i686.rpm
+
+x86_64:
+gdm-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.i686.rpm
+gdm-debuginfo-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-libs-2.30.4-21.el6_0.1.i686.rpm
+gdm-libs-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-plugin-fingerprint-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-plugin-smartcard-2.30.4-21.el6_0.1.x86_64.rpm
+gdm-user-switch-applet-2.30.4-21.el6_0.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-0727.html">https://www.redhat.com/security/data/cve/CVE-2011-0727.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &amp;lt;secalert redhat com&amp;gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNkNqpXlSAg2UNWIIRAupyAJ9lGy1RnJtrvIfDbtq5sIVnDoCFWwCghg6l
+KmqpHchv0ZlUfoHIk6SsTFQ=
+=jd2G
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00044.html">Date Prev</a>][<a href="msg00046.html">Date Next</a>] &nbsp; [<a href="msg00044.html">Thread Prev</a>][<a href="msg00046.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00045">Thread Index</A>]
+[<A HREF="date.html#00045">Date Index</A>]
+[<A HREF="author.html#00045">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

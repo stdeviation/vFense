@@ -1,0 +1,434 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1219&#45;01] Moderate: samba security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 29 Aug 2011 13:48:31 &#45;0400 -->
+<!--X-Message-Id: 201108291748.p7THmPHe002031@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1219-01] Moderate: samba security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1219-01] Moderate: samba security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1219-01] Moderate: samba security update</li>
+<li><em>Date</em>: Mon, 29 Aug 2011 17:48:25 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: samba security update
+Advisory ID:       RHSA-2011:1219-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1219.html">https://rhn.redhat.com/errata/RHSA-2011-1219.html</a>
+Issue date:        2011-08-29
+CVE Names:         CVE-2010-0547 CVE-2010-0787 CVE-2011-1678 
+                   CVE-2011-2522 CVE-2011-2694 
+=====================================================================
+
+1. Summary:
+
+Updated samba packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 4 and 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+Samba is a suite of programs used by machines to share files, printers, and
+other information.
+
+A cross-site scripting (XSS) flaw was found in the password change page of
+the Samba Web Administration Tool (SWAT). If a remote attacker could trick
+a user, who was logged into the SWAT interface, into visiting a
+specially-crafted URL, it would lead to arbitrary web script execution in
+the context of the user's SWAT session. (CVE-2011-2694)
+
+It was found that SWAT web pages did not protect against Cross-Site
+Request Forgery (CSRF) attacks. If a remote attacker could trick a user,
+who was logged into the SWAT interface, into visiting a specially-crafted
+URL, the attacker could perform Samba configuration changes with the
+privileges of the logged in user. (CVE-2011-2522)
+
+A race condition flaw was found in the way the mount.cifs tool mounted CIFS
+(Common Internet File System) shares. If mount.cifs had the setuid bit set,
+a local attacker could conduct a symbolic link attack to trick mount.cifs
+into mounting a share over an arbitrary directory they were otherwise not
+allowed to mount to, possibly allowing them to escalate their privileges.
+(CVE-2010-0787)
+
+It was found that the mount.cifs tool did not properly handle share or
+directory names containing a newline character. If mount.cifs had the
+setuid bit set, a local attacker could corrupt the mtab (mounted file
+systems table) file via a specially-crafted CIFS share mount request.
+(CVE-2010-0547)
+
+It was found that the mount.cifs tool did not handle certain errors
+correctly when updating the mtab file. If mount.cifs had the setuid bit
+set, a local attacker could corrupt the mtab file by setting a small file
+size limit before running mount.cifs. (CVE-2011-1678)
+
+Note: mount.cifs from the samba packages distributed by Red Hat does not
+have the setuid bit set. We recommend that administrators do not manually
+set the setuid bit for mount.cifs.
+
+Red Hat would like to thank the Samba project for reporting CVE-2011-2694
+and CVE-2011-2522; the Debian Security Team for reporting CVE-2010-0787;
+and Dan Rosenberg for reporting CVE-2011-1678. Upstream acknowledges
+Nobuhiro Tsuji of NTT DATA Security Corporation as the original reporter of
+CVE-2011-2694; Yoshihiro Ishikawa of LAC Co., Ltd. as the original reporter
+of CVE-2011-2522; and the Debian Security Team acknowledges Ronald Volgers
+as the original reporter of CVE-2010-0787.
+
+Users of Samba are advised to upgrade to these updated packages, which
+contain backported patches to resolve these issues. After installing this
+update, the smb service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+562156 - CVE-2010-0547 samba: mount.cifs improper device name and mountpoint strings sanitization
+577277 - CVE-2010-0787 samba: Race condition by mount (mount.cifs) operations
+695925 - CVE-2011-1678 samba/cifs-utils: mount.cifs and umount.cifs fail to anticipate RLIMIT_FSIZE
+721348 - CVE-2011-2522 samba (SWAT): Absent CSRF protection in various Samba web configuration formulars
+722537 - CVE-2011-2694 samba (SWAT): XSS flaw in Change Password page
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/samba-3.0.33-0.34.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/samba-3.0.33-0.34.el4.src.rpm</a>
+
+i386:
+samba-3.0.33-0.34.el4.i386.rpm
+samba-client-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-swat-3.0.33-0.34.el4.i386.rpm
+
+ia64:
+samba-3.0.33-0.34.el4.ia64.rpm
+samba-client-3.0.33-0.34.el4.ia64.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.ia64.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.ia64.rpm
+samba-swat-3.0.33-0.34.el4.ia64.rpm
+
+ppc:
+samba-3.0.33-0.34.el4.ppc.rpm
+samba-client-3.0.33-0.34.el4.ppc.rpm
+samba-common-3.0.33-0.34.el4.ppc.rpm
+samba-common-3.0.33-0.34.el4.ppc64.rpm
+samba-debuginfo-3.0.33-0.34.el4.ppc.rpm
+samba-debuginfo-3.0.33-0.34.el4.ppc64.rpm
+samba-swat-3.0.33-0.34.el4.ppc.rpm
+
+s390:
+samba-3.0.33-0.34.el4.s390.rpm
+samba-client-3.0.33-0.34.el4.s390.rpm
+samba-common-3.0.33-0.34.el4.s390.rpm
+samba-debuginfo-3.0.33-0.34.el4.s390.rpm
+samba-swat-3.0.33-0.34.el4.s390.rpm
+
+s390x:
+samba-3.0.33-0.34.el4.s390x.rpm
+samba-client-3.0.33-0.34.el4.s390x.rpm
+samba-common-3.0.33-0.34.el4.s390.rpm
+samba-common-3.0.33-0.34.el4.s390x.rpm
+samba-debuginfo-3.0.33-0.34.el4.s390.rpm
+samba-debuginfo-3.0.33-0.34.el4.s390x.rpm
+samba-swat-3.0.33-0.34.el4.s390x.rpm
+
+x86_64:
+samba-3.0.33-0.34.el4.x86_64.rpm
+samba-client-3.0.33-0.34.el4.x86_64.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.x86_64.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.x86_64.rpm
+samba-swat-3.0.33-0.34.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/samba-3.0.33-0.34.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/samba-3.0.33-0.34.el4.src.rpm</a>
+
+i386:
+samba-3.0.33-0.34.el4.i386.rpm
+samba-client-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-swat-3.0.33-0.34.el4.i386.rpm
+
+x86_64:
+samba-3.0.33-0.34.el4.x86_64.rpm
+samba-client-3.0.33-0.34.el4.x86_64.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.x86_64.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.x86_64.rpm
+samba-swat-3.0.33-0.34.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/samba-3.0.33-0.34.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/samba-3.0.33-0.34.el4.src.rpm</a>
+
+i386:
+samba-3.0.33-0.34.el4.i386.rpm
+samba-client-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-swat-3.0.33-0.34.el4.i386.rpm
+
+ia64:
+samba-3.0.33-0.34.el4.ia64.rpm
+samba-client-3.0.33-0.34.el4.ia64.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.ia64.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.ia64.rpm
+samba-swat-3.0.33-0.34.el4.ia64.rpm
+
+x86_64:
+samba-3.0.33-0.34.el4.x86_64.rpm
+samba-client-3.0.33-0.34.el4.x86_64.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.x86_64.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.x86_64.rpm
+samba-swat-3.0.33-0.34.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/samba-3.0.33-0.34.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/samba-3.0.33-0.34.el4.src.rpm</a>
+
+i386:
+samba-3.0.33-0.34.el4.i386.rpm
+samba-client-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-swat-3.0.33-0.34.el4.i386.rpm
+
+ia64:
+samba-3.0.33-0.34.el4.ia64.rpm
+samba-client-3.0.33-0.34.el4.ia64.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.ia64.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.ia64.rpm
+samba-swat-3.0.33-0.34.el4.ia64.rpm
+
+x86_64:
+samba-3.0.33-0.34.el4.x86_64.rpm
+samba-client-3.0.33-0.34.el4.x86_64.rpm
+samba-common-3.0.33-0.34.el4.i386.rpm
+samba-common-3.0.33-0.34.el4.x86_64.rpm
+samba-debuginfo-3.0.33-0.34.el4.i386.rpm
+samba-debuginfo-3.0.33-0.34.el4.x86_64.rpm
+samba-swat-3.0.33-0.34.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.29.el5_7.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.29.el5_7.4.src.rpm</a>
+
+i386:
+libsmbclient-3.0.33-3.29.el5_7.4.i386.rpm
+samba-3.0.33-3.29.el5_7.4.i386.rpm
+samba-client-3.0.33-3.29.el5_7.4.i386.rpm
+samba-common-3.0.33-3.29.el5_7.4.i386.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.i386.rpm
+samba-swat-3.0.33-3.29.el5_7.4.i386.rpm
+
+x86_64:
+libsmbclient-3.0.33-3.29.el5_7.4.i386.rpm
+libsmbclient-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-client-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-common-3.0.33-3.29.el5_7.4.i386.rpm
+samba-common-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.i386.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-swat-3.0.33-3.29.el5_7.4.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.29.el5_7.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/samba-3.0.33-3.29.el5_7.4.src.rpm</a>
+
+i386:
+libsmbclient-devel-3.0.33-3.29.el5_7.4.i386.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.i386.rpm
+
+x86_64:
+libsmbclient-devel-3.0.33-3.29.el5_7.4.i386.rpm
+libsmbclient-devel-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.i386.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba-3.0.33-3.29.el5_7.4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/samba-3.0.33-3.29.el5_7.4.src.rpm</a>
+
+i386:
+libsmbclient-3.0.33-3.29.el5_7.4.i386.rpm
+libsmbclient-devel-3.0.33-3.29.el5_7.4.i386.rpm
+samba-3.0.33-3.29.el5_7.4.i386.rpm
+samba-client-3.0.33-3.29.el5_7.4.i386.rpm
+samba-common-3.0.33-3.29.el5_7.4.i386.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.i386.rpm
+samba-swat-3.0.33-3.29.el5_7.4.i386.rpm
+
+ia64:
+libsmbclient-3.0.33-3.29.el5_7.4.ia64.rpm
+libsmbclient-devel-3.0.33-3.29.el5_7.4.ia64.rpm
+samba-3.0.33-3.29.el5_7.4.ia64.rpm
+samba-client-3.0.33-3.29.el5_7.4.ia64.rpm
+samba-common-3.0.33-3.29.el5_7.4.ia64.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.ia64.rpm
+samba-swat-3.0.33-3.29.el5_7.4.ia64.rpm
+
+ppc:
+libsmbclient-3.0.33-3.29.el5_7.4.ppc.rpm
+libsmbclient-3.0.33-3.29.el5_7.4.ppc64.rpm
+libsmbclient-devel-3.0.33-3.29.el5_7.4.ppc.rpm
+libsmbclient-devel-3.0.33-3.29.el5_7.4.ppc64.rpm
+samba-3.0.33-3.29.el5_7.4.ppc.rpm
+samba-client-3.0.33-3.29.el5_7.4.ppc.rpm
+samba-common-3.0.33-3.29.el5_7.4.ppc.rpm
+samba-common-3.0.33-3.29.el5_7.4.ppc64.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.ppc.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.ppc64.rpm
+samba-swat-3.0.33-3.29.el5_7.4.ppc.rpm
+
+s390x:
+libsmbclient-3.0.33-3.29.el5_7.4.s390.rpm
+libsmbclient-3.0.33-3.29.el5_7.4.s390x.rpm
+libsmbclient-devel-3.0.33-3.29.el5_7.4.s390.rpm
+libsmbclient-devel-3.0.33-3.29.el5_7.4.s390x.rpm
+samba-3.0.33-3.29.el5_7.4.s390x.rpm
+samba-client-3.0.33-3.29.el5_7.4.s390x.rpm
+samba-common-3.0.33-3.29.el5_7.4.s390.rpm
+samba-common-3.0.33-3.29.el5_7.4.s390x.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.s390.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.s390x.rpm
+samba-swat-3.0.33-3.29.el5_7.4.s390x.rpm
+
+x86_64:
+libsmbclient-3.0.33-3.29.el5_7.4.i386.rpm
+libsmbclient-3.0.33-3.29.el5_7.4.x86_64.rpm
+libsmbclient-devel-3.0.33-3.29.el5_7.4.i386.rpm
+libsmbclient-devel-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-client-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-common-3.0.33-3.29.el5_7.4.i386.rpm
+samba-common-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.i386.rpm
+samba-debuginfo-3.0.33-3.29.el5_7.4.x86_64.rpm
+samba-swat-3.0.33-3.29.el5_7.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0547.html">https://www.redhat.com/security/data/cve/CVE-2010-0547.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0787.html">https://www.redhat.com/security/data/cve/CVE-2010-0787.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1678.html">https://www.redhat.com/security/data/cve/CVE-2011-1678.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2522.html">https://www.redhat.com/security/data/cve/CVE-2011-2522.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2694.html">https://www.redhat.com/security/data/cve/CVE-2011-2694.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOW9DUXlSAg2UNWIIRAhJFAJ9tZ/Z6V7GkQso39LEeQWBF9/b8XgCgm+3y
+4NAb5sNC6ZrQ3Cuw2iFWDXA=
+=3GTx
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -13,7 +13,6 @@ from vFense.plugins.patching.status_codes import PackageCodes
 from vFense.utils.common import hash_verify
 
 from vFense.plugins.patching._db_model import AppsKey, AppCollections
-from vFense.plugins.patching._constants import CommonFileKeys
 from vFense.plugins.patching._db import update_app_data_by_app_id
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -45,21 +44,21 @@ def download_file(uri, dl_path, throttle):
         urlgrab(uri, filename=dl_path, throttle=throttle)
 
 
-def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
+def download_all_files_in_app(app, file_data=None,
         throttle=0, collection=AppCollections.UniqueApplications):
 
     create_necessary_dirs()
     throttle *= 1024
 
-    if not file_data and check_if_redhat(os_string):
+    if not file_data and check_if_redhat(app.os_string):
         download_status = {
             AppsKey.FilesDownloadStatus: \
                 PackageCodes.AgentWillDownloadFromVendor
         }
-        update_app_data_by_app_id(app_id, download_status, collection)
+        update_app_data_by_app_id(app.app_id, download_status, collection)
 
     elif len(file_data) > 0:
-        app_path = os.path.join(VFENSE_APP_PATH, str(app_id))
+        app_path = os.path.join(VFENSE_APP_PATH, str(app.app_id))
         if not os.path.exists(app_path):
             os.mkdir(app_path)
 
@@ -74,57 +73,57 @@ def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
         }
 
         for file_info in file_data:
-            uri = str(file_info[CommonFileKeys.PKG_URI])
-            lhash = str(file_info[CommonFileKeys.PKG_HASH])
-            fname = str(file_info[CommonFileKeys.PKG_NAME])
-            fsize = file_info[CommonFileKeys.PKG_SIZE]
 
-            if os_code == 'linux':
-                file_path = os.path.join(VFENSE_APP_DEP_PATH, fname)
+            if app.os_code == 'linux':
+                file_path = (
+                    os.path.join(VFENSE_APP_DEP_PATH, file_info.file_name)
+                )
             else:
-                file_path = os.path.join(app_path, fname)
+                file_path = os.path.join(app_path, file_info.file_name)
 
-            symlink_path = os.path.join(app_path, fname)
+            symlink_path = os.path.join(app_path, file_info.file_name)
             cmd = 'ln -s %s %s' % (file_path, symlink_path)
 
             try:
-                if uri and not os.path.exists(file_path):
-                    download_file(uri, file_path, throttle)
+                if file_info.download_url and not os.path.exists(file_path):
+                    download_file(file_info.download_url, file_path, throttle)
 
                     if os.path.exists(file_path):
-                        if lhash:
+                        if file_info.file_hash:
                             hash_match = hash_verify(
-                                orig_hash=lhash, file_path=file_path
+                                orig_hash=file_info.file_hash,
+                                file_path=file_path
                             )
 
                             if hash_match:
                                 num_of_files_downloaded += 1
 
-                                if os_code == 'linux':
+                                if app.os_code == 'linux':
                                     if not os.path.islink(file_path):
                                         os.system(cmd)
                             else:
                                 num_of_files_mismatch += 1
 
-                        elif fsize and not lhash:
-                            if os.path.getsize(file_path) == fsize:
+                        elif file_info.file_size and not file_info.file_hash:
+                            if (os.path.getsize(file_path) ==
+                                    file_info.file_size):
                                 num_of_files_downloaded += 1
                             else:
                                 num_of_files_mismatch += 1
                     else:
                         num_of_files_failed += 1
 
-                elif os.path.exists(file_path) and os_code == 'linux':
+                elif os.path.exists(file_path) and app.os_code == 'linux':
 
                     if not os.path.islink(symlink_path):
                         os.system(cmd)
 
                     num_of_files_downloaded += 1
 
-                elif os.path.exists(file_path) and os_code != 'linux':
+                elif os.path.exists(file_path) and app.os_code != 'linux':
                     num_of_files_downloaded += 1
 
-                elif uri:
+                elif file_info.download_url:
                     num_of_files_invalid_uri += 1
 
             except Exception as e:
@@ -151,10 +150,10 @@ def download_all_files_in_app(app_id, os_code, os_string=None, file_data=None,
             )
 
         db_update_response = update_app_data_by_app_id(
-            app_id, new_status, collection
+            app.app_id, new_status, collection
         )
 
         logger.info(
             '%s, %s, %s, %s' %
-            (collection, app_id, str(new_status), db_update_response)
+            (collection, app.app_id, str(new_status), db_update_response)
         )

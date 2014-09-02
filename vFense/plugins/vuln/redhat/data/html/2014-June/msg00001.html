@@ -1,0 +1,200 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0591&#45;01] Important: Red Hat JBoss Enterprise Application	Platform 5.2.0 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 2 Jun 2014 10:14:03 &#45;0400 -->
+<!--X-Message-Id: 201406021414.s52EDx0Y000884@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0591-01] Important: Red Hat JBoss Enterprise Application	Plat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0591-01] Important: Red Hat JBoss Enterprise Application	Platform 5.2.0 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0591-01] Important: Red Hat JBoss Enterprise Application	Platform 5.2.0 security update</li>
+<li><em>Date</em>: Mon, 2 Jun 2014 14:13:58 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Enterprise Application Platform 5.2.0 security update
+Advisory ID:       RHSA-2014:0591-01
+Product:           Red Hat JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0591.html">https://rhn.redhat.com/errata/RHSA-2014-0591.html</a>
+Issue date:        2014-06-02
+CVE Names:         CVE-2014-0107 
+=====================================================================
+
+1. Summary:
+
+Updated packages for JBoss Enterprise Application Platform 5.2.0 which fix
+one security issue and one bug are now available for Red Hat Enterprise
+Linux 4, 5, and 6.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat JBoss Enterprise Application Platform 5 for RHEL 4 AS - noarch
+Red Hat JBoss Enterprise Application Platform 5 for RHEL 4 ES - noarch
+Red Hat JBoss Enterprise Application Platform 5 for RHEL 5 Server - noarch
+Red Hat JBoss Enterprise Application Platform 5 for RHEL 6 Server - noarch
+
+3. Description:
+
+JBoss Enterprise Application Platform is a platform for Java applications,
+which integrates the JBoss Application Server with JBoss Hibernate and
+JBoss Seam.
+
+It was found that the secure processing feature of Xalan-Java had
+insufficient restrictions defined for certain properties and features.
+A remote attacker able to provide Extensible Stylesheet Language
+Transformations (XSLT) content to be processed by an application using
+Xalan-Java could use this flaw to bypass the intended constraints of the
+secure processing feature. Depending on the components available in the
+classpath, this could lead to arbitrary remote code execution in the
+context of the application server running the application that uses
+Xalan-Java. (CVE-2014-0107)
+
+This update also fixes the following bug:
+
+It was observed that when using the Transfomer to convert a StreamSource to
+DOMResult, the performance of the conversion degraded as the size of the
+character data increased. For example, converting a 50 MB XML BLOB would
+take a very long time to finish. This issue has been resolved in this
+release by adjusting both the SAX2DOM and DOMBuilder classes to handle
+larger inputs more efficiently. (JBPAPP-10991)
+
+All users of JBoss Enterprise Application Platform 5.2.0 on Red Hat
+Enterprise Linux 4, 5, and 6 are advised to upgrade to these updated
+packages. The JBoss server process must be restarted for the update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied. Also, back up your existing Red
+Hat JBoss Enterprise Application Platform 5 installation (including all
+applications and configuration files).
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1080248 - CVE-2014-0107 Xalan-Java: insufficient constraints in secure processing feature
+
+6. Package List:
+
+Red Hat JBoss Enterprise Application Platform 5 for RHEL 4 AS:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/xalan-j2-2.7.1-12_patch_08.ep5.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/JBEAP/SRPMS/xalan-j2-2.7.1-12_patch_08.ep5.el4.src.rpm</a>
+
+noarch:
+xalan-j2-2.7.1-12_patch_08.ep5.el4.noarch.rpm
+
+Red Hat JBoss Enterprise Application Platform 5 for RHEL 4 ES:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/xalan-j2-2.7.1-12_patch_08.ep5.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/JBEAP/SRPMS/xalan-j2-2.7.1-12_patch_08.ep5.el4.src.rpm</a>
+
+noarch:
+xalan-j2-2.7.1-12_patch_08.ep5.el4.noarch.rpm
+
+Red Hat JBoss Enterprise Application Platform 5 for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/xalan-j2-2.7.1-12_patch_08.ep5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/JBEAP/SRPMS/xalan-j2-2.7.1-12_patch_08.ep5.el5.src.rpm</a>
+
+noarch:
+xalan-j2-2.7.1-12_patch_08.ep5.el5.noarch.rpm
+
+Red Hat JBoss Enterprise Application Platform 5 for RHEL 6 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/JBEAP/SRPMS/xalan-j2-2.7.1-12_patch_08.ep5.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/JBEAP/SRPMS/xalan-j2-2.7.1-12_patch_08.ep5.el6.src.rpm</a>
+
+noarch:
+xalan-j2-2.7.1-12_patch_08.ep5.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0107.html">https://www.redhat.com/security/data/cve/CVE-2014-0107.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://issues.jboss.org/browse/JBPAPP-10991">https://issues.jboss.org/browse/JBPAPP-10991</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTjIZ5XlSAg2UNWIIRAp8eAJ9AeruhcjZp02SgDOHko6Vw6ByolgCeKiM0
+icwKrRY1RLV3vjZL87xMI3E=
+=e7BM
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

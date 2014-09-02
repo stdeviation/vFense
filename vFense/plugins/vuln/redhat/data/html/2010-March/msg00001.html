@@ -1,0 +1,245 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0125&#45;01] Moderate: systemtap security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 1 Mar 2010 14:26:21 &#45;0500 -->
+<!--X-Message-Id: 201003011926.o21JQEDF000493@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0125-01] Moderate: systemtap security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0125-01] Moderate: systemtap security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0125-01] Moderate: systemtap security update</li>
+<li><em>Date</em>: Mon, 1 Mar 2010 14:26:14 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: systemtap security update
+Advisory ID:       RHSA-2010:0125-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0125.html">https://rhn.redhat.com/errata/RHSA-2010-0125.html</a>
+Issue date:        2010-03-01
+CVE Names:         CVE-2010-0411 
+=====================================================================
+
+1. Summary:
+
+Updated systemtap packages that fix a security issue are now available for
+Red Hat Enterprise Linux 4.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+SystemTap is an instrumentation system for systems running the Linux
+kernel, version 2.6. Developers can write scripts to collect data on the
+operation of the system.
+
+A buffer overflow flaw was found in SystemTap's tapset __get_argv()
+function. If a privileged user ran a SystemTap script that called this
+function, a local, unprivileged user could, while that script is still
+running, trigger this flaw and cause memory corruption by running a command
+with a large argument list, which may lead to a system crash or,
+potentially, arbitrary code execution with root privileges. (CVE-2010-0411)
+
+Note: SystemTap scripts that call __get_argv(), being a privileged
+function, can only be executed by the root user or users in the stapdev
+group. As well, if such a script was compiled and installed by root, users
+in the stapusr group would also be able to execute it.
+
+SystemTap users should upgrade to these updated packages, which contain a
+backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+559719 - CVE-2010-0411 systemtap: Crash with systemtap script using __get_argv()
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/systemtap-0.6.2-2.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/systemtap-0.6.2-2.el4_8.1.src.rpm</a>
+
+i386:
+systemtap-0.6.2-2.el4_8.1.i386.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.i386.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.i386.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.i386.rpm
+
+ia64:
+systemtap-0.6.2-2.el4_8.1.ia64.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.ia64.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.ia64.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.ia64.rpm
+
+ppc:
+systemtap-0.6.2-2.el4_8.1.ppc64.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.ppc64.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.ppc64.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.ppc64.rpm
+
+x86_64:
+systemtap-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/systemtap-0.6.2-2.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/systemtap-0.6.2-2.el4_8.1.src.rpm</a>
+
+i386:
+systemtap-0.6.2-2.el4_8.1.i386.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.i386.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.i386.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.i386.rpm
+
+x86_64:
+systemtap-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/systemtap-0.6.2-2.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/systemtap-0.6.2-2.el4_8.1.src.rpm</a>
+
+i386:
+systemtap-0.6.2-2.el4_8.1.i386.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.i386.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.i386.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.i386.rpm
+
+ia64:
+systemtap-0.6.2-2.el4_8.1.ia64.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.ia64.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.ia64.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.ia64.rpm
+
+x86_64:
+systemtap-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/systemtap-0.6.2-2.el4_8.1.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/systemtap-0.6.2-2.el4_8.1.src.rpm</a>
+
+i386:
+systemtap-0.6.2-2.el4_8.1.i386.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.i386.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.i386.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.i386.rpm
+
+ia64:
+systemtap-0.6.2-2.el4_8.1.ia64.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.ia64.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.ia64.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.ia64.rpm
+
+x86_64:
+systemtap-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-debuginfo-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-runtime-0.6.2-2.el4_8.1.x86_64.rpm
+systemtap-testsuite-0.6.2-2.el4_8.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0411.html">https://www.redhat.com/security/data/cve/CVE-2010-0411.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLjBTEXlSAg2UNWIIRArj2AKCTErZp52ErBKl5ktnV27pZPQiabwCaA5jI
+GMj6xpcZVqcoi6Rd5XbQgqE=
+=OLkA
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

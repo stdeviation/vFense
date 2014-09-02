@@ -1,0 +1,268 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0336&#45;01] Important: tomcat5 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 9 Mar 2011 17:10:35 &#45;0500 -->
+<!--X-Message-Id: 201103092210.p29MAUvc019511@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0336-01] Important: tomcat5 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0336-01] Important: tomcat5 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0336-01] Important: tomcat5 security update</li>
+<li><em>Date</em>: Wed, 9 Mar 2011 15:10:29 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: tomcat5 security update
+Advisory ID:       RHSA-2011:0336-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0336.html">https://rhn.redhat.com/errata/RHSA-2011-0336.html</a>
+Issue date:        2011-03-09
+CVE Names:         CVE-2010-4476 
+=====================================================================
+
+1. Summary:
+
+Updated tomcat5 packages that fix one security issue are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Apache Tomcat is a servlet container for the Java Servlet and JavaServer
+Pages (JSP) technologies.
+
+A denial of service flaw was found in the way certain strings were
+converted to Double objects. A remote attacker could use this flaw to cause
+Tomcat to hang via a specially-crafted HTTP request. (CVE-2010-4476)
+
+Users of Tomcat should upgrade to these updated packages, which contain a
+backported patch to correct this issue. Tomcat must be restarted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+674336 - CVE-2010-4476 JDK Double.parseDouble Denial-Of-Service
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/tomcat5-5.5.23-0jpp.17.el5_6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/tomcat5-5.5.23-0jpp.17.el5_6.src.rpm</a>
+
+i386:
+tomcat5-debuginfo-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.17.el5_6.i386.rpm
+
+x86_64:
+tomcat5-debuginfo-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.17.el5_6.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/tomcat5-5.5.23-0jpp.17.el5_6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/tomcat5-5.5.23-0jpp.17.el5_6.src.rpm</a>
+
+i386:
+tomcat5-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-common-lib-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-debuginfo-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-jasper-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-server-lib-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-webapps-5.5.23-0jpp.17.el5_6.i386.rpm
+
+x86_64:
+tomcat5-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-common-lib-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-debuginfo-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-jasper-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-server-lib-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-webapps-5.5.23-0jpp.17.el5_6.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/tomcat5-5.5.23-0jpp.17.el5_6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/tomcat5-5.5.23-0jpp.17.el5_6.src.rpm</a>
+
+i386:
+tomcat5-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-common-lib-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-debuginfo-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-jasper-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-server-lib-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.17.el5_6.i386.rpm
+tomcat5-webapps-5.5.23-0jpp.17.el5_6.i386.rpm
+
+ia64:
+tomcat5-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-common-lib-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-debuginfo-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-jasper-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-server-lib-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.17.el5_6.ia64.rpm
+tomcat5-webapps-5.5.23-0jpp.17.el5_6.ia64.rpm
+
+ppc:
+tomcat5-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-5.5.23-0jpp.17.el5_6.ppc64.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-common-lib-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-debuginfo-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-debuginfo-5.5.23-0jpp.17.el5_6.ppc64.rpm
+tomcat5-jasper-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-server-lib-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.17.el5_6.ppc.rpm
+tomcat5-webapps-5.5.23-0jpp.17.el5_6.ppc.rpm
+
+s390x:
+tomcat5-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-common-lib-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-debuginfo-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-jasper-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-server-lib-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.17.el5_6.s390x.rpm
+tomcat5-webapps-5.5.23-0jpp.17.el5_6.s390x.rpm
+
+x86_64:
+tomcat5-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-admin-webapps-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-common-lib-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-debuginfo-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-jasper-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-jasper-javadoc-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-jsp-2.0-api-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-jsp-2.0-api-javadoc-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-server-lib-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-servlet-2.4-api-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-servlet-2.4-api-javadoc-5.5.23-0jpp.17.el5_6.x86_64.rpm
+tomcat5-webapps-5.5.23-0jpp.17.el5_6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-4476.html">https://www.redhat.com/security/data/cve/CVE-2010-4476.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://tomcat.apache.org/security-5.html">http://tomcat.apache.org/security-5.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFNd/q3XlSAg2UNWIIRAoTWAJ44er893rgbe+HNkA3P8vS7bLmyYACgtaCN
+DtqJoWx0iR2Udl7ua3wPD/8=
+=jgZV
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

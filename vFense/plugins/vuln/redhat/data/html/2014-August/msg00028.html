@@ -1,0 +1,197 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1054&#45;01] Moderate: openssl security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 14 Aug 2014 00:54:08 &#45;0400 -->
+<!--X-Message-Id: 201408140454.s7E4s4cN000736@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1054-01] Moderate: openssl security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00027.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00027.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00028">Thread Index</A>]
+[<A HREF="date.html#00028">Date Index</A>]
+[<A HREF="author.html#00028">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1054-01] Moderate: openssl security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:1054-01] Moderate: openssl security update</li>
+<li><em>Date</em>: Thu, 14 Aug 2014 04:54:03 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openssl security update
+Advisory ID:       RHSA-2014:1054-01
+Product:           Red Hat Storage
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1054.html">https://rhn.redhat.com/errata/RHSA-2014-1054.html</a>
+Issue date:        2014-08-14
+CVE Names:         CVE-2014-3505 CVE-2014-3506 CVE-2014-3507 
+                   CVE-2014-3508 CVE-2014-3509 CVE-2014-3510 
+                   CVE-2014-3511 
+=====================================================================
+
+1. Summary:
+
+Updated openssl packages that fix multiple security issues are now
+available for Red Hat Storage 2.1.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Storage Server 2.1 - x86_64
+
+3. Description:
+
+OpenSSL is a toolkit that implements the Secure Sockets Layer (SSL),
+Transport Layer Security (TLS), and Datagram Transport Layer Security
+(DTLS) protocols, as well as a full-strength, general purpose cryptography
+library.
+
+A race condition was found in the way OpenSSL handled ServerHello messages
+with an included Supported EC Point Format extension. A malicious server
+could possibly use this flaw to cause a multi-threaded TLS/SSL client using
+OpenSSL to write into freed memory, causing the client to crash or execute
+arbitrary code. (CVE-2014-3509)
+
+It was discovered that the OBJ_obj2txt() function could fail to properly
+NUL-terminate its output. This could possibly cause an application using
+OpenSSL functions to format fields of X.509 certificates to disclose
+portions of its memory. (CVE-2014-3508)
+
+A flaw was found in the way OpenSSL handled fragmented handshake packets.
+A man-in-the-middle attacker could use this flaw to force a TLS/SSL server
+using OpenSSL to use TLS 1.0, even if both the client and the server
+supported newer protocol versions. (CVE-2014-3511)
+
+Multiple flaws were discovered in the way OpenSSL handled DTLS packets.
+A remote attacker could use these flaws to cause a DTLS server or client
+using OpenSSL to crash or use excessive amounts of memory. (CVE-2014-3505,
+CVE-2014-3506, CVE-2014-3507)
+
+A NULL pointer dereference flaw was found in the way OpenSSL performed a
+handshake when using the anonymous Diffie-Hellman (DH) key exchange. A
+malicious server could cause a DTLS client using OpenSSL to crash if that
+client had anonymous DH cipher suites enabled. (CVE-2014-3510)
+
+All OpenSSL users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. For the update to take
+effect, all services linked to the OpenSSL library must be restarted or the
+system rebooted.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1127490 - CVE-2014-3508 openssl: information leak in pretty printing functions
+1127498 - CVE-2014-3509 openssl: race condition in ssl_parse_serverhello_tlsext
+1127499 - CVE-2014-3505 openssl: DTLS packet processing double free
+1127500 - CVE-2014-3506 openssl: DTLS memory exhaustion
+1127502 - CVE-2014-3507 openssl: DTLS memory leak from zero-length fragments
+1127503 - CVE-2014-3510 openssl: DTLS anonymous (EC)DH denial of service
+1127504 - CVE-2014-3511 openssl: TLS protocol downgrade attack
+
+6. Package List:
+
+Red Hat Storage Server 2.1:
+
+Source:
+openssl-1.0.1e-16.el6_5.15.src.rpm
+
+x86_64:
+openssl-1.0.1e-16.el6_5.15.x86_64.rpm
+openssl-debuginfo-1.0.1e-16.el6_5.15.x86_64.rpm
+openssl-devel-1.0.1e-16.el6_5.15.x86_64.rpm
+openssl-perl-1.0.1e-16.el6_5.15.x86_64.rpm
+openssl-static-1.0.1e-16.el6_5.15.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3505.html">https://www.redhat.com/security/data/cve/CVE-2014-3505.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3506.html">https://www.redhat.com/security/data/cve/CVE-2014-3506.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3507.html">https://www.redhat.com/security/data/cve/CVE-2014-3507.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3508.html">https://www.redhat.com/security/data/cve/CVE-2014-3508.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3509.html">https://www.redhat.com/security/data/cve/CVE-2014-3509.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3510.html">https://www.redhat.com/security/data/cve/CVE-2014-3510.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3511.html">https://www.redhat.com/security/data/cve/CVE-2014-3511.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://www.openssl.org/news/secadv_20140806.txt">https://www.openssl.org/news/secadv_20140806.txt</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFT7EDQXlSAg2UNWIIRAmxoAJ4tKDoeadbVuOJOwL4vJQ0dZDkl8QCgmV8p
+2zxQNowHeNj9YpFxWhzQya0=
+=N+Wj
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00027.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00027.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00028">Thread Index</A>]
+[<A HREF="date.html#00028">Date Index</A>]
+[<A HREF="author.html#00028">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -6,8 +6,8 @@ from vFense.db.client import db_create_close, r
 from vFense.plugins.vuln import *
 from vFense.plugins.vuln._constants import *
 from vFense.plugins.vuln.ubuntu._db_model import (
-    UbuntuSecurityCollection, UbuntuSecurityBulletinKey,
-    UbuntuSecurityBulletinIndexes
+    UbuntuVulnerabilityCollections, UbuntuVulnerabilityKeys,
+    UbuntuVulnerabilityIndexes
 )
 from vFense.plugins.vuln.ubuntu._constants import *
 
@@ -42,12 +42,12 @@ def fetch_vuln_ids(name, version, os_string, conn=None):
     try:
         data = list(
             r
-            .table(UbuntuSecurityCollection.Bulletin)
+            .table(UbuntuVulnerabilityCollections.Vulnerabilities)
             .get_all(
                 [name, version],
-                index=UbuntuSecurityBulletinIndexes.NameAndVersion
+                index=UbuntuVulnerabilityIndexes.NameAndVersion
             )
-            .pluck(UbuntuSecurityBulletinKey.BulletinId, UbuntuSecurityBulletinKey.CveIds)
+            .pluck(UbuntuVulnerabilityKeys.VulnerabilityId, UbuntuVulnerabilityKeys.CveIds)
             .run(conn)
         )
 
@@ -60,7 +60,7 @@ def fetch_vuln_ids(name, version, os_string, conn=None):
 @time_it
 @db_create_close
 def fetch_vuln_data(vuln_id, conn=None):
-    """Retrieve Ubuntu Bulletin data for an Application by bulletin id.
+    """Retrieve Ubuntu.Vulnerabilities data for an Application by bulletin id.
     Args:
         vuln_id (str): The vulnerability id aka (USN-2161-1)
 
@@ -89,18 +89,16 @@ def fetch_vuln_data(vuln_id, conn=None):
     data = []
     map_hash = (
         {
-            UbuntuSecurityBulletinKey.Id: r.row[UbuntuSecurityBulletinKey.Id],
-            UbuntuSecurityBulletinKey.BulletinId: r.row[UbuntuSecurityBulletinKey.BulletinId],
-            UbuntuSecurityBulletinKey.DatePosted: r.row[UbuntuSecurityBulletinKey.DatePosted].to_epoch_time(),
-            UbuntuSecurityBulletinKey.Details: r.row[UbuntuSecurityBulletinKey.Details],
-            UbuntuSecurityBulletinKey.CveIds: r.row[UbuntuSecurityBulletinKey.CveIds],
-            SecurityBulletinKey.Supersedes: [],
+            UbuntuVulnerabilityKeys.VulnerabilityId: r.row[UbuntuVulnerabilityKeys.VulnerabilityId],
+            UbuntuVulnerabilityKeys.DatePosted: r.row[UbuntuVulnerabilityKeys.DatePosted].to_epoch_time(),
+            UbuntuVulnerabilityKeys.Details: r.row[UbuntuVulnerabilityKeys.Details],
+            UbuntuVulnerabilityKeys.CveIds: r.row[UbuntuVulnerabilityKeys.CveIds],
         }
     )
     try:
         data = list(
             r
-            .table(UbuntuSecurityCollection.Bulletin)
+            .table(UbuntuVulnerabilityCollections.Vulnerabilities)
             .get_all(vuln_id)
             .map(map_hash)
             .run(conn)
@@ -116,7 +114,7 @@ def fetch_vuln_data(vuln_id, conn=None):
 @db_create_close
 @return_status_tuple
 def insert_bulletin_data(bulletin_data, conn=None):
-    """Insert Ubuntu Bulletin data into the Windows Security Bulletin Collection
+    """Insert Ubuntu.Vulnerabilities data into the Windows Security.Vulnerabilities Collection
         DO NOT CALL DIRECTLY
     Args:
         bulletin_data (list|dict): List or dictionary of vulnerability data
@@ -134,7 +132,7 @@ def insert_bulletin_data(bulletin_data, conn=None):
     try:
         data = (
             r
-            .table(UbuntuSecurityCollection.Bulletin)
+            .table(UbuntuVulnerabilityCollections.Vulnerabilities)
             .insert(bulletin_data, upsert=True)
             .run(conn)
         )

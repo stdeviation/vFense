@@ -1,0 +1,251 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0168&#45;01] Important: rhev&#45;hypervisor5 security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 21 Feb 2012 03:58:08 &#45;0500 -->
+<!--X-Message-Id: 201202210858.q1L8w1kf011948@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0168-01] Important: rhev-hypervisor5 security and bug fix	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00059.html">Date Prev</a>][<a href="msg00061.html">Date Next</a>] &nbsp; [<a href="msg00059.html">Thread Prev</a>][<a href="msg00061.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00060">Thread Index</A>]
+[<A HREF="date.html#00060">Date Index</A>]
+[<A HREF="author.html#00060">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0168-01] Important: rhev-hypervisor5 security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0168-01] Important: rhev-hypervisor5 security and bug fix	update</li>
+<li><em>Date</em>: Tue, 21 Feb 2012 08:58:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhev-hypervisor5 security and bug fix update
+Advisory ID:       RHSA-2012:0168-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0168.html">https://rhn.redhat.com/errata/RHSA-2012-0168.html</a>
+Issue date:        2012-02-21
+CVE Names:         CVE-2011-4109 CVE-2011-4576 CVE-2011-4619 
+                   CVE-2012-0029 CVE-2012-0207 
+=====================================================================
+
+1. Summary:
+
+An updated rhev-hypervisor5 package that fixes several security issues and
+various bugs is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV Hypervisor for RHEL-5 - noarch
+
+3. Description:
+
+The rhev-hypervisor5 package provides a Red Hat Enterprise Virtualization
+Hypervisor ISO disk image. The Red Hat Enterprise Virtualization
+Hypervisor is a dedicated Kernel-based Virtual Machine (KVM) hypervisor.
+It includes everything necessary to run and manage virtual machines: A
+subset of the Red Hat Enterprise Linux operating environment and the Red
+Hat Enterprise Virtualization Agent.
+
+Note: Red Hat Enterprise Virtualization Hypervisor is only available for
+the Intel 64 and AMD64 architectures with virtualization extensions.
+
+A heap overflow flaw was found in the way QEMU-KVM emulated the e1000
+network interface card. A privileged guest user in a virtual machine whose
+network interface is configured to use the e1000 emulated driver could use
+this flaw to crash the host or, possibly, escalate their privileges on the
+host. (CVE-2012-0029)
+
+A divide-by-zero flaw was found in the Linux kernel's igmp_heard_query()
+function. An attacker able to send certain IGMP (Internet Group Management
+Protocol) packets to a target system could use this flaw to cause a denial
+of service. (CVE-2012-0207)
+
+A double free flaw was discovered in the policy checking code in OpenSSL.
+A remote attacker could use this flaw to crash an application that uses
+OpenSSL by providing an X.509 certificate that has specially-crafted
+policy extension data. (CVE-2011-4109)
+
+An information leak flaw was found in the SSL 3.0 protocol implementation
+in OpenSSL. Incorrect initialization of SSL record padding bytes could
+cause an SSL client or server to send a limited amount of possibly
+sensitive data to its SSL peer via the encrypted connection.
+(CVE-2011-4576)
+
+It was discovered that OpenSSL did not limit the number of TLS/SSL
+handshake restarts required to support Server Gated Cryptography. A remote
+attacker could use this flaw to make a TLS/SSL server using OpenSSL consume
+an excessive amount of CPU by continuously restarting the handshake.
+(CVE-2011-4619)
+
+Red Hat would like to thank Nicolae Mogoreanu for reporting CVE-2012-0029,
+and Simon McVittie for reporting CVE-2012-0207.
+
+This updated package provides updated components that include fixes for
+various security issues. These issues have no security impact on Red Hat
+Enterprise Virtualization Hypervisor itself, however. The security fixes
+included in this update address the following CVE numbers:
+
+CVE-2006-1168 and CVE-2011-2716 (busybox issues)
+
+CVE-2009-5029, CVE-2009-5064, CVE-2010-0830 and CVE-2011-1089 (glibc
+issues)
+
+CVE-2011-1083, CVE-2011-3638, CVE-2011-4086, CVE-2011-4127 and
+CVE-2012-0028 (kernel issues)
+
+CVE-2011-1526 (krb5 issue)
+
+CVE-2011-4347 (kvm issue)
+
+CVE-2010-4008, CVE-2011-0216, CVE-2011-2834, CVE-2011-3905, CVE-2011-3919
+and CVE-2011-1944 (libxml2 issues)
+
+CVE-2011-1749 (nfs-utils issue)
+
+CVE-2011-4108 (openssl issue)
+
+CVE-2011-0010 (sudo issue)
+
+CVE-2011-1675 and CVE-2011-1677 (util-linux issues)
+
+CVE-2010-0424 (vixie-cron issue)
+
+This updated rhev-hypervisor5 package fixes various bugs. Documentation of
+these changes will be available shortly in the Technical Notes document:
+
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Servers/2.2/html/Technical_Notes/index.html">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Servers/2.2/html/Technical_Notes/index.html</a>
+
+Users of Red Hat Enterprise Virtualization Hypervisor are advised to
+upgrade to this updated package, which fixes these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+606191 - after upgrade , reboot can't shut off network successfully and back to firstboot menu again
+627538 - System will not boot sometimes when using rhevm to do upgrade twice.
+650179 - rhevm bridge came up instead of breth0 after fail to configure network
+675325 - Changes to networking always clear the contents of resolv.conf
+696875 - RHEVH bootup hanging in ovirt-early when doing LVM scanning
+717535 - [RFE] No confirm message for ntp server setting
+728895 - RHEV-H rpm should include a versions text file
+732948 - CCISS: Auto install fail at creating physical volume.
+734110 - rhevh - upgrade ovirt node fails due to nonexistent breth0
+734480 - [RFE] Add virt-who package to RHEVH
+734710 - Register RHN satellite will fail if RHN satellite password include space.
+740127 - Provide our CPE name in a new system file
+743938 - Make rhev-hypervisor RPM multi-installable like the kernel
+747519 - RHEV-H 5.8 register to RHN will fail.
+747647 - Change rhev-hypervisor RPM to be rhev-hypervisor5 to allow coinstallations with rhev-hypervisor6
+756178 - remove redundant brcm-iscsi.log rotation from ovirt-node now that it is in iscsi-initiator-utils
+758465 - RHEV-H 5.8 register to RHN will fail if password contains quotes or spaces
+759462 - Can not retrieve running guests UUID in RHEVH node.
+759632 - virt-who debugging output going to stderr always
+759635 - Revert workaround of virt-who output
+761357 - Multipathd service is stopped by default cause change password failed in single mode.
+768256 - network layout is incorrect when configure network with  nic up
+771771 - CVE-2011-4109 openssl: double-free in policy checks
+771775 - CVE-2011-4576 openssl: uninitialized SSL 3.0 padding
+771780 - CVE-2011-4619 openssl: SGC restart DoS attack
+772075 - CVE-2012-0029 qemu-kvm: e1000: process_tx_desc legacy mode packets heap overflow
+772867 - CVE-2012-0207 kernel: igmp: Avoid zero delay when receiving odd mixture of IGMP queries
+783625 - The setup command should only allow password setting and viewing logs in single mode.
+
+6. Package List:
+
+RHEV Hypervisor for RHEL-5:
+
+noarch:
+rhev-hypervisor5-5.8-20120202.0.el5.noarch.rpm
+rhev-hypervisor5-tools-5.8-20120202.0.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4109.html">https://www.redhat.com/security/data/cve/CVE-2011-4109.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4576.html">https://www.redhat.com/security/data/cve/CVE-2011-4576.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4619.html">https://www.redhat.com/security/data/cve/CVE-2011-4619.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0029.html">https://www.redhat.com/security/data/cve/CVE-2012-0029.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0207.html">https://www.redhat.com/security/data/cve/CVE-2012-0207.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Servers/2.2/html/Technical_Notes/index.html">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Servers/2.2/html/Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPQ1yHXlSAg2UNWIIRAl9/AJ9JmPpSO5U2xwDBKDZA8y5To8EVcwCfZFGN
+bzF952CZ/r5T3LUF9kY6X8c=
+=IdNq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00059.html">Date Prev</a>][<a href="msg00061.html">Date Next</a>] &nbsp; [<a href="msg00059.html">Thread Prev</a>][<a href="msg00061.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00060">Thread Index</A>]
+[<A HREF="date.html#00060">Date Index</A>]
+[<A HREF="author.html#00060">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

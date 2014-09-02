@@ -1,17 +1,13 @@
-class UbuntuSecurityCollection():
-    Bulletin = 'ubuntu_security_bulletin'
+from vFense.plugins.vuln._db_model import (
+    VulnerabilityKeys, VulnerabilityIndexes
+)
+
+class UbuntuVulnerabilityCollections():
+    Vulnerabilities = 'ubuntu_vulnerabilities'
 
 
-class UbuntuSecurityBulletinKey():
-    DatePosted = 'date_posted'
-    BulletinId = 'bulletin_id'
-    Details = 'bulletin_details'
-    Apps = 'apps'
-    OsStrings = 'os_strings'
-    CveIds = 'cve_ids'
-    SupportUrl = 'support_url'
+class UbuntuVulnerabilityKeys(VulnerabilityKeys):
+    pass
 
-class UbuntuSecurityBulletinIndexes():
-    BulletinId = 'bulletin_id'
-    NameAndVersion = 'name_and_version'
-    CveIds = 'cve_ids'
+class UbuntuVulnerabilityIndexes(VulnerabilityIndexes):
+    pass

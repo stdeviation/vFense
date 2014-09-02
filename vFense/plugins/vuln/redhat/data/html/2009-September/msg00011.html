@@ -1,0 +1,348 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1341&#45;02] Low: cman security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 2 Sep 2009 03:46:56 &#45;0400 -->
+<!--X-Message-Id: 200909020746.n827ktuU018380@int&#45;mx05.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1341-02] Low: cman security, bug fix,	and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1341-02] Low: cman security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1341-02] Low: cman security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 2 Sep 2009 03:46:55 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: cman security, bug fix, and enhancement update
+Advisory ID:       RHSA-2009:1341-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1341.html">https://rhn.redhat.com/errata/RHSA-2009-1341.html</a>
+Issue date:        2009-09-02
+Keywords:          cman
+CVE Names:         CVE-2008-4579 CVE-2008-6552 
+=====================================================================
+
+1. Summary:
+
+Updated cman packages that fix several security issues, various bugs, and
+add enhancements are now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The Cluster Manager (cman) utility provides services for managing a Linux
+cluster.
+
+Multiple insecure temporary file use flaws were found in fence_apc_snmp and
+ccs_tool. A local attacker could use these flaws to overwrite an arbitrary
+file writable by a victim running those utilities (typically root) with
+the output of the utilities via a symbolic link attack. (CVE-2008-4579,
+CVE-2008-6552)
+
+Bug fixes:
+
+* a buffer could overflow if cluster.conf had more than 52 entries per
+block inside the &lt;cman&gt; block. The limit is now 1024.
+
+* the output of the group_tool dump subcommands were NULL padded.
+
+* using device=&quot;&quot; instead of label=&quot;&quot; no longer causes qdiskd to
+incorrectly exit.
+
+* the IPMI fencing agent has been modified to time out after 10 seconds. It
+is also now possible to specify a different timeout value with the '-t'
+option.
+
+* the IPMI fencing agent now allows punctuation in passwords.
+
+* quickly starting and stopping the cman service no longer causes the
+cluster membership to become inconsistent across the cluster.
+
+* an issue with lock syncing caused 'receive_own from' errors to be logged
+to '/var/log/messages'.
+
+* an issue which caused gfs_controld to segfault when mounting hundreds of
+file systems has been fixed.
+
+* the LPAR fencing agent now properly reports status when an LPAR is in
+Open Firmware mode.
+
+* the LPAR fencing agent now works properly with systems using the
+Integrated Virtualization Manager (IVM).
+
+* the APC SNMP fencing agent now properly recognizes outletStatusOn and
+outletStatusOff return codes from the SNMP agent.
+
+* the WTI fencing agent can now connect to fencing devices with no
+password.
+
+* the rps-10 fencing agent now properly performs a reboot when run with no
+options.
+
+* the IPMI fencing agent now supports different cipher types with the '-C'
+option.
+
+* qdisk now properly scans devices and partitions.
+
+* cman now checks to see if a new node has state to prevent killing the
+first node during cluster setup.
+
+* 'service qdiskd start' now works properly.
+
+* the McData fence agent now works properly with the McData Sphereon 4500
+Fabric Switch.
+
+* the Egenera fence agent can now specify an SSH login name.
+
+* the APC fence agent now works with non-admin accounts when using the
+3.5.x firmware.
+
+* fence_xvmd now tries two methods to reboot a virtual machine.
+
+* connections to OpenAIS are now allowed from unprivileged CPG clients with
+the user and group of 'ais'.
+
+* groupd no longer allows the default fence domain to be '0', which
+previously caused rgmanager to hang. Now, rgmanager no longer hangs.
+
+* the RSA fence agent now supports SSH enabled RSA II devices.
+
+* the DRAC fence agent now works with the Integrated Dell Remote Access
+Controller (iDRAC) on Dell PowerEdge M600 blade servers.
+
+* fixed a memory leak in cman.
+
+* qdisk now displays a warning if more than one label is found with the
+same name.
+
+* the DRAC5 fencing agent now shows proper usage instructions for the '-D'
+option.
+
+* cman no longer uses the wrong node name when getnameinfo() fails.
+
+* the SCSI fence agent now verifies that sg_persist is installed.
+
+* the DRAC5 fencing agent now properly handles modulename.
+
+* QDisk now logs warning messages if it appears its I/O to shared storage
+is hung.
+
+* fence_apc no longer fails with a pexpect exception.
+
+* removing a node from the cluster using 'cman_tool leave remove' now
+properly reduces the expected_votes and quorum.
+
+* a semaphore leak in cman has been fixed.
+
+* 'cman_tool nodes -F name' no longer segfaults when a node is out of
+membership.
+
+Enhancements:
+
+* support for: ePowerSwitch 8+ and LPAR/HMC v3 devices, Cisco MDS 9124 and
+MDS 9134 SAN switches, the virsh fencing agent, and broadcast communication
+with cman.
+
+* fence_scsi limitations added to fence_scsi man page.
+
+Users of cman are advised to upgrade to these updated packages, which
+resolve these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+276541 - fence_impilan blocks alternative fencing agents when connectivity to IPMI fails.
+322291 - rps-10 fence agent does not perform default reboot action
+447497 - RFE: support for IPMI v2.0 ciphersuites in fence_ipmilan
+447964 - fence_ipmilan does not handle punctuation in password
+467386 - CVE-2008-4579 cman/fence: insecure temporary file usage in the apc fence agents
+468966 - Possible buffer overflow in cman config loader can lead to memory corruption
+472460 - cman_tool nodes -F name segfaults when a node is out of membership
+472786 - cluster view inconsistent after &quot;service cman stop; service cman start&quot;
+473961 - clvmd memory leak
+474163 - gfs_controld: receive_own from N messages with plock_ownership enabled
+480178 - fence_xvmd Fails to Reboot VM
+480401 - gfs_controld segfault during multiple mount attempt
+480836 - [RFE] Add support for Cisco 9124 and 9134 SAN switches as fence devices
+481566 - [PATCH] /sbin/fence_lpar - properly report status on systems in Open Firmware
+481664 - fence_wti is unable to connect to (password-less) fencing device
+484095 - fence_apc_snmp: invalid status outletStatusOff
+484956 - qdiskd does not prune partitions mapped to dm-mpio devices
+485026 - Cman kills first node in initial cluster setup
+485199 - 'service qdiskd restart' doesn't work
+485469 - Normal users cannot run CPG clients if openais is started by cman.
+485700 - fence_lpar doesn't work with hmc version 3
+487436 - Qdisk should choose first disk if multiple disks containing same label exist
+487501 - Exceptions in fencing agents
+488565 - cman uses local node name for lookup during start up
+488958 - GFS: Allow fence_egenera to specify ssh login name
+491640 - APC Fence Agent does not work with non-admin account
+493165 - group_tool ls fence returns one for fence id ZERO
+493207 - groupd assigns zero group id
+493802 - [RFE] Providing support for ssh enabled RSA II fence devices
+496629 - [RFE] Include fence_virsh along with the present agents
+496724 - fence_drac5 uses module_name instead of modulename
+498329 - fence_drac5 help output shows incorrect usage
+499767 - groupd segfaults on start
+500450 - qdiskd I/O hang reporting
+500567 - Flag added to openais to report security errors causes cman not to build
+501586 - fence agents (fence_apc, fence_wti) fails with pexpect exception
+502674 - fence_lpar can't log in to IVM systems
+504705 - fence_lpar: lssyscfg command on HMC can take longer than SHELL_TIMEOUT
+505258 - cman_tool leave remove does not reduce quorum
+505594 - semaphore leak during cluster startup/shutdown cycle
+512998 - Fence_scsi limitations man page fix needed
+514758 - [RHEL5][cman] fence_apc_snmp: local variable 'verbose_filename' referenced before assignment
+519436 - CVE-2008-6552 cman, gfs2-utils, rgmanager: multiple insecure temporary file use issues
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cman-2.0.115-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/cman-2.0.115-1.el5.src.rpm</a>
+
+i386:
+cman-2.0.115-1.el5.i386.rpm
+cman-debuginfo-2.0.115-1.el5.i386.rpm
+cman-devel-2.0.115-1.el5.i386.rpm
+
+x86_64:
+cman-2.0.115-1.el5.x86_64.rpm
+cman-debuginfo-2.0.115-1.el5.i386.rpm
+cman-debuginfo-2.0.115-1.el5.x86_64.rpm
+cman-devel-2.0.115-1.el5.i386.rpm
+cman-devel-2.0.115-1.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/cman-2.0.115-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/cman-2.0.115-1.el5.src.rpm</a>
+
+i386:
+cman-2.0.115-1.el5.i386.rpm
+cman-debuginfo-2.0.115-1.el5.i386.rpm
+cman-devel-2.0.115-1.el5.i386.rpm
+
+ia64:
+cman-2.0.115-1.el5.ia64.rpm
+cman-debuginfo-2.0.115-1.el5.ia64.rpm
+cman-devel-2.0.115-1.el5.ia64.rpm
+
+ppc:
+cman-2.0.115-1.el5.ppc.rpm
+cman-debuginfo-2.0.115-1.el5.ppc.rpm
+cman-debuginfo-2.0.115-1.el5.ppc64.rpm
+cman-devel-2.0.115-1.el5.ppc.rpm
+cman-devel-2.0.115-1.el5.ppc64.rpm
+
+s390x:
+cman-2.0.115-1.el5.s390x.rpm
+cman-debuginfo-2.0.115-1.el5.s390.rpm
+cman-debuginfo-2.0.115-1.el5.s390x.rpm
+cman-devel-2.0.115-1.el5.s390.rpm
+cman-devel-2.0.115-1.el5.s390x.rpm
+
+x86_64:
+cman-2.0.115-1.el5.x86_64.rpm
+cman-debuginfo-2.0.115-1.el5.i386.rpm
+cman-debuginfo-2.0.115-1.el5.x86_64.rpm
+cman-devel-2.0.115-1.el5.i386.rpm
+cman-devel-2.0.115-1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4579">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4579</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6552">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6552</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKniLhXlSAg2UNWIIRAtAOAJ0SrFjaDs000GRLzUBIVXmP0EOnhgCgpvoq
+x+uMGBr8XX8kuPre5qpRyLE=
+=e/BF
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1019&#45;01] Moderate: libvirt security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 21 Jul 2011 09:35:20 &#45;0400 -->
+<!--X-Message-Id: 201107211335.p6LDZDKP013579@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1019-01] Moderate: libvirt security, bug fix,	and enhancement</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1019-01] Moderate: libvirt security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1019-01] Moderate: libvirt security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Jul 2011 13:35:12 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libvirt security, bug fix, and enhancement update
+Advisory ID:       RHSA-2011:1019-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1019.html">https://rhn.redhat.com/errata/RHSA-2011-1019.html</a>
+Issue date:        2011-07-21
+CVE Names:         CVE-2011-2511 
+=====================================================================
+
+1. Summary:
+
+Updated libvirt packages that fix one security issue, several bugs and add
+various enhancements are now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - i386, x86_64
+RHEL Virtualization (v. 5 server) - i386, ia64, x86_64
+
+3. Description:
+
+The libvirt library is a C API for managing and interacting with the
+virtualization capabilities of Linux and other operating systems.
+
+An integer overflow flaw was found in libvirtd's RPC call handling. An
+attacker able to establish read-only connections to libvirtd could trigger
+this flaw by calling virDomainGetVcpus() with specially-crafted parameters,
+causing libvirtd to crash. (CVE-2011-2511)
+
+This update fixes the following bugs:
+
+* libvirt was rebased from version 0.6.3 to version 0.8.2 in Red Hat
+Enterprise Linux 5.6. A code audit found a minor API change that effected
+error messages seen by libvirt 0.8.2 clients talking to libvirt 0.7.1 –
+0.7.7 (0.7.x) servers. A libvirt 0.7.x server could send
+VIR_ERR_BUILD_FIREWALL errors where a libvirt 0.8.2 client expected
+VIR_ERR_CONFIG_UNSUPPORTED errors. In other circumstances, a libvirt 0.8.2
+client saw a &quot;Timed out during operation&quot; message where it should see an
+&quot;Invalid network filter&quot; error. This update adds a backported patch that
+allows libvirt 0.8.2 clients to interoperate with the API as used by
+libvirt 0.7.x servers, ensuring correct error messages are sent.
+(BZ#665075)
+
+* libvirt could crash if the maximum number of open file descriptors
+(_SC_OPEN_MAX) grew larger than the FD_SETSIZE value because it accessed
+file descriptors outside the bounds of the set. With this update the
+maximum number of open file descriptors can no longer grow larger than the
+FD_SETSIZE value. (BZ#665549)
+
+* A libvirt race condition was found. An array in the libvirt event
+handlers was accessed with a lock temporarily released. In rare cases, if
+one thread attempted to access this array but a second thread reallocated
+the array before the first thread reacquired a lock, it could lead to the
+first thread attempting to access freed memory, potentially causing libvirt
+to crash. With this update libvirt no longer refers to the old array and,
+consequently, behaves as expected. (BZ#671569)
+
+* Guests connected to a passthrough NIC would kernel panic if a
+system_reset signal was sent through the QEMU monitor. With this update you
+can reset such guests as expected. (BZ#689880)
+
+* When using the Xen kernel, the rpmbuild command failed on the xencapstest
+test. With this update you can run rpmbuild successfully when using the Xen
+kernel. (BZ#690459)
+
+* When a disk was hot unplugged, &quot;ret &gt;= 0&quot; was passed to the qemuAuditDisk
+calls in disk hotunplug operations before ret was, in fact, set to 0. As
+well, the error path jumped to the &quot;cleanup&quot; label prematurely. As a
+consequence, hotunplug failures were not audited and hotunplug successes
+were audited as failures. This was corrected and hot unplugging checks now
+behave as expected. (BZ#710151)
+
+* A conflict existed between filter update locking sequences and virtual
+machine startup locking sequences. When a filter update occurred on one or
+more virtual machines, a deadlock could consequently occur if a virtual
+machine referencing a filter was started. This update changes and makes
+more flexible several qemu locking sequences ensuring this deadlock no
+longer occurs. (BZ#697749)
+
+* qemudDomainSaveImageStartVM closed some incoming file descriptor (fd)
+arguments without informing the caller. The consequent double-closes could
+cause Domain restoration failure. This update alters the
+qemudDomainSaveImageStartVM signature to prevent the double-closes.
+(BZ#681623)
+
+This update also adds the following enhancements:
+
+* The libvirt Xen driver now supports more than one serial port.
+(BZ#670789)
+
+* Enabling and disabling the High Precision Event Timer (HPET) in Xen
+domains is now possible. (BZ#703193)
+
+All libvirt users should install this update which addresses this
+vulnerability, fixes these bugs and adds these enhancements. After
+installing the updated packages, libvirtd must be restarted (&quot;service
+libvirtd restart&quot;) for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+665075 - minor libvirt API break in error reporting
+665549 - libvirt crash on src/util/util.c in __virExec
+671569 - race condition in libvirt could lead to crash on event handling
+681623 - libvirt double-close bug in tight loop of save/restore [5.7]
+689880 - guest with passthrough nic got kernel panic when send system_reset signal in QEMU monitor
+690459 - rpmbuild failed on xencapstest when running under xen kernel
+697749 - Deadlock between VM ops and filter update
+703193 - support enabling/disabling xen hpet
+710151 - Auditing of QEMU driver disk hotunplug events logs is missing and/or incorrect
+717199 - CVE-2011-2511 libvirt: integer overflow in VirDomainGetVcpus
+
+6. Package List:
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libvirt-0.8.2-22.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/libvirt-0.8.2-22.el5.src.rpm</a>
+
+i386:
+libvirt-0.8.2-22.el5.i386.rpm
+libvirt-debuginfo-0.8.2-22.el5.i386.rpm
+libvirt-devel-0.8.2-22.el5.i386.rpm
+libvirt-python-0.8.2-22.el5.i386.rpm
+
+x86_64:
+libvirt-0.8.2-22.el5.i386.rpm
+libvirt-0.8.2-22.el5.x86_64.rpm
+libvirt-debuginfo-0.8.2-22.el5.i386.rpm
+libvirt-debuginfo-0.8.2-22.el5.x86_64.rpm
+libvirt-devel-0.8.2-22.el5.i386.rpm
+libvirt-devel-0.8.2-22.el5.x86_64.rpm
+libvirt-python-0.8.2-22.el5.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libvirt-0.8.2-22.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/libvirt-0.8.2-22.el5.src.rpm</a>
+
+i386:
+libvirt-0.8.2-22.el5.i386.rpm
+libvirt-debuginfo-0.8.2-22.el5.i386.rpm
+libvirt-devel-0.8.2-22.el5.i386.rpm
+libvirt-python-0.8.2-22.el5.i386.rpm
+
+ia64:
+libvirt-0.8.2-22.el5.ia64.rpm
+libvirt-debuginfo-0.8.2-22.el5.ia64.rpm
+libvirt-devel-0.8.2-22.el5.ia64.rpm
+libvirt-python-0.8.2-22.el5.ia64.rpm
+
+x86_64:
+libvirt-0.8.2-22.el5.i386.rpm
+libvirt-0.8.2-22.el5.x86_64.rpm
+libvirt-debuginfo-0.8.2-22.el5.i386.rpm
+libvirt-debuginfo-0.8.2-22.el5.x86_64.rpm
+libvirt-devel-0.8.2-22.el5.i386.rpm
+libvirt-devel-0.8.2-22.el5.x86_64.rpm
+libvirt-python-0.8.2-22.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2511.html">https://www.redhat.com/security/data/cve/CVE-2011-2511.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOKCq3XlSAg2UNWIIRAh+2AKCGGhUYMwzTuqeKUHbY+BhxEYouoACgpqfB
+b/l7//fSgMwQIA5HVRWMmcI=
+=wBo1
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

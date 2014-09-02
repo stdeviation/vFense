@@ -1,0 +1,243 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1239&#45;01] Important: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 1 Sep 2009 03:42:32 &#45;0400 -->
+<!--X-Message-Id: 200909010742.n817gViU025223@int&#45;mx02.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1239-01] Important: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1239-01] Important: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1239-01] Important: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Tue, 1 Sep 2009 03:42:31 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2009:1239-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1239.html">https://rhn.redhat.com/errata/RHSA-2009-1239.html</a>
+Issue date:        2009-09-01
+CVE Names:         CVE-2009-1895 CVE-2009-2692 CVE-2009-2847 
+                   CVE-2009-2848 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix several security issues and various
+bugs are now available for Red Hat Enterprise MRG 1.1.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+These updated packages fix the following security issues:
+
+* the ADDR_COMPAT_LAYOUT and MMAP_PAGE_ZERO flags were not cleared when a
+setuid or setgid program was executed. A local, unprivileged user could use
+this flaw to bypass the mmap_min_addr protection mechanism and perform a
+NULL pointer dereference attack, or bypass the Address Space Layout
+Randomization (ASLR) security feature. (CVE-2009-1895, Important)
+
+* Tavis Ormandy and Julien Tinnes of the Google Security Team reported a
+flaw in the SOCKOPS_WRAP macro in the Linux kernel. This macro did not
+initialize the sendpage operation in the proto_ops structure correctly. A
+local, unprivileged user could use this flaw to cause a local denial of
+service or escalate their privileges. (CVE-2009-2692, Important)
+
+* it was discovered that, when executing a new process, the clear_child_tid
+pointer in the Linux kernel is not cleared. If this pointer points to a
+writable portion of the memory of the new program, the kernel could corrupt
+four bytes of memory, possibly leading to a local denial of service or
+privilege escalation. (CVE-2009-2848, Important)
+
+* a flaw was found in the way the do_sigaltstack() function in the Linux
+kernel copies the stack_t structure to user-space. On 64-bit machines, this
+flaw could lead to a four-byte information leak. (CVE-2009-2847, Moderate)
+
+This update also fixes the following bugs:
+
+* the gcc flag &quot;-fno-delete-null-pointer-checks&quot; was added to the kernel
+build options. This prevents gcc from optimizing out NULL pointer checks
+after the first use of a pointer. NULL pointer bugs are often exploited by
+attackers, and keeping these checks is considered a safety measure.
+(BZ#511187) 
+
+* a bug in the locking strategy for the free_pages_bulk() kernel function
+was found, where a lock in a code branch was not held. This could have
+created a &quot;double free&quot; problem that resulted in a kernel panic.
+(BZ#513715)
+
+* udevd and multipathd were unable to service events fast enough when a
+Fibre Channel cable was unplugged. This caused the cable state to be out of
+sync if the cable was plugged back in quickly, possibly resulting in
+devices being removed, or path issues when using Device-Mapper Multipath.
+This has been changed so that users can specify devices that should not be
+removed if a cable is unplugged. (BZ#514541)
+
+* a race condition in exit_thread() could have eventually caused a kernel
+oops. (BZ#514587)
+
+* a race condition was fixed between kthread_stop() and kthread_create().
+Kernel subsystems creating and stopping threads at a fast pace could hit
+this issue. Several inexplicable backtraces observed during tests
+caused this race condition. (BZ#518967)
+
+* HPET_EMULATE_RTC was being disabled during kernel compile. This was
+caused by an incorrect requirement in the related Kconfig entry. This issue
+led to failures when accessing the RTC (real time clock) in machines that
+had the RTC emulated by HPET (High Precision Event Timer). (BZ#519433)
+
+Users should upgrade to these updated packages, which contain backported
+patches to correct these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+511171 - CVE-2009-1895 kernel: personality: fix PER_CLEAR_ON_SETID
+511187 - kernel: build with -fno-delete-null-pointer-checks [mrg-1]
+514541 - [FOCUS] [MRG-1] When the dev_loss_tmo fires don't remove devices by default.
+515392 - CVE-2009-2847 kernel: information leak in sigaltstack
+515423 - CVE-2009-2848 kernel: execve: must clear current-&amp;gt;clear_child_tid
+516949 - CVE-2009-2692 kernel: uninit op in SOCKOPS_WRAP() leads to privesc
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-132.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.24.7-132.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-debug-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-devel-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-trace-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-132.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.24.7-132.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.24.7-132.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.24.7-132.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.24.7-132.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1895">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-1895</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2692">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2692</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2847">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2847</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2848">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-2848</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKnNBhXlSAg2UNWIIRAszuAKCqkLT4HwFBMQ3J6OvPpi605QplYQCfRd1o
+IEwkpnFKxKMH9BVv3dY3jlw=
+=fK9H
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

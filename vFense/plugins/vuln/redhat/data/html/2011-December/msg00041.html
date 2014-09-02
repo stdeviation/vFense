@@ -1,0 +1,172 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1822&#45;01] Moderate: JBoss Enterprise Portal Platform 5.2.0	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 14 Dec 2011 19:23:10 &#45;0500 -->
+<!--X-Message-Id: 201112150023.pBF0N30I031548@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1822-01] Moderate: JBoss Enterprise Portal Platform 5.2.0	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00040.html">Date Prev</a>][<a href="msg00042.html">Date Next</a>] &nbsp; [<a href="msg00040.html">Thread Prev</a>][<a href="msg00042.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00041">Thread Index</A>]
+[<A HREF="date.html#00041">Date Index</A>]
+[<A HREF="author.html#00041">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1822-01] Moderate: JBoss Enterprise Portal Platform 5.2.0	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1822-01] Moderate: JBoss Enterprise Portal Platform 5.2.0	update</li>
+<li><em>Date</em>: Thu, 15 Dec 2011 00:23:02 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: JBoss Enterprise Portal Platform 5.2.0 update
+Advisory ID:       RHSA-2011:1822-01
+Product:           JBoss Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1822.html">https://rhn.redhat.com/errata/RHSA-2011-1822.html</a>
+Issue date:        2011-12-14
+CVE Names:         CVE-2011-2941 CVE-2011-4085 CVE-2011-4580 
+=====================================================================
+
+1. Summary:
+
+JBoss Enterprise Portal Platform 5.2.0, which fixes multiple security
+issues, various bugs, and adds enhancements is now available from the Red
+Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Description:
+
+JBoss Enterprise Portal Platform is the open source implementation of the
+Java EE suite of services and Portal services running atop JBoss Enterprise
+Application Platform. It comprises a set of offerings for enterprise
+customers who are looking for pre-configured profiles of JBoss Enterprise
+Middleware components that have been tested and certified together to
+provide an integrated experience.
+
+This release of JBoss Enterprise Portal Platform 5.2.0 serves as a
+replacement for JBoss Enterprise Portal Platform 5.1.1, and includes bug
+fixes and enhancements. Refer to the JBoss Enterprise Portal Platform 5.2.0
+Release Notes for information on the most significant of these changes. The
+Release Notes will be available shortly from
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/index.html">https://docs.redhat.com/docs/en-US/index.html</a>
+
+The following security issues are also fixed with this release:
+
+Multiple cross-site scripting (XSS) flaws were found in JBoss Enterprise
+Portal Platform. If a remote attacker could trick a user, who was logged
+into the portal, into visiting a specially-crafted URL, it would lead to
+arbitrary web script execution in the context of the user's portal
+session. (CVE-2011-4580)
+
+It was found that the login page of JBoss Enterprise Portal Platform could
+be used to perform open URL redirects. A remote attacker could use this
+flaw to redirect users to arbitrary websites and conduct phishing attacks
+via a URL passed in the initialURI parameter. (CVE-2011-2941)
+
+It was found that the invoker servlets, deployed by default via
+httpha-invoker, only performed access control on the HTTP GET and POST
+methods, allowing remote attackers to make unauthenticated requests by
+using different HTTP methods. Due to the second layer of authentication
+provided by a security interceptor, this issue is not exploitable on
+default installations unless an administrator has misconfigured the
+security interceptor or disabled it. (CVE-2011-4085)
+
+Red Hat would like to thank Christopher Hartley of The Ohio State
+University for reporting the CVE-2011-2941 issue.
+
+Warning: Before applying this update, back up all applications deployed on
+JBoss Enterprise Portal Platform, along with all customized configuration
+files.
+
+All users of JBoss Enterprise Portal Platform 5.1.1 as provided from the
+Red Hat Customer Portal are advised to upgrade to JBoss Enterprise Portal
+Platform 5.2.0.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update).
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+732342 - CVE-2011-2941 JBoss Enterprise Portal Platform: open URL redirect
+750422 - CVE-2011-4085 Invoker servlets authentication bypass (HTTP verb tampering)
+760845 - CVE-2011-4580 JBoss Enterprise Portal Platform: Multiple XSS flaws
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-2941.html">https://www.redhat.com/security/data/cve/CVE-2011-2941.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4085.html">https://www.redhat.com/security/data/cve/CVE-2011-4085.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-4580.html">https://www.redhat.com/security/data/cve/CVE-2011-4580.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/index.html">https://docs.redhat.com/docs/en-US/index.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=distributions">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jbportal&amp;downloadType=distributions</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFO6T16XlSAg2UNWIIRAtLZAJ0SqPhzGFMnTV8q7AvSSx2Q6SJxKQCgngvR
+s7ye0GSvB8faTdwYz5/fXDc=
+=PZwm
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00040.html">Date Prev</a>][<a href="msg00042.html">Date Next</a>] &nbsp; [<a href="msg00040.html">Thread Prev</a>][<a href="msg00042.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00041">Thread Index</A>]
+[<A HREF="date.html#00041">Date Index</A>]
+[<A HREF="author.html#00041">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

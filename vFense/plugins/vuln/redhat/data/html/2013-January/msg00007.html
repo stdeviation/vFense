@@ -1,0 +1,302 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0124&#45;01] Moderate: net&#45;snmp security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 8 Jan 2013 01:59:23 &#45;0500 -->
+<!--X-Message-Id: 201301080659.r086xLLD014539@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0124-01] Moderate: net-snmp security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0124-01] Moderate: net-snmp security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0124-01] Moderate: net-snmp security and bug fix update</li>
+<li><em>Date</em>: Tue, 8 Jan 2013 06:49:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: net-snmp security and bug fix update
+Advisory ID:       RHSA-2013:0124-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0124.html">https://rhn.redhat.com/errata/RHSA-2013-0124.html</a>
+Issue date:        2013-01-08
+CVE Names:         CVE-2012-2141 
+=====================================================================
+
+1. Summary:
+
+Updated net-snmp packages that fix one security issue and multiple bugs are
+now available for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+These packages provide various libraries and tools for the Simple Network
+Management Protocol (SNMP).
+
+An out-of-bounds buffer read flaw was found in the net-snmp agent. A remote
+attacker with read privileges to a Management Information Base (MIB)
+subtree handled by the &quot;extend&quot; directive (in &quot;/etc/snmp/snmpd.conf&quot;) could
+use this flaw to crash snmpd via a crafted SNMP GET request.
+(CVE-2012-2141)
+
+Bug fixes:
+
+* Devices that used certain file systems were not reported in the
+&quot;HOST-RESOURCES-MIB::hrStorageTable&quot; table. As a result, the snmpd daemon
+did not recognize devices using tmpfs, ReiserFS, and Oracle Cluster File
+System (OCFS2) file systems. This update recognizes these devices and
+reports them in the &quot;HOST-RESOURCES-MIB::hrStorageTable&quot; table.
+(BZ#754652, BZ#755958, BZ#822061)
+
+* The snmptrapd (8) man page did not correctly describe how to load
+multiple configuration files using the &quot;-c&quot; option. This update describes
+correctly that multiple configuration files must be separated by a comma.
+(BZ#760001)
+
+* Integers truncated from 64 to 32-bit were not correctly evaluated. As a
+consequence, the snmpd daemon could enter an endless loop when encoding the
+truncated integers to network format. This update modifies the underlying
+code so that snmpd correctly checks truncated 64-bit integers. Now, snmpd
+avoids an endless loop. (BZ#783892)
+
+* snmpd did not correctly check for interrupted system calls when
+enumerating existing IPv6 network prefixes during startup. As a
+consequence, snmpd could prematurely exit when receiving a signal during
+this enumeration. This update checks the network prefix enumeration code
+for interrupted system calls. Now, snmpd no longer terminates when a signal
+is received. (BZ#799699)
+
+* snmpd used the wrong length of COUNTER64 values in the AgentX protocol.
+As a consequence, snmpd could not decode two consecutive COUNTER64 values
+in one AgentX packet. This update uses the correct COUNTER64 size and can
+process two or mode COUNTER64 values in AgentX communication. (BZ#803585)
+
+* snmpd ignored the &quot;-e&quot; parameter of the &quot;trapsess&quot; option in the snmpd
+configuration file. As a result, outgoing traps were incorrectly sent with
+the default EngineID of snmpd when configuring &quot;trapsess&quot; with an explicit
+EngineID. This update modifies the underlying code to send outgoing traps
+using the EngineID as specified in the &quot;trapsess -e&quot; parameter in the
+configuration file. (BZ#805689)
+
+* snmpd did not correctly encode negative Request-IDs in outgoing requests,
+for example during trap operations. As a consequence, a 32-bit value could
+be encoded in 5 bytes instead of 4, and the outgoing requests were refused
+by certain implementations of the SNMP protocol as invalid. With this
+update, a Request-ID can no longer become negative and is always encoded in
+4 bytes. (BZ#818259)
+
+* snmpd ignored the port number of the &quot;clientaddr&quot; option when specifying
+the source address of outgoing SNMP requests. As a consequence, the system
+assigned a random address. This update allows to specify both the port
+number and the source IP address in the &quot;clientaddr&quot; option. Now,
+administrators can increase security with firewall rules and
+Security-Enhanced Linux (SELinux) policies by configuring a specific source
+port of outgoing traps and other requests. (BZ#828691)
+
+* snmpd did not correctly process responses to internal queries when
+initializing monitoring enabled by the &quot;monitor&quot; option in the
+&quot;/etc/snmp/snmpd.conf&quot; configuration file. As a consequence, snmpd was not
+fully initialized and the error message &quot;failed to run mteTrigger query&quot;
+appeared in the system log 30 seconds after the snmpd startup. This update
+explicitly checks for responses to internal monitoring queries. (BZ#830042)
+
+Users of net-snmp should upgrade to these updated packages, which contain
+backported patches to correct these issues. After installing the update,
+the snmpd and snmptrapd daemons will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+755958 - net-snmp ignores reiserfs formatted partitions
+803585 - agentx counter64 snmpget problem
+815813 - CVE-2012-2141 net-snmp: Array index error, leading to out-of heap-based buffer read (snmpd crash)
+840861 - snmpd does not report error when clientaddr &lt;ip&gt;:&lt;port&gt; cannot bind to the specified port
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/net-snmp-5.3.2.2-20.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/net-snmp-5.3.2.2-20.el5.src.rpm</a>
+
+i386:
+net-snmp-5.3.2.2-20.el5.i386.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.i386.rpm
+net-snmp-libs-5.3.2.2-20.el5.i386.rpm
+net-snmp-perl-5.3.2.2-20.el5.i386.rpm
+net-snmp-utils-5.3.2.2-20.el5.i386.rpm
+
+x86_64:
+net-snmp-5.3.2.2-20.el5.x86_64.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.i386.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.x86_64.rpm
+net-snmp-libs-5.3.2.2-20.el5.i386.rpm
+net-snmp-libs-5.3.2.2-20.el5.x86_64.rpm
+net-snmp-perl-5.3.2.2-20.el5.x86_64.rpm
+net-snmp-utils-5.3.2.2-20.el5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/net-snmp-5.3.2.2-20.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/net-snmp-5.3.2.2-20.el5.src.rpm</a>
+
+i386:
+net-snmp-debuginfo-5.3.2.2-20.el5.i386.rpm
+net-snmp-devel-5.3.2.2-20.el5.i386.rpm
+
+x86_64:
+net-snmp-debuginfo-5.3.2.2-20.el5.i386.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.x86_64.rpm
+net-snmp-devel-5.3.2.2-20.el5.i386.rpm
+net-snmp-devel-5.3.2.2-20.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/net-snmp-5.3.2.2-20.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/net-snmp-5.3.2.2-20.el5.src.rpm</a>
+
+i386:
+net-snmp-5.3.2.2-20.el5.i386.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.i386.rpm
+net-snmp-devel-5.3.2.2-20.el5.i386.rpm
+net-snmp-libs-5.3.2.2-20.el5.i386.rpm
+net-snmp-perl-5.3.2.2-20.el5.i386.rpm
+net-snmp-utils-5.3.2.2-20.el5.i386.rpm
+
+ia64:
+net-snmp-5.3.2.2-20.el5.ia64.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.ia64.rpm
+net-snmp-devel-5.3.2.2-20.el5.ia64.rpm
+net-snmp-libs-5.3.2.2-20.el5.ia64.rpm
+net-snmp-perl-5.3.2.2-20.el5.ia64.rpm
+net-snmp-utils-5.3.2.2-20.el5.ia64.rpm
+
+ppc:
+net-snmp-5.3.2.2-20.el5.ppc.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.ppc.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.ppc64.rpm
+net-snmp-devel-5.3.2.2-20.el5.ppc.rpm
+net-snmp-devel-5.3.2.2-20.el5.ppc64.rpm
+net-snmp-libs-5.3.2.2-20.el5.ppc.rpm
+net-snmp-libs-5.3.2.2-20.el5.ppc64.rpm
+net-snmp-perl-5.3.2.2-20.el5.ppc.rpm
+net-snmp-utils-5.3.2.2-20.el5.ppc.rpm
+
+s390x:
+net-snmp-5.3.2.2-20.el5.s390x.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.s390.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.s390x.rpm
+net-snmp-devel-5.3.2.2-20.el5.s390.rpm
+net-snmp-devel-5.3.2.2-20.el5.s390x.rpm
+net-snmp-libs-5.3.2.2-20.el5.s390.rpm
+net-snmp-libs-5.3.2.2-20.el5.s390x.rpm
+net-snmp-perl-5.3.2.2-20.el5.s390x.rpm
+net-snmp-utils-5.3.2.2-20.el5.s390x.rpm
+
+x86_64:
+net-snmp-5.3.2.2-20.el5.x86_64.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.i386.rpm
+net-snmp-debuginfo-5.3.2.2-20.el5.x86_64.rpm
+net-snmp-devel-5.3.2.2-20.el5.i386.rpm
+net-snmp-devel-5.3.2.2-20.el5.x86_64.rpm
+net-snmp-libs-5.3.2.2-20.el5.i386.rpm
+net-snmp-libs-5.3.2.2-20.el5.x86_64.rpm
+net-snmp-perl-5.3.2.2-20.el5.x86_64.rpm
+net-snmp-utils-5.3.2.2-20.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2141.html">https://www.redhat.com/security/data/cve/CVE-2012-2141.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFQ68PEXlSAg2UNWIIRAjCiAJ9W/MBaqJqdzDYYAGmTv4kzqNkg8wCghMvJ
+51oSTzzi76pyrX3XyxqAuv0=
+=MaWU
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

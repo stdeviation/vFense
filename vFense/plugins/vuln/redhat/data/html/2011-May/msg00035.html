@@ -1,0 +1,457 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0844&#45;01] Low: apr security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 31 May 2011 11:59:09 &#45;0400 -->
+<!--X-Message-Id: 201105311559.p4VFx36g020003@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0844-01] Low: apr security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0844-01] Low: apr security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:0844-01] Low: apr security update</li>
+<li><em>Date</em>: Tue, 31 May 2011 15:59:03 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: apr security update
+Advisory ID:       RHSA-2011:0844-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0844.html">https://rhn.redhat.com/errata/RHSA-2011-0844.html</a>
+Issue date:        2011-05-31
+CVE Names:         CVE-2011-1928 
+=====================================================================
+
+1. Summary:
+
+Updated apr packages that fix one security issue are now available for
+Red Hat Enterprise Linux 4, 5, and 6.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The Apache Portable Runtime (APR) is a portability library used by the
+Apache HTTP Server and other projects. It provides a free library of C data
+structures and routines.
+
+The fix for CVE-2011-0419 (released via RHSA-2011:0507) introduced an
+infinite loop flaw in the apr_fnmatch() function when the APR_FNM_PATHNAME
+matching flag was used. A remote attacker could possibly use this flaw to
+cause a denial of service on an application using the apr_fnmatch()
+function. (CVE-2011-1928)
+
+Note: This problem affected httpd configurations using the &quot;Location&quot;
+directive with wildcard URLs. The denial of service could have been
+triggered during normal operation; it did not specifically require a
+malicious HTTP request.
+
+This update also addresses additional problems introduced by the rewrite of
+the apr_fnmatch() function, which was necessary to address the
+CVE-2011-0419 flaw.
+
+All apr users should upgrade to these updated packages, which contain a
+backported patch to correct this issue. Applications using the apr library,
+such as httpd, must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+706203 - CVE-2011-1928 apr: DoS flaw in apr_fnmatch() due to fix for CVE-2011-0419
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/apr-0.9.4-26.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/apr-0.9.4-26.el4.src.rpm</a>
+
+i386:
+apr-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-devel-0.9.4-26.el4.i386.rpm
+
+ia64:
+apr-0.9.4-26.el4.i386.rpm
+apr-0.9.4-26.el4.ia64.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.ia64.rpm
+apr-devel-0.9.4-26.el4.ia64.rpm
+
+ppc:
+apr-0.9.4-26.el4.ppc.rpm
+apr-0.9.4-26.el4.ppc64.rpm
+apr-debuginfo-0.9.4-26.el4.ppc.rpm
+apr-debuginfo-0.9.4-26.el4.ppc64.rpm
+apr-devel-0.9.4-26.el4.ppc.rpm
+
+s390:
+apr-0.9.4-26.el4.s390.rpm
+apr-debuginfo-0.9.4-26.el4.s390.rpm
+apr-devel-0.9.4-26.el4.s390.rpm
+
+s390x:
+apr-0.9.4-26.el4.s390.rpm
+apr-0.9.4-26.el4.s390x.rpm
+apr-debuginfo-0.9.4-26.el4.s390.rpm
+apr-debuginfo-0.9.4-26.el4.s390x.rpm
+apr-devel-0.9.4-26.el4.s390x.rpm
+
+x86_64:
+apr-0.9.4-26.el4.i386.rpm
+apr-0.9.4-26.el4.x86_64.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.x86_64.rpm
+apr-devel-0.9.4-26.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/apr-0.9.4-26.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/apr-0.9.4-26.el4.src.rpm</a>
+
+i386:
+apr-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-devel-0.9.4-26.el4.i386.rpm
+
+x86_64:
+apr-0.9.4-26.el4.i386.rpm
+apr-0.9.4-26.el4.x86_64.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.x86_64.rpm
+apr-devel-0.9.4-26.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/apr-0.9.4-26.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/apr-0.9.4-26.el4.src.rpm</a>
+
+i386:
+apr-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-devel-0.9.4-26.el4.i386.rpm
+
+ia64:
+apr-0.9.4-26.el4.i386.rpm
+apr-0.9.4-26.el4.ia64.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.ia64.rpm
+apr-devel-0.9.4-26.el4.ia64.rpm
+
+x86_64:
+apr-0.9.4-26.el4.i386.rpm
+apr-0.9.4-26.el4.x86_64.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.x86_64.rpm
+apr-devel-0.9.4-26.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/apr-0.9.4-26.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/apr-0.9.4-26.el4.src.rpm</a>
+
+i386:
+apr-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-devel-0.9.4-26.el4.i386.rpm
+
+ia64:
+apr-0.9.4-26.el4.i386.rpm
+apr-0.9.4-26.el4.ia64.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.ia64.rpm
+apr-devel-0.9.4-26.el4.ia64.rpm
+
+x86_64:
+apr-0.9.4-26.el4.i386.rpm
+apr-0.9.4-26.el4.x86_64.rpm
+apr-debuginfo-0.9.4-26.el4.i386.rpm
+apr-debuginfo-0.9.4-26.el4.x86_64.rpm
+apr-devel-0.9.4-26.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/apr-1.2.7-11.el5_6.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/apr-1.2.7-11.el5_6.5.src.rpm</a>
+
+i386:
+apr-1.2.7-11.el5_6.5.i386.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.i386.rpm
+apr-docs-1.2.7-11.el5_6.5.i386.rpm
+
+x86_64:
+apr-1.2.7-11.el5_6.5.i386.rpm
+apr-1.2.7-11.el5_6.5.x86_64.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.i386.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.x86_64.rpm
+apr-docs-1.2.7-11.el5_6.5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/apr-1.2.7-11.el5_6.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/apr-1.2.7-11.el5_6.5.src.rpm</a>
+
+i386:
+apr-debuginfo-1.2.7-11.el5_6.5.i386.rpm
+apr-devel-1.2.7-11.el5_6.5.i386.rpm
+
+x86_64:
+apr-debuginfo-1.2.7-11.el5_6.5.i386.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.x86_64.rpm
+apr-devel-1.2.7-11.el5_6.5.i386.rpm
+apr-devel-1.2.7-11.el5_6.5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/apr-1.2.7-11.el5_6.5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/apr-1.2.7-11.el5_6.5.src.rpm</a>
+
+i386:
+apr-1.2.7-11.el5_6.5.i386.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.i386.rpm
+apr-devel-1.2.7-11.el5_6.5.i386.rpm
+apr-docs-1.2.7-11.el5_6.5.i386.rpm
+
+ia64:
+apr-1.2.7-11.el5_6.5.ia64.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.ia64.rpm
+apr-devel-1.2.7-11.el5_6.5.ia64.rpm
+apr-docs-1.2.7-11.el5_6.5.ia64.rpm
+
+ppc:
+apr-1.2.7-11.el5_6.5.ppc.rpm
+apr-1.2.7-11.el5_6.5.ppc64.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.ppc.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.ppc64.rpm
+apr-devel-1.2.7-11.el5_6.5.ppc.rpm
+apr-devel-1.2.7-11.el5_6.5.ppc64.rpm
+apr-docs-1.2.7-11.el5_6.5.ppc.rpm
+
+s390x:
+apr-1.2.7-11.el5_6.5.s390.rpm
+apr-1.2.7-11.el5_6.5.s390x.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.s390.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.s390x.rpm
+apr-devel-1.2.7-11.el5_6.5.s390.rpm
+apr-devel-1.2.7-11.el5_6.5.s390x.rpm
+apr-docs-1.2.7-11.el5_6.5.s390x.rpm
+
+x86_64:
+apr-1.2.7-11.el5_6.5.i386.rpm
+apr-1.2.7-11.el5_6.5.x86_64.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.i386.rpm
+apr-debuginfo-1.2.7-11.el5_6.5.x86_64.rpm
+apr-devel-1.2.7-11.el5_6.5.i386.rpm
+apr-devel-1.2.7-11.el5_6.5.x86_64.rpm
+apr-docs-1.2.7-11.el5_6.5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm</a>
+
+i386:
+apr-1.3.9-3.el6_1.2.i686.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.i686.rpm
+
+x86_64:
+apr-1.3.9-3.el6_1.2.i686.rpm
+apr-1.3.9-3.el6_1.2.x86_64.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.i686.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm</a>
+
+i386:
+apr-debuginfo-1.3.9-3.el6_1.2.i686.rpm
+apr-devel-1.3.9-3.el6_1.2.i686.rpm
+
+x86_64:
+apr-debuginfo-1.3.9-3.el6_1.2.i686.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.x86_64.rpm
+apr-devel-1.3.9-3.el6_1.2.i686.rpm
+apr-devel-1.3.9-3.el6_1.2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm</a>
+
+x86_64:
+apr-1.3.9-3.el6_1.2.i686.rpm
+apr-1.3.9-3.el6_1.2.x86_64.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.i686.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm</a>
+
+x86_64:
+apr-debuginfo-1.3.9-3.el6_1.2.i686.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.x86_64.rpm
+apr-devel-1.3.9-3.el6_1.2.i686.rpm
+apr-devel-1.3.9-3.el6_1.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm</a>
+
+i386:
+apr-1.3.9-3.el6_1.2.i686.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.i686.rpm
+apr-devel-1.3.9-3.el6_1.2.i686.rpm
+
+ppc64:
+apr-1.3.9-3.el6_1.2.ppc.rpm
+apr-1.3.9-3.el6_1.2.ppc64.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.ppc.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.ppc64.rpm
+apr-devel-1.3.9-3.el6_1.2.ppc.rpm
+apr-devel-1.3.9-3.el6_1.2.ppc64.rpm
+
+s390x:
+apr-1.3.9-3.el6_1.2.s390.rpm
+apr-1.3.9-3.el6_1.2.s390x.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.s390.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.s390x.rpm
+apr-devel-1.3.9-3.el6_1.2.s390.rpm
+apr-devel-1.3.9-3.el6_1.2.s390x.rpm
+
+x86_64:
+apr-1.3.9-3.el6_1.2.i686.rpm
+apr-1.3.9-3.el6_1.2.x86_64.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.i686.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.x86_64.rpm
+apr-devel-1.3.9-3.el6_1.2.i686.rpm
+apr-devel-1.3.9-3.el6_1.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/apr-1.3.9-3.el6_1.2.src.rpm</a>
+
+i386:
+apr-1.3.9-3.el6_1.2.i686.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.i686.rpm
+apr-devel-1.3.9-3.el6_1.2.i686.rpm
+
+x86_64:
+apr-1.3.9-3.el6_1.2.i686.rpm
+apr-1.3.9-3.el6_1.2.x86_64.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.i686.rpm
+apr-debuginfo-1.3.9-3.el6_1.2.x86_64.rpm
+apr-devel-1.3.9-3.el6_1.2.i686.rpm
+apr-devel-1.3.9-3.el6_1.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1928.html">https://www.redhat.com/security/data/cve/CVE-2011-1928.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0507.html">https://rhn.redhat.com/errata/RHSA-2011-0507.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &amp;lt;secalert redhat com&amp;gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFN5RAiXlSAg2UNWIIRAuwdAJ9vddMlxPWoOqzsNz37JmvVmqSKfgCfchI5
+R4u+hsr+KDZ1nnC2K8wCJ9c=
+=e0/T
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

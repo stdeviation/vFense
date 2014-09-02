@@ -1,0 +1,174 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0858&#45;01] Moderate: Red Hat Enterprise MRG 2.5 Messaging	and Grid security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 9 Jul 2014 05:29:37 &#45;0400 -->
+<!--X-Message-Id: 201407090929.s699TZug018844@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0858-01] Moderate: Red Hat Enterprise MRG 2.5 Messaging	and G</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0858-01] Moderate: Red Hat Enterprise MRG 2.5 Messaging	and Grid security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0858-01] Moderate: Red Hat Enterprise MRG 2.5 Messaging	and Grid security update</li>
+<li><em>Date</em>: Wed, 9 Jul 2014 09:29:34 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Enterprise MRG 2.5 Messaging and Grid security update
+Advisory ID:       RHSA-2014:0858-01
+Product:           Red Hat Enterprise MRG for RHEL-6
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0858.html">https://rhn.redhat.com/errata/RHSA-2014-0858.html</a>
+Issue date:        2014-07-09
+CVE Names:         CVE-2012-2682 CVE-2014-0174 
+=====================================================================
+
+1. Summary:
+
+An updated cumin package that fixes two security issues is now available
+for Red Hat Enterprise MRG 2.5 for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Grid for RHEL 6 Server v.2 - noarch
+MRG Management for RHEL 6 Server v.2 - noarch
+
+3. Description:
+
+Red Hat Enterprise MRG (Messaging, Realtime, and Grid) is a next-generation
+IT infrastructure for enterprise computing. MRG offers increased
+performance, reliability, interoperability, and faster computing for
+enterprise customers.
+
+It was found that if Cumin were asked to display a link name containing
+non-ASCII characters, the request would terminate with an error. If data
+containing non-ASCII characters were added to the database (such as via
+Cumin or Wallaby), requests to load said data would terminate and the
+requested page would not be displayed until an administrator cleans the
+database. (CVE-2012-2682)
+
+It was found that Cumin did not set the HttpOnly flag on session cookies.
+This could allow a malicious script to access the session cookie.
+(CVE-2014-0174)
+
+These issues were discovered by Stanislav Graf of Red Hat.
+
+All users of cumin with Red Hat Enterprise MRG 2.5 for Red Hat Enterprise
+Linux 6 are advised to upgrade to this updated package, which corrects
+these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+830254 - CVE-2012-2682 cumin: DoS via displayed link names containing non-ASCII characters
+1086000 - CVE-2014-0174 cumin: session cookies lack httponly setting
+
+6. Package List:
+
+MRG Grid for RHEL 6 Server v.2:
+
+Source:
+cumin-0.1.5797-3.el6.src.rpm
+
+noarch:
+cumin-0.1.5797-3.el6.noarch.rpm
+
+MRG Management for RHEL 6 Server v.2:
+
+Source:
+cumin-0.1.5797-3.el6.src.rpm
+
+noarch:
+cumin-0.1.5797-3.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2682.html">https://www.redhat.com/security/data/cve/CVE-2012-2682.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0174.html">https://www.redhat.com/security/data/cve/CVE-2014-0174.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTvQtlXlSAg2UNWIIRAvyPAJ4t8usigBWAc1zg8vIgNsAfna5oCgCePWHq
+B+yu84FfTPBV/P3tEyYX4vw=
+=50WZ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

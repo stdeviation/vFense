@@ -1,0 +1,173 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0102&#45;01] Low: Red Hat Network Proxy spacewalk&#45;backend	security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 6 Feb 2012 13:41:57 &#45;0500 -->
+<!--X-Message-Id: 201202061841.q16IfpA9005711@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0102-01] Low: Red Hat Network Proxy spacewalk-backend	securit</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0102-01] Low: Red Hat Network Proxy spacewalk-backend	security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2012:0102-01] Low: Red Hat Network Proxy spacewalk-backend	security and bug fix update</li>
+<li><em>Date</em>: Mon, 6 Feb 2012 18:41:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat Network Proxy spacewalk-backend security and bug fix update
+Advisory ID:       RHSA-2012:0102-01
+Product:           Red Hat Network Proxy Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0102.html">https://rhn.redhat.com/errata/RHSA-2012-0102.html</a>
+Issue date:        2012-02-06
+CVE Names:         CVE-2012-0059 
+=====================================================================
+
+1. Summary:
+
+Updated spacewalk-backend packages that fix one security issue are now
+available for Red Hat Network Proxy 5.4.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+6Server-RHNProxy - noarch
+Red Hat Network Proxy 5.4 (RHEL v.5) - noarch
+
+3. Description:
+
+Red Hat Network (RHN) Proxy provides a mechanism for caching content, such
+as package updates from Red Hat or custom content created for an
+organization on an internal, centrally-located server.
+
+If a user submitted a system registration XML-RPC call to an RHN Proxy
+server (for example, by running &quot;rhnreg_ks&quot;) and that call failed, their
+RHN user password was included in plain text in the error messages both
+stored in the server log and mailed to the server administrator. With this
+update, user passwords are excluded from these error messages to avoid the
+exposure of authentication credentials. (CVE-2012-0059)
+
+Users of Red Hat Network Proxy are advised to upgrade to these updated
+packages, which correct this issue. For this update to take effect,
+Red Hat Network Proxy must be restarted. Refer to the Solution section for
+details.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+Run the following command to restart the Red Hat Network Proxy server:
+
+# rhn-proxy restart
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+782819 - CVE-2012-0059 Satellite, Spacewalk: RHN user password disclosure upon failed system registration
+
+6. Package List:
+
+Red Hat Network Proxy 5.4 (RHEL v.5):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNPROXY/SRPMS/spacewalk-backend-1.2.13-66.el5sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHNPROXY/SRPMS/spacewalk-backend-1.2.13-66.el5sat.src.rpm</a>
+
+noarch:
+spacewalk-backend-1.2.13-66.el5sat.noarch.rpm
+spacewalk-backend-libs-1.2.13-66.el5sat.noarch.rpm
+
+6Server-RHNProxy:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNPROXY/SRPMS/spacewalk-backend-1.2.13-66.el6sat.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHNPROXY/SRPMS/spacewalk-backend-1.2.13-66.el6sat.src.rpm</a>
+
+noarch:
+spacewalk-backend-1.2.13-66.el6sat.noarch.rpm
+spacewalk-backend-libs-1.2.13-66.el6sat.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0059.html">https://www.redhat.com/security/data/cve/CVE-2012-0059.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPMB7cXlSAg2UNWIIRAjarAJ49MyA7u+v3Ztg50gI1h8prAxsctgCgpLrz
+RopPHJnqvdyjaL+K9Yz/yD0=
+=vQVT
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

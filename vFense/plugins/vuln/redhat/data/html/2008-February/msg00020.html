@@ -1,0 +1,300 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0105&#45;02] Critical: thunderbird security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 28 Feb 2008 07:11:56 &#45;0500 -->
+<!--X-Message-Id: 200802281211.m1SCBtG8025318@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0105-02] Critical: thunderbird security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00019.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0105-02] Critical: thunderbird security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0105-02] Critical: thunderbird security update</li>
+<li><em>Date</em>: Thu, 28 Feb 2008 07:11:55 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: thunderbird security update
+Advisory ID:       RHSA-2008:0105-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0105.html">https://rhn.redhat.com/errata/RHSA-2008-0105.html</a>
+Issue date:        2008-02-07
+Updated on:        2008-02-27
+CVE Names:         CVE-2008-0304 CVE-2008-0412 CVE-2008-0413 
+                   CVE-2008-0415 CVE-2008-0418 CVE-2008-0419 
+                   CVE-2008-0420 CVE-2008-0591 CVE-2008-0592 
+                   CVE-2008-0593 
+=====================================================================
+
+1. Summary:
+
+Updated thunderbird packages that fix several security issues are now
+available for Red Hat Enterprise Linux 4 and 5.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+[Updated 27th February 2008]
+The erratum text has been updated to include the details of additional
+issues that were fixed by these erratum packages, but which were not public
+at the time of release. No changes have been made to the packages.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Optional Productivity Applications (v. 5 server) - i386, x86_64
+
+3. Description:
+
+Mozilla Thunderbird is a standalone mail and newsgroup client.
+
+A heap-based buffer overflow flaw was found in the way Thunderbird
+processed messages with external-body Multipurpose Internet Message
+Extensions (MIME) types. A HTML mail message containing malicious content
+could cause Thunderbird to execute arbitrary code as the user running
+Thunderbird. (CVE-2008-0304)
+
+Several flaws were found in the way Thunderbird processed certain malformed
+HTML mail content. A HTML mail message containing malicious content could
+cause Thunderbird to crash, or potentially execute arbitrary code as the
+user running Thunderbird. (CVE-2008-0412, CVE-2008-0413, CVE-2008-0415,
+CVE-2008-0419)
+
+Several flaws were found in the way Thunderbird displayed malformed HTML
+mail content. A HTML mail message containing specially-crafted content
+could trick a user into surrendering sensitive information. (CVE-2008-0420,
+CVE-2008-0591, CVE-2008-0593)
+
+A flaw was found in the way Thunderbird handles certain chrome URLs. If a
+user has certain extensions installed, it could allow a malicious HTML mail
+message to steal sensitive session data. Note: this flaw does not affect a
+default installation of Thunderbird. (CVE-2008-0418)
+
+Note: JavaScript support is disabled by default in Thunderbird; the above
+issues are not exploitable unless JavaScript is enabled.
+
+A flaw was found in the way Thunderbird saves certain text files. If a
+remote site offers a file of type &quot;plain/text&quot;, rather than &quot;text/plain&quot;,
+Thunderbird will not show future &quot;text/plain&quot; content to the user, forcing
+them to save those files locally to view the content. (CVE-2008-0592)
+
+Users of thunderbird are advised to upgrade to these updated packages,
+which contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+431732 - CVE-2008-0412 Mozilla layout engine crashes
+431733 - CVE-2008-0413 Mozilla javascript engine crashes
+431739 - CVE-2008-0415 Mozilla arbitrary code execution
+431748 - CVE-2008-0418 Mozilla chrome: directory traversal
+431749 - CVE-2008-0419 Mozilla arbitrary code execution
+431751 - CVE-2008-0591 Mozilla information disclosure flaw
+431752 - CVE-2008-0592 Mozilla text file mishandling
+431756 - CVE-2008-0593 Mozilla URL token stealing flaw
+435123 - CVE-2008-0304 thunderbird/seamonkey: MIME External-Body Heap Overflow Vulnerability
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/thunderbird-1.5.0.12-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/thunderbird-1.5.0.12-8.el4.src.rpm</a>
+
+i386:
+thunderbird-1.5.0.12-8.el4.i386.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.i386.rpm
+
+ia64:
+thunderbird-1.5.0.12-8.el4.ia64.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.ia64.rpm
+
+ppc:
+thunderbird-1.5.0.12-8.el4.ppc.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.ppc.rpm
+
+s390:
+thunderbird-1.5.0.12-8.el4.s390.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.s390.rpm
+
+s390x:
+thunderbird-1.5.0.12-8.el4.s390x.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.s390x.rpm
+
+x86_64:
+thunderbird-1.5.0.12-8.el4.x86_64.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/thunderbird-1.5.0.12-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/thunderbird-1.5.0.12-8.el4.src.rpm</a>
+
+i386:
+thunderbird-1.5.0.12-8.el4.i386.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.i386.rpm
+
+x86_64:
+thunderbird-1.5.0.12-8.el4.x86_64.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/thunderbird-1.5.0.12-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/thunderbird-1.5.0.12-8.el4.src.rpm</a>
+
+i386:
+thunderbird-1.5.0.12-8.el4.i386.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.i386.rpm
+
+ia64:
+thunderbird-1.5.0.12-8.el4.ia64.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.ia64.rpm
+
+x86_64:
+thunderbird-1.5.0.12-8.el4.x86_64.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/thunderbird-1.5.0.12-8.el4.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/thunderbird-1.5.0.12-8.el4.src.rpm</a>
+
+i386:
+thunderbird-1.5.0.12-8.el4.i386.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.i386.rpm
+
+ia64:
+thunderbird-1.5.0.12-8.el4.ia64.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.ia64.rpm
+
+x86_64:
+thunderbird-1.5.0.12-8.el4.x86_64.rpm
+thunderbird-debuginfo-1.5.0.12-8.el4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/thunderbird-1.5.0.12-8.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/thunderbird-1.5.0.12-8.el5.src.rpm</a>
+
+i386:
+thunderbird-1.5.0.12-8.el5.i386.rpm
+thunderbird-debuginfo-1.5.0.12-8.el5.i386.rpm
+
+x86_64:
+thunderbird-1.5.0.12-8.el5.x86_64.rpm
+thunderbird-debuginfo-1.5.0.12-8.el5.x86_64.rpm
+
+RHEL Optional Productivity Applications (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/thunderbird-1.5.0.12-8.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/thunderbird-1.5.0.12-8.el5.src.rpm</a>
+
+i386:
+thunderbird-1.5.0.12-8.el5.i386.rpm
+thunderbird-debuginfo-1.5.0.12-8.el5.i386.rpm
+
+x86_64:
+thunderbird-1.5.0.12-8.el5.x86_64.rpm
+thunderbird-debuginfo-1.5.0.12-8.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0304">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0304</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0412">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0412</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0413">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0413</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0415">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0415</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0418">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0418</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0419">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0419</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0420">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0420</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0591">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0591</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0592">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0592</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0593">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0593</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHxqUJXlSAg2UNWIIRAka5AJ0bqM+SC1HDBMm95a2n46PXm4HPmgCguR4W
+EbZ2+7EigkctGIna1GSkaiA=
+=WfZ1
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00019.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

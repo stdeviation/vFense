@@ -1,0 +1,329 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0528&#45;01] Moderate: avahi security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 13 Jul 2010 13:54:47 &#45;0400 -->
+<!--X-Message-Id: 201007131754.o6DHsgQV013925@int&#45;mx05.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0528-01] Moderate: avahi security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0528-01] Moderate: avahi security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0528-01] Moderate: avahi security update</li>
+<li><em>Date</em>: Tue, 13 Jul 2010 11:54:41 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: avahi security update
+Advisory ID:       RHSA-2010:0528-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0528.html">https://rhn.redhat.com/errata/RHSA-2010-0528.html</a>
+Issue date:        2010-07-13
+CVE Names:         CVE-2009-0758 CVE-2010-2244 
+=====================================================================
+
+1. Summary:
+
+Updated avahi packages that fix two security issues are now available for
+Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Avahi is an implementation of the DNS Service Discovery and Multicast DNS
+specifications for Zero Configuration Networking. It facilitates service
+discovery on a local network. Avahi and Avahi-aware applications allow you
+to plug your computer into a network and, with no configuration, view other
+people to chat with, view printers to print to, and find shared files on
+other computers.
+
+A flaw was found in the way the Avahi daemon (avahi-daemon) processed
+Multicast DNS (mDNS) packets with corrupted checksums. An attacker on the
+local network could use this flaw to cause avahi-daemon on a target system
+to exit unexpectedly via specially-crafted mDNS packets. (CVE-2010-2244)
+
+A flaw was found in the way avahi-daemon processed incoming unicast mDNS
+messages. If the mDNS reflector were enabled on a system, an attacker on
+the local network could send a specially-crafted unicast mDNS message to
+that system, resulting in its avahi-daemon flooding the network with a
+multicast packet storm, and consuming a large amount of CPU. Note: The mDNS
+reflector is disabled by default. (CVE-2009-0758)
+
+All users are advised to upgrade to these updated packages, which contain
+backported patches to correct these issues. After installing the update,
+avahi-daemon will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+488314 - CVE-2009-0758 avahi: remote DoS via legacy unicast mDNS queries
+607293 - CVE-2010-2244 avahi: assertion failure after receiving a packet with corrupted checksum
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/avahi-0.6.16-9.el5_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/avahi-0.6.16-9.el5_5.src.rpm</a>
+
+i386:
+avahi-0.6.16-9.el5_5.i386.rpm
+avahi-compat-howl-0.6.16-9.el5_5.i386.rpm
+avahi-compat-howl-devel-0.6.16-9.el5_5.i386.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.i386.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.i386.rpm
+avahi-debuginfo-0.6.16-9.el5_5.i386.rpm
+avahi-devel-0.6.16-9.el5_5.i386.rpm
+avahi-glib-0.6.16-9.el5_5.i386.rpm
+avahi-glib-devel-0.6.16-9.el5_5.i386.rpm
+avahi-qt3-0.6.16-9.el5_5.i386.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.i386.rpm
+avahi-tools-0.6.16-9.el5_5.i386.rpm
+
+x86_64:
+avahi-0.6.16-9.el5_5.i386.rpm
+avahi-0.6.16-9.el5_5.x86_64.rpm
+avahi-compat-howl-0.6.16-9.el5_5.i386.rpm
+avahi-compat-howl-0.6.16-9.el5_5.x86_64.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.i386.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.x86_64.rpm
+avahi-debuginfo-0.6.16-9.el5_5.i386.rpm
+avahi-debuginfo-0.6.16-9.el5_5.x86_64.rpm
+avahi-glib-0.6.16-9.el5_5.i386.rpm
+avahi-glib-0.6.16-9.el5_5.x86_64.rpm
+avahi-qt3-0.6.16-9.el5_5.i386.rpm
+avahi-qt3-0.6.16-9.el5_5.x86_64.rpm
+avahi-tools-0.6.16-9.el5_5.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/avahi-0.6.16-9.el5_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/avahi-0.6.16-9.el5_5.src.rpm</a>
+
+i386:
+avahi-compat-howl-devel-0.6.16-9.el5_5.i386.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.i386.rpm
+avahi-debuginfo-0.6.16-9.el5_5.i386.rpm
+avahi-devel-0.6.16-9.el5_5.i386.rpm
+avahi-glib-devel-0.6.16-9.el5_5.i386.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.i386.rpm
+
+x86_64:
+avahi-compat-howl-devel-0.6.16-9.el5_5.i386.rpm
+avahi-compat-howl-devel-0.6.16-9.el5_5.x86_64.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.i386.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.x86_64.rpm
+avahi-debuginfo-0.6.16-9.el5_5.i386.rpm
+avahi-debuginfo-0.6.16-9.el5_5.x86_64.rpm
+avahi-devel-0.6.16-9.el5_5.i386.rpm
+avahi-devel-0.6.16-9.el5_5.x86_64.rpm
+avahi-glib-devel-0.6.16-9.el5_5.i386.rpm
+avahi-glib-devel-0.6.16-9.el5_5.x86_64.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.i386.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/avahi-0.6.16-9.el5_5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/avahi-0.6.16-9.el5_5.src.rpm</a>
+
+i386:
+avahi-0.6.16-9.el5_5.i386.rpm
+avahi-compat-howl-0.6.16-9.el5_5.i386.rpm
+avahi-compat-howl-devel-0.6.16-9.el5_5.i386.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.i386.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.i386.rpm
+avahi-debuginfo-0.6.16-9.el5_5.i386.rpm
+avahi-devel-0.6.16-9.el5_5.i386.rpm
+avahi-glib-0.6.16-9.el5_5.i386.rpm
+avahi-glib-devel-0.6.16-9.el5_5.i386.rpm
+avahi-qt3-0.6.16-9.el5_5.i386.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.i386.rpm
+avahi-tools-0.6.16-9.el5_5.i386.rpm
+
+ia64:
+avahi-0.6.16-9.el5_5.ia64.rpm
+avahi-compat-howl-0.6.16-9.el5_5.ia64.rpm
+avahi-compat-howl-devel-0.6.16-9.el5_5.ia64.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.ia64.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.ia64.rpm
+avahi-debuginfo-0.6.16-9.el5_5.ia64.rpm
+avahi-devel-0.6.16-9.el5_5.ia64.rpm
+avahi-glib-0.6.16-9.el5_5.ia64.rpm
+avahi-glib-devel-0.6.16-9.el5_5.ia64.rpm
+avahi-qt3-0.6.16-9.el5_5.ia64.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.ia64.rpm
+avahi-tools-0.6.16-9.el5_5.ia64.rpm
+
+ppc:
+avahi-0.6.16-9.el5_5.ppc.rpm
+avahi-0.6.16-9.el5_5.ppc64.rpm
+avahi-compat-howl-0.6.16-9.el5_5.ppc.rpm
+avahi-compat-howl-0.6.16-9.el5_5.ppc64.rpm
+avahi-compat-howl-devel-0.6.16-9.el5_5.ppc.rpm
+avahi-compat-howl-devel-0.6.16-9.el5_5.ppc64.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.ppc.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.ppc64.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.ppc.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.ppc64.rpm
+avahi-debuginfo-0.6.16-9.el5_5.ppc.rpm
+avahi-debuginfo-0.6.16-9.el5_5.ppc64.rpm
+avahi-devel-0.6.16-9.el5_5.ppc.rpm
+avahi-devel-0.6.16-9.el5_5.ppc64.rpm
+avahi-glib-0.6.16-9.el5_5.ppc.rpm
+avahi-glib-0.6.16-9.el5_5.ppc64.rpm
+avahi-glib-devel-0.6.16-9.el5_5.ppc.rpm
+avahi-glib-devel-0.6.16-9.el5_5.ppc64.rpm
+avahi-qt3-0.6.16-9.el5_5.ppc.rpm
+avahi-qt3-0.6.16-9.el5_5.ppc64.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.ppc.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.ppc64.rpm
+avahi-tools-0.6.16-9.el5_5.ppc.rpm
+
+s390x:
+avahi-0.6.16-9.el5_5.s390.rpm
+avahi-0.6.16-9.el5_5.s390x.rpm
+avahi-compat-howl-0.6.16-9.el5_5.s390.rpm
+avahi-compat-howl-0.6.16-9.el5_5.s390x.rpm
+avahi-compat-howl-devel-0.6.16-9.el5_5.s390.rpm
+avahi-compat-howl-devel-0.6.16-9.el5_5.s390x.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.s390.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.s390x.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.s390.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.s390x.rpm
+avahi-debuginfo-0.6.16-9.el5_5.s390.rpm
+avahi-debuginfo-0.6.16-9.el5_5.s390x.rpm
+avahi-devel-0.6.16-9.el5_5.s390.rpm
+avahi-devel-0.6.16-9.el5_5.s390x.rpm
+avahi-glib-0.6.16-9.el5_5.s390.rpm
+avahi-glib-0.6.16-9.el5_5.s390x.rpm
+avahi-glib-devel-0.6.16-9.el5_5.s390.rpm
+avahi-glib-devel-0.6.16-9.el5_5.s390x.rpm
+avahi-qt3-0.6.16-9.el5_5.s390.rpm
+avahi-qt3-0.6.16-9.el5_5.s390x.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.s390.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.s390x.rpm
+avahi-tools-0.6.16-9.el5_5.s390x.rpm
+
+x86_64:
+avahi-0.6.16-9.el5_5.i386.rpm
+avahi-0.6.16-9.el5_5.x86_64.rpm
+avahi-compat-howl-0.6.16-9.el5_5.i386.rpm
+avahi-compat-howl-0.6.16-9.el5_5.x86_64.rpm
+avahi-compat-howl-devel-0.6.16-9.el5_5.i386.rpm
+avahi-compat-howl-devel-0.6.16-9.el5_5.x86_64.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.i386.rpm
+avahi-compat-libdns_sd-0.6.16-9.el5_5.x86_64.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.i386.rpm
+avahi-compat-libdns_sd-devel-0.6.16-9.el5_5.x86_64.rpm
+avahi-debuginfo-0.6.16-9.el5_5.i386.rpm
+avahi-debuginfo-0.6.16-9.el5_5.x86_64.rpm
+avahi-devel-0.6.16-9.el5_5.i386.rpm
+avahi-devel-0.6.16-9.el5_5.x86_64.rpm
+avahi-glib-0.6.16-9.el5_5.i386.rpm
+avahi-glib-0.6.16-9.el5_5.x86_64.rpm
+avahi-glib-devel-0.6.16-9.el5_5.i386.rpm
+avahi-glib-devel-0.6.16-9.el5_5.x86_64.rpm
+avahi-qt3-0.6.16-9.el5_5.i386.rpm
+avahi-qt3-0.6.16-9.el5_5.x86_64.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.i386.rpm
+avahi-qt3-devel-0.6.16-9.el5_5.x86_64.rpm
+avahi-tools-0.6.16-9.el5_5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-0758.html">https://www.redhat.com/security/data/cve/CVE-2009-0758.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2244.html">https://www.redhat.com/security/data/cve/CVE-2010-2244.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMPKg9XlSAg2UNWIIRApMlAKCNN0yihnW8UFWMQyAvMEjWpmhTmwCfbQmR
+htt8x42bF3BAtiUDVKXPrGw=
+=FiFd
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

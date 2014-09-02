@@ -1,0 +1,739 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0773&#45;01] Moderate: Red Hat Enterprise MRG Messaging and	Grid Version 1.3 -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 14 Oct 2010 12:25:48 &#45;0400 -->
+<!--X-Message-Id: 201010141625.o9EGPget012676@int&#45;mx03.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0773-01] Moderate: Red Hat Enterprise MRG Messaging and	Grid </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0773-01] Moderate: Red Hat Enterprise MRG Messaging and	Grid Version 1.3</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0773-01] Moderate: Red Hat Enterprise MRG Messaging and	Grid Version 1.3</li>
+<li><em>Date</em>: Thu, 14 Oct 2010 12:26:37 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Enterprise MRG Messaging and Grid Version 1.3
+Advisory ID:       RHSA-2010:0773-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0773.html">https://rhn.redhat.com/errata/RHSA-2010-0773.html</a>
+Issue date:        2010-10-14
+CVE Names:         CVE-2009-5005 CVE-2009-5006 
+=====================================================================
+
+1. Summary:
+
+Updated packages that fix two security issues, several bugs, and add
+multiple enhancements are now available as part of the ongoing support and
+maintenance of Red Hat Enterprise MRG Messaging and Grid for Red Hat
+Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Grid Execute Node for RHEL 5 Server - i386, noarch, x86_64
+MRG Grid for RHEL 5 Server - i386, noarch, x86_64
+MRG Management for RHEL 5 Server - i386, noarch, x86_64
+MRG Realtime for RHEL 5 Server - noarch
+Red Hat MRG Messaging Base for RHEL 5 Server - i386, noarch, x86_64
+Red Hat MRG Messaging for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+Red Hat Enterprise MRG (Messaging, Realtime, and Grid) is a realtime IT
+infrastructure for enterprise computing. MRG Messaging uses Apache Qpid to
+implement the Advanced Message Queuing Protocol (AMQP) standard, adding
+persistence options, kernel optimizations, and operating system services.
+
+This update moves Red Hat Enterprise MRG to version 1.3.
+
+A flaw was found in the way Apache Qpid handled the receipt of invalid AMQP
+data. A remote user could send invalid AMQP data to the server, causing it
+to crash, resulting in the cluster shutting down. (CVE-2009-5005)
+
+A flaw was found in the way Apache Qpid handled a request to redeclare an
+existing exchange while adding a new alternate exchange. If a remote,
+authenticated user issued such a request, the server would crash, resulting
+in the cluster shutting down. (CVE-2009-5006)
+
+This update also adds the following enhancements:
+
+* This update introduces a protocol-independent C++ API. The extra layer of
+indirection will make it easy to support new versions of the AMQP protocol,
+as well as multiple versions simultaneously. (BZ#497747)
+
+* The management component is now capable of working in a cluster.
+(BZ#501015)
+
+* The Messaging Client Python API is now protocol-independent. (BZ#497748)
+
+* This update allows a JMS client to subscribe to the failover exchange to
+retrieve cluster membership information and subsequently to receive
+updates. (BZ#483753)
+
+* With this update, the qpidd service can be run without additional
+authentication options. (BZ#515513)
+
+* This update adds an OpenMPI wrapper script to Condor. It adds support for
+OpenMPI jobs. (BZ#537232)
+
+* The Messaging Client Python API now provides a failover mechanism for
+clustered brokers. (BZ#495718)
+
+* The Python Messaging API now includes support for Simple Authentication
+and Security Layer (SASL), which allows authentication support to be added
+to connection-based protocols. (BZ#548493)
+
+* The qpid-tool is now able to determine which session a queue consumer
+belongs to. (BZ#504325)
+
+* This update handles backward/forward compatibility for QMF and its
+components. (BZ#506698)
+
+* Both Secure Sockets Layer (SSL) and Remote Direct Memory Access (RDMA)
+entries can now appear in the list of known URLs. (BZ#471632)
+
+* This update allows for the scheduler daemon to run without swap.
+(BZ#548090)
+
+* This update introduces a mechanism that specifies the queue size of a
+queue that is setup via the Java API. (BZ#534008)
+
+* Previously, a collector could not be remotely restarted. With this
+update, the restart is possible and works as expected. (BZ#543021)
+
+* The usage information for the qpid-config utility (that is, the output of
+the &quot;qpid-config -h&quot; command) has been updated to include a brief
+explanation of the exchange type. (BZ#506420)
+
+These updated packages include many other bug fixes and enhancements. Users
+are directed to the Red Hat Enterprise MRG 1.3 Technical Notes for
+information on these changes:
+
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1/html/Technical_N">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1/html/Technical_N</a>
+otes/index.html
+
+All Red Hat Enterprise MRG users are advised to upgrade to these updated
+packages, which resolve these issues and add these enhancements, as well as
+resolving the issues and adding the enhancements noted in the Red Hat
+Enterprise MRG 1.3 Technical Notes. After installing the updated packages,
+the qpidd service must be restarted (&quot;service qpidd restart&quot;) for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+445749 - [python client] kerberos based authentication
+452546 - No way to determine if session/connection is established
+455318 - A tx commit fails without a proper error message when a queue runs out of capacity
+456482 - submit -spool and transfer_executable = false
+458344 - Messages are not released on rollback
+462461 - Clustering broker fail-over must replicate federation links
+469919 - qpidd init script over-rides user option settings.
+470080 - Cluster integration with security.
+471054 - focus linking of gsoap, X11 and pq into daemons and tools
+471286 - Grid Statistics Job Activity Graphics doesn't update correctly
+471315 - Grid, Parse error on Hold a job reason entry.
+471326 - Grid: It appears that the default for jobs is to show up as held in the boxed graphic
+471632 - Add support for SSL/RDMA URLs in cluster's know urls list
+479031 - Cluster member can't be added while management session open
+479326 - cluster broker crashes with race condition in DispatchHandle
+482944 - Management messages can get staged - which breaks management
+483666 - Dynamic Slots and STARTD_JOB_EXPRS, invalid attribute name
+483753 - Add failover exchange support for the java client
+484048 - qpidd+store flush() failed: jexception 0x0106 slock::slo ck() threw JERR__PTHREAD: pthread failure. (pthread_mutex_lock failed:  errno=22 (Invalid argument)) (MessageStoreImpl.cpp:1331)
+485091 - &quot;Unknown Publisher&quot; when installing Windows grid client
+485429 - qpidd stopped by critical Broker start-up failed: Cannot lock ... Resource temporarily unavailable
+486595 - condor_configuration_node input validation
+486779 - [RFE] configurable sesame publish rate (sesame publishing too often)
+487023 - UID&amp;FILESYSTEM_DOMAIN mis-configuration causing unintended side-effects
+488942 - c++ client aborts when session and connection not closed
+489315 - perftest shutdown seems to be not clean 'Error in shutdown: Connection closed'
+489537 - Cluster - Bogus(?) messages in log file when a new broker joins a cluster
+489540 - Memory leak in SASL client code.
+490170 - qpidd init script does not implement condrestart though the rpm has a script to call it
+490855 - clustered qpidd segfaults in qpid::broker::Exchange::propagateFedOp
+491203 - &quot;Timed out waiting for daemon&quot; if recovery from journal takes a long time
+491305 - clustered qpidd - replicating non-acked messages is not made visible for managent tools qpid-tool/cumin
+491313 - Subscribing sessions should be terminated with exception if the queue they are subscribed to is deleted
+492334 - qpidd+store startup crash in mrg::msgstore::MessageStoreImpl::init()
+493710 - condor_configure_node: delete not inverse of add
+494393 - First two nodes join 'simultaneously'; no node can reach the 'ready' state.
+494399 - Bindings from durable queues to the default exchange are not shown after restore
+494651 - sesame README points to old apache SVN location
+495718 - Python client needs to have failover for clustering
+497747 - Feature: Protocol independent API for c++
+497748 - Feature: Protocol independent API for python
+498056 - SASL/GSSAPI - Connection hangs when GSSAPI context expires
+498247 - CLI utilities display Python back-traces in some error cases
+500712 - QMF queries to the broker may return records for deleted objects
+500779 - Feature: Provide access to the Connection a Session corresponds to
+501015 - Management and cluster do not work together.
+501305 - Cluster node gets stuck as updatee and 'hangs' cluster
+501749 - If an XML exchange is declared durable, the broker crashes on recovery
+504000 - qpid-config's altern-ex option doesn't work
+504325 - Enhancement: it should be possible to determine through qpid-tool which sessions a queues consumers belong to
+504691 - alternate-exchange proprty of exchange and queue are not persisted
+505287 - Messages with no content that 'flow to disk' result in protocol errors on delivery
+505314 - qpid-tool crashes down after input wrong command list query
+505923 - dedicated scheduler may be inappropriately reusing claims
+506420 - qpid-config -h does not explain exchange type
+506553 - sesame - memory bloat over time
+506556 - c++ client may not timeout accurately where multiple connections exist in the process
+506698 - Handle backward/forward compatibility for QMF
+507363 - clustered qpidd fails to start - gather loop causes openais_dispatch_recv() to block
+507413 - Broker with single IO thread gets stuck looping if it runs out of file handles
+507421 - Cluster flow control does not appear to be working properly.
+507538 - method exchange_declare is missing in ruby qpid session class
+507586 - qpid-config ends with failure
+508137 - C++ QMF agent not connecting to broker under valgrind
+508144 - A broker stopped and restarted does not remember 'redelivered' status correctly
+508675 - Unresponsive qpidd process hangs the cluster
+508959 - Attempt to propagate binding info over dynamic link can crash broker if link is concurrently destroyed
+509395 - The JMS Client does not default to the correct priority as specified in the spec
+509437 - Failure in failover_soak
+509449 - JMS client releases messages in an unpredictable order on recover
+509454 - [RFE] Add validation for the '--cluster-url' qpidd option
+509800 - If journal capacity is exceeded as a result of cluster-durable mode being invoked, last man standing exits
+509892 - byte credit calculation inconsistent for messages transfered to new joiner
+510241 - clustered qpidd crash in qpid::sys::Poller::run()
+510475 - clustered qpidd startup - abort because of unhandled exception
+510583 - Unhandled exception when running qpid-cluster against a standalone broker.
+510747 - Out of Bounds exception when sending large QMF response
+511066 - Replication exchange type should record the usual management stats
+511292 - Unexpected connection shows up for qpid-stat -c
+513426 - string to double conversion results in questionable precision
+513641 - qpid-config gives error &quot;Failed: ()&quot; when creating persistent queue
+514054 - [store] Journal can fill under some conditions, and recover from full condition not possible
+514751 - QMF agent logging to file, no stdout
+515513 - Make cluster update work out of the box without special authentication options
+517836 - exclusive parameter ignored in JMS url binding, if durable attribute is present
+518291 - Python management tools must handle SystemExit exception properly
+518394 - Creating durable and cluster-durable queue which has bad --file-count and/or --file-size parameter causes an exception only for first time
+518872 - [FEATURE] exchange flag auto-delete is not recognizable
+519183 - Matchmaker code doesn't implement fair share correctly
+519476 - Invalid accept data sent by Java client after failover.
+519505 - Broker strips domain from userID, causes mismatch on GSSAPI id checking
+520600 - Intermittent leak in client library, connector thread not joined.
+522267 - Windows: Qpid C++ pid_t and ssize_t 3rd-party compat
+526299 - the clustered broker seems to sometimes not send a close-ok before shutting down the socket
+526680 - Exchanges named &quot;amq.&quot; are declarable, but amqp spec
+527233 - shadow process bloat
+529670 - qpid-config - inappropriate error message if trying to authenticate with non-existing user
+530594 - restart of libvirtd causes condor_vm-gahp to hang.
+531561 - alternate exchange not visible on a queue via QMF
+531833 - FailoverExchangeMethod getNextBrokerDetails() loops infinitely after a total cluster failure or if the inital connect node is down
+531837 - Java client should set the process ID in the client properties during Connection open
+531842 - When kerberos auth is used, Java client should use the kerberos user_id &amp; domain when setting the user_id in messages
+533045 - Feature Request: support for SASL EXTERNAL with TLS/SSL
+533173 - --max-connectoins has no effect
+534008 - Need mechanism to specify the queue size of a queue that is setup via the Java API.
+537232 - PU: need OpenMPI wrapper script
+537481 - qpid-stat needs option to link sesion to queue via subscription object
+538188 - connection.start() hangs if connection is not accepted
+540545 - WANT_SUSPEND evaluating to UNDEFIEND causes condor_startd exception
+541927 - Persistent cluster problems after reboot -f
+543021 - Unable to restart collector with condor_restart on remote node
+543524 - Cluster with --cluster-size  should not hold up init scripts.
+543560 - VM Universe libvirt script issues
+544092 - message store should not delete backups when qpidd starts
+544306 - clustered broker does not retry CPG calls that return TRY_AGAIN
+545436 - Cluster node shutsdown with inconsistent error
+546736 - Schedd performs unnecessary file operations on SPOOL, targeting mpp.X.Y files
+546770 - condor_schedd performance, job removal fsync for each job
+547295 - qpid-stat -b threading exception during shutdown 'exceptions.TypeError: 'NoneType' object is not callable'
+547397 - Compile with -O2
+547769 - clustered qpidd: qpid-cluster/qpid-stat -b reports different widths on different nodes while replication is working well on all nodes
+548090 - RESERVED_SWAP doesn't default to 0 as stated in docs
+548137 - TIMEOUT_MULTIPLIER only available in &lt;SUBSYS&gt;_ form
+548493 - SASL support missing for Python messaging API
+549389 - condor_master -pidfile will stomp pidfile of running master
+549432 - Parallel Universe jobs require job spool directory
+549443 - qpid-config cannot create bindings for the XML or Headers exchange types
+549956 - Clustered broker crashes with inconsistency error
+552330 - qpid-config from trunk causes exception in broker
+552407 - classad debug() function doesn't work with IfThenElse
+554980 - [qpidd+store] broker rarely aborts when stressed by perftest
+555716 - [qpidd+store] broker rarely segfaults when stressed by perftest
+556351 - clustered qpidd - durable exchanges do not survive cluster restart.
+557159 - Queue-Purge does not send messages to alternate-exchange
+557896 - The ttl of messages is not adjusted when forwarding on to other brokers in a federation.
+558526 - clustered qpidd shutdowns during start-up with 'Authentication failed: SASL(-1): generic failure: Unable to find a callback: 32775'
+558864 - JMS_QPID_DESTTYPE is not set making getJMSDestination unusable.
+558968 - initscript lsb compliance
+559014 - clustered qpid: durable exchange state not replicated to broker joining cluster
+559071 - VM_MEMORY handled inconsistently between Startd and VMGahp
+559625 - Segfault if FailoverManager is closed before being opened.
+560005 - Broker options &quot;--auth&quot; and &quot;--require-encryption&quot; can fail when used with SSL/TLS
+561955 - PREPARE hook invoked as condor, not as user. cannot access $PWD.
+561958 - PREPARE hook invocation failure does not abort job execution
+565618 - condor_submit fsync()s UserLog for each job
+566825 - Grid with no slots throws exception in MRG Management Console
+568502 - Collector should advertise itself immediately
+568661 - JMS client does not verify that the hostname connected to matches that specified in the servers certificate
+568718 - Is acl reload safe to use?
+568838 - Dynamic federation duplicates messages
+568863 - Dynamic federation tears links down incorrectly
+570756 - DtxSetTimeout sent after XID has already been committed
+572574 - Error reported from execute node incomplete for IWD access failure
+572668 - Potential shadow/schedd protocol error
+575147 - condor_master can't start additional schedd's without a restart
+575150 - Need to be able to configure maximum cluster id
+575177 - Messages set with a TTL expire immediately when sent on qpid queues with LVQ ordering
+575748 - broker exits with &quot;critical Broker start-up failed: St9bad_alloc&quot; when ran with --worker-threads 0|-1
+575777 - scheduler universe jobs can start during schedd shutdown
+575784 - improper RELEASE_CLAIM after REQUEST_CLAIM rejection
+576693 - qpid-cluster -d does not close the client connection
+578216 - condor_schedd reuses claims to partitioned slots inappropriately
+578600 - Dyanamic Slot INVALIDATE_STARTD_ADS causes collector pegging
+579681 - Topic exchange duplicates messages
+582366 - When reloading a large acl file , the broker core dumps
+583131 - Fix Java Client logging
+583526 - Management methods disallowed in Clusters must be re-enabled
+584089 - ACL module core dumps if management is disabled
+591292 - MRG-M Heartbeat causes core
+592861 - Recovered messages larger than 65523 bytes result in framing violation
+597362 - Sporadic failure of check-long in cluster_tests.py test_failover
+601828 - QMF Agent returning STATUS_USER returns error 7 to QMF Console
+603201 - condor-7.4.3-0.17.el5 postuninstall uses invalid init script option
+603839 - Concurrent tagging of message with trace id while message is delivered from another queue causes segfault
+605311 - condor_schedd double free on SOAP transaction timeout
+606824 - Acquired but Not Accepted Messages Not Sent to Alterntate Exchange
+614993 - Using Memory or RequestMemory in job requirements drops both default RequestMemory and Memory requirements
+615313 - condor_chirp fails when querying the value of a non-existing attribute
+615492 - starter hooks, HOOK_UPDATE_JOB_INFO and HOOK_JOB_EXIT not run as job owner
+615504 - condor_chirp relies on getenv(&quot;_CONDOR_SCRATCH_DIR&quot;)
+615510 - Job hooks environment does not contain _CONDOR_SCRATCH_DIR and the like
+615633 - condor_chirp get_job_attr can return garbage
+617709 - fix hfs accountant stats
+619552 - negotiator hfs incorrect remaining and infinite loop
+621902 - Permissions not set correctly on key pair file
+623684 - condor_userlog core dumps when unable to open log file r/o
+625205 - shadows create a spool directory per job
+628034 - negotiator core on quota_dynamic =0
+628086 - GROUP_DYNAMIC_MACH_CONSTRAINT unused with HFS
+642373 - CVE-2009-5005 qpid: crash on receipt of invalid AMQP data
+642377 - CVE-2009-5006 qpid: crash when redeclaring the exchange with specified alternate_exchange
+
+6. Package List:
+
+MRG Grid for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/PyYAML-3.08-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/PyYAML-3.08-5.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/classads-1.0.8-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/classads-1.0.8-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.4.4-0.16.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.4.4-0.16.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-1.1-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-1.1-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-hooks-1.1-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-hooks-1.1-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-job-hooks-1.4-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-job-hooks-1.4-5.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-low-latency-1.1-0.2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-low-latency-1.1-0.2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-3.6-6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-3.6-6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-base-db-1.4-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-base-db-1.4-5.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/libyaml-0.1.2-4.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/libyaml-0.1.2-4.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-grid-docs-1.3-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-grid-docs-1.3-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-rhubarb-0.2.7-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-rhubarb-0.2.7-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-spqr-0.3.2-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-spqr-0.3.2-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-sqlite3-1.2.4-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-sqlite3-1.2.4-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/wallaby-0.9.18-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/wallaby-0.9.18-2.el5.src.rpm</a>
+
+i386:
+PyYAML-3.08-5.el5.i386.rpm
+PyYAML-debuginfo-3.08-5.el5.i386.rpm
+classads-1.0.8-1.el5.i386.rpm
+classads-debuginfo-1.0.8-1.el5.i386.rpm
+classads-devel-1.0.8-1.el5.i386.rpm
+classads-static-1.0.8-1.el5.i386.rpm
+condor-7.4.4-0.16.el5.i386.rpm
+condor-debuginfo-7.4.4-0.16.el5.i386.rpm
+condor-kbdd-7.4.4-0.16.el5.i386.rpm
+condor-qmf-7.4.4-0.16.el5.i386.rpm
+condor-vm-gahp-7.4.4-0.16.el5.i386.rpm
+libyaml-0.1.2-4.el5.i386.rpm
+libyaml-debuginfo-0.1.2-4.el5.i386.rpm
+libyaml-devel-0.1.2-4.el5.i386.rpm
+ruby-sqlite3-1.2.4-1.el5.i386.rpm
+ruby-sqlite3-debuginfo-1.2.4-1.el5.i386.rpm
+
+noarch:
+condor-ec2-enhanced-1.1-1.el5.noarch.rpm
+condor-ec2-enhanced-hooks-1.1-1.el5.noarch.rpm
+condor-job-hooks-1.4-5.el5.noarch.rpm
+condor-low-latency-1.1-0.2.el5.noarch.rpm
+condor-wallaby-base-db-1.4-5.el5.noarch.rpm
+condor-wallaby-client-3.6-6.el5.noarch.rpm
+condor-wallaby-tools-3.6-6.el5.noarch.rpm
+mrg-grid-docs-1.3-1.el5.noarch.rpm
+mrg-release-1.3-2.el5.noarch.rpm
+python-condorec2e-1.1-1.el5.noarch.rpm
+python-condorutils-1.4-5.el5.noarch.rpm
+python-wallabyclient-3.6-6.el5.noarch.rpm
+ruby-rhubarb-0.2.7-1.el5.noarch.rpm
+ruby-spqr-0.3.2-1.el5.noarch.rpm
+ruby-wallaby-0.9.18-2.el5.noarch.rpm
+spqr-gen-0.3.2-1.el5.noarch.rpm
+wallaby-0.9.18-2.el5.noarch.rpm
+wallaby-utils-0.9.18-2.el5.noarch.rpm
+
+x86_64:
+PyYAML-3.08-5.el5.x86_64.rpm
+PyYAML-debuginfo-3.08-5.el5.x86_64.rpm
+classads-1.0.8-1.el5.x86_64.rpm
+classads-debuginfo-1.0.8-1.el5.x86_64.rpm
+classads-devel-1.0.8-1.el5.x86_64.rpm
+classads-static-1.0.8-1.el5.x86_64.rpm
+condor-7.4.4-0.16.el5.x86_64.rpm
+condor-debuginfo-7.4.4-0.16.el5.x86_64.rpm
+condor-kbdd-7.4.4-0.16.el5.x86_64.rpm
+condor-qmf-7.4.4-0.16.el5.x86_64.rpm
+condor-vm-gahp-7.4.4-0.16.el5.x86_64.rpm
+libyaml-0.1.2-4.el5.x86_64.rpm
+libyaml-debuginfo-0.1.2-4.el5.x86_64.rpm
+libyaml-devel-0.1.2-4.el5.x86_64.rpm
+ruby-sqlite3-1.2.4-1.el5.x86_64.rpm
+ruby-sqlite3-debuginfo-1.2.4-1.el5.x86_64.rpm
+
+MRG Grid Execute Node for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/PyYAML-3.08-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/PyYAML-3.08-5.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/classads-1.0.8-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/classads-1.0.8-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.4.4-0.16.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-7.4.4-0.16.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-1.1-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-1.1-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-hooks-1.1-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-ec2-enhanced-hooks-1.1-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-job-hooks-1.4-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-job-hooks-1.4-5.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-low-latency-1.1-0.2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-low-latency-1.1-0.2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-3.6-6.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-3.6-6.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-base-db-1.4-5.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/condor-wallaby-base-db-1.4-5.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/libyaml-0.1.2-4.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/libyaml-0.1.2-4.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-grid-docs-1.3-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-grid-docs-1.3-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-rhubarb-0.2.7-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-rhubarb-0.2.7-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-spqr-0.3.2-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-spqr-0.3.2-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-sqlite3-1.2.4-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-sqlite3-1.2.4-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/wallaby-0.9.18-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/wallaby-0.9.18-2.el5.src.rpm</a>
+
+i386:
+PyYAML-3.08-5.el5.i386.rpm
+PyYAML-debuginfo-3.08-5.el5.i386.rpm
+classads-1.0.8-1.el5.i386.rpm
+classads-debuginfo-1.0.8-1.el5.i386.rpm
+classads-devel-1.0.8-1.el5.i386.rpm
+classads-static-1.0.8-1.el5.i386.rpm
+condor-7.4.4-0.16.el5.i386.rpm
+condor-debuginfo-7.4.4-0.16.el5.i386.rpm
+condor-kbdd-7.4.4-0.16.el5.i386.rpm
+condor-qmf-7.4.4-0.16.el5.i386.rpm
+condor-vm-gahp-7.4.4-0.16.el5.i386.rpm
+libyaml-0.1.2-4.el5.i386.rpm
+libyaml-debuginfo-0.1.2-4.el5.i386.rpm
+libyaml-devel-0.1.2-4.el5.i386.rpm
+ruby-sqlite3-1.2.4-1.el5.i386.rpm
+ruby-sqlite3-debuginfo-1.2.4-1.el5.i386.rpm
+
+noarch:
+condor-ec2-enhanced-1.1-1.el5.noarch.rpm
+condor-ec2-enhanced-hooks-1.1-1.el5.noarch.rpm
+condor-job-hooks-1.4-5.el5.noarch.rpm
+condor-low-latency-1.1-0.2.el5.noarch.rpm
+condor-wallaby-base-db-1.4-5.el5.noarch.rpm
+condor-wallaby-client-3.6-6.el5.noarch.rpm
+condor-wallaby-tools-3.6-6.el5.noarch.rpm
+mrg-grid-docs-1.3-1.el5.noarch.rpm
+mrg-release-1.3-2.el5.noarch.rpm
+python-condorec2e-1.1-1.el5.noarch.rpm
+python-condorutils-1.4-5.el5.noarch.rpm
+python-wallabyclient-3.6-6.el5.noarch.rpm
+ruby-rhubarb-0.2.7-1.el5.noarch.rpm
+ruby-spqr-0.3.2-1.el5.noarch.rpm
+ruby-wallaby-0.9.18-2.el5.noarch.rpm
+spqr-gen-0.3.2-1.el5.noarch.rpm
+wallaby-0.9.18-2.el5.noarch.rpm
+wallaby-utils-0.9.18-2.el5.noarch.rpm
+
+x86_64:
+PyYAML-3.08-5.el5.x86_64.rpm
+PyYAML-debuginfo-3.08-5.el5.x86_64.rpm
+classads-1.0.8-1.el5.x86_64.rpm
+classads-debuginfo-1.0.8-1.el5.x86_64.rpm
+classads-devel-1.0.8-1.el5.x86_64.rpm
+classads-static-1.0.8-1.el5.x86_64.rpm
+condor-7.4.4-0.16.el5.x86_64.rpm
+condor-debuginfo-7.4.4-0.16.el5.x86_64.rpm
+condor-kbdd-7.4.4-0.16.el5.x86_64.rpm
+condor-qmf-7.4.4-0.16.el5.x86_64.rpm
+condor-vm-gahp-7.4.4-0.16.el5.x86_64.rpm
+libyaml-0.1.2-4.el5.x86_64.rpm
+libyaml-debuginfo-0.1.2-4.el5.x86_64.rpm
+libyaml-devel-0.1.2-4.el5.x86_64.rpm
+ruby-sqlite3-1.2.4-1.el5.x86_64.rpm
+ruby-sqlite3-debuginfo-1.2.4-1.el5.x86_64.rpm
+
+MRG Management for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/cumin-0.1.4369-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/cumin-0.1.4369-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-psycopg2-2.0.14-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-psycopg2-2.0.14-2.el5.src.rpm</a>
+
+i386:
+python-psycopg2-2.0.14-2.el5.i386.rpm
+python-psycopg2-debuginfo-2.0.14-2.el5.i386.rpm
+python-psycopg2-doc-2.0.14-2.el5.i386.rpm
+
+noarch:
+cumin-0.1.4369-1.el5.noarch.rpm
+mrg-release-1.3-2.el5.noarch.rpm
+
+x86_64:
+python-psycopg2-2.0.14-2.el5.x86_64.rpm
+python-psycopg2-debuginfo-2.0.14-2.el5.x86_64.rpm
+python-psycopg2-doc-2.0.14-2.el5.x86_64.rpm
+
+Red Hat MRG Messaging for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-qmf-0.7.946106-13.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-qmf-0.7.946106-13.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-qpid-0.7.946106-14.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-qpid-0.7.946106-14.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-17.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-17.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-java-0.7.946106-11.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-java-0.7.946106-11.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-tests-0.7.946106-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-tests-0.7.946106-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-tools-0.7.946106-11.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-tools-0.7.946106-11.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/rhm-docs-0.7.946106-8.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/rhm-docs-0.7.946106-8.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-qpid-0.7.946106-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-qpid-0.7.946106-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/saslwrapper-0.1.934605-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/saslwrapper-0.1.934605-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/sesame-0.7.4297-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/sesame-0.7.4297-2.el5.src.rpm</a>
+
+i386:
+python-saslwrapper-0.1.934605-2.el5.i386.rpm
+qmf-0.7.946106-17.el5.i386.rpm
+qmf-devel-0.7.946106-17.el5.i386.rpm
+qpid-cpp-client-0.7.946106-17.el5.i386.rpm
+qpid-cpp-client-devel-0.7.946106-17.el5.i386.rpm
+qpid-cpp-client-devel-docs-0.7.946106-17.el5.i386.rpm
+qpid-cpp-client-rdma-0.7.946106-17.el5.i386.rpm
+qpid-cpp-client-ssl-0.7.946106-17.el5.i386.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-17.el5.i386.rpm
+qpid-cpp-server-0.7.946106-17.el5.i386.rpm
+qpid-cpp-server-cluster-0.7.946106-17.el5.i386.rpm
+qpid-cpp-server-devel-0.7.946106-17.el5.i386.rpm
+qpid-cpp-server-rdma-0.7.946106-17.el5.i386.rpm
+qpid-cpp-server-ssl-0.7.946106-17.el5.i386.rpm
+qpid-cpp-server-store-0.7.946106-17.el5.i386.rpm
+qpid-cpp-server-xml-0.7.946106-17.el5.i386.rpm
+rh-qpid-cpp-tests-0.7.946106-17.el5.i386.rpm
+ruby-qmf-0.7.946106-17.el5.i386.rpm
+ruby-qpid-0.7.946106-2.el5.i386.rpm
+ruby-saslwrapper-0.1.934605-2.el5.i386.rpm
+saslwrapper-0.1.934605-2.el5.i386.rpm
+saslwrapper-debuginfo-0.1.934605-2.el5.i386.rpm
+saslwrapper-devel-0.1.934605-2.el5.i386.rpm
+sesame-0.7.4297-2.el5.i386.rpm
+sesame-debuginfo-0.7.4297-2.el5.i386.rpm
+
+noarch:
+mrg-release-1.3-2.el5.noarch.rpm
+python-qmf-0.7.946106-13.el5.noarch.rpm
+python-qpid-0.7.946106-14.el5.noarch.rpm
+qpid-java-client-0.7.946106-11.el5.noarch.rpm
+qpid-java-common-0.7.946106-11.el5.noarch.rpm
+qpid-java-example-0.7.946106-11.el5.noarch.rpm
+qpid-tests-0.7.946106-1.el5.noarch.rpm
+qpid-tools-0.7.946106-11.el5.noarch.rpm
+rhm-docs-0.7.946106-8.el5.noarch.rpm
+
+x86_64:
+python-saslwrapper-0.1.934605-2.el5.x86_64.rpm
+qmf-0.7.946106-17.el5.x86_64.rpm
+qmf-devel-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-client-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-client-devel-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-client-devel-docs-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-client-rdma-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-client-ssl-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-server-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-server-cluster-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-server-devel-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-server-rdma-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-server-ssl-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-server-store-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-server-xml-0.7.946106-17.el5.x86_64.rpm
+rh-qpid-cpp-tests-0.7.946106-17.el5.x86_64.rpm
+ruby-qmf-0.7.946106-17.el5.x86_64.rpm
+ruby-qpid-0.7.946106-2.el5.x86_64.rpm
+ruby-saslwrapper-0.1.934605-2.el5.x86_64.rpm
+saslwrapper-0.1.934605-2.el5.x86_64.rpm
+saslwrapper-debuginfo-0.1.934605-2.el5.x86_64.rpm
+saslwrapper-devel-0.1.934605-2.el5.x86_64.rpm
+sesame-0.7.4297-2.el5.x86_64.rpm
+sesame-debuginfo-0.7.4297-2.el5.x86_64.rpm
+
+Red Hat MRG Messaging Base for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-qmf-0.7.946106-13.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-qmf-0.7.946106-13.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-qpid-0.7.946106-14.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/python-qpid-0.7.946106-14.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-17.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-cpp-mrg-0.7.946106-17.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-java-0.7.946106-11.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-java-0.7.946106-11.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-tests-0.7.946106-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-tests-0.7.946106-1.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-tools-0.7.946106-11.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/qpid-tools-0.7.946106-11.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-qpid-0.7.946106-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/ruby-qpid-0.7.946106-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/saslwrapper-0.1.934605-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/saslwrapper-0.1.934605-2.el5.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/sesame-0.7.4297-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/sesame-0.7.4297-2.el5.src.rpm</a>
+
+i386:
+python-saslwrapper-0.1.934605-2.el5.i386.rpm
+qmf-0.7.946106-17.el5.i386.rpm
+qmf-devel-0.7.946106-17.el5.i386.rpm
+qpid-cpp-client-0.7.946106-17.el5.i386.rpm
+qpid-cpp-client-devel-0.7.946106-17.el5.i386.rpm
+qpid-cpp-client-devel-docs-0.7.946106-17.el5.i386.rpm
+qpid-cpp-client-ssl-0.7.946106-17.el5.i386.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-17.el5.i386.rpm
+qpid-cpp-server-0.7.946106-17.el5.i386.rpm
+qpid-cpp-server-devel-0.7.946106-17.el5.i386.rpm
+qpid-cpp-server-ssl-0.7.946106-17.el5.i386.rpm
+ruby-qmf-0.7.946106-17.el5.i386.rpm
+ruby-qpid-0.7.946106-2.el5.i386.rpm
+ruby-saslwrapper-0.1.934605-2.el5.i386.rpm
+saslwrapper-0.1.934605-2.el5.i386.rpm
+saslwrapper-debuginfo-0.1.934605-2.el5.i386.rpm
+saslwrapper-devel-0.1.934605-2.el5.i386.rpm
+sesame-0.7.4297-2.el5.i386.rpm
+sesame-debuginfo-0.7.4297-2.el5.i386.rpm
+
+noarch:
+mrg-release-1.3-2.el5.noarch.rpm
+python-qmf-0.7.946106-13.el5.noarch.rpm
+python-qpid-0.7.946106-14.el5.noarch.rpm
+qpid-java-client-0.7.946106-11.el5.noarch.rpm
+qpid-java-common-0.7.946106-11.el5.noarch.rpm
+qpid-java-example-0.7.946106-11.el5.noarch.rpm
+qpid-tests-0.7.946106-1.el5.noarch.rpm
+qpid-tools-0.7.946106-11.el5.noarch.rpm
+
+x86_64:
+python-saslwrapper-0.1.934605-2.el5.x86_64.rpm
+qmf-0.7.946106-17.el5.x86_64.rpm
+qmf-devel-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-client-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-client-devel-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-client-devel-docs-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-client-ssl-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-mrg-debuginfo-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-server-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-server-devel-0.7.946106-17.el5.x86_64.rpm
+qpid-cpp-server-ssl-0.7.946106-17.el5.x86_64.rpm
+ruby-qmf-0.7.946106-17.el5.x86_64.rpm
+ruby-qpid-0.7.946106-2.el5.x86_64.rpm
+ruby-saslwrapper-0.1.934605-2.el5.x86_64.rpm
+saslwrapper-0.1.934605-2.el5.x86_64.rpm
+saslwrapper-debuginfo-0.1.934605-2.el5.x86_64.rpm
+saslwrapper-devel-0.1.934605-2.el5.x86_64.rpm
+sesame-0.7.4297-2.el5.x86_64.rpm
+sesame-debuginfo-0.7.4297-2.el5.x86_64.rpm
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/mrg-release-1.3-2.el5.src.rpm</a>
+
+noarch:
+mrg-release-1.3-2.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-5005.html">https://www.redhat.com/security/data/cve/CVE-2009-5005.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-5006.html">https://www.redhat.com/security/data/cve/CVE-2009-5006.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1/html/Technical_Notes/index.html">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1/html/Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMty7jXlSAg2UNWIIRApsMAJ9/zq22IsM/uNW/jxonZk3V8PM8ygCePXg6
+nsAMtqpvtX9mg/p0HLkIUmY=
+=VVsb
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

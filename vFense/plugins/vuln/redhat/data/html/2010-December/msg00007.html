@@ -1,0 +1,151 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0818&#45;01] Important: Red Hat Enterprise Virtualization	Manager security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 6 Dec 2010 14:21:40 &#45;0500 -->
+<!--X-Message-Id: 201012061921.oB6JLYXG022865@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0818-01] Important: Red Hat Enterprise Virtualization	Manager</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0818-01] Important: Red Hat Enterprise Virtualization	Manager security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0818-01] Important: Red Hat Enterprise Virtualization	Manager security update</li>
+<li><em>Date</em>: Mon, 6 Dec 2010 12:21:34 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Enterprise Virtualization Manager security update
+Advisory ID:       RHSA-2010:0818-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0818.html">https://rhn.redhat.com/errata/RHSA-2010-0818.html</a>
+Issue date:        2010-12-06
+CVE Names:         CVE-2010-2793 
+=====================================================================
+
+1. Summary:
+
+Red Hat Enterprise Virtualization Manager 2.2.4 is now available for Red
+Hat Enterprise Virtualization.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+Red Hat Enterprise Virtualization Manager is a visual tool for centrally
+managing collections of virtual servers running Red Hat Enterprise Linux
+and Microsoft Windows. This package also includes the Red Hat Enterprise
+Virtualization Manager API, a set of scriptable commands that give
+administrators the ability to perform queries and operations on Red Hat
+Enterprise Virtualization Manager.
+
+The Simple Protocol for Independent Computing Environments (SPICE) is a
+remote display protocol.
+
+A race condition was found in the way the SPICE plug-in for Microsoft
+Internet Explorer and the SPICE client communicated. A local attacker could
+use this flaw to trick the plug-in and the SPICE client into communicating
+over an attacker-controlled named pipe, possibly gaining access to
+authentication details, or resulting in privilege escalation.
+(CVE-2010-2793)
+
+This updated Red Hat Enterprise Virtualization Manager package also fixes
+several bugs. Documentation for these bug fixes will be available shortly
+from
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Ser">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Ser</a>
+vers/2.2/html/Technical_Notes/
+
+All Red Hat Enterprise Virtualization Manager users are advised to install
+this updated package, which corrects this issue and fixes the bugs noted in
+the Technical Notes document, linked to in the References.
+
+3. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+620355 - CVE-2010-2793 spice activex/spicec named pipe races
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2793.html">https://www.redhat.com/security/data/cve/CVE-2010-2793.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Servers/2.2/html/Technical_Notes/">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization_for_Servers/2.2/html/Technical_Notes/</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFM/Td1XlSAg2UNWIIRArHWAKC2qWXnQnzQuJuIuHF426Ik84wSAACgsGuP
+CvMru3iL6ifTmLU7u4T+Ka4=
+=4HL9
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

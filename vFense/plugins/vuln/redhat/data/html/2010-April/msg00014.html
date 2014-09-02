@@ -1,0 +1,226 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0378&#45;01] Critical: JBoss Enterprise Application Platform	4.2.0.CP09 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 27 Apr 2010 00:21:35 &#45;0400 -->
+<!--X-Message-Id: 201004270421.o3R4LS2j022603@int&#45;mx05.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0378-01] Critical: JBoss Enterprise Application Platform	4.2.</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0378-01] Critical: JBoss Enterprise Application Platform	4.2.0.CP09 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0378-01] Critical: JBoss Enterprise Application Platform	4.2.0.CP09 update</li>
+<li><em>Date</em>: Mon, 26 Apr 2010 22:21:28 -0600</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: JBoss Enterprise Application Platform 4.2.0.CP09 update
+Advisory ID:       RHSA-2010:0378-01
+Product:           JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0378.html">https://rhn.redhat.com/errata/RHSA-2010-0378.html</a>
+Issue date:        2010-04-26
+CVE Names:         CVE-2010-0738 CVE-2010-1428 CVE-2010-1429 
+=====================================================================
+
+1. Summary:
+
+Updated JBoss Enterprise Application Platform (JBEAP) 4.2 packages that fix
+three security issues and multiple bugs are now available for Red Hat
+Enterprise Linux 5 as JBEAP 4.2.0.CP09.
+
+The Red Hat Security Response Team has rated this update as having critical
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+JBoss Enterprise Application Platform for RHEL 5 Server - noarch
+
+3. Description:
+
+JBoss Enterprise Application Platform is the market leading platform for
+innovative and scalable Java applications; integrating the JBoss
+Application Server, with JBoss Hibernate and JBoss Seam into a complete,
+simple enterprise solution.
+
+This release of JBEAP for Red Hat Enterprise Linux 5 serves as a
+replacement to JBEAP 4.2.0.CP08.
+
+These updated packages include multiple bug fixes which are detailed in the
+Release Notes. The Release Notes will be available shortly from the link
+in the References section.
+
+The following security issues are also fixed with this release:
+
+The JMX Console configuration only specified an authentication requirement
+for requests that used the GET and POST HTTP &quot;verbs&quot;. A remote attacker
+could create an HTTP request that does not specify GET or POST, causing it
+to be executed by the default GET handler without authentication. This
+release contains a JMX Console with an updated configuration that no longer
+specifies the HTTP verbs. This means that the authentication requirement is
+applied to all requests. (CVE-2010-0738)
+
+For the CVE-2010-0738 issue, if an immediate upgrade is not possible or the
+server deployment has been customized, a manual fix can be applied. Refer
+to the &quot;Security&quot; subsection of the &quot;Issues fixed in this release&quot; section
+(JBPAPP-3952) of the JBEAP Release Notes, linked to in the References, for
+details. Contact Red Hat JBoss Support for advice before making the changes
+noted in the Release Notes.
+
+Red Hat would like to thank Stefano Di Paola and Giorgio Fedon of Minded
+Security for responsibly reporting the CVE-2010-0738 issue.
+
+Unauthenticated access to the JBoss Application Server Web Console
+(/web-console) is blocked by default. However, it was found that this block
+was incomplete, and only blocked GET and POST HTTP verbs. A remote attacker
+could use this flaw to gain access to sensitive information. This release
+contains a Web Console with an updated configuration that now blocks all
+unauthenticated access to it by default. (CVE-2010-1428)
+
+The RHSA-2008:0827 update fixed an issue (CVE-2008-3273) where
+unauthenticated users were able to access the status servlet; however, a
+bug fix included in the RHSA-2009:0348 update re-introduced the issue. A
+remote attacker could use this flaw to acquire details about deployed web
+contexts. (CVE-2010-1429)
+
+Warning: Before applying this update, please backup the JBEAP
+&quot;server/[configuration]/deploy/&quot; directory, and any other customized
+configuration files.
+
+All users of JBEAP 4.2 on Red Hat Enterprise Linux 5 are advised to upgrade
+to these updated packages.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+571835 - Tracker bug for the EAP 4.2.0.cp09 release for RHEL-5.
+574105 - CVE-2010-0738 JBoss EAP jmx authentication bypass with crafted HTTP request
+585899 - CVE-2010-1428 JBoss Application Server Web Console Authentication bypass
+585900 - CVE-2010-1429  JBossEAP status servlet info leak
+
+6. Package List:
+
+JBoss Enterprise Application Platform for RHEL 5 Server:
+
+Source:
+hibernate3-3.2.4-1.SP1_CP10.0jpp.ep1.1.el5.src.rpm
+hibernate3-annotations-3.3.1-1.12.GA_CP03.ep1.el5.src.rpm
+jacorb-2.3.0-1jpp.ep1.10.1.el5.src.rpm
+jboss-aop-1.5.5-3.CP05.2.ep1.1.el5.src.rpm
+jboss-cache-1.4.1-6.SP14.1.ep1.1.el5.src.rpm
+jboss-remoting-2.2.3-3.SP2.ep1.1.el5.src.rpm
+jboss-seam-1.2.1-1.ep1.24.el5.src.rpm
+jbossas-4.2.0-6.GA_CP09.6.ep1.el5.src.rpm
+jbossts-4.2.3-1.SP5_CP09.1jpp.ep1.1.1.el5.src.rpm
+jbossweb-2.0.0-6.CP13.0jpp.ep1.1.1.el5.src.rpm
+rh-eap-docs-4.2.0-7.GA_CP09.ep1.4.1.el5.src.rpm
+
+noarch:
+hibernate3-3.2.4-1.SP1_CP10.0jpp.ep1.1.el5.noarch.rpm
+hibernate3-annotations-3.3.1-1.12.GA_CP03.ep1.el5.noarch.rpm
+hibernate3-annotations-javadoc-3.3.1-1.12.GA_CP03.ep1.el5.noarch.rpm
+hibernate3-javadoc-3.2.4-1.SP1_CP10.0jpp.ep1.1.el5.noarch.rpm
+jacorb-2.3.0-1jpp.ep1.10.1.el5.noarch.rpm
+jboss-aop-1.5.5-3.CP05.2.ep1.1.el5.noarch.rpm
+jboss-cache-1.4.1-6.SP14.1.ep1.1.el5.noarch.rpm
+jboss-remoting-2.2.3-3.SP2.ep1.1.el5.noarch.rpm
+jboss-seam-1.2.1-1.ep1.24.el5.noarch.rpm
+jboss-seam-docs-1.2.1-1.ep1.24.el5.noarch.rpm
+jbossas-4.2.0-6.GA_CP09.6.ep1.el5.noarch.rpm
+jbossas-4.2.0.GA_CP09-bin-4.2.0-6.GA_CP09.6.ep1.el5.noarch.rpm
+jbossas-client-4.2.0-6.GA_CP09.6.ep1.el5.noarch.rpm
+jbossts-4.2.3-1.SP5_CP09.1jpp.ep1.1.1.el5.noarch.rpm
+jbossweb-2.0.0-6.CP13.0jpp.ep1.1.1.el5.noarch.rpm
+rh-eap-docs-4.2.0-7.GA_CP09.ep1.4.1.el5.noarch.rpm
+rh-eap-docs-examples-4.2.0-7.GA_CP09.ep1.4.1.el5.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0738.html">https://www.redhat.com/security/data/cve/CVE-2010-0738.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1428.html">https://www.redhat.com/security/data/cve/CVE-2010-1428.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-1429.html">https://www.redhat.com/security/data/cve/CVE-2010-1429.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/4.2.0.cp09/html-single/Release_Notes/index.html">http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/4.2.0.cp09/html-single/Release_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFL1mYoXlSAg2UNWIIRAv7+AJ9iYmObzIZJR0JB9y3uYJTNiDmFLQCffAWS
+PloVItVvFf1ulnZJXMTN4X8=
+=jAR2
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

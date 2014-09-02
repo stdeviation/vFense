@@ -1,0 +1,399 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0014&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 14 Jan 2009 13:06:51 &#45;0500 -->
+<!--X-Message-Id: 200901141806.n0EI6mlW012716@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0014-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0014-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0014-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Wed, 14 Jan 2009 13:06:47 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2009:0014-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0014.html">https://rhn.redhat.com/errata/RHSA-2009-0014.html</a>
+Issue date:        2009-01-14
+CVE Names:         CVE-2008-3275 CVE-2008-4933 CVE-2008-4934 
+                   CVE-2008-5025 CVE-2008-5029 CVE-2008-5300 
+                   CVE-2008-5702 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that resolve several security issues and fix
+various bugs are now available for Red Hat Enterprise Linux 4.
+
+This update has been rated as having important security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 4 - i386, ia64, noarch, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, noarch, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, noarch, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update addresses the following security issues:
+
+* the sendmsg() function in the Linux kernel did not block during UNIX
+socket garbage collection. This could, potentially, lead to a local denial
+of service. (CVE-2008-5300, Important)
+
+* when fput() was called to close a socket, the __scm_destroy() function in
+the Linux kernel could make indirect recursive calls to itself. This could,
+potentially, lead to a local denial of service. (CVE-2008-5029, Important)
+
+* a deficiency was found in the Linux kernel virtual file system (VFS)
+implementation. This could allow a local, unprivileged user to make a
+series of file creations within deleted directories, possibly causing a
+denial of service. (CVE-2008-3275, Moderate)
+
+* a buffer underflow flaw was found in the Linux kernel IB700 SBC watchdog
+timer driver. This deficiency could lead to a possible information leak. By
+default, the &quot;/dev/watchdog&quot; device is accessible only to the root user.
+(CVE-2008-5702, Low)
+
+* the hfs and hfsplus file systems code failed to properly handle corrupted
+data structures. This could, potentially, lead to a local denial of
+service. (CVE-2008-4933, CVE-2008-5025, Low)
+
+* a flaw was found in the hfsplus file system implementation. This could,
+potentially, lead to a local denial of service when write operations were
+performed. (CVE-2008-4934, Low)
+
+This update also fixes the following bugs:
+
+* when running Red Hat Enterprise Linux 4.6 and 4.7 on some systems running
+Intel® CPUs, the cpuspeed daemon did not run, preventing the CPU speed from
+being changed, such as not being reduced to an idle state when not in use.
+
+* mmap() could be used to gain access to beyond the first megabyte of RAM,
+due to insufficient checks in the Linux kernel code. Checks have been added
+to prevent this.
+
+* attempting to turn keyboard LEDs on and off rapidly on keyboards with
+slow keyboard controllers, may have caused key presses to fail.
+
+* after migrating a hypervisor guest, the MAC address table was not
+updated, causing packet loss and preventing network connections to the
+guest. Now, a gratuitous ARP request is sent after migration. This
+refreshes the ARP caches, minimizing network downtime.
+
+* writing crash dumps with diskdump may have caused a kernel panic on
+Non-Uniform Memory Access (NUMA) systems with certain memory
+configurations.
+
+* on big-endian systems, such as PowerPC, the getsockopt() function
+incorrectly returned 0 depending on the parameters passed to it when the
+time to live (TTL) value equaled 255, possibly causing memory corruption
+and application crashes.
+
+* a problem in the kernel packages provided by the RHSA-2008:0508 advisory
+caused the Linux kernel's built-in memory copy procedure to return the
+wrong error code after recovering from a page fault on AMD64 and Intel 64
+systems. This may have caused other Linux kernel functions to return wrong
+error codes.
+
+* a divide-by-zero bug in the Linux kernel process scheduler, which may
+have caused kernel panics on certain systems, has been resolved.
+
+* the netconsole kernel module caused the Linux kernel to hang when slave
+interfaces of bonded network interfaces were started, resulting in a system
+hang or kernel panic when restarting the network.
+
+* the &quot;/proc/xen/&quot; directory existed even if systems were not running Red
+Hat Virtualization. This may have caused problems for third-party software
+that checks virtualization-ability based on the existence of &quot;/proc/xen/&quot;.
+Note: this update will remove the &quot;/proc/xen/&quot; directory on systems not
+running Red Hat Virtualization.
+
+All Red Hat Enterprise Linux 4 users should upgrade to these updated
+packages, which contain backported patches to resolve these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+248710 - Local keyboard DoS through LED switching
+457858 - CVE-2008-3275 Linux kernel local filesystem DoS
+460862 - kernel: devmem: add range_is_allowed() check to mmap_mem() [rhel-4.7.z]
+469631 - CVE-2008-4933 kernel: hfsplus: fix Buffer overflow with a corrupted image
+469640 - CVE-2008-4934 kernel: hfsplus: check read_mapping_page() return value
+469891 - lost packets when live migrating (RHEL4 XEN)
+470034 - HP-Japan: RHEL4.6 diskdump fails when NUMA is on
+470196 - getsockopt() returning incorrectly in PPC
+470201 - CVE-2008-5029 kernel: Unix sockets kernel panic
+470769 - CVE-2008-5025 kernel: hfs: fix namelength memory corruption
+471015 - RHSA-2008:0508 linux-2.6.9-x86_64-copy_user-zero-tail.patch broken
+471222 - erroneous load balancing for isolated CPUs leads to divide-by-zero panic in find_busiest_group()
+471391 - netconsole hang the system on ifenslave operation
+473259 - CVE-2008-5300 kernel: fix soft lockups/OOM issues with unix socket garbage collector
+475733 - CVE-2008-5702 kernel: watchdog: ib700wdt.c - buffer_underflow bug
+476534 - Xen balloon driver on RHEL4 x86_64 with 2.6.9-78.0.1.ELsmp
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-78.0.13.EL.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/kernel-2.6.9-78.0.13.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-78.0.13.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.i686.rpm
+kernel-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-hugemem-2.6.9-78.0.13.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-smp-2.6.9-78.0.13.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-xenU-2.6.9-78.0.13.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.0.13.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-78.0.13.EL.ia64.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.ia64.rpm
+kernel-devel-2.6.9-78.0.13.EL.ia64.rpm
+kernel-largesmp-2.6.9-78.0.13.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-78.0.13.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-78.0.13.EL.noarch.rpm
+
+ppc:
+kernel-2.6.9-78.0.13.EL.ppc64.rpm
+kernel-2.6.9-78.0.13.EL.ppc64iseries.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.ppc64.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.ppc64iseries.rpm
+kernel-devel-2.6.9-78.0.13.EL.ppc64.rpm
+kernel-devel-2.6.9-78.0.13.EL.ppc64iseries.rpm
+kernel-largesmp-2.6.9-78.0.13.EL.ppc64.rpm
+kernel-largesmp-devel-2.6.9-78.0.13.EL.ppc64.rpm
+
+s390:
+kernel-2.6.9-78.0.13.EL.s390.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.s390.rpm
+kernel-devel-2.6.9-78.0.13.EL.s390.rpm
+
+s390x:
+kernel-2.6.9-78.0.13.EL.s390x.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.s390x.rpm
+kernel-devel-2.6.9-78.0.13.EL.s390x.rpm
+
+x86_64:
+kernel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-smp-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.0.13.EL.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-78.0.13.EL.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/kernel-2.6.9-78.0.13.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-78.0.13.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.i686.rpm
+kernel-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-hugemem-2.6.9-78.0.13.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-smp-2.6.9-78.0.13.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-xenU-2.6.9-78.0.13.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.0.13.EL.i686.rpm
+
+noarch:
+kernel-doc-2.6.9-78.0.13.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-smp-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.0.13.EL.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-78.0.13.EL.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/kernel-2.6.9-78.0.13.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-78.0.13.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.i686.rpm
+kernel-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-hugemem-2.6.9-78.0.13.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-smp-2.6.9-78.0.13.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-xenU-2.6.9-78.0.13.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.0.13.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-78.0.13.EL.ia64.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.ia64.rpm
+kernel-devel-2.6.9-78.0.13.EL.ia64.rpm
+kernel-largesmp-2.6.9-78.0.13.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-78.0.13.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-78.0.13.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-smp-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.0.13.EL.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-78.0.13.EL.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/kernel-2.6.9-78.0.13.EL.src.rpm</a>
+
+i386:
+kernel-2.6.9-78.0.13.EL.i686.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.i686.rpm
+kernel-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-hugemem-2.6.9-78.0.13.EL.i686.rpm
+kernel-hugemem-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-smp-2.6.9-78.0.13.EL.i686.rpm
+kernel-smp-devel-2.6.9-78.0.13.EL.i686.rpm
+kernel-xenU-2.6.9-78.0.13.EL.i686.rpm
+kernel-xenU-devel-2.6.9-78.0.13.EL.i686.rpm
+
+ia64:
+kernel-2.6.9-78.0.13.EL.ia64.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.ia64.rpm
+kernel-devel-2.6.9-78.0.13.EL.ia64.rpm
+kernel-largesmp-2.6.9-78.0.13.EL.ia64.rpm
+kernel-largesmp-devel-2.6.9-78.0.13.EL.ia64.rpm
+
+noarch:
+kernel-doc-2.6.9-78.0.13.EL.noarch.rpm
+
+x86_64:
+kernel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-debuginfo-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-largesmp-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-largesmp-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-smp-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-smp-devel-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-xenU-2.6.9-78.0.13.EL.x86_64.rpm
+kernel-xenU-devel-2.6.9-78.0.13.EL.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3275">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3275</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4933">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4933</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4934">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4934</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5025">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5025</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5029">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5029</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5300">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5300</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5702">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5702</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#important">http://www.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJbimLXlSAg2UNWIIRAor8AKC1vFKmJ8FBi7sRFi2BUw5BRaZF8ACgvrlA
+LOKUwjVGPlOYesNoJbTPcl4=
+=2exf
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

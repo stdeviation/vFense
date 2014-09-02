@@ -1,9 +1,11 @@
 "CVE DOWNLOADER FOR TOPPATCH, NVD/CVE XML VERSION 1.2"
 import os
-import requests
 import logging
 import logging.config
+import requests
+
 from vFense import VFENSE_LOGGING_CONFIG
+from vFense.plugins.patching.patching import get_remote_file_size
 from vFense.plugins.vuln.cve._constants import CVEDataDir, CVEStrings
 from vFense.plugins.vuln._constants import DateValues
 
@@ -57,6 +59,14 @@ def log_status(status, size, url_path, nvd_path):
         logger.error(msg)
 
 
+def download_xml(url, nvd_file):
+    msg = 'downloading %s' % (url)
+    print msg
+    logger.info(msg)
+    xml_status = cve_downloader(url, nvd_file)
+    log_status(xml_status[0], xml_status[1], url, nvd_file)
+
+
 def start_nvd_xml_download():
     """The is the CVE/NVD Downloader
     Basic Usage:
@@ -85,18 +95,20 @@ def start_nvd_xml_download():
         nvd = CVEStrings.NVDCVE_BASE + str(iter_year) + '.xml'
         full_url = CVEStrings.NVD_DOWNLOAD_URL + nvd
         full_nvd = os.path.join(CVEDataDir.XML_DIR, nvd)
+        remote_file_size = int(get_remote_file_size(full_url))
 
         if not os.path.exists(full_nvd):
-            msg = 'downloading %s' % (full_url)
-            print msg
-            logger.info(msg)
-            xml_status = cve_downloader(full_url, full_nvd)
-            log_status(xml_status[0], xml_status[1], full_url, full_nvd)
+            download_xml(full_url, full_nvd)
 
         else:
-            msg = "%s already exists at %s" % (nvd, full_nvd)
-            print msg
-            logger.info(msg)
+            local_file_size = os.stat(full_nvd).st_size
+            if local_file_size != remote_file_size:
+                download_xml(full_url, full_nvd)
+
+            elif local_file_size == remote_file_size:
+                msg = "%s already exists at %s" % (nvd, full_nvd)
+                print msg
+                logger.info(msg)
 
         if iter_year == DateValues.CURRENT_YEAR:
             msg = 'downloading %s' % (full_url)

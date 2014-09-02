@@ -1,0 +1,152 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0511&#45;01] Important: Red Hat JBoss Operations Network 3.2.1	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 15 May 2014 13:27:07 &#45;0400 -->
+<!--X-Message-Id: 201405151727.s4FHR21O002822@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0511-01] Important: Red Hat JBoss Operations Network 3.2.1	se</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0511-01] Important: Red Hat JBoss Operations Network 3.2.1	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0511-01] Important: Red Hat JBoss Operations Network 3.2.1	security update</li>
+<li><em>Date</em>: Thu, 15 May 2014 17:27:02 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Operations Network 3.2.1 security update
+Advisory ID:       RHSA-2014:0511-01
+Product:           Red Hat JBoss Operations Network
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0511.html">https://rhn.redhat.com/errata/RHSA-2014-0511.html</a>
+Issue date:        2014-05-15
+CVE Names:         CVE-2013-4286 CVE-2014-0114 
+=====================================================================
+
+1. Summary:
+
+An update for Red Hat JBoss Operations Network 3.2.1, which fixes two
+security issues, is now available from the Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+Important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Operations Network is a middleware management solution that
+provides a single point of control to deploy, manage, and monitor JBoss
+Enterprise Middleware, applications, and services.
+
+Apache Struts is a framework for building web applications with Java.
+
+It was found that the Struts 1 ActionForm object allowed access to the
+'class' parameter, which is directly mapped to the getClass() method. A
+remote attacker could use this flaw to manipulate the ClassLoader used by
+an application server running Struts 1. This could lead to remote code
+execution under certain conditions. (CVE-2014-0114)
+
+It was found that when JBoss Web processed a series of HTTP requests in
+which at least one request contained either multiple content-length
+headers, or one content-length header with a chunked transfer-encoding
+header, JBoss Web would incorrectly handle the request. A remote attacker
+could use this flaw to poison a web cache, perform cross-site scripting
+(XSS) attacks, or obtain sensitive information from other requests.
+(CVE-2013-4286)
+
+All users of JBoss Operations Network 3.2.1 as provided from the Red Hat
+Customer Portal are advised to apply this update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing JBoss Operations Network installation (including its databases,
+applications, configuration files, the JBoss Operations Network server's
+file system directory, and so on).
+
+Refer to the &quot;Manual Instructions&quot; section of the release description,
+available from the Customer Portal for this update, for installation
+information.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1069921 - CVE-2013-4286 tomcat: multiple content-length header poisoning flaws
+1091938 - CVE-2014-0114 Apache Struts 1: Class Loader manipulation via request parameters
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4286.html">https://www.redhat.com/security/data/cve/CVE-2013-4286.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0114.html">https://www.redhat.com/security/data/cve/CVE-2014-0114.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=em&amp;version=3.2.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=em&amp;version=3.2.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTdPiJXlSAg2UNWIIRAm+fAKCd/qzvq+1/sytD+ZBrWziUmx6f0ACfS8Pk
+KBO8RCF4ogjaH3eldMgU18c=
+=rGlu
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

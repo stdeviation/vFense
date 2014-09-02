@@ -1,0 +1,221 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0421&#45;01] Moderate: rhevm security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 26 Mar 2012 11:31:53 &#45;0400 -->
+<!--X-Message-Id: 201203261531.q2QFVmHi011868@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0421-01] Moderate: rhevm security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0421-01] Moderate: rhevm security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0421-01] Moderate: rhevm security and bug fix update</li>
+<li><em>Date</em>: Mon, 26 Mar 2012 15:31:47 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhevm security and bug fix update
+Advisory ID:       RHSA-2012:0421-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0421.html">https://rhn.redhat.com/errata/RHSA-2012-0421.html</a>
+Issue date:        2012-03-26
+CVE Names:         CVE-2012-0818 
+=====================================================================
+
+1. Summary:
+
+Updated rhevm packages that fix one security issue and various bugs are now
+available.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M for Servers - x86_64
+
+3. Description:
+
+Red Hat Enterprise Virtualization Manager is a visual tool for centrally
+managing collections of virtual machines running Red Hat Enterprise Linux
+and Microsoft Windows. These packages also include the Red Hat Enterprise
+Virtualization Manager REST (Representational State Transfer) API, a set of
+scriptable commands that give administrators the ability to perform queries
+and operations on Red Hat Enterprise Virtualization Manager.
+
+It was found that RESTEasy was vulnerable to XML External Entity (XXE)
+attacks. If a remote attacker who is able to access the Red Hat Enterprise
+Virtualization Manager REST API submitted a request containing an external
+XML entity to a RESTEasy endpoint, the entity would be resolved, allowing
+the attacker to read files accessible to the user running the application
+server. This flaw affected DOM (Document Object Model) Document and JAXB
+(Java Architecture for XML Binding) input. (CVE-2012-0818)
+
+This update also fixes the following bugs:
+
+* Previously the REST API was ignoring the &quot;Accept&quot; header. This made it
+impossible to retrieve detailed information about specific sub-collections,
+including hosts and disks. The REST API has been updated and now processes
+the &quot;Accept&quot; header as originally intended. (BZ#771369)
+
+* The &quot;start_time&quot; Virtual Machine property was previously always set. This
+meant that even Virtual Machines that were stopped, had a value for
+&quot;start_time&quot;. An update has been made to ensure that the &quot;start_time&quot;
+property is only set when the Virtual Machine has been started, and is
+running. (BZ#772975)
+
+* The 'rhevm-setup' script previously only ran successfully on systems with
+their locale set to 'en_US.UTF-8', 'en_US.utf-8', or 'en_US.utf8'. The
+script has since been updated to also run successfully in additional
+locales, including 'ja_JP.UTF-8'. (BZ#784860)
+
+* The REST API did not previously validate that all required parameters
+were provided when enabling power management. The response code returned
+would also incorrectly indicate the operation had succeeded where
+mandatory parameters were not supplied. An update has been made to ensure
+that the power management parameters are validated correctly. (BZ#785744)
+
+* Previously no warning or error was issued when the amount of free disk
+space on a host was low. When no free disk space remained on the host it
+would become non-responsive with no prior warning. An update has been made
+to report a warning in the audit log when a host's free disk space is less
+than 1000 MB, and an error when a host's free disk space is less than 500
+MB. (BZ#786132)
+
+* When importing Virtual Machines no notification was provided if the MAC
+address of the network interface card clashed with that of an existing
+Virtual Machine. Now when this occurs a message is printed to the audit
+log, highlighting the need for manual intervention. (BZ#795416)
+
+* Previously it was not possible to set more, or less, than one value for
+SpiceSecureChannels using the rhevm-config tool. This meant it was not
+possible to encrypt all SPICE channels. The rhevm-config tool has been
+updated and it is now possible to encrypt all SPICE channels, by adding
+them to the SpiceSecureChannels configuration key. (BZ#784012)
+
+All Red Hat Enterprise Virtualization users are advised to upgrade to these
+updated packages, which address this vulnerability and fix these bugs.
+Refer to the Solution section for information about installing this update.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Follow the upgrade
+procedure in the Red Hat Enterprise Virtualization
+Installation Guide to install these updated packages:
+
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization/3.0/htm">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization/3.0/htm</a>
+l/Installation_Guide/chap-Installation_Guide-Installing_the_RHEV_Manager-Up
+grades.html
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+785631 - CVE-2012-0818 RESTEasy: XML eXternal Entity (XXE) flaw
+
+6. Package List:
+
+RHEV-M for Servers:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-3.0.3_0001-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHEV/SRPMS/rhevm-3.0.3_0001-3.el6.src.rpm</a>
+
+x86_64:
+rhevm-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-backend-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-config-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-dbscripts-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-debuginfo-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-genericapi-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-iso-uploader-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-jboss-deps-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-log-collector-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-notification-service-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-restapi-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-setup-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-tools-common-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-userportal-3.0.3_0001-3.el6.x86_64.rpm
+rhevm-webadmin-portal-3.0.3_0001-3.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0818.html">https://www.redhat.com/security/data/cve/CVE-2012-0818.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization/3.0/html/Installation_Guide/chap-Installation_Guide-Installing_the_RHEV_Manager-Upgrades.html">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Virtualization/3.0/html/Installation_Guide/chap-Installation_Guide-Installing_the_RHEV_Manager-Upgrades.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFPcIu9XlSAg2UNWIIRAncsAJ9B7Jyw49kqs90XhnHrxk27IeTgzQCfThJK
+AEh85Iy3CUzWanOyYNwsLnI=
+=aN3C
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

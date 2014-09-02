@@ -3,7 +3,7 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import time_it
-from vFense.plugins.vuln.windows._db_model import WindowsSecurityBulletinKey
+from vFense.plugins.vuln.windows._db_model import WindowsVulnerabilityKeys
 from vFense.plugins.vuln.windows._db import fetch_vuln_ids, \
     fetch_vuln_data
 
@@ -33,8 +33,8 @@ def get_vuln_ids(kb):
     """
 
     info = {
-        WindowsSecurityBulletinKey.BulletinId: '',
-        WindowsSecurityBulletinKey.CveIds: []
+        WindowsVulnerabilityKeys.BulletinId: '',
+        WindowsVulnerabilityKeys.CveIds: []
     }
 
     data = fetch_vuln_ids(kb)

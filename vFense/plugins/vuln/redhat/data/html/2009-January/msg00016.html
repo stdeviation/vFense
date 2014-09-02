@@ -1,0 +1,235 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:0006&#45;01] Moderate: rhpki security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 15 Jan 2009 04:58:42 &#45;0500 -->
+<!--X-Message-Id: 200901150958.n0F9whOU022706@int&#45;mx1.corp.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:0006-01] Moderate: rhpki security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:0006-01] Moderate: rhpki security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:0006-01] Moderate: rhpki security and bug fix update</li>
+<li><em>Date</em>: Thu, 15 Jan 2009 04:58:42 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhpki security and bug fix update
+Advisory ID:       RHSA-2009:0006-01
+Product:           Red Hat Certificate System
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-0006.html">https://rhn.redhat.com/errata/RHSA-2009-0006.html</a>
+Issue date:        2009-01-15
+CVE Names:         CVE-2008-2367 CVE-2008-2368 
+=====================================================================
+
+1. Summary:
+
+Updated pkisetup, rhpki-common, rhpki-ca, rhpki-kra, rhpki-ocsp, rhpki-tks,
+and rhpki-tps (and rhpki-util for Solaris 9) packages that fix various
+security issues and several bugs are now available for Red Hat Certificate
+System 7.2.
+
+This update has been rated as having moderate security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Certificate System 7.2 for 4AS - i386, noarch, x86_64
+Red Hat Certificate System 7.2 for 4ES - i386, noarch, x86_64
+
+3. Description:
+
+Red Hat Certificate System is an enterprise software system designed to
+manage enterprise public key infrastructure (PKI) deployments.
+
+It was discovered that Red Hat Certificate System used insecure default
+file permissions on certain configuration files (for example,
+password.conf) that may contain authentication credentials. These 
+credentials should only be accessible to administrative and service users. 
+A local user could use this flaw to read Red Hat Certificate System 
+configuration files containing sensitive information. (CVE-2008-2367)
+
+It was discovered that Red Hat Certificate System stored plain text
+passwords in multiple debug log files with insufficient access restrictions
+(such as the UserDirEnrollment log and RA wizard installer log). A local
+user could use this flaw to extract plain text passwords from the Red Hat
+Certificate System debug log files. (CVE-2008-2368)
+
+These updated packages fix the following bugs:
+
+* Due to a regression, signing a certificate revocation list (CRL) with
+approximately 150,000 records may have taken up to five minutes. In these
+updated packages, signing such CRLs takes approximately twenty seconds.
+
+* Because Certificate System servers could not handle Online Certificate 
+Status Protocol (OCSP) requests in the GET method, OCSP GET requests 
+resulted in a 404 error. The bug for handling GET requests may have also 
+caused a system to use 100% CPU. This has been resolved. Additionally, 
+OCSP requests are now logged to the debug log file.
+
+* It was possible for a CRL update to run at the same time as a certificate
+status update. Now, CRL updating locks out the certificate status update
+thread.
+
+* Inefficient LDAP search methods caused LDAP searches for 100,000 or 
+more revoked certificates to take twenty minutes or longer during CRL 
+generation. The LDAP search method has been modified to greatly improve 
+LDAP search times.
+
+* The default OCSP verification path has changed since Red Hat Certificate
+System 7.1. These updated packages add support for certificates that use
+the old AuthorityInfoAccess (AIA) URL.
+
+* An OCSP client submitting an OCSP request via the GET method may have 
+caused a NullPointerException.
+
+* If an agent automatically approved a certificate signing request (CSR),
+using AgentCertAuth, the resultant certificate contained blank 
+subjectAltName extension fields. A manual enrollment by the same agent 
+produced a certificate with the correct number of subjectAltNames and no 
+blank entries. With this update, automated enrollments through 
+AgentCertAuth do not have blank fields in issued certificates.
+
+All users of Red Hat Certificate System 7.2 should upgrade to these updated
+packages, which resolve these issues.
+
+4. Solution:
+
+Users running Red Hat Certificate System on Red Hat Enterprise Linux:
+
+Before applying this update, make sure that all previously-released errata
+relevant to your system have been applied.
+
+This update is available via Red Hat Network. Details on how to use the Red
+Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+Users running Red Hat Certificate System on Sun Solaris:
+
+Updated Solaris packages in .pkg format are available in the Red Hat
+Certificate System Solaris channels on the Red Hat Network. These packages
+should be installed/upgraded using Solaris native package management tools.
+
+Refer to the Red Hat Certificate System Administration Guide for
+installation instructions:
+<a  rel="nofollow" href="http://www.redhat.com/docs/manuals/cert-system/">http://www.redhat.com/docs/manuals/cert-system/</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+451998 - CVE-2008-2367 Certificate System: insecure config file permissions
+452000 - CVE-2008-2368 Certificate System: plain text passwords stored in debug log
+
+6. Package List:
+
+Red Hat Certificate System 7.2 for 4AS:
+
+i386:
+rhpki-tps-7.2.0-8.i386.rpm
+
+noarch:
+pkisetup-7.2.0-7.noarch.rpm
+rhpki-ca-7.2.0-6.noarch.rpm
+rhpki-common-7.2.0-16.noarch.rpm
+rhpki-kra-7.2.0-5.noarch.rpm
+rhpki-ocsp-7.2.0-5.noarch.rpm
+rhpki-tks-7.2.0-5.noarch.rpm
+
+x86_64:
+rhpki-tps-7.2.0-8.x86_64.rpm
+
+Red Hat Certificate System 7.2 for 4ES:
+
+i386:
+rhpki-tps-7.2.0-8.i386.rpm
+
+noarch:
+pkisetup-7.2.0-7.noarch.rpm
+rhpki-ca-7.2.0-6.noarch.rpm
+rhpki-common-7.2.0-16.noarch.rpm
+rhpki-kra-7.2.0-5.noarch.rpm
+rhpki-ocsp-7.2.0-5.noarch.rpm
+rhpki-tks-7.2.0-5.noarch.rpm
+
+x86_64:
+rhpki-tps-7.2.0-8.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2367">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2367</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2368">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2368</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJbwfkXlSAg2UNWIIRAncIAKCvjiLNqcrJRmVwJJDHWFheicns0wCeIZii
+Fs1Z4jiNYbpNjrav1zt437I=
+=d3ij
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

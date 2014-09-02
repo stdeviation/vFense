@@ -1,0 +1,153 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0235&#45;01] Important: jbossweb security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 4 Feb 2013 19:13:39 &#45;0500 -->
+<!--X-Message-Id: 201302050013.r150Dc9n025413@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0235-01] Important: jbossweb security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0235-01] Important: jbossweb security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0235-01] Important: jbossweb security update</li>
+<li><em>Date</em>: Tue, 5 Feb 2013 00:13:38 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: jbossweb security update
+Advisory ID:       RHSA-2013:0235-01
+Product:           JBoss Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0235.html">https://rhn.redhat.com/errata/RHSA-2013-0235.html</a>
+Issue date:        2013-02-04
+CVE Names:         CVE-2012-3546 
+=====================================================================
+
+1. Summary:
+
+An update for JBoss Enterprise Portal Platform 5.2.2 and JBoss Enterprise
+SOA Platform 5.3.0 that fixes one security issue is now available from the
+Red Hat Customer Portal.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+JBoss Web is a web container based on Apache Tomcat. It provides a single
+deployment platform for the JavaServer Pages (JSP) and Java Servlet
+technologies.
+
+It was found that when an application used FORM authentication, along with
+another component that calls request.setUserPrincipal() before the call to
+FormAuthenticator#authenticate() (such as the Single-Sign-On valve), it was
+possible to bypass the security constraint checks in the FORM authenticator
+by appending &quot;/j_security_check&quot; to the end of a URL. A remote attacker
+with an authenticated session on an affected application could use this
+flaw to circumvent authorization controls, and thereby access resources not
+permitted by the roles associated with their authenticated session.
+(CVE-2012-3546)
+
+Warning: Before applying this update, back up your JBoss installation,
+including any databases, database settings, applications, configuration
+files, and so on.
+
+All users of JBoss Enterprise Portal Platform 5.2.2 and JBoss Enterprise
+SOA Platform 5.3.0 as provided from the Red Hat Customer Portal are advised
+to install this update.
+
+3. Solution:
+
+The References section of this erratum contains download links (you must
+log in to download the update). Before applying this update, back up your
+JBoss installation, including any databases, database settings,
+applications, configuration files, and so on.
+
+For both JBoss Enterprise Portal Platform and JBoss Enterprise SOA
+Platform, it is recommended to halt the server by stopping the JBoss
+Application Server process before installing this update, and then after
+installing the update, restart the server by starting the JBoss Application
+Server process.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+883634 - CVE-2012-3546 Tomcat/JBoss Web: Bypass of security constraints
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-3546.html">https://www.redhat.com/security/data/cve/CVE-2012-3546.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=jbportal&amp;version=5.2.2">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=jbportal&amp;version=5.2.2</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=soaplatform&amp;version=5.3.0+GA">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=securityPatches&amp;product=soaplatform&amp;version=5.3.0+GA</a>
+<a  rel="nofollow" href="http://tomcat.apache.org/security-6.html">http://tomcat.apache.org/security-6.html</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFREE6bXlSAg2UNWIIRAtAZAJ48nP6TokkmGnePFdAf0npOvisEkwCfZOCo
+BJX+Jf/b87zxtk+KLoHUaX8=
+=99HK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][<a href="msg00008.html">Date Next</a>] &nbsp; [<a href="msg00006.html">Thread Prev</a>][<a href="msg00008.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

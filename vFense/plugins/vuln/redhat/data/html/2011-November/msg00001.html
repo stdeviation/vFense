@@ -1,0 +1,273 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1419&#45;01] Moderate: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 1 Nov 2011 13:21:15 &#45;0400 -->
+<!--X-Message-Id: 201111011721.pA1HL9wB002806@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1419-01] Moderate: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1419-01] Moderate: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1419-01] Moderate: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 1 Nov 2011 17:21:09 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel security and bug fix update
+Advisory ID:       RHSA-2011:1419-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1419.html">https://rhn.redhat.com/errata/RHSA-2011-1419.html</a>
+Issue date:        2011-11-01
+CVE Names:         CVE-2011-3188 CVE-2011-3209 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix two security issues and four bugs are now
+available for Red Hat Enterprise Linux 5.6 Extended Update Support.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5.6.z server) - i386, ia64, noarch, ppc, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* The way IPv4 and IPv6 protocol sequence numbers and fragment IDs were
+generated could allow a man-in-the-middle attacker to inject packets and
+possibly hijack connections. Protocol sequence numbers and fragment IDs are
+now more random. (CVE-2011-3188, Moderate)
+
+* A flaw was found in the Linux kernel's clock implementation on 32-bit,
+SMP (symmetric multiprocessing) systems. A local, unprivileged user could
+use this flaw to cause a divide error fault, resulting in a denial of
+service. (CVE-2011-3209, Moderate)
+
+Red Hat would like to thank Dan Kaminsky for reporting CVE-2011-3188, and
+Yasuaki Ishimatsu for reporting CVE-2011-3209.
+
+In addition, this update fixes the following bugs:
+
+* When the Global File System 2 (GFS2) file system is suspended, its delete
+work queue is also suspended, along with any pending work on the queue.
+Prior to this update, if GFS2's transaction lock was demoted while the
+delete work queue was suspended, a deadlock could occur on the file system
+because the file system tried to flush the work queue in the lock demotion
+code. With this update, the delete work queue is no longer flushed by the
+lock demotion code, and a deadlock no longer occurs. Instead, the work
+queue is flushed by the unmount operation, so that pending work is properly
+completed. (BZ#733678)
+
+* A previously applied patch introduced a regression for third-party file
+systems that do not set the FS_HAS_IODONE2 flag, specifically, Oracle
+Cluster File System 2 (OCFS2). The patch removed a call to the aio_complete
+function, resulting in no completion events being processed, causing
+user-space applications to become unresponsive. This update reintroduces
+the aio_complete function call, fixing this issue. (BZ#734156)
+
+* Certain devices support multiple operation modes. For example, EMC
+CLARiiON disk arrays support ALUA mode and their own vendor specific mode
+for failover. In Red Hat Enterprise Linux 5.5, a bug was discovered that
+prevented tools such as multipath from being able to select the
+device/hardware handler plug-in to use. This resulted in the application
+(for example, multipath) not working properly. With this update, the kernel
+has been modified to allow applications to select the device/hardware
+handler to use, thus resolving this issue. (BZ#739900)
+
+* This update improves the performance of delete/unlink operations in a
+GFS2 file system with large files by adding a layer of metadata read-ahead
+for indirect blocks. (BZ#743805)
+
+Users should upgrade to these updated packages, which contain backported
+patches to resolve these issues. The system must be rebooted for this
+update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+732658 - CVE-2011-3188 kernel: net: improve sequence number generation
+732878 - CVE-2011-3209 kernel: panic occurs when clock_gettime() is called
+733678 - GFS2: recovery stuck on transaction lock [rhel-5.6.z]
+739900 - scsi_dh_emc gives &quot;error attaching hardware handler&quot; for EMC active-active SANs [rhel-5.6.z]
+
+6. Package List:
+
+Red Hat Enterprise Linux (v. 5.6.z server):
+
+Source:
+kernel-2.6.18-238.28.1.el5.src.rpm
+
+i386:
+kernel-2.6.18-238.28.1.el5.i686.rpm
+kernel-PAE-2.6.18-238.28.1.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-238.28.1.el5.i686.rpm
+kernel-PAE-devel-2.6.18-238.28.1.el5.i686.rpm
+kernel-debug-2.6.18-238.28.1.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-238.28.1.el5.i686.rpm
+kernel-debug-devel-2.6.18-238.28.1.el5.i686.rpm
+kernel-debuginfo-2.6.18-238.28.1.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-238.28.1.el5.i686.rpm
+kernel-devel-2.6.18-238.28.1.el5.i686.rpm
+kernel-headers-2.6.18-238.28.1.el5.i386.rpm
+kernel-xen-2.6.18-238.28.1.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-238.28.1.el5.i686.rpm
+kernel-xen-devel-2.6.18-238.28.1.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-238.28.1.el5.ia64.rpm
+kernel-debug-2.6.18-238.28.1.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-238.28.1.el5.ia64.rpm
+kernel-debug-devel-2.6.18-238.28.1.el5.ia64.rpm
+kernel-debuginfo-2.6.18-238.28.1.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-238.28.1.el5.ia64.rpm
+kernel-devel-2.6.18-238.28.1.el5.ia64.rpm
+kernel-headers-2.6.18-238.28.1.el5.ia64.rpm
+kernel-xen-2.6.18-238.28.1.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-238.28.1.el5.ia64.rpm
+kernel-xen-devel-2.6.18-238.28.1.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-238.28.1.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-238.28.1.el5.ppc64.rpm
+kernel-debug-2.6.18-238.28.1.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-238.28.1.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-238.28.1.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-238.28.1.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-238.28.1.el5.ppc64.rpm
+kernel-devel-2.6.18-238.28.1.el5.ppc64.rpm
+kernel-headers-2.6.18-238.28.1.el5.ppc.rpm
+kernel-headers-2.6.18-238.28.1.el5.ppc64.rpm
+kernel-kdump-2.6.18-238.28.1.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-238.28.1.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-238.28.1.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-238.28.1.el5.s390x.rpm
+kernel-debug-2.6.18-238.28.1.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-238.28.1.el5.s390x.rpm
+kernel-debug-devel-2.6.18-238.28.1.el5.s390x.rpm
+kernel-debuginfo-2.6.18-238.28.1.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-238.28.1.el5.s390x.rpm
+kernel-devel-2.6.18-238.28.1.el5.s390x.rpm
+kernel-headers-2.6.18-238.28.1.el5.s390x.rpm
+kernel-kdump-2.6.18-238.28.1.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-238.28.1.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-238.28.1.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-238.28.1.el5.x86_64.rpm
+kernel-debug-2.6.18-238.28.1.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-238.28.1.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-238.28.1.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-238.28.1.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-238.28.1.el5.x86_64.rpm
+kernel-devel-2.6.18-238.28.1.el5.x86_64.rpm
+kernel-headers-2.6.18-238.28.1.el5.x86_64.rpm
+kernel-xen-2.6.18-238.28.1.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-238.28.1.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-238.28.1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3188.html">https://www.redhat.com/security/data/cve/CVE-2011-3188.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3209.html">https://www.redhat.com/security/data/cve/CVE-2011-3209.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOsCp6XlSAg2UNWIIRAqjtAKC+6itwqo7i/nD2TiB5jAoly0MGowCfU9EU
+LGpVFEpzls46GkvOInRcpSo=
+=qH8Q
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][<a href="msg00002.html">Date Next</a>] &nbsp; [<a href="msg00000.html">Thread Prev</a>][<a href="msg00002.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

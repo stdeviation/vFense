@@ -1,0 +1,174 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:0882&#45;01] Low: Red Hat Network Satellite server jabberd	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 16 Jun 2011 15:36:50 &#45;0400 -->
+<!--X-Message-Id: 201106161936.p5GJaiYr028027@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:0882-01] Low: Red Hat Network Satellite server jabberd	securi</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:0882-01] Low: Red Hat Network Satellite server jabberd	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2011:0882-01] Low: Red Hat Network Satellite server jabberd	security update</li>
+<li><em>Date</em>: Thu, 16 Jun 2011 19:36:44 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat Network Satellite server jabberd security update
+Advisory ID:       RHSA-2011:0882-01
+Product:           Red Hat Network Satellite Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-0882.html">https://rhn.redhat.com/errata/RHSA-2011-0882.html</a>
+Issue date:        2011-06-16
+CVE Names:         CVE-2011-1755 
+=====================================================================
+
+1. Summary:
+
+An updated jabberd package that fixes one security issue is now available
+for Red Hat Network Satellite 5.4.1 for Red Hat Enterprise Linux 5.
+
+The Red Hat Security Response Team has rated this update as having low
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Network Satellite Server 5.4 (RHEL v.5) - i386, s390x, x86_64
+
+3. Description:
+
+This package provides jabberd 2, an Extensible Messaging and Presence
+Protocol (XMPP) server used for XML based communication.
+
+It was found that the jabberd daemon did not properly detect recursion
+during entity expansion. A remote attacker could provide a
+specially-crafted XML file containing a large number of nested entity
+references, which once processed by the jabberd daemon, could lead to a
+denial of service (excessive memory and CPU consumption). (CVE-2011-1755)
+
+Red Hat would like to thank Nico Golde of the Debian Security Team for
+reporting this issue. The Debian Security Team acknowledges Wouter
+Coekaerts as the original reporter.
+
+Users of Red Hat Network Satellite 5.4.1 are advised to upgrade to this
+updated jabberd package, which resolves this issue. For this update to take
+effect, Red Hat Network Satellite must be restarted. Refer to the Solution
+section for details.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+Run the following command to restart the Red Hat Network Satellite
+server:
+
+# rhn-satellite restart
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+700390 - CVE-2011-1755 jabberd: DoS via the XML &quot;billion laughs attack&quot;
+
+6. Package List:
+
+Red Hat Network Satellite Server 5.4 (RHEL v.5):
+
+Source:
+jabberd-2.2.8-12.el5sat.src.rpm
+
+i386:
+jabberd-2.2.8-12.el5sat.i386.rpm
+jabberd-debuginfo-2.2.8-12.el5sat.i386.rpm
+
+s390x:
+jabberd-2.2.8-12.el5sat.s390x.rpm
+jabberd-debuginfo-2.2.8-12.el5sat.s390x.rpm
+
+x86_64:
+jabberd-2.2.8-12.el5sat.x86_64.rpm
+jabberd-debuginfo-2.2.8-12.el5sat.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-1755.html">https://www.redhat.com/security/data/cve/CVE-2011-1755.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFN+ls1XlSAg2UNWIIRAmwAAJoDSpALZrhvGJOkYWVtvg42UM1xFQCgk6rX
+BxwLgtgDOCcYEu1Wvk0eGeQ=
+=+jcc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

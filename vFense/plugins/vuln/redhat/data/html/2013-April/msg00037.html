@@ -1,0 +1,392 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0772&#45;01] Important: mysql security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 25 Apr 2013 13:39:41 &#45;0400 -->
+<!--X-Message-Id: 201304251739.r3PHdeCu023220@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0772-01] Important: mysql security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0772-01] Important: mysql security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0772-01] Important: mysql security update</li>
+<li><em>Date</em>: Thu, 25 Apr 2013 17:39:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: mysql security update
+Advisory ID:       RHSA-2013:0772-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0772.html">https://rhn.redhat.com/errata/RHSA-2013-0772.html</a>
+Issue date:        2013-04-25
+CVE Names:         CVE-2012-5614 CVE-2013-1506 CVE-2013-1521 
+                   CVE-2013-1531 CVE-2013-1532 CVE-2013-1544 
+                   CVE-2013-1548 CVE-2013-1552 CVE-2013-1555 
+                   CVE-2013-2375 CVE-2013-2378 CVE-2013-2389 
+                   CVE-2013-2391 CVE-2013-2392 
+=====================================================================
+
+1. Summary:
+
+Updated mysql packages that fix several security issues are now available
+for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. Common Vulnerability Scoring System (CVSS) base
+scores, which give detailed severity ratings, are available for each
+vulnerability from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+MySQL is a multi-user, multi-threaded SQL database server. It consists of
+the MySQL server daemon (mysqld) and many client programs and libraries.
+
+This update fixes several vulnerabilities in the MySQL database server.
+Information about these flaws can be found on the Oracle Critical Patch
+Update Advisory page, listed in the References section. (CVE-2012-5614,
+CVE-2013-1506, CVE-2013-1521, CVE-2013-1531, CVE-2013-1532, CVE-2013-1544,
+CVE-2013-1548, CVE-2013-1552, CVE-2013-1555, CVE-2013-2375, CVE-2013-2378,
+CVE-2013-2389, CVE-2013-2391, CVE-2013-2392)
+
+These updated packages upgrade MySQL to version 5.1.69. Refer to the MySQL
+release notes listed in the References section for a full list of changes.
+
+All MySQL users should upgrade to these updated packages, which correct
+these issues. After installing this update, the MySQL server daemon
+(mysqld) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+882607 - CVE-2012-5614 mysql: COM_BINLOG_DUMP crash on invalid data
+952861 - CVE-2013-1521 mysql: unspecified vulnerability related to Server Locking (CPU April 2013)
+952862 - CVE-2013-2378 mysql: unspecified vulnerability related to Information Schema (CPU April 2013)
+952863 - CVE-2013-1552 mysql: unspecified vulnerability related to Server (CPU April 2013)
+952864 - CVE-2013-1531 mysql: unspecified vulnerability related to Server Privileges (CPU April 2013)
+952866 - CVE-2013-2375 mysql: unspecified vulnerability related to Server Privileges (CPU April 2013)
+952869 - CVE-2013-1544 mysql: unspecified DoS related to Data Manipulation Language (CPU April 2013)
+952871 - CVE-2013-1532 mysql: unspecified DoS related to Information Schema (CPU April 2013)
+952874 - CVE-2013-2389 mysql: unspecified DoS related to InnoDB (CPU April 2013)
+952875 - CVE-2013-2392 mysql: unspecified DoS related to Server Optimizer (CPU April 2013)
+952876 - CVE-2013-1555 mysql: unspecified DoS related to Server Partition (CPU April 2013)
+952893 - CVE-2013-1548 mysql: unspecified DoS related to Server Types (CPU April 2013)
+952895 - CVE-2013-2391 mysql: unspecified vulnerability related to Server Install (CPU April 2013)
+952899 - CVE-2013-1506 mysql: unspecified DoS related to Server Locking (CPU April 2013)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm</a>
+
+i386:
+mysql-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-libs-5.1.69-1.el6_4.i686.rpm
+mysql-server-5.1.69-1.el6_4.i686.rpm
+
+x86_64:
+mysql-5.1.69-1.el6_4.x86_64.rpm
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.x86_64.rpm
+mysql-libs-5.1.69-1.el6_4.i686.rpm
+mysql-libs-5.1.69-1.el6_4.x86_64.rpm
+mysql-server-5.1.69-1.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm</a>
+
+i386:
+mysql-bench-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-devel-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.i686.rpm
+mysql-test-5.1.69-1.el6_4.i686.rpm
+
+x86_64:
+mysql-bench-5.1.69-1.el6_4.x86_64.rpm
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.x86_64.rpm
+mysql-devel-5.1.69-1.el6_4.i686.rpm
+mysql-devel-5.1.69-1.el6_4.x86_64.rpm
+mysql-embedded-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-5.1.69-1.el6_4.x86_64.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.x86_64.rpm
+mysql-test-5.1.69-1.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm</a>
+
+x86_64:
+mysql-5.1.69-1.el6_4.x86_64.rpm
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.x86_64.rpm
+mysql-libs-5.1.69-1.el6_4.i686.rpm
+mysql-libs-5.1.69-1.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm</a>
+
+x86_64:
+mysql-bench-5.1.69-1.el6_4.x86_64.rpm
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.x86_64.rpm
+mysql-devel-5.1.69-1.el6_4.i686.rpm
+mysql-devel-5.1.69-1.el6_4.x86_64.rpm
+mysql-embedded-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-5.1.69-1.el6_4.x86_64.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.x86_64.rpm
+mysql-server-5.1.69-1.el6_4.x86_64.rpm
+mysql-test-5.1.69-1.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm</a>
+
+i386:
+mysql-5.1.69-1.el6_4.i686.rpm
+mysql-bench-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-devel-5.1.69-1.el6_4.i686.rpm
+mysql-libs-5.1.69-1.el6_4.i686.rpm
+mysql-server-5.1.69-1.el6_4.i686.rpm
+mysql-test-5.1.69-1.el6_4.i686.rpm
+
+ppc64:
+mysql-5.1.69-1.el6_4.ppc64.rpm
+mysql-bench-5.1.69-1.el6_4.ppc64.rpm
+mysql-debuginfo-5.1.69-1.el6_4.ppc.rpm
+mysql-debuginfo-5.1.69-1.el6_4.ppc64.rpm
+mysql-devel-5.1.69-1.el6_4.ppc.rpm
+mysql-devel-5.1.69-1.el6_4.ppc64.rpm
+mysql-libs-5.1.69-1.el6_4.ppc.rpm
+mysql-libs-5.1.69-1.el6_4.ppc64.rpm
+mysql-server-5.1.69-1.el6_4.ppc64.rpm
+mysql-test-5.1.69-1.el6_4.ppc64.rpm
+
+s390x:
+mysql-5.1.69-1.el6_4.s390x.rpm
+mysql-bench-5.1.69-1.el6_4.s390x.rpm
+mysql-debuginfo-5.1.69-1.el6_4.s390.rpm
+mysql-debuginfo-5.1.69-1.el6_4.s390x.rpm
+mysql-devel-5.1.69-1.el6_4.s390.rpm
+mysql-devel-5.1.69-1.el6_4.s390x.rpm
+mysql-libs-5.1.69-1.el6_4.s390.rpm
+mysql-libs-5.1.69-1.el6_4.s390x.rpm
+mysql-server-5.1.69-1.el6_4.s390x.rpm
+mysql-test-5.1.69-1.el6_4.s390x.rpm
+
+x86_64:
+mysql-5.1.69-1.el6_4.x86_64.rpm
+mysql-bench-5.1.69-1.el6_4.x86_64.rpm
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.x86_64.rpm
+mysql-devel-5.1.69-1.el6_4.i686.rpm
+mysql-devel-5.1.69-1.el6_4.x86_64.rpm
+mysql-libs-5.1.69-1.el6_4.i686.rpm
+mysql-libs-5.1.69-1.el6_4.x86_64.rpm
+mysql-server-5.1.69-1.el6_4.x86_64.rpm
+mysql-test-5.1.69-1.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm</a>
+
+i386:
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.i686.rpm
+
+ppc64:
+mysql-debuginfo-5.1.69-1.el6_4.ppc.rpm
+mysql-debuginfo-5.1.69-1.el6_4.ppc64.rpm
+mysql-embedded-5.1.69-1.el6_4.ppc.rpm
+mysql-embedded-5.1.69-1.el6_4.ppc64.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.ppc.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.ppc64.rpm
+
+s390x:
+mysql-debuginfo-5.1.69-1.el6_4.s390.rpm
+mysql-debuginfo-5.1.69-1.el6_4.s390x.rpm
+mysql-embedded-5.1.69-1.el6_4.s390.rpm
+mysql-embedded-5.1.69-1.el6_4.s390x.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.s390.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.s390x.rpm
+
+x86_64:
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.x86_64.rpm
+mysql-embedded-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-5.1.69-1.el6_4.x86_64.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm</a>
+
+i386:
+mysql-5.1.69-1.el6_4.i686.rpm
+mysql-bench-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-devel-5.1.69-1.el6_4.i686.rpm
+mysql-libs-5.1.69-1.el6_4.i686.rpm
+mysql-server-5.1.69-1.el6_4.i686.rpm
+mysql-test-5.1.69-1.el6_4.i686.rpm
+
+x86_64:
+mysql-5.1.69-1.el6_4.x86_64.rpm
+mysql-bench-5.1.69-1.el6_4.x86_64.rpm
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.x86_64.rpm
+mysql-devel-5.1.69-1.el6_4.i686.rpm
+mysql-devel-5.1.69-1.el6_4.x86_64.rpm
+mysql-libs-5.1.69-1.el6_4.i686.rpm
+mysql-libs-5.1.69-1.el6_4.x86_64.rpm
+mysql-server-5.1.69-1.el6_4.x86_64.rpm
+mysql-test-5.1.69-1.el6_4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mysql-5.1.69-1.el6_4.src.rpm</a>
+
+i386:
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.i686.rpm
+
+x86_64:
+mysql-debuginfo-5.1.69-1.el6_4.i686.rpm
+mysql-debuginfo-5.1.69-1.el6_4.x86_64.rpm
+mysql-embedded-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-5.1.69-1.el6_4.x86_64.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.i686.rpm
+mysql-embedded-devel-5.1.69-1.el6_4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5614.html">https://www.redhat.com/security/data/cve/CVE-2012-5614.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1506.html">https://www.redhat.com/security/data/cve/CVE-2013-1506.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1521.html">https://www.redhat.com/security/data/cve/CVE-2013-1521.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1531.html">https://www.redhat.com/security/data/cve/CVE-2013-1531.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1532.html">https://www.redhat.com/security/data/cve/CVE-2013-1532.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1544.html">https://www.redhat.com/security/data/cve/CVE-2013-1544.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1548.html">https://www.redhat.com/security/data/cve/CVE-2013-1548.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1552.html">https://www.redhat.com/security/data/cve/CVE-2013-1552.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1555.html">https://www.redhat.com/security/data/cve/CVE-2013-1555.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2375.html">https://www.redhat.com/security/data/cve/CVE-2013-2375.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2378.html">https://www.redhat.com/security/data/cve/CVE-2013-2378.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2389.html">https://www.redhat.com/security/data/cve/CVE-2013-2389.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2391.html">https://www.redhat.com/security/data/cve/CVE-2013-2391.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2392.html">https://www.redhat.com/security/data/cve/CVE-2013-2392.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.oracle.com/technetwork/topics/security/cpuapr2013-1899555.html#AppendixMSQL">http://www.oracle.com/technetwork/topics/security/cpuapr2013-1899555.html#AppendixMSQL</a>
+<a  rel="nofollow" href="http://dev.mysql.com/doc/relnotes/mysql/5.1/en/news-5-1-68.html">http://dev.mysql.com/doc/relnotes/mysql/5.1/en/news-5-1-68.html</a>
+<a  rel="nofollow" href="http://dev.mysql.com/doc/relnotes/mysql/5.1/en/news-5-1-69.html">http://dev.mysql.com/doc/relnotes/mysql/5.1/en/news-5-1-69.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFReWo8XlSAg2UNWIIRAmuIAJ4jP1zQz4/IreYBUOHkquq9V+71qQCgpDfA
+585DgLwXPclUGR1SzFAaT2M=
+=bIVs
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00036.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00036.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

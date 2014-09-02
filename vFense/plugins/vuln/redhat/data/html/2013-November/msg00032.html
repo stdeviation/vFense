@@ -1,0 +1,676 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:1661&#45;02] Moderate: RDMA stack security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Nov 2013 23:44:26 &#45;0500 -->
+<!--X-Message-Id: 201311210444.rAL4iN0D016843@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:1661-02] Moderate: RDMA stack security, bug fix,	and enhancem</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:1661-02] Moderate: RDMA stack security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:1661-02] Moderate: RDMA stack security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 21 Nov 2013 04:47:56 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: RDMA stack security, bug fix, and enhancement update
+Advisory ID:       RHSA-2013:1661-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-1661.html">https://rhn.redhat.com/errata/RHSA-2013-1661.html</a>
+Issue date:        2013-11-21
+Keywords:          rdma libibverbs mlx4 InfiniBand iWARP RoCE IBoE
+CVE Names:         CVE-2012-4516 CVE-2013-2561 
+=====================================================================
+
+1. Summary:
+
+Updated rdma, libibverbs, libmlx4, librdmacm, qperf, perftest, openmpi,
+compat-openmpi, infinipath-psm, mpitests, and rds-tools packages that fix
+two security issues, several bugs, and add various enhancements are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Red Hat Enterprise Linux includes a collection of Infiniband and iWARP
+utilities, libraries and development packages for writing applications that
+use Remote Direct Memory Access (RDMA) technology.
+
+A flaw was found in the way ibutils handled temporary files. A local
+attacker could use this flaw to cause arbitrary files to be overwritten as
+the root user via a symbolic link attack. (CVE-2013-2561)
+
+It was discovered that librdmacm used a static port to connect to the
+ib_acm service. A local attacker able to run a specially crafted ib_acm
+service on that port could use this flaw to provide incorrect address
+resolution information to librmdacm applications. (CVE-2012-4516)
+
+The CVE-2012-4516 issue was discovered by Florian Weimer of the Red Hat
+Product Security Team.
+
+This advisory updates the following packages to the latest upstream
+releases, providing a number of bug fixes and enhancements over the
+previous versions:
+
+* libibverbs-1.1.7
+* libmlx4-1.0.5
+* librdmacm-1.0.17
+* mstflint-3.0
+* perftest-2.0
+* qperf-0.4.9
+* rdma-3.10
+
+Several bugs have been fixed in the openmpi, mpitests, ibutils, and
+infinipath-psm packages.
+
+The most notable changes in these updated packages from the RDMA stack are
+the following:
+
+* Multiple bugs in the Message Passing Interface (MPI) test packages were
+resolved, allowing more of the mpitest applications to pass on the
+underlying MPI implementations.
+
+* The libmlx4 package now includes dracut module files to ensure that any
+necessary custom configuration of mlx4 port types is included in the
+initramfs dracut builds.
+
+* Multiple test programs in the perftest and qperf packages now work
+properly over RoCE interfaces, or when specifying the use of rdmacm
+queue pairs.
+
+* The mstflint package has been updated to the latest upstream version,
+which is now capable of burning firmware on newly released Mellanox
+Connect-IB hardware.
+
+* A compatibility problem between the openmpi and infinipath-psm packages
+has been resolved with new builds of these packages.
+
+All RDMA users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add
+these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+865483 - CVE-2012-4516 librdmacm: Tried to connect to port 6125 if ibacm.port was not found
+927430 - CVE-2013-2561 ibutils: insecure handling of files in the /tmp directory
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openmpi-1.5.4-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openmpi-1.5.4-2.el6.src.rpm</a>
+
+i386:
+libibverbs-1.1.7-1.el6.i686.rpm
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+librdmacm-1.0.17-1.el6.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+openmpi-1.5.4-2.el6.i686.rpm
+openmpi-debuginfo-1.5.4-2.el6.i686.rpm
+
+x86_64:
+infinipath-psm-3.0.1-115.1015_open.2.el6.x86_64.rpm
+infinipath-psm-debuginfo-3.0.1-115.1015_open.2.el6.x86_64.rpm
+libibverbs-1.1.7-1.el6.i686.rpm
+libibverbs-1.1.7-1.el6.x86_64.rpm
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+libibverbs-debuginfo-1.1.7-1.el6.x86_64.rpm
+librdmacm-1.0.17-1.el6.i686.rpm
+librdmacm-1.0.17-1.el6.x86_64.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.x86_64.rpm
+openmpi-1.5.4-2.el6.x86_64.rpm
+openmpi-debuginfo-1.5.4-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openmpi-1.5.4-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/openmpi-1.5.4-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/rdma-3.10-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/rdma-3.10-3.el6.src.rpm</a>
+
+i386:
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+libibverbs-devel-1.1.7-1.el6.i686.rpm
+libibverbs-devel-static-1.1.7-1.el6.i686.rpm
+libibverbs-utils-1.1.7-1.el6.i686.rpm
+libmlx4-1.0.5-4.el6.1.i686.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.i686.rpm
+libmlx4-static-1.0.5-4.el6.1.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+librdmacm-devel-1.0.17-1.el6.i686.rpm
+librdmacm-static-1.0.17-1.el6.i686.rpm
+librdmacm-utils-1.0.17-1.el6.i686.rpm
+openmpi-debuginfo-1.5.4-2.el6.i686.rpm
+openmpi-devel-1.5.4-2.el6.i686.rpm
+
+noarch:
+rdma-3.10-3.el6.noarch.rpm
+
+x86_64:
+infinipath-psm-debuginfo-3.0.1-115.1015_open.2.el6.x86_64.rpm
+infinipath-psm-devel-3.0.1-115.1015_open.2.el6.x86_64.rpm
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+libibverbs-debuginfo-1.1.7-1.el6.x86_64.rpm
+libibverbs-devel-1.1.7-1.el6.i686.rpm
+libibverbs-devel-1.1.7-1.el6.x86_64.rpm
+libibverbs-devel-static-1.1.7-1.el6.x86_64.rpm
+libibverbs-utils-1.1.7-1.el6.x86_64.rpm
+libmlx4-1.0.5-4.el6.1.i686.rpm
+libmlx4-1.0.5-4.el6.1.x86_64.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.i686.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.x86_64.rpm
+libmlx4-static-1.0.5-4.el6.1.x86_64.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.x86_64.rpm
+librdmacm-devel-1.0.17-1.el6.i686.rpm
+librdmacm-devel-1.0.17-1.el6.x86_64.rpm
+librdmacm-static-1.0.17-1.el6.x86_64.rpm
+librdmacm-utils-1.0.17-1.el6.x86_64.rpm
+openmpi-1.5.4-2.el6.i686.rpm
+openmpi-debuginfo-1.5.4-2.el6.i686.rpm
+openmpi-debuginfo-1.5.4-2.el6.x86_64.rpm
+openmpi-devel-1.5.4-2.el6.i686.rpm
+openmpi-devel-1.5.4-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mstflint-3.0-0.6.g6961daa.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mstflint-3.0-0.6.g6961daa.1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openmpi-1.5.4-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/openmpi-1.5.4-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/perftest-2.0-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/perftest-2.0-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/qperf-0.4.9-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/qperf-0.4.9-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/rdma-3.10-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/rdma-3.10-3.el6.src.rpm</a>
+
+noarch:
+rdma-3.10-3.el6.noarch.rpm
+
+x86_64:
+ibutils-1.5.7-8.el6.x86_64.rpm
+ibutils-debuginfo-1.5.7-8.el6.i686.rpm
+ibutils-debuginfo-1.5.7-8.el6.x86_64.rpm
+ibutils-libs-1.5.7-8.el6.i686.rpm
+ibutils-libs-1.5.7-8.el6.x86_64.rpm
+infinipath-psm-3.0.1-115.1015_open.2.el6.x86_64.rpm
+infinipath-psm-debuginfo-3.0.1-115.1015_open.2.el6.x86_64.rpm
+libibverbs-1.1.7-1.el6.i686.rpm
+libibverbs-1.1.7-1.el6.x86_64.rpm
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+libibverbs-debuginfo-1.1.7-1.el6.x86_64.rpm
+libibverbs-devel-1.1.7-1.el6.i686.rpm
+libibverbs-devel-1.1.7-1.el6.x86_64.rpm
+libibverbs-utils-1.1.7-1.el6.x86_64.rpm
+libmlx4-1.0.5-4.el6.1.i686.rpm
+libmlx4-1.0.5-4.el6.1.x86_64.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.i686.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.x86_64.rpm
+librdmacm-1.0.17-1.el6.i686.rpm
+librdmacm-1.0.17-1.el6.x86_64.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.x86_64.rpm
+librdmacm-devel-1.0.17-1.el6.i686.rpm
+librdmacm-devel-1.0.17-1.el6.x86_64.rpm
+librdmacm-utils-1.0.17-1.el6.x86_64.rpm
+mpitests-debuginfo-3.2-9.el6.x86_64.rpm
+mpitests-mvapich-3.2-9.el6.x86_64.rpm
+mpitests-mvapich2-3.2-9.el6.x86_64.rpm
+mpitests-openmpi-3.2-9.el6.x86_64.rpm
+mstflint-3.0-0.6.g6961daa.1.el6.x86_64.rpm
+mstflint-debuginfo-3.0-0.6.g6961daa.1.el6.x86_64.rpm
+openmpi-1.5.4-2.el6.i686.rpm
+openmpi-1.5.4-2.el6.x86_64.rpm
+openmpi-debuginfo-1.5.4-2.el6.i686.rpm
+openmpi-debuginfo-1.5.4-2.el6.x86_64.rpm
+openmpi-devel-1.5.4-2.el6.i686.rpm
+openmpi-devel-1.5.4-2.el6.x86_64.rpm
+perftest-2.0-2.el6.x86_64.rpm
+perftest-debuginfo-2.0-2.el6.x86_64.rpm
+qperf-0.4.9-1.el6.x86_64.rpm
+qperf-debuginfo-0.4.9-1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm</a>
+
+x86_64:
+ibutils-debuginfo-1.5.7-8.el6.i686.rpm
+ibutils-debuginfo-1.5.7-8.el6.x86_64.rpm
+ibutils-devel-1.5.7-8.el6.i686.rpm
+ibutils-devel-1.5.7-8.el6.x86_64.rpm
+infinipath-psm-debuginfo-3.0.1-115.1015_open.2.el6.x86_64.rpm
+infinipath-psm-devel-3.0.1-115.1015_open.2.el6.x86_64.rpm
+libibverbs-debuginfo-1.1.7-1.el6.x86_64.rpm
+libibverbs-devel-static-1.1.7-1.el6.x86_64.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.x86_64.rpm
+libmlx4-static-1.0.5-4.el6.1.x86_64.rpm
+librdmacm-debuginfo-1.0.17-1.el6.x86_64.rpm
+librdmacm-static-1.0.17-1.el6.x86_64.rpm
+mpitests-debuginfo-3.2-9.el6.x86_64.rpm
+mpitests-mvapich-psm-3.2-9.el6.x86_64.rpm
+mpitests-mvapich2-psm-3.2-9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mstflint-3.0-0.6.g6961daa.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mstflint-3.0-0.6.g6961daa.1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openmpi-1.5.4-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/openmpi-1.5.4-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/perftest-2.0-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/perftest-2.0-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/qperf-0.4.9-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/qperf-0.4.9-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/rdma-3.10-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/rdma-3.10-3.el6.src.rpm</a>
+
+i386:
+ibutils-1.5.7-8.el6.i686.rpm
+ibutils-debuginfo-1.5.7-8.el6.i686.rpm
+ibutils-libs-1.5.7-8.el6.i686.rpm
+libibverbs-1.1.7-1.el6.i686.rpm
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+libibverbs-devel-1.1.7-1.el6.i686.rpm
+libibverbs-utils-1.1.7-1.el6.i686.rpm
+libmlx4-1.0.5-4.el6.1.i686.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.i686.rpm
+librdmacm-1.0.17-1.el6.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+librdmacm-utils-1.0.17-1.el6.i686.rpm
+mpitests-debuginfo-3.2-9.el6.i686.rpm
+mpitests-mvapich-3.2-9.el6.i686.rpm
+mpitests-mvapich2-3.2-9.el6.i686.rpm
+mpitests-openmpi-3.2-9.el6.i686.rpm
+mstflint-3.0-0.6.g6961daa.1.el6.i686.rpm
+mstflint-debuginfo-3.0-0.6.g6961daa.1.el6.i686.rpm
+openmpi-1.5.4-2.el6.i686.rpm
+openmpi-debuginfo-1.5.4-2.el6.i686.rpm
+openmpi-devel-1.5.4-2.el6.i686.rpm
+perftest-2.0-2.el6.i686.rpm
+perftest-debuginfo-2.0-2.el6.i686.rpm
+qperf-0.4.9-1.el6.i686.rpm
+qperf-debuginfo-0.4.9-1.el6.i686.rpm
+
+noarch:
+rdma-3.10-3.el6.noarch.rpm
+
+ppc64:
+ibutils-1.5.7-8.el6.ppc64.rpm
+ibutils-debuginfo-1.5.7-8.el6.ppc.rpm
+ibutils-debuginfo-1.5.7-8.el6.ppc64.rpm
+ibutils-libs-1.5.7-8.el6.ppc.rpm
+ibutils-libs-1.5.7-8.el6.ppc64.rpm
+libibverbs-1.1.7-1.el6.ppc.rpm
+libibverbs-1.1.7-1.el6.ppc64.rpm
+libibverbs-debuginfo-1.1.7-1.el6.ppc.rpm
+libibverbs-debuginfo-1.1.7-1.el6.ppc64.rpm
+libibverbs-devel-1.1.7-1.el6.ppc.rpm
+libibverbs-devel-1.1.7-1.el6.ppc64.rpm
+libibverbs-utils-1.1.7-1.el6.ppc64.rpm
+libmlx4-1.0.5-4.el6.1.ppc.rpm
+libmlx4-1.0.5-4.el6.1.ppc64.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.ppc.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.ppc64.rpm
+librdmacm-1.0.17-1.el6.ppc.rpm
+librdmacm-1.0.17-1.el6.ppc64.rpm
+librdmacm-debuginfo-1.0.17-1.el6.ppc.rpm
+librdmacm-debuginfo-1.0.17-1.el6.ppc64.rpm
+librdmacm-utils-1.0.17-1.el6.ppc64.rpm
+mstflint-3.0-0.6.g6961daa.1.el6.ppc64.rpm
+mstflint-debuginfo-3.0-0.6.g6961daa.1.el6.ppc64.rpm
+openmpi-1.5.4-2.el6.ppc.rpm
+openmpi-1.5.4-2.el6.ppc64.rpm
+openmpi-debuginfo-1.5.4-2.el6.ppc.rpm
+openmpi-debuginfo-1.5.4-2.el6.ppc64.rpm
+openmpi-devel-1.5.4-2.el6.ppc.rpm
+openmpi-devel-1.5.4-2.el6.ppc64.rpm
+perftest-2.0-2.el6.ppc64.rpm
+perftest-debuginfo-2.0-2.el6.ppc64.rpm
+qperf-0.4.9-1.el6.ppc64.rpm
+qperf-debuginfo-0.4.9-1.el6.ppc64.rpm
+
+x86_64:
+ibutils-1.5.7-8.el6.x86_64.rpm
+ibutils-debuginfo-1.5.7-8.el6.i686.rpm
+ibutils-debuginfo-1.5.7-8.el6.x86_64.rpm
+ibutils-libs-1.5.7-8.el6.i686.rpm
+ibutils-libs-1.5.7-8.el6.x86_64.rpm
+infinipath-psm-3.0.1-115.1015_open.2.el6.x86_64.rpm
+infinipath-psm-debuginfo-3.0.1-115.1015_open.2.el6.x86_64.rpm
+libibverbs-1.1.7-1.el6.i686.rpm
+libibverbs-1.1.7-1.el6.x86_64.rpm
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+libibverbs-debuginfo-1.1.7-1.el6.x86_64.rpm
+libibverbs-devel-1.1.7-1.el6.i686.rpm
+libibverbs-devel-1.1.7-1.el6.x86_64.rpm
+libibverbs-utils-1.1.7-1.el6.x86_64.rpm
+libmlx4-1.0.5-4.el6.1.i686.rpm
+libmlx4-1.0.5-4.el6.1.x86_64.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.i686.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.x86_64.rpm
+librdmacm-1.0.17-1.el6.i686.rpm
+librdmacm-1.0.17-1.el6.x86_64.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.x86_64.rpm
+librdmacm-devel-1.0.17-1.el6.i686.rpm
+librdmacm-devel-1.0.17-1.el6.x86_64.rpm
+librdmacm-utils-1.0.17-1.el6.x86_64.rpm
+mpitests-debuginfo-3.2-9.el6.x86_64.rpm
+mpitests-mvapich-3.2-9.el6.x86_64.rpm
+mpitests-mvapich2-3.2-9.el6.x86_64.rpm
+mpitests-openmpi-3.2-9.el6.x86_64.rpm
+mstflint-3.0-0.6.g6961daa.1.el6.x86_64.rpm
+mstflint-debuginfo-3.0-0.6.g6961daa.1.el6.x86_64.rpm
+openmpi-1.5.4-2.el6.i686.rpm
+openmpi-1.5.4-2.el6.x86_64.rpm
+openmpi-debuginfo-1.5.4-2.el6.i686.rpm
+openmpi-debuginfo-1.5.4-2.el6.x86_64.rpm
+openmpi-devel-1.5.4-2.el6.i686.rpm
+openmpi-devel-1.5.4-2.el6.x86_64.rpm
+perftest-2.0-2.el6.x86_64.rpm
+perftest-debuginfo-2.0-2.el6.x86_64.rpm
+qperf-0.4.9-1.el6.x86_64.rpm
+qperf-debuginfo-0.4.9-1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm</a>
+
+i386:
+ibutils-debuginfo-1.5.7-8.el6.i686.rpm
+ibutils-devel-1.5.7-8.el6.i686.rpm
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+libibverbs-devel-static-1.1.7-1.el6.i686.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.i686.rpm
+libmlx4-static-1.0.5-4.el6.1.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+librdmacm-devel-1.0.17-1.el6.i686.rpm
+librdmacm-static-1.0.17-1.el6.i686.rpm
+
+ppc64:
+ibutils-debuginfo-1.5.7-8.el6.ppc.rpm
+ibutils-debuginfo-1.5.7-8.el6.ppc64.rpm
+ibutils-devel-1.5.7-8.el6.ppc.rpm
+ibutils-devel-1.5.7-8.el6.ppc64.rpm
+libibverbs-debuginfo-1.1.7-1.el6.ppc64.rpm
+libibverbs-devel-static-1.1.7-1.el6.ppc64.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.ppc64.rpm
+libmlx4-static-1.0.5-4.el6.1.ppc64.rpm
+librdmacm-debuginfo-1.0.17-1.el6.ppc.rpm
+librdmacm-debuginfo-1.0.17-1.el6.ppc64.rpm
+librdmacm-devel-1.0.17-1.el6.ppc.rpm
+librdmacm-devel-1.0.17-1.el6.ppc64.rpm
+librdmacm-static-1.0.17-1.el6.ppc64.rpm
+
+x86_64:
+ibutils-debuginfo-1.5.7-8.el6.i686.rpm
+ibutils-debuginfo-1.5.7-8.el6.x86_64.rpm
+ibutils-devel-1.5.7-8.el6.i686.rpm
+ibutils-devel-1.5.7-8.el6.x86_64.rpm
+infinipath-psm-debuginfo-3.0.1-115.1015_open.2.el6.x86_64.rpm
+infinipath-psm-devel-3.0.1-115.1015_open.2.el6.x86_64.rpm
+libibverbs-debuginfo-1.1.7-1.el6.x86_64.rpm
+libibverbs-devel-static-1.1.7-1.el6.x86_64.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.x86_64.rpm
+libmlx4-static-1.0.5-4.el6.1.x86_64.rpm
+librdmacm-debuginfo-1.0.17-1.el6.x86_64.rpm
+librdmacm-static-1.0.17-1.el6.x86_64.rpm
+mpitests-debuginfo-3.2-9.el6.x86_64.rpm
+mpitests-mvapich-psm-3.2-9.el6.x86_64.rpm
+mpitests-mvapich2-psm-3.2-9.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mstflint-3.0-0.6.g6961daa.1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mstflint-3.0-0.6.g6961daa.1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openmpi-1.5.4-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/openmpi-1.5.4-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/perftest-2.0-2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/perftest-2.0-2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/qperf-0.4.9-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/qperf-0.4.9-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/rdma-3.10-3.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/rdma-3.10-3.el6.src.rpm</a>
+
+i386:
+ibutils-1.5.7-8.el6.i686.rpm
+ibutils-debuginfo-1.5.7-8.el6.i686.rpm
+ibutils-libs-1.5.7-8.el6.i686.rpm
+libibverbs-1.1.7-1.el6.i686.rpm
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+libibverbs-devel-1.1.7-1.el6.i686.rpm
+libibverbs-utils-1.1.7-1.el6.i686.rpm
+libmlx4-1.0.5-4.el6.1.i686.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.i686.rpm
+librdmacm-1.0.17-1.el6.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+librdmacm-utils-1.0.17-1.el6.i686.rpm
+mpitests-debuginfo-3.2-9.el6.i686.rpm
+mpitests-mvapich-3.2-9.el6.i686.rpm
+mpitests-mvapich2-3.2-9.el6.i686.rpm
+mpitests-openmpi-3.2-9.el6.i686.rpm
+mstflint-3.0-0.6.g6961daa.1.el6.i686.rpm
+mstflint-debuginfo-3.0-0.6.g6961daa.1.el6.i686.rpm
+openmpi-1.5.4-2.el6.i686.rpm
+openmpi-debuginfo-1.5.4-2.el6.i686.rpm
+openmpi-devel-1.5.4-2.el6.i686.rpm
+perftest-2.0-2.el6.i686.rpm
+perftest-debuginfo-2.0-2.el6.i686.rpm
+qperf-0.4.9-1.el6.i686.rpm
+qperf-debuginfo-0.4.9-1.el6.i686.rpm
+
+noarch:
+rdma-3.10-3.el6.noarch.rpm
+
+x86_64:
+ibutils-1.5.7-8.el6.x86_64.rpm
+ibutils-debuginfo-1.5.7-8.el6.i686.rpm
+ibutils-debuginfo-1.5.7-8.el6.x86_64.rpm
+ibutils-libs-1.5.7-8.el6.i686.rpm
+ibutils-libs-1.5.7-8.el6.x86_64.rpm
+infinipath-psm-3.0.1-115.1015_open.2.el6.x86_64.rpm
+infinipath-psm-debuginfo-3.0.1-115.1015_open.2.el6.x86_64.rpm
+libibverbs-1.1.7-1.el6.i686.rpm
+libibverbs-1.1.7-1.el6.x86_64.rpm
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+libibverbs-debuginfo-1.1.7-1.el6.x86_64.rpm
+libibverbs-devel-1.1.7-1.el6.i686.rpm
+libibverbs-devel-1.1.7-1.el6.x86_64.rpm
+libibverbs-utils-1.1.7-1.el6.x86_64.rpm
+libmlx4-1.0.5-4.el6.1.i686.rpm
+libmlx4-1.0.5-4.el6.1.x86_64.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.i686.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.x86_64.rpm
+librdmacm-1.0.17-1.el6.i686.rpm
+librdmacm-1.0.17-1.el6.x86_64.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.x86_64.rpm
+librdmacm-devel-1.0.17-1.el6.i686.rpm
+librdmacm-devel-1.0.17-1.el6.x86_64.rpm
+librdmacm-utils-1.0.17-1.el6.x86_64.rpm
+mpitests-debuginfo-3.2-9.el6.x86_64.rpm
+mpitests-mvapich-3.2-9.el6.x86_64.rpm
+mpitests-mvapich2-3.2-9.el6.x86_64.rpm
+mpitests-openmpi-3.2-9.el6.x86_64.rpm
+mstflint-3.0-0.6.g6961daa.1.el6.x86_64.rpm
+mstflint-debuginfo-3.0-0.6.g6961daa.1.el6.x86_64.rpm
+openmpi-1.5.4-2.el6.i686.rpm
+openmpi-1.5.4-2.el6.x86_64.rpm
+openmpi-debuginfo-1.5.4-2.el6.i686.rpm
+openmpi-debuginfo-1.5.4-2.el6.x86_64.rpm
+openmpi-devel-1.5.4-2.el6.i686.rpm
+openmpi-devel-1.5.4-2.el6.x86_64.rpm
+perftest-2.0-2.el6.x86_64.rpm
+perftest-debuginfo-2.0-2.el6.x86_64.rpm
+qperf-0.4.9-1.el6.x86_64.rpm
+qperf-debuginfo-0.4.9-1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/ibutils-1.5.7-8.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/infinipath-psm-3.0.1-115.1015_open.2.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libibverbs-1.1.7-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/libmlx4-1.0.5-4.el6.1.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/librdmacm-1.0.17-1.el6.src.rpm</a>
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/mpitests-3.2-9.el6.src.rpm</a>
+
+i386:
+ibutils-debuginfo-1.5.7-8.el6.i686.rpm
+ibutils-devel-1.5.7-8.el6.i686.rpm
+libibverbs-debuginfo-1.1.7-1.el6.i686.rpm
+libibverbs-devel-static-1.1.7-1.el6.i686.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.i686.rpm
+libmlx4-static-1.0.5-4.el6.1.i686.rpm
+librdmacm-debuginfo-1.0.17-1.el6.i686.rpm
+librdmacm-devel-1.0.17-1.el6.i686.rpm
+librdmacm-static-1.0.17-1.el6.i686.rpm
+
+x86_64:
+ibutils-debuginfo-1.5.7-8.el6.i686.rpm
+ibutils-debuginfo-1.5.7-8.el6.x86_64.rpm
+ibutils-devel-1.5.7-8.el6.i686.rpm
+ibutils-devel-1.5.7-8.el6.x86_64.rpm
+infinipath-psm-debuginfo-3.0.1-115.1015_open.2.el6.x86_64.rpm
+infinipath-psm-devel-3.0.1-115.1015_open.2.el6.x86_64.rpm
+libibverbs-debuginfo-1.1.7-1.el6.x86_64.rpm
+libibverbs-devel-static-1.1.7-1.el6.x86_64.rpm
+libmlx4-debuginfo-1.0.5-4.el6.1.x86_64.rpm
+libmlx4-static-1.0.5-4.el6.1.x86_64.rpm
+librdmacm-debuginfo-1.0.17-1.el6.x86_64.rpm
+librdmacm-static-1.0.17-1.el6.x86_64.rpm
+mpitests-debuginfo-3.2-9.el6.x86_64.rpm
+mpitests-mvapich-psm-3.2-9.el6.x86_64.rpm
+mpitests-mvapich2-psm-3.2-9.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-4516.html">https://www.redhat.com/security/data/cve/CVE-2012-4516.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2561.html">https://www.redhat.com/security/data/cve/CVE-2013-2561.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFSjY+jXlSAg2UNWIIRAociAKCjnFlqNLKrYnI7qj9RawpVcp+MNwCdEnD9
+qeY87l9xVoIzgl8C5DFa2yU=
+=PfNv
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00031.html">Date Prev</a>][<a href="msg00033.html">Date Next</a>] &nbsp; [<a href="msg00031.html">Thread Prev</a>][<a href="msg00033.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00032">Thread Index</A>]
+[<A HREF="date.html#00032">Date Index</A>]
+[<A HREF="author.html#00032">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

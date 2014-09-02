@@ -1,0 +1,238 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0580&#45;01] Moderate: vim security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 25 Nov 2008 03:44:18 &#45;0500 -->
+<!--X-Message-Id: 200811250844.mAP8iGrH020075@ns3.rdu.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0580-01] Moderate: vim security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0580-01] Moderate: vim security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0580-01] Moderate: vim security update</li>
+<li><em>Date</em>: Tue, 25 Nov 2008 03:44:10 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: vim security update
+Advisory ID:       RHSA-2008:0580-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0580.html">https://rhn.redhat.com/errata/RHSA-2008-0580.html</a>
+Issue date:        2008-11-25
+CVE Names:         CVE-2007-2953 CVE-2008-2712 CVE-2008-3074 
+                   CVE-2008-3075 CVE-2008-3076 CVE-2008-4101 
+=====================================================================
+
+1. Summary:
+
+Updated vim packages that fix security issues are now available for Red Hat
+Enterprise Linux 5.
+
+This update has been rated as having moderate security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+Vim (Visual editor IMproved) is an updated and improved version of the vi
+editor.
+
+Several input sanitization flaws were found in Vim's keyword and tag
+handling. If Vim looked up a document's maliciously crafted tag or keyword,
+it was possible to execute arbitrary code as the user running Vim.
+(CVE-2008-4101)
+
+Multiple security flaws were found in netrw.vim, the Vim plug-in providing
+file reading and writing over the network. If a user opened a specially
+crafted file or directory with the netrw plug-in, it could result in
+arbitrary code execution as the user running Vim. (CVE-2008-3076)
+
+A security flaw was found in zip.vim, the Vim plug-in that handles ZIP
+archive browsing. If a user opened a ZIP archive using the zip.vim plug-in,
+it could result in arbitrary code execution as the user running Vim.
+(CVE-2008-3075)
+
+A security flaw was found in tar.vim, the Vim plug-in which handles TAR
+archive browsing. If a user opened a TAR archive using the tar.vim plug-in,
+it could result in arbitrary code execution as the user runnin Vim.
+(CVE-2008-3074)
+
+Several input sanitization flaws were found in various Vim system
+functions. If a user opened a specially crafted file, it was possible to
+execute arbitrary code as the user running Vim. (CVE-2008-2712)
+
+Ulf Härnhammar, of Secunia Research, discovered a format string flaw in
+Vim's help tag processor. If a user was tricked into executing the
+&quot;helptags&quot; command on malicious data, arbitrary code could be executed with
+the permissions of the user running Vim. (CVE-2007-2953)
+
+All Vim users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+248542 - CVE-2007-2953 vim format string flaw
+451759 - CVE-2008-2712 vim: command execution via scripts not sanitizing inputs to execute and system
+461927 - CVE-2008-4101 vim: arbitrary code execution in commands: K, Control-], g]
+467428 - CVE-2008-3074 Vim tar.vim plugin: improper Implementation of shellescape() (arbitrary code execution)
+467432 - CVE-2008-3075 Vim zip.vim plugin: improper Implementation of shellescape() (arbitrary code execution)
+467439 - CVE-2008-3076 Vim netrw.vim plugin: lack of sanitization throughout netrw.vim can lead to arbitrary code execution
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/vim-7.0.109-4.el5_2.4z.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/vim-7.0.109-4.el5_2.4z.src.rpm</a>
+
+i386:
+vim-X11-7.0.109-4.el5_2.4z.i386.rpm
+vim-common-7.0.109-4.el5_2.4z.i386.rpm
+vim-debuginfo-7.0.109-4.el5_2.4z.i386.rpm
+vim-enhanced-7.0.109-4.el5_2.4z.i386.rpm
+vim-minimal-7.0.109-4.el5_2.4z.i386.rpm
+
+x86_64:
+vim-X11-7.0.109-4.el5_2.4z.x86_64.rpm
+vim-common-7.0.109-4.el5_2.4z.x86_64.rpm
+vim-debuginfo-7.0.109-4.el5_2.4z.x86_64.rpm
+vim-enhanced-7.0.109-4.el5_2.4z.x86_64.rpm
+vim-minimal-7.0.109-4.el5_2.4z.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/vim-7.0.109-4.el5_2.4z.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/vim-7.0.109-4.el5_2.4z.src.rpm</a>
+
+i386:
+vim-X11-7.0.109-4.el5_2.4z.i386.rpm
+vim-common-7.0.109-4.el5_2.4z.i386.rpm
+vim-debuginfo-7.0.109-4.el5_2.4z.i386.rpm
+vim-enhanced-7.0.109-4.el5_2.4z.i386.rpm
+vim-minimal-7.0.109-4.el5_2.4z.i386.rpm
+
+ia64:
+vim-X11-7.0.109-4.el5_2.4z.ia64.rpm
+vim-common-7.0.109-4.el5_2.4z.ia64.rpm
+vim-debuginfo-7.0.109-4.el5_2.4z.ia64.rpm
+vim-enhanced-7.0.109-4.el5_2.4z.ia64.rpm
+vim-minimal-7.0.109-4.el5_2.4z.ia64.rpm
+
+ppc:
+vim-X11-7.0.109-4.el5_2.4z.ppc.rpm
+vim-common-7.0.109-4.el5_2.4z.ppc.rpm
+vim-debuginfo-7.0.109-4.el5_2.4z.ppc.rpm
+vim-enhanced-7.0.109-4.el5_2.4z.ppc.rpm
+vim-minimal-7.0.109-4.el5_2.4z.ppc.rpm
+
+s390x:
+vim-X11-7.0.109-4.el5_2.4z.s390x.rpm
+vim-common-7.0.109-4.el5_2.4z.s390x.rpm
+vim-debuginfo-7.0.109-4.el5_2.4z.s390x.rpm
+vim-enhanced-7.0.109-4.el5_2.4z.s390x.rpm
+vim-minimal-7.0.109-4.el5_2.4z.s390x.rpm
+
+x86_64:
+vim-X11-7.0.109-4.el5_2.4z.x86_64.rpm
+vim-common-7.0.109-4.el5_2.4z.x86_64.rpm
+vim-debuginfo-7.0.109-4.el5_2.4z.x86_64.rpm
+vim-enhanced-7.0.109-4.el5_2.4z.x86_64.rpm
+vim-minimal-7.0.109-4.el5_2.4z.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2953">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-2953</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2712">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-2712</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3074">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3074</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3075">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3075</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3076">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3076</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4101">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4101</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFJK7qUXlSAg2UNWIIRApD6AKCl3yX2mvfOR1eH+yMVz0KOLBh5WQCePFrk
+siao5l2XegHs5nJD6bTjwe4=
+=OvzW
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

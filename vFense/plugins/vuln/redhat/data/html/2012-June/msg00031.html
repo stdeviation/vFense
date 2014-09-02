@@ -1,0 +1,311 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2012:0876&#45;04] Moderate: net&#45;snmp security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 20 Jun 2012 05:29:18 &#45;0400 -->
+<!--X-Message-Id: 201206200929.q5K9TB8j011625@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2012:0876-04] Moderate: net-snmp security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2012:0876-04] Moderate: net-snmp security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2012:0876-04] Moderate: net-snmp security and bug fix update</li>
+<li><em>Date</em>: Wed, 20 Jun 2012 09:25:05 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: net-snmp security and bug fix update
+Advisory ID:       RHSA-2012:0876-04
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2012-0876.html">https://rhn.redhat.com/errata/RHSA-2012-0876.html</a>
+Issue date:        2012-06-20
+CVE Names:         CVE-2012-2141 
+=====================================================================
+
+1. Summary:
+
+Updated net-snmp packages that fix one security issue and multiple bugs are
+now available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+The net-snmp packages provide various libraries and tools for the Simple
+Network Management Protocol (SNMP), including an SNMP library, an
+extensible agent, tools for requesting or setting information from SNMP
+agents, tools for generating and handling SNMP traps, a version of the
+netstat command which uses SNMP, and a Tk/Perl Management Information Base
+(MIB) browser.
+
+An array index error, leading to an out-of-bounds buffer read flaw, was
+found in the way the net-snmp agent looked up entries in the extension
+table. A remote attacker with read privileges to a Management Information
+Base (MIB) subtree handled by the &quot;extend&quot; directive (in
+&quot;/etc/snmp/snmpd.conf&quot;) could use this flaw to crash snmpd via a crafted
+SNMP GET request. (CVE-2012-2141)
+
+These updated net-snmp packages also include numerous bug fixes. Space
+precludes documenting all of these changes in this advisory. Users are
+directed to the Red Hat Enterprise Linux 6.3 Technical Notes for
+information on the most significant of these changes.
+
+All users of net-snmp are advised to upgrade to these updated packages,
+which contain backported patches to resolve these issues. After installing
+the update, the snmpd and snmptrapd daemons will be restarted
+automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+736580 - snmpd memory leak when AgentX subagent disconnects while processing  a request
+748410 - hrStorageSize from HOST-RESOURCES-TYPES mib reports incorrect size for filesystems &gt; 16TB
+754275 - Cannot create new rows in snmpTargetAddrTable
+757685 - net-snmp ignores reiserfs formatted partitions
+786931 - sysObjectID cannot be set to an OID value with a length greater than 10.
+788954 - snmpd: error finding row index in _ifXTable_container_row_restore
+799291 - proxied OIDs unspecified in proxy statement in snmpd.conf
+815813 - CVE-2012-2141 net-snmp: Array index error, leading to out-of heap-based buffer read (snmpd crash)
+822480 - move /var/lib/net-snmp from net-snmp to net-snmp-libs
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm</a>
+
+i386:
+net-snmp-5.5-41.el6.i686.rpm
+net-snmp-debuginfo-5.5-41.el6.i686.rpm
+net-snmp-libs-5.5-41.el6.i686.rpm
+
+x86_64:
+net-snmp-5.5-41.el6.x86_64.rpm
+net-snmp-debuginfo-5.5-41.el6.i686.rpm
+net-snmp-debuginfo-5.5-41.el6.x86_64.rpm
+net-snmp-libs-5.5-41.el6.i686.rpm
+net-snmp-libs-5.5-41.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm</a>
+
+i386:
+net-snmp-debuginfo-5.5-41.el6.i686.rpm
+net-snmp-devel-5.5-41.el6.i686.rpm
+net-snmp-perl-5.5-41.el6.i686.rpm
+net-snmp-python-5.5-41.el6.i686.rpm
+net-snmp-utils-5.5-41.el6.i686.rpm
+
+x86_64:
+net-snmp-debuginfo-5.5-41.el6.i686.rpm
+net-snmp-debuginfo-5.5-41.el6.x86_64.rpm
+net-snmp-devel-5.5-41.el6.i686.rpm
+net-snmp-devel-5.5-41.el6.x86_64.rpm
+net-snmp-perl-5.5-41.el6.x86_64.rpm
+net-snmp-python-5.5-41.el6.x86_64.rpm
+net-snmp-utils-5.5-41.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm</a>
+
+x86_64:
+net-snmp-5.5-41.el6.x86_64.rpm
+net-snmp-debuginfo-5.5-41.el6.i686.rpm
+net-snmp-debuginfo-5.5-41.el6.x86_64.rpm
+net-snmp-libs-5.5-41.el6.i686.rpm
+net-snmp-libs-5.5-41.el6.x86_64.rpm
+net-snmp-perl-5.5-41.el6.x86_64.rpm
+net-snmp-python-5.5-41.el6.x86_64.rpm
+net-snmp-utils-5.5-41.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm</a>
+
+x86_64:
+net-snmp-debuginfo-5.5-41.el6.i686.rpm
+net-snmp-debuginfo-5.5-41.el6.x86_64.rpm
+net-snmp-devel-5.5-41.el6.i686.rpm
+net-snmp-devel-5.5-41.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm</a>
+
+i386:
+net-snmp-5.5-41.el6.i686.rpm
+net-snmp-debuginfo-5.5-41.el6.i686.rpm
+net-snmp-devel-5.5-41.el6.i686.rpm
+net-snmp-libs-5.5-41.el6.i686.rpm
+net-snmp-perl-5.5-41.el6.i686.rpm
+net-snmp-python-5.5-41.el6.i686.rpm
+net-snmp-utils-5.5-41.el6.i686.rpm
+
+ppc64:
+net-snmp-5.5-41.el6.ppc64.rpm
+net-snmp-debuginfo-5.5-41.el6.ppc.rpm
+net-snmp-debuginfo-5.5-41.el6.ppc64.rpm
+net-snmp-devel-5.5-41.el6.ppc.rpm
+net-snmp-devel-5.5-41.el6.ppc64.rpm
+net-snmp-libs-5.5-41.el6.ppc.rpm
+net-snmp-libs-5.5-41.el6.ppc64.rpm
+net-snmp-perl-5.5-41.el6.ppc64.rpm
+net-snmp-python-5.5-41.el6.ppc64.rpm
+net-snmp-utils-5.5-41.el6.ppc64.rpm
+
+s390x:
+net-snmp-5.5-41.el6.s390x.rpm
+net-snmp-debuginfo-5.5-41.el6.s390.rpm
+net-snmp-debuginfo-5.5-41.el6.s390x.rpm
+net-snmp-devel-5.5-41.el6.s390.rpm
+net-snmp-devel-5.5-41.el6.s390x.rpm
+net-snmp-libs-5.5-41.el6.s390.rpm
+net-snmp-libs-5.5-41.el6.s390x.rpm
+net-snmp-perl-5.5-41.el6.s390x.rpm
+net-snmp-python-5.5-41.el6.s390x.rpm
+net-snmp-utils-5.5-41.el6.s390x.rpm
+
+x86_64:
+net-snmp-5.5-41.el6.x86_64.rpm
+net-snmp-debuginfo-5.5-41.el6.i686.rpm
+net-snmp-debuginfo-5.5-41.el6.x86_64.rpm
+net-snmp-devel-5.5-41.el6.i686.rpm
+net-snmp-devel-5.5-41.el6.x86_64.rpm
+net-snmp-libs-5.5-41.el6.i686.rpm
+net-snmp-libs-5.5-41.el6.x86_64.rpm
+net-snmp-perl-5.5-41.el6.x86_64.rpm
+net-snmp-python-5.5-41.el6.x86_64.rpm
+net-snmp-utils-5.5-41.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/net-snmp-5.5-41.el6.src.rpm</a>
+
+i386:
+net-snmp-5.5-41.el6.i686.rpm
+net-snmp-debuginfo-5.5-41.el6.i686.rpm
+net-snmp-devel-5.5-41.el6.i686.rpm
+net-snmp-libs-5.5-41.el6.i686.rpm
+net-snmp-perl-5.5-41.el6.i686.rpm
+net-snmp-python-5.5-41.el6.i686.rpm
+net-snmp-utils-5.5-41.el6.i686.rpm
+
+x86_64:
+net-snmp-5.5-41.el6.x86_64.rpm
+net-snmp-debuginfo-5.5-41.el6.i686.rpm
+net-snmp-debuginfo-5.5-41.el6.x86_64.rpm
+net-snmp-devel-5.5-41.el6.i686.rpm
+net-snmp-devel-5.5-41.el6.x86_64.rpm
+net-snmp-libs-5.5-41.el6.i686.rpm
+net-snmp-libs-5.5-41.el6.x86_64.rpm
+net-snmp-perl-5.5-41.el6.x86_64.rpm
+net-snmp-python-5.5-41.el6.x86_64.rpm
+net-snmp-utils-5.5-41.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-2141.html">https://www.redhat.com/security/data/cve/CVE-2012-2141.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.3_Technical_Notes/net-snmp.html#RHSA-2012-0876">https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/6.3_Technical_Notes/net-snmp.html#RHSA-2012-0876</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2012 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFP4ZfiXlSAg2UNWIIRAsYgAKCLsoxZOZQtMLUOf+8VvWI9C2rWPgCgpx9x
+UN4cIzACysILLCURFVFdMdI=
+=DrsT
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

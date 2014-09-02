@@ -1,0 +1,289 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0144&#45;01] Critical: acroread security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Fri, 22 Feb 2008 12:00:15 &#45;0500 -->
+<!--X-Message-Id: 200802221700.m1MH0DaC017304@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0144-01] Critical: acroread security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0144-01] Critical: acroread security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0144-01] Critical: acroread security update</li>
+<li><em>Date</em>: Fri, 22 Feb 2008 12:00:13 -0500</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: acroread security update
+Advisory ID:       RHSA-2008:0144-01
+Product:           Red Hat Enterprise Linux Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0144.html">https://rhn.redhat.com/errata/RHSA-2008-0144.html</a>
+Issue date:        2008-02-22
+CVE Names:         CVE-2007-5659 CVE-2007-5663 CVE-2007-5666 
+                   CVE-2007-0044 CVE-2008-0655 CVE-2008-0667 
+                   CVE-2008-0726 
+=====================================================================
+
+1. Summary:
+
+Updated acroread packages that fix several security issues are now
+available for Red Hat Enterprise Linux 3, 4, and 5.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AS version 3 Extras - i386, x86_64
+Red Hat Desktop version 3 Extras - i386, x86_64
+Red Hat Enterprise Linux ES version 3 Extras - i386, x86_64
+Red Hat Enterprise Linux WS version 3 Extras - i386, x86_64
+Red Hat Enterprise Linux AS version 4 Extras - i386, x86_64
+Red Hat Desktop version 4 Extras - i386, x86_64
+Red Hat Enterprise Linux ES version 4 Extras - i386, x86_64
+Red Hat Enterprise Linux WS version 4 Extras - i386, x86_64
+RHEL Desktop Supplementary (v. 5 client) - i386, x86_64
+RHEL Supplementary (v. 5 server) - i386, x86_64
+
+3. Description:
+
+The Adobe Reader allows users to view and print documents in portable
+document format (PDF).
+
+Several flaws were found in the way Adobe Reader processed malformed PDF
+files. An attacker could create a malicious PDF file which could execute
+arbitrary code if opened by a victim. (CVE-2007-5659, CVE-2007-5663,
+CVE-2007-5666, CVE-2008-0726)
+
+A flaw was found in the way the Adobe Reader browser plug-in honored
+certain requests. A malicious PDF file could cause the browser to request
+an unauthorized URL, allowing for a cross-site request forgery attack.
+(CVE-2007-0044)
+
+A flaw was found in Adobe Reader's JavaScript API DOC.print function. A
+malicious PDF file could silently trigger non-interactive printing of the
+document, causing multiple copies to be printed without the users consent.
+(CVE-2008-0667)
+
+Additionally, this update fixes multiple unknown flaws in Adobe Reader.
+When the information regarding these flaws is made public by Adobe, it will
+be added to this advisory. (CVE-2008-0655)
+
+Note: Adobe have yet to release security fixed versions of Adobe 7. All
+users of Adobe Reader are, therefore, advised to install these updated
+packages. They contain Adobe Reader version 8.1.2, which is not vulnerable
+to these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+To update all RPMs for your particular architecture, run:
+
+rpm -Fvh [filenames]
+
+where [filenames] is a list of the RPMs you wish to upgrade.  Only those
+RPMs which are currently installed will be updated.  Those RPMs which are
+not installed but included in the list will not be updated.  Note that you
+can also use wildcards (*.rpm) if your current directory *only* contains the
+desired RPMs.
+
+Please note that this update is also available via Red Hat Network.  Many
+people find this an easier way to apply updates.  To use Red Hat Network,
+launch the Red Hat Update Agent with the following command:
+
+up2date
+
+This will start an interactive process that will result in the appropriate
+RPMs being upgraded on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+223113 - CVE-2007-0044 Acrobat Reader Universal CSRF and session riding
+431985 - CVE-2008-0655 acroread: unspecified vulnerabilities
+432471 - CVE-2008-0667 acroread: silent print vulnerability
+432629 - CVE-2007-5659 acroread Multiple buffer overflows
+432630 - CVE-2007-5663 acroread JavaScript Insecure Method Exposure
+432632 - CVE-2007-5666 acroread JavaScript Insecure Libary Search Path
+432757 - CVE-2008-0726 Acroread memory corruption
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 3 Extras:
+
+i386:
+acroread-8.1.2-1.el3.6.i386.rpm
+acroread-plugin-8.1.2-1.el3.6.i386.rpm
+
+x86_64:
+acroread-8.1.2-1.el3.6.i386.rpm
+
+Red Hat Desktop version 3 Extras:
+
+i386:
+acroread-8.1.2-1.el3.6.i386.rpm
+acroread-plugin-8.1.2-1.el3.6.i386.rpm
+
+x86_64:
+acroread-8.1.2-1.el3.6.i386.rpm
+
+Red Hat Enterprise Linux ES version 3 Extras:
+
+i386:
+acroread-8.1.2-1.el3.6.i386.rpm
+acroread-plugin-8.1.2-1.el3.6.i386.rpm
+
+x86_64:
+acroread-8.1.2-1.el3.6.i386.rpm
+
+Red Hat Enterprise Linux WS version 3 Extras:
+
+i386:
+acroread-8.1.2-1.el3.6.i386.rpm
+acroread-plugin-8.1.2-1.el3.6.i386.rpm
+
+x86_64:
+acroread-8.1.2-1.el3.6.i386.rpm
+
+Red Hat Enterprise Linux AS version 4 Extras:
+
+i386:
+acroread-8.1.2-1.el4.2.i386.rpm
+acroread-plugin-8.1.2-1.el4.2.i386.rpm
+
+x86_64:
+acroread-8.1.2-1.el4.2.i386.rpm
+
+Red Hat Desktop version 4 Extras:
+
+i386:
+acroread-8.1.2-1.el4.2.i386.rpm
+acroread-plugin-8.1.2-1.el4.2.i386.rpm
+
+x86_64:
+acroread-8.1.2-1.el4.2.i386.rpm
+
+Red Hat Enterprise Linux ES version 4 Extras:
+
+i386:
+acroread-8.1.2-1.el4.2.i386.rpm
+acroread-plugin-8.1.2-1.el4.2.i386.rpm
+
+x86_64:
+acroread-8.1.2-1.el4.2.i386.rpm
+
+Red Hat Enterprise Linux WS version 4 Extras:
+
+i386:
+acroread-8.1.2-1.el4.2.i386.rpm
+acroread-plugin-8.1.2-1.el4.2.i386.rpm
+
+x86_64:
+acroread-8.1.2-1.el4.2.i386.rpm
+
+RHEL Desktop Supplementary (v. 5 client):
+
+i386:
+acroread-8.1.2-1.el5.3.i386.rpm
+acroread-plugin-8.1.2-1.el5.3.i386.rpm
+
+x86_64:
+acroread-8.1.2-1.el5.3.i386.rpm
+acroread-plugin-8.1.2-1.el5.3.i386.rpm
+
+RHEL Supplementary (v. 5 server):
+
+i386:
+acroread-8.1.2-1.el5.3.i386.rpm
+acroread-plugin-8.1.2-1.el5.3.i386.rpm
+
+x86_64:
+acroread-8.1.2-1.el5.3.i386.rpm
+acroread-plugin-8.1.2-1.el5.3.i386.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5659">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5659</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5663">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5663</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5666">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-5666</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0044">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0044</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0655">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0655</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0667">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0667</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0726">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0726</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFHvv90XlSAg2UNWIIRAmsAAJsGwERLrCU4RaHJU3wzn8nBdSkcBACdGLS2
+aS9vgj1R4bYqskDdOH8lsdQ=
+=qrEO
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

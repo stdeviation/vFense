@@ -1,0 +1,452 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0163&#45;01] Moderate: openssl security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 25 Mar 2010 06:58:08 &#45;0400 -->
+<!--X-Message-Id: 201003251058.o2PAw193020530@int&#45;mx04.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0163-01] Moderate: openssl security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0163-01] Moderate: openssl security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0163-01] Moderate: openssl security update</li>
+<li><em>Date</em>: Thu, 25 Mar 2010 11:58:01 +0100</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openssl security update
+Advisory ID:       RHSA-2010:0163-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0163.html">https://rhn.redhat.com/errata/RHSA-2010-0163.html</a>
+Issue date:        2010-03-25
+CVE Names:         CVE-2009-0590 CVE-2009-2409 CVE-2009-3555 
+=====================================================================
+
+1. Summary:
+
+Updated openssl packages that fix several security issues are now available
+for Red Hat Enterprise Linux 3 and 4.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Desktop version 3 - i386, x86_64
+Red Hat Enterprise Linux AS version 3 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux AS version 4 - i386, ia64, ppc, s390, s390x, x86_64
+Red Hat Enterprise Linux Desktop version 4 - i386, x86_64
+Red Hat Enterprise Linux ES version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux ES version 4 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 3 - i386, ia64, x86_64
+Red Hat Enterprise Linux WS version 4 - i386, ia64, x86_64
+
+3. Description:
+
+OpenSSL is a toolkit that implements the Secure Sockets Layer (SSL v2/v3)
+and Transport Layer Security (TLS v1) protocols, as well as a
+full-strength, general purpose cryptography library.
+
+A flaw was found in the way the TLS/SSL (Transport Layer Security/Secure
+Sockets Layer) protocols handled session renegotiation. A man-in-the-middle
+attacker could use this flaw to prefix arbitrary plain text to a client's
+session (for example, an HTTPS connection to a website). This could force
+the server to process an attacker's request as if authenticated using the
+victim's credentials. This update addresses this flaw by implementing the
+TLS Renegotiation Indication Extension, as defined in RFC 5746.
+(CVE-2009-3555)
+
+Refer to the following Knowledgebase article for additional details about
+the CVE-2009-3555 flaw: <a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+
+Dan Kaminsky found that browsers could accept certificates with MD2 hash
+signatures, even though MD2 is no longer considered a cryptographically
+strong algorithm. This could make it easier for an attacker to create a
+malicious certificate that would be treated as trusted by a browser.
+OpenSSL now disables the use of the MD2 algorithm inside signatures by
+default. (CVE-2009-2409)
+
+An input validation flaw was found in the handling of the BMPString and
+UniversalString ASN1 string types in OpenSSL's ASN1_STRING_print_ex()
+function. An attacker could use this flaw to create a specially-crafted
+X.509 certificate that could cause applications using the affected function
+to crash when printing certificate contents. (CVE-2009-0590)
+
+Note: The affected function is rarely used. No application shipped with Red
+Hat Enterprise Linux calls this function, for example.
+
+All OpenSSL users should upgrade to these updated packages, which contain
+backported patches to resolve these issues. For the update to take effect,
+all services linked to the OpenSSL library must be restarted, or the system
+rebooted.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+492304 - CVE-2009-0590 openssl: ASN1 printing crash
+510197 - CVE-2009-2409 deprecate MD2 in SSL cert validation (Kaminsky)
+533125 - CVE-2009-3555 TLS: MITM attacks via session renegotiation
+
+6. Package List:
+
+Red Hat Enterprise Linux AS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/openssl-0.9.7a-33.26.src.rpm">ftp://updates.redhat.com/enterprise/3AS/en/os/SRPMS/openssl-0.9.7a-33.26.src.rpm</a>
+
+i386:
+openssl-0.9.7a-33.26.i386.rpm
+openssl-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.i386.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-devel-0.9.7a-33.26.i386.rpm
+openssl-perl-0.9.7a-33.26.i386.rpm
+
+ia64:
+openssl-0.9.7a-33.26.i686.rpm
+openssl-0.9.7a-33.26.ia64.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.ia64.rpm
+openssl-devel-0.9.7a-33.26.ia64.rpm
+openssl-perl-0.9.7a-33.26.ia64.rpm
+
+ppc:
+openssl-0.9.7a-33.26.ppc.rpm
+openssl-0.9.7a-33.26.ppc64.rpm
+openssl-debuginfo-0.9.7a-33.26.ppc.rpm
+openssl-debuginfo-0.9.7a-33.26.ppc64.rpm
+openssl-devel-0.9.7a-33.26.ppc.rpm
+openssl-perl-0.9.7a-33.26.ppc.rpm
+
+s390:
+openssl-0.9.7a-33.26.s390.rpm
+openssl-debuginfo-0.9.7a-33.26.s390.rpm
+openssl-devel-0.9.7a-33.26.s390.rpm
+openssl-perl-0.9.7a-33.26.s390.rpm
+
+s390x:
+openssl-0.9.7a-33.26.s390.rpm
+openssl-0.9.7a-33.26.s390x.rpm
+openssl-debuginfo-0.9.7a-33.26.s390.rpm
+openssl-debuginfo-0.9.7a-33.26.s390x.rpm
+openssl-devel-0.9.7a-33.26.s390x.rpm
+openssl-perl-0.9.7a-33.26.s390x.rpm
+
+x86_64:
+openssl-0.9.7a-33.26.i686.rpm
+openssl-0.9.7a-33.26.x86_64.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.x86_64.rpm
+openssl-devel-0.9.7a-33.26.x86_64.rpm
+openssl-perl-0.9.7a-33.26.x86_64.rpm
+
+Red Hat Desktop version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/openssl-0.9.7a-33.26.src.rpm">ftp://updates.redhat.com/enterprise/3desktop/en/os/SRPMS/openssl-0.9.7a-33.26.src.rpm</a>
+
+i386:
+openssl-0.9.7a-33.26.i386.rpm
+openssl-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.i386.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-devel-0.9.7a-33.26.i386.rpm
+openssl-perl-0.9.7a-33.26.i386.rpm
+
+x86_64:
+openssl-0.9.7a-33.26.i686.rpm
+openssl-0.9.7a-33.26.x86_64.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.x86_64.rpm
+openssl-devel-0.9.7a-33.26.x86_64.rpm
+openssl-perl-0.9.7a-33.26.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/openssl-0.9.7a-33.26.src.rpm">ftp://updates.redhat.com/enterprise/3ES/en/os/SRPMS/openssl-0.9.7a-33.26.src.rpm</a>
+
+i386:
+openssl-0.9.7a-33.26.i386.rpm
+openssl-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.i386.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-devel-0.9.7a-33.26.i386.rpm
+openssl-perl-0.9.7a-33.26.i386.rpm
+
+ia64:
+openssl-0.9.7a-33.26.i686.rpm
+openssl-0.9.7a-33.26.ia64.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.ia64.rpm
+openssl-devel-0.9.7a-33.26.ia64.rpm
+openssl-perl-0.9.7a-33.26.ia64.rpm
+
+x86_64:
+openssl-0.9.7a-33.26.i686.rpm
+openssl-0.9.7a-33.26.x86_64.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.x86_64.rpm
+openssl-devel-0.9.7a-33.26.x86_64.rpm
+openssl-perl-0.9.7a-33.26.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 3:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/openssl-0.9.7a-33.26.src.rpm">ftp://updates.redhat.com/enterprise/3WS/en/os/SRPMS/openssl-0.9.7a-33.26.src.rpm</a>
+
+i386:
+openssl-0.9.7a-33.26.i386.rpm
+openssl-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.i386.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-devel-0.9.7a-33.26.i386.rpm
+openssl-perl-0.9.7a-33.26.i386.rpm
+
+ia64:
+openssl-0.9.7a-33.26.i686.rpm
+openssl-0.9.7a-33.26.ia64.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.ia64.rpm
+openssl-devel-0.9.7a-33.26.ia64.rpm
+openssl-perl-0.9.7a-33.26.ia64.rpm
+
+x86_64:
+openssl-0.9.7a-33.26.i686.rpm
+openssl-0.9.7a-33.26.x86_64.rpm
+openssl-debuginfo-0.9.7a-33.26.i686.rpm
+openssl-debuginfo-0.9.7a-33.26.x86_64.rpm
+openssl-devel-0.9.7a-33.26.x86_64.rpm
+openssl-perl-0.9.7a-33.26.x86_64.rpm
+
+Red Hat Enterprise Linux AS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/openssl-0.9.7a-43.17.el4_8.5.src.rpm">ftp://updates.redhat.com/enterprise/4AS/en/os/SRPMS/openssl-0.9.7a-43.17.el4_8.5.src.rpm</a>
+
+i386:
+openssl-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.i386.rpm
+
+ia64:
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-0.9.7a-43.17.el4_8.5.ia64.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.ia64.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.ia64.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.ia64.rpm
+
+ppc:
+openssl-0.9.7a-43.17.el4_8.5.ppc.rpm
+openssl-0.9.7a-43.17.el4_8.5.ppc64.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.ppc.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.ppc64.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.ppc.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.ppc64.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.ppc.rpm
+
+s390:
+openssl-0.9.7a-43.17.el4_8.5.s390.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.s390.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.s390.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.s390.rpm
+
+s390x:
+openssl-0.9.7a-43.17.el4_8.5.s390.rpm
+openssl-0.9.7a-43.17.el4_8.5.s390x.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.s390.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.s390x.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.s390.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.s390x.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.s390x.rpm
+
+x86_64:
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/openssl-0.9.7a-43.17.el4_8.5.src.rpm">ftp://updates.redhat.com/enterprise/4Desktop/en/os/SRPMS/openssl-0.9.7a-43.17.el4_8.5.src.rpm</a>
+
+i386:
+openssl-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.i386.rpm
+
+x86_64:
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.x86_64.rpm
+
+Red Hat Enterprise Linux ES version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/openssl-0.9.7a-43.17.el4_8.5.src.rpm">ftp://updates.redhat.com/enterprise/4ES/en/os/SRPMS/openssl-0.9.7a-43.17.el4_8.5.src.rpm</a>
+
+i386:
+openssl-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.i386.rpm
+
+ia64:
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-0.9.7a-43.17.el4_8.5.ia64.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.ia64.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.ia64.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.ia64.rpm
+
+x86_64:
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.x86_64.rpm
+
+Red Hat Enterprise Linux WS version 4:
+
+Source:
+<a  rel="nofollow" href="ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/openssl-0.9.7a-43.17.el4_8.5.src.rpm">ftp://updates.redhat.com/enterprise/4WS/en/os/SRPMS/openssl-0.9.7a-43.17.el4_8.5.src.rpm</a>
+
+i386:
+openssl-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.i386.rpm
+
+ia64:
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-0.9.7a-43.17.el4_8.5.ia64.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.ia64.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.ia64.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.ia64.rpm
+
+x86_64:
+openssl-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.i686.rpm
+openssl-debuginfo-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.i386.rpm
+openssl-devel-0.9.7a-43.17.el4_8.5.x86_64.rpm
+openssl-perl-0.9.7a-43.17.el4_8.5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-0590.html">https://www.redhat.com/security/data/cve/CVE-2009-0590.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-2409.html">https://www.redhat.com/security/data/cve/CVE-2009-2409.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2009-3555.html">https://www.redhat.com/security/data/cve/CVE-2009-3555.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-20491">http://kbase.redhat.com/faq/docs/DOC-20491</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFLq0FMXlSAg2UNWIIRAkUBAJ9U9UK/AKGkp6C6aKNiju/0H85ncACff/Ik
+XNkd/Dl7OFXMXyyM51/Tb50=
+=6XPJ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

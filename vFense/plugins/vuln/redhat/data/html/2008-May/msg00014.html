@@ -1,0 +1,234 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2008:0489&#45;01] Critical: gnutls security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 20 May 2008 10:49:44 &#45;0400 -->
+<!--X-Message-Id: 200805201449.m4KEng4f004735@pobox.devel.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2008:0489-01] Critical: gnutls security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2008:0489-01] Critical: gnutls security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2008:0489-01] Critical: gnutls security update</li>
+<li><em>Date</em>: Tue, 20 May 2008 10:49:42 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: gnutls security update
+Advisory ID:       RHSA-2008:0489-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2008-0489.html">https://rhn.redhat.com/errata/RHSA-2008-0489.html</a>
+Issue date:        2008-05-20
+CVE Names:         CVE-2008-1948 CVE-2008-1949 CVE-2008-1950 
+=====================================================================
+
+1. Summary:
+
+Updated gnutls packages that fix several security issues are now available
+for Red Hat Enterprise Linux 5.
+
+This update has been rated as having critical security impact by the Red
+Hat Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The GnuTLS Library provides support for cryptographic algorithms and
+protocols such as TLS. GnuTLS includes libtasn1, a library developed for
+ASN.1 structures management that includes DER encoding and decoding.
+
+Flaws were found in the way GnuTLS handles malicious client connections. A
+malicious remote client could send a specially crafted request to a service
+using GnuTLS that could cause the service to crash. (CVE-2008-1948,
+CVE-2008-1949, CVE-2008-1950)
+
+We believe it is possible to leverage the flaw CVE-2008-1948 to execute
+arbitrary code but have been unable to prove this at the time of releasing
+this advisory. Red Hat Enterprise Linux 5 includes applications, such as
+CUPS, that would be directly vulnerable to any such an exploit, however.
+Consequently, we have assigned it critical severity.
+
+Users of GnuTLS are advised to upgrade to these updated packages, which
+contain a backported patch that corrects these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.  
+
+This update is available via Red Hat Network.  Details on how to use 
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/FAQ_58_10188">http://kbase.redhat.com/faq/FAQ_58_10188</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+447461 - CVE-2008-1948 GNUTLS-SA-2008-1-1 GnuTLS buffer overflow
+447462 - CVE-2008-1949 GNUTLS-SA-2008-1-2 GnuTLS null-pointer dereference
+447463 - CVE-2008-1950 GNUTLS-SA-2008-1-3 GnuTLS memory overread flaw
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnutls-1.4.1-3.el5_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnutls-1.4.1-3.el5_1.src.rpm</a>
+
+i386:
+gnutls-1.4.1-3.el5_1.i386.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.i386.rpm
+gnutls-utils-1.4.1-3.el5_1.i386.rpm
+
+x86_64:
+gnutls-1.4.1-3.el5_1.i386.rpm
+gnutls-1.4.1-3.el5_1.x86_64.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.i386.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.x86_64.rpm
+gnutls-utils-1.4.1-3.el5_1.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnutls-1.4.1-3.el5_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gnutls-1.4.1-3.el5_1.src.rpm</a>
+
+i386:
+gnutls-debuginfo-1.4.1-3.el5_1.i386.rpm
+gnutls-devel-1.4.1-3.el5_1.i386.rpm
+
+x86_64:
+gnutls-debuginfo-1.4.1-3.el5_1.i386.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.x86_64.rpm
+gnutls-devel-1.4.1-3.el5_1.i386.rpm
+gnutls-devel-1.4.1-3.el5_1.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gnutls-1.4.1-3.el5_1.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gnutls-1.4.1-3.el5_1.src.rpm</a>
+
+i386:
+gnutls-1.4.1-3.el5_1.i386.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.i386.rpm
+gnutls-devel-1.4.1-3.el5_1.i386.rpm
+gnutls-utils-1.4.1-3.el5_1.i386.rpm
+
+ia64:
+gnutls-1.4.1-3.el5_1.i386.rpm
+gnutls-1.4.1-3.el5_1.ia64.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.i386.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.ia64.rpm
+gnutls-devel-1.4.1-3.el5_1.ia64.rpm
+gnutls-utils-1.4.1-3.el5_1.ia64.rpm
+
+ppc:
+gnutls-1.4.1-3.el5_1.ppc.rpm
+gnutls-1.4.1-3.el5_1.ppc64.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.ppc.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.ppc64.rpm
+gnutls-devel-1.4.1-3.el5_1.ppc.rpm
+gnutls-devel-1.4.1-3.el5_1.ppc64.rpm
+gnutls-utils-1.4.1-3.el5_1.ppc.rpm
+
+s390x:
+gnutls-1.4.1-3.el5_1.s390.rpm
+gnutls-1.4.1-3.el5_1.s390x.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.s390.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.s390x.rpm
+gnutls-devel-1.4.1-3.el5_1.s390.rpm
+gnutls-devel-1.4.1-3.el5_1.s390x.rpm
+gnutls-utils-1.4.1-3.el5_1.s390x.rpm
+
+x86_64:
+gnutls-1.4.1-3.el5_1.i386.rpm
+gnutls-1.4.1-3.el5_1.x86_64.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.i386.rpm
+gnutls-debuginfo-1.4.1-3.el5_1.x86_64.rpm
+gnutls-devel-1.4.1-3.el5_1.i386.rpm
+gnutls-devel-1.4.1-3.el5_1.x86_64.rpm
+gnutls-utils-1.4.1-3.el5_1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1948">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1948</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1949">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1949</a>
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1950">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-1950</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#critical">http://www.redhat.com/security/updates/classification/#critical</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2008 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFIMuUBXlSAg2UNWIIRAlKIAJ9hIDhnAHsww5O+8RpFuW2njUDgFACfQqZf
+XAbhp8KXDUbhkeIiL6wIEWM=
+=P2DK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

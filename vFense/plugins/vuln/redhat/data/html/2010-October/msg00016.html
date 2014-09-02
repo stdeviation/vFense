@@ -1,0 +1,244 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2010:0771&#45;01] Moderate: kernel&#45;rt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 14 Oct 2010 11:48:59 &#45;0400 -->
+<!--X-Message-Id: 201010141548.o9EFmr4N021948@int&#45;mx01.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2010:0771-01] Moderate: kernel-rt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2010:0771-01] Moderate: kernel-rt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2010:0771-01] Moderate: kernel-rt security and bug fix update</li>
+<li><em>Date</em>: Thu, 14 Oct 2010 11:49:47 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel-rt security and bug fix update
+Advisory ID:       RHSA-2010:0771-01
+Product:           Red Hat Enterprise MRG for RHEL-5
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2010-0771.html">https://rhn.redhat.com/errata/RHSA-2010-0771.html</a>
+Issue date:        2010-10-14
+CVE Names:         CVE-2010-0307 CVE-2010-2942 CVE-2010-2955 
+                   CVE-2010-3297 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix multiple security issues and upgrade
+the kernel-rt kernel to version 2.6.33.7-rt29 are now available for Red Hat
+Enterprise MRG 1.3.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 5 Server - i386, noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+This update fixes the following security issues:
+
+* On AMD64 systems, it was discovered that the kernel did not ensure the
+ELF interpreter was available before making a call to the SET_PERSONALITY
+macro. A local attacker could use this flaw to cause a denial of service by
+running a 32-bit application that attempts to execute a 64-bit application.
+(CVE-2010-0307, Moderate)
+
+* Information leak flaws were found in the Linux kernel Traffic Control
+Unit implementation. A local attacker could use these flaws to cause the
+kernel to leak kernel memory to user-space, possibly leading to the
+disclosure of sensitive information. (CVE-2010-2942, Moderate)
+
+* It was found that wireless drivers might not always clear allocated
+buffers when handling a driver-specific IOCTL information request. A local
+user could trigger this flaw to cause kernel memory to leak from the heap
+to user-space, leading to an information leak. (CVE-2010-2955, Moderate)
+
+* A flaw was found in the eql_g_master_cfg() function in the Linux kernel
+equalizer load-balancer for serial network interfaces implementation. A
+data structure in eql_g_master_cfg() was not initialized properly before
+being copied to user-space. A local, unprivileged user could use this flaw
+to cause an information leak. (CVE-2010-3297, Moderate)
+
+Red Hat would like to thank Mathias Krause for reporting CVE-2010-0307, and
+Dan Rosenberg for reporting CVE-2010-3297.
+
+This update also fixes the following bugs:
+
+* The mkinitrd utility reported the following warning message when creating
+an initial ramdisk:
+
+No module dm-mem-cache found for kernel [version], aborting.
+
+This was caused by an erroneous dependency on dmraid-related modules. This
+update removes these dependencies with the result that mkinitrd does not
+issue a spurious warning about the dm-mem-cache module not being found.
+(BZ#482753)
+
+* The ibm_rtl kernel module now performs more exhaustive checking to ensure
+it only loads on correct IBM hardware. (BZ#612275)
+
+* The realtime Linux kernel has been upgraded to upstream version
+2.6.33.7-rt29, which provides a number of bug fixes and enhancements for
+Red Hat Enterprise MRG 1.3. (BZ#638672)
+
+Users should upgrade to these updated packages, which upgrade the kernel-rt
+kernel to version 2.6.33.7-rt29 to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not
+use &quot;rpm -Uvh&quot; as that will remove the running kernel binaries from
+your system. You may use &quot;rpm -e&quot; to remove old kernels after
+determining that the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+482753 - mkinitrd erroneously inserts dependencies to dm-mem-cache (not present on MRG)
+560547 - CVE-2010-0307 kernel: DoS on x86_64
+612275 - WARNING: at arch/x86/mm/ioremap.c:148 __ioremap_caller+0x160/0x30e()
+624903 - CVE-2010-2942 kernel: net sched: fix some kernel memory leaks
+628434 - CVE-2010-2955 kernel: wireless: fix 64K kernel heap content leak via ioctl
+633145 - CVE-2010-3297 kernel: drivers/net/eql.c: reading uninitialized stack memory
+638672 - Need to move the MRG RT source base to upstream RT (2.6.33)
+
+6. Package List:
+
+MRG Realtime for RHEL 5 Server:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.33.7-rt29.45.el5rt.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/RHEMRG/SRPMS/kernel-rt-2.6.33.7-rt29.45.el5rt.src.rpm</a>
+
+i386:
+kernel-rt-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-debug-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-debug-debuginfo-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-debug-devel-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-debuginfo-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-debuginfo-common-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-devel-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-trace-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-trace-debuginfo-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-trace-devel-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-vanilla-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-vanilla-debuginfo-2.6.33.7-rt29.45.el5rt.i686.rpm
+kernel-rt-vanilla-devel-2.6.33.7-rt29.45.el5rt.i686.rpm
+perf-2.6.33.7-rt29.45.el5rt.i686.rpm
+perf-debuginfo-2.6.33.7-rt29.45.el5rt.i686.rpm
+
+noarch:
+kernel-rt-doc-2.6.33.7-rt29.45.el5rt.noarch.rpm
+
+x86_64:
+kernel-rt-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-debug-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-debug-debuginfo-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-debug-devel-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-debuginfo-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-debuginfo-common-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-devel-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-trace-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-trace-debuginfo-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-trace-devel-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-vanilla-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+kernel-rt-vanilla-devel-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+perf-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+perf-debuginfo-2.6.33.7-rt29.45.el5rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-0307.html">https://www.redhat.com/security/data/cve/CVE-2010-0307.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2942.html">https://www.redhat.com/security/data/cve/CVE-2010-2942.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-2955.html">https://www.redhat.com/security/data/cve/CVE-2010-2955.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2010-3297.html">https://www.redhat.com/security/data/cve/CVE-2010-3297.html</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#moderate">http://www.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2010 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFMtyY1XlSAg2UNWIIRAnPuAJ9D7y9FA2DNluu+aaPZgOPbg2hE1QCfULTI
+S+kkGSMbPa3nTYxNvFVFEI8=
+=h2XV
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

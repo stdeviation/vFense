@@ -1,0 +1,179 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:0517&#45;01] Moderate: openstack&#45;foreman&#45;installer security,	bug fix, and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 29 May 2014 17:18:46 &#45;0400 -->
+<!--X-Message-Id: 201405292118.s4TLIjmP026500@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:0517-01] Moderate: openstack-foreman-installer security,	bug </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:0517-01] Moderate: openstack-foreman-installer security,	bug fix, and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:0517-01] Moderate: openstack-foreman-installer security,	bug fix, and enhancement update</li>
+<li><em>Date</em>: Thu, 29 May 2014 21:18:45 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-foreman-installer security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:0517-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-0517.html">https://rhn.redhat.com/errata/RHSA-2014-0517.html</a>
+Issue date:        2014-05-29
+CVE Names:         CVE-2013-6470 
+=====================================================================
+
+1. Summary:
+
+An updated openstack-foreman-installer package that fixes one security
+issue, several bugs, and adds various enhancements is now available for Red
+Hat Enterprise Linux OpenStack Platform 4.0.
+
+The Red Hat Security Response Team has rated this update as having Moderate
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0 - noarch
+
+3. Description:
+
+The openstack-foreman-installer package provides facilities for rapidly
+deploying Red Hat Enterprise Linux OpenStack Platform 4.
+
+It was discovered that the Qpid configuration created by
+openstack-foreman-installer did not have authentication enabled when run
+with default settings in standalone mode. An attacker able to establish a
+TCP connection to Qpid could access any OpenStack back end using Qpid (for
+example, nova) without any authentication. (CVE-2013-6470)
+
+This update also fixes several bugs and adds enhancements. Documentation
+for these changes is available in the Technical Notes document linked to
+in the References section.
+
+All openstack-foreman-installer users are advised to upgrade to this
+updated package, which corrects these issues and adds these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1033247 - [RFE] Global Parameter Boolean for Specifying Service Deployment
+1049122 - Install a Highly Available OpenStack deployment using Foreman (qpid)
+1051994 - CVE-2013-6470 openstack foreman-installer: insecure defaults
+1053623 - openstack-foreman-installer: openstack-selinux package is not installed on the foreman_clients (it cause: multiple AVCs in messages).
+1062699 - [RFE] foreman should allow for cinder share mount options on HA Controller
+1064050 - [RFE] foreman should allow the configuraiton of glance using RHS/NFS and direct file access
+1064056 - Foreman Heat ports not opened in a foreman based Nova network install
+1068885 - Foreman-installer doesn't create keystonerc_admin file on controller
+1073087 - [RFE] Use subscription-manager in kickstart template, not rhnreg_ks
+1073550 - Change foreman-installer to use openstack-puppet-modules
+1077818 - Modify installer to accept environment variable for Foreman provisioning interface
+1078279 - Pull latest Cisco Nexus updates
+1080638 - openshift-enterprise HA template egress rules block cloud-init metadata
+1084534 - Add Nova Service to HA hostgroup
+1085547 - Keystone role is created as _member_ instead of Member
+1087713 - Add Swift Proxy service to HA hostgroup
+1088608 - Add Neutron Service to HA hostgroup
+1088611 - Add Heat Service to HA hostgroup
+1095853 - [Rubygem-Staypuft]:When attempting to browse : Infrastructure --&gt; Compute Resources'  getting &quot;Not Implemented&quot; page (as well to other pages) .
+1099661 - OpenStack-Foreman-Installer: Failed to deploy Neutron-Compute using O-F-I due to  'Invalid parameter ceilometer_host'.
+1100411 - ceilometer attempts to start before mongo service is ready
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0:
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-foreman-installer-1.0.12-1.el6ost.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/RHOS/SRPMS/openstack-foreman-installer-1.0.12-1.el6ost.src.rpm</a>
+
+noarch:
+openstack-foreman-installer-1.0.12-1.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6470.html">https://www.redhat.com/security/data/cve/CVE-2013-6470.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/4/html/Technical_Notes/index.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/4/html/Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFTh6P+XlSAg2UNWIIRAgfAAKC1mILeqUQGjQrck82kHLPGuHLExACfTAq/
+hNd3D5xiov61/eVUkIfPtag=
+=YUhM
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

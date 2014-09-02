@@ -1,0 +1,182 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2013:0924&#45;01] Important: spice&#45;vdagent&#45;win security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 10 Jun 2013 17:10:16 &#45;0400 -->
+<!--X-Message-Id: 201306102110.r5ALABnZ010544@int&#45;mx12.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2013:0924-01] Important: spice-vdagent-win security and bug fix	up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2013:0924-01] Important: spice-vdagent-win security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2013:0924-01] Important: spice-vdagent-win security and bug fix	update</li>
+<li><em>Date</em>: Mon, 10 Jun 2013 21:10:11 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: spice-vdagent-win security and bug fix update
+Advisory ID:       RHSA-2013:0924-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2013-0924.html">https://rhn.redhat.com/errata/RHSA-2013-0924.html</a>
+Issue date:        2013-06-10
+CVE Names:         CVE-2013-2152 
+=====================================================================
+
+1. Summary:
+
+An update for spice-vdagent-win that fixes one security issue and several
+bugs is now available.
+
+The Red Hat Security Response Team has rated this update as having
+important security impact. A Common Vulnerability Scoring System (CVSS)
+base score, which gives a detailed severity rating, is available from the
+CVE link in the References section.
+
+2. Description:
+
+spice-vdagent-win provides a service and an agent that can be installed and
+run on Windows guests.
+
+An unquoted search path flaw was found in the way the SPICE service was
+installed on Windows. Depending on the permissions of the directories in
+the unquoted search path, a local, unprivileged user could use this flaw to
+have a binary of their choosing executed with SYSTEM privileges.
+(CVE-2013-2152)
+
+This update also fixes the following bugs:
+
+* Previously, due to issues with some Windows guest applications, RHEV
+SPICE agent stopped getting clipboard changes. Now, the agent uses a new
+API that keeps track of clipboard changes, without the need to &quot;trust&quot; the
+behavior of other applications registered to the clipboard. (BZ#919451)
+
+* Previously, copying a .jpg or .png image file from specific applications,
+such as Mozilla Firefox, on a Windows guest, then pasting into a Linux
+client, resulted in an empty or black and white image due to incorrect
+pallete encoding in the guest vdagent. Now, the encoding has been fixed and
+copying and pasting works as expected. (BZ#919150)
+
+* Previously, when using a Windows virtual machine, enabling extra monitors
+with arbitrary configuration could fail. Now the agent enables the monitors
+before updating it to an arbitrary resolution to solve this issue.
+(BZ#922394)
+
+* Previously, if SPICE was disconnected in the middle of copying and
+pasting data from the client to the guest, copy and paste would stop
+working after SPICE was reconnected. Now, the clipboard timeout has been
+adjusted so that if SPICE is unexpectedly disconnected, the immediate copy
+and paste action will fail, but subsequent attempts will be successful.
+(BZ#833835)
+
+* Previously, when attempting to connect multiple displays using a Windows
+7 guest, remote-viewer would only show one display available, even when all
+settings in the manager and on the SPICE client itself were correctly
+configured. This was caused by a regression issue relating to changes to
+custom resolution commands. Now, connecting and displaying multiple
+monitors functions correctly. (BZ#922283)
+
+* Previously, due to a regression caused by another patch, copying a .png
+image from specific applications, such as Firefox, on a Linux client,
+failed pasting into a Windows guest application, such as Paint, due to
+incorrect pallete encoding in the guest vdagent. Now, the encoding has been
+fixed and copying and pasting works as expected. (BZ#921980)
+
+* Previously, when a second user logged into a Windows guest, the RHEV
+SPICE Agent service terminated the previous vdagent instance, but
+mistakenly also the newly created vdagent on the current active session.
+Now, the vdagent termination event is reset after previous agent
+termination, so each new agent is no longer terminated. (BZ#868254)
+
+* Previously, if &quot;RHEV SPICE agent&quot; was stopped after copying data from a
+Windows guest, the client was not correctly notified, and assumed it could
+still paste the data. Now, agent termination has been fixed so that the
+client is notified to release the clipboard. (BZ#903379)
+
+3. Solution:
+
+Red Hat Enterprise Virtualization users that are using SPICE to connect to
+their virtual machines are advised to install this update.
+
+4. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+833835 - copy-paste stops working after client disconnection during a copy-paste
+868254 - vdagent-win exits if two users are logged in simultaneously
+903379 - Stop the spice-vdagent on a Windows VM and the client right-click menu still shows you can paste with an empty clipboard.
+922283 - win-vdagent:  does not enable extra displays
+922394 - --full-screen=auto-conf doesn't turn on disabled guest monitors
+971172 - CVE-2013-2152 rhevm: spice service unquoted search path
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2152.html">https://www.redhat.com/security/data/cve/CVE-2013-2152.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2013 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFRtkCiXlSAg2UNWIIRAjFhAKCPt2Okx8fSwurWw+n6ko7GVkUbXwCgsLGQ
+FOdSFAsMBtuFTl8VBa7gW1w=
+=AMZc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

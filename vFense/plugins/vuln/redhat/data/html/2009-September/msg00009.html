@@ -1,0 +1,253 @@
+<!-- MHonArc v2.6.12 -->
+<!--X-Subject: [RHSA&#45;2009:1337&#45;02] Low: gfs2&#45;utils security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 2 Sep 2009 03:46:13 &#45;0400 -->
+<!--X-Message-Id: 200909020746.n827kBAS013739@int&#45;mx08.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2009:1337-02] Low: gfs2-utils security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla@redhat.com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2009:1337-02] Low: gfs2-utils security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2009:1337-02] Low: gfs2-utils security and bug fix update</li>
+<li><em>Date</em>: Wed, 2 Sep 2009 03:46:11 -0400</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: gfs2-utils security and bug fix update
+Advisory ID:       RHSA-2009:1337-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2009-1337.html">https://rhn.redhat.com/errata/RHSA-2009-1337.html</a>
+Issue date:        2009-09-02
+Keywords:          gfs2-utils
+CVE Names:         CVE-2008-6552 
+=====================================================================
+
+1. Summary:
+
+An updated gfs2-utils package that fixes multiple security issues and
+various bugs is now available for Red Hat Enterprise Linux 5.
+
+This update has been rated as having low security impact by the Red Hat
+Security Response Team.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+The gfs2-utils package provides the user-space tools necessary to mount,
+create, maintain, and test GFS2 file systems.
+
+Multiple insecure temporary file use flaws were discovered in GFS2 user
+level utilities. A local attacker could use these flaws to overwrite an
+arbitrary file writable by a victim running those utilities (typically
+root) with the output of the utilities via a symbolic link attack.
+(CVE-2008-6552)
+
+This update also fixes the following bugs:
+
+* gfs2_fsck now properly detects and repairs problems with sequence numbers
+on GFS2 file systems.
+
+* GFS2 user utilities now use the file system UUID.
+
+* gfs2_grow now properly updates the file system size during operation.
+
+* gfs2_fsck now returns the proper exit codes.
+
+* gfs2_convert now properly frees blocks when removing free blocks up to
+height 2.
+
+* the gfs2_fsck manual page has been renamed to fsck.gfs2 to match current
+standards.
+
+* the 'gfs2_tool df' command now provides human-readable output.
+
+* mounting GFS2 file systems with the noatime or noquota option now works
+properly.
+
+* new capabilities have been added to the gfs2_edit tool to help in testing
+and debugging GFS and GFS2 issues.
+
+* the 'gfs2_tool df' command no longer segfaults on file systems with a
+block size other than 4k.
+
+* the gfs2_grow manual page no longer references the '-r' option, which has
+been removed.
+
+* the 'gfs2_tool unfreeze' command no longer hangs during use.
+
+* gfs2_convert no longer corrupts file systems when converting from GFS to
+GFS2.
+
+* gfs2_fsck no longer segfaults when encountering a block which is listed
+as both a data and stuffed directory inode.
+
+* gfs2_fsck can now fix file systems even if the journal is already locked
+for use.
+
+* a GFS2 file system's metadata is now properly copied with 'gfs2_edit
+savemeta' and 'gfs2_edit restoremeta'.
+
+* the gfs2_edit savemeta function now properly saves blocks of type 2.
+
+* 'gfs2_convert -vy' now works properly on the PowerPC architecture.
+
+* when mounting a GFS2 file system as '/', mount_gfs2 no longer fails after
+being unable to find the file system in '/proc/mounts'.
+
+* gfs2_fsck no longer segfaults when fixing 'EA leaf block type' problems.
+
+All gfs2-utils users should upgrade to this updated package, which resolves
+these issues.
+
+4. Solution:
+
+Before applying this update, make sure that all previously-released
+errata relevant to your system have been applied.
+
+This update is available via Red Hat Network.  Details on how to use
+the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="http://kbase.redhat.com/faq/docs/DOC-11259">http://kbase.redhat.com/faq/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+242701 - Add Filesystem UUID to GFS2 utils.
+469773 - GFS2: gfs2_grow doesn't grow file system properly
+474705 - GFS2: make gfs2_fsck conform to fsck(8) exit codes
+474707 - GFS2: gfs2_convert not freeing blocks when removing file with height &amp;gt;=2
+477072 - gfs2_fsck man page should be fsck.gfs2 man page
+481762 - No longer able to mount GFS volume with noatime,noquota options
+483799 - GFS2: gfs2_edit fixes for 5.4
+485761 - GFS2: gfs2_tool df segfault on non-4K block size
+486034 - gfs2_grow man page references removed -r option
+487608 - GFS2: gfs2_tool unfreeze hangs
+498646 - gfs2_fsck does not fix filesystem when 'journal is already locked for use'
+501732 - mount failure after gfs2_edit restoremeta of GFS file system
+502056 - GFS2: gfs2_edit savemeta needs to save freemeta blocks
+506629 - GFS2: gfs2_convert, parameter not understood on ppc
+510758 - fsck.gfs2 segfaults while fixing 'EA leaf block type' problem.
+519436 - CVE-2008-6552 cman, gfs2-utils, rgmanager: multiple insecure temporary file use issues
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gfs2-utils-0.1.62-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Client/en/os/SRPMS/gfs2-utils-0.1.62-1.el5.src.rpm</a>
+
+i386:
+gfs2-utils-0.1.62-1.el5.i386.rpm
+gfs2-utils-debuginfo-0.1.62-1.el5.i386.rpm
+
+x86_64:
+gfs2-utils-0.1.62-1.el5.x86_64.rpm
+gfs2-utils-debuginfo-0.1.62-1.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gfs2-utils-0.1.62-1.el5.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/5Server/en/os/SRPMS/gfs2-utils-0.1.62-1.el5.src.rpm</a>
+
+i386:
+gfs2-utils-0.1.62-1.el5.i386.rpm
+gfs2-utils-debuginfo-0.1.62-1.el5.i386.rpm
+
+ia64:
+gfs2-utils-0.1.62-1.el5.ia64.rpm
+gfs2-utils-debuginfo-0.1.62-1.el5.ia64.rpm
+
+ppc:
+gfs2-utils-0.1.62-1.el5.ppc.rpm
+gfs2-utils-debuginfo-0.1.62-1.el5.ppc.rpm
+
+s390x:
+gfs2-utils-0.1.62-1.el5.s390x.rpm
+gfs2-utils-debuginfo-0.1.62-1.el5.s390x.rpm
+
+x86_64:
+gfs2-utils-0.1.62-1.el5.x86_64.rpm
+gfs2-utils-debuginfo-0.1.62-1.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://www.redhat.com/security/team/key/#package">https://www.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6552">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-6552</a>
+<a  rel="nofollow" href="http://www.redhat.com/security/updates/classification/#low">http://www.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://www.redhat.com/security/team/contact/">https://www.redhat.com/security/team/contact/</a>
+
+Copyright 2009 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFKniKRXlSAg2UNWIIRAuVaAKC4DuQv08PQBMmzJJs/sWnY5aN/pACgkdWH
+inFl2QiVaXbBJ1dXPZg/nAk=
+=QTFs
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2011:1391&#45;01] Moderate: httpd security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 20 Oct 2011 13:37:06 &#45;0400 -->
+<!--X-Message-Id: 201110201737.p9KHb0Lo032242@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2011:1391-01] Moderate: httpd security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2011:1391-01] Moderate: httpd security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2011:1391-01] Moderate: httpd security and bug fix update</li>
+<li><em>Date</em>: Thu, 20 Oct 2011 17:37:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: httpd security and bug fix update
+Advisory ID:       RHSA-2011:1391-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1391.html">https://rhn.redhat.com/errata/RHSA-2011-1391.html</a>
+Issue date:        2011-10-20
+CVE Names:         CVE-2011-3348 CVE-2011-3368 
+=====================================================================
+
+1. Summary:
+
+Updated httpd packages that fix two security issues and one bug are now
+available for Red Hat Enterprise Linux 6.
+
+The Red Hat Security Response Team has rated this update as having moderate
+security impact. Common Vulnerability Scoring System (CVSS) base scores,
+which give detailed severity ratings, are available for each vulnerability
+from the CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+The Apache HTTP Server is a popular web server.
+
+It was discovered that the Apache HTTP Server did not properly validate the
+request URI for proxied requests. In certain configurations, if a reverse
+proxy used the ProxyPassMatch directive, or if it used the RewriteRule
+directive with the proxy flag, a remote attacker could make the proxy
+connect to an arbitrary server, possibly disclosing sensitive information
+from internal web servers not directly accessible to the attacker.
+(CVE-2011-3368)
+
+It was discovered that mod_proxy_ajp incorrectly returned an &quot;Internal
+Server Error&quot; response when processing certain malformed HTTP requests,
+which caused the back-end server to be marked as failed in configurations
+where mod_proxy was used in load balancer mode. A remote attacker could
+cause mod_proxy to not send requests to back-end AJP (Apache JServ
+Protocol) servers for the retry timeout period or until all back-end
+servers were marked as failed. (CVE-2011-3348)
+
+Red Hat would like to thank Context Information Security for reporting the
+CVE-2011-3368 issue.
+
+This update also fixes the following bug:
+
+* The fix for CVE-2011-3192 provided by the RHSA-2011:1245 update
+introduced regressions in the way httpd handled certain Range HTTP header
+values. This update corrects those regressions. (BZ#736592)
+
+All httpd users should upgrade to these updated packages, which contain
+backported patches to correct these issues. After installing the updated
+packages, the httpd daemon must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously-released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/kb/docs/DOC-11259">https://access.redhat.com/kb/docs/DOC-11259</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="http://bugzilla.redhat.com/">http://bugzilla.redhat.com/</a>):
+
+736592 - httpd: RHSA-2011:1245 regressions [rhel-6]
+736690 - CVE-2011-3348 httpd: mod_proxy_ajp remote temporary DoS
+740045 - CVE-2011-3368 httpd: reverse web proxy vulnerability
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm</a>
+
+i386:
+httpd-2.2.15-9.el6_1.3.i686.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.i686.rpm
+httpd-tools-2.2.15-9.el6_1.3.i686.rpm
+
+x86_64:
+httpd-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-tools-2.2.15-9.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Client/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm</a>
+
+i386:
+httpd-debuginfo-2.2.15-9.el6_1.3.i686.rpm
+httpd-devel-2.2.15-9.el6_1.3.i686.rpm
+mod_ssl-2.2.15-9.el6_1.3.i686.rpm
+
+noarch:
+httpd-manual-2.2.15-9.el6_1.3.noarch.rpm
+
+x86_64:
+httpd-debuginfo-2.2.15-9.el6_1.3.i686.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-devel-2.2.15-9.el6_1.3.i686.rpm
+httpd-devel-2.2.15-9.el6_1.3.x86_64.rpm
+mod_ssl-2.2.15-9.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm</a>
+
+x86_64:
+httpd-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-tools-2.2.15-9.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6ComputeNode/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm</a>
+
+noarch:
+httpd-manual-2.2.15-9.el6_1.3.noarch.rpm
+
+x86_64:
+httpd-debuginfo-2.2.15-9.el6_1.3.i686.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-devel-2.2.15-9.el6_1.3.i686.rpm
+httpd-devel-2.2.15-9.el6_1.3.x86_64.rpm
+mod_ssl-2.2.15-9.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Server/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm</a>
+
+i386:
+httpd-2.2.15-9.el6_1.3.i686.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.i686.rpm
+httpd-devel-2.2.15-9.el6_1.3.i686.rpm
+httpd-tools-2.2.15-9.el6_1.3.i686.rpm
+mod_ssl-2.2.15-9.el6_1.3.i686.rpm
+
+noarch:
+httpd-manual-2.2.15-9.el6_1.3.noarch.rpm
+
+ppc64:
+httpd-2.2.15-9.el6_1.3.ppc64.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.ppc.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.ppc64.rpm
+httpd-devel-2.2.15-9.el6_1.3.ppc.rpm
+httpd-devel-2.2.15-9.el6_1.3.ppc64.rpm
+httpd-tools-2.2.15-9.el6_1.3.ppc64.rpm
+mod_ssl-2.2.15-9.el6_1.3.ppc64.rpm
+
+s390x:
+httpd-2.2.15-9.el6_1.3.s390x.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.s390.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.s390x.rpm
+httpd-devel-2.2.15-9.el6_1.3.s390.rpm
+httpd-devel-2.2.15-9.el6_1.3.s390x.rpm
+httpd-tools-2.2.15-9.el6_1.3.s390x.rpm
+mod_ssl-2.2.15-9.el6_1.3.s390x.rpm
+
+x86_64:
+httpd-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.i686.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-devel-2.2.15-9.el6_1.3.i686.rpm
+httpd-devel-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-tools-2.2.15-9.el6_1.3.x86_64.rpm
+mod_ssl-2.2.15-9.el6_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+<a  rel="nofollow" href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/6Workstation/en/os/SRPMS/httpd-2.2.15-9.el6_1.3.src.rpm</a>
+
+i386:
+httpd-2.2.15-9.el6_1.3.i686.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.i686.rpm
+httpd-devel-2.2.15-9.el6_1.3.i686.rpm
+httpd-tools-2.2.15-9.el6_1.3.i686.rpm
+mod_ssl-2.2.15-9.el6_1.3.i686.rpm
+
+noarch:
+httpd-manual-2.2.15-9.el6_1.3.noarch.rpm
+
+x86_64:
+httpd-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.i686.rpm
+httpd-debuginfo-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-devel-2.2.15-9.el6_1.3.i686.rpm
+httpd-devel-2.2.15-9.el6_1.3.x86_64.rpm
+httpd-tools-2.2.15-9.el6_1.3.x86_64.rpm
+mod_ssl-2.2.15-9.el6_1.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and 
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3348.html">https://www.redhat.com/security/data/cve/CVE-2011-3348.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2011-3368.html">https://www.redhat.com/security/data/cve/CVE-2011-3368.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2011-1245.html">https://rhn.redhat.com/errata/RHSA-2011-1245.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2011 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.4 (GNU/Linux)
+
+iD8DBQFOoFwtXlSAg2UNWIIRArNFAJ4wl+RBSDavBY4s30osXuQolAExpgCfdnq4
+jqEdmfFTEkx4L2vdRBd3Ux8=
+=yDza
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
