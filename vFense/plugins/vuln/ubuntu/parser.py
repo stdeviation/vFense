@@ -322,40 +322,50 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
                 soup.find(
                     'div',
                     {
-                        'class': 'pagination'
+                        'class': 'eight-col'
+                    }
+                ).find(
+                    'div',
+                    {
+                        'class': 'right'
                     }
                 ).find(
                     'a',
                     {
                         'href': re.compile(UbuntuUSNStrings.NEXT_PAGE)
                     },
-                    text=re.compile('Next'),
-                )
+                    text=re.compile('Next')
+                ).parent['href']
             )
-            usn_uris = (
-                soup.find(
+            usn_uris = []
+            eight = (
+                soup.findAll(
                     'div',
                     {
-                        'id': 'content'
-                    }
-                ).findAll(
-                    'a',
-                    {
-                        'href': re.compile(UbuntuUSNStrings.USR_URI)
+                        'class': 'eight-col notice'
                     }
                 )
             )
+            for uri in eight:
+                usn_uris.append(
+                    uri.find(
+                        'a',
+                        {
+                            'href': re.compile(UbuntuUSNStrings.USR_URI)
+                        }
+                    )['href']
+                )
             if len(usn_uris) > 0:
                 data = []
                 for usn_uri in usn_uris:
-                    data_to_update, ok = process_usn_page(usn_uri['href'])
+                    data_to_update, ok = process_usn_page(usn_uri)
                     if ok:
                         data.append(data_to_update)
                 insert_bulletin_data(data)
 
             if full_parse:
                 if next_page:
-                    return(begin_usn_home_page_processing(next_page.parent['href'], True))
+                    return(begin_usn_home_page_processing(next_page, True))
 
     except Exception as e:
         logger.exception(e)
