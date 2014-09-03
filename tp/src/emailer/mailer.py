@@ -171,7 +171,7 @@ def create_or_modify_mail_config(modifying_username=None, customer_name=None,
                 is_created = (
                     r
                     .table(NotificationCollections.NotificationPlugins)
-                    .insert(base_config, upsert=True)
+                    .insert(base_config, conflict="replace")
                     .run(conn)
                 )
                 if 'inserted' in is_created:
