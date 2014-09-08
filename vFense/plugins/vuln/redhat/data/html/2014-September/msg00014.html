@@ -1,0 +1,208 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1162&#45;01] Important: Red Hat JBoss Enterprise Application	Platform 6.3.0 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 4 Sep 2014 13:36:40 &#45;0400 -->
+<!--X-Message-Id: 201409041736.s84Had7c008211@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1162-01] Important: Red Hat JBoss Enterprise Application	Plat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1162-01] Important: Red Hat JBoss Enterprise Application	Platform 6.3.0 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1162-01] Important: Red Hat JBoss Enterprise Application	Platform 6.3.0 security update</li>
+<li><em>Date</em>: Thu, 4 Sep 2014 17:36:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Enterprise Application Platform 6.3.0 security update
+Advisory ID:       RHSA-2014:1162-01
+Product:           Red Hat JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1162.html">https://rhn.redhat.com/errata/RHSA-2014-1162.html</a>
+Issue date:        2014-09-04
+CVE Names:         CVE-2012-6153 CVE-2014-3577 
+=====================================================================
+
+1. Summary:
+
+Updated Red Hat JBoss Enterprise Application Platform 6.3.0 packages that
+fix two security issues are now available for Red Hat Enterprise Linux 5,
+6, and 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat JBoss EAP 6.3 for RHEL 5 - noarch
+Red Hat JBoss EAP 6.3 for RHEL 6 - noarch
+Red Hat JBoss EAP 6.3 for RHEL 7 - noarch
+
+3. Description:
+
+Red Hat JBoss Enterprise Application Platform 6 is a platform for Java
+applications based on JBoss Application Server 7.
+
+It was found that the fix for CVE-2012-5783 was incomplete: the code added
+to check that the server host name matches the domain name in a subject's
+Common Name (CN) field in X.509 certificates was flawed.
+A man-in-the-middle attacker could use this flaw to spoof an SSL server
+using a specially crafted X.509 certificate. (CVE-2012-6153)
+
+It was discovered that the HttpClient incorrectly extracted host name from
+an X.509 certificate subject's Common Name (CN) field. A man-in-the-middle
+attacker could use this flaw to spoof an SSL server using a specially
+crafted X.509 certificate. (CVE-2014-3577)
+
+The CVE-2012-6153 issue was discovered by Florian Weimer of Red Hat
+Product Security.
+
+For additional information on these flaws, refer to the Knowledgebase
+article in the References section.
+
+All users of Red Hat JBoss Enterprise Application Platform 6.3.0 on Red Hat
+Enterprise Linux 5, 6, and 7 are advised to upgrade to these updated
+packages. The JBoss server process must be restarted for the update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied. Also, back up any customized Red
+Hat JBoss Enterprise Application Platform 6 configuration files. On update,
+the configuration files that have been locally modified will not be
+updated. The updated version of such files will be stored as the rpmnew
+files. Make sure to locate any such files after the update and merge any
+changes manually.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1129074 - CVE-2014-3577 Apache HttpComponents client: SSL hostname verification bypass, incomplete CVE-2012-6153 fix
+1129916 - CVE-2012-6153 Apache HttpComponents client: SSL hostname verification bypass, incomplete CVE-2012-5783 fix
+
+6. Package List:
+
+Red Hat JBoss EAP 6.3 for RHEL 5:
+
+Source:
+httpcomponents-eap6-6-12.redhat_2.1.ep6.el5.src.rpm
+
+noarch:
+httpclient-eap6-4.2.1-12.redhat_2.1.ep6.el5.noarch.rpm
+httpcomponents-client-eap6-4.2.1-12.redhat_2.1.ep6.el5.noarch.rpm
+httpcomponents-core-eap6-4.2.1-12.redhat_2.1.ep6.el5.noarch.rpm
+httpcomponents-project-eap6-6-12.redhat_2.1.ep6.el5.noarch.rpm
+httpcore-eap6-4.2.1-12.redhat_2.1.ep6.el5.noarch.rpm
+httpmime-eap6-4.2.1-12.redhat_2.1.ep6.el5.noarch.rpm
+
+Red Hat JBoss EAP 6.3 for RHEL 6:
+
+Source:
+httpcomponents-eap6-6-12.redhat_2.1.ep6.el6.src.rpm
+
+noarch:
+httpclient-eap6-4.2.1-12.redhat_2.1.ep6.el6.noarch.rpm
+httpcomponents-client-eap6-4.2.1-12.redhat_2.1.ep6.el6.noarch.rpm
+httpcomponents-core-eap6-4.2.1-12.redhat_2.1.ep6.el6.noarch.rpm
+httpcomponents-project-eap6-6-12.redhat_2.1.ep6.el6.noarch.rpm
+httpcore-eap6-4.2.1-12.redhat_2.1.ep6.el6.noarch.rpm
+httpmime-eap6-4.2.1-12.redhat_2.1.ep6.el6.noarch.rpm
+
+Red Hat JBoss EAP 6.3 for RHEL 7:
+
+Source:
+httpcomponents-eap6-6-12.redhat_2.1.ep6.el7.src.rpm
+
+noarch:
+httpclient-eap6-4.2.1-12.redhat_2.1.ep6.el7.noarch.rpm
+httpcomponents-client-eap6-4.2.1-12.redhat_2.1.ep6.el7.noarch.rpm
+httpcomponents-core-eap6-4.2.1-12.redhat_2.1.ep6.el7.noarch.rpm
+httpcomponents-project-eap6-6-12.redhat_2.1.ep6.el7.noarch.rpm
+httpcore-eap6-4.2.1-12.redhat_2.1.ep6.el7.noarch.rpm
+httpmime-eap6-4.2.1-12.redhat_2.1.ep6.el7.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-6153.html">https://www.redhat.com/security/data/cve/CVE-2012-6153.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3577.html">https://www.redhat.com/security/data/cve/CVE-2014-3577.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/solutions/1165533">https://access.redhat.com/solutions/1165533</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUCKMRXlSAg2UNWIIRAgw9AKCsFn6selet1xbRkBQWwFQKJc3jMQCZAYa5
+JEN+aoMN188Hw4dbWCvQ7jw=
+=ekRw
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

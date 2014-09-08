@@ -1,0 +1,197 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1161&#45;01] Moderate: Red Hat Enterprise Virtualization	Manager 3.4.2 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 4 Sep 2014 11:14:45 &#45;0400 -->
+<!--X-Message-Id: 201409041514.s84FEjAF029224@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1161-01] Moderate: Red Hat Enterprise Virtualization	Manager </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1161-01] Moderate: Red Hat Enterprise Virtualization	Manager 3.4.2 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1161-01] Moderate: Red Hat Enterprise Virtualization	Manager 3.4.2 update</li>
+<li><em>Date</em>: Thu, 4 Sep 2014 15:14:44 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Enterprise Virtualization Manager 3.4.2 update
+Advisory ID:       RHSA-2014:1161-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1161.html">https://rhn.redhat.com/errata/RHSA-2014-1161.html</a>
+Issue date:        2014-09-04
+CVE Names:         CVE-2014-3573 
+=====================================================================
+
+1. Summary:
+
+Red Hat Enterprise Virtualization Manager 3.4.2 is now available.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.4 - noarch
+
+3. Description:
+
+Red Hat Enterprise Virtualization Manager is a visual tool for centrally
+managing collections of virtual servers running Red Hat Enterprise Linux
+and Microsoft Windows. This package also includes the Red Hat Enterprise
+Virtualization Manager API, a set of scriptable commands that give
+administrators the ability to perform queries and operations on Red Hat
+Enterprise Virtualization Manager.
+
+The Manager is a JBoss Application Server application that provides several
+interfaces through which the virtual environment can be accessed and
+interacted with, including an Administration Portal, a User Portal, and a
+Representational State Transfer (REST) Application Programming Interface
+(API).
+
+It was discovered that, when loading XML/RSDL documents, the oVirt Engine
+back end module used an insecure DocumentBuilderFactory. A remote,
+authenticated attacker could use this flaw to read files accessible to the
+user running the ovirt-engine server, and potentially perform other more
+advanced XML External Entity (XXE) attacks. (CVE-2014-3573)
+
+This issue was discovered by Arun Babu Neelicattu of Red Hat Product
+Security.
+
+These updated Red Hat Enterprise Virtualization Manager packages also
+include numerous bug fixes and various enhancements. Space precludes
+documenting all of these changes in this advisory. Users are directed to
+the Red Hat Enterprise Virtualization 3.4 Technical Notes, linked to in the
+References, for information on the most significant of these changes.
+
+All Red Hat Enterprise Virtualization Manager users are advised to upgrade
+to these updated packages, which resolve these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1114877 - CPU hot plug &quot;tool tip&quot;, in VM edit dialogue, is not clear.
+1122446 - Violating hard constraint positive Affinity rule can prevent fixing the violated rule forever
+1125262 - Cannot add AD group to a new VM from the user portal
+1125373 - ovirt-engine currently sets the disk device to &quot;lun&quot; for all virtio-scsi direct LUN connections and disables read-only for these devices
+1125795 - CVE-2014-3573 oVirt Engine: XML eXternal Entity (XXE) flaw in backend module
+1126221 - [engine-backend] [iSCSI multipath] It's possible to remove a network from the setup even though it participates in an iSCSI multipath bond
+1126428 - [engine-backend] [iSCSI multipath] No indication that updating an iSCSI multipath bond doesn't trigger any operation from vdsm side
+1126797 - Odd vCPU topology dropped by libvirt
+1127007 - [engine-backend] [iscsi multipath] After networks replacement in an iSCSI multipath bond had failed, the bond's networks aren't being updated back
+1131294 - Can't change a vm disk's storage domain from a file domain to a block domain when creating a template from a vm
+1131295 - Could not import a VM from export domain with raw sparse disks to a block storage domain
+
+6. Package List:
+
+RHEV-M 3.4:
+
+Source:
+rhevm-3.4.2-0.2.el6ev.src.rpm
+
+noarch:
+rhevm-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-backend-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-dbscripts-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-lib-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-restapi-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-setup-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-setup-base-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-setup-plugin-allinone-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-setup-plugin-ovirt-engine-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-setup-plugin-ovirt-engine-common-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-setup-plugin-websocket-proxy-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-tools-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-userportal-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-webadmin-portal-3.4.2-0.2.el6ev.noarch.rpm
+rhevm-websocket-proxy-3.4.2-0.2.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3573.html">https://www.redhat.com/security/data/cve/CVE-2014-3573.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.4/html-single/Technical_Notes/index.html">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.4/html-single/Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUCIG2XlSAg2UNWIIRArKgAKCxqby7/3826COFHKjmGRJ4iGqKsQCdHz2X
+HDcUsL7SoZ2QfdpfWb2AgcI=
+=pSOU
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

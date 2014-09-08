@@ -1,0 +1,159 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1149&#45;01] Moderate: Red Hat JBoss Operations Network 3.2.3	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 3 Sep 2014 18:29:26 &#45;0400 -->
+<!--X-Message-Id: 201409032229.s83MTPon006961@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1149-01] Moderate: Red Hat JBoss Operations Network 3.2.3	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1149-01] Moderate: Red Hat JBoss Operations Network 3.2.3	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1149-01] Moderate: Red Hat JBoss Operations Network 3.2.3	update</li>
+<li><em>Date</em>: Wed, 3 Sep 2014 22:29:25 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Operations Network 3.2.3 update
+Advisory ID:       RHSA-2014:1149-01
+Product:           Red Hat JBoss Operations Network
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1149.html">https://rhn.redhat.com/errata/RHSA-2014-1149.html</a>
+Issue date:        2014-09-03
+CVE Names:         CVE-2014-0075 CVE-2014-0099 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Operations Network 3.2.3, which fixes two security issues and
+several bugs, is now available from the Red Hat Customer Portal.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Operations Network is a middleware management solution that
+provides a single point of control to deploy, manage, and monitor JBoss
+Enterprise Middleware, applications, and services.
+
+This JBoss Operations Network 3.2.3 release serves as a replacement for
+JBoss Operations Network 3.2.2, and includes several bug fixes. Refer to
+the JBoss Operations Network 3.2.3 Release Notes for information on the
+most significant of these changes. The Release Notes will be available
+shortly from <a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/">https://access.redhat.com/documentation/en-US/</a>
+
+The following security issues are also fixed with this release:
+
+It was discovered that JBoss Web did not limit the length of chunk sizes
+when using chunked transfer encoding. A remote attacker could use this flaw
+to perform a denial of service attack against JBoss Web by streaming an
+unlimited quantity of data, leading to excessive consumption of server
+resources. (CVE-2014-0075)
+
+It was found that JBoss Web did not check for overflowing values when
+parsing request content length headers. A remote attacker could use this
+flaw to perform an HTTP request smuggling attack on a JBoss Web server
+located behind a reverse proxy that processed the content length header
+correctly. (CVE-2014-0099)
+
+The CVE-2014-0075 issue was discovered by David Jorm of Red Hat Product
+Security.
+
+All users of JBoss Operations Network 3.2.2 as provided from the Red Hat
+Customer Portal are advised to upgrade to JBoss Operations Network 3.2.3.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing JBoss Operations Network installation (including its databases,
+applications, configuration files, the JBoss Operations Network server's
+file system directory, and so on).
+
+Refer to the JBoss Operations Network 3.2.3 Release Notes for
+installation information.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1072776 - CVE-2014-0075 Tomcat/JBossWeb: Limited DoS in chunked transfer encoding input filter
+1102030 - CVE-2014-0099 Tomcat/JBossWeb: Request smuggling via malicious content length header
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0075.html">https://www.redhat.com/security/data/cve/CVE-2014-0075.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0099.html">https://www.redhat.com/security/data/cve/CVE-2014-0099.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=em&amp;downloadType=securityPatches&amp;version=3.2.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=em&amp;downloadType=securityPatches&amp;version=3.2.0</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_JBoss_Operations_Network/">https://access.redhat.com/documentation/en-US/Red_Hat_JBoss_Operations_Network/</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUB5Y8XlSAg2UNWIIRAkn6AKDAZUiEXF/U8JdBkC4iXbtFrGm5lQCfZOFu
+bNln2zQKFpka7hlHeZ51jFA=
+=QArM
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
