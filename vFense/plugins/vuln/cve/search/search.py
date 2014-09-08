@@ -22,7 +22,7 @@ class RetrieveCVEs(object):
     def __init__(
         self, count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET, sort=SortValues.DESC,
-        sort_key=CveKeys.CvePublishedDate
+        sort_key=CveKeys.DatePosted
         ):
 
         self.count = count
@@ -32,28 +32,28 @@ class RetrieveCVEs(object):
         self.valid_keys_to_filter_by = (
             [
                 CveKeys.CveId,
-                CveKeys.CvssScore,
-                CveKeys.CvssBaseScore,
-                CveKeys.CvssExploitSubScore,
-                CveKeys.CveCategories,
+                CveKeys.Score,
+                CveKeys.BaseScore,
+                CveKeys.ExploitSubScore,
+                CveKeys.Categories,
             ]
         )
 
         valid_keys_to_sort_by = (
             [
                 CveKeys.CveId,
-                CveKeys.CvssScore,
-                CveKeys.CvssBaseScore,
-                CveKeys.CvssExploitSubScore,
-                CveKeys.CveModifiedDate,
-                CveKeys.CvePublishedDate,
+                CveKeys.Score,
+                CveKeys.BaseScore,
+                CveKeys.ExploitSubScore,
+                CveKeys.Modified,
+                CveKeys.DatePosted,
             ]
         )
 
         if sort_key in valid_keys_to_sort_by:
             self.sort_key = sort_key
         else:
-            self.sort_key = CveKeys.CvePublishedDate
+            self.sort_key = CveKeys.DatePosted
 
         self.fetch_cves = (
             FetchCves(self.count, self.offset, self.sort, self.sort_key)
@@ -111,7 +111,7 @@ class RetrieveCVEs(object):
             List of dictionairies.
         """
         count, data = (
-            self.fetch_cves.by_score(CveKeys.CvssBaseScore, score, logic)
+            self.fetch_cves.by_score(CveKeys.BaseScore, score, logic)
         )
         generic_status_code = GenericCodes.InformationRetrieved
 
@@ -149,7 +149,7 @@ class RetrieveCVEs(object):
             List of dictionairies.
         """
         count, data = (
-            self.fetch_cves.by_score(CveKeys.CvssScore, score, logic)
+            self.fetch_cves.by_score(CveKeys.Score, score, logic)
         )
         generic_status_code = GenericCodes.InformationRetrieved
 
@@ -188,7 +188,7 @@ class RetrieveCVEs(object):
         """
         count, data = (
             self.fetch_cves.by_score(
-                CveKeys.CvssExploitSubScore, score, logic
+                CveKeys.ExploitSubScore, score, logic
             )
         )
         generic_status_code = GenericCodes.InformationRetrieved

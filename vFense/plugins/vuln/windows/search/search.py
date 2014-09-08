@@ -7,8 +7,8 @@ from vFense.core.decorators import time_it
 from vFense.core._constants import (
     SortValues, DefaultQueryValues
 )
-from vFense.plugins.vuln.windows.search._db import FetchWindowVulns
-from vFense.plugins.vuln.windows._db_model import WindowsSecurityBulletinKey
+from vFense.plugins.vuln.windows.search._db import FetchWindowsVulns
+from vFense.plugins.vuln.windows._db_model import WindowsVulnerabilityKeys
 
 from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
@@ -21,7 +21,7 @@ class RetrieveWindowVulns(object):
     def __init__(
         self, count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET, sort=SortValues.DESC,
-        sort_key=WindowsSecurityBulletinKey.DatePosted
+        sort_key=WindowsVulnerabilityKeys.DatePosted
         ):
 
         self.count = count
@@ -30,22 +30,22 @@ class RetrieveWindowVulns(object):
 
         self.valid_keys_to_filter_by = (
             [
-                WindowsSecurityBulletinKey.BulletinId,
-                WindowsSecurityBulletinKey.DatePosted,
+                WindowsVulnerabilityKeys.VulnerabilityId,
+                WindowsVulnerabilityKeys.DatePosted,
             ]
         )
 
         valid_keys_to_sort_by = (
             [
-                WindowsSecurityBulletinKey.BulletinId,
-                WindowsSecurityBulletinKey.DatePosted,
+                WindowsVulnerabilityKeys.VulnerabilityId,
+                WindowsVulnerabilityKeys.DatePosted,
             ]
         )
 
         if sort_key in valid_keys_to_sort_by:
             self.sort_key = sort_key
         else:
-            self.sort_key = WindowsSecurityBulletinKey.BulletinId
+            self.sort_key = WindowsVulnerabilityKeys.VulnerabilityId
 
         self.fetch_vulns = (
             FetchWindowVulns(

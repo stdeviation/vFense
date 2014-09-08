@@ -7,7 +7,7 @@ from vFense.core.decorators import time_it
 from vFense.core._constants import (
     SortValues, DefaultQueryValues
 )
-from vFense.plugins.vuln.ubuntu._db_model import UbuntuSecurityBulletinKey
+from vFense.plugins.vuln.ubuntu._db_model import UbuntuVulnerabilityKeys
 from vFense.plugins.vuln.ubuntu.search._db import FetchUbuntuVulns
 
 from vFense.core.status_codes import (
@@ -21,7 +21,7 @@ class RetrieveUbuntuVulns(object):
     def __init__(
         self, count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET, sort=SortValues.DESC,
-        sort_key=UbuntuSecurityBulletinKey.DatePosted
+        sort_key=UbuntuVulnerabilityKeys.DatePosted
         ):
 
         self.count = count
@@ -30,22 +30,22 @@ class RetrieveUbuntuVulns(object):
 
         self.valid_keys_to_filter_by = (
             [
-                UbuntuSecurityBulletinKey.BulletinId,
-                UbuntuSecurityBulletinKey.DatePosted,
+                UbuntuVulnerabilityKeys.VulnerabilityId,
+                UbuntuVulnerabilityKeys.DatePosted,
             ]
         )
 
         valid_keys_to_sort_by = (
             [
-                UbuntuSecurityBulletinKey.BulletinId,
-                UbuntuSecurityBulletinKey.DatePosted,
+                UbuntuVulnerabilityKeys.VulnerabilityId,
+                UbuntuVulnerabilityKeys.DatePosted,
             ]
         )
 
         if sort_key in valid_keys_to_sort_by:
             self.sort_key = sort_key
         else:
-            self.sort_key = UbuntuSecurityBulletinKey.BulletinId
+            self.sort_key = UbuntuVulnerabilityKeys.VulnerabilityId
 
         self.fetch_vulns = (
             FetchUbuntuVulns(

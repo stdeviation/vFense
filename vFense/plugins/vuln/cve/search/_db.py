@@ -14,7 +14,7 @@ class FetchCves(object):
     def __init__(
         self, count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET, sort=SortValues.DESC,
-        sort_key=CveKeys.CvePublishedDate
+        sort_key=CveKeys.DatePosted
         ):
 
         self.count = count
@@ -132,11 +132,11 @@ class FetchCves(object):
         merge_hash = (
             lambda x:
             {
-                CveKeys.CvePublishedDate: (
-                    x[CveKeys.CvePublishedDate].to_epoch_time()
+                CveKeys.DatePosted: (
+                    x[CveKeys.DatePosted].to_epoch_time()
                 ),
-                CveKeys.CveModifiedDate: (
-                    x[CveKeys.CveModifiedDate].to_epoch_time()
+                CveKeys.DateModified: (
+                    x[CveKeys.DateModified].to_epoch_time()
                 ),
             }
         )
@@ -147,16 +147,16 @@ class FetchCves(object):
         map_hash = (
             lambda x:
             {
-                CveKeys.CvePublishedDate: (
-                    x[CveKeys.CvePublishedDate].to_epoch_time()
+                CveKeys.DatePosted: (
+                    x[CveKeys.DatePosted].to_epoch_time()
                 ),
-                CveKeys.CveModifiedDate: (
-                    x[CveKeys.CveModifiedDate].to_epoch_time()
+                CveKeys.DateModified: (
+                    x[CveKeys.DateModified].to_epoch_time()
                 ),
                 CveKeys.CveId: x[CveKeys.CveId],
-                CveKeys.CvssScore: x[CveKeys.CvssScore],
-                CveKeys.CvssBaseScore: x[CveKeys.CvssBaseScore],
-                CveKeys.CvssExploitSubScore: x[CveKeys.CvssExploitSubScore],
+                CveKeys.CvssScore: x[CveKeys.Score],
+                CveKeys.CvssBaseScore: x[CveKeys.BaseScore],
+                CveKeys.CvssExploitSubScore: x[CveKeys.ExploitSubScore],
             }
         )
 
