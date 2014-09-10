@@ -1,0 +1,147 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1171&#45;01] Important: Fuse ESB Enterprise/Fuse MQ Enterprise	7.1.0 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 10 Sep 2014 01:45:48 &#45;0400 -->
+<!--X-Message-Id: 201409100545.s8A5jidu024415@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1171-01] Important: Fuse ESB Enterprise/Fuse MQ Enterprise	7.</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1171-01] Important: Fuse ESB Enterprise/Fuse MQ Enterprise	7.1.0 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1171-01] Important: Fuse ESB Enterprise/Fuse MQ Enterprise	7.1.0 update</li>
+<li><em>Date</em>: Wed, 10 Sep 2014 05:45:44 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Fuse ESB Enterprise/Fuse MQ Enterprise 7.1.0 update
+Advisory ID:       RHSA-2014:1171-01
+Product:           Fuse Enterprise Middleware
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1171.html">https://rhn.redhat.com/errata/RHSA-2014-1171.html</a>
+Issue date:        2014-09-10
+CVE Names:         CVE-2014-3120 
+=====================================================================
+
+1. Summary:
+
+This advisory contains instructions on how to resolve one security issue
+in the Elasticsearch component in Fuse ESB Enterprise and Fuse MQ
+Enterprise 7.1.0.
+
+Red Hat Product Security has rated this security issue as having Important
+security impact. A Common Vulnerability Scoring System (CVSS) base score,
+which gives a detailed severity rating, is available from the CVE link in
+the References section.
+
+2. Description:
+
+Fuse ESB Enterprise is an integration platform based on Apache ServiceMix.
+Fuse MQ Enterprise, based on Apache ActiveMQ, is a standards-compliant
+messaging system that is tailored for use in mission critical applications.
+
+Fuse ESB Enterprise and Fuse MQ Enterprise include the insight plug-in,
+which provides insight into a Fuse Fabric using Elasticsearch to query data
+for logs, metrics or historic Camel messages. This plug-in is not enabled
+by default, and is provided as a technology preview. If it is enabled by
+installing the feature, for example:
+
+JBossFuse:karaf root&gt; features:install insight-elasticsearch
+
+Then an Elasticsearch server will be started. It was discovered that the
+default configuration of Elasticsearch enabled dynamic scripting, allowing
+a remote attacker to execute arbitrary MVEL expressions and Java code via
+the source parameter passed to _search. (CVE-2014-3120)
+
+All users of Fuse ESB Enterprise and Fuse MQ Enterprise 7.1.0 as provided
+from the Red Hat Customer Portal who have enabled Elasticsearch are advised
+to follow the instructions provided in the Solution section of this
+advisory.
+
+3. Solution:
+
+To mitigate this issue, follow the instructions at
+<a  rel="nofollow" href="https://access.redhat.com/solutions/1191453">https://access.redhat.com/solutions/1191453</a>
+
+For more information, refer to <a  rel="nofollow" href="https://access.redhat.com/solutions/1189133">https://access.redhat.com/solutions/1189133</a>
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1124252 - CVE-2014-3120 elasticsearch: remote code execution flaw via dynamic scripting
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3120.html">https://www.redhat.com/security/data/cve/CVE-2014-3120.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/solutions/1191453">https://access.redhat.com/solutions/1191453</a>
+<a  rel="nofollow" href="https://access.redhat.com/solutions/1189133">https://access.redhat.com/solutions/1189133</a>
+<a  rel="nofollow" href="https://access.redhat.com/support/offerings/techpreview">https://access.redhat.com/support/offerings/techpreview</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUD+V5XlSAg2UNWIIRAq17AJ4uaH05P7smwmn65TlUkAGQ1CxF/wCgiPT9
+ErXsWqsOvWdJ/Sc97FhECP4=
+=YMNu
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
