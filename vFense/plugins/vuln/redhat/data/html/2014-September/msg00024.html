@@ -1,0 +1,230 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1184&#45;01] Important: spacewalk&#45;java security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 11 Sep 2014 16:49:15 &#45;0400 -->
+<!--X-Message-Id: 201409112049.s8BKnEHp002115@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1184-01] Important: spacewalk-java security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1184-01] Important: spacewalk-java security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:1184-01] Important: spacewalk-java security update</li>
+<li><em>Date</em>: Thu, 11 Sep 2014 20:49:14 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: spacewalk-java security update
+Advisory ID:       RHSA-2014:1184-01
+Product:           Red Hat Satellite
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1184.html">https://rhn.redhat.com/errata/RHSA-2014-1184.html</a>
+Issue date:        2014-09-11
+CVE Names:         CVE-2014-3595 
+=====================================================================
+
+1. Summary:
+
+Updated spacewalk-java packages that fix one security issue are now
+available for Red Hat Satellite 5.4, 5.5, and 5.6.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Satellite 5.4 (RHEL v.5) - noarch
+Red Hat Satellite 5.4 (RHEL v.6) - noarch
+Red Hat Satellite 5.5 (RHEL v.5) - noarch
+Red Hat Satellite 5.5 (RHEL v.6) - noarch
+Red Hat Satellite 5.6 (RHEL v.5) - noarch
+Red Hat Satellite 5.6 (RHEL v.6) - noarch
+
+3. Description:
+
+Red Hat Satellite is a systems management tool for Linux-based
+infrastructures. It allows for provisioning, monitoring, and remote
+management of multiple Linux deployments with a single, centralized tool.
+The spacewalk-java packages contain the code for the Java version of the
+Spacewalk Web site.
+
+A stored cross-site scripting (XSS) flaw was found in the way
+spacewalk-java displayed log files. By sending a specially crafted request
+to Satellite, a remote attacker could embed HTML content into the log file,
+allowing them to inject malicious content into the web page that is used to
+view that log file. (CVE-2014-3595)
+
+Red Hat would like to thank Ron Bowes of Google for reporting this issue.
+
+All spacewalk-java users are advised to upgrade to these updated packages,
+which contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1129821 - CVE-2014-3595 Satellite: Spacewalk contains XSS in log file view
+
+6. Package List:
+
+Red Hat Satellite 5.4 (RHEL v.5):
+
+Source:
+spacewalk-java-1.2.39-137.el5sat.src.rpm
+
+noarch:
+spacewalk-java-1.2.39-137.el5sat.noarch.rpm
+spacewalk-java-config-1.2.39-137.el5sat.noarch.rpm
+spacewalk-java-lib-1.2.39-137.el5sat.noarch.rpm
+spacewalk-java-oracle-1.2.39-137.el5sat.noarch.rpm
+spacewalk-taskomatic-1.2.39-137.el5sat.noarch.rpm
+
+Red Hat Satellite 5.5 (RHEL v.5):
+
+Source:
+spacewalk-java-1.7.54-129.el5sat.src.rpm
+
+noarch:
+spacewalk-java-1.7.54-129.el5sat.noarch.rpm
+spacewalk-java-config-1.7.54-129.el5sat.noarch.rpm
+spacewalk-java-lib-1.7.54-129.el5sat.noarch.rpm
+spacewalk-java-oracle-1.7.54-129.el5sat.noarch.rpm
+spacewalk-taskomatic-1.7.54-129.el5sat.noarch.rpm
+
+Red Hat Satellite 5.6 (RHEL v.5):
+
+Source:
+spacewalk-java-2.0.2-85.el5sat.src.rpm
+
+noarch:
+spacewalk-java-2.0.2-85.el5sat.noarch.rpm
+spacewalk-java-config-2.0.2-85.el5sat.noarch.rpm
+spacewalk-java-lib-2.0.2-85.el5sat.noarch.rpm
+spacewalk-java-oracle-2.0.2-85.el5sat.noarch.rpm
+spacewalk-java-postgresql-2.0.2-85.el5sat.noarch.rpm
+spacewalk-taskomatic-2.0.2-85.el5sat.noarch.rpm
+
+Red Hat Satellite 5.4 (RHEL v.6):
+
+Source:
+spacewalk-java-1.2.39-137.el6sat.src.rpm
+
+noarch:
+spacewalk-java-1.2.39-137.el6sat.noarch.rpm
+spacewalk-java-config-1.2.39-137.el6sat.noarch.rpm
+spacewalk-java-lib-1.2.39-137.el6sat.noarch.rpm
+spacewalk-java-oracle-1.2.39-137.el6sat.noarch.rpm
+spacewalk-taskomatic-1.2.39-137.el6sat.noarch.rpm
+
+Red Hat Satellite 5.5 (RHEL v.6):
+
+Source:
+spacewalk-java-1.7.54-129.el6sat.src.rpm
+
+noarch:
+spacewalk-java-1.7.54-129.el6sat.noarch.rpm
+spacewalk-java-config-1.7.54-129.el6sat.noarch.rpm
+spacewalk-java-lib-1.7.54-129.el6sat.noarch.rpm
+spacewalk-java-oracle-1.7.54-129.el6sat.noarch.rpm
+spacewalk-taskomatic-1.7.54-129.el6sat.noarch.rpm
+
+Red Hat Satellite 5.6 (RHEL v.6):
+
+Source:
+spacewalk-java-2.0.2-85.el6sat.src.rpm
+
+noarch:
+spacewalk-java-2.0.2-85.el6sat.noarch.rpm
+spacewalk-java-config-2.0.2-85.el6sat.noarch.rpm
+spacewalk-java-lib-2.0.2-85.el6sat.noarch.rpm
+spacewalk-java-oracle-2.0.2-85.el6sat.noarch.rpm
+spacewalk-java-postgresql-2.0.2-85.el6sat.noarch.rpm
+spacewalk-taskomatic-2.0.2-85.el6sat.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3595.html">https://www.redhat.com/security/data/cve/CVE-2014-3595.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUEgqhXlSAg2UNWIIRAhwIAJkBvfT57xuruYOuYPJj1TtVimpDjwCfSGMV
+a9edWtloow3IpZyT8SqjKVM=
+=Ib09
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1263&#45;01] Low: Red Hat Storage 2.1 security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 18 Sep 2014 14:35:39 &#45;0400 -->
+<!--X-Message-Id: 201409181835.s8IIZcEj012104@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1263-01] Low: Red Hat Storage 2.1 security, bug fix,	and enha</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00035.html">Date Prev</a>][<a href="msg00037.html">Date Next</a>] &nbsp; [<a href="msg00035.html">Thread Prev</a>][<a href="msg00037.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00036">Thread Index</A>]
+[<A HREF="date.html#00036">Date Index</A>]
+[<A HREF="author.html#00036">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1263-01] Low: Red Hat Storage 2.1 security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:1263-01] Low: Red Hat Storage 2.1 security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 18 Sep 2014 18:35:38 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat Storage 2.1 security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1263-01
+Product:           Red Hat Storage
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1263.html">https://rhn.redhat.com/errata/RHSA-2014-1263.html</a>
+Issue date:        2014-09-18
+CVE Names:         CVE-2013-2099 
+=====================================================================
+
+1. Summary:
+
+Updated glusterfs, geo-replication, and native client packages that fix one
+security issue, several bugs, and adds an enhancement are now available Red
+Hat Storage 2.1.
+
+Red Hat Product Security has rated this update as having Low security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Storage Console 2.1 - noarch
+Red Hat Storage Native Client for Red Hat Enterprise Linux 5 - x86_64
+Red Hat Storage Native Client for Red Hat Enterprise Linux 6 - x86_64
+Red Hat Storage Server 2.1 - noarch, x86_64
+
+3. Description:
+
+Red Hat Storage is software-only, scale-out storage that provides flexible
+and affordable unstructured data storage for an enterprise. GlusterFS, a
+key building block of Red Hat Storage, is based on a stackable user-space
+design and can deliver exceptional performance for diverse workloads.
+GlusterFS aggregates various storage servers over network interconnections
+into one large, parallel network file system.
+
+A denial of service flaw was found in the way Python's SSL module
+implementation performed matching of certain certificate names. A remote
+attacker able to obtain a valid certificate that contained multiple
+wildcard characters could use this flaw to issue a request to validate such
+a certificate, resulting in excessive consumption of CPU. (CVE-2013-2099)
+
+This issue was discovered by Florian Weimer of Red Hat Product Security.
+
+This update also fixes several bugs and adds an enhancement. Space
+precludes documenting all of these changes in this advisory. Users are
+directed to the Red Hat Storage 2.1 Technical Notes, linked to in the
+References section, for information on the most significant of these
+changes.
+
+With this update, a migration script 'migrate-rhs-classic-to-rhsm', that
+applies to both Red Hat Storage Server and Red Hat Storage Console is
+provided, that enables you to have the system prepared for upgrade from the
+latest release of RHS 2.x to RHS 3.0. From the Red Hat Storage 3.0 release
+onwards, there will be a significant change made in the subscription and
+delivery mechanism from the previous Red Hat Network Classic to the new Red
+Hat Subscription Manager, and this script assists in the smooth migration.
+
+Users of Red Hat Storage are advised to upgrade to these updated packages,
+which correct these issues and add these enhancements.
+
+Note: After upgrading, it is recommend that you refer to the Knowledge Base
+articles linked to in the References section which outlines an issue with
+rebalance and file creation error that has been identified by Red Hat.
+This issue will be fixed by a subsequent update.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+963260 - CVE-2013-2099 python: ssl.match_hostname() DoS via certificates with specially crafted hostname wildcard patterns
+1062197 - dist-geo-rep : glusterfs rolling  upgrade (2.1 to 2.1.2) while geo-rep is running results in failure to update stime on bricks.
+1126354 - dist-geo-rep: Python backtrace seen in geo-rep logs &quot;ValueError: signal only works in main thread&quot;
+1135082 - &quot;redhat-access-plugin-rhsc&quot; package is NOT getting updated as part of &quot;rhsc-setup&quot; while upgrading to  RHSC 3.0 from 2.1 U4
+
+6. Package List:
+
+Red Hat Storage Native Client for Red Hat Enterprise Linux 5:
+
+Source:
+glusterfs-3.4.0.68rhs-1.el5.src.rpm
+
+x86_64:
+glusterfs-3.4.0.68rhs-1.el5.x86_64.rpm
+glusterfs-api-3.4.0.68rhs-1.el5.x86_64.rpm
+glusterfs-api-devel-3.4.0.68rhs-1.el5.x86_64.rpm
+glusterfs-debuginfo-3.4.0.68rhs-1.el5.x86_64.rpm
+glusterfs-devel-3.4.0.68rhs-1.el5.x86_64.rpm
+glusterfs-fuse-3.4.0.68rhs-1.el5.x86_64.rpm
+glusterfs-libs-3.4.0.68rhs-1.el5.x86_64.rpm
+glusterfs-rdma-3.4.0.68rhs-1.el5.x86_64.rpm
+
+Red Hat Storage Server 2.1:
+
+Source:
+glusterfs-3.4.0.68rhs-1.el6rhs.src.rpm
+python-backports-1.0-3.el6.src.rpm
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.src.rpm
+redhat-storage-server-2.1.4.2-1.el6rhs.src.rpm
+
+noarch:
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.noarch.rpm
+redhat-storage-server-2.1.4.2-1.el6rhs.noarch.rpm
+
+x86_64:
+glusterfs-3.4.0.68rhs-1.el6rhs.x86_64.rpm
+glusterfs-api-3.4.0.68rhs-1.el6rhs.x86_64.rpm
+glusterfs-api-devel-3.4.0.68rhs-1.el6rhs.x86_64.rpm
+glusterfs-debuginfo-3.4.0.68rhs-1.el6rhs.x86_64.rpm
+glusterfs-devel-3.4.0.68rhs-1.el6rhs.x86_64.rpm
+glusterfs-fuse-3.4.0.68rhs-1.el6rhs.x86_64.rpm
+glusterfs-geo-replication-3.4.0.68rhs-1.el6rhs.x86_64.rpm
+glusterfs-libs-3.4.0.68rhs-1.el6rhs.x86_64.rpm
+glusterfs-rdma-3.4.0.68rhs-1.el6rhs.x86_64.rpm
+glusterfs-server-3.4.0.68rhs-1.el6rhs.x86_64.rpm
+python-backports-1.0-3.el6.x86_64.rpm
+
+Red Hat Storage Console 2.1:
+
+Source:
+rhsc-2.1.2-0.40.el6rhs.src.rpm
+rhsc-branding-rhs-2.1.5-2.0.el6rhs.src.rpm
+
+noarch:
+rhsc-2.1.2-0.40.el6rhs.noarch.rpm
+rhsc-backend-2.1.2-0.40.el6rhs.noarch.rpm
+rhsc-branding-rhs-2.1.5-2.0.el6rhs.noarch.rpm
+rhsc-dbscripts-2.1.2-0.40.el6rhs.noarch.rpm
+rhsc-lib-2.1.2-0.40.el6rhs.noarch.rpm
+rhsc-restapi-2.1.2-0.40.el6rhs.noarch.rpm
+rhsc-setup-2.1.2-0.40.el6rhs.noarch.rpm
+rhsc-tools-2.1.2-0.40.el6rhs.noarch.rpm
+rhsc-webadmin-portal-2.1.2-0.40.el6rhs.noarch.rpm
+
+Red Hat Storage Native Client for Red Hat Enterprise Linux 6:
+
+Source:
+glusterfs-3.4.0.68rhs-1.el6.src.rpm
+
+x86_64:
+glusterfs-3.4.0.68rhs-1.el6.x86_64.rpm
+glusterfs-api-3.4.0.68rhs-1.el6.x86_64.rpm
+glusterfs-api-devel-3.4.0.68rhs-1.el6.x86_64.rpm
+glusterfs-debuginfo-3.4.0.68rhs-1.el6.x86_64.rpm
+glusterfs-devel-3.4.0.68rhs-1.el6.x86_64.rpm
+glusterfs-fuse-3.4.0.68rhs-1.el6.x86_64.rpm
+glusterfs-libs-3.4.0.68rhs-1.el6.x86_64.rpm
+glusterfs-rdma-3.4.0.68rhs-1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2099.html">https://www.redhat.com/security/data/cve/CVE-2013-2099.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Storage/2.1/html/Technical_Notes/index.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Storage/2.1/html/Technical_Notes/index.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/solutions/1199193">https://access.redhat.com/solutions/1199193</a>
+<a  rel="nofollow" href="https://access.redhat.com/solutions/1189413">https://access.redhat.com/solutions/1189413</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUGyXkXlSAg2UNWIIRAsFFAKCDPMC6tbADa549QZdltdruRgE5fQCfXXqs
+Juh/EwXUkW2Jcr7tRgvb9nU=
+=Rgv3
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00035.html">Date Prev</a>][<a href="msg00037.html">Date Next</a>] &nbsp; [<a href="msg00035.html">Thread Prev</a>][<a href="msg00037.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00036">Thread Index</A>]
+[<A HREF="date.html#00036">Date Index</A>]
+[<A HREF="author.html#00036">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

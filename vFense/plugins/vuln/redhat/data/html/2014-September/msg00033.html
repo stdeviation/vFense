@@ -1,0 +1,301 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1246&#45;01] Moderate: nss and nspr security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 16 Sep 2014 01:55:27 &#45;0400 -->
+<!--X-Message-Id: 201409160555.s8G5tP1u001742@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1246-01] Moderate: nss and nspr security, bug fix,	and enhanc</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1246-01] Moderate: nss and nspr security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1246-01] Moderate: nss and nspr security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 16 Sep 2014 06:03:37 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: nss and nspr security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1246-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1246.html">https://rhn.redhat.com/errata/RHSA-2014-1246.html</a>
+Issue date:        2014-09-16
+CVE Names:         CVE-2013-1740 CVE-2014-1490 CVE-2014-1491 
+                   CVE-2014-1492 CVE-2014-1545 
+=====================================================================
+
+1. Summary:
+
+Updated nss and nspr packages that fix multiple security issues, several
+bugs, and add various enhancements are now available for Red Hat Enterprise
+Linux 5.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop Workstation (v. 5 client) - i386, x86_64
+
+3. Description:
+
+Network Security Services (NSS) is a set of libraries designed to support
+the cross-platform development of security-enabled client and server
+applications.
+
+A flaw was found in the way TLS False Start was implemented in NSS.
+An attacker could use this flaw to potentially return unencrypted
+information from the server. (CVE-2013-1740)
+
+A race condition was found in the way NSS implemented session ticket
+handling as specified by RFC 5077. An attacker could use this flaw to crash
+an application using NSS or, in rare cases, execute arbitrary code with the
+privileges of the user running that application. (CVE-2014-1490)
+
+It was found that NSS accepted weak Diffie-Hellman Key exchange (DHKE)
+parameters. This could possibly lead to weak encryption being used in
+communication between the client and the server. (CVE-2014-1491)
+
+An out-of-bounds write flaw was found in NSPR. A remote attacker could
+potentially use this flaw to crash an application using NSPR or, possibly,
+execute arbitrary code with the privileges of the user running that
+application. This NSPR flaw was not exposed to web content in any shipped
+version of Firefox. (CVE-2014-1545)
+
+It was found that the implementation of Internationalizing Domain Names in
+Applications (IDNA) hostname matching in NSS did not follow the RFC 6125
+recommendations. This could lead to certain invalid certificates with
+international characters to be accepted as valid. (CVE-2014-1492)
+
+Red Hat would like to thank the Mozilla project for reporting the
+CVE-2014-1490, CVE-2014-1491, and CVE-2014-1545 issues. Upstream
+acknowledges Brian Smith as the original reporter of CVE-2014-1490, Antoine
+Delignat-Lavaud and Karthikeyan Bhargavan as the original reporters of
+CVE-2014-1491, and Abhishek Arya as the original reporter of CVE-2014-1545.
+
+The nss and nspr packages have been upgraded to upstream version 3.16.1 and
+4.10.6 respectively, which provide a number of bug fixes and enhancements
+over the previous versions. (BZ#1110857, BZ#1110860)
+
+This update also fixes the following bugs:
+
+* Previously, when the output.log file was not present on the system, the
+shell in the Network Security Services (NSS) specification handled test
+failures incorrectly as false positive test results. Consequently, certain
+utilities, such as &quot;grep&quot;, could not handle failures properly. This update
+improves error detection in the specification file, and &quot;grep&quot; and other
+utilities now handle missing files or crashes as intended. (BZ#1035281)
+
+* Prior to this update, a subordinate Certificate Authority (CA) of the
+ANSSI agency incorrectly issued an intermediate certificate installed on a
+network monitoring device. As a consequence, the monitoring device was
+enabled to act as an MITM (Man in the Middle) proxy performing traffic
+management of domain names or IP addresses that the certificate holder did
+not own or control. The trust in the intermediate certificate to issue the
+certificate for an MITM device has been revoked, and such a device can no
+longer be used for MITM attacks. (BZ#1042684)
+
+* Due to a regression, MD5 certificates were rejected by default because
+Network Security Services (NSS) did not trust MD5 certificates. With this
+update, MD5 certificates are supported in Red Hat Enterprise Linux 5.
+(BZ#11015864)
+
+Users of nss and nspr are advised to upgrade to these updated packages,
+which correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1035281 - Suboptimal shell code in nss.spec
+1053725 - CVE-2013-1740 nss: false start PR_Recv information disclosure security issue
+1060953 - CVE-2014-1490 nss: TOCTOU, potential use-after-free in libssl's session ticket processing (MFSA 2014-12)
+1060955 - CVE-2014-1491 nss: Do not allow p-1 as a public DH value (MFSA 2014-12)
+1079851 - CVE-2014-1492 nss: IDNA hostname matching code does not follow RFC 6125 recommendation (MFSA 2014-45)
+1107432 - CVE-2014-1545 Mozilla: Out of bounds write in NSPR (MFSA 2014-55)
+1110857 - Rebase nspr in RHEL 5.11 to NSPR 4.10.6 (required for FF31)
+1110860 - Rebase nss in RHEL 5.11 to NSS 3.16.1 (required for FF 31)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+nss-3.16.1-2.el5.src.rpm
+
+i386:
+nss-3.16.1-2.el5.i386.rpm
+nss-debuginfo-3.16.1-2.el5.i386.rpm
+nss-tools-3.16.1-2.el5.i386.rpm
+
+x86_64:
+nss-3.16.1-2.el5.i386.rpm
+nss-3.16.1-2.el5.x86_64.rpm
+nss-debuginfo-3.16.1-2.el5.i386.rpm
+nss-debuginfo-3.16.1-2.el5.x86_64.rpm
+nss-tools-3.16.1-2.el5.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Workstation (v. 5 client):
+
+Source:
+nss-3.16.1-2.el5.src.rpm
+
+i386:
+nss-debuginfo-3.16.1-2.el5.i386.rpm
+nss-devel-3.16.1-2.el5.i386.rpm
+nss-pkcs11-devel-3.16.1-2.el5.i386.rpm
+
+x86_64:
+nss-debuginfo-3.16.1-2.el5.i386.rpm
+nss-debuginfo-3.16.1-2.el5.x86_64.rpm
+nss-devel-3.16.1-2.el5.i386.rpm
+nss-devel-3.16.1-2.el5.x86_64.rpm
+nss-pkcs11-devel-3.16.1-2.el5.i386.rpm
+nss-pkcs11-devel-3.16.1-2.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+nss-3.16.1-2.el5.src.rpm
+
+i386:
+nss-3.16.1-2.el5.i386.rpm
+nss-debuginfo-3.16.1-2.el5.i386.rpm
+nss-devel-3.16.1-2.el5.i386.rpm
+nss-pkcs11-devel-3.16.1-2.el5.i386.rpm
+nss-tools-3.16.1-2.el5.i386.rpm
+
+ia64:
+nss-3.16.1-2.el5.i386.rpm
+nss-3.16.1-2.el5.ia64.rpm
+nss-debuginfo-3.16.1-2.el5.i386.rpm
+nss-debuginfo-3.16.1-2.el5.ia64.rpm
+nss-devel-3.16.1-2.el5.ia64.rpm
+nss-pkcs11-devel-3.16.1-2.el5.ia64.rpm
+nss-tools-3.16.1-2.el5.ia64.rpm
+
+ppc:
+nss-3.16.1-2.el5.ppc.rpm
+nss-3.16.1-2.el5.ppc64.rpm
+nss-debuginfo-3.16.1-2.el5.ppc.rpm
+nss-debuginfo-3.16.1-2.el5.ppc64.rpm
+nss-devel-3.16.1-2.el5.ppc.rpm
+nss-devel-3.16.1-2.el5.ppc64.rpm
+nss-pkcs11-devel-3.16.1-2.el5.ppc.rpm
+nss-pkcs11-devel-3.16.1-2.el5.ppc64.rpm
+nss-tools-3.16.1-2.el5.ppc.rpm
+
+s390x:
+nss-3.16.1-2.el5.s390.rpm
+nss-3.16.1-2.el5.s390x.rpm
+nss-debuginfo-3.16.1-2.el5.s390.rpm
+nss-debuginfo-3.16.1-2.el5.s390x.rpm
+nss-devel-3.16.1-2.el5.s390.rpm
+nss-devel-3.16.1-2.el5.s390x.rpm
+nss-pkcs11-devel-3.16.1-2.el5.s390.rpm
+nss-pkcs11-devel-3.16.1-2.el5.s390x.rpm
+nss-tools-3.16.1-2.el5.s390x.rpm
+
+x86_64:
+nss-3.16.1-2.el5.i386.rpm
+nss-3.16.1-2.el5.x86_64.rpm
+nss-debuginfo-3.16.1-2.el5.i386.rpm
+nss-debuginfo-3.16.1-2.el5.x86_64.rpm
+nss-devel-3.16.1-2.el5.i386.rpm
+nss-devel-3.16.1-2.el5.x86_64.rpm
+nss-pkcs11-devel-3.16.1-2.el5.i386.rpm
+nss-pkcs11-devel-3.16.1-2.el5.x86_64.rpm
+nss-tools-3.16.1-2.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1740.html">https://www.redhat.com/security/data/cve/CVE-2013-1740.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-1490.html">https://www.redhat.com/security/data/cve/CVE-2014-1490.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-1491.html">https://www.redhat.com/security/data/cve/CVE-2014-1491.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-1492.html">https://www.redhat.com/security/data/cve/CVE-2014-1492.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-1545.html">https://www.redhat.com/security/data/cve/CVE-2014-1545.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUF9DKXlSAg2UNWIIRAuWSAJ9/cjR8UeJurmdHO7Kc3PHNJ4iQTACcC/l8
+JuTMOYaScgPZSL0mmj5hBS8=
+=jX6l
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

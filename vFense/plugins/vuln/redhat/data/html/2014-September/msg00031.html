@@ -1,0 +1,245 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1244&#45;01] Moderate: bind97 security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 16 Sep 2014 01:54:34 &#45;0400 -->
+<!--X-Message-Id: 201409160554.s8G5sWCO001455@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1244-01] Moderate: bind97 security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1244-01] Moderate: bind97 security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1244-01] Moderate: bind97 security and bug fix update</li>
+<li><em>Date</em>: Tue, 16 Sep 2014 06:02:44 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: bind97 security and bug fix update
+Advisory ID:       RHSA-2014:1244-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1244.html">https://rhn.redhat.com/errata/RHSA-2014-1244.html</a>
+Issue date:        2014-09-16
+CVE Names:         CVE-2014-0591 
+=====================================================================
+
+1. Summary:
+
+Updated bind97 packages that fix one security issue and one bug are now
+available for Red Hat Enterprise Linux 5.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop Workstation (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The Berkeley Internet Name Domain (BIND) is an implementation of the Domain
+Name System (DNS) protocols. It contains a DNS server (named), a resolver
+library with routines for applications to use when interfacing with DNS,
+and tools for verifying that the DNS server is operating correctly.
+These packages contain version 9.7 of the BIND suite.
+
+A denial of service flaw was found in the way BIND handled queries for
+NSEC3-signed zones. A remote attacker could use this flaw against an
+authoritative name server that served NCES3-signed zones by sending a
+specially crafted query, which, when processed, would cause named to crash.
+(CVE-2014-0591)
+
+Note: The CVE-2014-0591 issue does not directly affect the version of
+bind97 shipped in Red Hat Enterprise Linux 5. This issue is being addressed
+however to assure it is not introduced in future builds of bind97 (possibly
+built with a different compiler or C library optimization).
+
+This update also fixes the following bug:
+
+* Previously, the bind97 initscript did not check for the existence of the
+ROOTDIR variable when shutting down the named daemon. As a consequence,
+some parts of the file system that are mounted when using bind97 in a
+chroot environment were unmounted on daemon shut down, even if bind97 was
+not running in a chroot environment. With this update, the initscript has
+been fixed to check for the existence of the ROOTDIR variable when
+unmounting some parts of the file system on named daemon shut down. Now,
+when shutting down bind97 that is not running in a chroot environment, no
+parts of the file system are unmounted. (BZ#1059118)
+
+All bind97 users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+update, the BIND daemon (named) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1051717 - CVE-2014-0591 bind: named crash when handling malformed NSEC3-signed zones
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Workstation (v. 5 client):
+
+Source:
+bind97-9.7.0-21.P2.el5.src.rpm
+
+i386:
+bind97-9.7.0-21.P2.el5.i386.rpm
+bind97-chroot-9.7.0-21.P2.el5.i386.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.i386.rpm
+bind97-devel-9.7.0-21.P2.el5.i386.rpm
+bind97-libs-9.7.0-21.P2.el5.i386.rpm
+bind97-utils-9.7.0-21.P2.el5.i386.rpm
+
+x86_64:
+bind97-9.7.0-21.P2.el5.x86_64.rpm
+bind97-chroot-9.7.0-21.P2.el5.x86_64.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.i386.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.x86_64.rpm
+bind97-devel-9.7.0-21.P2.el5.i386.rpm
+bind97-devel-9.7.0-21.P2.el5.x86_64.rpm
+bind97-libs-9.7.0-21.P2.el5.i386.rpm
+bind97-libs-9.7.0-21.P2.el5.x86_64.rpm
+bind97-utils-9.7.0-21.P2.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+bind97-9.7.0-21.P2.el5.src.rpm
+
+i386:
+bind97-9.7.0-21.P2.el5.i386.rpm
+bind97-chroot-9.7.0-21.P2.el5.i386.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.i386.rpm
+bind97-devel-9.7.0-21.P2.el5.i386.rpm
+bind97-libs-9.7.0-21.P2.el5.i386.rpm
+bind97-utils-9.7.0-21.P2.el5.i386.rpm
+
+ia64:
+bind97-9.7.0-21.P2.el5.ia64.rpm
+bind97-chroot-9.7.0-21.P2.el5.ia64.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.ia64.rpm
+bind97-devel-9.7.0-21.P2.el5.ia64.rpm
+bind97-libs-9.7.0-21.P2.el5.ia64.rpm
+bind97-utils-9.7.0-21.P2.el5.ia64.rpm
+
+ppc:
+bind97-9.7.0-21.P2.el5.ppc.rpm
+bind97-chroot-9.7.0-21.P2.el5.ppc.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.ppc.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.ppc64.rpm
+bind97-devel-9.7.0-21.P2.el5.ppc.rpm
+bind97-devel-9.7.0-21.P2.el5.ppc64.rpm
+bind97-libs-9.7.0-21.P2.el5.ppc.rpm
+bind97-libs-9.7.0-21.P2.el5.ppc64.rpm
+bind97-utils-9.7.0-21.P2.el5.ppc.rpm
+
+s390x:
+bind97-9.7.0-21.P2.el5.s390x.rpm
+bind97-chroot-9.7.0-21.P2.el5.s390x.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.s390.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.s390x.rpm
+bind97-devel-9.7.0-21.P2.el5.s390.rpm
+bind97-devel-9.7.0-21.P2.el5.s390x.rpm
+bind97-libs-9.7.0-21.P2.el5.s390.rpm
+bind97-libs-9.7.0-21.P2.el5.s390x.rpm
+bind97-utils-9.7.0-21.P2.el5.s390x.rpm
+
+x86_64:
+bind97-9.7.0-21.P2.el5.x86_64.rpm
+bind97-chroot-9.7.0-21.P2.el5.x86_64.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.i386.rpm
+bind97-debuginfo-9.7.0-21.P2.el5.x86_64.rpm
+bind97-devel-9.7.0-21.P2.el5.i386.rpm
+bind97-devel-9.7.0-21.P2.el5.x86_64.rpm
+bind97-libs-9.7.0-21.P2.el5.i386.rpm
+bind97-libs-9.7.0-21.P2.el5.x86_64.rpm
+bind97-utils-9.7.0-21.P2.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0591.html">https://www.redhat.com/security/data/cve/CVE-2014-0591.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUF9CTXlSAg2UNWIIRAgGoAKDAPigYazMYillr1OAnod+Kg5WauACgrG4O
+rECpFqEoAw4sf3G8w4OewWo=
+=oVuU
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1256&#45;01] Moderate: Red Hat JBoss Web Server 2.1.0 openssl	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 17 Sep 2014 12:51:58 &#45;0400 -->
+<!--X-Message-Id: 201409171651.s8HGpv01006090@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1256-01] Moderate: Red Hat JBoss Web Server 2.1.0 openssl	sec</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1256-01] Moderate: Red Hat JBoss Web Server 2.1.0 openssl	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1256-01] Moderate: Red Hat JBoss Web Server 2.1.0 openssl	security update</li>
+<li><em>Date</em>: Wed, 17 Sep 2014 16:51:57 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Web Server 2.1.0 openssl security update
+Advisory ID:       RHSA-2014:1256-01
+Product:           Red Hat JBoss Web Server
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1256.html">https://rhn.redhat.com/errata/RHSA-2014-1256.html</a>
+Issue date:        2014-09-17
+CVE Names:         CVE-2014-3505 CVE-2014-3506 CVE-2014-3508 
+                   CVE-2014-3510 
+=====================================================================
+
+1. Summary:
+
+An update for the openssl component for Red Hat JBoss Web Server 2.1.0 that
+fixes multiple security issues is now available from the Red Hat Customer
+Portal.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Web Server is a fully integrated and certified set of
+components for hosting Java web applications. It is comprised of the Apache
+HTTP Server, the Apache Tomcat Servlet container, Apache Tomcat Connector
+(mod_jk), JBoss HTTP Connector (mod_cluster), Hibernate, and the Tomcat
+Native library.
+
+OpenSSL is a toolkit that implements the Secure Sockets Layer (SSL),
+Transport Layer Security (TLS), and Datagram Transport Layer Security
+(DTLS) protocols, as well as a full-strength, general purpose cryptography
+library.
+
+It was discovered that the OBJ_obj2txt() function could fail to properly
+NUL-terminate its output. This could possibly cause an application using
+OpenSSL functions to format fields of X.509 certificates to disclose
+portions of its memory. (CVE-2014-3508)
+
+Two flaws were discovered in the way OpenSSL handled DTLS packets. A remote
+attacker could use these flaws to cause a DTLS server or client using
+OpenSSL to crash or use excessive amounts of memory. (CVE-2014-3505,
+CVE-2014-3506)
+
+A NULL pointer dereference flaw was found in the way OpenSSL performed a
+handshake when using the anonymous Diffie-Hellman (DH) key exchange. A
+malicious server could cause a DTLS client using OpenSSL to crash if that
+client had anonymous DH cipher suites enabled. (CVE-2014-3510)
+
+All users of Red Hat JBoss Web Server 2.1.0 as provided from the Red Hat
+Customer Portal are advised to apply this update. The Red Hat JBoss Web
+Server process must be restarted for the update to take effect.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing Red Hat JBoss Web Server installation (including all applications
+and configuration files).
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1127490 - CVE-2014-3508 openssl: information leak in pretty printing functions
+1127499 - CVE-2014-3505 openssl: DTLS packet processing double free
+1127500 - CVE-2014-3506 openssl: DTLS memory exhaustion
+1127503 - CVE-2014-3510 openssl: DTLS anonymous (EC)DH denial of service
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3505.html">https://www.redhat.com/security/data/cve/CVE-2014-3505.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3506.html">https://www.redhat.com/security/data/cve/CVE-2014-3506.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3508.html">https://www.redhat.com/security/data/cve/CVE-2014-3508.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3510.html">https://www.redhat.com/security/data/cve/CVE-2014-3510.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=webserver&amp;downloadType=securityPatches&amp;version=2.1.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=webserver&amp;downloadType=securityPatches&amp;version=2.1.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUGbuXXlSAg2UNWIIRAlOtAKChkOz+8z5lYXidsnEIXrxWNSogEgCfahyd
+U9tLfNSazIT44HiS/71olJo=
+=dGMc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

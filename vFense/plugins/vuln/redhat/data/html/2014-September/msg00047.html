@@ -1,0 +1,162 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1292&#45;01] Moderate: haproxy security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 24 Sep 2014 01:27:23 &#45;0400 -->
+<!--X-Message-Id: 201409240527.s8O5RK3V015489@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1292-01] Moderate: haproxy security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00046.html">Date Prev</a>][<a href="msg00048.html">Date Next</a>] &nbsp; [<a href="msg00046.html">Thread Prev</a>][<a href="msg00048.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00047">Thread Index</A>]
+[<A HREF="date.html#00047">Date Index</A>]
+[<A HREF="author.html#00047">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1292-01] Moderate: haproxy security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1292-01] Moderate: haproxy security update</li>
+<li><em>Date</em>: Wed, 24 Sep 2014 05:35:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: haproxy security update
+Advisory ID:       RHSA-2014:1292-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1292.html">https://rhn.redhat.com/errata/RHSA-2014-1292.html</a>
+Issue date:        2014-09-24
+CVE Names:         CVE-2014-6269 
+=====================================================================
+
+1. Summary:
+
+An updated haproxy package that fixes one security issue is now available
+for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+
+3. Description:
+
+HAProxy provides high availability, load balancing, and proxying for TCP
+and HTTP-based applications.
+
+A buffer overflow flaw was discovered in the way HAProxy handled, under
+very specific conditions, data uploaded from a client. A remote attacker
+could possibly use this flaw to crash HAProxy. (CVE-2014-6269)
+
+All haproxy users are advised to upgrade to this updated package, which
+contains a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1136552 - CVE-2014-6269 haproxy: remote client denial of service vulnerability
+
+6. Package List:
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+haproxy-1.5.2-3.el7_0.src.rpm
+
+x86_64:
+haproxy-1.5.2-3.el7_0.x86_64.rpm
+haproxy-debuginfo-1.5.2-3.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+haproxy-1.5.2-3.el7_0.src.rpm
+
+x86_64:
+haproxy-1.5.2-3.el7_0.x86_64.rpm
+haproxy-debuginfo-1.5.2-3.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-6269.html">https://www.redhat.com/security/data/cve/CVE-2014-6269.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUIlYyXlSAg2UNWIIRAmtXAKCXN/ZrKzc7qI98afGzlG/GecNUkgCfSUHu
+ieuU5FOabm/qlJPpygNnDp4=
+=Qhqh
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00046.html">Date Prev</a>][<a href="msg00048.html">Date Next</a>] &nbsp; [<a href="msg00046.html">Thread Prev</a>][<a href="msg00048.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00047">Thread Index</A>]
+[<A HREF="date.html#00047">Date Index</A>]
+[<A HREF="author.html#00047">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

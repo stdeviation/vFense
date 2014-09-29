@@ -1,0 +1,158 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1186&#45;01] Important: katello&#45;configure security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 11 Sep 2014 17:23:23 &#45;0400 -->
+<!--X-Message-Id: 201409112123.s8BLNNfY028290@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1186-01] Important: katello-configure security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1186-01] Important: katello-configure security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:1186-01] Important: katello-configure security update</li>
+<li><em>Date</em>: Thu, 11 Sep 2014 21:23:22 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: katello-configure security update
+Advisory ID:       RHSA-2014:1186-01
+Product:           Red Hat Subscription Asset Manager
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1186.html">https://rhn.redhat.com/errata/RHSA-2014-1186.html</a>
+Issue date:        2014-09-11
+CVE Names:         CVE-2014-3120 
+=====================================================================
+
+1. Summary:
+
+An updated katello-configure package that fixes one security issue is now
+available for Red Hat Subscription Asset Manager.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Subscription Asset Manager for RHEL 6 Server - noarch
+
+3. Description:
+
+The katello-configure package provides the katello-configure script, which
+configures the Katello installation, and the katello-upgrade script, which
+handles upgrades between versions.
+
+It was discovered that the default configuration of Elasticsearch enabled
+dynamic scripting, allowing a remote attacker to execute arbitrary MVEL
+expressions and Java code via the source parameter passed to _search.
+(CVE-2014-3120)
+
+All Subscription Asset Manager users are advised to upgrade to this updated
+package. The update provides a script that modifies the elasticsearch.yml
+configuration file to disable dynamic scripting. After updating, run the
+&quot;katello-configure&quot; command. This will update the elasticsearch.yml
+configuration file and restart the elasticsearch service.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied. After updating, run the
+&quot;katello-configure&quot; command to apply the needed configuration changes.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1124252 - CVE-2014-3120 elasticsearch: remote code execution flaw via dynamic scripting
+
+6. Package List:
+
+Red Hat Subscription Asset Manager for RHEL 6 Server:
+
+Source:
+katello-configure-1.4.5.1-3.el6sam.src.rpm
+
+noarch:
+katello-configure-1.4.5.1-3.el6sam.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3120.html">https://www.redhat.com/security/data/cve/CVE-2014-3120.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUEhK5XlSAg2UNWIIRAn1BAJ0bC4dcZW2T5hOmKN2zVTboNLyCbgCfbncO
+wrudH/0C18bG+g4wAaDaOIw=
+=Byh7
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1194&#45;01] Moderate: conga security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 16 Sep 2014 01:53:43 &#45;0400 -->
+<!--X-Message-Id: 201409160553.s8G5rfcU005973@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1194-01] Moderate: conga security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00028.html">Date Prev</a>][<a href="msg00030.html">Date Next</a>] &nbsp; [<a href="msg00028.html">Thread Prev</a>][<a href="msg00030.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00029">Thread Index</A>]
+[<A HREF="date.html#00029">Date Index</A>]
+[<A HREF="author.html#00029">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1194-01] Moderate: conga security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1194-01] Moderate: conga security and bug fix update</li>
+<li><em>Date</em>: Tue, 16 Sep 2014 06:01:53 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: conga security and bug fix update
+Advisory ID:       RHSA-2014:1194-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1194.html">https://rhn.redhat.com/errata/RHSA-2014-1194.html</a>
+Issue date:        2014-09-16
+CVE Names:         CVE-2012-5485 CVE-2012-5486 CVE-2012-5488 
+                   CVE-2012-5497 CVE-2012-5498 CVE-2012-5499 
+                   CVE-2012-5500 CVE-2013-6496 CVE-2014-3521 
+=====================================================================
+
+1. Summary:
+
+Updated conga packages that fix multiple security issues and several bugs
+are now available for Red Hat Enterprise Linux 5.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Clustering (v. 5 server) - i386, ia64, ppc, x86_64
+
+3. Description:
+
+The Conga project is a management system for remote workstations.
+It consists of luci, which is a secure web-based front end, and ricci,
+which is a secure daemon that dispatches incoming messages to underlying
+management modules.
+
+It was discovered that Plone, included as a part of luci, did not properly
+protect the administrator interface (control panel). A remote attacker
+could use this flaw to inject a specially crafted Python statement or
+script into Plone's restricted Python sandbox that, when the administrator
+interface was accessed, would be executed with the privileges of that
+administrator user. (CVE-2012-5485)
+
+It was discovered that Plone, included as a part of luci, did not properly
+sanitize HTTP headers provided within certain URL requests. A remote
+attacker could use a specially crafted URL that, when processed, would
+cause the injected HTTP headers to be returned as a part of the Plone HTTP
+response, potentially allowing the attacker to perform other more advanced
+attacks. (CVE-2012-5486)
+
+Multiple information leak flaws were found in the way conga processed luci
+site extension-related URL requests. A remote, unauthenticated attacker
+could issue a specially crafted HTTP request that, when processed, would
+result in unauthorized information disclosure. (CVE-2013-6496)
+
+It was discovered that various components in the luci site
+extension-related URLs were not properly restricted to administrative
+users. A remote, authenticated attacker could escalate their privileges to
+perform certain actions that should be restricted to administrative users,
+such as adding users and systems, and viewing log data. (CVE-2014-3521)
+
+It was discovered that Plone, included as a part of luci, did not properly
+protect the privilege of running RestrictedPython scripts. A remote
+attacker could use a specially crafted URL that, when processed, would
+allow the attacker to submit and perform expensive computations or, in
+conjunction with other attacks, be able to access or alter privileged
+information. (CVE-2012-5488)
+
+It was discovered that Plone, included as a part of luci, did not properly
+enforce permissions checks on the membership database. A remote attacker
+could use a specially crafted URL that, when processed, could allow the
+attacker to enumerate user account names. (CVE-2012-5497)
+
+It was discovered that Plone, included as a part of luci, did not properly
+handle the processing of requests for certain collections. A remote
+attacker could use a specially crafted URL that, when processed, would lead
+to excessive I/O and/or cache resource consumption. (CVE-2012-5498)
+
+It was discovered that Plone, included as a part of luci, did not properly
+handle the processing of very large values passed to an internal utility
+function. A remote attacker could use a specially crafted URL that, when
+processed, would lead to excessive memory consumption. (CVE-2012-5499)
+
+It was discovered that Plone, included as a part of luci, allowed a remote
+anonymous user to change titles of content items due to improper
+permissions checks. (CVE-2012-5500)
+
+The CVE-2014-3521 issue was discovered by Radek Steiger of Red Hat, and the
+CVE-2013-6496 issue was discovered by Jan Pokorny of Red Hat.
+
+In addition, these updated conga packages include several bug fixes.
+Space precludes documenting all of these changes in this advisory.
+Users are directed to the Red Hat Enterprise Linux 5.11 Technical Notes,
+linked to in the References section, for information on the most
+significant of these changes
+
+All conga users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing this
+update, the luci and ricci services will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+874649 - CVE-2012-5500 conga (Plone): Anonymous users can batch change titles of content items
+874657 - CVE-2012-5499 conga (Plone): Partial denial of service through internal function
+874665 - CVE-2012-5498 conga (Plone): Partial denial of service through Collections functionality
+874681 - CVE-2012-5497 conga (Plone): Anonymous users can list user account names
+878934 - CVE-2012-5485 conga (Plone): Restricted Python injection
+878939 - CVE-2012-5486 conga (Plone): Reflexive HTTP header injection
+878945 - CVE-2012-5488 conga (Plone): Restricted Python injection
+970288 - luci initscript does not check return values correctly
+971541 - CVE-2013-6496 conga: Multiple information leak flaws in various luci site extensions
+1065263 - luci: reflect startup_wait parameter added in postgres-8 RA (el5.11+)
+1072075 - luci mishandling of distro release string leads to dropping some features and parameters
+1076711 - ricci: end-use modules do not handle stdin polling correctly
+1112813 - CVE-2014-3521 luci: unauthorized administrative access granted to non-administrative users
+
+6. Package List:
+
+Red Hat Enterprise Linux Clustering (v. 5 server):
+
+Source:
+conga-0.12.2-81.el5.src.rpm
+
+i386:
+conga-debuginfo-0.12.2-81.el5.i386.rpm
+luci-0.12.2-81.el5.i386.rpm
+ricci-0.12.2-81.el5.i386.rpm
+
+ia64:
+conga-debuginfo-0.12.2-81.el5.ia64.rpm
+luci-0.12.2-81.el5.ia64.rpm
+ricci-0.12.2-81.el5.ia64.rpm
+
+ppc:
+conga-debuginfo-0.12.2-81.el5.ppc.rpm
+luci-0.12.2-81.el5.ppc.rpm
+ricci-0.12.2-81.el5.ppc.rpm
+
+x86_64:
+conga-debuginfo-0.12.2-81.el5.x86_64.rpm
+luci-0.12.2-81.el5.x86_64.rpm
+ricci-0.12.2-81.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5485.html">https://www.redhat.com/security/data/cve/CVE-2012-5485.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5486.html">https://www.redhat.com/security/data/cve/CVE-2012-5486.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5488.html">https://www.redhat.com/security/data/cve/CVE-2012-5488.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5497.html">https://www.redhat.com/security/data/cve/CVE-2012-5497.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5498.html">https://www.redhat.com/security/data/cve/CVE-2012-5498.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5499.html">https://www.redhat.com/security/data/cve/CVE-2012-5499.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-5500.html">https://www.redhat.com/security/data/cve/CVE-2012-5500.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-6496.html">https://www.redhat.com/security/data/cve/CVE-2013-6496.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3521.html">https://www.redhat.com/security/data/cve/CVE-2014-3521.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/5/html/5.11_Technical_Notes/index.html">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/5/html/5.11_Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUF9BeXlSAg2UNWIIRAlrTAJ0cmZOWgdAAzab9DmMt/e9H7OiAGwCgrCyW
+EnVk6AeP1UJtAXzGnhZHbqg=
+=74aY
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00028.html">Date Prev</a>][<a href="msg00030.html">Date Next</a>] &nbsp; [<a href="msg00028.html">Thread Prev</a>][<a href="msg00030.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00029">Thread Index</A>]
+[<A HREF="date.html#00029">Date Index</A>]
+[<A HREF="author.html#00029">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

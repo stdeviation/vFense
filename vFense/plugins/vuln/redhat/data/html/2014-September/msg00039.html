@@ -1,0 +1,425 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1281&#45;01] Moderate: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 22 Sep 2014 14:32:36 &#45;0400 -->
+<!--X-Message-Id: 201409221832.s8MIWZVj000940@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1281-01] Moderate: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00038.html">Date Prev</a>][<a href="msg00040.html">Date Next</a>] &nbsp; [<a href="msg00038.html">Thread Prev</a>][<a href="msg00040.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00039">Thread Index</A>]
+[<A HREF="date.html#00039">Date Index</A>]
+[<A HREF="author.html#00039">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1281-01] Moderate: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1281-01] Moderate: kernel security and bug fix update</li>
+<li><em>Date</em>: Mon, 22 Sep 2014 18:32:35 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel security and bug fix update
+Advisory ID:       RHSA-2014:1281-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1281.html">https://rhn.redhat.com/errata/RHSA-2014-1281.html</a>
+Issue date:        2014-09-22
+CVE Names:         CVE-2014-3917 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix one security issue and several bugs are
+now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 7) - noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+* An out-of-bounds memory access flaw was found in the Linux kernel's
+system call auditing implementation. On a system with existing audit rules
+defined, a local, unprivileged user could use this flaw to leak kernel
+memory to user space or, potentially, crash the system. (CVE-2014-3917,
+Moderate)
+
+This update also fixes the following bugs: 
+
+* A bug in the mtip32xx driver could prevent the Micron P420m PCIe SSD
+devices with unaligned I/O access from completing the submitted I/O
+requests. This resulted in a livelock situation and rendered the Micron
+P420m PCIe SSD devices unusable. To fix this problem, mtip32xx now checks
+whether an I/O access is unaligned and if so, it uses the correct
+semaphore. (BZ#1125776)
+
+* A series of patches has been backported to improve the functionality of
+a touch pad on the latest Lenovo laptops in Red Hat Enterprise Linux 7.
+(BZ#1122559)
+
+* Due to a bug in the bnx2x driver, a network adapter could be unable to
+recover from EEH error injection. The network adapter had to be taken
+offline and rebooted in order to function properly again. With this update,
+the bnx2x driver has been corrected and network adapters now recover from
+EEH errors as expected. (BZ#1107722)
+
+* Previously, if an hrtimer interrupt was delayed, all future pending
+hrtimer events that were queued on the same processor were also delayed
+until the initial hrtimer event was handled. This could cause all hrtimer
+processing to stop for a significant period of time. To prevent this
+problem, the kernel has been modified to handle all expired hrtimer events
+when handling the initially delayed hrtimer event. (BZ#1113175)
+
+* A previous change to the nouveau driver introduced a bit shift error,
+which resulted in a wrong display resolution being set with some models
+of NVIDIA controllers. With this update, the erroneous code has been
+corrected, and the affected NVIDIA controllers can now set the correct
+display resolution. (BZ#1114869)
+
+* Due to a NULL pointer dereference bug in the be2net driver, the system
+could experience a kernel oops and reboot when disabling a network adapter
+after a permanent failure. This problem has been fixed by introducing a
+flag to keep track of the setup state. The failing adapter can now be
+disabled successfully without a kernel crash. (BZ#1122558)
+
+* Previously, the Huge Translation Lookaside Buffer (HugeTLB) allowed
+access to huge pages access by default. However, huge pages may be
+unsupported in some environments, such as a KVM guest on a PowerPC
+architecture, and an attempt to access a huge page in memory would result
+in a kernel oops. This update ensures that HugeTLB denies access to huge
+pages if the huge pages are not supported on the system. (BZ#1122115)
+
+* If an NVMe device becomes ready but fails to create I/O queues, the nvme
+driver creates a character device handle to manage such a device.
+Previously, a character device could be created before a device reference
+counter was initialized, which resulted in a kernel oops. This problem has
+been fixed by calling the relevant initialization function earlier in the
+code. (BZ#1119720)
+
+* On some firmware versions of the BladeEngine 3 (BE3) controller,
+interrupts remain disabled after a hardware reset. This was a problem for
+all Emulex-based network adapters using such a BE3 controller because
+these adapters would fail to recover from an EEH error if it occurred. To
+resolve this problem, the be2net driver has been modified to enable the
+interrupts in the eeh_resume handler explicitly. (BZ#1121712)
+
+All kernel users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not use
+&quot;rpm -Uvh&quot; as that will remove the running kernel binaries from your
+system. You may use &quot;rpm -e&quot; to remove old kernels after determining that
+the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1102571 - CVE-2014-3917 kernel: DoS with syscall auditing
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+kernel-3.10.0-123.8.1.el7.src.rpm
+
+noarch:
+kernel-abi-whitelists-3.10.0-123.8.1.el7.noarch.rpm
+
+x86_64:
+kernel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-devel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-devel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-headers-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-libs-3.10.0-123.8.1.el7.x86_64.rpm
+perf-3.10.0-123.8.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+noarch:
+kernel-doc-3.10.0-123.8.1.el7.noarch.rpm
+
+x86_64:
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-libs-devel-3.10.0-123.8.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+kernel-3.10.0-123.8.1.el7.src.rpm
+
+noarch:
+kernel-abi-whitelists-3.10.0-123.8.1.el7.noarch.rpm
+
+x86_64:
+kernel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-devel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-devel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-headers-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-libs-3.10.0-123.8.1.el7.x86_64.rpm
+perf-3.10.0-123.8.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+noarch:
+kernel-doc-3.10.0-123.8.1.el7.noarch.rpm
+
+x86_64:
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-libs-devel-3.10.0-123.8.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+kernel-3.10.0-123.8.1.el7.src.rpm
+
+noarch:
+kernel-abi-whitelists-3.10.0-123.8.1.el7.noarch.rpm
+
+ppc64:
+kernel-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-bootwrapper-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-debug-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-debug-devel-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-debuginfo-common-ppc64-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-devel-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-headers-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-tools-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-tools-debuginfo-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-tools-libs-3.10.0-123.8.1.el7.ppc64.rpm
+perf-3.10.0-123.8.1.el7.ppc64.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.ppc64.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.ppc64.rpm
+
+s390x:
+kernel-3.10.0-123.8.1.el7.s390x.rpm
+kernel-debug-3.10.0-123.8.1.el7.s390x.rpm
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.s390x.rpm
+kernel-debug-devel-3.10.0-123.8.1.el7.s390x.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.s390x.rpm
+kernel-debuginfo-common-s390x-3.10.0-123.8.1.el7.s390x.rpm
+kernel-devel-3.10.0-123.8.1.el7.s390x.rpm
+kernel-headers-3.10.0-123.8.1.el7.s390x.rpm
+kernel-kdump-3.10.0-123.8.1.el7.s390x.rpm
+kernel-kdump-debuginfo-3.10.0-123.8.1.el7.s390x.rpm
+kernel-kdump-devel-3.10.0-123.8.1.el7.s390x.rpm
+perf-3.10.0-123.8.1.el7.s390x.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.s390x.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.s390x.rpm
+
+x86_64:
+kernel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-devel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-devel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-headers-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-libs-3.10.0-123.8.1.el7.x86_64.rpm
+perf-3.10.0-123.8.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+noarch:
+kernel-doc-3.10.0-123.8.1.el7.noarch.rpm
+
+ppc64:
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-debuginfo-common-ppc64-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-tools-debuginfo-3.10.0-123.8.1.el7.ppc64.rpm
+kernel-tools-libs-devel-3.10.0-123.8.1.el7.ppc64.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.ppc64.rpm
+python-perf-3.10.0-123.8.1.el7.ppc64.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.ppc64.rpm
+
+s390x:
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.s390x.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.s390x.rpm
+kernel-debuginfo-common-s390x-3.10.0-123.8.1.el7.s390x.rpm
+kernel-kdump-debuginfo-3.10.0-123.8.1.el7.s390x.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.s390x.rpm
+python-perf-3.10.0-123.8.1.el7.s390x.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.s390x.rpm
+
+x86_64:
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-libs-devel-3.10.0-123.8.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+kernel-3.10.0-123.8.1.el7.src.rpm
+
+noarch:
+kernel-abi-whitelists-3.10.0-123.8.1.el7.noarch.rpm
+
+x86_64:
+kernel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debug-devel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-devel-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-headers-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-libs-3.10.0-123.8.1.el7.x86_64.rpm
+perf-3.10.0-123.8.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+noarch:
+kernel-doc-3.10.0-123.8.1.el7.noarch.rpm
+
+x86_64:
+kernel-debug-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+kernel-tools-libs-devel-3.10.0-123.8.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-3.10.0-123.8.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.8.1.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3917.html">https://www.redhat.com/security/data/cve/CVE-2014-3917.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUIGsOXlSAg2UNWIIRAg3yAJ4vSmXt6Q2f+YlIrmPR6wWXUFwjDACfQCcF
+C+uXlFrpAt9wbWGsEIKrcH8=
+=1DJs
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00038.html">Date Prev</a>][<a href="msg00040.html">Date Next</a>] &nbsp; [<a href="msg00038.html">Thread Prev</a>][<a href="msg00040.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00039">Thread Index</A>]
+[<A HREF="date.html#00039">Date Index</A>]
+[<A HREF="author.html#00039">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

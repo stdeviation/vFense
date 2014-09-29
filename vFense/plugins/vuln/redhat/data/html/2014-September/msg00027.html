@@ -1,0 +1,179 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1187&#45;01] Moderate: qemu&#45;kvm&#45;rhev security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 15 Sep 2014 02:14:34 &#45;0400 -->
+<!--X-Message-Id: 201409150614.s8F6EWdK008538@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1187-01] Moderate: qemu-kvm-rhev security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1187-01] Moderate: qemu-kvm-rhev security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1187-01] Moderate: qemu-kvm-rhev security update</li>
+<li><em>Date</em>: Mon, 15 Sep 2014 06:14:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: qemu-kvm-rhev security update
+Advisory ID:       RHSA-2014:1187-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1187.html">https://rhn.redhat.com/errata/RHSA-2014-1187.html</a>
+Issue date:        2014-09-15
+CVE Names:         CVE-2014-0222 CVE-2014-0223 
+=====================================================================
+
+1. Summary:
+
+Updated qemu-kvm-rhev packages that fix two security issues are now
+available for Red Hat Enterprise Linux OpenStack Platform 4 and 5 for
+Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0 - x86_64
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 6 - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. The qemu-kvm-rhev package provides the
+user-space component for running virtual machines using KVM in environments
+managed by Red Hat Enterprise Linux OpenStack Platform.
+
+Two integer overflow flaws were found in the QEMU block driver for QCOW
+version 1 disk images. A user able to supply a malicious image file to QEMU
+or to helper tools used in image conversion by services such as Glance and
+Nova could potentially use these flaws to cause memory corruption,
+resulting in a crash or possibly arbitrary code execution. (CVE-2014-0222,
+CVE-2014-0223)
+
+Red Hat would like to thank NSA for reporting these issues.
+
+All users of qemu-kvm-rhev are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues. After
+installing this update, shut down all running virtual machines. Once all
+virtual machines have shut down, start them again for this update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1097216 - CVE-2014-0222 Qemu: qcow1: validate L2 table size to avoid integer overflows
+1097222 - CVE-2014-0223 Qemu: qcow1: validate image size to avoid out-of-bounds memory access
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 6:
+
+Source:
+qemu-kvm-rhev-0.12.1.2-2.415.el6_5.14.src.rpm
+
+x86_64:
+qemu-img-rhev-0.12.1.2-2.415.el6_5.14.x86_64.rpm
+qemu-kvm-rhev-0.12.1.2-2.415.el6_5.14.x86_64.rpm
+qemu-kvm-rhev-debuginfo-0.12.1.2-2.415.el6_5.14.x86_64.rpm
+qemu-kvm-rhev-tools-0.12.1.2-2.415.el6_5.14.x86_64.rpm
+
+Red Hat Enterprise Linux OpenStack Platform 4.0:
+
+Source:
+qemu-kvm-rhev-0.12.1.2-2.415.el6_5.14.src.rpm
+
+x86_64:
+qemu-img-rhev-0.12.1.2-2.415.el6_5.14.x86_64.rpm
+qemu-kvm-rhev-0.12.1.2-2.415.el6_5.14.x86_64.rpm
+qemu-kvm-rhev-debuginfo-0.12.1.2-2.415.el6_5.14.x86_64.rpm
+qemu-kvm-rhev-tools-0.12.1.2-2.415.el6_5.14.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0222.html">https://www.redhat.com/security/data/cve/CVE-2014-0222.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0223.html">https://www.redhat.com/security/data/cve/CVE-2014-0223.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUFoPAXlSAg2UNWIIRAkZaAJ9a5C0I1lZpwLxFa8O+wJ90icHedACbBXWS
+vwx/JUMsZy8Z3BHQ2EjRTAg=
+=feBk
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

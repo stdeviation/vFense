@@ -1,0 +1,144 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1288&#45;01] Low: Red Hat JBoss Enterprise Application	Platform 6.3.1 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 23 Sep 2014 16:29:32 &#45;0400 -->
+<!--X-Message-Id: 201409232029.s8NKTV4R008396@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1288-01] Low: Red Hat JBoss Enterprise Application	Platform 6</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00043.html">Date Prev</a>][<a href="msg00045.html">Date Next</a>] &nbsp; [<a href="msg00043.html">Thread Prev</a>][<a href="msg00045.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00044">Thread Index</A>]
+[<A HREF="date.html#00044">Date Index</A>]
+[<A HREF="author.html#00044">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1288-01] Low: Red Hat JBoss Enterprise Application	Platform 6.3.1 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1288-01] Low: Red Hat JBoss Enterprise Application	Platform 6.3.1 update</li>
+<li><em>Date</em>: Tue, 23 Sep 2014 20:29:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat JBoss Enterprise Application Platform 6.3.1 update
+Advisory ID:       RHSA-2014:1288-01
+Product:           Red Hat JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1288.html">https://rhn.redhat.com/errata/RHSA-2014-1288.html</a>
+Issue date:        2014-09-23
+CVE Names:         CVE-2014-3558 
+=====================================================================
+
+1. Summary:
+
+Updated packages that provide Red Hat JBoss Enterprise Application Platform
+6.3.1 and fix one security issue, several bugs, and add various
+enhancements are now available from the Red Hat Customer Portal.
+
+Red Hat Product Security has rated this update as having Low security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Description:
+
+Red Hat JBoss Enterprise Application Platform 6 is a platform for Java
+applications based on JBoss Application Server 7.
+
+It was discovered that the implementation of
+org.hibernate.validator.util.ReflectionHelper together with the permissions
+required to run Hibernate Validator under the Java Security Manager could
+allow a malicious application deployed in the same application container to
+execute several actions with escalated privileges, which might otherwise
+not be possible. This flaw could be used to perform various attacks,
+including but not restricted to, arbitrary code execution in systems that
+are otherwise secured by the Java Security Manager. (CVE-2014-3558)
+
+This release of JBoss Enterprise Application Platform also includes bug
+fixes and enhancements. A list of these changes is available
+from the JBoss Enterprise Application Platform 6.3.1 Downloads page on
+the Customer Portal.
+
+All users of Red Hat JBoss Enterprise Application Platform 6.3 as provided
+from the Red Hat Customer Portal are advised to apply this update.
+The JBoss server process must be restarted for the update to take effect.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing Red Hat JBoss Enterprise Application Platform installation and
+deployed applications.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1120495 - CVE-2014-3558 Hibernate Validator: JSM bypass via ReflectionHelper
+
+5. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3558.html">https://www.redhat.com/security/data/cve/CVE-2014-3558.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=distributions&amp;version=6.3">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=distributions&amp;version=6.3</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUIdglXlSAg2UNWIIRAphKAJ9uhZaGm09SMO22OdAhM0KxLzTebwCZAR0t
+xzkyait+Rr9QJGdph5e6ZhA=
+=e5xu
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00043.html">Date Prev</a>][<a href="msg00045.html">Date Next</a>] &nbsp; [<a href="msg00043.html">Thread Prev</a>][<a href="msg00045.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00044">Thread Index</A>]
+[<A HREF="date.html#00044">Date Index</A>]
+[<A HREF="author.html#00044">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
