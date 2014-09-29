@@ -106,7 +106,7 @@ class AppsBaseHandler(BaseHandler):
 
         elif self.vuln and self.severity and self.status and self.query:
             results = (
-                self.by_status_and_self.name_and_self.sev_and_self.vuln(
+                self.by_status_and_name_and_self.sev_and_self.vuln(
                     search
                 )
             )
@@ -143,7 +143,7 @@ class AppsBaseHandler(BaseHandler):
 
     @results_message
     def by_name(self, search):
-        results = search.by_name(self.name)
+        results = search.by_name(self.query)
         return results
 
     @results_message
@@ -158,7 +158,7 @@ class AppsBaseHandler(BaseHandler):
 
     @results_message
     def by_sev_and_name(self, search):
-        results = search.by_sev_and_name(self.sev, self.name)
+        results = search.by_sev_and_name(self.sev, self.query)
         return results
 
     @results_message
@@ -174,7 +174,7 @@ class AppsBaseHandler(BaseHandler):
     @results_message
     def by_status_and_name_and_sev(self, search):
         results = search.by_status_and_name_and_sev(
-            self.status, self.name, self.sev
+            self.status, self.query, self.sev
         )
         return results
 
@@ -182,19 +182,19 @@ class AppsBaseHandler(BaseHandler):
     def by_status_and_name_and_sev_and_vuln(self, search):
         results = (
             search.by_status_and_name_and_sev_and_vuln(
-                self.status, self.name, self.sev
+                self.status, self.query, self.sev
             )
         )
         return results
 
     @results_message
     def by_status_and_name(self, search):
-        results = search.by_status_and_name(self.status, self.name)
+        results = search.by_status_and_name(self.status, self.query)
         return results
 
     @results_message
     def by_status_and_name_and_vuln(self, search):
-        results = search.by_status_and_name_and_vuln(self.status, self.name)
+        results = search.by_status_and_name_and_vuln(self.status, self.query)
         return results
 
     def get_and_set_install_arguments(self):

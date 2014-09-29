@@ -56,7 +56,7 @@ class AppsKey():
     SupportUrl = 'support_url'
     Version = 'version'
     OsCode = 'os_code'
-    OsStrings = 'os_strings'
+    OsString = 'os_string'
     vFenseSeverity = 'vfense_severity'
     VendorSeverity = 'vendor_severity'
     VendorName = 'vendor_name'

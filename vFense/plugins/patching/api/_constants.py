@@ -13,6 +13,7 @@ class AppApiArguments(ApiArguments):
     RESTART = 'restart'
     CPU_THROTTLE = 'cpu_throttle'
     NET_THROTTLE = 'net_throttle'
+    NAME = 'name'
 
 class AppFilterValues():
     SEVERITY = 'severity'
