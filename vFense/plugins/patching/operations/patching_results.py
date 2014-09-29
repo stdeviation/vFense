@@ -82,7 +82,7 @@ class PatchingOperationResults(OperationResults):
         self.reboot_required = reboot_required
         self.operation_type = self.operation_data[AgentOperationKey.Operation]
 
-    def apps_refresh(self):
+    def refresh_apps(self):
         operation_type = AgentOperations.REFRESH_APPS
         results = self.update_operation(operation_type)
         return results

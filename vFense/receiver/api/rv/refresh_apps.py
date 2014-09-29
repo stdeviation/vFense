@@ -84,5 +84,5 @@ class RefreshAppsV2(AgentBaseHandler):
 
     @agent_results_message
     def refresh_apps_results(update_results):
-        results = update_results.apps_refresh()
+        results = update_results.refresh_apps()
         return results

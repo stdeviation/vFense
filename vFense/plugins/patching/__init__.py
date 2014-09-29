@@ -391,7 +391,7 @@ class Apps(object):
             DbCommonAppKeys.SupportUrl: self.support_url,
             DbCommonAppKeys.Version: self.version,
             DbCommonAppKeys.OsCode: self.os_code,
-            DbCommonAppKeys.OsStrings: [self.os_string],
+            DbCommonAppKeys.OsString: self.os_string,
             DbCommonAppKeys.vFenseSeverity: self.vfense_severity,
             DbCommonAppKeys.VendorSeverity: self.vendor_severity,
             DbCommonAppKeys.VendorName: self.vendor_name,

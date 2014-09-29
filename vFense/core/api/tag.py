@@ -333,7 +333,7 @@ class TagHandler(BaseHandler):
                 operation = (
                     StorePatchingOperation(active_user, active_view)
                 )
-                results = self.apps_refresh(operation, tag_id)
+                results = self.refresh_apps(operation, tag_id)
 
             elif token:
                 if token_exist_in_current(token):
@@ -394,8 +394,8 @@ class TagHandler(BaseHandler):
 
     @results_message
     @check_permissions(Permissions.READ)
-    def apps_refresh(self, operation, tag_id):
-        results = operation.apps_refresh(tag_id=tag_id)
+    def refresh_apps(self, operation, tag_id):
+        results = operation.refresh_apps(tag_id=tag_id)
         return results
 
 

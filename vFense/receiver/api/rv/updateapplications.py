@@ -43,7 +43,7 @@ class UpdateApplicationsV1(BaseHandler):
                     agent_id, operation_id, success, error, status_code
                 )
 
-                results = self.apps_refresh_results(update_results)
+                results = self.refresh_apps_results(update_results)
                 self.set_status(results['http_status'])
                 self.write(dumps(results))
 
@@ -81,7 +81,7 @@ class UpdateApplicationsV1(BaseHandler):
             self.write(dumps(results))
 
     @results_message
-    def apps_refresh_results(update_results):
-        results = update_results.apps_refresh()
+    def refresh_apps_results(update_results):
+        results = update_results.refresh_apps()
         return results
 

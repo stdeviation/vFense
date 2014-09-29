@@ -36,7 +36,7 @@ logger = logging.getLogger('rvapi')
 class StorePatchingOperation(StoreAgentOperation):
     """Create operations for the patching plugin"""
     def refresh_apps(self, agent_ids=None, tag_id=None):
-        """Send the apps_refresh operation to the agent,
+        """Send the refresh_apps operation to the agent,
             Send all installed applications and updates needed
             to the server.
         Kwargs:
