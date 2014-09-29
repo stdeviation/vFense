@@ -83,6 +83,6 @@ class RefreshAppsV2(AgentBaseHandler):
             self.write(dumps(results))
 
     @agent_results_message
-    def refresh_apps_results(update_results):
+    def refresh_apps_results(self, update_results):
         results = update_results.refresh_apps()
         return results
