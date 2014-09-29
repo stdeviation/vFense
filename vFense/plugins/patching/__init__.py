@@ -447,7 +447,8 @@ class Apps(object):
                 self.vulnerability_categories
             ),
             DbCommonAppPerAgentKeys.VulnerabilityId: self.vulnerability_id,
-            DbCommonAppPerAgentKeys.CveIds: self.cve_ids
+            DbCommonAppPerAgentKeys.CveIds: self.cve_ids,
+            DbCommonAppPerAgentKeys.Status: self.status
         }
 
     def to_dict_db_apps_per_agent(self):

@@ -316,11 +316,11 @@ def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
             files_data = []
             files = app.pop(DbCommonAppKeys.FileData, None)
             app_data = Apps(**app)
+            app_data.fill_in_defaults()
             app_data.views = agent.views
             app_data.os_code = agent.os_code
             app_data.os_string = agent.os_string
             app_data.agent_id = agent_id
-            app_data.fill_in_defaults()
             if isinstance(files, list):
                 for file_data in files:
                     files_data.append(Files(**file_data))

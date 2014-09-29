@@ -622,6 +622,7 @@ class AgentHandler(BaseHandler):
     def get_agent_by_id(self, search, agent_id):
         results = search.by_id(agent_id)
         if results[ApiResultKeys.COUNT] > 0:
+            print results[ApiResultKeys.DATA]
             results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA].pop()
         return results
 

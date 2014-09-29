@@ -93,9 +93,6 @@ class FetchAgents(object):
             data = list(
                 base_filter
                 .get_all(agent_id)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
                 .merge(merge_query)
                 .merge(agent_merge_query)
                 .run(conn)
@@ -740,22 +737,6 @@ class FetchAgents(object):
                             ),
                             CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
                             CommonAppKeys.NAME: CommonAppKeys.CUSTOM
-                        },
-                        {
-                            CommonAppKeys.COUNT: (
-                                r
-                                .table(AppCollections.SupportedAppsPerAgent)
-                                .get_all(
-                                    [
-                                        CommonAppKeys.AVAILABLE,
-                                        x[AgentKeys.AgentId]
-                                    ],
-                                    index=AppsPerAgentIndexes.StatusAndAgentId
-                                )
-                                .count()
-                            ),
-                            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                            CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
                         },
                         {
                             CommonAppKeys.COUNT: (
