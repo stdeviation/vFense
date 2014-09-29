@@ -30,7 +30,7 @@ class Apps(object):
                  os_code=None, os_string=None, vendor_name=None,
                  description=None, cli_options=None, release_date=None,
                  reboot_required=None, hidden=None, uninstallable=None,
-                 repo=None, download_status=None, vulnerability_id=None,
+                 repo=None, files_download_status=None, vulnerability_id=None,
                  id=None, update=None,install_date=None, status=None,
                  agent_id=None, dependencies=None, last_modified_time=None,
                  vulnerability_categories=None, cve_ids=None, views=None):
@@ -54,7 +54,7 @@ class Apps(object):
             hidden (str): no or yes.
             uninstallable (str): yes or no.
             repo (str): repository this application belongs too.
-            download_status (int): The integer status code that represents
+            files_download_status (int): The integer status code that represents
                 if this application has been downloaded successfully.
             vulnerability_id (str): The vulnerability identifier assigned
                 by the respective vendor.
@@ -86,7 +86,7 @@ class Apps(object):
         self.release_date = release_date
         self.reboot_required = reboot_required
         self.hidden = hidden
-        self.download_status = download_status
+        self.files_download_status = files_download_status
         self.uninstallable = uninstallable
         self.repo = repo
         self.vulnerability_id = vulnerability_id
@@ -120,8 +120,8 @@ class Apps(object):
         if not self.reboot_required:
             self.reboot_required= AppDefaults.reboot_required()
 
-        if not self.download_status:
-            self.download_status = AppDefaults.download_status()
+        if not self.files_download_status:
+            self.files_download_status = AppDefaults.download_status()
 
         if not self.vfense_severity:
             self.vfense_severity = get_proper_severity(self.vendor_severity)
@@ -395,7 +395,7 @@ class Apps(object):
             DbCommonAppKeys.vFenseSeverity: self.vfense_severity,
             DbCommonAppKeys.VendorSeverity: self.vendor_severity,
             DbCommonAppKeys.VendorName: self.vendor_name,
-            DbCommonAppKeys.FilesDownloadStatus: self.download_status,
+            DbCommonAppKeys.FilesDownloadStatus: self.files_download_status,
             DbCommonAppKeys.Uninstallable: self.uninstallable,
             DbCommonAppKeys.Repo: self.repo,
             DbCommonAppKeys.VulnerabilityId: self.vulnerability_id,

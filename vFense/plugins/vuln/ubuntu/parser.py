@@ -257,10 +257,11 @@ def process_usn_page(usn_uri):
     if content:
         soup = BeautifulSoup(content.replace('<br />', '\n'))
         date_posted_em = soup.find('em')
-        bulletin_h2 = soup.div.find('h2')
-        details_h3 = soup.div.find('h3', text='Details')
-        app_info_dl = soup.div.findAll('dl')
-        cve_info_h3 = soup.div.findAll('h3', text='References')
+        bulletin_h2 = soup.find('h2')
+        details_h3 = soup.find('h3', text='Details')
+        app_info_dl = soup.findAll('dl')
+        cve_info_h3 = soup.findAll('h3', text='References')
+        #print date_posted_em, bulletin_h2, details_h3, app_info_dl, cve_info_h3
         if date_posted_em:
             vuln.date_posted = get_date_posted(date_posted_em)
 
@@ -308,11 +309,11 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
         except Exception as e:
             return(begin_usn_home_page_processing(next_page, True))
     else:
-        #print begin_usn_home_page_processing.func_name, MAIN_USN_URL
+        #print begin_usn_home_page_processing.func_name, UbuntuUSNStrings.MAIN_USN_URL
         try:
             main_page = requests.get(UbuntuUSNStrings.MAIN_USN_URL)
         except Exception as e:
-            return(begin_usn_home_page_processing(full_parse=True))
+            return(begin_usn_home_page_processing(full_parse=full_parse))
 
     try:
         if main_page.ok:
