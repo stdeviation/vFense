@@ -49,7 +49,8 @@ class RetrieveUbuntuVulns(object):
 
         self.fetch_vulns = (
             FetchUbuntuVulns(
-                self.count, self.offset, self.sort, self.sort_key
+                count=self.count, offset=self.offset,
+                sort=self.sort, sort_key=self.sort_key
             )
         )
 

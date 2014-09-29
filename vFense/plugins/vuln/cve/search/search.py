@@ -34,7 +34,7 @@ class RetrieveCVEs(object):
                 CveKeys.CveId,
                 CveKeys.Score,
                 CveKeys.BaseScore,
-                CveKeys.ExploitSubScore,
+                CveKeys.ExploitScore,
                 CveKeys.Categories,
             ]
         )
@@ -44,8 +44,8 @@ class RetrieveCVEs(object):
                 CveKeys.CveId,
                 CveKeys.Score,
                 CveKeys.BaseScore,
-                CveKeys.ExploitSubScore,
-                CveKeys.Modified,
+                CveKeys.ExploitScore,
+                CveKeys.DateModified,
                 CveKeys.DatePosted,
             ]
         )
@@ -188,7 +188,7 @@ class RetrieveCVEs(object):
         """
         count, data = (
             self.fetch_cves.by_score(
-                CveKeys.ExploitSubScore, score, logic
+                CveKeys.ExploitScore, score, logic
             )
         )
         generic_status_code = GenericCodes.InformationRetrieved

@@ -7,6 +7,9 @@ from vFense.plugins.vuln.redhat import Redhat
 from vFense.plugins.vuln.redhat.search._db import FetchRedhatVulns
 from vFense.plugins.vuln.windows import Windows
 from vFense.plugins.vuln.windows.search._db import FetchWindowsVulns
+from vFense.core.results import (
+    ApiResultKeys
+)
 
 
 class FetchVulns(object):
@@ -52,6 +55,7 @@ class FetchVulns(object):
         self.windows = False
         self.ubuntu = False
         self.redhat = False
+
         if re.search(r'Windows', os_string, re.IGNORECASE):
             self.search = FetchWindowsVulns(**kwargs)
             self.windows = True
@@ -63,6 +67,36 @@ class FetchVulns(object):
         elif re.search('|'.join(REDHAT_DISTROS), os_string, re.IGNORECASE):
             self.search = FetchRedhatVulns(**kwargs)
             self.redhat = True
+
+
+    def by_vuln_id(self, vuln_id):
+        """Search by name and version or by kb
+        Kwargs:
+            name (str): The name of the application you are searching for.
+
+        Basic Usage:
+            >>> from vFense.plugins.vuln.search.vuln_search import FetchVulns
+            >>> search = FetchVulns()
+            >>> search.by_app_info(name="kernel-kdump-devel", version="2.6.32431.20.5.el6")
+
+        Returns:
+            Tuple (count, list of dictionaries)
+        """
+
+        data = Vulnerability()
+
+        count, data = self.search.by_id(vuln_id)
+        if count > 0 :
+            data = data[0]
+            if count > 0 :
+                if self.redhat:
+                    data = Redhat(**data)
+                elif self.ubuntu:
+                    data = Ubuntu(**data)
+                else:
+                    data = Windows(**data)
+
+        return data
 
 
     def by_app_info(self, name=None, version=None, kb=None):
@@ -79,36 +113,6 @@ class FetchVulns(object):
 
         Returns:
             Tuple (count, list of dictionaries)
-[
-    1,
-    [
-        {
-            "os_strings": null,
-            "support_url": "https://rhn.redhat.com/errata/RHSA-2014-0924.html",
-            "apps": {
-                "version": "2.6.32431.20.5.el6",
-                "arch": "s390x",
-                "app_id": "8fa7d3d638a96859f178803e7b6d1685821f3ee59651d7d4f53c2f0a993fe737",
-                "name": "kernel-kdump-devel"
-            },
-            "cve_ids": [
-                "CVE-2014-4699",
-                "CVE-2014-4943"
-            ],
-            "details": "The kernel packages contain the Linux kernel, the core of any Linux\noperating system.\n\n* It was found that th
-e Linux kernel's ptrace subsystem allowed a traced\nprocess' instruction pointer to be set to a non-canonical memory address\nwithout fo
-rcing the non-sysret code path when returning to user space.\nA local, unprivileged user could use this flaw to crash the system or,\npo
-tentially, escalate their privileges on the system. (CVE-2014-4699,\nImportant)\n\nNote: The CVE-2014-4699 issue only affected systems u
-sing an Intel CPU.\n\n* A flaw was found in the way the pppol2tp_setsockopt() and\npppol2tp_getsockopt() functions in the Linux kernel's
- PPP over L2TP\nimplementation handled requests with a non-SOL_PPPOL2TP socket option\nlevel. A local, unprivileged user could use this
-flaw to escalate their\nprivileges on the system. (CVE-2014-4943, Important)\n\nRed Hat would like to thank Andy Lutomirski for reportin
-g CVE-2014-4699,\nand Sasha Levin for reporting CVE-2014-4943.\n\nAll kernel users are advised to upgrade to these updated packages, whi
-ch\ncontain backported patches to correct these issues. The system must be\nrebooted for this update to take effect.",
-            "date_posted": 1406088000,
-            "vulnerability_id": "RHSA-2014:0924-01"
-        }
-    ]
-]
         """
         data = Vulnerability()
 
@@ -127,3 +131,16 @@ ch\ncontain backported patches to correct these issues. The system must be\nrebo
                 data = Windows(**data)
 
         return data
+
+    def _set_results(self, gen_status_code, vfense_status_code,
+                     msg, count, data):
+
+        results = {
+            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
+            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
+            ApiResultKeys.MESSAGE: msg,
+            ApiResultKeys.COUNT: count,
+            ApiResultKeys.DATA: data,
+        }
+
+        return results
