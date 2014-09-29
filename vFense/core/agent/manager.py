@@ -252,7 +252,7 @@ class AgentManager(object):
 
     @time_it
     def update(self, agent, tags):
-        """Add an agent into vFense.
+        """Update an agent into vFense.
         Args:
             agent (Agent): An instance of Agent.
         Kwargs:
@@ -262,8 +262,9 @@ class AgentManager(object):
             >>> from vFense.core.agent.manager import AgentManager
             >>> from vFense.core.agent import Agent
             >>> agent = Agent(computer_name='DISCIPLINE-1', etc...)
+            >>> tags = ['foo']
             >>> manager = AgentManager()
-            >>> manager.update(agent)
+            >>> manager.update(agent, tags)
 
         Returns:
             Dictionary
@@ -348,21 +349,25 @@ class AgentManager(object):
                     agent_data[AgentKeys.LastAgentUpdate]
                 )
             )
-            current_views = agent_data[AgentKeys.Views]
+            if agent_data[AgentKeys.Views]:
+                views = agent_data[AgentKeys.Views]
+            else:
+                views = self.views
             views_are_valid, valid_view_names, invalid_view_names = (
-                validate_view_names(current_views)
+                validate_view_names(views)
             )
 
             if views_are_valid and not invalid_fields and agent_exist:
-                agent_data[AgentKeys.Views] = (
-                    set(current_views).union(agent_exist[AgentKeys.Views])
+                agent_data[AgentKeys.Views] = list(
+                    set(views).union(agent_exist[AgentKeys.Views])
                 )
                 agent_data[AgentKeys.DisplayName] = (
                     agent_exist[AgentKeys.DisplayName]
                 )
                 status_code, _, _, generated_ids = (
-                    update_agent(agent_data)
+                    update_agent(self.agent_id, agent_data)
                 )
+                print status_code, generated_ids, 'FOO'
                 if status_code == DbCodes.Replaced:
                     self.properties = self._agent_attributes()
                     self.add_hardware(agent_data[AgentKeys.Hardware])
@@ -425,7 +430,7 @@ class AgentManager(object):
 
             else:
                 msg = (
-                    'Failed to add agent, invalid views were passed: {0}.'
+                    'Failed to update agent, invalid views were passed: {0}.'
                     .format(', '.join(invalid_view_names))
                 )
                 results[ApiResultKeys.GENERIC_STATUS_CODE] = (

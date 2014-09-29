@@ -106,7 +106,8 @@ class CheckInV2(AgentBaseHandler):
         data = {ApiResultKeys.OPERATIONS: agent_queue}
         status = (
             AgentResults(
-                self.uri, self.http_method, self.get_token(), agent_id
+                self.request.uri, self.request.method,
+                self.get_token(), agent_id
             ).check_in(**data)
         )
         return status

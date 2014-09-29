@@ -19,7 +19,7 @@ class Agent(object):
                  environment=None, machine_type=None,
                  rebooted=None, hardware=None, bit_type=None,
                  version=None, date_added=None, last_agent_update=None,
-                 token=None, assign_new_token=False, tags=None
+                 token=None, assign_new_token=False, tags=None, enabled=True
                  ):
         """
         Kwargs:
@@ -45,6 +45,7 @@ class Agent(object):
             token (str): Base64 encoded string.
             assign_new_token (bool): Assign this agent a new token.
             tags (list): List of tags, this agent is a part of.
+            enabled (bool): True or False
         """
         self.agent_id = agent_id
         self.computer_name = computer_name
@@ -65,6 +66,7 @@ class Agent(object):
         self.token = token
         self.assign_new_token = assign_new_token
         self.tags = tags
+        self.enabled = enabled
 
 
     def fill_in_defaults(self):
@@ -103,6 +105,9 @@ class Agent(object):
 
         if not self.last_agent_update:
             self.last_agent_update = time()
+
+        if not self.enabled:
+            self.enabled = True
 
     def get_invalid_fields(self):
         """Check the agent for any invalid fields.

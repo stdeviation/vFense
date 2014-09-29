@@ -73,7 +73,6 @@ class RvHandOff():
         self._add_applications_from_agent(
             agent_id,
             apps_data,
-            self.delete_afterwards,
         )
         self._add_custom_apps(
             agent_id
