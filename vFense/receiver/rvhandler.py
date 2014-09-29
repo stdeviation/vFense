@@ -85,14 +85,13 @@ class RvHandOff():
         if not agent_data:
             agent_data = self._get_agent_data(agent_id)
 
-        self.refresh_apps_operation(agent_id, apps_data, agent_data)
+        self.refresh_apps_operation(agent_id, apps_data)
 
     def refresh_apps_operation(self, agent_id, apps_data):
 
         self._add_applications_from_agent(
             agent_id,
-            apps_data,
-            self.delete_afterwards,
+            apps_data
         )
         self._add_supported_apps(agent_id)
 
@@ -100,6 +99,5 @@ class RvHandOff():
         apps_data = [app_data]
         self._add_applications_from_agent(
             agent_id,
-            apps_data,
-            self.delete_afterwards,
+            apps_data
         )

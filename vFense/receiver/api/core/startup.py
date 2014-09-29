@@ -103,7 +103,6 @@ class StartUpV2(AgentBaseHandler):
     @authenticate_agent
     def put(self, agent_id):
         try:
-            print 'IM HERE'
             views = self.arguments.get(AgentKeys.Views)
             system_info = self.arguments.get(AgentKeys.SystemInfo)
             hardware = self.arguments.get(AgentKeys.Hardware)
@@ -114,11 +113,9 @@ class StartUpV2(AgentBaseHandler):
                     agent_id, system_info, hardware, views, tags
                 )
             )
-            print 'YEAH', results
             status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
 
             if status_code == AgentResultCodes.StartUpSucceeded:
-                print 'RV time'
                 if 'rv' in plugins:
                     RvHandOff(
                     ).startup_operation(agent_id, plugins['rv']['data'])
@@ -128,7 +125,6 @@ class StartUpV2(AgentBaseHandler):
             self.write(dumps(results, indent=4))
 
         except Exception as e:
-            print 'what happened', e
             data = {
                 ApiResultKeys.MESSAGE: (
                     'start up operation for agent {0} broke: {1}'
@@ -152,10 +148,7 @@ class StartUpV2(AgentBaseHandler):
         agent = Agent(**system_info)
         manager = AgentManager(agent_id)
         results = manager.update(agent, tags)
-        print results
-        results[ApiResultKeys.OPERATIONS] = (
-            [results[ApiResultKeys.DATA]]
-        )
+        results[ApiResultKeys.OPERATIONS] = []
         status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
         if status_code == AgentResultCodes.StartUpSucceeded:
             uris = get_result_uris(agent_id)

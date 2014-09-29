@@ -342,38 +342,27 @@ class AgentManager(object):
         if isinstance(agent, Agent):
             agent_exist = self.properties
             invalid_fields = agent.get_invalid_fields()
-            agent_data = agent.to_dict()
-            last_agent_update = agent_data[AgentKeys.LastAgentUpdate]
-            agent_data[AgentKeys.LastAgentUpdate] = (
-                DbTime().epoch_time_to_db_time(
-                    agent_data[AgentKeys.LastAgentUpdate]
-                )
-            )
-            if agent_data[AgentKeys.Views]:
-                views = agent_data[AgentKeys.Views]
-            else:
-                views = self.views
+            last_agent_update = DbTime().time_now()
+            agent.last_agent_update = last_agent_update
+            if not agent.views:
+                agent.views = self.views
+
             views_are_valid, valid_view_names, invalid_view_names = (
-                validate_view_names(views)
+                validate_view_names(agent.views)
             )
 
             if views_are_valid and not invalid_fields and agent_exist:
-                agent_data[AgentKeys.Views] = list(
-                    set(views).union(agent_exist[AgentKeys.Views])
-                )
-                agent_data[AgentKeys.DisplayName] = (
-                    agent_exist[AgentKeys.DisplayName]
-                )
-                status_code, _, _, generated_ids = (
+                agent.views = list(set(agent.views).union(self.views))
+                agent.display_name = agent_exist[AgentKeys.DisplayName]
+                agent_data = agent.to_dict_non_null()
+                status_code, _, errors, generated_ids = (
                     update_agent(self.agent_id, agent_data)
                 )
-                print status_code, generated_ids, 'FOO'
                 if status_code == DbCodes.Replaced:
                     self.properties = self._agent_attributes()
-                    self.add_hardware(agent_data[AgentKeys.Hardware])
+                    self.add_hardware(agent.hardware)
                     if tags:
                         self.add_to_tags(tags)
-                    agent_data[AgentKeys.AgentId] = self.agent_id
                     msg = (
                         'Agent {0} updated successfully'
                         .format(self.agent_id)
