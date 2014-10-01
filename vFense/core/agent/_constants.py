@@ -1,3 +1,5 @@
+import re
+
 class AgentCommonKeys(object):
     AVAIL_UPDATES = 'available_updates'
     AVAIL_VULN = 'available_vulnerabilities'
@@ -25,3 +27,6 @@ class AgentDefaults(object):
     VIEWS = ['global']
     TAGS = []
     DISPLAY_NAME = None
+
+def agent_regex():
+    return '([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})'
