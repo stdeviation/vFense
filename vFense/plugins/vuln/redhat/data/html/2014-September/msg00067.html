@@ -1,0 +1,175 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1337&#45;01] Moderate: openstack&#45;glance security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 30 Sep 2014 14:16:07 &#45;0400 -->
+<!--X-Message-Id: 201409301816.s8UIG6qO011355@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1337-01] Moderate: openstack-glance security and bug fix	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00066.html">Date Prev</a>][<a href="msg00068.html">Date Next</a>] &nbsp; [<a href="msg00066.html">Thread Prev</a>][<a href="msg00068.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00067">Thread Index</A>]
+[<A HREF="date.html#00067">Date Index</A>]
+[<A HREF="author.html#00067">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1337-01] Moderate: openstack-glance security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1337-01] Moderate: openstack-glance security and bug fix	update</li>
+<li><em>Date</em>: Tue, 30 Sep 2014 18:16:06 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-glance security and bug fix update
+Advisory ID:       RHSA-2014:1337-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1337.html">https://rhn.redhat.com/errata/RHSA-2014-1337.html</a>
+Issue date:        2014-09-30
+CVE Names:         CVE-2014-5356 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-glance packages that fix one security issue and two bugs
+are now available for Red Hat Enterprise Linux OpenStack Platform 5.0 for
+Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7 - noarch
+
+3. Description:
+
+OpenStack Image service (glance) provides discovery, registration, and
+delivery services for disk and server images. It provides the ability to
+copy or snapshot a server image, and immediately store it away. Stored
+images can be used as a template to get new servers up and running quickly
+and more consistently than installing a server operating system and
+individually configuring additional services.
+
+It was discovered that the image_size_cap configuration option in glance
+was not honored. An authenticated user could use this flaw to upload an
+image to glance and consume all available storage space, resulting in a
+denial of service. (CVE-2014-5356)
+
+This update also fixes the following bugs:
+
+* Uploading an image to glance that exceeded the user's current quota
+setting was rejected, but no message was added to the glance API log to
+indicate this. This update fixes this bug, and such events are now logged
+as INFO messages in the glance API log. (BZ#1055550)
+
+* Whenever the 'x-image-meta-store' header was passed to glance-api, the
+service would check whether the value was a valid store instead of a valid
+scheme. However, the rest of the store library uses the scheme to identify
+the store that should be used; this prevented the use of this feature.
+Glance now verifies that the value of 'x-image-meta-store' is a valid
+scheme instead of a valid store name. (BZ#1130622)
+
+All openstack-glance users are advised to upgrade to these updated
+packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1055550 - glance: no error reported in api.log when image create is killed on quota
+1130622 - Glance `--store` checks on store name instead of scheme
+1131770 - CVE-2014-5356 openstack-glance: Glance store disk space exhaustion
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7:
+
+Source:
+openstack-glance-2014.1.2-3.el7ost.src.rpm
+
+noarch:
+openstack-glance-2014.1.2-3.el7ost.noarch.rpm
+openstack-glance-doc-2014.1.2-3.el7ost.noarch.rpm
+python-glance-2014.1.2-3.el7ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-5356.html">https://www.redhat.com/security/data/cve/CVE-2014-5356.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUKvNaXlSAg2UNWIIRAlqoAJwM5LqelBDsLiflsPwP4mh+E3kmjQCgrsAV
+7Otnu9XvIB40ldguXF4OqZ8=
+=l/l5
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00066.html">Date Prev</a>][<a href="msg00068.html">Date Next</a>] &nbsp; [<a href="msg00066.html">Thread Prev</a>][<a href="msg00068.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00067">Thread Index</A>]
+[<A HREF="date.html#00067">Date Index</A>]
+[<A HREF="author.html#00067">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

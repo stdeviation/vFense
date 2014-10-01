@@ -1,0 +1,410 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1327&#45;01] Moderate: php security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 30 Sep 2014 07:13:33 &#45;0400 -->
+<!--X-Message-Id: 201409301113.s8UBDUTf020020@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1327-01] Moderate: php security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00063.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00063.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00064">Thread Index</A>]
+[<A HREF="date.html#00064">Date Index</A>]
+[<A HREF="author.html#00064">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1327-01] Moderate: php security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1327-01] Moderate: php security update</li>
+<li><em>Date</em>: Tue, 30 Sep 2014 11:21:53 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: php security update
+Advisory ID:       RHSA-2014:1327-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1327.html">https://rhn.redhat.com/errata/RHSA-2014-1327.html</a>
+Issue date:        2014-09-30
+CVE Names:         CVE-2014-2497 CVE-2014-3478 CVE-2014-3538 
+                   CVE-2014-3587 CVE-2014-3597 CVE-2014-4670 
+                   CVE-2014-4698 CVE-2014-5120 
+=====================================================================
+
+1. Summary:
+
+Updated php packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+PHP is an HTML-embedded scripting language commonly used with the Apache
+HTTP Server. PHP's fileinfo module provides functions used to identify a
+particular file according to the type of data contained by the file.
+
+A buffer overflow flaw was found in the way the File Information (fileinfo)
+extension processed certain Pascal strings. A remote attacker able to make
+a PHP application using fileinfo convert a specially crafted Pascal string
+provided by an image file could cause that application to crash.
+(CVE-2014-3478)
+
+Multiple flaws were found in the File Information (fileinfo) extension
+regular expression rules for detecting various files. A remote attacker
+could use either of these flaws to cause a PHP application using fileinfo
+to consume an excessive amount of CPU. (CVE-2014-3538)
+
+It was found that the fix for CVE-2012-1571 was incomplete; the File
+Information (fileinfo) extension did not correctly parse certain Composite
+Document Format (CDF) files. A remote attacker could use this flaw to crash
+a PHP application using fileinfo via a specially crafted CDF file.
+(CVE-2014-3587)
+
+It was found that PHP's gd extension did not properly handle file names
+with a null character. A remote attacker could possibly use this flaw to
+make a PHP application access unexpected files and bypass intended file
+system access restrictions. (CVE-2014-5120)
+
+A NULL pointer dereference flaw was found in the gdImageCreateFromXpm()
+function of PHP's gd extension. A remote attacker could use this flaw to
+crash a PHP application using gd via a specially crafted X PixMap (XPM)
+file. (CVE-2014-2497)
+
+Multiple buffer over-read flaws were found in the php_parserr() function of
+PHP. A malicious DNS server or a man-in-the-middle attacker could possibly
+use this flaw to execute arbitrary code as the PHP interpreter if a PHP
+application used the dns_get_record() function to perform a DNS query.
+(CVE-2014-3597)
+
+Two use-after-free flaws were found in the way PHP handled certain Standard
+PHP Library (SPL) Iterators and ArrayIterators. A malicious script author
+could possibly use either of these flaws to disclose certain portions of
+server memory. (CVE-2014-4670, CVE-2014-4698)
+
+The CVE-2014-3478 issue was discovered by Francisco Alonso of Red Hat
+Product Security, the CVE-2014-3538 issue was discovered by Jan Kaluža of
+the Red Hat Web Stack Team, and the CVE-2014-3597 issue was discovered by
+David Kutálek of the Red Hat BaseOS QE.
+
+All php users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, the httpd daemon must be restarted for the update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1076676 - CVE-2014-2497 gd: NULL pointer dereference in gdImageCreateFromXpm()
+1098222 - CVE-2014-3538 file: unrestricted regular expression matching
+1104863 - CVE-2014-3478 file: mconvert incorrect handling of truncated pascal string size
+1120259 - CVE-2014-4698 php: ArrayIterator use-after-free due to object change during sorting
+1120266 - CVE-2014-4670 php: SPL Iterators use-after-free
+1128587 - CVE-2014-3587 file: incomplete fix for CVE-2012-1571 in cdf_read_property_info
+1132589 - CVE-2014-3597 php: multiple buffer over-reads in php_parserr
+1132793 - CVE-2014-5120 php: gd extension NUL byte injection in file names
+
+6. Package List:
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+Source:
+php-5.4.16-23.el7_0.1.src.rpm
+
+x86_64:
+php-5.4.16-23.el7_0.1.x86_64.rpm
+php-bcmath-5.4.16-23.el7_0.1.x86_64.rpm
+php-cli-5.4.16-23.el7_0.1.x86_64.rpm
+php-common-5.4.16-23.el7_0.1.x86_64.rpm
+php-dba-5.4.16-23.el7_0.1.x86_64.rpm
+php-debuginfo-5.4.16-23.el7_0.1.x86_64.rpm
+php-devel-5.4.16-23.el7_0.1.x86_64.rpm
+php-embedded-5.4.16-23.el7_0.1.x86_64.rpm
+php-enchant-5.4.16-23.el7_0.1.x86_64.rpm
+php-fpm-5.4.16-23.el7_0.1.x86_64.rpm
+php-gd-5.4.16-23.el7_0.1.x86_64.rpm
+php-intl-5.4.16-23.el7_0.1.x86_64.rpm
+php-ldap-5.4.16-23.el7_0.1.x86_64.rpm
+php-mbstring-5.4.16-23.el7_0.1.x86_64.rpm
+php-mysql-5.4.16-23.el7_0.1.x86_64.rpm
+php-mysqlnd-5.4.16-23.el7_0.1.x86_64.rpm
+php-odbc-5.4.16-23.el7_0.1.x86_64.rpm
+php-pdo-5.4.16-23.el7_0.1.x86_64.rpm
+php-pgsql-5.4.16-23.el7_0.1.x86_64.rpm
+php-process-5.4.16-23.el7_0.1.x86_64.rpm
+php-pspell-5.4.16-23.el7_0.1.x86_64.rpm
+php-recode-5.4.16-23.el7_0.1.x86_64.rpm
+php-snmp-5.4.16-23.el7_0.1.x86_64.rpm
+php-soap-5.4.16-23.el7_0.1.x86_64.rpm
+php-xml-5.4.16-23.el7_0.1.x86_64.rpm
+php-xmlrpc-5.4.16-23.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+Source:
+php-5.4.16-23.el7_0.1.src.rpm
+
+x86_64:
+php-5.4.16-23.el7_0.1.x86_64.rpm
+php-bcmath-5.4.16-23.el7_0.1.x86_64.rpm
+php-cli-5.4.16-23.el7_0.1.x86_64.rpm
+php-common-5.4.16-23.el7_0.1.x86_64.rpm
+php-dba-5.4.16-23.el7_0.1.x86_64.rpm
+php-debuginfo-5.4.16-23.el7_0.1.x86_64.rpm
+php-devel-5.4.16-23.el7_0.1.x86_64.rpm
+php-embedded-5.4.16-23.el7_0.1.x86_64.rpm
+php-enchant-5.4.16-23.el7_0.1.x86_64.rpm
+php-fpm-5.4.16-23.el7_0.1.x86_64.rpm
+php-gd-5.4.16-23.el7_0.1.x86_64.rpm
+php-intl-5.4.16-23.el7_0.1.x86_64.rpm
+php-ldap-5.4.16-23.el7_0.1.x86_64.rpm
+php-mbstring-5.4.16-23.el7_0.1.x86_64.rpm
+php-mysql-5.4.16-23.el7_0.1.x86_64.rpm
+php-mysqlnd-5.4.16-23.el7_0.1.x86_64.rpm
+php-odbc-5.4.16-23.el7_0.1.x86_64.rpm
+php-pdo-5.4.16-23.el7_0.1.x86_64.rpm
+php-pgsql-5.4.16-23.el7_0.1.x86_64.rpm
+php-process-5.4.16-23.el7_0.1.x86_64.rpm
+php-pspell-5.4.16-23.el7_0.1.x86_64.rpm
+php-recode-5.4.16-23.el7_0.1.x86_64.rpm
+php-snmp-5.4.16-23.el7_0.1.x86_64.rpm
+php-soap-5.4.16-23.el7_0.1.x86_64.rpm
+php-xml-5.4.16-23.el7_0.1.x86_64.rpm
+php-xmlrpc-5.4.16-23.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+php-5.4.16-23.el7_0.1.src.rpm
+
+ppc64:
+php-5.4.16-23.el7_0.1.ppc64.rpm
+php-cli-5.4.16-23.el7_0.1.ppc64.rpm
+php-common-5.4.16-23.el7_0.1.ppc64.rpm
+php-debuginfo-5.4.16-23.el7_0.1.ppc64.rpm
+php-gd-5.4.16-23.el7_0.1.ppc64.rpm
+php-ldap-5.4.16-23.el7_0.1.ppc64.rpm
+php-mysql-5.4.16-23.el7_0.1.ppc64.rpm
+php-odbc-5.4.16-23.el7_0.1.ppc64.rpm
+php-pdo-5.4.16-23.el7_0.1.ppc64.rpm
+php-pgsql-5.4.16-23.el7_0.1.ppc64.rpm
+php-process-5.4.16-23.el7_0.1.ppc64.rpm
+php-recode-5.4.16-23.el7_0.1.ppc64.rpm
+php-soap-5.4.16-23.el7_0.1.ppc64.rpm
+php-xml-5.4.16-23.el7_0.1.ppc64.rpm
+php-xmlrpc-5.4.16-23.el7_0.1.ppc64.rpm
+
+s390x:
+php-5.4.16-23.el7_0.1.s390x.rpm
+php-cli-5.4.16-23.el7_0.1.s390x.rpm
+php-common-5.4.16-23.el7_0.1.s390x.rpm
+php-debuginfo-5.4.16-23.el7_0.1.s390x.rpm
+php-gd-5.4.16-23.el7_0.1.s390x.rpm
+php-ldap-5.4.16-23.el7_0.1.s390x.rpm
+php-mysql-5.4.16-23.el7_0.1.s390x.rpm
+php-odbc-5.4.16-23.el7_0.1.s390x.rpm
+php-pdo-5.4.16-23.el7_0.1.s390x.rpm
+php-pgsql-5.4.16-23.el7_0.1.s390x.rpm
+php-process-5.4.16-23.el7_0.1.s390x.rpm
+php-recode-5.4.16-23.el7_0.1.s390x.rpm
+php-soap-5.4.16-23.el7_0.1.s390x.rpm
+php-xml-5.4.16-23.el7_0.1.s390x.rpm
+php-xmlrpc-5.4.16-23.el7_0.1.s390x.rpm
+
+x86_64:
+php-5.4.16-23.el7_0.1.x86_64.rpm
+php-cli-5.4.16-23.el7_0.1.x86_64.rpm
+php-common-5.4.16-23.el7_0.1.x86_64.rpm
+php-debuginfo-5.4.16-23.el7_0.1.x86_64.rpm
+php-gd-5.4.16-23.el7_0.1.x86_64.rpm
+php-ldap-5.4.16-23.el7_0.1.x86_64.rpm
+php-mysql-5.4.16-23.el7_0.1.x86_64.rpm
+php-odbc-5.4.16-23.el7_0.1.x86_64.rpm
+php-pdo-5.4.16-23.el7_0.1.x86_64.rpm
+php-pgsql-5.4.16-23.el7_0.1.x86_64.rpm
+php-process-5.4.16-23.el7_0.1.x86_64.rpm
+php-recode-5.4.16-23.el7_0.1.x86_64.rpm
+php-soap-5.4.16-23.el7_0.1.x86_64.rpm
+php-xml-5.4.16-23.el7_0.1.x86_64.rpm
+php-xmlrpc-5.4.16-23.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+php-bcmath-5.4.16-23.el7_0.1.ppc64.rpm
+php-dba-5.4.16-23.el7_0.1.ppc64.rpm
+php-debuginfo-5.4.16-23.el7_0.1.ppc64.rpm
+php-devel-5.4.16-23.el7_0.1.ppc64.rpm
+php-embedded-5.4.16-23.el7_0.1.ppc64.rpm
+php-enchant-5.4.16-23.el7_0.1.ppc64.rpm
+php-fpm-5.4.16-23.el7_0.1.ppc64.rpm
+php-intl-5.4.16-23.el7_0.1.ppc64.rpm
+php-mbstring-5.4.16-23.el7_0.1.ppc64.rpm
+php-mysqlnd-5.4.16-23.el7_0.1.ppc64.rpm
+php-pspell-5.4.16-23.el7_0.1.ppc64.rpm
+php-snmp-5.4.16-23.el7_0.1.ppc64.rpm
+
+s390x:
+php-bcmath-5.4.16-23.el7_0.1.s390x.rpm
+php-dba-5.4.16-23.el7_0.1.s390x.rpm
+php-debuginfo-5.4.16-23.el7_0.1.s390x.rpm
+php-devel-5.4.16-23.el7_0.1.s390x.rpm
+php-embedded-5.4.16-23.el7_0.1.s390x.rpm
+php-enchant-5.4.16-23.el7_0.1.s390x.rpm
+php-fpm-5.4.16-23.el7_0.1.s390x.rpm
+php-intl-5.4.16-23.el7_0.1.s390x.rpm
+php-mbstring-5.4.16-23.el7_0.1.s390x.rpm
+php-mysqlnd-5.4.16-23.el7_0.1.s390x.rpm
+php-pspell-5.4.16-23.el7_0.1.s390x.rpm
+php-snmp-5.4.16-23.el7_0.1.s390x.rpm
+
+x86_64:
+php-bcmath-5.4.16-23.el7_0.1.x86_64.rpm
+php-dba-5.4.16-23.el7_0.1.x86_64.rpm
+php-debuginfo-5.4.16-23.el7_0.1.x86_64.rpm
+php-devel-5.4.16-23.el7_0.1.x86_64.rpm
+php-embedded-5.4.16-23.el7_0.1.x86_64.rpm
+php-enchant-5.4.16-23.el7_0.1.x86_64.rpm
+php-fpm-5.4.16-23.el7_0.1.x86_64.rpm
+php-intl-5.4.16-23.el7_0.1.x86_64.rpm
+php-mbstring-5.4.16-23.el7_0.1.x86_64.rpm
+php-mysqlnd-5.4.16-23.el7_0.1.x86_64.rpm
+php-pspell-5.4.16-23.el7_0.1.x86_64.rpm
+php-snmp-5.4.16-23.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+php-5.4.16-23.el7_0.1.src.rpm
+
+x86_64:
+php-5.4.16-23.el7_0.1.x86_64.rpm
+php-cli-5.4.16-23.el7_0.1.x86_64.rpm
+php-common-5.4.16-23.el7_0.1.x86_64.rpm
+php-debuginfo-5.4.16-23.el7_0.1.x86_64.rpm
+php-gd-5.4.16-23.el7_0.1.x86_64.rpm
+php-ldap-5.4.16-23.el7_0.1.x86_64.rpm
+php-mysql-5.4.16-23.el7_0.1.x86_64.rpm
+php-odbc-5.4.16-23.el7_0.1.x86_64.rpm
+php-pdo-5.4.16-23.el7_0.1.x86_64.rpm
+php-pgsql-5.4.16-23.el7_0.1.x86_64.rpm
+php-process-5.4.16-23.el7_0.1.x86_64.rpm
+php-recode-5.4.16-23.el7_0.1.x86_64.rpm
+php-soap-5.4.16-23.el7_0.1.x86_64.rpm
+php-xml-5.4.16-23.el7_0.1.x86_64.rpm
+php-xmlrpc-5.4.16-23.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+php-bcmath-5.4.16-23.el7_0.1.x86_64.rpm
+php-dba-5.4.16-23.el7_0.1.x86_64.rpm
+php-debuginfo-5.4.16-23.el7_0.1.x86_64.rpm
+php-devel-5.4.16-23.el7_0.1.x86_64.rpm
+php-embedded-5.4.16-23.el7_0.1.x86_64.rpm
+php-enchant-5.4.16-23.el7_0.1.x86_64.rpm
+php-fpm-5.4.16-23.el7_0.1.x86_64.rpm
+php-intl-5.4.16-23.el7_0.1.x86_64.rpm
+php-mbstring-5.4.16-23.el7_0.1.x86_64.rpm
+php-mysqlnd-5.4.16-23.el7_0.1.x86_64.rpm
+php-pspell-5.4.16-23.el7_0.1.x86_64.rpm
+php-snmp-5.4.16-23.el7_0.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2497.html">https://www.redhat.com/security/data/cve/CVE-2014-2497.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3478.html">https://www.redhat.com/security/data/cve/CVE-2014-3478.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3538.html">https://www.redhat.com/security/data/cve/CVE-2014-3538.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3587.html">https://www.redhat.com/security/data/cve/CVE-2014-3587.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3597.html">https://www.redhat.com/security/data/cve/CVE-2014-3597.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-4670.html">https://www.redhat.com/security/data/cve/CVE-2014-4670.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-4698.html">https://www.redhat.com/security/data/cve/CVE-2014-4698.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-5120.html">https://www.redhat.com/security/data/cve/CVE-2014-5120.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUKpBKXlSAg2UNWIIRArFiAKCClLEm+8b7N1wTVoqNKAyS1Lde+wCgoHKl
+LV6t8VbAtzTF83H0ON8jggk=
+=W9Jz
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00063.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00063.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00064">Thread Index</A>]
+[<A HREF="date.html#00064">Date Index</A>]
+[<A HREF="author.html#00064">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
