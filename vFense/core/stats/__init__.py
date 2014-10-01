@@ -1,6 +1,6 @@
 import re
 from vFense.core.stats._db_model import (
-    CpuStatKeys, AgentStatKeys, MemoryStatKeys
+    CpuStatKeys, AgentStatKeys, MemoryStatKeys, FileSystemStatKeys
 )
 from vFense.core.agent._constants import (
     agent_regex
@@ -101,8 +101,6 @@ class CPUStats(Stats):
             agent_id (str): The id of the agent.
             stat_type (str): The type of the stat.
         """
-        self.agent_id = kwargs.get('agent_id')
-        self.stat_type = kwargs.get('stat_type')
         self.idle = kwargs.get('idle')
         self.user = kwargs.get('user')
         self.system = kwargs.get('system')
@@ -186,11 +184,13 @@ class MemoryStats(Stats):
             free_percent (float): Percent of free memory.
             used (float): Kilobytes used.
             free (float): kilobytes free.
+            agent_id (str): The id of the agent.
+            stat_type (str): The type of the stat.
         """
-        self.used_percent = kwargs.get('used_percent')
-        self.free_percent = kwargs.get('free_percent')
-        self.used = kwargs.get('used')
-        self.free = kwargs.get('free')
+        self.used_percent = used_percent
+        self.free_percent = free_percent
+        self.used = used
+        self.free = free
 
 
 
@@ -198,7 +198,7 @@ class MemoryStats(Stats):
         """Check the agent for any invalid fields.
 
         """
-        invalid_fields = super(CPUStats, self).get_invalid_fields()
+        invalid_fields = super(MemoryStats, self).get_invalid_fields()
 
         if self.used_percent:
             if not isinstance(self.used_percent, float):
@@ -224,11 +224,11 @@ class MemoryStats(Stats):
                     }
                 )
 
-        if self.system:
-            if not isinstance(self.system, float):
+        if self.used:
+            if not isinstance(self.used, float):
                 invalid_fields.append(
                     {
-                        CpuStatKeys.System: self.system,
+                        MemoryStatKeys.Used: self.used,
                         CommonKeys.REASON: 'Must be a float',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             GenericCodes.InvalidValue
@@ -236,17 +236,18 @@ class MemoryStats(Stats):
                     }
                 )
 
-        if self.iowait:
-            if not isinstance(self.iowait, float):
+        if self.free:
+            if not isinstance(self.free, float):
                 invalid_fields.append(
                     {
-                        CpuStatKeys.IOWait: self.iowait,
+                        MemoryStatKeys.Free: self.free,
                         CommonKeys.REASON: 'Must be a float',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             GenericCodes.InvalidValue
                         )
                     }
                 )
+
 
         return invalid_fields
 
@@ -257,5 +258,65 @@ class MemoryStats(Stats):
             MemoryStatKeys.FreePercent: self.free_percent,
             MemoryStatKeys.Used: self.used,
             MemoryStatKeys.Free: self.free,
+        }
+        return dict(data.items() + inherited_data.items())
+
+
+class FileSystemStats(MemoryStats):
+    def __init__(self, mount=None, name=None, **kwargs):
+        """
+        Kwargs:
+            used_percent (float): Percent of memory being used.
+            free_percent (float): Percent of free memory.
+            used (float): Kilobytes used.
+            free (float): kilobytes free.
+            mount (str): The full path of this mount.
+            name (str): The name of this disk aka the device path.
+            agent_id (str): The id of the agent.
+            stat_type (str): The type of the stat.
+        """
+        super(FileSystemStats, self).__init__(**kwargs)
+        self.name = name
+        self.mount = mount
+
+
+    def get_invalid_fields(self):
+        """Check the agent for any invalid fields.
+
+        """
+        invalid_fields = super(FileSystemStats, self).get_invalid_fields()
+
+        if self.name:
+            if not isinstance(self.name, str):
+                invalid_fields.append(
+                    {
+                        FileSystemStatKeys.Name: self.name,
+                        CommonKeys.REASON: 'Must be a string',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.mount:
+            if not isinstance(self.mount, str):
+                invalid_fields.append(
+                    {
+                        FileSystemStatKeys.Mount: self.mount,
+                        CommonKeys.REASON: 'Must be a float',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+
+        return invalid_fields
+
+    def to_dict(self):
+        inherited_data = super(FileSystemStatKeys, self).to_dict()
+        data = {
+            FileSystemStatKeys.Name: self.name,
+            FileSystemStatKeys.Mount: self.mount,
         }
         return dict(data.items() + inherited_data.items())

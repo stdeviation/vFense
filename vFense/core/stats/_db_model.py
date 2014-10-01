@@ -1,10 +1,12 @@
 class StatsCollections():
     AgentStats = 'agent_stats'
 
+
 class AgentStatKeys():
     Id = 'id'
     AgentId = 'agent_id'
     StatType = 'stat_type'
+
 
 class CpuStatKeys(AgentStatKeys):
     Idle = 'idle'
@@ -12,11 +14,18 @@ class CpuStatKeys(AgentStatKeys):
     User = 'user'
     IOWait = 'iowait'
 
+
 class MemoryStatKeys(AgentStatKeys):
     UsedPercent = 'used_percent'
     FreePercent = 'free_percent'
     Used = 'used'
     Free = 'free'
+
+
+class FileSystemStatKeys(MemoryStatKeys):
+    Name = 'name'
+    Mount = 'mount'
+
 
 class StatsPerAgentIndexes():
     AgentId = 'agent_id'
