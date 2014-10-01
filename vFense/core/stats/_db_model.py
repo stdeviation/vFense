@@ -12,6 +12,12 @@ class CpuStatKeys(AgentStatKeys):
     User = 'user'
     IOWait = 'iowait'
 
+class MemoryStatKeys(AgentStatKeys):
+    UsedPercent = 'used_percent'
+    FreePercent = 'free_percent'
+    Used = 'used'
+    Free = 'free'
+
 class StatsPerAgentIndexes():
     AgentId = 'agent_id'
     StatType = 'stat_type'

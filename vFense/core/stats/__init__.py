@@ -1,6 +1,6 @@
 import re
 from vFense.core.stats._db_model import (
-    CpuStatKeys, AgentStatKeys
+    CpuStatKeys, AgentStatKeys, MemoryStatKeys
 )
 from vFense.core.agent._constants import (
     agent_regex
@@ -173,5 +173,89 @@ class CPUStats(Stats):
             CpuStatKeys.System: self.system,
             CpuStatKeys.User: self.user,
             CpuStatKeys.IOWait: self.iowait,
+        }
+        return dict(data.items() + inherited_data.items())
+
+class MemoryStats(Stats):
+    def __init__(self, used_percent=None, free_percent=None,
+                 used=None, free=None, **kwargs):
+        super(MemoryStats, self).__init__(**kwargs)
+        """
+        Kwargs:
+            used_percent (float): Percent of memory being used.
+            free_percent (float): Percent of free memory.
+            used (float): Kilobytes used.
+            free (float): kilobytes free.
+        """
+        self.used_percent = kwargs.get('used_percent')
+        self.free_percent = kwargs.get('free_percent')
+        self.used = kwargs.get('used')
+        self.free = kwargs.get('free')
+
+
+
+    def get_invalid_fields(self):
+        """Check the agent for any invalid fields.
+
+        """
+        invalid_fields = super(CPUStats, self).get_invalid_fields()
+
+        if self.used_percent:
+            if not isinstance(self.used_percent, float):
+                invalid_fields.append(
+                    {
+                        MemoryStatKeys.UsedPercent: self.used_percent,
+                        CommonKeys.REASON: 'Must be a float',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.free_percent:
+            if not isinstance(self.free_percent, float):
+                invalid_fields.append(
+                    {
+                        MemoryStatKeys.FreePercent: self.free_percent,
+                        CommonKeys.REASON: 'Must be a float',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.system:
+            if not isinstance(self.system, float):
+                invalid_fields.append(
+                    {
+                        CpuStatKeys.System: self.system,
+                        CommonKeys.REASON: 'Must be a float',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.iowait:
+            if not isinstance(self.iowait, float):
+                invalid_fields.append(
+                    {
+                        CpuStatKeys.IOWait: self.iowait,
+                        CommonKeys.REASON: 'Must be a float',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        return invalid_fields
+
+    def to_dict(self):
+        inherited_data = super(MemoryStats, self).to_dict()
+        data = {
+            MemoryStatKeys.UsedPercent: self.used_percent,
+            MemoryStatKeys.FreePercent: self.free_percent,
+            MemoryStatKeys.Used: self.used,
+            MemoryStatKeys.Free: self.free,
         }
         return dict(data.items() + inherited_data.items())
