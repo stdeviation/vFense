@@ -1,4 +1,5 @@
 import os
+import fnmatch
 import logging, logging.config
 from vFense.supported_platforms import *
 
@@ -66,3 +67,10 @@ def get_sheduler_location():
             return(sched_location)
     return(sched_location)
 
+
+def all_db_modules():
+    db_files = []
+    for root, dirs, files in os.walk(VFENSE_BASE_PATH):
+        for filename in fnmatch.filter(files, '_db_init.py'):
+            db_files.append(os.path.join(root, filename))
+    return db_files
