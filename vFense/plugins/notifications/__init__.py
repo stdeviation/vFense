@@ -373,11 +373,11 @@ class NotificationPlugin(Base):
         """
         invalid_fields = []
 
-        if self.alert_sent:
-            if not isinstance(self.alert_sent, bool):
+        if self.is_tls:
+            if not isinstance(self.is_tls, bool):
                 invalid_fields.append(
                     {
-                        NotificationHistoryKeys.AlertSent: self.alert_sent,
+                        NotificationPluginKeys.IsTls: self.is_tls,
                         CommonKeys.REASON: 'Must be a bool',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             GenericCodes.InvalidValue
@@ -385,14 +385,54 @@ class NotificationPlugin(Base):
                     }
                 )
 
-        if self.alert_sent_time:
-            if not isinstance(self.alert_sent_time, float):
+        if self.is_ssl:
+            if not isinstance(self.is_ssl, bool):
                 invalid_fields.append(
                     {
-                        NotificationHistoryKeys.AlertSentTime: (
-                            self.alert_sent_time
+                        NotificationPluginKeys.IsSsl: self.is_ssl,
+                        CommonKeys.REASON: 'Must be a bool',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.created_time:
+            if not isinstance(self.created_time, float):
+                invalid_fields.append(
+                    {
+                        NotificationHistoryKeys.CreatedTime: (
+                            self.created_time
                         ),
                         CommonKeys.REASON: 'Must be a float',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.modified_time:
+            if not isinstance(self.modified_time, float):
+                invalid_fields.append(
+                    {
+                        NotificationHistoryKeys.ModifiedTime: (
+                            self.modified_time
+                        ),
+                        CommonKeys.REASON: 'Must be a float',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
+        if self.port:
+            if not isinstance(self.port, int):
+                invalid_fields.append(
+                    {
+                        NotificationHistoryKeys.Port: (
+                            self.port
+                        ),
+                        CommonKeys.REASON: 'Must be a int',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             GenericCodes.InvalidValue
                         )
@@ -406,7 +446,18 @@ class NotificationPlugin(Base):
 
         return {
             NotificationHistoryKeys.Id: self.id,
-            NotificationHistoryKeys.NotificationId: self.notification_id,
-            NotificationHistoryKeys.AlertSent: self.alert_sent,
-            NotificationHistoryKeys.AlertSentTime: self.alert_sent_time,
+            NotificationPluginKeys.ViewName: self.view_name,
+            NotificationPluginKeys.PluginName: self.plugin_name,
+            NotificationPluginKeys.CreatedTime: self.created_time,
+            NotificationPluginKeys.CreatedBy: self.created_by,
+            NotificationPluginKeys.ModifiedTime: self.modified_time,
+            NotificationPluginKeys.ModifiedBy: self.modified_by,
+            NotificationPluginKeys.UserName: self.username,
+            NotificationPluginKeys.Password: self.password,
+            NotificationPluginKeys.Server: self.server,
+            NotificationPluginKeys.Port: self.port,
+            NotificationPluginKeys.IsTls: self.is_tls,
+            NotificationPluginKeys.IsSsl: self.is_ssl,
+            NotificationPluginKeys.FromEmail: self.from_email,
+            NotificationPluginKeys.ToEmail: self.to_email,
         }
