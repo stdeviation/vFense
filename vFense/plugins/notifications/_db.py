@@ -23,6 +23,11 @@ from vFense.plugins.notifications._db_model import (
 )
 from vFense.core.decorators import return_status_tuple, time_it
 
+from vFense.core._db import (
+    insert_data_in_table, delete_data_in_table,
+    update_data_in_table
+)
+
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -112,20 +117,77 @@ def fetch_valid_fields(view_name, conn=None):
     return data
 
 
-@db_create_close
-@return_status_tuple
-def delete_notification_rule(self, rule_id, conn=None):
-    data = {}
-    try:
-        data = (
-            r
-            .table(NotificationCollections.Notifications)
-            .get(rule_id)
-            .delete()
-            .run(conn)
-        )
+@time_it
+def delete_rule(rule_id):
+    """ Delete a notification rule and its properties in the database
+        This function should not be called directly.
+    Args:
+        rule_id (str): the notification rule UUID
 
-    except Exception as e:
-        logger.exception(e)
+    Basic Usage:
+        >>> from vFense.plugins.notifications._db import delete_rule
+        >>> rule_id = '38226b0e-a482-4cb8-b135-0a0057b913f2'
+        >>> delete_rule(rule_id)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = (
+        delete_data_in_table(
+            rule_id, NotificationCollections.Notifications
+        )
+    )
 
     return data
+
+@time_it
+def insert_rule(rule_data):
+    """ Insert a notification rule and its properties into the database
+        This function should not be called directly.
+    Args:
+        rule_data (list|dict): Dictionary of the data you are inserting.
+
+    Basic Usage:
+        >>> from vFense.plugins.notifications._db import insert_rule
+        >>> rule_data = {'rule_name': 'vFense', 'rule_description': 'no'}
+        >>> insert_rule(rule_data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = (
+        insert_data_in_table(
+            rule_data, NotificationCollections.Notifications
+        )
+    )
+
+    return data
+
+@time_it
+def update_rule(rule_id, rule_data):
+    """ Update a notification rule and its properties into the database
+        This function should not be called directly.
+    Args:
+        rule_id (str): the notification rule UUID
+        rule_data (list|dict): Dictionary of the data you are updating.
+
+    Basic Usage:
+        >>> from vFense.plugins.notifications._db import update_rule
+        >>> rule_id = ''
+        >>> rule_data = {'rule_name': 'vFense', 'rule_description': 'no'}
+        >>> update_rule(rule_id, rule_data)
+
+    Return:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = (
+        update_data_in_table(
+            rule_id, rule_data, NotificationCollections.Notifications
+        )
+    )
+
+    return data
+

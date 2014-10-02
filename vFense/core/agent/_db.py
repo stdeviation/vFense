@@ -458,6 +458,42 @@ def fetch_agent(agent_id, keys_to_pluck=None, conn=None):
 
 @time_it
 @db_create_close
+def agent_exist(agent_id, conn=None):
+    """Return True, if the agent exist.
+    Args:
+        agent_id (str): 36 character uuid of the agent you are retrieving.
+
+    Basic Usage:
+        >>> from vFense.core.agent._db import agent_exist
+        >>> agent_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
+        >>> agent_exist(agent_id)
+
+    Return:
+        Bool
+        >>> True
+    """
+    exist = False
+    try:
+        data = (
+            r
+            .table(AgentCollections.Agents)
+            .get_all(agent_id)
+            .is_empty()
+            .run(conn)
+        )
+        if data:
+           exist = False
+        else:
+            exist = True
+
+    except Exception as e:
+        logger.exception(e)
+
+    return exist
+
+
+@time_it
+@db_create_close
 @return_status_tuple
 def fetch_all_agents_for_view(view_name, conn=None):
     """Retrieve all agents for a view.

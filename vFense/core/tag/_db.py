@@ -70,6 +70,41 @@ def fetch_tag(tag_id, keys_to_pluck=None, conn=None):
 
     return tag_info
 
+@time_it
+@db_create_close
+def tag_exist(tag_id, conn=None):
+    """Return True, if the tag exist.
+    Args:
+        tag_id (str): 36 character uuid of the tag you are retrieving.
+
+    Basic Usage:
+        >>> from vFense.core.tag._db import tag_exist
+        >>> tag_id = '52faa1db-290a-47a7-a4cf-e4ad70e25c38'
+        >>> tag_exist(tag_id)
+
+    Return:
+        Bool
+        >>> True
+    """
+    exist = False
+    try:
+        data = (
+            r
+            .table(TagCollections.Tags)
+            .get_all(tag_id)
+            .is_empty()
+            .run(conn)
+        )
+        if data:
+           exist = False
+        else:
+            exist = True
+
+    except Exception as e:
+        logger.exception(e)
+
+    return exist
+
 @db_create_close
 def fetch_tag_by_name_and_view(tag_name, view_name, conn=None):
     """Retrieve tag by name and view.

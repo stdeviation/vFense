@@ -64,12 +64,6 @@ class UpdatesApplications(object):
     UpdatesApplicationsFailed = 7001
 
 
-class NotificationCodes(object):
-    InvalidNotificationType = 8000
-    InvalidNotificationPlugin = 8001
-    InvalidNotificationThreshold = 8002
-    NotificationDataValidated = 8003
-
 class MightyMouseCodes(object):
     MouseCreated = 10000
     MouseUpdated = 10001

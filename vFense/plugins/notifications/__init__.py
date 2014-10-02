@@ -1,4 +1,5 @@
 from vFense import Base
+from vFense.core._db_constants import DbTime
 from vFense.plugins.notifications._db_model import (
     NotificationKeys, NotificationHistoryKeys,
     NotificationPluginKeys
@@ -211,6 +212,46 @@ class Notification(Base):
         }
 
 
+    def to_dict_db(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        data = {
+            NotificationPluginKeys.CreatedTime: (
+                DbTime.epoch_time_to_db_time(self.created_time)
+            ),
+            NotificationPluginKeys.ModifiedTime: (
+                DbTime.epoch_time_to_db_time(self.modified_time)
+            ),
+        }
+
+        combined_data = dict(self.to_dict().items() + data.items())
+        combined_data.pop(NotificationKeys.NotificationId)
+        return combined_data
+
+    def to_dict_db_update(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        data = {
+            NotificationPluginKeys.ModifiedTime: (
+                DbTime.epoch_time_to_db_time(self.modified_time)
+            ),
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        combined_data.pop(NotificationKeys.NotificationId)
+        return combined_data
+
+
 class NotificationHistory(Base):
     """Used to represent an instance of an agent."""
 
@@ -296,6 +337,25 @@ class NotificationHistory(Base):
             NotificationHistoryKeys.AlertSent: self.alert_sent,
             NotificationHistoryKeys.AlertSentTime: self.alert_sent_time,
         }
+
+    def to_dict_db(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        data = {
+            NotificationHistoryKeys.AlertSentTime: (
+                DbTime.epoch_time_to_db_time(self.alert_sent_time)
+            ),
+        }
+
+        combined_data = dict(self.to_dict().items() + data.items())
+        combined_data.pop(NotificationHistoryKeys.Id)
+
+        return dict(self.to_dict().items() + data.items())
 
 
 class NotificationPlugin(Base):
@@ -445,7 +505,7 @@ class NotificationPlugin(Base):
         """ Turn the view fields into a dictionary."""
 
         return {
-            NotificationHistoryKeys.Id: self.id,
+            NotificationPluginKeys.Id: self.id,
             NotificationPluginKeys.ViewName: self.view_name,
             NotificationPluginKeys.PluginName: self.plugin_name,
             NotificationPluginKeys.CreatedTime: self.created_time,
@@ -461,3 +521,25 @@ class NotificationPlugin(Base):
             NotificationPluginKeys.FromEmail: self.from_email,
             NotificationPluginKeys.ToEmail: self.to_email,
         }
+
+    def to_dict_db(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        data = {
+            NotificationPluginKeys.CreatedTime: (
+                DbTime.epoch_time_to_db_time(self.created_time)
+            ),
+            NotificationPluginKeys.ModifiedTime: (
+                DbTime.epoch_time_to_db_time(self.modified_time)
+            ),
+        }
+
+        combined_data = dict(self.to_dict().items() + data.items())
+        combined_data.pop(NotificationPluginKeys.Id)
+
+        return dict(self.to_dict().items() + data.items())
