@@ -2,7 +2,9 @@ import logging, logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.plugins.notifications._db_model import (
-    NotificationIndexes, NotificationKeys, NotificationCollections
+    NotificationIndexes, NotificationKeys, NotificationCollections,
+    NotificationPluginIndexes, NotificationHistoryIndexes,
+    NotificationPluginKeys, NotificationHistoryKeys
 )
 from vFense.core._db import (
     retrieve_collections, create_collection, retrieve_indexes
@@ -89,12 +91,45 @@ def initialize_notification_indexes(collection, indexes, conn=None):
             .run(conn)
         )
 
+@db_create_close
+def initialize_notification_history_indexes(collection, indexes, conn=None):
+    if not NotificationHistoryIndexes.NotificationId in indexes:
+        (
+            r
+            .table(collection)
+            .index_create(
+                NotificationHistoryIndexes.NotificationId
+            )
+            .run(conn)
+        )
+
+
+@db_create_close
+def initialize_notification_plugin_indexes(collection, indexes, conn=None):
+    if not NotificationPluginIndexes.ViewName in indexes:
+        (
+            r
+            .table(collection)
+            .index_create(
+                NotificationPluginIndexes.ViewName
+            )
+            .run(conn)
+        )
+
 
 try:
     notification_collections = [
         (
             NotificationCollections.Notifications,
             NotificationKeys.NotificationId
+        ),
+        (
+            NotificationCollections.NotificationsHistory,
+            NotificationHistoryKeys.Id
+        ),
+        (
+            NotificationCollections.NotificationsPlugin,
+            NotificationPluginKeys.Id
         ),
     ]
     current_collections = retrieve_collections()
