@@ -11,8 +11,6 @@ from vFense.core.agent._db_model import (
     HardwarePerAgentIndexes
 )
 from vFense.core.agent._db_sub_queries import Merge
-#from vFense.core.tag._db_model import *
-#from vFense.plugins.patching._db_model import *
 from vFense.core.decorators import return_status_tuple, time_it
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -854,7 +852,7 @@ def update_views_for_agent(views, agent_id, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 
 @time_it
 @db_create_close
@@ -895,5 +893,5 @@ def delete_views_from_agent(views, agent_id, conn=None):
     except Exception as e:
         logger.exception(e)
 
-    return(data)
+    return data
 

@@ -4,8 +4,6 @@ import os.path
 import sys
 import re
 from time import sleep
-import shlex
-import shutil
 import signal
 import subprocess
 import logging, logging.config
@@ -13,7 +11,6 @@ from vFense import (
     VFENSE_LOGGING_CONFIG, VFENSE_TMP_PATH, VFENSE_BASE_PATH,
     VFENSE_LOG_PATH, VFENSE_BASE_SRC_PATH
 )
-from vFense.db.client import db_connect
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -65,21 +62,21 @@ for port in RVW_PORTS:
 VFENSE_HOME = VFENSE_BASE_PATH
 PROGRAM = 'python'
 PIDFILE = os.path.join(VFENSE_TMP_PATH, 'process.pid')
-RVSCHEDULER_PIDFILE= os.path.join(VFENSE_TMP_PATH, 'rvscheduler-9002.pid')
+ADMIN_JOBS_PIDFILE= os.path.join(VFENSE_TMP_PATH, 'admin_jobs-9002.pid')
 
 WORKERS_DIR = os.path.join(VFENSE_BASE_SRC_PATH, 'receiver', 'rqworkers')
 PATH = VFENSE_BASE_SRC_PATH
-RVSCHEDULER='scheduler/rvscheduler.py'
+ADMIN_JOBS='jobs/admin_jobs.py'
 
-PIDS.append((RVSCHEDULER_PIDFILE, 'RvScheduler'))
+PIDS.append((ADMIN_JOBS_PIDFILE, 'AdminJobs'))
 
 if not os.path.exists(VFENSE_TMP_PATH):
     os.mkdir(VFENSE_TMP_PATH)
 if not os.path.exists(VFENSE_LOG_PATH):
     os.mkdir(VFENSE_LOG_PATH)
 
-SERVICES.append((RVSCHEDULER, RVSCHEDULER_PIDFILE, 'RvScheduler'))
-ALLSERVICES.append((RVSCHEDULER, RVSCHEDULER_PIDFILE, 'RvScheduler'))
+SERVICES.append((ADMIN_JOBS, ADMIN_JOBS_PIDFILE, 'AdminJobs'))
+ALLSERVICES.append((ADMIN_JOBS, ADMIN_JOBS_PIDFILE, 'AdminJobs'))
 
 def run(program, *args):
     try:

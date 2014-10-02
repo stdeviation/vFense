@@ -87,3 +87,45 @@ def import_modules_by_regex(regex):
                 db_files.append(module)
                 importlib.import_module(module)
     return db_files
+
+
+
+class Base(object):
+    """Used to represent an instance of an agent."""
+
+    def __init__(self):
+        pass
+
+
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values."""
+        pass
+
+
+    def get_invalid_fields(self):
+        """Check for any invalid fields.
+
+        Returns:
+            (list): List of key/value pair dictionaries corresponding
+                to the invalid fields.
+        """
+        invalid_fields = []
+
+        return invalid_fields
+
+    def to_dict(self):
+        """ Turn the view fields into a dictionary."""
+
+        return {}
+
+    def to_dict_non_null(self):
+        """ Use to get non None fields. Useful when
+        filling out just a few fields to update the db with .
+
+        Returns:
+            (dict): a dictionary with the non None fields of this view.
+        """
+        agent_dict = self.to_dict()
+
+        return {k:agent_dict[k] for k in agent_dict}

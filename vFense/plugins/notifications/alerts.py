@@ -1,206 +1,64 @@
 #!/usr/bin/env python
-from time import mktime
-from datetime import datetime
+from time import time
 import logging
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.agent._db_model import *
-from vFense.core.tag._db_model import *
-from datetime import datetime
-from vFense.db.client import db_create_close, r
-from vFense.core.results import Results, NotificationResults
 from vFense.core.operations._db_model import *
-from vFense.notifications import *
-from vFense.rv_exceptions.broken import *
 
-from vFense.server.hierarchy import Collection, GroupKey, UserKey, ViewKey
+from vFense.core.status_codes import (
+    DbCodes, GenericCodes, GenericFailureCodes,
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-@db_create_close
-def notification_rule_exists(rule_id, conn=None):
-    try:
-        rule_exists = (
-            r
-            .table(NotificationCollections.Notifications)
-            .get(rule_id)
-            .run(conn)
-        )
 
-    except Exception as e:
-        rule_exists = None
-        logger.error(e)
-
-    return(rule_exists)
+def get_valid_fields(view_name):
+    fields = fetch_valid_fields(view_name)
+    fields['plugins'] = VALID_NOTIFICATION_PLUGINS
+    fields['app_operation_types'] = VALID_APP_NOTIFICATIONS
+    fields['app_thresholds'] = VALID_STATUSES_TO_ALERT_ON
+    fields['monitoring_operation_types'] = VALID_MONITORING_NOTIFICATIONS
 
 
-@db_create_close
-def get_all_notifications(username, view_name,
-                          uri, method, conn=None):
-    map_list = (
-        {
-            NotificationKeys.NotificationId: r.row[NotificationKeys.NotificationId],
-            NotificationKeys.NotificationType: r.row[NotificationKeys.NotificationType],
-            NotificationKeys.RuleName: r.row[NotificationKeys.RuleName],
-            NotificationKeys.RuleDescription: r.row[NotificationKeys.RuleDescription],
-            NotificationKeys.CreatedBy: r.row[NotificationKeys.CreatedBy],
-            NotificationKeys.CreatedTime: r.row[NotificationKeys.CreatedTime].to_epoch_time(),
-            NotificationKeys.ModifiedBy: r.row[NotificationKeys.ModifiedBy],
-            NotificationKeys.ModifiedTime: r.row[NotificationKeys.ModifiedTime].to_epoch_time(),
-            NotificationKeys.Plugin: r.row[NotificationKeys.Plugin],
-            NotificationKeys.User: r.row[NotificationKeys.User],
-            NotificationKeys.Group: r.row[NotificationKeys.Group],
-            NotificationKeys.AllAgents: r.row[NotificationKeys.AllAgents],
-            NotificationKeys.Agents: r.row[NotificationKeys.Agents],
-            NotificationKeys.Tags: r.row[NotificationKeys.Tags],
-            NotificationKeys.ViewName: r.row[NotificationKeys.ViewName],
-            NotificationKeys.AppThreshold: r.row[NotificationKeys.AppThreshold],
-            NotificationKeys.RebootThreshold: r.row[NotificationKeys.RebootThreshold],
-            NotificationKeys.ShutdownThreshold: r.row[NotificationKeys.ShutdownThreshold],
-            NotificationKeys.CpuThreshold: r.row[NotificationKeys.CpuThreshold],
-            NotificationKeys.MemThreshold: r.row[NotificationKeys.MemThreshold],
-            NotificationKeys.FileSystemThreshold: r.row[NotificationKeys.FileSystemThreshold],
-            NotificationKeys.FileSystem: r.row[NotificationKeys.FileSystem],
-        }
-    )
-    try:
-        data = list(
-            r
-            .table(NotificationCollections.Notifications)
-            .get_all(view_name, index=NotificationIndexes.ViewName)
-            .map(map_list)
-            .run(conn)
-        )
-        results = (
-            Results(
-                username, uri, method
-            ).information_retrieved(data, len(data))
-        )
+class NotificationManager():
 
-    except Exception as e:
-        logger.exception(e)
-        results = (
-            Results(
-                username, uri, method
-            ).something_broke('notifications', 'retrieve notification', e)
-        )
-
-    return(results)
-
-
-@db_create_close
-def get_valid_fields(username, view_name,
-                     uri, method, conn=None):
-    try:
-        agents = list(
-            r
-            .table(AgentsCollection)
-            .get_all(view_name, index=AgentKeys.ViewName)
-            .pluck(AgentKeys.AgentId, AgentKeys.ComputerName)
-            .run(conn)
-        )
-        tags = list(
-            r
-            .table(TagsCollection)
-            .get_all(view_name, index=TagsIndexes.ViewName)
-            .pluck(TagKeys.TagId, TagKeys.TagName)
-            .run(conn)
-        )
-        users = list(
-            r
-            .table(Collection.Users)
-            .pluck(UserKey.UserName)
-            .run(conn)
-        )
-        groups = list(
-            r
-            .table(Collection.Groups)
-            .get_all(view_name, index=GroupKey.ViewId)
-            .pluck(GroupKey.GroupName)
-            .run(conn)
-        )
-        views = list(
-            r
-            .table(Collection.Views)
-            .pluck(ViewKey.ViewName)
-            .run(conn)
-        )
-        data = {
-            'tags': tags,
-            'agents': agents,
-            'users': users,
-            'groups': groups,
-            'views': views,
-            'plugins': VALID_NOTIFICATION_PLUGINS,
-            'rv_operation_types': VALID_RV_NOTIFICATIONS,
-            'rv_thresholds': VALID_STATUSES_TO_ALERT_ON,
-            'monitoring_operation_types': VALID_MONITORING_NOTIFICATIONS,
-        }
-
-        results = (
-            Results(
-                username, uri, method
-            ).information_retrieved(data, 1)
-        )
-
-    except Exception as e:
-        logger.exception(e)
-        results = (
-            Results(
-                username, uri, method
-            ).something_broke('Get Notification Fields', 'Notifications', e)
-        )
-
-    return(results)
-
-
-class Notifier():
-
-    def __init__(self, username, view_name, uri, method):
+    def __init__(self, username, view_name):
 
         self.username = username
         self.view_name = view_name
-        self.uri = uri
-        self.method = method
-        self.now = mktime(datetime.now().timetuple())
+        self.now = time()
 
     @db_create_close
-    def delete_alerting_rule(self, rule_id, conn=None):
+    def delete(self, rule_id):
+        results = {}
+        status_code, _, _, generated_ids = (
+            delete_notification_rule(rule_id)
+        )
+        if status_code == DbCodes.Deleted:
+            msg = (
+                'Notification rule id {0} successfully deleted'.format(rule_id)
+                )
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    GenericCodes.ObjectDeleted
+            )
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                AgentResultCodes.NewAgentSucceeded
+            )
+            results[ApiResultKeys.MESSAGE] = msg
 
-        try:
-            (
-                r
-                .table(NotificationCollections.Notifications)
-                .get(rule_id)
-                .delete()
-                .run(conn)
+        else:
+            msg = 'Invalid notification id {0}'.format(rule_id)
+            results[ApiResultKeys.MESSAGE] = msg
+            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                GenericCodes.InvalidId
             )
-            (
-                r
-                .table(NotificationCollections.NotificationsHistory)
-                .get_all(
-                    rule_id,
-                    index=NotificationHistoryIndexes.NotificationId)
-                .delete()
-                .run(conn)
-            )
-
-            results = (
-                Results(
-                    self.username, self.uri, self.method
-                ).object_deleted(rule_id, 'notification')
-            )
-        except Exception as e:
-            logger.exception(e)
-            results = (
-                Results(
-                    self.username, self.uri, self.method
-                ).something_broke(rule_id, 'Notification Deleted', e)
+            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                GenericCodes.InvalidId
             )
 
-        return(results)
+        return results
 
     def create_install_alerting_rule(self, **kwargs):
         rule_data = self.__populate_data(kwargs)
