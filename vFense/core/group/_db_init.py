@@ -23,7 +23,7 @@ def initialize_group_indexes(collection, indexes, conn=None):
             r
             .table(collection)
             .index_create(
-                GroupIndexes.Views
+                GroupIndexes.Views, multi=True
             )
             .run(conn)
         )
@@ -32,7 +32,9 @@ def initialize_group_indexes(collection, indexes, conn=None):
         (
             r
             .table(collection)
-            .index_create(GroupIndexes.Users)
+            .index_create(
+                GroupIndexes.Users, multi=True
+            )
             .run(conn)
         )
 

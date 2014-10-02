@@ -22,7 +22,7 @@ vfense_logger.create_config()
 
 import logging, logging.config
 
-import vFense.db.create_indexes as ci
+from vFense import import_modules_by_regex
 import nginx_config_creator as ncc
 from vFense import *
 from vFense.supported_platforms import *
@@ -302,7 +302,7 @@ def generate_initial_db_data(conn=None):
         r.db_create('vFense').run(conn)
         conn.close()
         print 'creating indexes and secondary indexes'
-        ci.initialize_indexes_and_create_tables()
+        import_modules_by_regex('_db_init.py')
         print 'creating views, groups, and users'
         create_views()
         admin_group_id, agent_group_id = create_groups()

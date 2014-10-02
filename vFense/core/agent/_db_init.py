@@ -24,7 +24,7 @@ def initialize_agent_indexes(collection, indexes, conn=None):
             r
             .table(collection)
             .index_create(
-                AgentIndexes.Views
+                AgentIndexes.Views, multi=True
             )
             .run(conn)
         )

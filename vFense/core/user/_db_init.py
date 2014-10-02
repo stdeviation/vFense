@@ -23,7 +23,7 @@ def initialize_user_indexes(collection, indexes, conn=None):
             r
             .table(collection)
             .index_create(
-                UserIndexes.Views
+                UserIndexes.Views, multi=True
             )
             .run(conn)
         )

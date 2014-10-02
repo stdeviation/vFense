@@ -1,5 +1,7 @@
 import os
+import re
 import fnmatch
+import importlib
 import logging, logging.config
 from vFense.supported_platforms import *
 
@@ -68,9 +70,20 @@ def get_sheduler_location():
     return(sched_location)
 
 
-def all_db_modules():
+def import_modules_by_regex(regex):
+    """Import vFense python modules by regex
+    Args:
+        regex (str): The file you want to import.
+            example.. _db_init.py
+    """
     db_files = []
     for root, dirs, files in os.walk(VFENSE_BASE_PATH):
-        for filename in fnmatch.filter(files, '_db_init.py'):
-            db_files.append(os.path.join(root, filename))
+        for filename in fnmatch.filter(files, regex):
+            file_path = (
+                re.search(r'vFense/(vFense.*).py', os.path.join(root, filename))
+            )
+            if file_path:
+                module = file_path.group(1).replace('/', '.')
+                db_files.append(module)
+                importlib.import_module(module)
     return db_files

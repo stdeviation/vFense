@@ -3,7 +3,6 @@ import sys
 import importlib
 import inspect
 import traceback
-
 from vFense.receiver.api.core.newagent import NewAgentV1, NewAgentV2
 from vFense.receiver.api.core.checkin import CheckInV1, CheckInV2
 from vFense.receiver.api.core.startup import StartUpV1, StartUpV2

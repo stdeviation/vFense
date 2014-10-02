@@ -23,7 +23,7 @@ def initialize_view_indexes(collection, indexes, conn=None):
             r
             .table(collection)
             .index_create(
-                ViewIndexes.Users
+                ViewIndexes.Users, multi=True
             )
             .run(conn)
         )
@@ -40,10 +40,11 @@ def initialize_view_indexes(collection, indexes, conn=None):
         (
             r
             .table(collection)
-            .index_create(ViewIndexes.PreviousTokens)
+            .index_create(
+                ViewIndexes.PreviousTokens, multi=True
+            )
             .run(conn)
         )
-
 
 try:
     view_collections = [
