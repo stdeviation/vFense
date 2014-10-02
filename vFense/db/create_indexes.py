@@ -1,26 +1,16 @@
 #!/usr/bin/env python
 
 from vFense.db.client import db_connect, r
-
 from vFense.notifications import *
-from vFense.plugins.patching._db_model import *
 from vFense.plugins.mightymouse import *
 
 Id = 'id'
 def initialize_indexes_and_create_tables():
     tables = [
-        (AppCollections.CustomApps, CustomAppsKey.AppId),
-        (AppCollections.CustomAppsPerAgent, Id),
-        (AppCollections.vFenseApps, vFenseAppsKey.AppId),
-        (AppCollections.vFenseAppsPerAgent, Id),
-        (FileCollections.Files, FilesKey.FileName),
         (FileCollections.FileServers, FileServerKeys.FileServerName),
-        ('downloaded_status', Id),
         (NotificationCollections.NotificationPlugins, Id),
         (NotificationCollections.Notifications, NotificationKeys.NotificationId),
         (NotificationCollections.NotificationsHistory, Id),
-        ('notification_queue', Id),
-        ('plugin_configurations', 'name'),
     ]
     conn = db_connect()
 #################################### If Collections do not exist, create them #########################
@@ -30,20 +20,10 @@ def initialize_indexes_and_create_tables():
             r.table_create(table[0], primary_key=table[1]).run(conn)
 
 #################################### Get All Indexes ###################################################
-    downloaded_list = r.table('downloaded_status').index_list().run(conn)
     file_server_list = r.table(FileCollections.FileServers).index_list().run(conn)
     notif_list = r.table(NotificationCollections.Notifications).index_list().run(conn)
     notif_history_list = r.table(NotificationCollections.NotificationsHistory).index_list().run(conn)
     notif_plugin_list = r.table(NotificationCollections.NotificationPlugins,).index_list().run(conn)
-
-#################################### DownloadStatusCollection Indexes ###################################################
-    if not 'app_id' in downloaded_list:
-        r.table('downloaded_status').index_create('app_id').run(conn)
-
-    if not 'by_filename_and_rvid' in downloaded_list:
-        r.table('downloaded_status').index_create(
-            'by_filename_and_rvid', lambda x: [
-                x['file_name'], x['app_id']]).run(conn)
 
 #################################### NotificationsCollection Indexes ###################################################
     if not NotificationIndexes.ViewName in notif_list:
