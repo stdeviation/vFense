@@ -128,7 +128,7 @@ try:
             NotificationHistoryKeys.Id
         ),
         (
-            NotificationCollections.NotificationsPlugin,
+            NotificationCollections.NotificationPlugins,
             NotificationPluginKeys.Id
         ),
     ]

@@ -54,7 +54,7 @@ def initialize_stat_indexes(collection, indexes, conn=None):
 
 try:
     stat_collections = [
-        (StatsCollections.AgentStats, AgentStatKeys.Id),
+        (StatsCollections.AgentStats, AgentStatKeys.Id)
     ]
     current_collections = retrieve_collections()
 

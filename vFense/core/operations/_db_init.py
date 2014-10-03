@@ -292,7 +292,7 @@ try:
         (OperationCollections.Admin, AdminOperationKey.OperationId),
     ]
     agent_oper_collections = [
-        (OperationCollections.Agent, AgentOperationKey.Id),
+        (OperationCollections.Agent, AgentOperationKey.OperationId),
     ]
     oper_per_agent_collections = [
         (OperationCollections.OperationPerAgent, OperationPerAgentKey.Id),

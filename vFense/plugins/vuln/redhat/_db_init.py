@@ -26,7 +26,7 @@ def initialize_redhat_indexes(collection, indexes, conn=None):
             .table(collection)
             .index_create(
                 RedhatVulnerabilityIndexes.CveIds,
-                mult=True
+                multi=True
             )
             .run(conn)
         )
@@ -41,8 +41,8 @@ def initialize_redhat_indexes(collection, indexes, conn=None):
                 x[RedhatVulnerabilityKeys.Apps].map(
                     lambda y:
                     [
-                        y[RedhatVulnerabilityKeys.Name],
-                        y[RedhatVulnerabilityKeys.Version]
+                        y[RedhatVulnSubKeys.NAME],
+                        y[RedhatVulnSubKeys.VERSION]
                     ]
                 ), multi=True
             )

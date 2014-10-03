@@ -1,7 +1,7 @@
 import logging, logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.plugins.vuln.ubuntu._db_model import (
+from vFense.plugins.vuln.cve._db_model import (
     CVECollections, CveKeys, CveIndexes
 )
 from vFense.core._db import (
@@ -24,7 +24,7 @@ def initialize_cve_indexes(collection, indexes, conn=None):
             .table(collection)
             .index_create(
                 CveIndexes.Categories,
-                mult=True
+                multi=True
             )
             .run(conn)
         )

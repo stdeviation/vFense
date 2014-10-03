@@ -26,7 +26,7 @@ def initialize_windows_indexes(collection, indexes, conn=None):
             .table(collection)
             .index_create(
                 WindowsVulnerabilityIndexes.CveIds,
-                mult=True
+                multi=True
             )
             .run(conn)
         )

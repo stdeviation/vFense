@@ -48,7 +48,7 @@ def initialize_view_indexes(collection, indexes, conn=None):
 
 try:
     view_collections = [
-        (ViewCollections.Views, ViewKeys.ViewId),
+        (ViewCollections.Views, ViewKeys.ViewName),
     ]
     current_collections = retrieve_collections()
     for collection in view_collections:

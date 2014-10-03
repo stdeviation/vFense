@@ -2,7 +2,7 @@ import logging, logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.tag._db_model import (
-    TagCollections, TagKeys, TagIndexes, TagsPerAgentKeys, TagsPerAgentIndexes
+    TagCollections, TagKeys, TagsIndexes, TagsPerAgentKeys, TagsPerAgentIndexes
 )
 from vFense.core._db import (
     retrieve_collections, create_collection, retrieve_indexes
@@ -18,22 +18,22 @@ def initialize_collections(collection, current_collections):
 
 @db_create_close
 def initialize_tag_indexes(collection, indexes, conn=None):
-    if not TagIndexes.ViewName in indexes:
+    if not TagsIndexes.ViewName in indexes:
         (
             r
             .table(collection)
             .index_create(
-                TagIndexes.ViewName
+                TagsIndexes.ViewName
             )
             .run(conn)
         )
 
-    if not TagIndexes.TagNameAndView in indexes:
+    if not TagsIndexes.TagNameAndView in indexes:
         (
             r
             .table(collection)
             .index_create(
-                TagIndexes.TagNameAndView,
+                TagsIndexes.TagNameAndView,
                 lambda x:
                 [
                     x[TagKeys.TagName],

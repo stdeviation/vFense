@@ -180,7 +180,7 @@ def create_collection(name, primary_key, conn=None):
     try:
         data = (
             r
-            .table_create(name, primary_key)
+            .table_create(name, primary_key=primary_key)
             .run(conn)
         )
 

@@ -26,7 +26,7 @@ def initialize_ubuntu_indexes(collection, indexes, conn=None):
             .table(collection)
             .index_create(
                 UbuntuVulnerabilityIndexes.CveIds,
-                mult=True
+                multi=True
             )
             .run(conn)
         )
@@ -41,8 +41,8 @@ def initialize_ubuntu_indexes(collection, indexes, conn=None):
                 x[UbuntuVulnerabilityKeys.Apps].map(
                     lambda y:
                     [
-                        y[UbuntuVulnerabilityKeys.Name],
-                        y[UbuntuVulnerabilityKeys.Version]
+                        y[UbuntuVulnSubKeys.NAME],
+                        y[UbuntuVulnSubKeys.VERSION]
                     ]
                 ), multi=True
             )

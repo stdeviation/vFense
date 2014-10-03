@@ -1,7 +1,7 @@
 import logging, logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.core.tag._db_model import (
+from vFense.core.queue._db_model import (
     QueueCollections, AgentQueueKey, AgentQueueIndexes
 )
 from vFense.core._db import (
