@@ -115,16 +115,6 @@ def initialize_agent_operation_indexes(collection, indexes, conn=None):
             .run(conn)
         )
 
-    if not AgentOperationIndexes.OperationId in indexes:
-        (
-            r
-            .table(collection)
-            .index_create(
-                AgentOperationIndexes.OperationId
-            )
-            .run(conn)
-        )
-
     if not AgentOperationIndexes.OperationAndView in indexes:
         (
             r
@@ -264,8 +254,8 @@ def initialize_operation_per_app_indexes(collection, indexes, conn=None):
                 OperationPerAppIndexes.OperationIdAndAgentId,
                 lambda x:
                 [
-                    x[OperationPerAgentKey.OperationId],
-                    x[OperationPerAgentKey.AgentId]
+                    x[OperationPerAppKey.OperationId],
+                    x[OperationPerAppKey.AgentId]
                 ]
             )
             .run(conn)
@@ -276,12 +266,12 @@ def initialize_operation_per_app_indexes(collection, indexes, conn=None):
             r
             .table(collection)
             .index_create(
-                OperationPerAgentIndexes.OperationIdAndAgentIdAndAppId,
+                OperationPerAppIndexes.OperationIdAndAgentIdAndAppId,
                 lambda x:
                 [
-                    x[OperationPerAgentKey.OperationId],
-                    x[OperationPerAgentKey.AgentId],
-                    x[OperationPerAgentKey.AppId]
+                    x[OperationPerAppKey.OperationId],
+                    x[OperationPerAppKey.AgentId],
+                    x[OperationPerAppKey.AppId]
                 ]
             )
             .run(conn)
@@ -310,17 +300,17 @@ try:
         initialize_collections(collection, current_collections)
         name, _ = collection
         indexes = retrieve_indexes(name)
-        initialize_agent_operation_indexes(collection, current_collections)
+        initialize_agent_operation_indexes(name, indexes)
     for collection in oper_per_agent_collections:
         initialize_collections(collection, current_collections)
         name, _ = collection
         indexes = retrieve_indexes(name)
-        initialize_operation_per_agent_indexes(collection, current_collections)
+        initialize_operation_per_agent_indexes(name, indexes)
     for collection in oper_per_app_collections:
         initialize_collections(collection, current_collections)
         name, _ = collection
         indexes = retrieve_indexes(name)
-        initialize_operation_per_app_indexes(collection, current_collections)
+        initialize_operation_per_app_indexes(name, indexes)
 
 except Exception as e:
     logger.exception(e)
