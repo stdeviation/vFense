@@ -1,0 +1,374 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1352&#45;01] Moderate: libvirt security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 1 Oct 2014 15:17:19 &#45;0400 -->
+<!--X-Message-Id: 201410011917.s91JHHvK020651@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1352-01] Moderate: libvirt security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00000.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00000.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1352-01] Moderate: libvirt security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1352-01] Moderate: libvirt security and bug fix update</li>
+<li><em>Date</em>: Wed, 1 Oct 2014 19:17:17 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libvirt security and bug fix update
+Advisory ID:       RHSA-2014:1352-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1352.html">https://rhn.redhat.com/errata/RHSA-2014-1352.html</a>
+Issue date:        2014-10-01
+CVE Names:         CVE-2014-3633 CVE-2014-3657 
+=====================================================================
+
+1. Summary:
+
+Updated libvirt packages that fix two security issues and one bug are now
+available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The libvirt library is a C API for managing and interacting with the
+virtualization capabilities of Linux and other operating systems.
+In addition, libvirt provides tools for remote management of
+virtualized systems.
+
+An out-of-bounds read flaw was found in the way libvirt's
+qemuDomainGetBlockIoTune() function looked up the disk index in a
+non-persistent (live) disk configuration while a persistent disk
+configuration was being indexed. A remote attacker able to establish a
+read-only connection to libvirtd could use this flaw to crash libvirtd or,
+potentially, leak memory from the libvirtd process. (CVE-2014-3633)
+
+A denial of service flaw was found in the way libvirt's
+virConnectListAllDomains() function computed the number of used domains.
+A remote attacker able to establish a read-only connection to libvirtd
+could use this flaw to make any domain operations within libvirt
+unresponsive. (CVE-2014-3657)
+
+The CVE-2014-3633 issue was discovered by Luyao Huang of Red Hat.
+
+This update also fixes the following bug:
+
+* Prior to this update, libvirt was setting the cpuset.mems parameter for
+domains with numatune/memory[nodeset] prior to starting them. As a
+consequence, domains with such a nodeset, which excluded the NUMA node with
+DMA and DMA32 zones (found in /proc/zoneinfo), could not be started due to
+failed KVM initialization. With this update, libvirt sets the cpuset.mems
+parameter after the initialization, and domains with any nodeset (in
+/numatune/memory) can be started without an error. (BZ#1135871)
+
+All libvirt users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, libvirtd will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1141131 - CVE-2014-3633 libvirt: qemu: out-of-bounds read access in qemuDomainGetBlockIoTune() due to invalid index
+1145667 - CVE-2014-3657 libvirt: domain_conf: domain deadlock DoS
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+libvirt-1.1.1-29.el7_0.3.src.rpm
+
+x86_64:
+libvirt-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-client-1.1.1-29.el7_0.3.i686.rpm
+libvirt-client-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-config-network-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-config-nwfilter-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-interface-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-lxc-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-network-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-nodedev-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-nwfilter-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-qemu-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-secret-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-storage-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-kvm-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.i686.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-python-1.1.1-29.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+libvirt-daemon-lxc-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.i686.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-devel-1.1.1-29.el7_0.3.i686.rpm
+libvirt-devel-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-docs-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-lock-sanlock-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-login-shell-1.1.1-29.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+libvirt-1.1.1-29.el7_0.3.src.rpm
+
+x86_64:
+libvirt-client-1.1.1-29.el7_0.3.i686.rpm
+libvirt-client-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.i686.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+libvirt-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-config-network-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-config-nwfilter-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-interface-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-lxc-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-network-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-nodedev-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-nwfilter-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-qemu-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-secret-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-storage-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-kvm-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-lxc-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.i686.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-devel-1.1.1-29.el7_0.3.i686.rpm
+libvirt-devel-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-docs-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-lock-sanlock-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-login-shell-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-python-1.1.1-29.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+libvirt-1.1.1-29.el7_0.3.src.rpm
+
+ppc64:
+libvirt-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-client-1.1.1-29.el7_0.3.ppc.rpm
+libvirt-client-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-daemon-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-daemon-config-network-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-daemon-config-nwfilter-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-daemon-driver-interface-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-daemon-driver-lxc-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-daemon-driver-network-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-daemon-driver-nodedev-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-daemon-driver-nwfilter-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-daemon-driver-secret-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-daemon-driver-storage-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.ppc.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-devel-1.1.1-29.el7_0.3.ppc.rpm
+libvirt-devel-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-docs-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-python-1.1.1-29.el7_0.3.ppc64.rpm
+
+s390x:
+libvirt-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-client-1.1.1-29.el7_0.3.s390.rpm
+libvirt-client-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-daemon-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-daemon-config-network-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-daemon-config-nwfilter-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-daemon-driver-interface-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-daemon-driver-lxc-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-daemon-driver-network-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-daemon-driver-nodedev-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-daemon-driver-nwfilter-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-daemon-driver-secret-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-daemon-driver-storage-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.s390.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-devel-1.1.1-29.el7_0.3.s390.rpm
+libvirt-devel-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-docs-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-python-1.1.1-29.el7_0.3.s390x.rpm
+
+x86_64:
+libvirt-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-client-1.1.1-29.el7_0.3.i686.rpm
+libvirt-client-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-config-network-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-config-nwfilter-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-interface-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-lxc-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-network-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-nodedev-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-nwfilter-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-qemu-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-secret-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-storage-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-kvm-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.i686.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-devel-1.1.1-29.el7_0.3.i686.rpm
+libvirt-devel-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-docs-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-python-1.1.1-29.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+libvirt-daemon-lxc-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.ppc64.rpm
+libvirt-login-shell-1.1.1-29.el7_0.3.ppc64.rpm
+
+s390x:
+libvirt-daemon-lxc-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.s390x.rpm
+libvirt-login-shell-1.1.1-29.el7_0.3.s390x.rpm
+
+x86_64:
+libvirt-daemon-lxc-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-lock-sanlock-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-login-shell-1.1.1-29.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+libvirt-1.1.1-29.el7_0.3.src.rpm
+
+x86_64:
+libvirt-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-client-1.1.1-29.el7_0.3.i686.rpm
+libvirt-client-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-config-network-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-config-nwfilter-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-interface-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-lxc-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-network-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-nodedev-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-nwfilter-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-qemu-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-secret-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-driver-storage-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-daemon-kvm-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.i686.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-devel-1.1.1-29.el7_0.3.i686.rpm
+libvirt-devel-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-docs-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-python-1.1.1-29.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+libvirt-daemon-lxc-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-debuginfo-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-lock-sanlock-1.1.1-29.el7_0.3.x86_64.rpm
+libvirt-login-shell-1.1.1-29.el7_0.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3633.html">https://www.redhat.com/security/data/cve/CVE-2014-3633.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3657.html">https://www.redhat.com/security/data/cve/CVE-2014-3657.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFULFMyXlSAg2UNWIIRAgnlAJ4xpiSWFERj85UqA7221JplN7hIOgCfc0R0
+HawDgpgRVnAPDKcCFPHFmxc=
+=OqRn
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00000.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00000.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00001">Thread Index</A>]
+[<A HREF="date.html#00001">Date Index</A>]
+[<A HREF="author.html#00001">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

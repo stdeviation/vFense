@@ -1,0 +1,677 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1317&#45;01] Moderate: cfme security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 2 Oct 2014 15:27:14 &#45;0400 -->
+<!--X-Message-Id: 201410021927.s92JRDU2030997@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1317-01] Moderate: cfme security, bug fix,	and enhancement up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1317-01] Moderate: cfme security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:1317-01] Moderate: cfme security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 2 Oct 2014 19:27:13 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: cfme security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1317-01
+Product:           Red Hat CloudForms
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1317.html">https://rhn.redhat.com/errata/RHSA-2014-1317.html</a>
+Issue date:        2014-10-02
+CVE Names:         CVE-2014-0140 CVE-2014-3642 
+=====================================================================
+
+1. Summary:
+
+Updated cfme packages that fix two security issues, several bugs, and add
+various enhancements are now available for Red Hat CloudForms 3.1.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+CloudForms Management Engine 5.3 - noarch, x86_64
+
+3. Description:
+
+Red Hat CloudForms Management Engine delivers the insight, control, and
+automation needed to address the challenges of managing virtual
+environments. CloudForms Management Engine is built on Ruby on Rails, a
+model-view-controller (MVC) framework for web application development.
+Action Pack implements the controller and the view components.
+
+It was found that Red Hat CloudForms exposed default routes that were
+reachable via HTTP(S) requests. An authenticated user could use this flaw
+to access potentially sensitive controllers and actions that would allow
+for privilege escalation. (CVE-2014-0140)
+
+It was found that Red Hat CloudForms contained an insecure send method that
+accepted user-supplied arguments. An authenticated user could use this flaw
+to modify the program flow in a way that could result in privilege
+escalation. (CVE-2014-3642)
+
+These issues were discovered by Jan Rusnacko of Red Hat Product Security.
+
+This update also fixes several bugs and adds various enhancements.
+Documentation for these changes is available in the Release Notes and
+Technical Notes documents linked to in the References section.
+
+All cfme users are advised to upgrade to these updated packages, which
+contain correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/site/articles/11258">https://access.redhat.com/site/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1077359 - CVE-2014-0140 CFME: default routes expose controllers and actions
+1092894 - CVE-2014-3642 CFME: dangerous send method in performance.rb
+
+6. Package List:
+
+CloudForms Management Engine 5.3:
+
+Source:
+certmonger-0.75.13-1.el6.src.rpm
+cfme-5.2.1.8-1.el6cf.src.rpm
+cfme-5.2.2.1-1.el6cf.src.rpm
+cfme-5.3.0.0-1.el6cf.alpha2.src.rpm
+cfme-5.3.0.0-10.el6cf.alpha5.src.rpm
+cfme-5.3.0.0-13.el6cf.alpha6.src.rpm
+cfme-5.3.0.0-2.el6cf.alpha2.src.rpm
+cfme-5.3.0.0-3.el6cf.alpha2.src.rpm
+cfme-5.3.0.0-4.el6cf.alpha2.src.rpm
+cfme-5.3.0.0-5.el6cf.alpha3.src.rpm
+cfme-5.3.0.0-6.el6cf.alpha3.src.rpm
+cfme-5.3.0.0-7.el6cf.alpha4.src.rpm
+cfme-5.3.0.0-9.el6cf.alpha5.src.rpm
+cfme-5.3.0.15-1.el6cf.src.rpm
+cfme-vnc-plugin-1.0.0-2.el6cf.src.rpm
+libdnet-1.12-11.el6cf.src.rpm
+lshw-B.02.16-4.el6cf.src.rpm
+mod_authnz_pam-0.9.2-1.el6.src.rpm
+mod_intercept_form_submit-0.9.7-1.el6.src.rpm
+mod_lookup_identity-0.9.2-1.el6.src.rpm
+netapp-manageability-sdk-4.0P1-3.el6cf.src.rpm
+open-vm-tools-9.2.3-5.el6cf.src.rpm
+prince-9.0r2-4.el6cf.src.rpm
+pyliblzma-0.5.3-7.el6cf.src.rpm
+ruby193-rubygem-Platform-0.4.0-4.el6cf.src.rpm
+ruby193-rubygem-actionmailer-3.2.17-1.el6cf.src.rpm
+ruby193-rubygem-actionpack-3.2.13-5.el6cf.src.rpm
+ruby193-rubygem-actionpack-3.2.17-3.el6cf.src.rpm
+ruby193-rubygem-actionpack-3.2.17-6.el6cf.src.rpm
+ruby193-rubygem-actionwebservice-3.1.0-3.el6cf.src.rpm
+ruby193-rubygem-active_hash-1.3.0-2.el6cf.src.rpm
+ruby193-rubygem-activemodel-3.2.17-1.el6cf.src.rpm
+ruby193-rubygem-activerecord-3.2.13-4.el6cf.src.rpm
+ruby193-rubygem-activerecord-3.2.17-1.el6cf.src.rpm
+ruby193-rubygem-activerecord-3.2.17-4.el6cf.src.rpm
+ruby193-rubygem-activeresource-3.2.17-1.el6cf.src.rpm
+ruby193-rubygem-activesupport-3.2.17-1.el6cf.src.rpm
+ruby193-rubygem-acts_as_list-0.1.9-1.el6cf.src.rpm
+ruby193-rubygem-acts_as_tree-0.1.1-1.el6cf.src.rpm
+ruby193-rubygem-addressable-2.2.8-1.el6cf.src.rpm
+ruby193-rubygem-akami-1.2.0-1.el6cf.src.rpm
+ruby193-rubygem-american_date-1.0.0-1.el6cf.src.rpm
+ruby193-rubygem-amq-protocol-1.9.2-3.el6cf.src.rpm
+ruby193-rubygem-ancestry-1.2.5-1.el6cf.src.rpm
+ruby193-rubygem-arrayfields-4.9.0-1.el6cf.src.rpm
+ruby193-rubygem-awesome_print-1.1.0-1.el6cf.src.rpm
+ruby193-rubygem-awesome_spawn-1.2.1-1.el6cf.src.rpm
+ruby193-rubygem-aws-sdk-1.11.3-1.el6cf.src.rpm
+ruby193-rubygem-binary_struct-1.0.1-1.el6cf.src.rpm
+ruby193-rubygem-brakeman-2.0.0-1.el6cf.src.rpm
+ruby193-rubygem-bullet-4.6.0-1.el6cf.src.rpm
+ruby193-rubygem-bundler_ext-0.4.0-1.el6cf.src.rpm
+ruby193-rubygem-bunny-1.0.7-1.el6cf.src.rpm
+ruby193-rubygem-capybara-2.1.0-1.el6cf.src.rpm
+ruby193-rubygem-childprocess-0.3.9-1.el6cf.src.rpm
+ruby193-rubygem-chronic-0.3.0-1.el6cf.src.rpm
+ruby193-rubygem-churn-0.0.29-1.el6cf.src.rpm
+ruby193-rubygem-code_analyzer-0.3.2-1.el6cf.src.rpm
+ruby193-rubygem-color-1.4.1-4.el6cf.src.rpm
+ruby193-rubygem-colored-1.2-1.el6cf.src.rpm
+ruby193-rubygem-crack-0.3.2-1.el6cf.src.rpm
+ruby193-rubygem-daemons-1.1.9-2.el6cf.src.rpm
+ruby193-rubygem-dalli-2.2.1-1.el6cf.src.rpm
+ruby193-rubygem-default_value_for-1.0.7-1.el6cf.src.rpm
+ruby193-rubygem-elif-0.1.0-1.el6cf.src.rpm
+ruby193-rubygem-eventmachine-1.0.0-1.el6cf.src.rpm
+ruby193-rubygem-excon-0.31.0-1.el6cf.src.rpm
+ruby193-rubygem-execjs-2.0.2-1.el6cf.src.rpm
+ruby193-rubygem-ezcrypto-0.7-1.el6cf.src.rpm
+ruby193-rubygem-facade-1.0.5-1.el6cf.src.rpm
+ruby193-rubygem-factory_girl-4.1.0-1.el6cf.src.rpm
+ruby193-rubygem-fastercsv-1.5.5-2.el6cf.src.rpm
+ruby193-rubygem-fattr-2.2.1-1.el6cf.src.rpm
+ruby193-rubygem-ffi-1.9.3-1.el6cf.src.rpm
+ruby193-rubygem-flay-2.3.0-1.el6cf.src.rpm
+ruby193-rubygem-flog-3.2.3-2.el6cf.src.rpm
+ruby193-rubygem-fog-1.19.0-1.el6cf.src.rpm
+ruby193-rubygem-formatador-0.2.4-1.el6cf.src.rpm
+ruby193-rubygem-gssapi-1.1.2-1.el6cf.src.rpm
+ruby193-rubygem-gyoku-1.0.0-1.el6cf.src.rpm
+ruby193-rubygem-haml-4.0.5-1.el6cf.src.rpm
+ruby193-rubygem-haml-rails-0.4-1.el6cf.src.rpm
+ruby193-rubygem-handsoap-0.2.5-2.el6cf.src.rpm
+ruby193-rubygem-highline-1.6.21-1.el6cf.src.rpm
+ruby193-rubygem-hirb-0.7.1-1.el6cf.src.rpm
+ruby193-rubygem-hmac-0.4.0-7.el6cf.src.rpm
+ruby193-rubygem-hoe-2.12.3-2.el6cf.src.rpm
+ruby193-rubygem-httparty-0.10.2-1.el6cf.src.rpm
+ruby193-rubygem-httpclient-2.2.7-1.el6cf.src.rpm
+ruby193-rubygem-httpi-2.0.2-1.el6cf.src.rpm
+ruby193-rubygem-i18n-0.6.9-1.el6cf.src.rpm
+ruby193-rubygem-inifile-2.0.2-1.el6cf.src.rpm
+ruby193-rubygem-io-extra-1.2.6-1.el6cf.src.rpm
+ruby193-rubygem-japgolly-Saikuro-1.1.1.0-1.el6cf.src.rpm
+ruby193-rubygem-jbuilder-2.0.7-1.el6cf.src.rpm
+ruby193-rubygem-json-1.8.0-3.el6cf.src.rpm
+ruby193-rubygem-json_pure-1.8.0-1.el6cf.src.rpm
+ruby193-rubygem-libxml-ruby-2.2.2-1.el6cf.src.rpm
+ruby193-rubygem-linux_admin-0.7.0-1.el6cf.src.rpm
+ruby193-rubygem-linux_admin-0.9.1-1.el6cf.src.rpm
+ruby193-rubygem-little-plugger-1.1.3-1.el6cf.src.rpm
+ruby193-rubygem-log4r-1.1.8-1.el6cf.src.rpm
+ruby193-rubygem-logging-1.6.2-1.el6cf.src.rpm
+ruby193-rubygem-mail-2.5.4-1.el6cf.src.rpm
+ruby193-rubygem-main-4.7.1-1.el6cf.src.rpm
+ruby193-rubygem-map-6.5.1-1.el6cf.src.rpm
+ruby193-rubygem-metric_fu-3.0.0-1.el6cf.src.rpm
+ruby193-rubygem-mime-types-1.20.1-1.el6cf.src.rpm
+ruby193-rubygem-minitest-3.2.0-3.el6cf.src.rpm
+ruby193-rubygem-more_core_extensions-1.2.0-1.el6cf.src.rpm
+ruby193-rubygem-multi_json-1.7.7-1.el6cf.src.rpm
+ruby193-rubygem-multi_xml-0.5.2-1.el6cf.src.rpm
+ruby193-rubygem-net-ldap-0.7.0-1.el6cf.src.rpm
+ruby193-rubygem-net-ping-1.7.4-2.el6cf.src.rpm
+ruby193-rubygem-net-scp-1.1.2-1.el6cf.src.rpm
+ruby193-rubygem-net-sftp-2.0.5-7.el6cf.src.rpm
+ruby193-rubygem-net-ssh-2.9.1-1.el6cf.src.rpm
+ruby193-rubygem-netrc-0.7.7-3.el6cf.src.rpm
+ruby193-rubygem-nokogiri-1.5.6-3.el6cf.src.rpm
+ruby193-rubygem-nori-2.1.0-1.el6cf.src.rpm
+ruby193-rubygem-open4-1.3.0-4.el6cf.src.rpm
+ruby193-rubygem-outfielding-jqplot-rails-1.0.8-1.el6cf.src.rpm
+ruby193-rubygem-ovirt_metrics-1.0.1-1.el6cf.src.rpm
+ruby193-rubygem-parallel-0.5.21-1.el6cf.src.rpm
+ruby193-rubygem-pdf-writer-1.1.8-1.el6cf.src.rpm
+ruby193-rubygem-pg-0.12.2-5.el6cf.src.rpm
+ruby193-rubygem-princely-1.2.6-1.el6cf.src.rpm
+ruby193-rubygem-progressbar-0.11.0-2.el6cf.src.rpm
+ruby193-rubygem-prototype-rails-3.2.1-1.el6cf.src.rpm
+ruby193-rubygem-qpid_messaging-0.20.2-2.el6cf.src.rpm
+ruby193-rubygem-rack-1.4.5-3.el6cf.src.rpm
+ruby193-rubygem-rack-test-0.6.2-1.el6cf.src.rpm
+ruby193-rubygem-rails-3.2.17-1.el6cf.src.rpm
+ruby193-rubygem-rails_best_practices-1.13.8-1.el6cf.src.rpm
+ruby193-rubygem-railties-3.2.17-1.el6cf.src.rpm
+ruby193-rubygem-rake-10.1.0-1.el6cf.src.rpm
+ruby193-rubygem-rake-compiler-0.8.3-2.el6cf.src.rpm
+ruby193-rubygem-rbovirt-0.0.17-3.el6cf.src.rpm
+ruby193-rubygem-rbvmomi-1.2.3-4.el6cf.src.rpm
+ruby193-rubygem-rdoc-3.12.2-4.el6cf.src.rpm
+ruby193-rubygem-reek-1.3.1-1.el6cf.src.rpm
+ruby193-rubygem-rest-client-1.6.7-5.el6cf.src.rpm
+ruby193-rubygem-roodi-2.2.0-1.el6cf.src.rpm
+ruby193-rubygem-rspec-2.12.0-1.el6cf.src.rpm
+ruby193-rubygem-rspec-core-2.12.2-1.el6cf.src.rpm
+ruby193-rubygem-rspec-expectations-2.12.1-1.el6cf.src.rpm
+ruby193-rubygem-rspec-fire-1.3.0-1.el6cf.src.rpm
+ruby193-rubygem-rspec-mocks-2.12.1-1.el6cf.src.rpm
+ruby193-rubygem-rspec-rails-2.12.1-1.el6cf.src.rpm
+ruby193-rubygem-ruby-graphviz-1.0.9-1.el6cf.src.rpm
+ruby193-rubygem-ruby-plsql-0.4.1-1.el6cf.src.rpm
+ruby193-rubygem-ruby-prof-0.13.0-1.el6cf.src.rpm
+ruby193-rubygem-ruby-progressbar-0.0.10-1.el6cf.src.rpm
+ruby193-rubygem-ruby2ruby-2.0.6-1.el6cf.src.rpm
+ruby193-rubygem-ruby_parser-3.1.3-2.el6cf.src.rpm
+ruby193-rubygem-rubyforge-2.0.4-3.el6cf.src.rpm
+ruby193-rubygem-rubyntlm-0.4.0-1.el6cf.src.rpm
+ruby193-rubygem-rubyrep-1.2.0-6.el6cf.src.rpm
+ruby193-rubygem-rubywbem-0.1.0-2.el6cf.src.rpm
+ruby193-rubygem-rubyzip-0.9.5-1.el6cf.src.rpm
+ruby193-rubygem-rufus-lru-1.0.5-1.el6cf.src.rpm
+ruby193-rubygem-rufus-scheduler-2.0.19-2.el6cf.src.rpm
+ruby193-rubygem-ruport-1.7.0-2.el6cf.src.rpm
+ruby193-rubygem-savon-2.2.0-1.el6cf.src.rpm
+ruby193-rubygem-secure_headers-1.1.1-1.el6cf.src.rpm
+ruby193-rubygem-selenium-webdriver-2.32.1-2.el6cf.src.rpm
+ruby193-rubygem-sexp_processor-4.2.1-1.el6cf.src.rpm
+ruby193-rubygem-shindo-0.3.4-7.el6cf.src.rpm
+ruby193-rubygem-shoulda-matchers-1.0.0-1.el6cf.src.rpm
+ruby193-rubygem-simple-rss-1.2.3-8.el6cf.src.rpm
+ruby193-rubygem-simplecov-0.7.1-6.el6cf.src.rpm
+ruby193-rubygem-simplecov-html-0.7.1-2.el6cf.src.rpm
+ruby193-rubygem-simplecov-rcov-0.2.3-1.el6cf.src.rpm
+ruby193-rubygem-simplecov-rcov-text-0.0.2-1.el6cf.src.rpm
+ruby193-rubygem-slim-1.3.9-1.el6cf.src.rpm
+ruby193-rubygem-snmp-1.1.0-6.el6cf.src.rpm
+ruby193-rubygem-soap4r-1.6.0-2.el6cf.src.rpm
+ruby193-rubygem-state_machine-1.1.2-8.el6cf.src.rpm
+ruby193-rubygem-syntax-1.0.0-8.el6cf.src.rpm
+ruby193-rubygem-temple-0.6.5-1.el6cf.src.rpm
+ruby193-rubygem-terminal-table-1.4.5-1.el6cf.src.rpm
+ruby193-rubygem-test-spec-0.10.0-7.el6cf.src.rpm
+ruby193-rubygem-test-unit-2.4.5-5.el6cf.src.rpm
+ruby193-rubygem-thin-1.3.1-5.el6cf.src.rpm
+ruby193-rubygem-timecop-0.5.3-1.el6cf.src.rpm
+ruby193-rubygem-transaction-simple-1.4.0-5.el6cf.src.rpm
+ruby193-rubygem-trollop-1.16.2-2.el6cf.src.rpm
+ruby193-rubygem-uglifier-2.4.0-1.el6cf.src.rpm
+ruby193-rubygem-uniform_notifier-1.2.0-1.el6cf.src.rpm
+ruby193-rubygem-uuidtools-2.1.3-3.el6cf.src.rpm
+ruby193-rubygem-vcr-2.4.0-1.el6cf.src.rpm
+ruby193-rubygem-wasabi-3.1.0-1.el6cf.src.rpm
+ruby193-rubygem-webmock-1.11.0-1.el6cf.src.rpm
+ruby193-rubygem-websocket-1.0.7-1.el6cf.src.rpm
+ruby193-rubygem-winrm-1.1.3-1.el6cf.src.rpm
+ruby193-rubygem-winrm-1.1.3-2.el6cf.src.rpm
+ruby193-rubygem-winrm-1.1.3-4.el6cf.src.rpm
+ruby193-rubygem-xml-simple-1.0.12-1.el6cf.src.rpm
+ruby193-rubygem-xpath-2.0.0-1.el6cf.src.rpm
+ruby193-rubygem-ziya-2.3.0-2.el6cf.src.rpm
+selinux-policy-3.7.19-244.el6.src.rpm
+sneakernet_ca-0.1-2.el6cf.src.rpm
+sssd-1.11.6-3.el6.src.rpm
+
+noarch:
+python-sssdconfig-1.11.6-3.el6.noarch.rpm
+ruby193-rubygem-Platform-0.4.0-4.el6cf.noarch.rpm
+ruby193-rubygem-actionmailer-3.2.17-1.el6cf.noarch.rpm
+ruby193-rubygem-actionpack-3.2.13-5.el6cf.noarch.rpm
+ruby193-rubygem-actionpack-3.2.17-3.el6cf.noarch.rpm
+ruby193-rubygem-actionpack-3.2.17-6.el6cf.noarch.rpm
+ruby193-rubygem-actionwebservice-3.1.0-3.el6cf.noarch.rpm
+ruby193-rubygem-active_hash-1.3.0-2.el6cf.noarch.rpm
+ruby193-rubygem-activemodel-3.2.17-1.el6cf.noarch.rpm
+ruby193-rubygem-activerecord-3.2.13-4.el6cf.noarch.rpm
+ruby193-rubygem-activerecord-3.2.17-1.el6cf.noarch.rpm
+ruby193-rubygem-activerecord-3.2.17-4.el6cf.noarch.rpm
+ruby193-rubygem-activeresource-3.2.17-1.el6cf.noarch.rpm
+ruby193-rubygem-activesupport-3.2.17-1.el6cf.noarch.rpm
+ruby193-rubygem-acts_as_list-0.1.9-1.el6cf.noarch.rpm
+ruby193-rubygem-acts_as_tree-0.1.1-1.el6cf.noarch.rpm
+ruby193-rubygem-addressable-2.2.8-1.el6cf.noarch.rpm
+ruby193-rubygem-akami-1.2.0-1.el6cf.noarch.rpm
+ruby193-rubygem-american_date-1.0.0-1.el6cf.noarch.rpm
+ruby193-rubygem-amq-protocol-1.9.2-3.el6cf.noarch.rpm
+ruby193-rubygem-ancestry-1.2.5-1.el6cf.noarch.rpm
+ruby193-rubygem-arrayfields-4.9.0-1.el6cf.noarch.rpm
+ruby193-rubygem-awesome_print-1.1.0-1.el6cf.noarch.rpm
+ruby193-rubygem-awesome_spawn-1.2.1-1.el6cf.noarch.rpm
+ruby193-rubygem-aws-sdk-1.11.3-1.el6cf.noarch.rpm
+ruby193-rubygem-binary_struct-1.0.1-1.el6cf.noarch.rpm
+ruby193-rubygem-brakeman-2.0.0-1.el6cf.noarch.rpm
+ruby193-rubygem-bullet-4.6.0-1.el6cf.noarch.rpm
+ruby193-rubygem-bundler_ext-0.4.0-1.el6cf.noarch.rpm
+ruby193-rubygem-bunny-1.0.7-1.el6cf.noarch.rpm
+ruby193-rubygem-capybara-2.1.0-1.el6cf.noarch.rpm
+ruby193-rubygem-childprocess-0.3.9-1.el6cf.noarch.rpm
+ruby193-rubygem-chronic-0.3.0-1.el6cf.noarch.rpm
+ruby193-rubygem-churn-0.0.29-1.el6cf.noarch.rpm
+ruby193-rubygem-code_analyzer-0.3.2-1.el6cf.noarch.rpm
+ruby193-rubygem-color-1.4.1-4.el6cf.noarch.rpm
+ruby193-rubygem-colored-1.2-1.el6cf.noarch.rpm
+ruby193-rubygem-crack-0.3.2-1.el6cf.noarch.rpm
+ruby193-rubygem-daemons-1.1.9-2.el6cf.noarch.rpm
+ruby193-rubygem-dalli-2.2.1-1.el6cf.noarch.rpm
+ruby193-rubygem-default_value_for-1.0.7-1.el6cf.noarch.rpm
+ruby193-rubygem-elif-0.1.0-1.el6cf.noarch.rpm
+ruby193-rubygem-excon-0.31.0-1.el6cf.noarch.rpm
+ruby193-rubygem-execjs-2.0.2-1.el6cf.noarch.rpm
+ruby193-rubygem-ezcrypto-0.7-1.el6cf.noarch.rpm
+ruby193-rubygem-facade-1.0.5-1.el6cf.noarch.rpm
+ruby193-rubygem-factory_girl-4.1.0-1.el6cf.noarch.rpm
+ruby193-rubygem-fastercsv-1.5.5-2.el6cf.noarch.rpm
+ruby193-rubygem-fattr-2.2.1-1.el6cf.noarch.rpm
+ruby193-rubygem-flay-2.3.0-1.el6cf.noarch.rpm
+ruby193-rubygem-flog-3.2.3-2.el6cf.noarch.rpm
+ruby193-rubygem-fog-1.19.0-1.el6cf.noarch.rpm
+ruby193-rubygem-formatador-0.2.4-1.el6cf.noarch.rpm
+ruby193-rubygem-gssapi-1.1.2-1.el6cf.noarch.rpm
+ruby193-rubygem-gyoku-1.0.0-1.el6cf.noarch.rpm
+ruby193-rubygem-haml-4.0.5-1.el6cf.noarch.rpm
+ruby193-rubygem-haml-rails-0.4-1.el6cf.noarch.rpm
+ruby193-rubygem-handsoap-0.2.5-2.el6cf.noarch.rpm
+ruby193-rubygem-highline-1.6.21-1.el6cf.noarch.rpm
+ruby193-rubygem-hirb-0.7.1-1.el6cf.noarch.rpm
+ruby193-rubygem-hmac-0.4.0-7.el6cf.noarch.rpm
+ruby193-rubygem-hoe-2.12.3-2.el6cf.noarch.rpm
+ruby193-rubygem-httparty-0.10.2-1.el6cf.noarch.rpm
+ruby193-rubygem-httpclient-2.2.7-1.el6cf.noarch.rpm
+ruby193-rubygem-httpi-2.0.2-1.el6cf.noarch.rpm
+ruby193-rubygem-i18n-0.6.9-1.el6cf.noarch.rpm
+ruby193-rubygem-inifile-2.0.2-1.el6cf.noarch.rpm
+ruby193-rubygem-japgolly-Saikuro-1.1.1.0-1.el6cf.noarch.rpm
+ruby193-rubygem-jbuilder-2.0.7-1.el6cf.noarch.rpm
+ruby193-rubygem-json_pure-1.8.0-1.el6cf.noarch.rpm
+ruby193-rubygem-linux_admin-0.7.0-1.el6cf.noarch.rpm
+ruby193-rubygem-linux_admin-0.9.1-1.el6cf.noarch.rpm
+ruby193-rubygem-little-plugger-1.1.3-1.el6cf.noarch.rpm
+ruby193-rubygem-log4r-1.1.8-1.el6cf.noarch.rpm
+ruby193-rubygem-logging-1.6.2-1.el6cf.noarch.rpm
+ruby193-rubygem-mail-2.5.4-1.el6cf.noarch.rpm
+ruby193-rubygem-main-4.7.1-1.el6cf.noarch.rpm
+ruby193-rubygem-map-6.5.1-1.el6cf.noarch.rpm
+ruby193-rubygem-metric_fu-3.0.0-1.el6cf.noarch.rpm
+ruby193-rubygem-mime-types-1.20.1-1.el6cf.noarch.rpm
+ruby193-rubygem-minitest-3.2.0-3.el6cf.noarch.rpm
+ruby193-rubygem-more_core_extensions-1.2.0-1.el6cf.noarch.rpm
+ruby193-rubygem-multi_json-1.7.7-1.el6cf.noarch.rpm
+ruby193-rubygem-multi_xml-0.5.2-1.el6cf.noarch.rpm
+ruby193-rubygem-net-ldap-0.7.0-1.el6cf.noarch.rpm
+ruby193-rubygem-net-ping-1.7.4-2.el6cf.noarch.rpm
+ruby193-rubygem-net-scp-1.1.2-1.el6cf.noarch.rpm
+ruby193-rubygem-net-sftp-2.0.5-7.el6cf.noarch.rpm
+ruby193-rubygem-net-ssh-2.9.1-1.el6cf.noarch.rpm
+ruby193-rubygem-netrc-0.7.7-3.el6cf.noarch.rpm
+ruby193-rubygem-nori-2.1.0-1.el6cf.noarch.rpm
+ruby193-rubygem-open4-1.3.0-4.el6cf.noarch.rpm
+ruby193-rubygem-outfielding-jqplot-rails-1.0.8-1.el6cf.noarch.rpm
+ruby193-rubygem-ovirt_metrics-1.0.1-1.el6cf.noarch.rpm
+ruby193-rubygem-parallel-0.5.21-1.el6cf.noarch.rpm
+ruby193-rubygem-pdf-writer-1.1.8-1.el6cf.noarch.rpm
+ruby193-rubygem-princely-1.2.6-1.el6cf.noarch.rpm
+ruby193-rubygem-progressbar-0.11.0-2.el6cf.noarch.rpm
+ruby193-rubygem-prototype-rails-3.2.1-1.el6cf.noarch.rpm
+ruby193-rubygem-rack-1.4.5-3.el6cf.noarch.rpm
+ruby193-rubygem-rack-test-0.6.2-1.el6cf.noarch.rpm
+ruby193-rubygem-rails-3.2.17-1.el6cf.noarch.rpm
+ruby193-rubygem-rails_best_practices-1.13.8-1.el6cf.noarch.rpm
+ruby193-rubygem-railties-3.2.17-1.el6cf.noarch.rpm
+ruby193-rubygem-rake-10.1.0-1.el6cf.noarch.rpm
+ruby193-rubygem-rake-compiler-0.8.3-2.el6cf.noarch.rpm
+ruby193-rubygem-rbovirt-0.0.17-3.el6cf.noarch.rpm
+ruby193-rubygem-rbvmomi-1.2.3-4.el6cf.noarch.rpm
+ruby193-rubygem-rdoc-3.12.2-4.el6cf.noarch.rpm
+ruby193-rubygem-reek-1.3.1-1.el6cf.noarch.rpm
+ruby193-rubygem-rest-client-1.6.7-5.el6cf.noarch.rpm
+ruby193-rubygem-roodi-2.2.0-1.el6cf.noarch.rpm
+ruby193-rubygem-rspec-2.12.0-1.el6cf.noarch.rpm
+ruby193-rubygem-rspec-core-2.12.2-1.el6cf.noarch.rpm
+ruby193-rubygem-rspec-expectations-2.12.1-1.el6cf.noarch.rpm
+ruby193-rubygem-rspec-fire-1.3.0-1.el6cf.noarch.rpm
+ruby193-rubygem-rspec-mocks-2.12.1-1.el6cf.noarch.rpm
+ruby193-rubygem-rspec-rails-2.12.1-1.el6cf.noarch.rpm
+ruby193-rubygem-ruby-graphviz-1.0.9-1.el6cf.noarch.rpm
+ruby193-rubygem-ruby-plsql-0.4.1-1.el6cf.noarch.rpm
+ruby193-rubygem-ruby-progressbar-0.0.10-1.el6cf.noarch.rpm
+ruby193-rubygem-ruby2ruby-2.0.6-1.el6cf.noarch.rpm
+ruby193-rubygem-ruby_parser-3.1.3-2.el6cf.noarch.rpm
+ruby193-rubygem-rubyforge-2.0.4-3.el6cf.noarch.rpm
+ruby193-rubygem-rubyntlm-0.4.0-1.el6cf.noarch.rpm
+ruby193-rubygem-rubyrep-1.2.0-6.el6cf.noarch.rpm
+ruby193-rubygem-rubywbem-0.1.0-2.el6cf.noarch.rpm
+ruby193-rubygem-rubyzip-0.9.5-1.el6cf.noarch.rpm
+ruby193-rubygem-rufus-lru-1.0.5-1.el6cf.noarch.rpm
+ruby193-rubygem-rufus-scheduler-2.0.19-2.el6cf.noarch.rpm
+ruby193-rubygem-ruport-1.7.0-2.el6cf.noarch.rpm
+ruby193-rubygem-savon-2.2.0-1.el6cf.noarch.rpm
+ruby193-rubygem-secure_headers-1.1.1-1.el6cf.noarch.rpm
+ruby193-rubygem-sexp_processor-4.2.1-1.el6cf.noarch.rpm
+ruby193-rubygem-shindo-0.3.4-7.el6cf.noarch.rpm
+ruby193-rubygem-shoulda-matchers-1.0.0-1.el6cf.noarch.rpm
+ruby193-rubygem-simple-rss-1.2.3-8.el6cf.noarch.rpm
+ruby193-rubygem-simplecov-0.7.1-6.el6cf.noarch.rpm
+ruby193-rubygem-simplecov-html-0.7.1-2.el6cf.noarch.rpm
+ruby193-rubygem-simplecov-rcov-0.2.3-1.el6cf.noarch.rpm
+ruby193-rubygem-simplecov-rcov-text-0.0.2-1.el6cf.noarch.rpm
+ruby193-rubygem-slim-1.3.9-1.el6cf.noarch.rpm
+ruby193-rubygem-snmp-1.1.0-6.el6cf.noarch.rpm
+ruby193-rubygem-soap4r-1.6.0-2.el6cf.noarch.rpm
+ruby193-rubygem-state_machine-1.1.2-8.el6cf.noarch.rpm
+ruby193-rubygem-syntax-1.0.0-8.el6cf.noarch.rpm
+ruby193-rubygem-temple-0.6.5-1.el6cf.noarch.rpm
+ruby193-rubygem-terminal-table-1.4.5-1.el6cf.noarch.rpm
+ruby193-rubygem-test-spec-0.10.0-7.el6cf.noarch.rpm
+ruby193-rubygem-test-unit-2.4.5-5.el6cf.noarch.rpm
+ruby193-rubygem-timecop-0.5.3-1.el6cf.noarch.rpm
+ruby193-rubygem-transaction-simple-1.4.0-5.el6cf.noarch.rpm
+ruby193-rubygem-trollop-1.16.2-2.el6cf.noarch.rpm
+ruby193-rubygem-uglifier-2.4.0-1.el6cf.noarch.rpm
+ruby193-rubygem-uniform_notifier-1.2.0-1.el6cf.noarch.rpm
+ruby193-rubygem-uuidtools-2.1.3-3.el6cf.noarch.rpm
+ruby193-rubygem-vcr-2.4.0-1.el6cf.noarch.rpm
+ruby193-rubygem-wasabi-3.1.0-1.el6cf.noarch.rpm
+ruby193-rubygem-webmock-1.11.0-1.el6cf.noarch.rpm
+ruby193-rubygem-websocket-1.0.7-1.el6cf.noarch.rpm
+ruby193-rubygem-winrm-1.1.3-1.el6cf.noarch.rpm
+ruby193-rubygem-winrm-1.1.3-2.el6cf.noarch.rpm
+ruby193-rubygem-winrm-1.1.3-4.el6cf.noarch.rpm
+ruby193-rubygem-xml-simple-1.0.12-1.el6cf.noarch.rpm
+ruby193-rubygem-xpath-2.0.0-1.el6cf.noarch.rpm
+ruby193-rubygem-ziya-2.3.0-2.el6cf.noarch.rpm
+selinux-policy-3.7.19-244.el6.noarch.rpm
+selinux-policy-targeted-3.7.19-244.el6.noarch.rpm
+sneakernet_ca-0.1-2.el6cf.noarch.rpm
+
+x86_64:
+certmonger-0.75.13-1.el6.x86_64.rpm
+certmonger-debuginfo-0.75.13-1.el6.x86_64.rpm
+cfme-5.2.1.8-1.el6cf.x86_64.rpm
+cfme-5.2.2.1-1.el6cf.x86_64.rpm
+cfme-5.3.0.0-1.el6cf.alpha2.x86_64.rpm
+cfme-5.3.0.0-10.el6cf.alpha5.x86_64.rpm
+cfme-5.3.0.0-13.el6cf.alpha6.x86_64.rpm
+cfme-5.3.0.0-2.el6cf.alpha2.x86_64.rpm
+cfme-5.3.0.0-3.el6cf.alpha2.x86_64.rpm
+cfme-5.3.0.0-4.el6cf.alpha2.x86_64.rpm
+cfme-5.3.0.0-5.el6cf.alpha3.x86_64.rpm
+cfme-5.3.0.0-6.el6cf.alpha3.x86_64.rpm
+cfme-5.3.0.0-7.el6cf.alpha4.x86_64.rpm
+cfme-5.3.0.0-9.el6cf.alpha5.x86_64.rpm
+cfme-5.3.0.15-1.el6cf.x86_64.rpm
+cfme-appliance-5.2.1.8-1.el6cf.x86_64.rpm
+cfme-appliance-5.2.2.1-1.el6cf.x86_64.rpm
+cfme-appliance-5.3.0.0-1.el6cf.alpha2.x86_64.rpm
+cfme-appliance-5.3.0.0-10.el6cf.alpha5.x86_64.rpm
+cfme-appliance-5.3.0.0-13.el6cf.alpha6.x86_64.rpm
+cfme-appliance-5.3.0.0-2.el6cf.alpha2.x86_64.rpm
+cfme-appliance-5.3.0.0-3.el6cf.alpha2.x86_64.rpm
+cfme-appliance-5.3.0.0-4.el6cf.alpha2.x86_64.rpm
+cfme-appliance-5.3.0.0-5.el6cf.alpha3.x86_64.rpm
+cfme-appliance-5.3.0.0-6.el6cf.alpha3.x86_64.rpm
+cfme-appliance-5.3.0.0-7.el6cf.alpha4.x86_64.rpm
+cfme-appliance-5.3.0.0-9.el6cf.alpha5.x86_64.rpm
+cfme-appliance-5.3.0.15-1.el6cf.x86_64.rpm
+cfme-debuginfo-5.2.1.8-1.el6cf.x86_64.rpm
+cfme-debuginfo-5.2.2.1-1.el6cf.x86_64.rpm
+cfme-debuginfo-5.3.0.0-1.el6cf.alpha2.x86_64.rpm
+cfme-debuginfo-5.3.0.0-10.el6cf.alpha5.x86_64.rpm
+cfme-debuginfo-5.3.0.0-13.el6cf.alpha6.x86_64.rpm
+cfme-debuginfo-5.3.0.0-2.el6cf.alpha2.x86_64.rpm
+cfme-debuginfo-5.3.0.0-3.el6cf.alpha2.x86_64.rpm
+cfme-debuginfo-5.3.0.0-4.el6cf.alpha2.x86_64.rpm
+cfme-debuginfo-5.3.0.0-5.el6cf.alpha3.x86_64.rpm
+cfme-debuginfo-5.3.0.0-6.el6cf.alpha3.x86_64.rpm
+cfme-debuginfo-5.3.0.0-7.el6cf.alpha4.x86_64.rpm
+cfme-debuginfo-5.3.0.0-9.el6cf.alpha5.x86_64.rpm
+cfme-debuginfo-5.3.0.15-1.el6cf.x86_64.rpm
+cfme-lib-5.2.1.8-1.el6cf.x86_64.rpm
+cfme-lib-5.2.2.1-1.el6cf.x86_64.rpm
+cfme-lib-5.3.0.0-1.el6cf.alpha2.x86_64.rpm
+cfme-lib-5.3.0.0-10.el6cf.alpha5.x86_64.rpm
+cfme-lib-5.3.0.0-13.el6cf.alpha6.x86_64.rpm
+cfme-lib-5.3.0.0-2.el6cf.alpha2.x86_64.rpm
+cfme-lib-5.3.0.0-3.el6cf.alpha2.x86_64.rpm
+cfme-lib-5.3.0.0-4.el6cf.alpha2.x86_64.rpm
+cfme-lib-5.3.0.0-5.el6cf.alpha3.x86_64.rpm
+cfme-lib-5.3.0.0-6.el6cf.alpha3.x86_64.rpm
+cfme-lib-5.3.0.0-7.el6cf.alpha4.x86_64.rpm
+cfme-lib-5.3.0.0-9.el6cf.alpha5.x86_64.rpm
+cfme-lib-5.3.0.15-1.el6cf.x86_64.rpm
+cfme-vnc-plugin-1.0.0-2.el6cf.x86_64.rpm
+cfme-vnc-plugin-debuginfo-1.0.0-2.el6cf.x86_64.rpm
+libdnet-1.12-11.el6cf.x86_64.rpm
+libdnet-debuginfo-1.12-11.el6cf.x86_64.rpm
+libdnet-devel-1.12-11.el6cf.x86_64.rpm
+libdnet-progs-1.12-11.el6cf.x86_64.rpm
+libipa_hbac-1.11.6-3.el6.x86_64.rpm
+libipa_hbac-devel-1.11.6-3.el6.x86_64.rpm
+libipa_hbac-python-1.11.6-3.el6.x86_64.rpm
+libsss_idmap-1.11.6-3.el6.x86_64.rpm
+libsss_idmap-devel-1.11.6-3.el6.x86_64.rpm
+libsss_nss_idmap-1.11.6-3.el6.x86_64.rpm
+libsss_nss_idmap-devel-1.11.6-3.el6.x86_64.rpm
+libsss_nss_idmap-python-1.11.6-3.el6.x86_64.rpm
+lshw-B.02.16-4.el6cf.x86_64.rpm
+lshw-debuginfo-B.02.16-4.el6cf.x86_64.rpm
+lshw-gui-B.02.16-4.el6cf.x86_64.rpm
+mingw32-cfme-host-5.2.1.8-1.el6cf.x86_64.rpm
+mingw32-cfme-host-5.2.2.1-1.el6cf.x86_64.rpm
+mingw32-cfme-host-5.3.0.0-1.el6cf.alpha2.x86_64.rpm
+mingw32-cfme-host-5.3.0.0-10.el6cf.alpha5.x86_64.rpm
+mingw32-cfme-host-5.3.0.0-13.el6cf.alpha6.x86_64.rpm
+mingw32-cfme-host-5.3.0.0-2.el6cf.alpha2.x86_64.rpm
+mingw32-cfme-host-5.3.0.0-3.el6cf.alpha2.x86_64.rpm
+mingw32-cfme-host-5.3.0.0-4.el6cf.alpha2.x86_64.rpm
+mingw32-cfme-host-5.3.0.0-5.el6cf.alpha3.x86_64.rpm
+mingw32-cfme-host-5.3.0.0-6.el6cf.alpha3.x86_64.rpm
+mingw32-cfme-host-5.3.0.0-7.el6cf.alpha4.x86_64.rpm
+mingw32-cfme-host-5.3.0.0-9.el6cf.alpha5.x86_64.rpm
+mingw32-cfme-host-5.3.0.15-1.el6cf.x86_64.rpm
+mod_authnz_pam-0.9.2-1.el6.x86_64.rpm
+mod_authnz_pam-debuginfo-0.9.2-1.el6.x86_64.rpm
+mod_intercept_form_submit-0.9.7-1.el6.x86_64.rpm
+mod_intercept_form_submit-debuginfo-0.9.7-1.el6.x86_64.rpm
+mod_lookup_identity-0.9.2-1.el6.x86_64.rpm
+mod_lookup_identity-debuginfo-0.9.2-1.el6.x86_64.rpm
+netapp-manageability-sdk-4.0P1-3.el6cf.x86_64.rpm
+netapp-manageability-sdk-devel-4.0P1-3.el6cf.x86_64.rpm
+open-vm-tools-9.2.3-5.el6cf.x86_64.rpm
+open-vm-tools-debuginfo-9.2.3-5.el6cf.x86_64.rpm
+open-vm-tools-desktop-9.2.3-5.el6cf.x86_64.rpm
+open-vm-tools-devel-9.2.3-5.el6cf.x86_64.rpm
+prince-9.0r2-4.el6cf.x86_64.rpm
+pyliblzma-0.5.3-7.el6cf.x86_64.rpm
+pyliblzma-debuginfo-0.5.3-7.el6cf.x86_64.rpm
+ruby193-rubygem-eventmachine-1.0.0-1.el6cf.x86_64.rpm
+ruby193-rubygem-eventmachine-debuginfo-1.0.0-1.el6cf.x86_64.rpm
+ruby193-rubygem-ffi-1.9.3-1.el6cf.x86_64.rpm
+ruby193-rubygem-ffi-debuginfo-1.9.3-1.el6cf.x86_64.rpm
+ruby193-rubygem-io-extra-1.2.6-1.el6cf.x86_64.rpm
+ruby193-rubygem-io-extra-debuginfo-1.2.6-1.el6cf.x86_64.rpm
+ruby193-rubygem-json-1.8.0-3.el6cf.x86_64.rpm
+ruby193-rubygem-json-debuginfo-1.8.0-3.el6cf.x86_64.rpm
+ruby193-rubygem-libxml-ruby-2.2.2-1.el6cf.x86_64.rpm
+ruby193-rubygem-libxml-ruby-debuginfo-2.2.2-1.el6cf.x86_64.rpm
+ruby193-rubygem-nokogiri-1.5.6-3.el6cf.x86_64.rpm
+ruby193-rubygem-nokogiri-debuginfo-1.5.6-3.el6cf.x86_64.rpm
+ruby193-rubygem-pg-0.12.2-5.el6cf.x86_64.rpm
+ruby193-rubygem-pg-debuginfo-0.12.2-5.el6cf.x86_64.rpm
+ruby193-rubygem-qpid_messaging-0.20.2-2.el6cf.x86_64.rpm
+ruby193-rubygem-qpid_messaging-debuginfo-0.20.2-2.el6cf.x86_64.rpm
+ruby193-rubygem-ruby-prof-0.13.0-1.el6cf.x86_64.rpm
+ruby193-rubygem-ruby-prof-debuginfo-0.13.0-1.el6cf.x86_64.rpm
+ruby193-rubygem-selenium-webdriver-2.32.1-2.el6cf.x86_64.rpm
+ruby193-rubygem-selenium-webdriver-debuginfo-2.32.1-2.el6cf.x86_64.rpm
+ruby193-rubygem-thin-1.3.1-5.el6cf.x86_64.rpm
+ruby193-rubygem-thin-debuginfo-1.3.1-5.el6cf.x86_64.rpm
+sssd-1.11.6-3.el6.x86_64.rpm
+sssd-ad-1.11.6-3.el6.x86_64.rpm
+sssd-client-1.11.6-3.el6.x86_64.rpm
+sssd-common-1.11.6-3.el6.x86_64.rpm
+sssd-common-pac-1.11.6-3.el6.x86_64.rpm
+sssd-dbus-1.11.6-3.el6.x86_64.rpm
+sssd-debuginfo-1.11.6-3.el6.x86_64.rpm
+sssd-ipa-1.11.6-3.el6.x86_64.rpm
+sssd-krb5-1.11.6-3.el6.x86_64.rpm
+sssd-krb5-common-1.11.6-3.el6.x86_64.rpm
+sssd-ldap-1.11.6-3.el6.x86_64.rpm
+sssd-proxy-1.11.6-3.el6.x86_64.rpm
+sssd-tools-1.11.6-3.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0140.html">https://www.redhat.com/security/data/cve/CVE-2014-0140.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3642.html">https://www.redhat.com/security/data/cve/CVE-2014-3642.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/CloudForms/3.1/html/Management_Engine_5.3_Release_Notes">https://access.redhat.com/documentation/en-US/CloudForms/3.1/html/Management_Engine_5.3_Release_Notes</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/CloudForms/3.1/html/Management_Engine_5.3_Technical_Notes">https://access.redhat.com/documentation/en-US/CloudForms/3.1/html/Management_Engine_5.3_Technical_Notes</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFULaYzXlSAg2UNWIIRAn+RAKCdvNwsjNzIlKu40AzLlpw4bXZZDgCgg2Ss
+iCNZ/CM91CW4wiQ4IQjkzD4=
+=wP86
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
