@@ -2,6 +2,8 @@ from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
 )
 
+from vFense.core._constants import ApiResultDefaults
+
 class ApiResultKeys():
     URI = 'uri'
     HTTP_METHOD = 'http_method'
@@ -38,7 +40,8 @@ class ApiResults(object):
                  vfense_status_code=None, db_status_code=None, http_uri=None,
                  message=None, http_method=None, errors=None, user_name=None,
                  operation=None, operations=None, agent_id=None, tag_id=None,
-                 app_id=None, operation_id=None, count=None
+                 app_id=None, operation_id=None, count=None,
+                 generated_ids=None
                  ):
         """
         Kwargs:
@@ -57,6 +60,8 @@ class ApiResults(object):
         self.operation = operation
         self.operations = operations
         self.count = count
+        self.generated_ids = generated_ids
+        self.errors = errors
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -69,22 +74,28 @@ class ApiResults(object):
         """
 
         if not self.updated_ids:
-            self.updated_ids = []
+            self.updated_ids = ApiResultDefaults.updated_ids()
 
         if not self.invalid_ids:
-            self.invalid_ids = []
+            self.invalid_ids = ApiResultDefaults.invalid_ids()
 
         if not self.unchanged_ids:
-            self.unchanged_ids = []
+            self.unchanged_ids = ApiResultDefaults.unchanged_ids()
 
         if not self.deleted_ids:
-            self.deleted_ids = []
+            self.deleted_ids = ApiResultDefaults.deleted_ids()
 
         if not self.data:
-            self.data = []
+            self.data = ApiResultDefaults.data()
 
         if not self.operations:
-            self.operations = []
+            self.operations = ApiResultDefaults.operations()
+
+        if not self.generated_ids:
+            self.generated_ids = ApiResultDefaults.generated_ids()
+
+        if not self.errors:
+            self.errors = ApiResultDefaults().errors()
 
 
     def to_dict_results(self):
@@ -101,11 +112,14 @@ class ApiResults(object):
             ApiResultKeys.UNCHANGED_IDS: self.unchanged_ids,
             ApiResultKeys.DELETED_IDS: self.deleted_ids,
             ApiResultKeys.INVALID_IDS: self.invalid_ids,
+            ApiResultKeys.GENERATED_IDS: self.generated_ids,
             ApiResultKeys.GENERIC_STATUS_CODE: self.generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: self.vfense_status_code,
             ApiResultKeys.COUNT: self.count,
             ApiResultKeys.DATA: self.data,
             ApiResultKeys.MESSAGE: self.message,
+            ApiResultKeys.OPERATIONS: self.operations,
+            ApiResultKeys.ERRORS: self.errors,
         }
 
 

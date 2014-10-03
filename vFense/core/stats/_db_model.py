@@ -6,6 +6,7 @@ class AgentStatKeys():
     Id = 'id'
     AgentId = 'agent_id'
     StatType = 'stat_type'
+    LastUpdated = 'last_updated'
 
 
 class CpuStatKeys(AgentStatKeys):

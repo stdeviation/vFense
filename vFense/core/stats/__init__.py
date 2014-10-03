@@ -1,4 +1,6 @@
 import re
+from time import time
+from vFense.core._db_constants import DbTime
 from vFense.core.stats._db_model import (
     CpuStatKeys, AgentStatKeys, MemoryStatKeys, FileSystemStatKeys
 )
@@ -15,14 +17,19 @@ from vFense.core.status_codes import GenericCodes
 class Stats(object):
     """Used to represent an instance of an agent."""
 
-    def __init__(self, agent_id=None, stat_type=None):
+    def __init__(self, agent_id=None, stat_type=None, last_updated=None,
+                 id=None):
         """
         Kwargs:
+            id (str): The 36 Character UUID of this stat.
             agent_id (str): The id of the agent.
             stat_type (str): The type of the stat.
+            last_updated (float): The unixtimestamp
         """
+        self.id = id
         self.agent_id = agent_id
         self.stat_type = stat_type
+        self.last_updated = last_updated
 
 
     def fill_in_defaults(self):
@@ -35,7 +42,8 @@ class Stats(object):
             method to fill in the rest.
         """
 
-        pass
+        if not self.last_updated:
+            self.last_updated = time()
 
     def get_invalid_fields(self):
         """Check the agent for any invalid fields.
@@ -72,7 +80,8 @@ class Stats(object):
         """ Turn the fields into a dictionary."""
         data = {
             AgentStatKeys.AgentId: self.agent_id,
-            AgentStatKeys.StatType: self.stat_type
+            AgentStatKeys.StatType: self.stat_type,
+            AgentStatKeys.LastUpdated: self.last_updated
         }
 
         return data
@@ -89,6 +98,26 @@ class Stats(object):
         return {k:agent_dict[k] for k in agent_dict
                 if agent_dict[k] != None}
 
+    def to_dict_db(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        data = {
+            AgentStatKeys.LastUpdated: (
+                DbTime.epoch_time_to_db_time(self.last_updated)
+            )
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        combined_data.pop(AgentStatKeys.Id, None)
+
+        return dict(self.to_dict().items() + data.items())
+
+
 class CPUStats(Stats):
     def __init__(self, idle=None, user=None, system=None, iowait=None, **kwargs):
         super(CPUStats, self).__init__(**kwargs)
@@ -101,12 +130,25 @@ class CPUStats(Stats):
             agent_id (str): The id of the agent.
             stat_type (str): The type of the stat.
         """
-        self.idle = kwargs.get('idle')
-        self.user = kwargs.get('user')
-        self.system = kwargs.get('system')
-        self.iowait = kwargs.get('iowait')
+        self.idle = idle
+        self.user = user
+        self.system = system
+        self.iowait = iowait
 
 
+    def fill_in_defaults(self):
+        super(CPUStats, self).fill_in_defaults()
+        if not self.idle:
+            self.idle = 0.0
+
+        if not self.system:
+            self.system = 0.0
+
+        if not self.user:
+            self.user = 0.0
+
+        if not self.iowait:
+            self.iowait = 0.0
 
     def get_invalid_fields(self):
         """Check the agent for any invalid fields.
@@ -193,6 +235,20 @@ class MemoryStats(Stats):
         self.free = free
 
 
+    def fill_in_defaults(self):
+        super(MemoryStats, self).fill_in_defaults()
+        if not self.used_percent:
+            self.used_percent = 0.0
+
+        if not self.free_percent:
+            self.free_percent = 0.0
+
+        if not self.used:
+            self.used = 0.0
+
+        if not self.free:
+            self.free = 0.0
+
 
     def get_invalid_fields(self):
         """Check the agent for any invalid fields.
@@ -278,6 +334,20 @@ class FileSystemStats(MemoryStats):
         super(FileSystemStats, self).__init__(**kwargs)
         self.name = name
         self.mount = mount
+
+    def fill_in_defaults(self):
+        super(FileSystemStats, self).fill_in_defaults()
+        if not self.used_percent:
+            self.used_percent = 0.0
+
+        if not self.free_percent:
+            self.free_percent = 0.0
+
+        if not self.used:
+            self.used = 0.0
+
+        if not self.free:
+            self.free = 0.0
 
 
     def get_invalid_fields(self):
