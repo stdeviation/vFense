@@ -43,7 +43,6 @@ from vFense.core.view.manager import ViewManager
 from vFense.core.view._constants import DefaultViews
 from vFense.core.permissions._constants import Permissions
 
-from vFense.plugins import monit
 from vFense.plugins.vuln.cve.parser import load_up_all_xml_into_db
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
 from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing
