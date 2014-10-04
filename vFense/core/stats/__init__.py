@@ -10,6 +10,9 @@ from vFense.core.agent._constants import (
 from vFense.core._constants import (
     CommonKeys
 )
+from vFense.core.stats._constants import (
+    StatsType
+)
 from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 
@@ -134,6 +137,7 @@ class CPUStats(Stats):
         self.user = user
         self.system = system
         self.iowait = iowait
+        self.stat_type = StatsType.CPU
 
 
     def fill_in_defaults(self):
@@ -233,6 +237,7 @@ class MemoryStats(Stats):
         self.free_percent = free_percent
         self.used = used
         self.free = free
+        self.stat_type = StatsType.MEM
 
 
     def fill_in_defaults(self):
@@ -334,6 +339,7 @@ class FileSystemStats(MemoryStats):
         super(FileSystemStats, self).__init__(**kwargs)
         self.name = name
         self.mount = mount
+        self.stat_type = StatsType.FILE_SYSTEM
 
     def fill_in_defaults(self):
         super(FileSystemStats, self).fill_in_defaults()

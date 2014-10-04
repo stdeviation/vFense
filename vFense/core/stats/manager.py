@@ -30,7 +30,7 @@ class StatManager(object):
     def __init__(self, agent_id=None):
         self.agent_id = agent_id
 
-    def stats(self, stat_type):
+    def stats(self, stat_type=None):
         stats = (
             fetch_stats_by_agent_id_and_type(self.agent_id, stat_type)
         )
