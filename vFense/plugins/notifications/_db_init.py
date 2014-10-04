@@ -3,8 +3,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.plugins.notifications._db_model import (
     NotificationIndexes, NotificationKeys, NotificationCollections,
-    NotificationPluginIndexes, NotificationHistoryIndexes,
-    NotificationPluginKeys, NotificationHistoryKeys
+    NotificationHistoryIndexes, NotificationHistoryKeys
 )
 from vFense.core._db import (
     retrieve_collections, create_collection, retrieve_indexes
@@ -104,32 +103,17 @@ def initialize_notification_history_indexes(collection, indexes, conn=None):
         )
 
 
-@db_create_close
-def initialize_notification_plugin_indexes(collection, indexes, conn=None):
-    if not NotificationPluginIndexes.ViewName in indexes:
-        (
-            r
-            .table(collection)
-            .index_create(
-                NotificationPluginIndexes.ViewName
-            )
-            .run(conn)
-        )
-
-
 try:
     notification_collections = [
         (
             NotificationCollections.Notifications,
             NotificationKeys.NotificationId
         ),
+    ]
+    notification_history_collections = [
         (
             NotificationCollections.NotificationsHistory,
             NotificationHistoryKeys.Id
-        ),
-        (
-            NotificationCollections.NotificationPlugins,
-            NotificationPluginKeys.Id
         ),
     ]
     current_collections = retrieve_collections()
@@ -138,6 +122,11 @@ try:
         name, _ = collection
         indexes = retrieve_indexes(name)
         initialize_notification_indexes(name, indexes)
+    for collection in notification_history_collections:
+        initialize_collections(collection, current_collections)
+        name, _ = collection
+        indexes = retrieve_indexes(name)
+        initialize_notification_history_indexes(name, indexes)
 
 
 except Exception as e:
