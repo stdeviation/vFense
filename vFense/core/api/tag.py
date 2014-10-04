@@ -233,14 +233,14 @@ class TagsHandler(BaseHandler):
         for tag_id in tags:
             manager = TagManager(tag_id)
             results = manager.remove()
-            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+            if (results.vfense_status_code
                     == TagCodes.TagsDeleted):
                 tags_deleted.append(tag_id)
             else:
                 tags_unchanged.append(tag_id)
 
-        end_results[ApiResultKeys.UNCHANGED_IDS] = tags_unchanged
-        end_results[ApiResultKeys.DELETED_IDS] = tags_deleted
+        end_results.unchanged_ids = tags_unchanged
+        end_results.deleted_ids = tags_deleted
 
         if tags_deleted and tags_unchanged:
             msg = (
@@ -250,38 +250,38 @@ class TagsHandler(BaseHandler):
                     ', '.join(tags_unchanged),
                 )
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 TagFailureCodes.FailedToDeleteAllObjects
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 TagFailureCodes.FailedToDeleteTags
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif tags_deleted and not tags_unchanged:
             msg = (
                 'Tags: {0} deleted.'.format(', '.join(tags))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 TagCodes.ObjectsDeleted
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 TagCodes.TagsDeleted
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif tags_unchanged and not tags_deleted:
             msg = (
                 'Tags: {0} failed to delete: {1}'
                 .format(', '.join(tags), ', '.join(tags_unchanged))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 TagCodes.ObjectsUnchanged
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 TagFailureCodes.FailedToDeleteTags
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         return end_results
 

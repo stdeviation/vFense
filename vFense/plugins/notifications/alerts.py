@@ -49,21 +49,21 @@ class NotificationManager(object):
             msg = (
                 'Notification rule id {0} successfully deleted'.format(rule_id)
                 )
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericCodes.ObjectDeleted
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 NotificationFailureCodes.NotificationDeleted
             )
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
         else:
             msg = 'Invalid notification id {0}'.format(rule_id)
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.message = msg
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 GenericCodes.InvalidId
             )
 
@@ -84,67 +84,67 @@ class NotificationManager(object):
                     msg = (
                         'Notification rule {0} created'.format(rule.rule_name)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.ObjectCreated
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         NotificationCodes.NotificationCreated
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = rule.to_dict()
-                    results[ApiResultKeys.GENERATED_IDS] = rule.notification_id
+                    results.message = msg
+                    results.data = rule.to_dict()
+                    results.generated_ids = rule.notification_id
 
                 else:
                     msg = (
                         'Failed to add notification rule {0}.'.format(rule.rule_name)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericFailureCodes.FailedToCreateObject
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         NotificationFailureCodes.FailedToCreateNotification
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = rule.to_dict()
+                    results.message = msg
+                    results.data = rule.to_dict()
 
             elif invalid_fields:
                 msg = (
                     'Failed to add notification rule {0}.'.format(rule.rule_name)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.InvalidFields
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     NotificationFailureCodes.InvalidFields
                 )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = invalid_fields
+                results.message = msg
+                results.data = invalid_fields
 
             else:
                 msg = (
                     'Failed to add notification rule {0}.'.format(rule.rule_name)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.InvalidId
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     NotificationFailureCodes.InvalidId
                 )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = rule.agents + rule.tags
+                results.message = msg
+                results.data = rule.agents + rule.tags
 
         else:
             msg = (
                 'Failed to add notification rule'
             )
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericFailureCodes.InvalidInstanceType
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 NotificationFailureCodes.InvalidInstanceType
             )
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.DATA] = rule.agents + rule.tags
+            results.message = msg
+            results.data = rule.agents + rule.tags
 
         return(results)
 
@@ -161,85 +161,85 @@ class NotificationManager(object):
                     msg = (
                         'Notification rule {0} updated'.format(rule.rule_name)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.ObjectUpdated
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         NotificationCodes.NotificationUpdated
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = rule.to_dict_non_null()
-                    results[ApiResultKeys.GENERATED_IDS] = rule.notification_id
+                    results.message = msg
+                    results.data = rule.to_dict_non_null()
+                    results.generated_ids = rule.notification_id
 
                 if status_code == DbCodes.Skipped:
                     msg = (
                         'Notification rule {0} id does not exist'
                         .format(rule.notification_id)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.InvalidId
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         GenericCodes.InvalidId
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = rule.to_dict_non_null()
-                    results[ApiResultKeys.GENERATED_IDS] = rule.notification_id
+                    results.message = msg
+                    results.data = rule.to_dict_non_null()
+                    results.generated_ids = rule.notification_id
 
                 else:
                     msg = (
                         'Failed to update notification rule {0}.'
                         .format(rule.rule_name)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericFailureCodes.FailedToUpdateObject
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         NotificationFailureCodes.FailedToUpdateNotification
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = rule.to_dict_non_null()
+                    results.message = msg
+                    results.data = rule.to_dict_non_null()
 
             elif invalid_fields:
                 msg = (
                     'Failed to update notification rule {0}.'
                     .format(rule.rule_name)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.InvalidFields
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     NotificationFailureCodes.InvalidFields
                 )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = invalid_fields
+                results.message = msg
+                results.data = invalid_fields
 
             else:
                 msg = (
                     'Failed to update notification rule {0}.'
                     .format(rule.rule_name)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.InvalidId
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     NotificationFailureCodes.InvalidId
                 )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = rule.agents + rule.tags
+                results.message = msg
+                results.data = rule.agents + rule.tags
 
         else:
             msg = (
                 'Failed to update notification rule'
             )
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericFailureCodes.InvalidInstanceType
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 NotificationFailureCodes.InvalidInstanceType
             )
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.DATA] = rule.agents + rule.tags
+            results.message = msg
+            results.data = rule.agents + rule.tags
 
         return(results)
 

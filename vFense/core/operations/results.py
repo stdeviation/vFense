@@ -127,17 +127,17 @@ class OperationResults(object):
                         'Results updated for operation id %s' %
                         (self.operation_id)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.ObjectUpdated
                     )
 
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         AgentResultCodes.ResultsUpdated
                     )
 
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.message = msg
 
-                    results[ApiResultKeys.UPDATED_IDS] = (
+                    results.updated_ids = (
                         [self.operation_id]
                     )
 
@@ -146,17 +146,17 @@ class OperationResults(object):
                         'Results failed to update operation id %s' %
                         (self.operation_id)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericFailureCodes.FailedToUpdateObject
                     )
 
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         AgentFailureResultCodes.ResultsFailedToUpdate
                     )
 
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.message = msg
 
-                    results[ApiResultKeys.UNCHANGED_IDS] = (
+                    results.unchanged_ids = (
                         [self.operation_id]
                     )
 
@@ -165,33 +165,33 @@ class OperationResults(object):
                     'Invalid operation id %s' %
                     (self.operation_id)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.FailedToUpdateObject
                 )
 
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     AgentFailureResultCodes.InvalidSuccessValue
                 )
 
-                results[ApiResultKeys.MESSAGE] = msg
+                results.message = msg
 
-                results[ApiResultKeys.UNCHANGED_IDS] = (
+                results.unchanged_ids = (
                     [self.operation_id]
                 )
 
         else:
             msg = 'Invalid operation id'
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericFailureCodes.InvalidId
             )
 
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 AgentFailureResultCodes.InvalidOperationId
             )
 
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
-            results[ApiResultKeys.UNCHANGED_IDS] = (
+            results.unchanged_ids = (
                 [self.operation_id]
             )
 

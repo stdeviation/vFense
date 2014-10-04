@@ -87,13 +87,13 @@ class StartUpV1(BaseHandler):
         agent = Agent(**agent_data)
         manager = AgentManager(agent_id)
         results = manager.update(agent)
-        status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+        status_code = results.vfense_status_code
         if status_code == AgentResultCodes.StartUpSucceeded:
             uris = get_result_uris(agent_id)
             uris[AgentOperationKey.Operation] = (
                 AgentOperations.REFRESH_RESPONSE_URIS
             )
-            results[ApiResultKeys.DATA].append(uris)
+            results.data.append(uris)
 
         return results
 
@@ -113,7 +113,7 @@ class StartUpV2(AgentBaseHandler):
                     agent_id, system_info, hardware, views, tags
                 )
             )
-            status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+            status_code = results.vfense_status_code
 
             if status_code == AgentResultCodes.StartUpSucceeded:
                 if 'rv' in plugins:
@@ -149,7 +149,7 @@ class StartUpV2(AgentBaseHandler):
         manager = AgentManager(agent_id)
         results = manager.update(agent, tags)
         results[ApiResultKeys.OPERATIONS] = []
-        status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+        status_code = results.vfense_status_code
         if status_code == AgentResultCodes.StartUpSucceeded:
             uris = get_result_uris(agent_id)
             uris[AgentOperationKey.Operation] = (

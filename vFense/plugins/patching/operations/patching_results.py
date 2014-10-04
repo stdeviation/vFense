@@ -276,50 +276,50 @@ class PatchingOperationResults(OperationResults):
                 )
                 if operation_updated:
                     msg = 'Results updated'
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.ObjectUpdated
                     )
 
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         AgentResultCodes.ResultsUpdated
                     )
 
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.message = msg
 
                 else:
                     msg = 'Results failed to update'
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericFailureCodes.FailedToUpdateObject
                     )
 
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         AgentFailureResultCodes.ResultsFailedToUpdate
                     )
 
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.message = msg
 
             else:
                 msg = 'Invalid operation id'
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.InvalidId
                 )
 
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     AgentFailureResultCodes.InvalidOperationId
                 )
 
-                results[ApiResultKeys.MESSAGE] = msg
+                results.message = msg
 
         else:
             msg = 'Invalid success value'
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericFailureCodes.FailedToUpdateObject
             )
 
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 AgentFailureResultCodes.InvalidSuccessValue
             )
 
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
         return results

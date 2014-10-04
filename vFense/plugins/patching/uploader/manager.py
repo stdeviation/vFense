@@ -54,7 +54,7 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
 
     Returns:
     """
-    results = {}
+    results = ApiResults()
     base_app_dir = os.path.join(TMP_DIR, uuid)
     full_app_path = os.path.join(base_app_dir, file_name)
 
@@ -76,38 +76,38 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
                 'hash': md5,
                 'file_path': full_app_path
             }
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 PackageCodes.ObjectCreated
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 PackageCodes.FileUploadedSuccessfully
             )
-            results[ApiResultKeys.DATA] = data
-            results[ApiResultKeys.MESSAGE] = (
+            results.data = data
+            results.message = (
                 'File {0} successfully uploaded'.format(file_name)
             )
 
         else:
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 PackageFailureCodes.FailedToCreateObject
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 PackageFailureCodes.FileUploadFailed
             )
-            results[ApiResultKeys.DATA] = []
-            results[ApiResultKeys.MESSAGE] = (
+            results.data = []
+            results.message = (
                 'File {0} failed to upload'.format(file_name)
             )
 
     except Exception as e:
-        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+        results.generic_status_code = (
             PackageFailureCodes.FailedToCreateObject
         )
-        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+        results.vfense_status_code = (
             PackageFailureCodes.FileUploadFailed
         )
-        results[ApiResultKeys.DATA] = []
-        results[ApiResultKeys.MESSAGE] = (
+        results.data = []
+        results.message = (
             'File {0} failed to upload: error {1}'
             .format(file_name, e)
         )
@@ -171,7 +171,7 @@ class UploadManager(object):
 
         Returns:
         """
-        results = {}
+        results = ApiResults()
         if isinstance(app, Apps) and isinstance(file_data, list):
             app_invalid_fields = app.get_invalid_fields()
             if not app_invalid_fields:
@@ -198,13 +198,13 @@ class UploadManager(object):
                             app_id=uuid
                         )
                         msg = 'app %s uploaded succesfully - ' % (app.name)
-                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        results.generic_status_code = (
                             PackageCodes.ObjectCreated
                         )
-                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        results.vfense_status_code = (
                             PackageCodes.FileUploadedSuccessfully
                         )
-                        results[ApiResultKeys.MESSAGE] = msg
-                        results[ApiResultKeys.DATA] = [app.to_dict()]
+                        results.message = msg
+                        results.data = [app.to_dict()]
 
         return results

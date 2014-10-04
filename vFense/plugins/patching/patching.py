@@ -971,7 +971,7 @@ def toggle_hidden_status(
         msg = 'Hidden status updated'
         generic_status_code = GenericCodes.ObjectUpdated
         vfense_status_code = PackageCodes.ToggleHiddenSuccessful
-        results[ApiResultKeys.UPDATED_IDS] = app_ids
+        results.updated_ids = app_ids
 
     elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
         msg = 'Hidden status could not be updated.'
@@ -995,8 +995,8 @@ def toggle_hidden_status(
         vfense_status_code = PackageFailureCodes.ToggleHiddenFailed
 
     results[ApiResultKeys.DB_STATUS_CODE] = status_code
-    results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
-    results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-    results[ApiResultKeys.MESSAGE] = status + msg
+    results.generic_status_code = generic_status_code
+    results.vfense_status_code = vfense_status_code
+    results.message = status + msg
 
     return results

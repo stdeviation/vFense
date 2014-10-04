@@ -10,7 +10,7 @@ from vFense.core.agent import Agent
 from vFense.core.agent.manager import AgentManager
 from vFense.core._db import insert_data_in_table
 from vFense.core.status_codes import DbCodes
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.manager import ViewManager
 from vFense.plugins.patching import Apps, Files
@@ -156,7 +156,7 @@ class AppsManager(object):
 
         Returns:
         """
-        results = {}
+        results = ApiResults()
         if isinstance(app, Apps) and isinstance(file_data, list):
             app_invalid_fields = app.get_invalid_fields()
             if not app_invalid_fields:
@@ -173,54 +173,54 @@ class AppsManager(object):
                         object_status == DbCodes.Replaced or
                         object_status == DbCodes.Unchanged):
                     msg = 'App %s stored succesfully' % (app.name)
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         PackageCodes.ObjectCreated
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         PackageCodes.FileUploadedSuccessfully
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = [app.to_dict_apps()]
+                    results.message = msg
+                    results.data = [app.to_dict_apps()]
 
                 else:
                     msg = 'Failed to add app %s' % (app.name)
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         PackageFailureCodes.FailedToCreateObject
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         PackageFailureCodes.FileUploadFailed
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.DATA] = [app.to_dict_apps()]
+                    results.message = msg
+                    results.data = [app.to_dict_apps()]
 
             else:
                 msg = (
                     'Failed to add {0}, contained invalid_fields {1}'
                     .format(app.name, ', '.join(app_invalid_fields))
                 )
-                results[ApiResultKeys.ERRORS] = app_invalid_fields
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.errors = app_invalid_fields
+                results.generic_status_code = (
                     PackageFailureCodes.FailedToCreateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     PackageFailureCodes.FileUploadFailed
                 )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.DATA] = [app.to_dict_apps()]
+                results.message = msg
+                results.data = [app.to_dict_apps()]
 
         else:
             msg = (
                 'Not a valid Apps {0} or Files {1} instance'
                 .format(type(app), type(file_data))
             )
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                     PackageFailureCodes.FailedToCreateObject
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                     PackageFailureCodes.FileUploadFailed
             )
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.DATA] = []
+            results.message = msg
+            results.data = []
 
         return results
 

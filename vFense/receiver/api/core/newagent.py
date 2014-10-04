@@ -50,10 +50,10 @@ class NewAgentV1(BaseHandler):
                     system_info, hardware, view_name
                 )
             )
-            status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+            status_code = results.vfense_status_code
             if status_code == AgentResultCodes.NewAgentSucceeded:
-                results[ApiResultKeys.DATA].pop(0)
-                agent_id = results[ApiResultKeys.GENERATED_IDS]
+                results.data.pop(0)
+                agent_id = results.generated_ids
                 try:
                     if 'rv' in plugins:
                         RvHandOff().new_agent_operation(
@@ -95,9 +95,9 @@ class NewAgentV1(BaseHandler):
         agent = Agent(**system_info)
         manager = AgentManager()
         results = manager.create(agent)
-        status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+        status_code = results.vfense_status_code
         if status_code == AgentResultCodes.NewAgentSucceeded:
-            agent_id = results[ApiResultKeys.GENERATED_IDS]
+            agent_id = results.generated_ids
             uris = get_result_uris(agent_id, version='v1')
             uris[AgentOperationKey.Operation] = (
                 AgentOperations.REFRESH_RESPONSE_URIS
@@ -107,9 +107,9 @@ class NewAgentV1(BaseHandler):
                 AgentOperationKey.OperationId: "",
                 OperationPerAgentKey.AgentId: agent_id
             }
-            results[ApiResultKeys.DATA] = [results[ApiResultKeys.DATA]]
-            results[ApiResultKeys.DATA].append(json_msg)
-            results[ApiResultKeys.DATA].append(uris)
+            results.data = [results.data]
+            results.data.append(json_msg)
+            results.data.append(uris)
         return results
 
 
@@ -126,10 +126,10 @@ class NewAgentV2(AgentBaseHandler):
             results = (
                 self.add_agent(system_info, hardware, views, tags)
             )
-            status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+            status_code = results.vfense_status_code
             if status_code == AgentResultCodes.NewAgentSucceeded:
-                results[ApiResultKeys.DATA].pop(0)
-                agent_id = results[ApiResultKeys.GENERATED_IDS]
+                results.data.pop(0)
+                agent_id = results.generated_ids
                 try:
                     if 'rv' in plugins:
                         RvHandOff(
@@ -169,10 +169,10 @@ class NewAgentV2(AgentBaseHandler):
         manager = AgentManager()
         results = manager.create(agent, tags)
         results[ApiResultKeys.OPERATIONS] = []
-        results[ApiResultKeys.DATA] = [results[ApiResultKeys.DATA]]
-        status_code = results[ApiResultKeys.VFENSE_STATUS_CODE]
+        results.data = [results.data]
+        status_code = results.vfense_status_code
         if status_code == AgentResultCodes.NewAgentSucceeded:
-            agent_id = results[ApiResultKeys.GENERATED_IDS]
+            agent_id = results.generated_ids
             uris = get_result_uris(agent_id, version='v2')
             uris[AgentOperationKey.Operation] = (
                 AgentOperations.REFRESH_RESPONSE_URIS

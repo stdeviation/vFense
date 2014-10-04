@@ -76,10 +76,10 @@ def authenticate_agent(fn):
                         agent.update_token(token)
                         msg = '{0} is a previous token'.format(token)
                         results[ApiResultKeys.INVALID_ID] = token
-                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        results.vfense_status_code = (
                             ViewCodes.ValidPreviousToken
                         )
-                        results[ApiResultKeys.MESSAGE] = msg
+                        results.message = msg
                         self.set_status(
                             results[ApiResultKeys.HTTP_STATUS_CODE]
                         )
@@ -88,10 +88,10 @@ def authenticate_agent(fn):
                     elif not authenticated and not valid_old_token:
                         msg = '{0} is not a valid token'.format(token)
                         results[ApiResultKeys.INVALID_ID] = token
-                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        results.vfense_status_code = (
                             ViewFailureCodes.InvalidToken
                         )
-                        results[ApiResultKeys.MESSAGE] = msg
+                        results.message = msg
                         self.set_status(
                             results[ApiResultKeys.HTTP_STATUS_CODE]
                         )
@@ -100,10 +100,10 @@ def authenticate_agent(fn):
                     elif not agent.get_attribute(AgentKeys.Enabled):
                         msg = '{0} is disabled'.format(agent_id)
                         results[ApiResultKeys.AGENT_ID] = agent_id
-                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        results.vfense_status_code = (
                             AgentCodes.Disabled
                         )
-                        results[ApiResultKeys.MESSAGE] = msg
+                        results.message = msg
                         self.set_status(
                             results[ApiResultKeys.HTTP_STATUS_CODE]
                         )
@@ -112,10 +112,10 @@ def authenticate_agent(fn):
                 else:
                     msg = '{0} not a valid agent id'.format(agent_id)
                     results[ApiResultKeys.AGENT_ID] = agent_id
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         AgentCodes.AgentIdDoesNotExist
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.message = msg
                     self.set_status(
                         results[ApiResultKeys.HTTP_STATUS_CODE]
                     )
@@ -123,10 +123,10 @@ def authenticate_agent(fn):
 
             else:
                 msg = 'Headers do not contain Authentication information'
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     GenericFailureCodes.InvalidHeaders
                 )
-                results[ApiResultKeys.MESSAGE] = msg
+                results.message = msg
                 self.set_status(
                     results[ApiResultKeys.HTTP_STATUS_CODE]
                 )
@@ -134,7 +134,7 @@ def authenticate_agent(fn):
 
         except Exception as e:
             msg = e
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 GenericCodes.SomethingBroke
             )
             self.set_status(
@@ -174,10 +174,10 @@ def authenticate_token(fn):
                 elif valid_previous_token:
                     msg = '{0} is a previous token'.format(token)
                     results[ApiResultKeys.INVALID_ID] = token
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         ViewCodes.ValidPreviousToken
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.message = msg
                     self.set_status(
                         results[ApiResultKeys.HTTP_STATUS_CODE]
                     )
@@ -186,20 +186,20 @@ def authenticate_token(fn):
                 else:
                     msg = '{0} is not a valid token'.format(token)
                     results[ApiResultKeys.INVALID_ID] = token
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         ViewFailureCodes.InvalidToken
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.message = msg
                     self.set_status(
                         results[ApiResultKeys.HTTP_STATUS_CODE]
                     )
                     self.write(json.dumps(results, indent=4))
             else:
                 msg = 'Headers do not contain Authentication information'
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     GenericFailureCodes.InvalidHeaders
                 )
-                results[ApiResultKeys.MESSAGE] = msg
+                results.message = msg
                 self.set_status(
                     results[ApiResultKeys.HTTP_STATUS_CODE]
                 )
@@ -207,8 +207,8 @@ def authenticate_token(fn):
 
         except Exception as e:
             msg = e
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.message = msg
+            results.vfense_status_code = (
                 GenericCodes.SomethingBroke
             )
             self.set_status(

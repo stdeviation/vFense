@@ -111,10 +111,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = []
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
         return results
 
@@ -163,10 +163,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = []
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
 
     def install_supported_apps(self, install):
@@ -215,10 +215,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = []
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
 
     def install_agent_update(self, install):
@@ -267,10 +267,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = []
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
 
     def uninstall_apps(self, install):
@@ -319,10 +319,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = []
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
 
     def install_apps(self, install, oper_type):
@@ -365,10 +365,10 @@ class StorePatchingOperation(StoreAgentOperation):
             msg = 'operation created'
             status_code = AgentOperationCodes.ObjectCreated
             vfense_status_code = AgentOperationCodes.Created
-            results[ApiResultKeys.GENERATED_IDS] = [operation_id]
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = [operation_id]
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
             for agent_id in install.agent_ids:
                 valid_app_ids = (
@@ -411,10 +411,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = [operation_id],
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = [operation_id],
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
         return results
 

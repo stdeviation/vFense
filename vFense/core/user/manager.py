@@ -1,6 +1,6 @@
 import logging
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core.user import User
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user._constants import DefaultUsers
@@ -165,7 +165,7 @@ class UserManager(object):
                     "message": "toggle_user_status - user tester is enabled",
                 }
         """
-        results = {}
+        results = ApiResults()
         status_code, _, _, _ = (
             user_status_toggle(self.username)
         )
@@ -177,24 +177,24 @@ class UserManager(object):
             else:
                 msg = 'user %s is disabled' % (self.username)
 
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericCodes.ObjectUpdated
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 UserCodes.UserUpdated
             )
-            results[ApiResultKeys.UPDATED_IDS] = [self.username]
+            results.updated_ids = [self.username]
 
         elif status_code == DbCodes.Skipped:
             msg = 'user %s is invalid' % (self.username)
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 UserFailureCodes.InvalidUserName
             )
 
-        results[ApiResultKeys.MESSAGE] = msg
+        results.message = msg
 
         return results
 
@@ -253,16 +253,16 @@ class UserManager(object):
         user_exist = self.properties
         user.fill_in_defaults()
         user_data = user.to_dict()
-        results = {}
+        results = ApiResults()
         if isinstance(user, User) and not user_exist:
             invalid_fields = user.get_invalid_fields()
-            results[ApiResultKeys.ERRORS] = invalid_fields
+            results.errors = invalid_fields
 
             if invalid_fields:
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.FailedToCreateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     UserFailureCodes.FailedToCreateUser
                 )
 
@@ -294,15 +294,15 @@ class UserManager(object):
                         self.properties = self._user_attributes()
                         self.add_to_views(views)
                         self.add_to_groups(group_ids)
-                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        results.generic_status_code = (
                             GenericCodes.ObjectCreated
                         )
-                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        results.vfense_status_code = (
                             UserCodes.UserCreated
                         )
-                        results[ApiResultKeys.GENERATED_IDS] = [self.username]
-                        results[ApiResultKeys.MESSAGE] = msg
-                        results[ApiResultKeys.DATA] = [user_data]
+                        results.generated_ids = [self.username]
+                        results.message = msg
+                        results.data = [user_data]
 
                 elif (not current_view_is_valid or not default_view_is_valid
                       and validated_groups):
@@ -311,28 +311,28 @@ class UserManager(object):
                         'view name %s does not exist' %
                         (user.current_view)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.InvalidId
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         ViewFailureCodes.ViewDoesNotExist
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-                    results[ApiResultKeys.DATA] = []
+                    results.message = msg
+                    results.unchanged_ids = [self.username]
+                    results.data = []
 
                 elif (current_view_is_valid or default_view_is_valid and
                       not validated_groups):
 
                     msg = 'group ids %s does not exist' % (invalid_groups)
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.InvalidId
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         GroupFailureCodes.InvalidGroupId
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                    results.message = msg
+                    results.unchanged_ids = [self.username]
 
                 else:
                     group_error = (
@@ -343,36 +343,36 @@ class UserManager(object):
                         (user.current_view)
                     )
                     msg = group_error + ' and ' + view_error
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericFailureCodes.FailedToCreateObject
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         UserFailureCodes.FailedToCreateUser
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                    results.message = msg
+                    results.unchanged_ids = [self.username]
 
         elif user_exist and isinstance(user, User):
             msg = 'username %s already exists' % (self.username)
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericCodes.ObjectExists
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 UserFailureCodes.UserNameExists
             )
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+            results.message = msg
+            results.unchanged_ids = [self.username]
 
         else:
             msg = 'Please pass a User instance, not a %s' % (str(type(user)))
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericFailureCodes.FailedToCreateObject
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 GenericFailureCodes.InvalidInstanceType
             )
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+            results.message = msg
+            results.unchanged_ids = [self.username]
 
         return results
 
@@ -407,7 +407,7 @@ class UserManager(object):
         if self.properties[UserKeys.Global]:
             views = fetch_all_view_names()
 
-        results = {}
+        results = ApiResults()
         user_exist = self.properties
         if views_are_valid and user_exist:
             status_code, _, _, _ = update_views_for_user(self.username, views)
@@ -418,14 +418,14 @@ class UserManager(object):
                         self.username, ', '.join(views)
                     )
                 )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.message = msg
+                results.generic_status_code = (
                     GenericCodes.ObjectUpdated
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     ViewCodes.ViewsAddedToUser
                 )
-                results[ApiResultKeys.UPDATED_IDS] = [self.username]
+                results.updated_ids = [self.username]
 
             elif status_code == DbCodes.Unchanged:
                 msg = (
@@ -433,23 +433,23 @@ class UserManager(object):
                         self.username, ', '.join(views)
                     )
                 )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.message = msg
+                results.generic_status_code = (
                     GenericCodes.ObjectUnchanged
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     ViewCodes.ViewUnchanged
                 )
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results.unchanged_ids = [self.username]
 
 
         elif not user_exist:
             msg = 'User name is invalid: %s' % (self.username)
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.message = msg
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 UserFailureCodes.UserNameDoesNotExist
             )
             results[ApiResultKeys.INVALID_IDS] = [self.username]
@@ -460,11 +460,11 @@ class UserManager(object):
                     ' and '.join(views_are_valid[2])
                 )
             )
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.message = msg
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 ViewFailureCodes.InvalidViewName
             )
             results[ApiResultKeys.INVALID_IDS] = [views]
@@ -497,7 +497,7 @@ class UserManager(object):
             }
         """
         user_exist = self.properties
-        results = {}
+        results = ApiResults()
         generated_ids = []
         users_group_exist = []
         if user_exist:
@@ -523,14 +523,14 @@ class UserManager(object):
                         'user %s add to groups: %s' %
                         (self.username, ', '.join(group_ids))
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.ObjectUpdated
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         UserCodes.UsersAddedToGroup
                     )
-                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.updated_ids = [self.username]
+                    results.message = msg
 
                 elif status_code == DbCodes.Unchanged:
                     msg = (
@@ -538,14 +538,14 @@ class UserManager(object):
                             self.username, ', '.join(users_group_exist)
                         )
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.ObjectExists
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         GroupFailureCodes.GroupExistForUser
                     )
-                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.unchanged_ids = [self.username]
+                    results.message = msg
 
 
             elif is_global and len(valid_global_groups) != len(group_ids):
@@ -553,55 +553,55 @@ class UserManager(object):
                     'Can not add local groups to a global user %s: %s' %
                     (self.username, ', '.join(group_ids))
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericCodes.InvalidId
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     UserFailureCodes.CantAddLocalGroupToGlobalUser
                 )
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-                results[ApiResultKeys.MESSAGE] = msg
+                results.unchanged_ids = [self.username]
+                results.message = msg
 
             elif not is_global and len(valid_local_groups) != len(group_ids):
                 msg = (
                     'Can not add global groups to a local user %s: %s' %
                     (self.username, ', '.join(group_ids))
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericCodes.InvalidId
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     UserFailureCodes.CantAddGlobalGroupToLocalUser
                 )
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-                results[ApiResultKeys.MESSAGE] = msg
+                results.unchanged_ids = [self.username]
+                results.message = msg
 
             elif invalid_groups:
                 msg = (
                     'Invalid group ids: %s' %
                     (', '.join(invalid_groups))
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericCodes.InvalidId
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     GroupFailureCodes.InvalidGroupId
                 )
                 results[ApiResultKeys.INVALID_IDS] = [group_ids]
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-                results[ApiResultKeys.MESSAGE] = msg
+                results.unchanged_ids = [self.username]
+                results.message = msg
 
         elif not user_exist:
             msg = 'User name is invalid: %s' % (self.username)
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 UserFailureCodes.InvalidUserName
             )
             results[ApiResultKeys.INVALID_IDS] = [self.username]
-            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-            results[ApiResultKeys.MESSAGE] = msg
+            results.unchanged_ids = [self.username]
+            results.message = msg
 
         return results
 
@@ -634,7 +634,7 @@ class UserManager(object):
         user_exist = self.properties
         username_not_to_delete = []
         username_to_delete = []
-        results = {}
+        results = ApiResults()
         if (user_exist and self.username != DefaultUsers.GLOBAL_ADMIN
                 and not force
                 or user_exist and force):
@@ -649,43 +649,43 @@ class UserManager(object):
 
             if object_status == DbCodes.Deleted:
                 msg = 'User removed %s' % (self.username)
-                results[ApiResultKeys.DELETED_IDS] = (
+                results.deleted_ids = (
                     username_to_delete
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericCodes.ObjectDeleted
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     UserCodes.UserDeleted
                 )
-                results[ApiResultKeys.MESSAGE] = msg
+                results.message = msg
 
         elif self.username == DefaultUsers.GLOBAL_ADMIN:
             msg = 'Can not delete the %s user' % (self.username)
             username_not_to_delete.append(self.username)
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericCodes.CouldNotBeDeleted
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 UserFailureCodes.AdminUserCanNotBeDeleted
             )
-            results[ApiResultKeys.UNCHANGED_IDS] = (
+            results.unchanged_ids = (
                 username_not_to_delete
             )
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
         else:
             msg = 'User does not exist %s' % (self.username)
             username_not_to_delete.append(self.username)
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 UserFailureCodes.UserNameDoesNotExist
             )
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
             results[ApiResultKeys.INVALID_IDS] =  [self.username]
-            results[ApiResultKeys.UNCHANGED_IDS] =  [self.username]
+            results.unchanged_ids =  [self.username]
 
         return results
 
@@ -717,7 +717,7 @@ class UserManager(object):
         exist_in_groupids = False
         admin_group_id = None
         admin_group_id_exists_in_group_ids = False
-        results = {}
+        results = ApiResults()
         if user_exist:
             group_ids_in_db = fetch_groupids_for_user(self.username)
             if self.username == DefaultUsers.GLOBAL_ADMIN:
@@ -753,69 +753,69 @@ class UserManager(object):
                         'Removed group ids: %s from user %s' %
                         (', '.join(group_ids), self.username)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.ObjectDeleted
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         GroupCodes.RemovedUsersFromGroup
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
+                    results.message = msg
+                    results.updated_ids = [self.username]
 
                 elif status_code == DbCodes.Unchanged:
                     msg = (
                         'Group ids: %s do not exist for user %s' %
                         (', '.join(group_ids), self.username)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.ObjectUnchanged
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         GroupCodes.GroupsUnchanged
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                    results.message = msg
+                    results.unchanged_ids = [self.username]
 
             elif admin_group_id_exists_in_group_ids and not remove_admin:
                 msg = (
                     'Can not remove the special group %s from user %s' %
                         (', '.join(group_ids), self.username)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericCodes.InvalidId
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     GroupFailureCodes.CantRemoveAdminFromGroup
                 )
-                results[ApiResultKeys.MESSAGE] =  msg
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results.message =  msg
+                results.unchanged_ids = [self.username]
 
             else:
                 msg = (
                     'groups %s do not exist for user %s' %
                     (' and '.join(group_ids), self.username)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericCodes.InvalidId
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     GroupFailureCodes.GroupDoesNotExistForUser
                 )
-                results[ApiResultKeys.MESSAGE] =  msg
+                results.message =  msg
                 results[ApiResultKeys.INVALID_IDS] = group_ids
-                results[ApiResultKeys.UNCHANGED_IDS] =  [self.username]
+                results.unchanged_ids =  [self.username]
 
         else:
             msg = 'User does not exist %s' % (self.username)
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 GroupFailureCodes.InvalidGroupId
             )
-            results[ApiResultKeys.MESSAGE] =  msg
+            results.message =  msg
             results[ApiResultKeys.INVALID_IDS] =  [self.username]
-            results[ApiResultKeys.UNCHANGED_IDS] =  [self.username]
+            results.unchanged_ids =  [self.username]
 
         return results
 
@@ -845,7 +845,7 @@ class UserManager(object):
             }
         """
         user_exist = self.properties
-        results = {}
+        results = ApiResults()
 
         if user_exist:
             views_in_db = user_exist[UserKeys.Views]
@@ -866,55 +866,55 @@ class UserManager(object):
                         'removed views from user %s: views = %s' %
                         (self.username, ', '.join(views))
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.message = msg
+                    results.generic_status_code = (
                         GenericCodes.ObjectDeleted
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         ViewCodes.ViewsRemovedFromUser
                     )
-                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
+                    results.updated_ids = [self.username]
                 else:
                     msg = (
                         'view names do not exist: %s for user %s' %
                         (', '.join(views), self.username)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.DoesNotExist
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         ViewFailureCodes.UsersDoNotExistForView
                     )
                     results[ApiResultKeys.INVALID_IDS] = [views]
-                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.unchanged_ids = [self.username]
+                    results.message = msg
 
             else:
                 msg = (
                     'view names do not exist: %s for user %s' %
                     (', '.join(views), self.username)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericCodes.DoesNotExist
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     ViewFailureCodes.UsersDoNotExistForView
                 )
                 results[ApiResultKeys.INVALID_IDS] = [views]
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
-                results[ApiResultKeys.MESSAGE] = msg
+                results.unchanged_ids = [self.username]
+                results.message = msg
 
         else:
             msg = 'Invalid username %s' % (self.username)
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.message = msg
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 ViewFailureCodes.InvalidViewName
             )
             results[ApiResultKeys.INVALID_IDS] = [self.username]
-            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+            results.unchanged_ids = [self.username]
 
         return results
 
@@ -945,7 +945,7 @@ class UserManager(object):
             }
         """
         user_exist = self.properties
-        results = {}
+        results = ApiResults()
         if user_exist:
             valid_passwd, strength = check_password(new_password)
             original_encrypted_password = (
@@ -973,65 +973,65 @@ class UserManager(object):
 
                 if object_status == DbCodes.Replaced:
                     msg = 'Password changed for user %s - ' % (self.username)
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.ObjectUpdated
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         UserCodes.PasswordChanged
                     )
-                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
+                    results.updated_ids = [self.username]
 
             elif new_password_verified_against_orignal_password:
                 msg = (
                     'New password is the same as the original - user %s - ' %
                     (self.username)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.FailedToUpdateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     UserFailureCodes.NewPasswordSameAsOld
                 )
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results.unchanged_ids = [self.username]
 
             elif original_password_verified and not valid_passwd:
                 msg = (
                     'New password is to weak for user %s - ' %
                     (self.username)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.FailedToUpdateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     UserFailureCodes.WeakPassword
                 )
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results.unchanged_ids = [self.username]
 
             elif not original_password_verified:
                 msg = (
                     'Password not verified for user %s - ' %
                     (self.username)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.FailedToUpdateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     UserFailureCodes.InvalidPassword
                 )
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results.unchanged_ids = [self.username]
 
 
         else:
             msg = 'User %s does not exist - ' % (self.username)
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 UserFailureCodes.UserNameDoesNotExist
             )
-            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+            results.unchanged_ids = [self.username]
 
-        results[ApiResultKeys.MESSAGE] = msg
+        results.message = msg
 
         return results
 
@@ -1060,7 +1060,7 @@ class UserManager(object):
             }
         """
         user_exist = self.properties
-        results = {}
+        results = ApiResults()
         if user_exist:
             valid_passwd, strength = check_password(password)
             encrypted_password = Crypto().hash_bcrypt(password)
@@ -1075,7 +1075,7 @@ class UserManager(object):
                     msg = 'Password changed for user %s - ' % (self.username)
                     generic_status_code = GenericCodes.ObjectUpdated
                     vfense_status_code = UserCodes.PasswordChanged
-                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
+                    results.updated_ids = [self.username]
 
             else:
                 msg = (
@@ -1084,18 +1084,18 @@ class UserManager(object):
                 )
                 generic_status_code = GenericFailureCodes.FailedToUpdateObject
                 vfense_status_code = UserFailureCodes.WeakPassword
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results.unchanged_ids = [self.username]
 
         else:
             msg = 'User %s does not exist - ' % (self.username)
             generic_status_code = GenericCodes.InvalidId
             vfense_status_code = UserFailureCodes.UserNameDoesNotExist
-            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+            results.unchanged_ids = [self.username]
 
-        results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
-        results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-        results[ApiResultKeys.MESSAGE] = msg
-        results[ApiResultKeys.DATA] = []
+        results.generic_status_code = generic_status_code
+        results.vfense_status_code = vfense_status_code
+        results.message = msg
+        results.data = []
 
         return results
 
@@ -1137,8 +1137,8 @@ class UserManager(object):
         """
         user_exist = self.properties
         status = self.change_view.func_name + ' - '
-        results = {}
-        results[ApiResultKeys.DATA] = []
+        results = ApiResults()
+        results.data = []
         view = None
         views_in_db = user_exist[UserKeys.Views]
         data = user.to_dict_non_null()
@@ -1161,22 +1161,22 @@ class UserManager(object):
                     'View %s is not valid for user %s' %
                     (view, self.username)
                 )
-                results[ApiResultKeys.MESSAGE] = status + msg
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.message = status + msg
+                results.generic_status_code = (
                     GenericCodes.InvalidId
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     UserFailureCodes.FailedToUpdateUser
                 )
         elif not user_exist and view:
             msg = (
                 'User %s is not valid' % (self.username)
             )
-            results[ApiResultKeys.MESSAGE] = status + msg
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.message = status + msg
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 UserFailureCodes.FailedToUpdateUser
             )
         else:
@@ -1184,11 +1184,11 @@ class UserManager(object):
                 'current_view or default_view ' +
                 'was not set in the User instance'
             )
-            results[ApiResultKeys.MESSAGE] = status + msg
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.message = status + msg
+            results.generic_status_code = (
                 GenericCodes.InvalidId
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 UserFailureCodes.FailedToUpdateUser
             )
 
@@ -1297,9 +1297,9 @@ class UserManager(object):
         """
 
         user_exist = self.properties
-        results = {}
+        results = ApiResults()
         data = {}
-        results[ApiResultKeys.DATA] = []
+        results.data = []
         if user_exist:
             invalid_fields = user.get_invalid_fields()
             data = user.to_dict_non_null()
@@ -1314,29 +1314,29 @@ class UserManager(object):
                     msg = 'User %s was updated - ' % (self.username)
                     generic_status_code = GenericCodes.ObjectUpdated
                     vfense_status_code = UserCodes.UserUpdated
-                    results[ApiResultKeys.UPDATED_IDS] = [self.username]
-                    results[ApiResultKeys.DATA] = [data]
+                    results.updated_ids = [self.username]
+                    results.data = [data]
 
                 elif object_status == DbCodes.Unchanged:
                     msg = 'User %s was not updated - ' % (self.username)
                     generic_status_code = GenericCodes.ObjectUnchanged
                     vfense_status_code = UserCodes.UserUnchanged
-                    results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                    results.unchanged_ids = [self.username]
 
             else:
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = UserFailureCodes.FailedToUpdateUser
                 msg = 'User %s properties were invalid - ' % (self.username)
-                results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+                results.unchanged_ids = [self.username]
 
         else:
             generic_status_code = GenericCodes.InvalidId
             vfense_status_code = UserFailureCodes.UserNameDoesNotExist
             msg = 'User %s does not exist - ' % (self.username)
-            results[ApiResultKeys.UNCHANGED_IDS] = [self.username]
+            results.unchanged_ids = [self.username]
 
-        results[ApiResultKeys.GENERIC_STATUS_CODE] = generic_status_code
-        results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-        results[ApiResultKeys.MESSAGE] = msg
+        results.generic_status_code = generic_status_code
+        results.vfense_status_code = vfense_status_code
+        results.message = msg
 
         return results

@@ -78,7 +78,7 @@ class ViewHandler(BaseHandler):
 
         results = fetch_views.by_name(view)
         if results[ApiResultKeys.COUNT] > 0:
-            results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
+            results.data = results.data[0]
         return results
 
 
@@ -211,7 +211,7 @@ class ViewHandler(BaseHandler):
                 if results.get(ApiResultKeys.DATA, None):
                     data.append(results.get(ApiResultKeys.DATA))
 
-            results[ApiResultKeys.DATA] = data
+            results.data = data
 
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -541,48 +541,48 @@ class ViewsHandler(BaseHandler):
             manager = ViewManager(view_name)
             manager.remove_agents()
             results = manager.remove(force)
-            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+            if (results.vfense_status_code
                     == ViewCodes.ViewDeleted):
                 views_deleted.append(view_name)
             else:
                 views_unchanged.append(view_name)
 
-        end_results[ApiResultKeys.UNCHANGED_IDS] = views_unchanged
-        end_results[ApiResultKeys.DELETED_IDS] = views_deleted
+        end_results.unchanged_ids = views_unchanged
+        end_results.deleted_ids = views_deleted
         if views_unchanged and views_deleted:
             msg = (
                 'view names deleted: %s, view names unchanged: %s'
                 % (', '.join(views_deleted), ', '.join(views_unchanged))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 ViewFailureCodes.FailedToDeleteAllObjects
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 ViewFailureCodes.FailedToDeleteAllViews
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif views_deleted and not views_unchanged:
             msg = (
                 'view names deleted: %s' % (', '.join(views_deleted))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 ViewCodes.ObjectsDeleted
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 ViewCodes.ViewsDeleted
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif views_unchanged and not views_deleted:
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 ViewCodes.ObjectsUnchanged
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 ViewCodes.ViewsUnchanged
             )
-            end_results[ApiResultKeys.MESSAGE] = (
-                results[ApiResultKeys.MESSAGE]
+            end_results.message = (
+                results.message
             )
 
         return end_results

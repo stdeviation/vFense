@@ -73,7 +73,7 @@ class GroupHandler(BaseHandler):
         fetch_groups = RetrieveGroups(is_global=is_global)
         results = fetch_groups.by_id(group_id)
         if results[ApiResultKeys.COUNT] > 0:
-            results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
+            results.data = results.data[0]
         return results
 
     @authenticated_request
@@ -458,45 +458,45 @@ class GroupsHandler(BaseHandler):
         for group_id in group_ids:
             manager = GroupManager(group_id)
             results = manager.remove()
-            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+            if (results.vfense_status_code
                         == GroupCodes.Deleted):
                 groups_deleted.append(group_id)
             else:
                 groups_unchanged.append(group_id)
 
-        end_results[ApiResultKeys.UNCHANGED_IDS] = groups_unchanged
-        end_results[ApiResultKeys.DELETED_IDS] = groups_deleted
+        end_results.unchanged_ids = groups_unchanged
+        end_results.deleted_ids = groups_deleted
         if groups_unchanged and groups_deleted:
             msg = (
                 'group ids deleted: %s, group ids unchanged: %s'
                 % (', '.join(groups_deleted), ', '.join(groups_unchanged))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 GroupFailureCodes.FailedToDeleteAllObjects
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 GroupFailureCodes.FailedToDeleteAllGroups
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif groups_deleted and not groups_unchanged:
             msg = 'group ids deleted: %s' % (', '.join(groups_deleted))
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 GroupCodes.ObjectsDeleted
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 GroupCodes.GroupsDeleted
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif groups_unchanged and not groups_deleted:
             msg = 'group ids unchanged: %s' % (', '.join(groups_unchanged))
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 GroupCodes.ObjectsUnchanged
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 GroupCodes.GroupsUnchanged
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         return end_results

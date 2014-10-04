@@ -89,7 +89,7 @@ class UserHandler(BaseHandler):
         fetch_users = RetrieveUsers(is_global=is_global)
         results = fetch_users.by_name(user_name)
         if results[ApiResultKeys.COUNT] > 0:
-            results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
+            results.data = results.data[0]
         return results
 
 
@@ -599,45 +599,45 @@ class UsersHandler(BaseHandler):
         for username in usernames:
             manager = UserManager(username)
             results = manager.remove()
-            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+            if (results.vfense_status_code
                     == UserCodes.Deleted):
                 users_deleted.append(username)
             else:
                 users_unchanged.append(username)
 
-        end_results[ApiResultKeys.UNCHANGED_IDS] = users_unchanged
-        end_results[ApiResultKeys.DELETED_IDS] = users_deleted
+        end_results.unchanged_ids = users_unchanged
+        end_results.deleted_ids = users_deleted
         if users_unchanged and users_deleted:
             msg = (
                 'user names deleted: %s, user names unchanged: %s'
                 % (', '.join(users_deleted), ', '.join(users_unchanged))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 UserFailureCodes.FailedToDeleteAllObjects
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 UserFailureCodes.FailedToDeleteAllUsers
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif users_deleted and not users_unchanged:
             msg = 'user names deleted: %s' % (', '.join(users_deleted))
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 UserCodes.ObjectsDeleted
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 UserCodes.UsersDeleted
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif users_unchanged and not users_deleted:
             msg = 'user names unchanged: %s' % (', '.join(users_unchanged))
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 UserCodes.ObjectsUnchanged
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 UserCodes.UsersUnchanged
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         return end_results

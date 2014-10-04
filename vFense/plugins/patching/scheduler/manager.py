@@ -11,7 +11,7 @@ from vFense.core.scheduler.manager import JobManager
 from vFense.core.scheduler.status_codes import (
     SchedulerCodes, SchedulerFailureCodes
 )
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 
 class AgentAppsJobManager(JobManager):
     def _set_funcs(self):
@@ -31,7 +31,7 @@ class AgentAppsJobManager(JobManager):
             operation (str): The name of the operation.
                 example install_os_apps, uninstall
         """
-        results = {}
+        results = ApiResults()
         self._set_funcs()
         if isinstance(install, Install):
             invalid_fields = install.get_invalid_fields()
@@ -52,28 +52,28 @@ class AgentAppsJobManager(JobManager):
                 msg = (
                     'Failed to create install job, invalid fields were passed'
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     SchedulerFailureCodes.FailedToCreateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     SchedulerFailureCodes.FailedToCreateSchedule
                 )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.ERRORS] = invalid_fields
-                results[ApiResultKeys.DATA] = install.to_dict()
+                results.message = msg
+                results.errors = invalid_fields
+                results.data = install.to_dict()
 
         else:
             msg = (
                 'Invalid {0} Instance, must pass an instance of Install.'
                 .format(type(install))
             )
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 SchedulerFailureCodes.FailedToCreateObject
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 SchedulerFailureCodes.FailedToCreateSchedule
             )
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
         return results
 
@@ -101,7 +101,7 @@ class AgentAppsJobManager(JobManager):
                 example install_os_apps, uninstall
         """
         self._set_funcs()
-        results = {}
+        results = ApiResults()
         if isinstance(install, Install):
             invalid_fields = install.get_invalid_fields()
             if not invalid_fields:
@@ -125,28 +125,28 @@ class AgentAppsJobManager(JobManager):
                 msg = (
                     'Failed to create install job, invalid fields were passed'
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     SchedulerFailureCodes.FailedToCreateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     SchedulerFailureCodes.FailedToCreateSchedule
                 )
-                results[ApiResultKeys.MESSAGE] = msg
-                results[ApiResultKeys.ERRORS] = invalid_fields
-                results[ApiResultKeys.DATA] = install.to_dict()
+                results.message = msg
+                results.errors = invalid_fields
+                results.data = install.to_dict()
 
         else:
             msg = (
                 'Invalid {0} Instance, must pass an instance of Install.'
                 .format(type(install))
             )
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 SchedulerFailureCodes.FailedToCreateObject
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 SchedulerFailureCodes.FailedToCreateSchedule
             )
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
         return results
 

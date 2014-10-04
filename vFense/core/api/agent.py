@@ -370,14 +370,14 @@ class AgentsHandler(BaseHandler):
         for view in views:
             manager = ViewManager(view)
             results = manager.add_to_agents(agents)
-            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+            if (results.vfense_status_code
                     == ViewCodes.AgentsAddedToView):
                 views_added.append(view)
             else:
                 views_unchanged.append(view)
 
-        end_results[ApiResultKeys.UNCHANGED_IDS] = views_unchanged
-        end_results[ApiResultKeys.UPDATED_IDS] = views_added
+        end_results.unchanged_ids = views_unchanged
+        end_results.updated_ids = views_added
 
         if views_added and views_unchanged:
             msg = (
@@ -388,39 +388,39 @@ class AgentsHandler(BaseHandler):
                     views_unchanged
                 )
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 AgentFailureCodes.FailedToUpdateAllObjects
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 AgentFailureCodes.FailedToAddViewsToAgents
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif views_added and not views_unchanged:
             msg = (
                 'Agents: {0} added to views: {1}'
                 .format(', '.join(agents), ', '.join(views_added))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 AgentCodes.ObjectsUpdated
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 AgentCodes.UsersDeleted
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif views_unchanged and not views_added:
             msg = (
                 'Agents: {0} failed to add to views: {1}'
                 .format(', '.join(agents), ', '.join(views_unchanged))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 AgentCodes.ObjectsUnchanged
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 AgentFailureCodes.FailedToAddViewsToAgent
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         return end_results
 
@@ -434,14 +434,14 @@ class AgentsHandler(BaseHandler):
         for view in views:
             manager = ViewManager(view)
             results = manager.remove_agents(agents)
-            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+            if (results.vfense_status_code
                     == ViewCodes.AgentsRemovedFromView):
                 views_removed.append(view)
             else:
                 views_unchanged.append(view)
 
-        end_results[ApiResultKeys.UNCHANGED_IDS] = views_unchanged
-        end_results[ApiResultKeys.UPDATED_IDS] = views_removed
+        end_results.unchanged_ids = views_unchanged
+        end_results.updated_ids = views_removed
 
         if views_removed and views_unchanged:
             msg = (
@@ -452,39 +452,39 @@ class AgentsHandler(BaseHandler):
                     views_unchanged
                 )
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 AgentFailureCodes.FailedToUpdateAllObjects
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 AgentFailureCodes.FailedToRemoveViewsFromAgents
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif views_removed and not views_unchanged:
             msg = (
                 'Agents: {0} removed from views: {1}'
                 .format(', '.join(agents), ', '.join(views_removed))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 AgentCodes.ObjectsUpdated
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 AgentCodes.ViewsRemovedFromAgents
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif views_unchanged and not views_removed:
             msg = (
                 'Agents: {0} failed to add to views: {1}'
                 .format(', '.join(agents), ', '.join(views_unchanged))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 AgentCodes.ObjectsUnchanged
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 AgentFailureCodes.FailedToAddViewsToAgent
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         return end_results
 
@@ -531,15 +531,15 @@ class AgentsHandler(BaseHandler):
         for agent_id in agents:
             manager = AgentManager(agent_id)
             results = manager.remove()
-            if (results[ApiResultKeys.VFENSE_STATUS_CODE]
+            if (results.vfense_status_code
                     == AgentCodes.AgentDeleted):
                 agents_deleted.append(agent_id)
                 delete_oper.uninstall_agent(agent_ids=[agent_id])
             else:
                 agents_unchanged.append(agent_id)
 
-        end_results[ApiResultKeys.UNCHANGED_IDS] = agents_unchanged
-        end_results[ApiResultKeys.DELETED_IDS] = agents_deleted
+        end_results.unchanged_ids = agents_unchanged
+        end_results.deleted_ids = agents_deleted
 
         if agents_deleted and agents_unchanged:
             msg = (
@@ -549,38 +549,38 @@ class AgentsHandler(BaseHandler):
                     ', '.join(agents_unchanged),
                 )
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 AgentFailureCodes.FailedToDeleteAllObjects
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 AgentFailureCodes.FailedToDeleteAgents
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif agents_deleted and not agents_unchanged:
             msg = (
                 'Agents: {0} deleted.'.format(', '.join(agents))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 AgentCodes.ObjectsDeleted
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 AgentCodes.AgentsDeleted
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         elif agents_unchanged and not agents_deleted:
             msg = (
                 'Agents: {0} failed to delete: {1}'
                 .format(', '.join(agents), ', '.join(agents_unchanged))
             )
-            end_results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            end_results.generic_status_code = (
                 AgentCodes.ObjectsUnchanged
             )
-            end_results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            end_results.vfense_status_code = (
                 AgentFailureCodes.FailedToDeleteAgents
             )
-            end_results[ApiResultKeys.MESSAGE] = msg
+            end_results.message = msg
 
         return end_results
 
@@ -622,7 +622,7 @@ class AgentHandler(BaseHandler):
     def get_agent_by_id(self, search, agent_id):
         results = search.by_id(agent_id)
         if results[ApiResultKeys.COUNT] > 0:
-            results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA].pop()
+            results.data = results.data.pop()
         return results
 
     @authenticated_request

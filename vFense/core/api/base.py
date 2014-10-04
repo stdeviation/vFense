@@ -38,7 +38,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def modified_output(self, results, content_type, file_name):
         if content_type == Outputs.CSV:
-            data = csvify(results[ApiResultKeys.DATA])
+            data = csvify(results.data)
             self.set_header('Content-Type', ContentTypes.CSV)
             self.set_header(
                 'Content-Disposition',
@@ -47,7 +47,7 @@ class BaseHandler(tornado.web.RequestHandler):
             self.write(data)
 
         elif content_type == Outputs.TEXT:
-            data = tableify(results[ApiResultKeys.DATA])
+            data = tableify(results.data)
             self.set_header('Content-Type', ContentTypes.TEXT)
             self.write(data)
 
