@@ -59,3 +59,8 @@ class NotifDefaults():
     @staticmethod
     def file_system():
         return None
+
+
+class NotifPluginTypes():
+    EMAIL = 'email'
+    SMS = 'sms'

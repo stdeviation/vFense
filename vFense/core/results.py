@@ -98,7 +98,7 @@ class ApiResults(object):
             self.errors = ApiResultDefaults().errors()
 
 
-    def to_dict_results(self):
+    def to_dict(self):
         """ Turn the view fields into a dictionary.
 
         Returns:

@@ -29,6 +29,7 @@ from vFense.core._db import (
 )
 
 
+
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
@@ -175,7 +176,7 @@ def update_rule(rule_id, rule_data):
 
     Basic Usage:
         >>> from vFense.plugins.notifications._db import update_rule
-        >>> rule_id = ''
+        >>> rule_id = '38226b0e-a482-4cb8-b135-0a0057b913f2'
         >>> rule_data = {'rule_name': 'vFense', 'rule_description': 'no'}
         >>> update_rule(rule_id, rule_data)
 
