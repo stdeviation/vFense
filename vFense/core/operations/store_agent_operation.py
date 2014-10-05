@@ -8,9 +8,9 @@ from vFense.core.operations._db_model import (
     OperationPerAgentKey, AgentOperationKey
 )
 from vFense.core.decorators import results_message
-from vFense.core.queue.queue import AgentQueue
+from vFense.core.queue.manager import AgentQueueManager
 from vFense.core.tag._db import fetch_agent_ids_in_tag
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core.status_codes import GenericCodes, GenericFailureCodes
 from vFense.core.operations.status_codes import (
     AgentOperationCodes, AgentOperationFailureCodes
@@ -57,9 +57,9 @@ class StoreAgentOperation(object):
     def _store_in_agent_queue(self, operation):
         """Add the operation inside of the agent queue collection
         Args:
-            operation (dict): The dictionary of the operation.
+            operation (AgentQueueOperation): The dictionary of the operation.
         """
-        agent_queue = AgentQueue(operation[OperationPerAgentKey.AgentId])
+        agent_queue = AgentQueueManager(operation.agent_id)
         agent_queue.add(
             operation, self.view_name, self.server_queue_ttl,
             self.agent_queue_ttl
@@ -130,9 +130,8 @@ class StoreAgentOperation(object):
             elif agentids:
                 agentids += fetch_agent_ids_in_tag(tag_id)
 
-        results = {
-            ApiResultKeys.DATA: [],
-        }
+        results = ApiResults()
+        results.fill_in_defaults()
 
         operation = (
             AgentOperation(

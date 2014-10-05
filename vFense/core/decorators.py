@@ -74,7 +74,6 @@ def results_message(fn):
     """Return the results in the vFense API standard"""
     def db_wrapper(*args, **kwargs):
         data = fn(*args, **kwargs)
-        generic_status_code = data.get(ApiResultKeys.GENERIC_STATUS_CODE, None)
         tornado_handler = args[0]
         username = tornado_handler.get_current_user()
         method = tornado_handler.request.method
@@ -82,66 +81,66 @@ def results_message(fn):
         status = None
 
 
-        if generic_status_code == GenericCodes.InformationRetrieved:
+        if data.generic_status_code == GenericCodes.InformationRetrieved:
             status = (
                 Results(
                     username, uri, method
                 ).data_retrieved(**data)
             )
 
-        elif generic_status_code == GenericCodes.ObjectCreated:
+        elif data.generic_status_code == GenericCodes.ObjectCreated:
             status = (
                 Results(
                     username, uri, method
                 ).objects_created(**data)
             )
 
-        elif generic_status_code == GenericCodes.AuthorizationGranted:
+        elif data.generic_status_code == GenericCodes.AuthorizationGranted:
             status = (
                 Results(
                     username, uri, method
                 ).auth_granted(**data)
             )
 
-        elif generic_status_code == GenericFailureCodes.FailedToCreateObject:
+        elif data.generic_status_code == GenericFailureCodes.FailedToCreateObject:
             status = (
                 Results(
                     username, uri, method
                 ).objects_failed_to_create(**data)
             )
 
-        elif (generic_status_code == GenericCodes.ObjectUpdated or
-              generic_status_code == GenericCodes.ObjectsUpdated):
+        elif (data.generic_status_code == GenericCodes.ObjectUpdated or
+              data.generic_status_code == GenericCodes.ObjectsUpdated):
             status = (
                 Results(
                     username, uri, method
                 ).objects_updated(**data)
             )
 
-        elif generic_status_code == GenericFailureCodes.FailedToUpdateObject:
+        elif data.generic_status_code == GenericFailureCodes.FailedToUpdateObject:
             status = (
                 Results(
                     username, uri, method
                 ).objects_failed_to_update(**data)
             )
 
-        elif (generic_status_code == GenericCodes.ObjectDeleted or
-              generic_status_code == GenericCodes.ObjectsDeleted):
+        elif (data.generic_status_code == GenericCodes.ObjectDeleted or
+              data.generic_status_code == GenericCodes.ObjectsDeleted):
             status = (
                 Results(
                     username, uri, method
                 ).objects_deleted(**data)
             )
 
-        elif generic_status_code == GenericFailureCodes.FailedToDeleteObject:
+        elif data.generic_status_code == GenericFailureCodes.FailedToDeleteObject:
             status = (
                 Results(
                     username, uri, method
                 ).objects_failed_to_delete(**data)
             )
 
-        elif (generic_status_code == GenericCodes.ObjectUnchanged or
-              generic_status_code == GenericCodes.ObjectsUnchanged):
+        elif (data.generic_status_code == GenericCodes.ObjectUnchanged or
+              data.generic_status_code == GenericCodes.ObjectsUnchanged):
             status = (
                 Results(
                     username, uri, method
@@ -150,11 +149,11 @@ def results_message(fn):
 
 
         elif (
-                generic_status_code == GenericCodes.InvalidId or
-                generic_status_code == GenericFailureCodes.InvalidId or
-                generic_status_code == GenericCodes.InvalidValue or
-                generic_status_code == GenericFailureCodes.InvalidFilterKey or
-                generic_status_code == GenericFailureCodes.InvalidFields):
+                data.generic_status_code == GenericCodes.InvalidId or
+                data.generic_status_code == GenericFailureCodes.InvalidId or
+                data.generic_status_code == GenericCodes.InvalidValue or
+                data.generic_status_code == GenericFailureCodes.InvalidFilterKey or
+                data.generic_status_code == GenericFailureCodes.InvalidFields):
 
             status = (
                 Results(
@@ -162,7 +161,7 @@ def results_message(fn):
                 ).invalid_id(**data)
             )
 
-        elif generic_status_code == GenericCodes.DoesNotExist:
+        elif data.generic_status_code == GenericCodes.DoesNotExist:
             status = (
                 Results(
                     username, uri, method
@@ -170,7 +169,7 @@ def results_message(fn):
             )
 
 
-        elif generic_status_code == GenericCodes.ObjectExists:
+        elif data.generic_status_code == GenericCodes.ObjectExists:
             status = (
                 Results(
                     username, uri, method

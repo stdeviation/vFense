@@ -230,7 +230,7 @@ class Notification(Base):
         }
 
         combined_data = dict(self.to_dict().items() + data.items())
-        combined_data.pop(NotificationKeys.NotificationId)
+        combined_data.pop(NotificationKeys.NotificationId, None)
         return combined_data
 
     def to_dict_db_update(self):
@@ -248,7 +248,7 @@ class Notification(Base):
         }
 
         combined_data = dict(self.to_dict_non_null().items() + data.items())
-        combined_data.pop(NotificationKeys.NotificationId)
+        combined_data.pop(NotificationKeys.NotificationId, None)
         return combined_data
 
 
@@ -353,7 +353,7 @@ class NotificationHistory(Base):
         }
 
         combined_data = dict(self.to_dict_non_null().items() + data.items())
-        combined_data.pop(NotificationHistoryKeys.Id)
+        combined_data.pop(NotificationHistoryKeys.Id, None)
 
         return dict(self.to_dict().items() + data.items())
 

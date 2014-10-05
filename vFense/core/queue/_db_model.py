@@ -12,7 +12,7 @@ class AgentQueueKey():
     ExpireMinutes = 'expire_minutes'
     Expired = 'expired'
     ViewName = 'view_name'
-    OperationId = 'OperationId'
+    Operation = 'Operation'
     RequestMethod = 'request_method'
     ResponseURI = 'response_uri'
 

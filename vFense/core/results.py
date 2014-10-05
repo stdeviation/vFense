@@ -39,7 +39,7 @@ class ApiResults(object):
                  deleted_ids=None, generic_status_code=None, data=None,
                  vfense_status_code=None, db_status_code=None, http_uri=None,
                  message=None, http_method=None, errors=None, user_name=None,
-                 operation=None, operations=None, agent_id=None, tag_id=None,
+                 operation=None, agent_id=None, tag_id=None,
                  app_id=None, operation_id=None, count=None,
                  generated_ids=None
                  ):
@@ -58,7 +58,6 @@ class ApiResults(object):
         self.message = message
         self.data = data
         self.operation = operation
-        self.operations = operations
         self.count = count
         self.generated_ids = generated_ids
         self.errors = errors
@@ -115,12 +114,52 @@ class ApiResults(object):
             ApiResultKeys.GENERATED_IDS: self.generated_ids,
             ApiResultKeys.GENERIC_STATUS_CODE: self.generic_status_code,
             ApiResultKeys.VFENSE_STATUS_CODE: self.vfense_status_code,
-            ApiResultKeys.COUNT: self.count,
             ApiResultKeys.DATA: self.data,
             ApiResultKeys.MESSAGE: self.message,
-            ApiResultKeys.OPERATIONS: self.operations,
             ApiResultKeys.ERRORS: self.errors,
         }
+
+
+class ExternalApiResults(ApiResults):
+    def __init__(self, uri=None, http_method=None, username=None, **kwargs):
+        super(ExternalApiResults, self).__init__(**kwargs)
+        self.uri = uri
+        self.http_method = http_method
+        self.username = username
+
+    def to_dict(self):
+        data = {
+            ApiResultKeys.OPERATIONS: self.operations,
+            ApiResultKeys.COUNT: self.count,
+            ApiResultKeys.HTTP_STATUS_CODE: self.http_status_code,
+            ApiResultKeys.URI: self.uri,
+            ApiResultKeys.HTTP_METHOD: self.http_method,
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        return combined_data
+
+
+class AgentApiResults(ApiResults):
+    def __init__(self, uri=None, http_method=None, agent_id=None,
+                 operations=None, **kwargs):
+        super(AgentApiResults, self).__init__(**kwargs)
+        self.uri = uri
+        self.http_method = http_method
+        self.agent_id = agent_id
+        self.operations = operations
+
+    def to_dict(self):
+        data = {
+            ApiResultKeys.OPERATIONS: self.operations,
+            ApiResultKeys.HTTP_STATUS_CODE: self.http_status_code,
+            ApiResultKeys.URI: self.uri,
+            ApiResultKeys.HTTP_METHOD: self.http_method,
+            ApiResultKeys.AGENT_ID: self.agent_id,
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        return combined_data
 
 
 

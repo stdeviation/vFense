@@ -4,7 +4,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.operations.agent_operations import AgentOperation
 from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations._constants import AgentOperations
-from vFense.core.queue.queue import AgentQueue
+from vFense.core.queue.manager import AgentQueueManager
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -13,7 +13,7 @@ logger = logging.getLogger('rvapi')
 
 
 def process_queue_data(agent_id):
-    agent_queue = AgentQueue(agent_id).pop_agent_queue()
+    agent_queue = AgentQueueManager(agent_id).pop_agent_queue()
     for operation in agent_queue:
         if operation.get(AgentOperationKey.OperationId):
             oper = AgentOperation()
