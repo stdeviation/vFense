@@ -1,4 +1,6 @@
 from time import time
+from vFense import Base
+from vFense.core._db_constants import DbTime
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent._constants import (
     AgentDefaults
@@ -10,7 +12,7 @@ from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 
 
-class Agent(object):
+class Agent(Base):
     """Used to represent an instance of an agent."""
 
     def __init__(self, agent_id=None, computer_name=None, display_name=None,
@@ -72,12 +74,8 @@ class Agent(object):
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
         the hardcoded default values.
-
-        Use case(s):
-            Useful when adding a new agent instance and only want to fill
-            in a few fields, then allow the add agent functions to call this
-            method to fill in the rest.
         """
+        now = time()
 
         if not self.needs_reboot:
             self.needs_reboot = AgentDefaults.NEEDS_REBOOT
@@ -101,26 +99,18 @@ class Agent(object):
             self.display_name = AgentDefaults.DISPLAY_NAME
 
         if not self.date_added:
-            self.date_added = time()
+            self.date_added = now
 
         if not self.last_agent_update:
-            self.last_agent_update = time()
+            self.last_agent_update = now
 
         if not self.enabled:
             self.enabled = True
 
     def get_invalid_fields(self):
-        """Check the agent for any invalid fields.
-
+        """Check for any invalid fields.
         Returns:
-            (list): List of key/value pair dictionaries corresponding
-                to the invalid fields.
-
-                Ex:
-                    [
-                        {'view_name': 'the invalid name in question'},
-                        {'net_throttle': -10}
-                    ]
+            (list): List of invalid fields
         """
         invalid_fields = []
 
@@ -180,77 +170,10 @@ class Agent(object):
         return invalid_fields
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the fields into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                view.
-
-                Ex:
-                {
-                    "rebooted": true,
-                    "hardware": {
-                        "nic": [
-                            {
-                                "mac": "3085A925BFD6",
-                                "ip_address": "10.0.0.2",
-                                "name": "Local Area Connection"
-                            },
-                            {
-                                "mac": "005056C00001",
-                                "ip_address": "192.168.110.1",
-                                "name": "VMware Network Adapter VMnet1"
-                            },
-                            {
-                                "mac": "005056C00008",
-                                "ip_address": "192.168.252.1",
-                                "name": "VMware Network Adapter VMnet8"
-                            }
-                        ],
-                        "display": [
-                            {
-                                "speed_mhz": "GeForce GTX 660M",
-                                "name": "NVIDIA GeForce GTX 660M  ",
-                                "ram_kb": 0
-                            }
-                        ],
-                        "storage": [
-                            {
-                                "free_size_kb": 155600024,
-                                "name": "C:",
-                                "size_kb": 499872764,
-                                "file_system": "NTFS"
-                            }
-                        ],
-                        "cpu": [
-                            {
-                                "speed_mhz": 2401,
-                                "name": "Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz",
-                                "cpu_id": 1,
-                                "bit_type": 64,
-                                "cache_kb": 1024,
-                                "cores": 4
-                            }
-                        ],
-                        "memory": 25165824
-                    },
-                    "display_name": null,
-                    "environment": "Production",
-                    "views": [
-                        "global"
-                    ],
-                    "date_added": 1403881567.891592,
-                    "last_agent_update": 1403881567.891593,
-                    "os_code": "windows",
-                    "agent_status": "up",
-                    "token": null,
-                    "version": "6.1.7601",
-                    "bit_type": "64",
-                    "computer_name": "DISCIPLINE-1",
-                    "os_string": "Windows 7 Professional N",
-                    "needs_reboot": false,
-                    "assign_new_token": false
-                }
+            (dict): A dictionary with the fields.
         """
 
         return {
@@ -273,14 +196,41 @@ class Agent(object):
             AgentKeys.AssignNewToken: self.assign_new_token,
         }
 
-    def to_dict_non_null(self):
-        """ Use to get non None fields of view. Useful when
-        filling out just a few fields to update the view in the db.
+    def to_dict_db(self):
+        """ Turn the fields into a dictionary, with db related fields.
 
         Returns:
-            (dict): a dictionary with the non None fields of this view.
-        """
-        agent_dict = self.to_dict()
+            (dict): A dictionary with the fields.
 
-        return {k:agent_dict[k] for k in agent_dict
-                if agent_dict[k] != None}
+        """
+
+        data = {
+            AgentKeys.DateAdded: (
+                DbTime.epoch_time_to_db_time(self.date_added)
+            ),
+            AgentKeys.LastAgentUpdate: (
+                DbTime.epoch_time_to_db_time(self.last_agent_update)
+            ),
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        combined_data.pop(AgentKeys.AgentId, None)
+        return combined_data
+
+    def to_dict_db_update(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        data = {
+            AgentKeys.LastAgentUpdate: (
+                DbTime.epoch_time_to_db_time(self.last_agent_update)
+            ),
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        combined_data.pop(AgentKeys.AgentId, None)
+        return combined_data

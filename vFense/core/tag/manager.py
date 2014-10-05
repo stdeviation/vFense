@@ -1,10 +1,13 @@
-from vFense.core.agent._db_model import *
+from time import time
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import time_it
 from vFense.core.agent.agents import validate_agent_ids
+from vFense.core.agent.status_codes import (
+    AgentFailureCodes
+)
 from vFense.core.tag import Tag
 from vFense.core.tag._db import (
     fetch_tag, insert_tag, add_agents_to_tag, delete_agent_ids_from_tag,
@@ -12,9 +15,6 @@ from vFense.core.tag._db import (
     update_tag
 )
 from vFense.core.view.views import validate_view_names
-from vFense.core.tag._db_model import (
-    TagKeys, TagMappedKeys, TagsPerAgentKeys
-)
 from vFense.core.results import ApiResults
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes,
@@ -37,7 +37,7 @@ class TagManager(object):
     def _tag_attributes(self):
         tag_data = {}
         if self.tag_id:
-            tag_data = fetch_tag(self.tag_id)
+            tag_data = Tag(**fetch_tag(self.tag_id))
         return tag_data
 
     def get_attribute(self, tag_attribute):
@@ -90,71 +90,46 @@ class TagManager(object):
             >>> manager.create(tag)
 
         Returns:
-            >>>
-                {
-                    "data": [
-                        {
-                            "environment": "production",
-                            "global": true,
-                            "view_name": "global",
-                            "tag_id": "0842c4c0-94ab-4fe4-9346-3b59fa53c316",
-                            "tag_name": "Test Tag 1"
-                        }
-                    ],
-                    "message": "Tag Test Tag 1 created successfully, tag id: 0842c4c0-94ab-4fe4-9346-3b59fa53c316",
-                    "generated_ids": [
-                        "0842c4c0-94ab-4fe4-9346-3b59fa53c316"
-                    ],
-                    "vfense_status_code": 4000,
-                    "generic_status_code": 1010
-                }
+            ApiResults instance
         """
         results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(tag, Tag):
             invalid_fields = tag.get_invalid_fields()
             tag.fill_in_defaults()
-            tag_data = tag.to_dict()
             views_are_validated, valid_view_names, invalid_view_names = (
-                validate_view_names([tag_data[TagKeys.ViewName]])
+                validate_view_names([tag.view_name])
             )
             tag_exist_for_view = (
                 fetch_tag_by_name_and_view(tag.tag_name, tag.view_name)
             )
             if (views_are_validated and not invalid_fields and
                     not tag_exist_for_view):
-                agents = tag_data.pop(TagMappedKeys.Agents)
                 status_code, _, _, generated_ids = (
-                    insert_tag(tag_data)
+                    insert_tag(tag.to_dict_db())
                 )
                 if status_code == DbCodes.Inserted:
                     self.tag_id = generated_ids.pop()
+                    tag.tag_id = self.tag_id
                     self.properties = self._tag_attributes()
                     #Add agents to this tag, if Agents exist
-                    if agents:
-                        self.add_agents(agents)
+                    if tag.agents:
+                        self.add_agents(tag.agents)
 
-                    tag_data[TagKeys.TagId] = self.tag_id
                     msg = (
                         'Tag {0} created successfully, tag id: {1}'
                         .format(
-                            tag_data[TagKeys.TagName], self.tag_id
+                            tag.tag_name, self.tag_id
                         )
                     )
-                    results.generic_status_code = (
-                        GenericCodes.ObjectCreated
-                    )
-                    results.vfense_status_code = (
-                        TagCodes.TagCreated
-                    )
+                    results.generic_status_code = GenericCodes.ObjectCreated
+                    results.vfense_status_code = TagCodes.TagCreated
                     results.message = msg
-                    results.data = [tag_data]
-                    results.generated_ids = [self.tag_id]
+                    results.data.append(tag.to_dict())
+                    results.generated_ids.append(self.tag_id)
 
                 else:
-                    msg = (
-                        'Failed to create tag {0}.'
-                        .format(tag_data[TagKeys.TagName])
-                    )
+                    msg = 'Failed to create tag {0}.'.format(tag.tag_name)
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToCreateObject
                     )
@@ -162,57 +137,45 @@ class TagManager(object):
                         TagFailureCodes.FailedToCreateTag
                     )
                     results.message = msg
-                    results.data = tag_data
+                    results.data.append(tag.to_dict())
 
             elif invalid_fields:
                 msg = (
                     'Failed to create tag {0}, invalid fields were passed.'
-                    .format(tag_data[TagKeys.TagName])
+                    .format(tag.tag_name)
                 )
                 results.generic_status_code = (
                     GenericFailureCodes.FailedToCreateObject
                 )
-                results.vfense_status_code = (
-                    TagFailureCodes.FailedToCreateTag
-                )
+                results.vfense_status_code = TagFailureCodes.FailedToCreateTag
                 results.errors = invalid_fields
                 results.message = msg
-                results.data = tag_data
+                results.data.append(tag.to_dict())
 
             elif tag_exist_for_view:
                 msg = (
                     'Tag {0} already exist in view {1}.'
-                    .format(
-                        tag_data[TagKeys.TagName],
-                        tag_data[TagKeys.ViewName]
-                    )
+                    .format(tag.tag_name, tag.view_name)
                 )
                 results.generic_status_code = (
                     GenericFailureCodes.FailedToCreateObject
                 )
-                results.vfense_status_code = (
-                    TagFailureCodes.FailedToCreateTag
-                )
+                results.vfense_status_code = TagFailureCodes.FailedToCreateTag
                 results.errors = invalid_fields
                 results.message = msg
-                results.data = tag_data
+                results.data.append(tag.to_dict())
 
             else:
                 msg = (
                     'Failed to create tag {0}, invalid views were passed: {1}.'
-                    .format(
-                        tag_data[TagKeys.TagName],
-                        ', '.join(invalid_view_names)
-                    )
+                    .format(tag.tag_name, ', '.join(invalid_view_names))
                 )
                 results.generic_status_code = (
                     GenericFailureCodes.FailedToCreateObject
                 )
-                results.vfense_status_code = (
-                    TagFailureCodes.FailedToCreateTag
-                )
+                results.vfense_status_code = TagFailureCodes.FailedToCreateTag
                 results.message = msg
-                results.data = tag_data
+                results.data.append(tag.to_dict())
 
         else:
             msg = (
@@ -222,9 +185,7 @@ class TagManager(object):
             results.generic_status_code = (
                 GenericFailureCodes.FailedToCreateObject
             )
-            results.vfense_status_code = (
-                TagFailureCodes.FailedToCreateTag
-            )
+            results.vfense_status_code = TagFailureCodes.FailedToCreateTag
             results.message = msg
 
         return results
@@ -242,32 +203,15 @@ class TagManager(object):
             >>> manager.add_agents(agent_ids)
 
         Returns:
-            Dictionary
-            >>>
-            {
-                "data": [
-                    {
-                        "tag_name": "Test Tag 1",
-                        "agent_id": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
-                        "tag_id": "0842c4c0-94ab-4fe4-9346-3b59fa53c316"
-                    }
-                ],
-                "message": "Agent ids cac3f82c-d320-4e6f-9ee7-e28b1f527d76 were added successfully to tag 0842c4c0-94ab-4fe4-9346-3b59fa53c316",
-                "vfense_status_code": 4009,
-                "updated_ids": [
-                    "0842c4c0-94ab-4fe4-9346-3b59fa53c316"
-                ],
-                "generic_status_code": 1010
-            }
-
+            ApiResults instance
         """
         results = ApiResults()
-        tag_exist = self.properties
+        results.fill_in_defaults()
         tag_data = []
-        if tag_exist:
-            tag_name = tag_exist[TagKeys.TagName]
+        if self.properties.tag_id:
+            tag_name = self.properties.tag_name
             agents_are_valid, valid_agents, invalid_agents = (False, [], [])
-            is_global = tag_exist[TagKeys.Global]
+            is_global = self.properties.is_global
             if is_global:
                 agents_are_valid = True
 
@@ -280,16 +224,12 @@ class TagManager(object):
             )
             if agents_are_valid and not agents_exist_in_tag:
                 for agent_id in agent_ids:
-                    tag_data.append(
-                        {
-                            TagsPerAgentKeys.AgentId: agent_id,
-                            TagsPerAgentKeys.TagId: self.tag_id,
-                            TagsPerAgentKeys.TagName: tag_name,
-                            TagsPerAgentKeys.ViewName: (
-                                tag_exist[TagKeys.ViewName]
-                            ),
-                        }
-                    )
+                    tag = Tag()
+                    tag.tag_id = self.tag_id
+                    tag.agent_id = agent_id
+                    tag.tag_name = tag_name
+                    tag.view_name = self.properties.view_name
+                    tag_data.append(tag.to_dict_per_agent())
                 status_code, _, _, _ = add_agents_to_tag(tag_data)
                 if status_code == DbCodes.Inserted:
                     self.properties = self._tag_attributes()
@@ -298,15 +238,11 @@ class TagManager(object):
                         'Agent ids {0} were added successfully to tag {1}'
                         .format(', '.join(agent_ids), self.tag_id)
                     )
-                    results.generic_status_code = (
-                        GenericCodes.ObjectCreated
-                    )
-                    results.vfense_status_code = (
-                        TagCodes.AgentsAddedToTag
-                   )
+                    results.generic_status_code = GenericCodes.ObjectCreated
+                    results.vfense_status_code = TagCodes.AgentsAddedToTag
                     results.message = msg
                     results.data = tag_data
-                    results.updated_ids = [self.tag_id]
+                    results.updated_ids.append(self.tag_id)
 
                 else:
                     msg = (
@@ -321,46 +257,34 @@ class TagManager(object):
                     )
                     results.message = msg
                     results.data = tag_data
-                    results.unchanged_ids = [self.tag_id]
+                    results.unchanged_ids.append(self.tag_id)
 
             elif agents_exist_in_tag:
                 msg = (
                     'Some of the agent ids: {0} already exist for tag: {1}.'
                     .format(', '.join(agent_ids), self.tag_id)
                 )
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
-                results.vfense_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
+                results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
 
             else:
                 msg = (
                     'Invalid agent ids: {0}.'.format(', '.join(agent_ids))
                 )
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
-                results.vfense_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
+                results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
-                results.unchanged_ids = [self.tag_id]
+                results.unchanged_ids.append(self.tag_id)
 
         else:
             msg = (
                 'Tag id {0} does not exist.'.format(self.tag_id)
             )
-            results.generic_status_code = (
-                GenericFailureCodes.InvalidId
-            )
-            results.vfense_status_code = (
-                GenericFailureCodes.InvalidId
-            )
+            results.generic_status_code = GenericFailureCodes.InvalidId
+            results.vfense_status_code = GenericFailureCodes.InvalidId
             results.message = msg
-            results.unchanged_ids = [self.tag_id]
+            results.unchanged_ids.append(self.tag_id)
 
         return results
 
@@ -377,18 +301,10 @@ class TagManager(object):
             >>> manager.remove()
 
         Returns:
-            Dictionary
-            >>>
-            {
-                "message": "Tag f671467d-de69-474d-b3eb-86d7c55eb1f2 removed successfully",
-                "vfense_status_code": 4001,
-                "deleted_ids": [
-                    "f671467d-de69-474d-b3eb-86d7c55eb1f2"
-                ],
-                "generic_status_code": 1012
-            }
+            ApiResults instance
         """
         results = ApiResults()
+        results.fill_in_defaults()
         tag_exist = self.properties
         if tag_exist:
             status_code, _, _, _ = (
@@ -396,44 +312,32 @@ class TagManager(object):
             )
             if status_code == DbCodes.Deleted:
                 delete_agent_ids_from_tag(self.tag_id)
-                self.properties =  {}
+                self.properties =  Tag()
                 msg = (
                     'Tag {0} removed successfully'.format(self.tag_id)
                 )
-                results.generic_status_code = (
-                    GenericCodes.ObjectDeleted
-                )
-                results.vfense_status_code = (
-                    TagCodes.TagRemoved
-                )
+                results.generic_status_code = GenericCodes.ObjectDeleted
+                results.vfense_status_code = TagCodes.TagRemoved
                 results.message = msg
-                results.deleted_ids = [self.tag_id]
+                results.deleted_ids.append(self.tag_id)
 
             else:
                 msg = (
                     'Tag id {0} does not exist.'.format(self.tag_id)
                 )
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
-                results.vfense_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
+                results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
-                results.unchanged_ids = [self.tag_id]
+                results.unchanged_ids.append(self.tag_id)
 
         else:
             msg = (
                 'Tag id {0} does not exist.'.format(self.tag_id)
             )
-            results.generic_status_code = (
-                GenericFailureCodes.InvalidId
-            )
-            results.vfense_status_code = (
-                GenericFailureCodes.InvalidId
-            )
+            results.generic_status_code = GenericFailureCodes.InvalidId
+            results.vfense_status_code = GenericFailureCodes.InvalidId
             results.message = msg
-            results.unchanged_ids = [self.tag_id]
+            results.unchanged_ids.append(self.tag_id)
 
         return results
 
@@ -451,21 +355,11 @@ class TagManager(object):
             >>> manager.remove_agents(agent_ids)
 
         Returns:
-            Dictionary
-            >>>
-            {
-                "message": "Agent ids cac3f82c-d320-4e6f-9ee7-e28b1f527d76 were removed successfully from tag 0842c4c0-94ab-4fe4-9346-3b59fa53c316",
-                "vfense_status_code": 4010,
-                "updated_ids": [
-                    "0842c4c0-94ab-4fe4-9346-3b59fa53c316"
-                ],
-                "generic_status_code": 1012
-            }
-
+            ApiResults instanace
         """
         results = ApiResults()
-        tag_exist = self.properties
-        if tag_exist:
+        results.fill_in_defaults()
+        if self.properties.tag_id:
             agents_exist_in_tag = (
                 bool(set(agent_ids).intersection(self.agents))
             )
@@ -480,14 +374,10 @@ class TagManager(object):
                         'Agent ids {0} were removed successfully from tag {1}'
                         .format(', '.join(agent_ids), self.tag_id)
                     )
-                    results.generic_status_code = (
-                        GenericCodes.ObjectDeleted
-                    )
-                    results.vfense_status_code = (
-                        TagCodes.AgentsRemovedFromTag
-                   )
+                    results.generic_status_code = GenericCodes.ObjectDeleted
+                    results.vfense_status_code = TagCodes.AgentsRemovedFromTag
                     results.message = msg
-                    results.updated_ids = [self.tag_id]
+                    results.updated_ids.append(self.tag_id)
 
                 else:
                     msg = (
@@ -501,33 +391,25 @@ class TagManager(object):
                         TagFailureCodes.FailedToRemoveAgentsFromTag
                     )
                     results.message = msg
-                    results.unchanged_ids = [self.tag_id]
+                    results.unchanged_ids.append(self.tag_id)
 
             else:
                 msg = (
                     'Invalid agent ids: {0}.'.format(', '.join(agent_ids))
                 )
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
-                results.vfense_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
+                results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
-                results.unchanged_ids = [self.tag_id]
+                results.unchanged_ids.append(self.tag_id)
 
         else:
             msg = (
                 'Tag id {0} does not exist.'.format(self.tag_id)
             )
-            results.generic_status_code = (
-                GenericFailureCodes.InvalidId
-            )
-            results.vfense_status_code = (
-                GenericFailureCodes.InvalidId
-            )
+            results.generic_status_code = GenericFailureCodes.InvalidId
+            results.vfense_status_code = GenericFailureCodes.InvalidId
             results.message = msg
-            results.unchanged_ids = [self.tag_id]
+            results.unchanged_ids.append(self.tag_id)
 
         return results
 
@@ -544,7 +426,7 @@ class TagManager(object):
             >>> manager.edit_environment(environment)
 
         Returns:
-            >>>
+            ApiResults instance
         """
         tag = Tag(environment=environment)
         results = self.__edit_properties(tag)
@@ -565,38 +447,35 @@ class TagManager(object):
             >>> manager.__edit_properties(tag)
 
         Return:
-            Dictionary of the status of the operation.
-            >>>
+            ApiResults instance
         """
-        tag_exist = self.properties
         results = ApiResults()
-        data = {}
-        results.data = []
-        if tag_exist and isinstance(tag, Tag):
+        results.fill_in_defaults()
+        if self.properties.tag_id and isinstance(tag, Tag):
             invalid_fields = tag.get_invalid_fields()
-            data = tag.to_dict_non_null()
             if not invalid_fields:
+                tag.date_modified = time()
                 object_status, _, _, _ = (
-                    update_tag(self.tag_id, data)
+                    update_tag(self.tag_id, tag.to_dict_db_update())
                 )
                 if object_status == DbCodes.Replaced:
                     msg = 'Tag %s was updated - ' % (self.tag_id)
                     generic_status_code = GenericCodes.ObjectUpdated
                     vfense_status_code = TagCodes.TagUpdated
-                    results.updated_ids = [self.tag_id]
-                    results.data = [data]
+                    results.updated_ids.append(self.tag_id)
+                    results.data.append(tag.to_dict_db_update())
 
                 elif object_status == DbCodes.Unchanged:
                     msg = 'Tag %s was not updated - ' % (self.tag_id)
                     generic_status_code = GenericCodes.ObjectUnchanged
                     vfense_status_code = TagCodes.TagUnchanged
-                    results.unchanged_ids = [self.tag_id]
+                    results.unchanged_ids.append(self.tag_id)
 
             else:
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = TagFailureCodes.FailedToUpdateTag
                 msg = 'Tag %s properties were invalid - ' % (self.tag_id)
-                results.unchanged_ids = [self.tag_id]
+                results.unchanged_ids.append(self.tag_id)
                 results.errors = invalid_fields
 
         elif not isinstance(tag, Tag):
@@ -606,13 +485,13 @@ class TagManager(object):
                 'Tag {0} is not of instance Tag., instanced passed {1}'
                 .format(self.tag_id, type(tag))
             )
-            results.unchanged_ids = [self.tag_id]
+            results.unchanged_ids.append(self.tag_id)
 
         else:
             generic_status_code = GenericCodes.InvalidId
             vfense_status_code = AgentFailureCodes.TagIdDoesNotExist
             msg = 'Tag %s does not exist - ' % (self.tag_id)
-            results.unchanged_ids = [self.tag_id]
+            results.unchanged_ids.append(self.tag_id)
 
         results.generic_status_code = generic_status_code
         results.vfense_status_code = vfense_status_code

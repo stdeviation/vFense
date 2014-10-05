@@ -9,6 +9,8 @@ class TagKeys():
     ViewName = 'view_name'
     Global = 'global'
     Environment = 'environment'
+    DateAdded = 'date_added'
+    DateModified = 'date_modified'
 
 
 class TagMappedKeys():

@@ -15,6 +15,7 @@ from vFense.core.decorators import time_it
 from vFense.core.agent._db_model import (
     AgentKeys, HardwarePerAgentKeys
 )
+from vFense.core.tag import Tag
 from vFense.core.tag._db_model import TagKeys, TagsPerAgentKeys
 from vFense.core.tag.tags import validate_tag_ids_in_views
 from vFense.core.tag._db import (
@@ -47,7 +48,7 @@ class AgentManager(object):
     def _agent_attributes(self):
         agent_data = {}
         if self.agent_id:
-            agent_data = fetch_agent(self.agent_id)
+            agent_data = Agent(**fetch_agent(self.agent_id))
 
         return agent_data
 
@@ -89,120 +90,37 @@ class AgentManager(object):
             >>> manager.create(agent)
 
         Returns:
-            Dictionary
-            >>>
-            {
-                "data": {
-                    "rebooted": true,
-                    "views": [
-                        "global"
-                    ],
-                    "last_agent_update": 1403100258.599256,
-                    "agent_status": "up",
-                    "bit_type": "64",
-                    "agent_id": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
-                    "computer_name": "DISCIPLINE-1",
-                    "date_added": 1403100258.599249,
-                    "needs_reboot": false,
-                    "hardware": {
-                        "nic": [
-                            {
-                                "mac": "3085A925BFD6",
-                                "ip_address": "10.0.0.2",
-                                "name": "Local Area Connection"
-                            },
-                            {
-                                "mac": "005056C00001",
-                                "ip_address": "192.168.110.1",
-                                "name": "VMware Network Adapter VMnet1"
-                            },
-                            {
-                                "mac": "005056C00008",
-                                "ip_address": "192.168.252.1",
-                                "name": "VMware Network Adapter VMnet8"
-                            }
-                        ],
-                        "display": [
-                            {
-                                "speed_mhz": "GeForce GTX 660M",
-                                "name": "NVIDIA GeForce GTX 660M  ",
-                                "ram_kb": 0
-                            }
-                        ],
-                        "storage": [
-                            {
-                                "free_size_kb": 155600024,
-                                "name": "C:",
-                                "size_kb": 499872764,
-                                "file_system": "NTFS"
-                            }
-                        ],
-                        "cpu": [
-                            {
-                                "speed_mhz": 2401,
-                                "name": "Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz",
-                                "cpu_id": 1,
-                                "bit_type": 64,
-                                "cache_kb": 1024,
-                                "cores": 4
-                            }
-                        ],
-                        "memory": 25165824
-                    },
-                    "display_name": null,
-                    "environment": "production",
-                    "os_code": "windows",
-                    "version": "6.1.7601",
-                    "os_string": "Windows 7 Professional N"
-                },
-                "message": "Agent cac3f82c-d320-4e6f-9ee7-e28b1f527d76 added successfully",
-                "generated_ids": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
-                "vfense_status_code": 3200,
-                "generic_status_code": 1010
-            }
+            ApiResults instance
         """
         results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(agent, Agent):
             invalid_fields = agent.get_invalid_fields()
             agent.fill_in_defaults()
             agent.enabled = True
-            agent_data = agent.to_dict()
-            last_agent_update = agent_data[AgentKeys.LastAgentUpdate]
-            date_added = agent_data[AgentKeys.DateAdded]
-            agent_data[AgentKeys.LastAgentUpdate] = (
-                DbTime().epoch_time_to_db_time(
-                    agent_data[AgentKeys.LastAgentUpdate]
-                )
-            )
-            agent_data[AgentKeys.DateAdded] = (
-                DbTime().epoch_time_to_db_time(
-                    agent_data[AgentKeys.DateAdded]
-                )
-            )
             views_are_valid, valid_view_names, invalid_view_names = (
-                validate_view_names(agent_data[AgentKeys.Views])
+                validate_view_names(agent.views)
             )
             if not invalid_fields:
-                agent_data[AgentKeys.Views] = valid_view_names
+                agent.views = valid_view_names
                 status_code, _, _, generated_ids = (
-                    insert_agent(agent_data)
+                    insert_agent(agent.to_dict_db())
                 )
                 if status_code == DbCodes.Inserted:
                     self.agent_id = generated_ids.pop()
+                    agent.agent_id = self.agent_id
                     self.properties = self._agent_attributes()
-                    self.add_hardware(agent_data[AgentKeys.Hardware])
+                    self.add_hardware(agent.hardware)
                     if tags:
                         self.add_to_tags(tags)
-                    agent_data[AgentKeys.AgentId] = self.agent_id
+                    agent.agent_id = self.agent_id
                     msg = 'Agent {0} added successfully'.format(self.agent_id)
-                    results.generic_status_code = (
-                        GenericCodes.ObjectCreated
-                    )
+                    results.generic_status_code = GenericCodes.ObjectCreated
                     results.vfense_status_code = (
                         AgentResultCodes.NewAgentSucceeded
                     )
                     results.message = msg
-                    results.data = agent_data
+                    results.data.append(agent.to_dict())
                     results.generated_ids = self.agent_id
 
                 else:
@@ -214,7 +132,7 @@ class AgentManager(object):
                         AgentFailureResultCodes.NewAgentFailed
                     )
                     results.message = msg
-                    results.data = agent_data
+                    results.data.append(agent.to_dict())
 
             else:
                 msg = (
@@ -228,14 +146,8 @@ class AgentManager(object):
                 )
                 results.message = msg
                 results.errors = invalid_fields
-                results.data = agent_data
+                results.data.append(agent.to_dict())
 
-            results.data[AgentKeys.LastAgentUpdate] = (
-                last_agent_update
-            )
-            results.data[AgentKeys.DateAdded] = (
-                date_added
-            )
         else:
             msg = (
                 'Invalid {0} Instance, must pass an instance of Agent.'
@@ -268,82 +180,14 @@ class AgentManager(object):
             >>> manager.update(agent, tags)
 
         Returns:
-            Dictionary
-            >>>
-            {
-                "data": {
-                    "rebooted": true,
-                    "views": [
-                        "global"
-                    ],
-                    "last_agent_update": 1403100258.599256,
-                    "agent_status": "up",
-                    "bit_type": "64",
-                    "agent_id": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
-                    "computer_name": "DISCIPLINE-1",
-                    "needs_reboot": false,
-                    "hardware": {
-                        "nic": [
-                            {
-                                "mac": "3085A925BFD6",
-                                "ip_address": "10.0.0.2",
-                                "name": "Local Area Connection"
-                            },
-                            {
-                                "mac": "005056C00001",
-                                "ip_address": "192.168.110.1",
-                                "name": "VMware Network Adapter VMnet1"
-                            },
-                            {
-                                "mac": "005056C00008",
-                                "ip_address": "192.168.252.1",
-                                "name": "VMware Network Adapter VMnet8"
-                            }
-                        ],
-                        "display": [
-                            {
-                                "speed_mhz": "GeForce GTX 660M",
-                                "name": "NVIDIA GeForce GTX 660M  ",
-                                "ram_kb": 0
-                            }
-                        ],
-                        "storage": [
-                            {
-                                "free_size_kb": 155600024,
-                                "name": "C:",
-                                "size_kb": 499872764,
-                                "file_system": "NTFS"
-                            }
-                        ],
-                        "cpu": [
-                            {
-                                "speed_mhz": 2401,
-                                "name": "Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz",
-                                "cpu_id": 1,
-                                "bit_type": 64,
-                                "cache_kb": 1024,
-                                "cores": 4
-                            }
-                        ],
-                        "memory": 25165824
-                    },
-                    "display_name": null,
-                    "environment": "production",
-                    "os_code": "windows",
-                    "version": "6.1.7601",
-                    "os_string": "Windows 7 Professional N"
-                },
-                "message": "Agent cac3f82c-d320-4e6f-9ee7-e28b1f527d76 added successfully",
-                "generated_ids": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
-                "vfense_status_code": 3200,
-                "generic_status_code": 1010
-            }
+            ApiResults instance
         """
         results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(agent, Agent):
             agent_exist = self.properties
             invalid_fields = agent.get_invalid_fields()
-            last_agent_update = DbTime().time_now()
+            last_agent_update = time()
             agent.last_agent_update = last_agent_update
             if not agent.views:
                 agent.views = self.views
@@ -355,9 +199,8 @@ class AgentManager(object):
             if views_are_valid and not invalid_fields and agent_exist:
                 agent.views = list(set(agent.views).union(self.views))
                 agent.display_name = agent_exist[AgentKeys.DisplayName]
-                agent_data = agent.to_dict_non_null()
                 status_code, _, errors, generated_ids = (
-                    update_agent(self.agent_id, agent_data)
+                    update_agent(self.agent_id, agent.to_dict_db_update())
                 )
                 if status_code == DbCodes.Replaced:
                     self.properties = self._agent_attributes()
@@ -368,15 +211,12 @@ class AgentManager(object):
                         'Agent {0} updated successfully'
                         .format(self.agent_id)
                     )
-                    results.generic_status_code = (
-                        GenericCodes.ObjectUpdated
-                    )
+                    results.generic_status_code = GenericCodes.ObjectUpdated
                     results.vfense_status_code = (
                         AgentResultCodes.StartUpSucceeded
                     )
                     results.message = msg
-                    results.data = agent_data
-                    results.generated_ids = self.agent_id
+                    results.data.append(agent.to_dict_db_update())
 
                 else:
                     msg = 'Failed to update agent {0}.'.format(self.agent_id)
@@ -387,7 +227,7 @@ class AgentManager(object):
                         AgentFailureResultCodes.StartupFailed
                     )
                     results.message = msg
-                    results.data = agent_data
+                    results.data.append(agent.to_dict_db_update())
 
             elif invalid_fields:
                 msg = (
@@ -402,21 +242,19 @@ class AgentManager(object):
                 )
                 results.message = msg
                 results.errors = invalid_fields
-                results.data = agent_data
+                results.data.append(agent.to_dict_db_update())
 
             elif not agent_exist:
                 msg = (
                     'Failed to update, agent {0} does not exist'
                     .format(self.agent_id)
                 )
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = (
                     AgentFailureResultCodes.StartupFailed
                 )
                 results.message = msg
-                results.data = agent_data
+                results.data.append(agent.to_dict_db_update())
 
             else:
                 msg = (
@@ -430,11 +268,8 @@ class AgentManager(object):
                     AgentFailureResultCodes.NewAgentFailed
                 )
                 results.message = msg
-                results.data = agent_data
+                results.data.append(agent.to_dict_db_update())
 
-            results.data[AgentKeys.LastAgentUpdate] = (
-                last_agent_update
-            )
         else:
             msg = (
                 'Invalid {0} Instance, must pass an instance of Agent.'
@@ -465,10 +300,10 @@ class AgentManager(object):
             >>> manager.add_to_views(views)
 
         Returns:
-            Dictionary
-            >>>
+            ApiResults instance
         """
         results = ApiResults()
+        results.fill_in_defaults()
         agent_exist = self.properties
         if agent_exist:
             views_are_valid, valid_views, invalid_views = (
@@ -489,12 +324,8 @@ class AgentManager(object):
                         'Views {0} were added successfully to agent {1}'
                         .format(', '.join(views), self.agent_id)
                     )
-                    results.generic_status_code = (
-                        GenericCodes.ObjectCreated
-                    )
-                    results.vfense_status_code = (
-                        AgentCodes.ViewsAddedToAgent
-                   )
+                    results.generic_status_code = GenericCodes.ObjectCreated
+                    results.vfense_status_code = AgentCodes.ViewsAddedToAgent
                     results.message = msg
                     results.data = views
                     results.updated_ids.append(self.agent_id)
@@ -512,47 +343,35 @@ class AgentManager(object):
                     )
                     results.message = msg
                     results.data = views
-                    results.unchanged_ids = [self.agent_id]
+                    results.unchanged_ids.append(self.agent_id)
 
             elif views_exist_in_agent:
                 msg = (
                     'Some of the views: {0} already exist for agent: {1}.'
                     .format(', '.join(views), self.agent_id)
                 )
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
-                results.vfense_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
+                results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
-                results.unchanged_ids = [self.agent_id]
+                results.unchanged_ids.append(self.agent_id)
 
             else:
                 msg = (
                     'Invalid views: {0}.'.format(', '.join(views))
                 )
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
-                results.vfense_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
+                results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
-                results.unchanged_ids = [self.agent_id]
+                results.unchanged_ids.append(self.agent_id)
 
         else:
             msg = (
                 'Agent id {0} does not exist.'.format(self.agent_id)
             )
-            results.generic_status_code = (
-                GenericFailureCodes.InvalidId
-            )
-            results.vfense_status_code = (
-                GenericFailureCodes.InvalidId
-            )
+            results.generic_status_code = GenericFailureCodes.InvalidId
+            results.vfense_status_code = GenericFailureCodes.InvalidId
             results.message = msg
-            results.unchanged_ids = [self.agent_id]
+            results.unchanged_ids.append(self.agent_id)
 
         return results
 
@@ -573,8 +392,8 @@ class AgentManager(object):
             >>>
         """
         results = ApiResults()
-        agent_exist = self.properties
-        if agent_exist:
+        results.fill_in_defaults()
+        if self.properties.agent_id:
             views_exist_in_agent = (
                 bool(set(views).intersection(self.views))
             )
@@ -590,9 +409,7 @@ class AgentManager(object):
                         'Views {0} were removed successfully from agent {1}'
                         .format(', '.join(views), self.agent_id)
                     )
-                    results.generic_status_code = (
-                        GenericCodes.ObjectDeleted
-                    )
+                    results.generic_status_code = GenericCodes.ObjectDeleted
                     results.vfense_status_code = (
                         AgentCodes.ViewsRemovedFromAgent
                    )
@@ -611,33 +428,25 @@ class AgentManager(object):
                         AgentFailureCodes.FailedToRemoveViewsFromAgent
                     )
                     results.message = msg
-                    results.unchanged_ids = [self.agent_id]
+                    results.unchanged_id.append(self.agent_id)
 
             else:
                 msg = (
                     'Invalid views: {0}.'.format(', '.join(views))
                 )
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
-                results.vfense_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
+                results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
-                results.unchanged_ids = [self.agent_id]
+                results.unchanged_ids.append(self.agent_id)
 
         else:
             msg = (
                 'Agent id {0} does not exist.'.format(self.agent_id)
             )
-            results.generic_status_code = (
-                GenericFailureCodes.InvalidId
-            )
-            results.vfense_status_code = (
-                GenericFailureCodes.InvalidId
-            )
+            results.generic_status_code = GenericFailureCodes.InvalidId
+            results.vfense_status_code = GenericFailureCodes.InvalidId
             results.message = msg
-            results.unchanged_ids = [self.agent_id]
+            results.unchanged_ids.append(self.agent_id)
 
         return results
 
@@ -655,49 +464,22 @@ class AgentManager(object):
             >>> manager.add_to_tags(tag_ids)
 
         Returns:
-            Dictionary
-            >>>
-            {
-                "data": [
-                    {
-                        "tag_name": "Test Tag 1",
-                        "agent_id": "cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
-                        "tag_id": "0842c4c0-94ab-4fe4-9346-3b59fa53c316"
-                    }
-                ],
-                "message": "Tag ids 0842c4c0-94ab-4fe4-9346-3b59fa53c316 were added successfully to agent cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
-                "vfense_status_code": 3013,
-                "updated_ids": [
-                    "cac3f82c-d320-4e6f-9ee7-e28b1f527d76"
-                ],
-                "generic_status_code": 1010
-            }
+            ApiResults instance
         """
         results = ApiResults()
         results.fill_in_defaults()
-        agent_exist = self.properties
         tag_data = []
-        if agent_exist:
-            views = agent_exist[AgentKeys.Views]
+        if self.properties.agent_id:
+            views = self.properties.views
             tags_are_valid, valid_tags, invalid_tags = (
                 validate_tag_ids_in_views(tag_ids, views)
             )
 
             if tags_are_valid and not set(valid_tags).issubset(self.tags):
                 for tag_id in tag_ids:
-                    tag = fetch_tag(tag_id)
-                    tag_data.append(
-                        {
-                            TagsPerAgentKeys.AgentId: self.agent_id,
-                            TagsPerAgentKeys.TagId: tag_id,
-                            TagsPerAgentKeys.TagName: (
-                                tag[TagKeys.TagName]
-                            ),
-                            TagsPerAgentKeys.ViewName: (
-                                tag[TagKeys.ViewName]
-                            ),
-                        }
-                    )
+                    tag = Tag(**fetch_tag(tag_id))
+                    tag.agent_id = self.agent_id
+                    tag_data.append(tag.to_dict_per_agent())
                 status_code, _, _, _ = add_tags_to_agent(tag_data)
                 if status_code == DbCodes.Inserted:
                     self.properties = self._agent_attributes()
@@ -706,12 +488,8 @@ class AgentManager(object):
                         'Tag ids {0} were added successfully to agent {1}'
                         .format(', '.join(tag_ids), self.agent_id)
                     )
-                    results.generic_status_code = (
-                        GenericCodes.ObjectCreated
-                    )
-                    results.vfense_status_code = (
-                        AgentCodes.TagsAddedToAgent
-                   )
+                    results.generic_status_code = GenericCodes.ObjectCreated
+                    results.vfense_status_code = AgentCodes.TagsAddedToAgent
                     results.message = msg
                     results.data = tag_data
                     results.updated_ids.append(self.agent_id)
@@ -729,47 +507,35 @@ class AgentManager(object):
                     )
                     results.message = msg
                     results.data = tag_data
-                    results.unchanged_ids = [self.agent_id]
+                    results.unchanged_ids.append(self.agent_id)
 
             elif set(valid_tags).issubset(self.tags):
                 msg = (
                     'Some of the tag ids: {0} already exist for agent: {1}.'
                     .format(', '.join(tag_ids), self.agent_id)
                 )
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
-                results.vfense_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
+                results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
-                results.unchanged_ids = [self.agent_id]
+                results.unchanged_ids.append(self.agent_id)
 
             else:
                 msg = (
                     'Invalid tag ids: {0}.'.format(', '.join(tag_ids))
                 )
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
-                results.vfense_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
+                results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
-                results.unchanged_ids = [self.agent_id]
+                results.unchanged_ids.append(self.agent_id)
 
         else:
             msg = (
                 'Agent id {0} does not exist.'.format(self.agent_id)
             )
-            results.generic_status_code = (
-                GenericFailureCodes.InvalidId
-            )
-            results.vfense_status_code = (
-                GenericFailureCodes.InvalidId
-            )
+            results.generic_status_code = GenericFailureCodes.InvalidId
+            results.vfense_status_code = GenericFailureCodes.InvalidId
             results.message = msg
-            results.unchanged_ids = [self.agent_id]
+            results.unchanged_ids.append(self.agent_id)
 
         return results
 
@@ -786,16 +552,7 @@ class AgentManager(object):
             >>> manager.remove_from_tags(tag_ids)
 
         Returns:
-            Dictionary
-            >>>
-            {
-                "message": "Tag ids 0842c4c0-94ab-4fe4-9346-3b59fa53c316 were removed successfully from agent cac3f82c-d320-4e6f-9ee7-e28b1f527d76",
-                "vfense_status_code": 3014,
-                "updated_ids": [
-                    "cac3f82c-d320-4e6f-9ee7-e28b1f527d76"
-                ],
-                "generic_status_code": 1012
-            }
+            ApiResults instance
         """
         results = ApiResults()
         results.fill_in_defaults()
@@ -812,9 +569,7 @@ class AgentManager(object):
                         'Tag ids {0} were removed successfully from agent {1}'
                         .format(', '.join(tag_ids), self.agent_id)
                     )
-                    results.generic_status_code = (
-                        GenericCodes.ObjectDeleted
-                    )
+                    results.generic_status_code = GenericCodes.ObjectDeleted
                     results.vfense_status_code = (
                         AgentCodes.TagsRemovedFromAgent
                    )
@@ -833,7 +588,7 @@ class AgentManager(object):
                         AgentFailureCodes.FailedToRemoveTagsFromAgent
                     )
                     results.message = msg
-                    results.unchanged_ids = [self.agent_id]
+                    results.unchanged_ids.append(self.agent_id)
 
             else:
                 msg = (
@@ -842,7 +597,7 @@ class AgentManager(object):
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
-                results.unchanged_ids = [self.agent_id]
+                results.unchanged_ids.append(self.agent_id)
 
         else:
             msg = (
@@ -851,7 +606,7 @@ class AgentManager(object):
             results.generic_status_code = GenericFailureCodes.InvalidId
             results.vfense_status_code = GenericFailureCodes.InvalidId
             results.message = msg
-            results.unchanged_ids = [self.agent_id]
+            results.unchanged_ids.append(self.agent_id)
 
         return results
 
@@ -877,8 +632,7 @@ class AgentManager(object):
             >>> manager.add_hardware(hardware)
 
         Returns:
-            Dictionary
-            >>>
+            ApiResults instance
         """
         results = ApiResults()
         results.fill_in_defaults()
@@ -975,20 +729,7 @@ class AgentManager(object):
             >>> manager.edit_environment('Development')
 
         Returns:
-            >>>
-            {
-                "vfense_status_code": 13001,
-                "message": " User global_admin was updated - ",
-                "data": [
-                    {
-                        "email": "shaolin_admin@shaolin.com"
-                    }
-                ],
-                "updated_ids": [
-                    "global_admin"
-                ],
-                "generic_status_code": 1008
-            }
+            ApiResults instance
         """
         agent = Agent(environment=environment)
         results = self.__edit_properties(agent)
@@ -1008,20 +749,7 @@ class AgentManager(object):
             >>> manager.edit_display_name('Test agent 3')
 
         Returns:
-            >>>
-            {
-                "vfense_status_code": 13001,
-                "message": " User global_admin was updated - ",
-                "data": [
-                    {
-                        "email": "shaolin_admin@shaolin.com"
-                    }
-                ],
-                "updated_ids": [
-                    "global_admin"
-                ],
-                "generic_status_code": 1008
-            }
+            ApiResults instance
         """
         agent = Agent(display_name=display_name)
         results = self.__edit_properties(agent)
@@ -1041,20 +769,7 @@ class AgentManager(object):
             >>> manager.edit_needs_reboot(True)
 
         Returns:
-            >>>
-            {
-                "vfense_status_code": 13001,
-                "message": " User global_admin was updated - ",
-                "data": [
-                    {
-                        "needs_reboot": true
-                    }
-                ],
-                "updated_ids": [
-                    "global_admin"
-                ],
-                "generic_status_code": 1008
-            }
+            ApiResults instance
         """
         agent = Agent(needs_reboot=needs_reboot)
         results = self.__edit_properties(agent)
@@ -1076,20 +791,7 @@ class AgentManager(object):
             >>> manager.assign_new_token(True)
 
         Returns:
-            >>>
-            {
-                "vfense_status_code": 13001,
-                "message": " User global_admin was updated - ",
-                "data": [
-                    {
-                        "assign_new_token": true
-                    }
-                ],
-                "updated_ids": [
-                    "global_admin"
-                ],
-                "generic_status_code": 1008
-            }
+            ApiResults instance
         """
         agent = Agent(assign_new_token=new_token)
         results = self.__edit_properties(agent)
@@ -1099,7 +801,6 @@ class AgentManager(object):
     @time_it
     def update_last_checkin_time(self):
         """Update the timestamp for the last time the agent communicated.
-
         Basic Usage:
             >>> from vFense.agent.manager import AgentManager
             >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
@@ -1107,20 +808,7 @@ class AgentManager(object):
             >>> manager.update_checkin_time()
 
         Returns:
-            >>>
-            {
-                "vfense_status_code": 13001,
-                "message": " User global_admin was updated - ",
-                "data": [
-                    {
-                        "last_agent_update": 22090992312
-                    }
-                ],
-                "updated_ids": [
-                    "global_admin"
-                ],
-                "generic_status_code": 1008
-            }
+            ApiResults instance
         """
         now = time()
         agent = Agent(last_agent_update=now)
@@ -1138,20 +826,7 @@ class AgentManager(object):
             >>> manager.update_checkin_time()
 
         Returns:
-            >>>
-            {
-                "vfense_status_code": 13001,
-                "message": " Agent cac3f82c-d320-4e6f-9ee7-e28b1f527d76 was updated - ",
-                "data": [
-                    {
-                        "token": "90sad8fg98j123"
-                    }
-                ],
-                "updated_ids": [
-                    "global_admin"
-                ],
-                "generic_status_code": 1008
-            }
+            ApiResults instance
         """
         agent = Agent(token=token)
         results = self.__edit_properties(agent)
@@ -1175,63 +850,36 @@ class AgentManager(object):
             >>> manager.__edit_agent_properties(agent)
 
         Return:
-            Dictionary of the status of the operation.
-            >>>
-            {
-                "vfense_status_code": 13001,
-                "message": Agent global_admin was updated - ",
-                "data": [
-                    {
-                        "display_name": "Web Server 1"
-                    }
-                ],
-                "updated_ids": [
-                    "cac3f82c-d320-4e6f-9ee7-e28b1f527d76"
-                ],
-                "generic_status_code": 1008
-            }
+            ApiResults instance
         """
 
-        agent_exist = self.properties
         results = ApiResults()
         results.fill_in_defaults()
-        data = {}
-        if agent_exist and isinstance(agent, Agent):
+        if self.properties.agent_id and isinstance(agent, Agent):
             invalid_fields = agent.get_invalid_fields()
-            data = agent.to_dict_non_null()
             if not invalid_fields:
-                if data.get(AgentKeys.LastAgentUpdate):
-                    data[AgentKeys.LastAgentUpdate] = (
-                        DbTime().epoch_time_to_db_time(
-                            data[AgentKeys.LastAgentUpdate]
-                        )
-                    )
                 object_status, _, _, _ = (
-                    update_agent(self.agent_id, data)
+                    update_agent(self.agent_id, agent.to_dict_db_update())
                 )
-                if data.get(AgentKeys.LastAgentUpdate):
-                    data[AgentKeys.LastAgentUpdate] = (
-                        data[AgentKeys.LastAgentUpdate].to_epoch_time()
-                    )
 
                 if object_status == DbCodes.Replaced:
                     msg = 'Agent %s was updated - ' % (self.agent_id)
                     generic_status_code = GenericCodes.ObjectUpdated
                     vfense_status_code = AgentCodes.AgentUpdated
                     results.updated_ids.append(self.agent_id)
-                    results.data = [data]
+                    results.data.append(agent.to_dict_non_null())
 
                 elif object_status == DbCodes.Unchanged:
                     msg = 'Agent %s was not updated - ' % (self.agent_id)
                     generic_status_code = GenericCodes.ObjectUnchanged
                     vfense_status_code = AgentCodes.AgentUnchanged
-                    results.unchanged_ids = [self.agent_id]
+                    results.unchanged_ids.append(self.agent_id)
 
             else:
                 generic_status_code = GenericCodes.InvalidId
                 vfense_status_code = AgentFailureCodes.FailedToUpdateAgent
                 msg = 'Agent %s properties were invalid - ' % (self.agent_id)
-                results.unchanged_ids = [self.agent_id]
+                results.unchanged_ids.append(self.agent_id)
                 results.errors = invalid_fields
 
         elif not isinstance(agent, Agent):
@@ -1267,14 +915,12 @@ class AgentManager(object):
             >>> manager.remove()
 
         Return:
-            Dictionary of the status of the operation.
-            >>>
+            ApiResults instance
         """
 
-        agent_exist = self.properties
         results = ApiResults()
         results.fill_in_defaults()
-        if agent_exist:
+        if self.properties.agent_id:
             delete_tag_ids_from_agent(self.agent_id, self.tags)
             delete_hardware_for_agent(self.agent_id)
             status_code, _, _, _ = delete_agent(self.agent_id)
@@ -1283,7 +929,7 @@ class AgentManager(object):
                 results.message = msg
                 results.generic_status_code = GenericCodes.ObjectDeleted
                 results.vfense_status_code = AgentCodes.AgentDeleted
-                results.deleted_ids = [self.agent_id]
+                results.deleted_ids.append(self.agent_id)
 
             else:
                 msg = 'Invalid agent id %s' % (self.agent_id)
