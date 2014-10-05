@@ -30,7 +30,7 @@ class View(Base):
         self, view_name=None, parent=None, ancestors=None, children=None,
         users=None, net_throttle=None, cpu_throttle=None,
         server_queue_ttl=None, agent_queue_ttl=None,
-        package_download_url=None, token=None, previous_tokens=None,
+        package_download_url_base=None, token=None, previous_tokens=None,
         time_zone=None, date_added=None, date_modified=None
     ):
         """
@@ -51,7 +51,7 @@ class View(Base):
                 on the server queue, in minutes. Must be above 0.
             agent_queue_ttl (int): The default time an operation will sit
                 on the agent queue, in minutes. Must be above 0.
-            package_download_url (str): The base url used to construct the
+            package_download_url_base (str): The base url used to construct the
                 urls where the packages will be downloaded from.
                     Ex:
                         'https://192.168.1.1/packages/'
@@ -70,7 +70,7 @@ class View(Base):
         self.cpu_throttle = cpu_throttle
         self.server_queue_ttl = server_queue_ttl
         self.agent_queue_ttl = agent_queue_ttl
-        self.package_download_url = package_download_url
+        self.package_download_url_base = package_download_url_base
         self.token = token
         self.previous_tokens = previous_tokens
         self.time_zone = time_zone
@@ -313,7 +313,7 @@ class View(Base):
             ViewKeys.ServerQueueTTL: self.server_queue_ttl,
             ViewKeys.AgentQueueTTL: self.agent_queue_ttl,
             ViewKeys.Users: self.users,
-            ViewKeys.PackageUrl: self.package_download_url,
+            ViewKeys.PackageUrl: self.package_download_url_base,
             ViewKeys.Token: self.token,
             ViewKeys.PreviousTokens: self.previous_tokens,
             ViewKeys.TimeZone: self.time_zone,
@@ -333,7 +333,7 @@ class View(Base):
             ViewKeys.DateAdded: (
                 DbTime.epoch_time_to_db_time(self.date_added)
             ),
-            ViewKeys.LastAgentUpdate: (
+            ViewKeys.DateModified: (
                 DbTime.epoch_time_to_db_time(self.date_modified)
             ),
         }

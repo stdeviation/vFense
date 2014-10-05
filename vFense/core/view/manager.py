@@ -64,7 +64,11 @@ class ViewManager(object):
         Returns:
             View instance
         """
-        view_data = View(**fetch_view(self.view_name))
+        data = fetch_view(self.view_name)
+        if data:
+            view_data = View(**data)
+        else:
+            view_data = View()
 
         return view_data
 
@@ -132,33 +136,27 @@ class ViewManager(object):
             view (View): A view instance filled out with the
                 appropriate fields.
 
-        Kwargs:
-            username (str): Name of the user that you are adding to this view.
-                Default=None
-
         Basic Usage:
             >>> from vFense.core.view import View
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View(
                 'global'
-                package_download_url='https://10.0.0.15/packages/'
+                package_download_url_base='https://10.0.0.15/packages/'
             )
-            >>> manager = ViewManager(view.name)
+            >>> manager = ViewManager(view.view_name)
             >>> manager.create(view)
 
         Returns:
             ApiResults instance
         """
-        msg = ''
         results = ApiResults()
         results.fill_in_defaults()
 
         if isinstance(view, View):
             invalid_fields = view.get_invalid_fields()
-            if not invalid_fields and not view.properties.view_name:
+            if not invalid_fields and not self.properties.view_name:
                 view.fill_in_defaults()
-                parent_view = {}
-                if view.name == DefaultViews.GLOBAL:
+                if view.view_name == DefaultViews.GLOBAL:
                     view.parent = None
                     view.ancestors = []
                     view.children = []
@@ -168,16 +166,20 @@ class ViewManager(object):
                         view.parent = DefaultViews.GLOBAL
                         view.ancestors = [view.parent]
                         parent_view = fetch_view(view.parent)
+                        if parent_view:
+                            parent_view = View(**parent_view)
+                        else:
+                            parent_view = View()
 
                     else:
                         parent_view = View(**fetch_view(view.parent))
                         if parent_view.view_name:
-                            parent_view.children.append(view.name)
+                            parent_view.children.append(view.view_name)
                             view.ancestors = parent_view.ancestors
                             view.ancestors.append(view.parent)
 
-                if not view.package_download_url:
-                    view.package_download_url = (
+                if not view.package_download_url_base:
+                    view.package_download_url_base = (
                         fetch_view(
                             DefaultViews.GLOBAL,
                             [ViewKeys.PackageUrl]
@@ -194,22 +196,22 @@ class ViewManager(object):
                 )
 
                 if object_status == DbCodes.Inserted:
-                    generated_ids.append(view.name)
-                    msg = 'view %s created - ' % (view.name)
+                    generated_ids.append(view.view_name)
+                    msg = 'view %s created - ' % (view.view_name)
                     results.generic_status_code = GenericCodes.ObjectCreated
                     results.vfense_status_code = ViewCodes.ViewCreated
                     results.message = msg
                     results.data.append(view.to_dict())
 
                     if usernames:
-                        update_views_for_users(usernames, [view.name])
+                        update_views_for_users(usernames, [view.view_name])
 
                     if groupids:
-                        add_view_to_groups(groupids, view.name)
+                        add_view_to_groups(groupids, view.view_name)
 
                     if parent_view:
                         update_children_for_view(
-                            parent_view.view_name, view.name
+                            parent_view.view_name, view.view_name
                         )
 
                 else:
@@ -223,8 +225,8 @@ class ViewManager(object):
                     results.message = msg
                     results.data.append(view.to_dict())
 
-            elif view.properties.view_name:
-                msg = 'view name %s already exists' % (view.name)
+            elif self.properties.view_name:
+                msg = 'view name %s already exists' % (view.view_name)
                 results.generic_status_code = GenericCodes.ObjectExists
                 results.vfense_status_code = ViewFailureCodes.ViewExists
                 results.message = msg
@@ -265,12 +267,11 @@ class ViewManager(object):
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View('global')
             >>> users = ['foo', 'man', bar']
-            >>> manager = ViewManager(view.name)
+            >>> manager = ViewManager(view.view_name)
             >>> manager.add_users()
 
         Returns:
-            Dictionary of the status of the operation.
-            >>>
+            ApiResults instance
         """
         results = ApiResults()
         results.fill_in_defaults()
@@ -362,12 +363,11 @@ class ViewManager(object):
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View('global')
             >>> groups = ['foo', 'man', bar']
-            >>> manager = ViewManager(view.name)
+            >>> manager = ViewManager(view.view_name)
             >>> manager.add_groups()
 
         Returns:
-            Dictionary of the status of the operation.
-            >>>
+            ApiResults instance
         """
         results = ApiResults()
         results.fill_in_defaults()
@@ -458,12 +458,11 @@ class ViewManager(object):
         Basic Usage:
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View('global')
-            >>> manager = ViewManager(view.name)
+            >>> manager = ViewManager(view.view_name)
             >>> manager.remove_users()
 
         Returns:
             ApiResults instance
-            >>>
         """
         results = ApiResults()
         results.fill_in_defaults()
@@ -543,12 +542,11 @@ class ViewManager(object):
         Basic Usage:
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View('global')
-            >>> manager = ViewManager(view.name)
+            >>> manager = ViewManager(view.view_name)
             >>> manager.add_agents()
 
         Returns:
             ApiResults instance
-            >>>
         """
         results = ApiResults()
         results.fill_in_defaults()
@@ -605,11 +603,11 @@ class ViewManager(object):
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View('global')
             >>> new_view = 'Test 1'
+            >>> manager = ViewManager(view.view_name)
             >>> manager.move_agents(new_view)
 
         Returns:
-            Dictionary of the status of the operation.
-            >>>
+            ApiResults instance
         """
         results = ApiResults()
         results.fill_in_defaults()
@@ -709,16 +707,14 @@ class ViewManager(object):
         Basic Usage:
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View('global')
-            >>> manager = ViewManager(view.name)
+            >>> manager = ViewManager(view.view_name)
             >>> manager.remove_agents()
 
         Returns:
-            Dictionary of the status of the operation.
-            >>>
+            ApiResults instance
         """
-        view_exist = self.properties
-        msg = ''
         results = ApiResults()
+        results.fill_in_defaults()
         if agents:
             if not isinstance(agents, list):
                 agents = agents.split()
@@ -734,7 +730,7 @@ class ViewManager(object):
         else:
             valid_agents = False
 
-        if view_exist and self.view_name != DefaultViews.GLOBAL:
+        if self.properties.view_name and self.view_name != DefaultViews.GLOBAL:
             if agents and valid_agents:
                 status_code, _, _, _ = (
                     remove_all_agents_from_view(self.view_name, agents)
@@ -746,47 +742,39 @@ class ViewManager(object):
                         .format(', '.join(agents), self.view_name)
                     )
 
-                    results.generic_status_code = (
-                        GenericCodes.ObjectUpdated
-                    )
+                    results.generic_status_code = GenericCodes.ObjectUpdated
                     results.vfense_status_code = (
                         ViewCodes.ViewsRemovedFromAgent
                     )
                     results.message = msg
-                    results.updated_ids = [self.view_name]
+                    results.updated_ids.append(self.view_name)
 
             elif agents and not valid_agents:
                 msg = (
                     'Agents %s are not valid for this view %s'%
                     (', '.join(agents), self.view_name)
                 )
-                results.generic_status_code = (
-                    GenericCodes.ObjectUnchanged
-                )
+                results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.AgentsDoNotExistForView
                 )
                 results.message = msg
-                results.unchanged_ids = [self.view_name]
+                results.unchanged_ids.append(self.view_name)
 
             else:
                 msg = (
                     'Agents do not exist in this view %s'% (self.view_name)
                 )
-                results.generic_status_code = (
-                    GenericCodes.ObjectUnchanged
-                )
+                results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.AgentsDoNotExistForView
                 )
                 results.message = msg
-                results.unchanged_ids = [self.view_name]
+                results.unchanged_ids.append(self.view_name)
 
         elif self.view_name == DefaultViews.GLOBAL:
             msg = 'Can not remove agents from the global view'
-            results.generic_status_code = (
-                GenericCodes.ObjectExists
-            )
+            results.generic_status_code = GenericCodes.ObjectExists
             results.vfense_status_code = (
                 ViewFailureCodes.CantRemoveAgentsFromGlobalView
             )
@@ -794,12 +782,8 @@ class ViewManager(object):
 
         else:
             msg = 'View %s does not exists' % (self.view_name)
-            results.generic_status_code = (
-                GenericCodes.ObjectExists
-            )
-            results.vfense_status_code = (
-                ViewFailureCodes.ViewDoesNotExist
-            )
+            results.generic_status_code = GenericCodes.ObjectExists
+            results.vfense_status_code = ViewFailureCodes.ViewDoesNotExist
             results.message = msg
 
         return results
@@ -816,16 +800,14 @@ class ViewManager(object):
         Basic Usage:
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View('global')
-            >>> manager = ViewManager(view.name)
+            >>> manager = ViewManager(view.view_name)
             >>> manager.delete_agents()
 
         Returns:
-            Dictionary of the status of the operation.
-            >>>
+            ApiResults instance
         """
-        view_exist = self.properties
-        msg = ''
         results = ApiResults()
+        results.fill_in_defaults()
         if agents:
             if not isinstance(agents, list):
                 agents = agents.split()
@@ -841,7 +823,7 @@ class ViewManager(object):
         else:
             valid_agents = False
 
-        if view_exist:
+        if self.properties.view_name:
             if agents and valid_agents:
                 status_code, _, _, _ = (
                     delete_all_agents_from_view(self.view_name, agents)
@@ -853,15 +835,10 @@ class ViewManager(object):
                         'The following agents: {0} were deleted from view {1}'
                         .format(', '.join(agents), self.view_name)
                     )
-
-                    results.generic_status_code = (
-                        GenericCodes.ObjectUpdated
-                    )
-                    results.vfense_status_code = (
-                        AgentCodes.AgentsDeleted
-                    )
+                    results.generic_status_code = GenericCodes.ObjectUpdated
+                    results.vfense_status_code = AgentCodes.AgentsDeleted
                     results.message = msg
-                    results.updated_ids = [self.view_name]
+                    results.updated_ids.append(self.view_name)
 
             elif agents and not valid_agents:
                 msg = (
@@ -875,29 +852,23 @@ class ViewManager(object):
                     ViewFailureCodes.AgentsDoNotExistForView
                 )
                 results.message = msg
-                results.unchanged_ids = [self.view_name]
+                results.unchanged_ids.append(self.view_name)
 
             else:
                 msg = (
                     'Agents do not exist in this view %s'% (self.view_name)
                 )
-                results.generic_status_code = (
-                    GenericCodes.ObjectUnchanged
-                )
+                results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.AgentsDoNotExistForView
                 )
                 results.message = msg
-                results.unchanged_ids = [self.view_name]
+                results.unchanged_ids.append(self.view_name)
 
         else:
             msg = 'View %s does not exists' % (self.view_name)
-            results.generic_status_code = (
-                GenericCodes.ObjectExists
-            )
-            results.vfense_status_code = (
-                ViewFailureCodes.ViewExists
-            )
+            results.generic_status_code = GenericCodes.ObjectExists
+            results.vfense_status_code = ViewFailureCodes.ViewExists
             results.message = msg
 
         return results
@@ -914,16 +885,14 @@ class ViewManager(object):
         Basic Usage:
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View('global')
-            >>> manager = ViewManager(view.name)
+            >>> manager = ViewManager(view.view_name)
             >>> manager.remove_users()
 
         Returns:
-            Dictionary of the status of the operation.
-            >>>
+            ApiResults instance
         """
-        view_exist = self.properties
-        msg = ''
         results = ApiResults()
+        results.fill_in_defaults()
         if groups:
             if not isinstance(groups, list):
                 groups = groups.split()
@@ -939,7 +908,7 @@ class ViewManager(object):
         else:
             valid_groups = False
 
-        if view_exist:
+        if self.properties.view_name:
             if groups and valid_groups:
                 status_code, _, _, _ = (
                     delete_groups_from_view(groups, self.view_name)
@@ -957,7 +926,7 @@ class ViewManager(object):
                         ViewCodes.ViewsRemovedFromGroup
                     )
                     results.message = msg
-                    results.updated_ids = [self.view_name]
+                    results.updated_ids.append(self.view_name)
 
             elif groups and not valid_groups:
                 msg = (
@@ -971,7 +940,7 @@ class ViewManager(object):
                     ViewFailureCodes.UsersDoNotExistForView
                 )
                 results.message = msg
-                results.unchanged_ids = [self.view_name]
+                results.unchanged_ids.append(self.view_name)
 
             else:
                 msg = (
@@ -984,16 +953,12 @@ class ViewManager(object):
                     ViewFailureCodes.GroupsDoNotExistInThisView
                 )
                 results.message = msg
-                results.unchanged_ids = [self.view_name]
+                results.unchanged_ids.append(self.view_name)
 
         else:
             msg = 'View %s does not exists' % (self.view_name)
-            results.generic_status_code = (
-                GenericCodes.ObjectExists
-            )
-            results.vfense_status_code = (
-                ViewFailureCodes.ViewExists
-            )
+            results.generic_status_code = GenericCodes.ObjectExists
+            results.vfense_status_code = ViewFailureCodes.ViewExists
             results.message = msg
 
         return results
@@ -1011,18 +976,16 @@ class ViewManager(object):
         Basic Usage:
             >>> from vFense.core.view.manager import ViewManager
             >>> view = View('global')
-            >>> manager = ViewManager(view.name)
+            >>> manager = ViewManager(view.view_name)
             >>> manager.remove(view)
 
         Returns:
-            Dictionary of the status of the operation.
-            >>>
+            ApiResults instance
         """
-        view_exist = self.properties
-        msg = ''
         results = ApiResults()
+        results.fill_in_defaults()
 
-        if view_exist:
+        if self.properties.view_name:
             if not self.users and not self.groups and not force or force:
                 object_status, _, _, generated_ids = (
                     delete_view(self.view_name)
@@ -1054,14 +1017,11 @@ class ViewManager(object):
                     else:
                         msg = 'View %s deleted - ' % (self.view_name)
 
-                    results.generic_status_code = (
-                        GenericCodes.ObjectDeleted
-                    )
-                    results.vfense_status_code = (
-                        ViewCodes.ViewDeleted
-                    )
+                    results.generic_status_code = GenericCodes.ObjectDeleted
+                    results.vfense_status_code = ViewCodes.ViewDeleted
                     results.message = msg
-                    results.deleted_ids = [self.view_name]
+                    results.deleted_ids.append(self.view_name)
+                    self.properties = self._view_properties()
 
             else:
                 msg = (
@@ -1075,16 +1035,12 @@ class ViewManager(object):
                     ViewFailureCodes.UsersExistForView
                 )
                 results.message = msg
-                results.unchanged_ids = [self.view_name]
+                results.unchanged_id.append(self.view_name)
 
         else:
             msg = 'View %s does not exists' % (self.view_name)
-            results.generic_status_code = (
-                GenericCodes.ObjectExists
-            )
-            results.vfense_status_code = (
-                ViewFailureCodes.ViewExists
-            )
+            results.generic_status_code = GenericCodes.ObjectExists
+            results.vfense_status_code = ViewFailureCodes.ViewExists
             results.message = msg
 
         return results
@@ -1194,7 +1150,7 @@ class ViewManager(object):
         Returns:
             Returns the results in a dictionary
         """
-        view = View(self.view_name, package_download_url=url)
+        view = View(self.view_name, package_download_url_base=url)
         results = self.__edit_properties(view)
 
         return results
@@ -1252,51 +1208,42 @@ class ViewManager(object):
             >>> from vFense.view.manager import ViewManager
             >>> view_name = 'global'
             >>> view = View(view_name, net_throttle=100)
-            >>> manager = ViewManager(view.name)
+            >>> manager = ViewManager(view_name)
             >>> manager.__edit_properties(view)
 
         Returns:
-            Returns the results in a dictionary
+            ApiResults instance
         """
         view_exist = self.properties
         results = ApiResults()
+        results.fill_in_defaults()
         if view_exist:
             if isinstance(view, View):
                 invalid_fields = view.get_invalid_fields()
-                view_data = view.to_dict_non_null()
-                view_data.pop(ViewKeys.ViewName, None)
                 if not invalid_fields:
                     status_code, _, _, _ = (
-                        update_view(self.view_name, view_data)
+                        update_view(self.view_name, view.to_dict_db_update())
                     )
                     if status_code == DbCodes.Replaced:
                         msg = (
                             'view %s updated with data: %s'
-                            % (self.view_name, view_data)
+                            % (self.view_name, view.to_dict_non_null())
                         )
                         results.message = msg
-                        results.generic_status_code = (
-                            GenericCodes.ObjectUpdated
-                        )
-                        results.vfense_status_code = (
-                            ViewCodes.ViewUpdated
-                        )
-                        results.updated_ids = [self.view_name]
-                        results.data = [view_data]
+                        results.generic_status_code = GenericCodes.ObjectUpdated
+                        results.vfense_status_code = ViewCodes.ViewUpdated
+                        results.updated_ids.append(self.view_name)
+                        results.data.append(view.to_dict_non_null())
 
                     if status_code == DbCodes.Unchanged:
                         msg = (
                             'View data: %s is the same as the previous values'
-                            % (view_data)
+                            % (view.to_dict_non_null())
                         )
                         results.message = msg
-                        results.generic_status_code = (
-                            GenericCodes.ObjectUnchanged
-                        )
-                        results.vfense_status_code = (
-                            ViewCodes.ViewUnchanged
-                        )
-                        results.unchanged_ids = [self.view_name]
+                        results.generic_status_code = GenericCodes.ObjectUnchanged
+                        results.vfense_status_code = ViewCodes.ViewUnchanged
+                        results.unchanged_ids.append(self.view_name)
 
                 else:
                     msg = (
@@ -1304,9 +1251,7 @@ class ViewManager(object):
                         % (self.view_name)
                     )
                     results.message = msg
-                    results.generic_status_code = (
-                        GenericCodes.ObjectUnchanged
-                    )
+                    results.generic_status_code = GenericCodes.ObjectUnchanged
                     results.vfense_status_code = (
                         ViewFailureCodes.InvalidFields
                     )
@@ -1319,25 +1264,17 @@ class ViewManager(object):
                     % (type(view))
                 )
                 results.message = msg
-                results.generic_status_code = (
-                    GenericCodes.InvalidValue
-                )
-                results.vfense_status_code = (
-                    ViewFailureCodes.InvalidValue
-                )
-                results.unchanged_ids = [self.view_name]
+                results.generic_status_code = GenericCodes.InvalidValue
+                results.vfense_status_code = ViewFailureCodes.InvalidValue
+                results.unchanged_ids.append(self.view_name)
 
         else:
             msg = 'view %s does not exist' % (self.view_name)
-            results.generic_status_code = (
-                GenericCodes.ObjectUnchanged
-            )
-            results.vfense_status_code = (
-                ViewCodes.ViewUnchanged
-            )
+            results.generic_status_code = GenericCodes.ObjectUnchanged
+            results.vfense_status_code = ViewCodes.ViewUnchanged
             results.message = msg
-            results.unchanged_ids = [self.view_name]
-            results[ApiResultKeys.INVALID_IDS] = [self.view_name]
+            results.unchanged_ids.append(self.view_name)
+            results.invalid_ids.append(self.view_name)
 
         return results
 
@@ -1350,7 +1287,7 @@ class ViewManager(object):
             >>> manager.generate_auth_token()
 
         Returns:
-            Returns the results in a dictionary
+            string
         """
         new_token = generate_token()
         current_tokens = fetch_all_current_tokens()
