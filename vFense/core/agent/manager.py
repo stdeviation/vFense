@@ -4,7 +4,6 @@ from time import time
 from copy import deepcopy
 from vFense import VFENSE_LOGGING_CONFIG
 
-from vFense.core._db_constants import DbTime
 from vFense.core.agent import Agent
 from vFense.core.agent._db import (
     fetch_agent, insert_agent, insert_hardware,
@@ -16,7 +15,6 @@ from vFense.core.agent._db_model import (
     AgentKeys, HardwarePerAgentKeys
 )
 from vFense.core.tag import Tag
-from vFense.core.tag._db_model import TagKeys, TagsPerAgentKeys
 from vFense.core.tag.tags import validate_tag_ids_in_views
 from vFense.core.tag._db import (
     add_tags_to_agent, delete_tag_ids_from_agent, fetch_tag,
@@ -72,7 +70,6 @@ class AgentManager(object):
         if not views:
             views = []
         return views
-
 
     @time_it
     def create(self, agent, tags=None):

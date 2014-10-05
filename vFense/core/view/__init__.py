@@ -1,6 +1,9 @@
 import re
 import logging
+from time import time
 from vFense import VFENSE_LOGGING_CONFIG
+from vFense import Base
+from vFense.core._db_constants import DbTime
 
 from vFense.core._constants import (
     CPUThrottleValues, DefaultStringLength, RegexPattern, CommonKeys
@@ -20,21 +23,19 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-class View(object):
+class View(Base):
     """Used to represent an instance of a view."""
 
     def __init__(
-        self, name, parent=None, ancestors=None, children=None,
+        self, view_name=None, parent=None, ancestors=None, children=None,
         users=None, net_throttle=None, cpu_throttle=None,
         server_queue_ttl=None, agent_queue_ttl=None,
         package_download_url=None, token=None, previous_tokens=None,
-        time_zone=None
+        time_zone=None, date_added=None, date_modified=None
     ):
         """
-        Args:
-            name (str): The name of the view.
-
         Kwargs:
+            view_name (str): The name of this view.
             parent (str): The parent of this view.
             ancestors (list): The ancestors of this view in
                 the correct order.
@@ -57,8 +58,10 @@ class View(object):
             token (str): Base64 encoded string.
             previous_tokens (list): List of previous base64 encoded strings.
             time_zone (str): The timezone you want your scheduler to run as.
+            date_added (epoch_time): time in epoch.
+            date_modified (epoch_time): time in epoch.
         """
-        self.name = name
+        self.view_name = view_name
         self.parent = parent
         self.ancestors = ancestors
         self.children = children
@@ -71,16 +74,14 @@ class View(object):
         self.token = token
         self.previous_tokens = previous_tokens
         self.time_zone = time_zone
+        self.date_added = date_added
+        self.date_modified = date_modified
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
         the hardcoded default values.
-
-        Use case(s):
-            Useful when creating a new view instance and only want to fill
-            in a few fields, then allow the create view functions call this
-            method to fill in the rest.
         """
+        now = time()
 
         if not self.parent:
             self.parent = ViewDefaults.PARENT
@@ -115,31 +116,27 @@ class View(object):
         if not self.time_zone:
             self.time_zone = ViewDefaults.TIME_ZONE
 
+        if not self.date_added:
+            self.date_added = now
+
+        if not self.date_modified:
+            self.date_modified = now
+
     def get_invalid_fields(self):
-        """Check the view for any invalid fields.
-
-        Returns:
-            (list): List of key/value pair dictionaries corresponding
-                to the invalid fields.
-
-                Ex:
-                    [
-                        {'view_name': 'the invalid name in question'},
-                        {'net_throttle': -10}
-                    ]
+        """Check for invalid fields.
         """
         invalid_fields = []
 
-        if isinstance(self.name, basestring):
+        if isinstance(self.view_name, basestring):
             valid_symbols = re.search(
-               RegexPattern.VIEW_NAME, self.name
+               RegexPattern.VIEW_NAME, self.view_name
             )
-            valid_length = len(self.name) <= DefaultStringLength.VIEW_NAME
+            valid_length = len(self.view_name) <= DefaultStringLength.VIEW_NAME
 
             if not valid_symbols and valid_length:
                 invalid_fields.append(
                     {
-                        ViewKeys.ViewName: self.name,
+                        ViewKeys.ViewName: self.view_name,
                         CommonKeys.REASON: (
                             'View name contains invalid special characters.'
                         ),
@@ -152,7 +149,7 @@ class View(object):
             elif valid_symbols and not valid_length:
                 invalid_fields.append(
                     {
-                        ViewKeys.ViewName: self.name,
+                        ViewKeys.ViewName: self.view_name,
                         CommonKeys.REASON: (
                             'View name is too long.'
                         ),
@@ -164,7 +161,7 @@ class View(object):
             elif not valid_symbols and not valid_length:
                 invalid_fields.append(
                     {
-                        ViewKeys.ViewName: self.name,
+                        ViewKeys.ViewName: self.view_name,
                         CommonKeys.REASON: (
                             'View name contains invalid special characters ' +
                             'and the name is too long'
@@ -177,7 +174,7 @@ class View(object):
         else:
             invalid_fields.append(
                 {
-                    ViewKeys.ViewName: self.name,
+                    ViewKeys.ViewName: self.view_name,
                     CommonKeys.REASON: 'View name is not a valid string',
                     ApiResultKeys.VFENSE_STATUS_CODE: (
                         ViewFailureCodes.InvalidViewName
@@ -302,23 +299,12 @@ class View(object):
         """ Turn the view fields into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                view.
-
-                Ex:
-                {
-                    "agent_queue_ttl": 100 ,
-                    "cpu_throttle":  "high" ,
-                    "view_name":  "default" ,
-                    "net_throttle": 100 ,
-                    "package_download_url_base": https://192.168.8.14/packages/,
-                    "server_queue_ttl": 100
-                }
+            (dict): A dictionary with the fields.
 
         """
 
         return {
-            ViewKeys.ViewName: self.name,
+            ViewKeys.ViewName: self.view_name,
             ViewKeys.Parent: self.parent,
             ViewKeys.Ancestors: self.ancestors,
             ViewKeys.Children: self.children,
@@ -331,17 +317,44 @@ class View(object):
             ViewKeys.Token: self.token,
             ViewKeys.PreviousTokens: self.previous_tokens,
             ViewKeys.TimeZone: self.time_zone,
+            ViewKeys.DateAdded: self.date_added,
+            ViewKeys.DateModified: self.date_modified,
         }
 
-    def to_dict_non_null(self):
-        """ Use to get non None fields of view. Useful when
-        filling out just a few fields to update the view in the db.
+    def to_dict_db(self):
+        """ Turn the fields into a dictionary, with db related fields.
 
         Returns:
-            (dict): a dictionary with the non None fields of this view.
+            (dict): A dictionary with the fields.
+
         """
-        view_dict = self.to_dict()
 
-        return {k:view_dict[k] for k in view_dict
-                if view_dict[k] != None}
+        data = {
+            ViewKeys.DateAdded: (
+                DbTime.epoch_time_to_db_time(self.date_added)
+            ),
+            ViewKeys.LastAgentUpdate: (
+                DbTime.epoch_time_to_db_time(self.date_modified)
+            ),
+        }
 
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        return combined_data
+
+    def to_dict_db_update(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        data = {
+            ViewKeys.DateModified: (
+                DbTime.epoch_time_to_db_time(self.date_modified)
+            ),
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        combined_data.pop(ViewKeys.ViewName, None)
+        return combined_data

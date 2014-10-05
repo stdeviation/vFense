@@ -17,6 +17,8 @@ class ViewKeys():
     Token = 'token'
     PreviousTokens = 'previous_tokens'
     TimeZone = 'time_zone'
+    DateAdded = 'date_added'
+    DateModified = 'date_modified'
 
 
 class ViewMappedKeys():
