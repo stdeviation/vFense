@@ -1,7 +1,10 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
 from copy import deepcopy
+from vFense import VFENSE_LOGGING_CONFIG
+from vFense.core.operations import (
+    AgentOper, OperPerAgent, OperPerApp
+)
 from vFense.core.operations._constants import vFenseObjects
 from vFense.core.operations.agent_operations import AgentOperation
 from vFense.core.operations._db_model import (
