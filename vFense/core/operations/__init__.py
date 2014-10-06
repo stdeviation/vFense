@@ -2,7 +2,7 @@ import re
 from vFense import Base
 from vFense.core._db_constants import DbTime
 from vFense.core.operations._db_model import (
-    AdminOperationKey
+    AdminOperationKey, AgentOperationKey
 )
 from vFense.core.operations._admin_constants import (
     AdminOperationDefaults, AdminActions
@@ -196,4 +196,99 @@ class AdminOperation(Base):
             AdminOperationKey.IdsCreated: self.ids_created,
             AdminOperationKey.IdsUpdated: self.ids_updated,
             AdminOperationKey.IdsRemoved: self.ids_removed,
+        }
+
+
+
+class AgentOperation(Base):
+    """Used to represent an instance of an admin operation."""
+
+    def __init__(
+        self, created_by=None, operation_id=None, action_performed_on=None,
+        agents=None, completed_time=None, created_time=None,
+        operation=None, operation_status=None, updated_time=None,
+        view_name=None, restart=None, tag_id=None, agent_ids=None,
+        plugin=None, cpu_throttle=None, net_throttle=None,
+        agents_total_count=None, agents_failed_count=None,
+        agents_completed_count=None, agents_expired_count=None,
+        agents_pending_results_count=None,
+        agents_pending_pickup_count=None,
+        agents_completed_with_errors_count=None, applications=None
+    ):
+        """
+        Kwargs:
+            created_by (str): The name of the user who created the operation.
+            operation_id (str): The 36 character UUID of the operation.
+            completed_time (int): The time this operation was created.
+            created_time (int): The time the operation completed.
+        """
+        self.created_by = created_by
+        self.operation_id = operation_id
+        self.action_performed_on = action_performed_on
+        self.agents = agents
+        self.completed_time = completed_time
+        self.created_time = created_time
+        self.operation = operation
+        self.operation_status = operation_status
+        self.action_performed_on = action_performed_on
+        self.updated_time = updated_time
+        self.view_name = view_name
+        self.restart = restart
+        self.tag_id = tag_id
+        self.agent_ids = agent_ids
+        self.plugin = plugin
+        self.cpu_throttle = cpu_throttle
+        self.net_throttle = net_throttle
+        self.agents_total_count = agents_total_count
+        self.agents_failed_count = agents_failed_count
+        self.agents_completed_count = agents_completed_count
+        self.agents_expired_count = agents_expired_count
+        self.agents_pending_results_count = agents_pending_results_count
+        self.agents_pending_pickup_count = agents_pending_pickup_count
+        self.agents_completed_with_errors_count = (
+            agents_completed_with_errors_count
+        )
+        self.applications = applications
+
+
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+
+        Use case(s):
+            Useful when creating a new user instance and only want to fill
+            in a few fields, then allow the create user functions call this
+            method to fill in the rest.
+        """
+        pass
+
+    def get_invalid_fields(self):
+        """Check the user for any invalid fields.
+
+        Returns:
+            (list): List of key/value pair dictionaries corresponding
+                to the invalid fields.
+
+                Ex:
+                    [
+                        {'view_name': 'the invalid name in question'},
+                        {'net_throttle': -10}
+                    ]
+        """
+        invalid_fields = []
+
+        return invalid_fields
+
+    def to_dict(self):
+        """ Turn the fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields.
+        """
+
+        return {
+            AgentOperationKey.CreatedBy: self.created_by,
+            AgentOperationKey.PerformedOn: self.action_performed_on,
+            AgentOperationKey.CompletedTime: self.completed_time,
+            AgentOperationKey.CreatedTime: self.created_time,
         }
