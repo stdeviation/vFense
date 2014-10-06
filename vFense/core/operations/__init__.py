@@ -23,7 +23,7 @@ from vFense.core.status_codes import (
     GenericFailureCodes
 )
 
-class AdminOperation(Base):
+class AdminOper(Base):
     """Used to represent an instance of an admin operation."""
 
     def __init__(
@@ -210,7 +210,7 @@ class AdminOperation(Base):
 
 
 
-class AgentOperation(Base):
+class AgentOper(Base):
     """Used to represent an instance of an admin operation."""
 
     def __init__(
@@ -460,7 +460,7 @@ class AgentOperation(Base):
         return combined_data
 
 
-class OperationPerAgent(Base):
+class OperPerAgent(Base):
     """Used to represent an instance of an admin operation."""
 
     def __init__(
@@ -632,7 +632,7 @@ class OperationPerAgent(Base):
 
         return data
 
-class OperationPerApp(Base):
+class OperPerApp(Base):
     """Used to represent an instance of an operation per app."""
 
     def __init__(
