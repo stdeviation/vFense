@@ -1,12 +1,20 @@
 class AdminOperationDefaults():
-    ERRORS = []
-    IDS_REMOVED = []
-    IDS_UPDATED = []
-    IDS_CREATED = []
-    OBJECT_DATA = {}
-    STATUS_MESSAGE = ''
-    GENERIC_STATUS_CODE = None
-    VFENSE_STATUS_CODE = None
+    @staticmethod
+    def errors():
+        return list()
+
+    @staticmethod
+    def ids_removed():
+        return list()
+
+    @staticmethod
+    def ids_updated():
+        return list()
+
+    @staticmethod
+    def ids_created():
+        return list()
+
 
 class AdminActions():
     ADD_USERS_TO_VIEW = 'add users to view'
