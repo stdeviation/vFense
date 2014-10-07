@@ -6,6 +6,9 @@ from time import mktime
 from vFense.core.operations._db_model import (
     AgentOperationKey, OperationPerAgentKey
 )
+from vFense.core.operations import (
+    AgentOper, OperPerAgent, OperPerApp
+)
 from vFense.core.operations._constants import vFenseObjects, OperationErrors
 from vFense.core._db_constants import DbTime
 from vFense.core.operations._db_agent import fetch_agent_operation, \
@@ -62,7 +65,7 @@ def get_agent_operation(operation_id):
             "view_name": "default"
         }
     """
-    return fetch_agent_operation(operation_id)
+    return AgentOperation(**fetch_agent_operation(operation_id))
 
 def operation_for_agent_exist(operation_id, agent_id):
     """Verify if the operation exists by operation id and agent id.
