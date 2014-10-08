@@ -10,7 +10,6 @@ from vFense.core.operations.agent_operations import AgentOperation
 from vFense.core.operations._db_model import (
     OperationPerAgentKey, AgentOperationKey
 )
-from vFense.core.decorators import results_message
 from vFense.core.queue.manager import AgentQueueManager
 from vFense.core.tag._db import fetch_agent_ids_in_tag
 from vFense.core.results import ApiResults
