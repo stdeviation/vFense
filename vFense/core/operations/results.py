@@ -9,7 +9,7 @@ from vFense.core.agent._db_model import AgentKeys
 from vFense.core.results import ApiResultKeys
 from vFense.core.agent.agents import get_agent_info
 from vFense.core._db_constants import DbTime
-from vFense.core.operations.agent_operations import AgentOperation, \
+from vFense.core.operations.agent_operations import AgentOperationManager, \
     operation_for_agent_exist, get_agent_operation
 
 from vFense.receiver.status_codes import (
@@ -58,12 +58,12 @@ class OperationResults(object):
         self.operation_id = operation_id
         self.agent_data = get_agent_info(self.agent_id)
         self.operation_data = get_agent_operation(self.operation_id)
-        self.date_now = DbTime.time_now()
+        self.date_now = DbTime.now()
         self.begining_of_time = DbTime.begining_of_time()
         self.error = error
         self.success = success
         self.status_code = status_code
-        self.operation = AgentOperation()
+        self.operation = AgentOperationManager()
 
     def update_operation(self, oper_type):
         """Update an agent operation

@@ -17,13 +17,16 @@ from vFense.core.operations._operation_per_app_constants import (
 from vFense.core.operations._operation_constants import (
     OperationDefaults
 )
+from vFense.core.operations.status_codes import (
+    AgentOperationCodes, OperationPerAgentCodes
+)
 from vFense.core._constants import CommonKeys
 from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import (
     GenericFailureCodes
 )
 
-class AdminOper(Base):
+class AdminOperation(Base):
     """Used to represent an instance of an admin operation."""
 
     def __init__(
@@ -210,7 +213,7 @@ class AdminOper(Base):
 
 
 
-class AgentOper(Base):
+class AgentOperation(Base):
     """Used to represent an instance of an admin operation."""
 
     def __init__(
@@ -248,7 +251,7 @@ class AgentOper(Base):
             agents_total_count (int): Number of agents invloved in this operation.
             agents_failed_count (int): Number of agents failed in this operation.
             agents_completed_count (int): Number of agents completed this operation.
-            agents_expire_count (int): Number of agents, that this operation
+            agents_expired_count (int): Number of agents, that this operation
                 has expired on.
             agents_pending_results_count (int): Number of agents, that this
                 operation is pending for results.
@@ -303,6 +306,9 @@ class AgentOper(Base):
         if not self.completed_time:
             self.completed_time = OperationDefaults.completed_time()
 
+        if not self.created_time:
+            self.created_time = OperationDefaults.created_time()
+
         if not self.agents:
             self.agents = OperationDefaults.agents()
 
@@ -345,6 +351,9 @@ class AgentOper(Base):
             self.agents_completed_with_errors_count = (
                 OperationDefaults.agents_completed_with_errors_count()
             )
+
+        if not self.operation_status:
+            self.operation_status = AgentOperationCodes.ResultsIncomplete
 
     def get_invalid_fields(self):
         """Check the user for any invalid fields.
@@ -409,55 +418,22 @@ class AgentOper(Base):
             (dict): A dictionary with the fields.
 
         """
-
-        data = {
-            AgentOperationKey.CreatedTime: (
+        data = self.to_dict_non_null()
+        data.pop(AgentOperationKey.OperationId, None)
+        if self.picked_up_time:
+            data[AgentOperationKey.CreatedTime] = (
                 DbTime.epoch_time_to_db_time(self.created_time)
-            ),
-            AgentOperationKey.UpdatedTime: (
+            )
+        if self.updated_time:
+            data[AgentOperationKey.UpdatedTime] = (
                 DbTime.epoch_time_to_db_time(self.updated_time)
-            ),
-            AgentOperationKey.CompletedTime: (
+            )
+        if self.completed_time:
+            data[AgentOperationKey.CompletedTime] = (
                 DbTime.epoch_time_to_db_time(self.completed_time)
-            ),
-        }
+            )
 
-        combined_data = dict(self.to_dict_non_null().items() + data.items())
-        return combined_data
-
-    def to_dict_db_updated(self):
-        """ Turn the fields into a dictionary, with db related fields.
-
-        Returns:
-            (dict): A dictionary with the fields.
-
-        """
-
-        data = {
-            AgentOperationKey.UpdatedTime: (
-                DbTime.epoch_time_to_db_time(self.updated_time)
-            ),
-        }
-
-        combined_data = dict(self.to_dict_non_null().items() + data.items())
-        return combined_data
-
-    def to_dict_db_completed(self):
-        """ Turn the fields into a dictionary, with db related fields.
-
-        Returns:
-            (dict): A dictionary with the fields.
-
-        """
-
-        data = {
-            AgentOperationKey.CompletedTime: (
-                DbTime.epoch_time_to_db_time(self.completed_time)
-            ),
-        }
-
-        combined_data = dict(self.to_dict_non_null().items() + data.items())
-        return combined_data
+        return data
 
 
 class OperPerAgent(Base):
@@ -467,7 +443,7 @@ class OperPerAgent(Base):
         self, operation_id=None, agent_id=None, picked_up_time=None, id=None,
         expired_time=None, completed_time=None, view_name=None, status=None,
         tag_id=None, errors=None, apps_total_count=0, apps_pending_count=0,
-        apps_failed_count=0, apps_completed_count=0
+        apps_failed_count=0, apps_completed_count=0, id=None
     ):
         """
         Kwargs:
@@ -544,6 +520,9 @@ class OperPerAgent(Base):
                 OperPerAgentDefaults.apps_completed_count()
             )
 
+        if not self.status:
+            self.status = OperationPerAgentCodes.PendingPickUp
+
     def get_invalid_fields(self):
         """Check the user for any invalid fields.
 
@@ -591,41 +570,17 @@ class OperPerAgent(Base):
             (dict): A dictionary with the fields.
 
         """
-
-        data = {
-            OperationPerAgentKey.PickedUpTime: (
-                DbTime.epoch_time_to_db_time(self.picked_up_time)
-            ),
-            OperationPerAgentKey.ExpiredTime: (
-                DbTime.epoch_time_to_db_time(self.expired_time)
-            ),
-            OperationPerAgentKey.CompletedTime: (
-                DbTime.epoch_time_to_db_time(self.completed_time)
-            ),
-        }
-
-        combined_data = dict(self.to_dict_non_null().items() + data.items())
-        return combined_data
-
-    def to_dict_db_updated(self):
-        """ Turn the fields into a dictionary, with db related fields.
-
-        Returns:
-            (dict): A dictionary with the fields.
-
-        """
         data = self.to_dict_non_null()
-        if data.get(OperationPerAgentKey.PickedUpTime, None):
+        data.pop(OperationPerAgentKey.Id, None)
+        if self.picked_up_time:
             data[OperationPerAgentKey.PickedUpTime] = (
                 DbTime.epoch_time_to_db_time(self.picked_up_time)
             )
-
-        if data.get(OperationPerAgentKey.ExpiredTime, None):
+        if self.expired_time:
             data[OperationPerAgentKey.ExpiredTime] = (
                 DbTime.epoch_time_to_db_time(self.expired_time)
             )
-
-        if data.get(OperationPerAgentKey.CompletedTime, None):
+        if self.completed_time:
             data[OperationPerAgentKey.CompletedTime] = (
                 DbTime.epoch_time_to_db_time(self.completed_time)
             )
@@ -736,12 +691,11 @@ class OperPerApp(Base):
             (dict): A dictionary with the fields.
 
         """
-
-        data = {
-            OperationPerAppKey.ResultsReceivedTime: (
+        data = self.to_dict_non_null()
+        data.pop(OperationPerAppKey.Id, None)
+        if self.results_received_time:
+            data[OperationPerAppKey.ResultsReceivedTime] = (
                 DbTime.epoch_time_to_db_time(self.results_received_time)
-            ),
-        }
+            )
 
-        combined_data = dict(self.to_dict_non_null().items() + data.items())
-        return combined_data
+        return data

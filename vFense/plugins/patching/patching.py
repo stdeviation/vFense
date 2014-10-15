@@ -878,7 +878,7 @@ def add_or_update_apps_per_agent(agent_id, app_dict_list, now=None,
 
     if delete_afterwards:
         if not now:
-            now = DbTime.time_now()
+            now = DbTime.now()
         else:
             if isinstance(now, float) or isinstance(now, int):
                 now = DbTime.epoch_time_to_db_time(now)

@@ -1,16 +1,11 @@
 #!/usr/bin/env python
 
 from vFense import logging
-from datetime import datetime
-from time import mktime
-from vFense.core.operations._db_model import (
-    AgentOperationKey, OperationPerAgentKey
-)
 from vFense.core.operations import (
-    AgentOper, OperPerAgent, OperPerApp
+    AgentOperation, OperPerAgent
 )
-from vFense.core.operations._constants import vFenseObjects, OperationErrors
-from vFense.core._db_constants import DbTime
+from vFense.core.operations._constants import OperationErrors
+from vFense.core._constants import Time
 from vFense.core.operations._db_agent import fetch_agent_operation, \
     operation_with_agentid_exists, operation_with_agentid_and_appid_exists, \
     insert_into_agent_operations, update_agent_operation_expire_time, \
@@ -114,7 +109,7 @@ def operation_for_agent_and_app_exist(operation_id, agent_id, app_id):
     return data
 
 
-class AgentOperation(object):
+class AgentOperationManager(object):
     """This is what creates operations for an agent or multiple agents.
 
     """
@@ -126,22 +121,17 @@ class AgentOperation(object):
                 default=None
 
         Basic Usage:
-            >>> from vFense.core.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperationManager
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> oper = AgentOperation(username, view_name)
+            >>> oper = AgentOperationManager(username, view_name)
         """
         self.username = username
         self.view_name = view_name
-        self.now = mktime(datetime.now().timetuple())
-        self.db_time = DbTime.time_now()
+        self.now = Time.now()
         self.INIT_COUNT = 0
 
-    def create_operation(
-            self, operation, plugin, agent_ids,
-            tag_id, cpu_throttle=None, net_throttle=None,
-            restart=None, performed_on=vFenseObjects.AGENT,
-        ):
+    def create_operation(self, operation):
         """Create the base operation. Here is where the
             operation_id is generated.
         Args:
@@ -157,10 +147,10 @@ class AgentOperation(object):
             performed_on (str): The default is agent.
 
         Basic Usage:
-            >>> from vFense.core.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperationManager
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> oper = AgentOperation(username, view_name)
+            >>> oper = AgentOperationManager(username, view_name)
             >>> operation = 'reboot'
             >>> plugin = 'core'
             >>> agent_ids = ['38c1c67e-436f-4652-8cae-f1a2ac2dd4a2']
@@ -172,45 +162,18 @@ class AgentOperation(object):
             String The 36 character UUID of the operation that was created.
             6c0209d5-b350-48b7-808a-158ddacb6940
         """
-
-        number_of_agents = len(agent_ids)
-        keys_to_insert = (
-            {
-                AgentOperationKey.Plugin: plugin,
-                AgentOperationKey.Operation: operation,
-                AgentOperationKey.OperationStatus: (
-                    AgentOperationCodes.ResultsIncomplete
-                ),
-                AgentOperationKey.ViewName: self.view_name,
-                AgentOperationKey.CreatedBy: self.username,
-                AgentOperationKey.ActionPerformedOn: performed_on,
-                AgentOperationKey.TagId: tag_id,
-                AgentOperationKey.AgentIds: agent_ids,
-                AgentOperationKey.AgentsTotalCount: number_of_agents,
-                AgentOperationKey.AgentsExpiredCount: self.INIT_COUNT,
-                AgentOperationKey.AgentsPendingResultsCount: self.INIT_COUNT,
-                AgentOperationKey.AgentsPendingPickUpCount: number_of_agents,
-                AgentOperationKey.AgentsFailedCount: self.INIT_COUNT,
-                AgentOperationKey.AgentsCompletedCount: self.INIT_COUNT,
-                AgentOperationKey.AgentsCompletedWithErrorsCount: (
-                    self.INIT_COUNT
-                ),
-                AgentOperationKey.CreatedTime: self.db_time,
-                AgentOperationKey.UpdatedTime: self.db_time,
-                AgentOperationKey.CompletedTime: DbTime.begining_of_time(),
-                AgentOperationKey.Restart: restart,
-                AgentOperationKey.CpuThrottle: cpu_throttle,
-                AgentOperationKey.NetThrottle: net_throttle,
-            }
-        )
-        status_code, count, errors, generated_ids = (
-            insert_into_agent_operations(keys_to_insert)
-        )
-        if status_code == DbCodes.Inserted:
-            operation_id = generated_ids[0]
-
-        else:
-            operation_id = None
+        operation_id = None
+        if isinstance(operation, AgentOperation):
+            operation.fill_in_defaults()
+            operation.agents_total_count = len(operation.agent_ids)
+            operation.agents_pending_pickup_count = len(operation.agent_ids)
+            operation.view_name = self.view_name
+            operation.created_by = self.username
+            status_code, count, errors, generated_ids = (
+                insert_into_agent_operations(operation.to_dict_db())
+            )
+            if status_code == DbCodes.Inserted:
+                operation_id = generated_ids[0]
 
         return operation_id
 
@@ -222,10 +185,10 @@ class AgentOperation(object):
             operation_id (str): the operation id.
 
         Basic Usage:
-            >>> from vFense.core.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperationManager
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> oper = AgentOperation(username, view_name)
+            >>> oper = AgentOperationManager(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> oper.add_agent_to_operation(
@@ -235,28 +198,20 @@ class AgentOperation(object):
         Returns:
             36 character UUID of the operation that was created for the agent.
         """
-        data_to_insert = {
-            OperationPerAgentKey.AgentId: agent_id,
-            OperationPerAgentKey.OperationId: operation_id,
-            OperationPerAgentKey.ViewName: self.view_name,
-            OperationPerAgentKey.Status: OperationPerAgentCodes.PendingPickUp,
-            OperationPerAgentKey.PickedUpTime: DbTime.begining_of_time(),
-            OperationPerAgentKey.ExpiredTime: DbTime.begining_of_time(),
-            OperationPerAgentKey.CompletedTime: DbTime.begining_of_time(),
-            OperationPerAgentKey.Errors: None
-        }
-
+        agent_operation_id = None
+        operation = OperPerAgent()
+        operation.fill_in_defaults()
+        operation.agent_id = agent_id
+        operation.operation_id = operation_id
+        operation.view_name = self.view_name
         status_code, count, errors, generated_ids = (
-            insert_agent_into_agent_operations(data_to_insert)
+            insert_agent_into_agent_operations(operation.to_dict_db())
         )
 
         if status_code == DbCodes.Inserted:
-            operation_id = generated_ids[0]
+            agent_operation_id = generated_ids[0]
 
-        else:
-            operation_id = None
-
-        return operation_id
+        return agent_operation_id
 
 
     def update_operation_expire_time(self, operation_id, agent_id):
@@ -266,10 +221,10 @@ class AgentOperation(object):
             agent_id (str): the agent id.
 
         Basic Usage:
-            >>> from vFense.core.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperationManager
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> oper = AgentOperation(username, view_name)
+            >>> oper = AgentOperationManager(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> oper.update_operation_expire_time(operation_id, agent_id)
@@ -278,24 +233,21 @@ class AgentOperation(object):
             Boolean
         """
         completed = False
-        operation_data = (
-            {
-                OperationPerAgentKey.Status: (
-                    OperationPerAgentCodes.OperationExpired
-                ),
-                OperationPerAgentKey.ExpiredTime: self.db_time,
-                OperationPerAgentKey.CompletedTime: self.db_time,
-                OperationPerAgentKey.Errors: OperationErrors.EXPIRED,
-            }
-        )
+        operation = OperPerAgent()
+        operation.status = OperationPerAgentCodes.OperationExpired
+        operation.expired_time = self.now
+        operation.completed_time = self.now
+        operation.errors = OperationErrors.EXPIRED
 
         status_code, count, errors, generated_ids = (
-            update_operation_per_agent(operation_id, agent_id, operation_data)
+            update_operation_per_agent(
+                operation_id, agent_id, operation.to_dict_db()
+            )
         )
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             status_code, count, errors, generated_ids = (
                 update_agent_operation_expire_time(
-                    operation_id, self.db_time
+                    operation_id, self.now
                 )
             )
             completed = True
@@ -309,10 +261,10 @@ class AgentOperation(object):
             agent_id (str): the agent id.
 
         Basic Usage:
-            >>> from vFense.core.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperationManager
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> oper = AgentOperation(username, view_name)
+            >>> oper = AgentOperationManager(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> oper.update_operation_pickup_time(operation_id, agent_id)
@@ -321,20 +273,18 @@ class AgentOperation(object):
             Boolean
         """
         completed = False
-        operation_data = (
-            {
-                OperationPerAgentKey.Status: OperationPerAgentCodes.PickedUp,
-                OperationPerAgentKey.PickedUpTime: self.db_time,
-            }
-        )
-
+        operation = OperPerAgent()
+        operation.status = OperationPerAgentCodes.PickedUp
+        operation.picked_up_time = self.now
         status_code, count, errors, generated_ids = (
-            update_operation_per_agent(operation_id, agent_id, operation_data)
+            update_operation_per_agent(
+                operation_id, agent_id, operation.to_dict_db()
+            )
         )
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             status_code, count, errors, generated_ids = (
                 update_agent_operation_pickup_time(
-                    operation_id, self.db_time
+                    operation_id, self.now
                 )
             )
             completed = True
@@ -356,10 +306,10 @@ class AgentOperation(object):
             errors (str): The error message, default is None.
 
         Basic Usage:
-            >>> from vFense.core.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperationManager
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> oper = AgentOperation(username, view_name)
+            >>> oper = AgentOperationManager(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> status_code = 6006
@@ -372,16 +322,15 @@ class AgentOperation(object):
             Boolean
         """
         completed = False
-        operation_data = (
-            {
-                OperationPerAgentKey.Status: status,
-                OperationPerAgentKey.CompletedTime: self.db_time,
-                OperationPerAgentKey.Errors: errors
-            }
-        )
+        operation = OperPerAgent()
+        operation.status = status
+        operation.completed_time = self.now
+        operation.errors = errors
 
         status_code, count, errors, generated_ids = (
-            update_operation_per_agent(operation_id, agent_id, operation_data)
+            update_operation_per_agent(
+                operation_id, agent_id, operation.to_dict_db()
+            )
         )
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             self._update_agent_stats(operation_id, agent_id)
@@ -397,10 +346,10 @@ class AgentOperation(object):
             agent_id (str): the agent id.
 
         Basic Usage:
-            >>> from vFense.core.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperationManager
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> oper = AgentOperation(username, view_name)
+            >>> oper = AgentOperationManager(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> oper._update_agent_stats(operation_id, agent_id)
@@ -414,32 +363,38 @@ class AgentOperation(object):
         )
 
         if agent_operation_exist:
-            operation = fetch_operation_with_agentid(operation_id, agent_id)
-            if (operation[OperationPerAgentKey.Status] ==
-                    AgentOperationCodes.ResultsReceived):
-
+            operation = (
+                OperPerAgent(
+                    **fetch_operation_with_agentid(operation_id, agent_id)
+                )
+            )
+            if operation.status == AgentOperationCodes.ResultsReceived:
                 status_code, count, errors, generated_ids = (
                     update_completed_and_pending_count(
-                        operation_id, self.db_time
+                        operation_id, self.now
                     )
                 )
-                if (status_code == DbCodes.Replaced or
-                        status_code == DbCodes.Unchanged):
+                if (
+                        status_code == DbCodes.Replaced or
+                        status_code == DbCodes.Unchanged
+                    ):
 
                     completed = True
 
             elif (
-                    operation[OperationPerAgentKey.Status] ==
+                    operation.status ==
                     AgentOperationCodes.ResultsReceivedWithErrors
                 ):
 
                 status_code, count, errors, generated_ids = (
                     update_failed_and_pending_count(
-                        operation_id, self.db_time
+                        operation_id, self.now
                     )
                 )
-                if (status_code == DbCodes.Replaced or
-                        status_code == DbCodes.Unchanged):
+                if (
+                        status_code == DbCodes.Replaced or
+                        status_code == DbCodes.Unchanged
+                    ):
 
                     completed = True
 
@@ -452,10 +407,10 @@ class AgentOperation(object):
             agent_id (str): the agent id.
 
         Basic Usage:
-            >>> from vFense.core.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperationManager
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> oper = AgentOperation(username, view_name)
+            >>> oper = AgentOperationManager(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
             >>> oper._update_completed_time_on_agents(operation_id, agent_id)
@@ -464,9 +419,12 @@ class AgentOperation(object):
             Boolean
         """
         completed = False
-        data = {OperationPerAgentKey.CompletedTime: self.db_time}
+        data = OperPerAgent()
+        data.completed_time = self.now
         status_code, count, errors, generated_ids = (
-            update_operation_per_agent(operation_id, agent_id, data)
+            update_operation_per_agent(
+                operation_id, agent_id, data.to_dict_db()
+            )
         )
 
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
@@ -483,10 +441,10 @@ class AgentOperation(object):
             operation_id (str): the operation id.
 
         Basic Usage:
-            >>> from vFense.core.operations.agent_operations import AgentOperation
+            >>> from vFense.core.operations.agent_operations import AgentOperationManager
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> oper = AgentOperation(username, view_name)
+            >>> oper = AgentOperationManager(username, view_name)
             >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
             >>> oper._update_operation_status_code(operation_id)
 
@@ -494,118 +452,89 @@ class AgentOperation(object):
             Boolean
         """
         operation = get_agent_operation(operation_id)
-        operation_data = {}
+        updated_oper = AgentOperation()
         completed = False
 
-        if (
-                operation[AgentOperationKey.AgentsTotalCount] ==
-                operation[AgentOperationKey.AgentsCompletedCount]
-            ):
+        if operation.agents_total_count == operation.agents.completed_count:
+            updated_oper.operation_status = (
+                AgentOperationCodes.ResultsCompleted
+            )
+            updated_oper.completed_time = self.now
 
-            operation_data = {
-                AgentOperationKey.OperationStatus: (
-                    AgentOperationCodes.ResultsCompleted
-                ),
-                AgentOperationKey.CompletedTime: self.db_time
-            }
+        elif operation.agents_total_count == operation.agents.failed_count:
+            updated_oper.operation_status = (
+                AgentOperationCodes.ResultsCompletedFailed
+            )
+            updated_oper.completed_time = self.now
 
-        elif (
-                operation[AgentOperationKey.AgentsTotalCount] ==
-                operation[AgentOperationKey.AgentsFailedCount]
-            ):
-
-            operation_data = {
-                AgentOperationKey.OperationStatus: (
-                    AgentOperationCodes.ResultsCompletedFailed
-                ),
-                AgentOperationKey.CompletedTime: self.db_time
-            }
+        elif operation.agents_total_count == operation.agents_expired_count:
+            updated_oper.operation_status = (
+                AgentOperationCodes.ResultsCompletedFailed
+            )
+            updated_oper.completed_time = self.now
 
         elif (
-                operation[AgentOperationKey.AgentsTotalCount] ==
+                operation.agents_total_count ==
                 (
-                    operation[AgentOperationKey.AgentsFailedCount] +
-                    operation[AgentOperationKey.AgentsExpiredCount]
+                    operation.agents.failed_count +
+                    operation.agents_expired_count
                 )
             ):
-
-            operation_data = {
-                AgentOperationKey.OperationStatus: (
-                    AgentOperationCodes.ResultsCompletedFailed
-                ),
-                AgentOperationKey.CompletedTime: self.db_time
-            }
+            updated_oper.operation_status = (
+                AgentOperationCodes.ResultsCompletedFailed
+            )
+            updated_oper.completed_time = self.now
 
         elif (
-                operation[AgentOperationKey.AgentsTotalCount] ==
-                operation[AgentOperationKey.AgentsExpiredCount]
-            ):
-
-            operation_data = {
-                AgentOperationKey.OperationStatus: (
-                    AgentOperationCodes.ResultsCompletedFailed
-                ),
-                AgentOperationKey.CompletedTime: self.db_time
-            }
-
-        elif (
-                operation[AgentOperationKey.AgentsTotalCount] ==
+                operation.agents_total_count ==
                 (
-                    operation[AgentOperationKey.AgentsFailedCount] +
-                    operation[AgentOperationKey.AgentsCompletedWithErrorsCount]
+                    operation.agents.failed_count +
+                    operation.agents_completed_with_errors_count
                 )
             ):
-
-            operation_data = {
-                AgentOperationKey.OperationStatus: (
-                    AgentOperationCodes.ResultsCompletedWithErrors
-                ),
-                AgentOperationKey.CompletedTime: self.db_time
-            }
+            updated_oper.operation_status = (
+                AgentOperationCodes.ResultsCompletedWithErrors
+            )
+            updated_oper.completed_time = self.now
 
         elif (
-                operation[AgentOperationKey.AgentsTotalCount] ==
+                operation.agents_total_count ==
                 (
-                    operation[AgentOperationKey.AgentsCompletedWithErrorsCount] +
-                    operation[AgentOperationKey.AgentsExpiredCount]
+                    operation.agents_completed_with_errors_count +
+                    operation.agents.agents_expired_count
                 )
             ):
-
-            operation_data = {
-                AgentOperationKey.OperationStatus: (
-                    AgentOperationCodes.ResultsCompletedWithErrors
-                ),
-                AgentOperationKey.CompletedTime: self.db_time
-            }
+            updated_oper.operation_status = (
+                AgentOperationCodes.ResultsCompletedWithErrors
+            )
+            updated_oper.completed_time = self.now
 
         elif (
-                operation[AgentOperationKey.AgentsTotalCount] ==
+                operation.agents_total_count ==
                 (
-                    operation[AgentOperationKey.AgentsFailedCount] +
-                    operation[AgentOperationKey.AgentsCompletedWithErrorsCount] +
-                    operation[AgentOperationKey.AgentsExpiredCount]
+                    operation.agents_completed_with_errors_count +
+                    operation.agents.agents_expired_count +
+                    operation.agents.agents_failed_count
                 )
             ):
-
-            operation_data = {
-                AgentOperationKey.OperationStatus: (
-                    AgentOperationCodes.ResultsCompletedWithErrors
-                ),
-                AgentOperationKey.CompletedTime: self.db_time
-            }
+            updated_oper.operation_status = (
+                AgentOperationCodes.ResultsCompletedWithErrors
+            )
+            updated_oper.completed_time = self.now
 
         else:
-            operation_data = {
-                AgentOperationKey.OperationStatus: (
-                    AgentOperationCodes.ResultsIncomplete
-                )
-            }
-
-        if operation_data:
-            status_code, count, errors, generated_ids = (
-                update_agent_operation(operation_id, operation_data)
+            updated_oper.operation_status = (
+                AgentOperationCodes.ResultsIncomplete
             )
-            if (status_code == DbCodes.Replaced or
+
+        if updated_oper.operation_status:
+            status_code, count, errors, generated_ids = (
+                update_agent_operation(
+                    operation_id, updated_oper.to_dict_db()
+                )
+            )
+            if (
+                    status_code == DbCodes.Replaced or
                     status_code == DbCodes.Unchanged):
 
                 completed = True

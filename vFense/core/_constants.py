@@ -1,3 +1,5 @@
+from time import time
+
 class CommonKeys():
     YES = 'yes'
     NO = 'no'
@@ -118,3 +120,15 @@ class ApiResultDefaults():
     @staticmethod
     def errors():
         return list()
+
+
+
+class Time(object):
+
+    @staticmethod
+    def now():
+        return(int(time()))
+
+    @staticmethod
+    def begining_of_time():
+        return 0

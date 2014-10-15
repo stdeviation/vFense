@@ -1,3 +1,4 @@
+from vFense.core._constants import Time
 class OperationDefaults():
     @staticmethod
     def updated_time():
@@ -6,6 +7,10 @@ class OperationDefaults():
     @staticmethod
     def completed_time():
         return 0
+
+    @staticmethod
+    def created_time():
+        return Time.now()
 
     @staticmethod
     def agents():

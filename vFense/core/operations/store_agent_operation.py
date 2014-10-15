@@ -3,10 +3,10 @@ import logging.config
 from copy import deepcopy
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.operations import (
-    AgentOper, OperPerAgent, OperPerApp
+    AgentOperation, OperPerAgent, OperPerApp
 )
 from vFense.core.operations._constants import vFenseObjects
-from vFense.core.operations.agent_operations import AgentOperation
+from vFense.core.operations.agent_operations import AgentOperationManager
 from vFense.core.operations._db_model import (
     OperationPerAgentKey, AgentOperationKey
 )
@@ -22,7 +22,7 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-class StoreAgentOperation(object):
+class StoreAgentOperationManager(object):
     """This is the base class for storing operations in an agent"""
     def __init__(
             self, username, view_name, server_queue_ttl=None,
@@ -49,7 +49,7 @@ class StoreAgentOperation(object):
             >>> from vFense.core.operations.store_agent_operation import StoreAgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> store = StoreAgentOperation(username, view_name)
+            >>> store = StoreAgentOperationManager(username, view_name)
         """
         self.view_name = view_name
         self.username = username
@@ -96,7 +96,7 @@ class StoreAgentOperation(object):
             >>> from vFense.core.operations.store_agent_operation import StoreAgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> store = StoreAgentOperation(username, view_name)
+            >>> store = StoreAgentOperationManager(username, view_name)
             >>> store.generic_operation(
                     'reboot', 'core',
                     agentids=['33ba8521-b2e5-47dc-9bdc-0f1e3384049d']
@@ -123,30 +123,31 @@ class StoreAgentOperation(object):
             }
         """
         data = []
-        performed_on = vFenseObjects.AGENT
+        oper = AgentOperation()
+        oper.fill_in_defaults()
+        oper.action_performed_on= vFenseObjects.AGENT
+        oper.operation = action
+        oper.plugin = plugin
         if tag_id:
-            performed_on = vFenseObjects.TAG
+            oper.tag_id = tag_id
+            oper.action_performed_on = vFenseObjects.TAG
             if not agentids:
                 agentids = fetch_agent_ids_in_tag(tag_id)
 
             elif agentids:
                 agentids += fetch_agent_ids_in_tag(tag_id)
 
+        oper.agent_ids = agentids
         results = ApiResults()
         results.fill_in_defaults()
 
         operation = (
-            AgentOperation(
+            AgentOperationManager(
                 self.username, self.view_name,
             )
         )
 
-        operation_id = (
-            operation.create_operation(
-                action, plugin, agentids, tag_id,
-                performed_on=performed_on
-            )
-        )
+        operation_id = operation.create_operation(oper)
         if operation_id:
             msg = 'operation created'
             status_code = GenericCodes.ObjectCreated

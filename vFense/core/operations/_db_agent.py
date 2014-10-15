@@ -63,6 +63,7 @@ def fetch_agent_operation(operation_id, conn=None):
             r
             .table(OperationCollections.Agent)
             .get(operation_id)
+            .merge(OperationPerAgentMerge.TIMES)
             .run(conn)
         )
 

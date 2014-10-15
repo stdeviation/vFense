@@ -29,11 +29,11 @@ class AdminOperationManager(object):
             view_name (str): the name of the view this user is part of.
 
         Basic Usage:
-            >>> from vFense.core.operations.admin_operations import AdminOperation
-            >>> oper = AdminOperation()
+            >>> from vFense.core.operations.admin_operations import AdminOperationManager
+            >>> oper = AdminOperationManager()
         """
         self.now = time()
-        self.db_time = DbTime.time_now()
+        self.db_time = DbTime.now()
         self.INIT_COUNT = 0
 
 
@@ -43,7 +43,7 @@ class AdminOperationManager(object):
             operation (AdminOperation): AdminOperation instance.
 
         Basic Usage:
-            >>> from vFense.core.operations.admin_operations import AdminOperation
+            >>> from vFense.core.operations.admin_operations import AdminOperationManager
             >>> username = 'global_admin'
             >>> view_name = 'global'
             >>> action = 'create user'
@@ -84,15 +84,15 @@ class AdminOperationManager(object):
             operation (AdminOperation): AdminOperation instance.
 
         Basic Usage:
-            >>> from vFense.core.operations import AdminOperation
-            >>> from vFense.core.operations.admin_operations import AdminOperationManager
+            >>> from vFense.core.operations import AdminOperationManager
+            >>> from vFense.core.operations.admin_operations import AdminOperationManagerManager
             >>> username = 'global_admin'
             >>> view_name = 'global'
-            >>> oper = AdminOperation(username, view_name)
+            >>> oper = AdminOperationManager(username, view_name)
             >>> action = 'create user'
             >>> performed_on = 'user'
             >>> operation_id = oper.create(action, performed_on)
-            >>> oper = AdminOperation(
+            >>> oper = AdminOperationManager(
                 status_message="user foo created successfully',
                 generic_status_code=1008, vfense_status_code=12008,
                 ids_created=['foo']
