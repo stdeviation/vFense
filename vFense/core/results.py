@@ -37,10 +37,8 @@ class ApiResults(object):
 
     def __init__(self, updated_ids=None, invalid_ids=None, unchanged_ids=None,
                  deleted_ids=None, generic_status_code=None, data=None,
-                 vfense_status_code=None, db_status_code=None, http_uri=None,
-                 message=None, http_method=None, errors=None, user_name=None,
-                 operation=None, agent_id=None, tag_id=None,
-                 app_id=None, operation_id=None, count=None,
+                 vfense_status_code=None, db_status_code=None,
+                 message=None, errors=None, agent_id=None, tag_id=None,
                  generated_ids=None
                  ):
         """
@@ -53,12 +51,8 @@ class ApiResults(object):
         self.db_status_code = db_status_code
         self.generic_status_code = generic_status_code
         self.vfense_status_code = vfense_status_code
-        self.http_uri = http_uri
-        self.http_method = http_method
         self.message = message
         self.data = data
-        self.operation = operation
-        self.count = count
         self.generated_ids = generated_ids
         self.errors = errors
 
@@ -121,15 +115,16 @@ class ApiResults(object):
 
 
 class ExternalApiResults(ApiResults):
-    def __init__(self, uri=None, http_method=None, username=None, **kwargs):
+    def __init__(self, uri=None, http_method=None, username=None,
+                 count=0, http_status_code=None, **kwargs):
         super(ExternalApiResults, self).__init__(**kwargs)
         self.uri = uri
         self.http_method = http_method
         self.username = username
+        self.count = count
 
     def to_dict(self):
         data = {
-            ApiResultKeys.OPERATIONS: self.operations,
             ApiResultKeys.COUNT: self.count,
             ApiResultKeys.HTTP_STATUS_CODE: self.http_status_code,
             ApiResultKeys.URI: self.uri,
