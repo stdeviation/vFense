@@ -88,41 +88,6 @@ class DefaultQueryValues():
     SORT = SortValues.ASC
 
 
-class ApiResultDefaults():
-    @staticmethod
-    def updated_ids():
-        return list()
-
-    @staticmethod
-    def invalid_ids():
-        return list()
-
-    @staticmethod
-    def unchanged_ids():
-        return list()
-
-    @staticmethod
-    def deleted_ids():
-        return list()
-
-    @staticmethod
-    def data():
-        return list()
-
-    @staticmethod
-    def operations():
-        return list()
-
-    @staticmethod
-    def generated_ids():
-        return list()
-
-    @staticmethod
-    def errors():
-        return list()
-
-
-
 class Time(object):
 
     @staticmethod
