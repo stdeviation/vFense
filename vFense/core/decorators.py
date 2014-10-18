@@ -6,7 +6,7 @@ from functools import wraps
 from tornado.web import HTTPError
 
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults, ExternalApiResults
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes
 )
@@ -75,113 +75,129 @@ def results_message(fn):
     def db_wrapper(*args, **kwargs):
         data = fn(*args, **kwargs)
         tornado_handler = args[0]
-        username = tornado_handler.get_current_user()
-        method = tornado_handler.request.method
-        uri = tornado_handler.request.uri
-        status = None
+
+        if isinstance(data, ApiResults):
+            status = ExternalApiResults(**data.to_dict_non_null())
+            status.username = tornado_handler.get_current_user()
+            status.uri = tornado_handler.request.uri
+            status.http_method = tornado_handler.request.method
+
+            if data.generic_status_code == GenericCodes.InformationRetrieved:
+                status.http_status_code = 200
+                if not status.message:
+                    status.message = (
+                        '{0}: data retrieved'.format(status.username)
+                    )
 
 
-        if data.generic_status_code == GenericCodes.InformationRetrieved:
-            status = (
-                Results(
-                    username, uri, method
-                ).data_retrieved(**data)
-            )
+            elif data.generic_status_code == GenericCodes.ObjectCreated:
+                status.http_status_code = 200
+                if not status.message:
+                    status.message = (
+                        '{0}: object created'.format(status.username)
+                    )
 
-        elif data.generic_status_code == GenericCodes.ObjectCreated:
-            status = (
-                Results(
-                    username, uri, method
-                ).objects_created(**data)
-            )
+            elif (
+                data.generic_status_code ==
+                GenericCodes.AuthorizationGranted
+            ):
+                status.http_status_code = 200
+                if not status.message:
+                    status.message = (
+                        '{0}: authorization granted'.format(status.username)
+                    )
 
-        elif data.generic_status_code == GenericCodes.AuthorizationGranted:
-            status = (
-                Results(
-                    username, uri, method
-                ).auth_granted(**data)
-            )
+            elif (
+                data.generic_status_code ==
+                GenericFailureCodes.FailedToCreateObject
+            ):
+                status.http_status_code = 409
+                if not status.message:
+                    status.message = (
+                        '{0}: failed to create object'.format(status.username)
+                    )
 
-        elif data.generic_status_code == GenericFailureCodes.FailedToCreateObject:
-            status = (
-                Results(
-                    username, uri, method
-                ).objects_failed_to_create(**data)
-            )
+            elif (
+                data.generic_status_code == GenericCodes.ObjectUpdated or
+                data.generic_status_code == GenericCodes.ObjectsUpdated
+            ):
+                status.http_status_code = 200
+                if not status.message:
+                    status.message = (
+                        '{0}: object updated'.format(status.username)
+                    )
 
-        elif (data.generic_status_code == GenericCodes.ObjectUpdated or
-              data.generic_status_code == GenericCodes.ObjectsUpdated):
-            status = (
-                Results(
-                    username, uri, method
-                ).objects_updated(**data)
-            )
+            elif (
+                data.generic_status_code ==
+                GenericFailureCodes.FailedToUpdateObject
+            ):
+                status.http_status_code = 409
+                if not status.message:
+                    status.message = (
+                        '{0}: failed to update object'.format(status.username)
+                    )
 
-        elif data.generic_status_code == GenericFailureCodes.FailedToUpdateObject:
-            status = (
-                Results(
-                    username, uri, method
-                ).objects_failed_to_update(**data)
-            )
+            elif (
+                data.generic_status_code == GenericCodes.ObjectDeleted or
+                data.generic_status_code == GenericCodes.ObjectsDeleted
+            ):
+                status.http_status_code = 200
+                if not status.message:
+                    status.message = (
+                        '{0}: object deleted'.format(status.username)
+                    )
 
-        elif (data.generic_status_code == GenericCodes.ObjectDeleted or
-              data.generic_status_code == GenericCodes.ObjectsDeleted):
-            status = (
-                Results(
-                    username, uri, method
-                ).objects_deleted(**data)
-            )
+            elif (
+                data.generic_status_code ==
+                GenericFailureCodes.FailedToDeleteObject
+            ):
+                status.http_status_code = 409
+                if not status.message:
+                    status.message = (
+                        '{0}: failed to delete object'.format(status.username)
+                    )
 
-        elif data.generic_status_code == GenericFailureCodes.FailedToDeleteObject:
-            status = (
-                Results(
-                    username, uri, method
-                ).objects_failed_to_delete(**data)
-            )
+            elif (
+                data.generic_status_code == GenericCodes.ObjectUnchanged or
+                data.generic_status_code == GenericCodes.ObjectsUnchanged
+            ):
+                status.http_status_code = 200
+                if not status.message:
+                    status.message = (
+                        '{0}: object unchanged'.format(status.username)
+                    )
 
-        elif (data.generic_status_code == GenericCodes.ObjectUnchanged or
-              data.generic_status_code == GenericCodes.ObjectsUnchanged):
-            status = (
-                Results(
-                    username, uri, method
-                ).objects_unchanged(**data)
-            )
-
-
-        elif (
+            elif (
                 data.generic_status_code == GenericCodes.InvalidId or
                 data.generic_status_code == GenericFailureCodes.InvalidId or
                 data.generic_status_code == GenericCodes.InvalidValue or
                 data.generic_status_code == GenericFailureCodes.InvalidFilterKey or
-                data.generic_status_code == GenericFailureCodes.InvalidFields):
+                data.generic_status_code == GenericFailureCodes.InvalidFields
+            ):
+                status.http_status_code = 404
+                if not status.message:
+                    status.message = (
+                        '{0}: invalid object'.format(status.username)
+                    )
 
-            status = (
-                Results(
-                    username, uri, method
-                ).invalid_id(**data)
-            )
-
-        elif data.generic_status_code == GenericCodes.DoesNotExist:
-            status = (
-                Results(
-                    username, uri, method
-                ).does_not_exist(**data)
-            )
-
-
-        elif data.generic_status_code == GenericCodes.ObjectExists:
-            status = (
-                Results(
-                    username, uri, method
-                ).does_not_exist(**data)
-            )
+            elif data.generic_status_code == GenericCodes.DoesNotExist:
+                status.http_status_code = 409
+                if not status.message:
+                    status.message = (
+                        '{0}: object does not exist'.format(status.username)
+                    )
+            else:
+                status.http_status_code = 200
 
         else:
-            status = (
-                Results(
-                    username, uri, method
-                ).something_broke(**data)
-            )
+            status = ExternalApiResults()
+            status.username = tornado_handler.get_current_user()
+            status.uri = tornado_handler.request.uri
+            status.http_method = tornado_handler.request.method
+            status.http_status_code = 404
+            if not status.message:
+                status.message = '{0}: invalid instance'.format(type(data))
+
         return status
 
     return wraps(fn)(db_wrapper)
