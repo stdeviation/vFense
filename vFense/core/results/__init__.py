@@ -1,3 +1,4 @@
+from vFense import Base
 from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes
 )
@@ -5,7 +6,7 @@ from vFense.core.status_codes import (
 from vFense.core.results._constants import ApiResultDefaults, ApiResultKeys
 
 
-class ApiResults(object):
+class ApiResults(Base):
     """Used to represent an instance of api results."""
 
     def __init__(self, updated_ids=None, invalid_ids=None, unchanged_ids=None,

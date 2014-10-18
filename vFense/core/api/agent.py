@@ -25,7 +25,7 @@ from vFense.core.tag.manager import TagManager
 from vFense.core.view.manager import ViewManager
 from vFense.core.view._db import token_exist_in_current
 from vFense.core.queue.uris import get_result_uris
-from vFense.core.results import ApiResults, ExternalApiResults
+from vFense.core.results import ExternalApiResults, ApiResults
 
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
@@ -63,9 +63,10 @@ class AgentResultURIs(BaseHandler):
     @results_message
     @check_permissions(Permissions.READ)
     def get_uris(self, agent_id):
-        results = self.get_result_uris(agent_id)
+        results = get_result_uris(agent_id)
         results.count = len(results.data)
         return results
+
 
 class FetchValidEnvironments(BaseHandler):
     @authenticated_request
@@ -91,6 +92,7 @@ class FetchValidEnvironments(BaseHandler):
         results.vfense_status_code = AgentCodes.InformationRetrieved
         return results
 
+
 class FetchSupportedOperatingSystems(BaseHandler):
     @authenticated_request
     def get(self):
@@ -98,8 +100,8 @@ class FetchSupportedOperatingSystems(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        os_code = self.get_argument('os_code', None)
-        os_string = self.get_argument('os_string', None)
+        os_code = self.get_argument(AgentApiArguments.OS_CODE, None)
+        os_string = self.get_argument(AgentApiArguments.OS_STRING, None)
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         if os_code and not os_string:
@@ -110,6 +112,7 @@ class FetchSupportedOperatingSystems(BaseHandler):
 
         self.set_status(results.http_status_code)
         self.modified_output(results, output, 'platforms')
+
 
     @results_message
     @check_permissions(Permissions.READ)
@@ -300,36 +303,32 @@ class AgentsHandler(BaseHandler):
                 results = self.new_token(operation, agent_ids, token)
 
             else:
-                data = {
-                    ApiResultKeys.MESSAGE: (
-                        'Incorrect arguments while editing agents'
-                    )
-                }
-                results = (
-                    Results(
-                        active_user, self.request.uri, self.request.method
-                    ).incorrect_arguments(**data)
-                )
+                results = ExternalApiResults()
+                results.fill_in_defaults()
+                results.generic_status_code = AgentCodes.IncorrectArguments
+                results.vfense_status_code = AgentCodes.IncorrectArguments
+                results.message = 'Incorrect arguments:'
+                results.uri = self.request.uri
+                results.http_method = self.request.method
+                results.username = active_user
 
-            self.set_status(results['http_status'])
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
         except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Editing of agents broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
             logger.exception(e)
-            self.set_status(results['http_status'])
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = AgentCodes.SomethingBroke
+            results.vfense_status_code = AgentCodes.SomethingBroke
+            results.message = 'Editing of agents broke: {0}'.format(e)
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = active_user
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.ASSIGN_NEW_TOKEN)
@@ -347,14 +346,14 @@ class AgentsHandler(BaseHandler):
     @check_permissions(Permissions.ADD_AGENTS_TO_VIEW)
     @log_operation(AdminActions.ADD_VIEWS_TO_AGENTS, vFenseObjects.AGENT)
     def add_agents_to_views(self, agents, views):
-        end_results = {}
+        end_results = ApiResults()
+        end_results.fill_in_defaults()
         views_added = []
         views_unchanged = []
         for view in views:
             manager = ViewManager(view)
             results = manager.add_to_agents(agents)
-            if (results.vfense_status_code
-                    == ViewCodes.AgentsAddedToView):
+            if results.vfense_status_code == ViewCodes.AgentsAddedToView:
                 views_added.append(view)
             else:
                 views_unchanged.append(view)
@@ -411,7 +410,8 @@ class AgentsHandler(BaseHandler):
     @check_permissions(Permissions.REMOVE_AGENTS_FROM_VIEW)
     @log_operation(AdminActions.REMOVE_VIEWS_FROM_AGENTS, vFenseObjects.AGENT)
     def remove_agents_from_views(self, agents, views):
-        end_results = {}
+        end_results = ApiResults()
+        end_results.fill_in_defaults()
         views_removed = []
         views_unchanged = []
         for view in views:
@@ -478,37 +478,21 @@ class AgentsHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            agent_ids = self.arguments.get('agent_ids')
-            if not isinstance(agent_ids, list):
-                agent_ids = agent_ids.split()
-            delete_oper = StoreAgentOperations(active_user, active_view)
-            results = self.delete_agents(agent_ids, delete_oper)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Deleting agents broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        agent_ids = self.arguments.get('agent_ids')
+        if not isinstance(agent_ids, list):
+            agent_ids = agent_ids.split()
+        delete_oper = StoreAgentOperations(active_user, active_view)
+        results = self.delete_agents(agent_ids, delete_oper)
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results, indent=4))
 
     @results_message
     @check_permissions(Permissions.DELETE_AGENT)
     @log_operation(AdminActions.REMOVE_AGENTS, vFenseObjects.AGENT)
     def delete_agents(self, agents, delete_oper):
-        end_results = {}
+        end_results = ApiResults()
+        end_results.fill_in_defaults()
         agents_deleted = []
         agents_unchanged = []
         for agent_id in agents:
@@ -577,35 +561,19 @@ class AgentHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
-            search = (
-                RetrieveAgents(active_view)
-            )
-            results = self.get_agent_by_id(search, agent_id)
-            self.modified_output(results, output, 'agent')
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        search = (
+            RetrieveAgents(active_view)
+        )
+        results = self.get_agent_by_id(search, agent_id)
+        self.modified_output(results, output, 'agent')
 
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Retrieving agent {0} broke: {1}'
-                    .format(agent_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_agent_by_id(self, search, agent_id):
         results = search.by_id(agent_id)
-        if results[ApiResultKeys.COUNT] > 0:
+        if results.count > 0:
             results.data = results.data.pop()
         return results
 

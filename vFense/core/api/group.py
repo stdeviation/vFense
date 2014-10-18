@@ -72,7 +72,7 @@ class GroupHandler(BaseHandler):
     def get_group(self, group_id, is_global):
         fetch_groups = RetrieveGroups(is_global=is_global)
         results = fetch_groups.by_id(group_id)
-        if results[ApiResultKeys.COUNT] > 0:
+        if results.count > 0:
             results.data = results.data[0]
         return results
 

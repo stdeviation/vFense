@@ -88,7 +88,7 @@ class UserHandler(BaseHandler):
     def get_user(self, user_name, is_global):
         fetch_users = RetrieveUsers(is_global=is_global)
         results = fetch_users.by_name(user_name)
-        if results[ApiResultKeys.COUNT] > 0:
+        if results.count > 0:
             results.data = results.data[0]
         return results
 
