@@ -884,39 +884,22 @@ class AgentTagHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            tag_ids = self.get_argument(TagApiArguments.TAG_IDS)
-            tag_name = self.get_argument(TagApiArguments.TAG_NAME, None)
-            action = self.get_argument(ApiArguments.ACTION, ApiValues.ADD)
-            manager = (
-                AgentManager(agent_id)
-            )
-            if action == ApiValues.ADD:
-                if not tag_name:
-                    results = self.add_tags(manager, tag_ids)
-                else:
-                    results = self.create_tag(tag_name, agent_id, active_view)
+        tag_ids = self.get_argument(TagApiArguments.TAG_IDS)
+        tag_name = self.get_argument(TagApiArguments.TAG_NAME, None)
+        action = self.get_argument(ApiArguments.ACTION, ApiValues.ADD)
+        manager = AgentManager(agent_id)
+        if action == ApiValues.ADD:
+            if not tag_name:
+                results = self.add_tags(manager, tag_ids)
             else:
-                results = self.remove_tags(manager, tag_ids)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+                results = self.create_tag(tag_name, agent_id, active_view)
+        else:
+            results = self.remove_tags(manager, tag_ids)
 
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Adding or removing tags for agent {0} broke: {1}'
-                    .format(agent_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
+
 
     @results_message
     @check_permissions(Permissions.ADD_AGENTS_TO_TAG)
