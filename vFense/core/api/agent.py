@@ -7,6 +7,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.api._constants import (
     ApiArguments, AgentApiArguments, ApiValues, TagApiArguments,
+    DefaultQueryValues
 )
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
@@ -24,7 +25,7 @@ from vFense.core.tag.manager import TagManager
 from vFense.core.view.manager import ViewManager
 from vFense.core.view._db import token_exist_in_current
 from vFense.core.queue.uris import get_result_uris
-from vFense.core.results import Results, ApiResults, ExternalApiResults
+from vFense.core.results import ApiResults, ExternalApiResults
 
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
@@ -54,30 +55,17 @@ logger = logging.getLogger('rvapi')
 class AgentResultURIs(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
-        active_user = self.get_current_user()
-        try:
-            results = get_result_uris(agent_id)
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
-            self.set_status(results['http_status'])
-            self.modified_output(results, output, 'uris')
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        results = self.get_uris(agent_id)
+        self.set_status(results.http_status_code)
+        self.modified_output(results, output, 'uris')
 
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Retrieving Results URIS for agent {0} broke: {1}'
-                    .format(agent_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
+    @results_message
+    @check_permissions(Permissions.READ)
+    def get_uris(self, agent_id):
+        results = self.get_result_uris(agent_id)
+        results.count = len(results.data)
+        return results
 
 class FetchValidEnvironments(BaseHandler):
     @authenticated_request
@@ -86,33 +74,22 @@ class FetchValidEnvironments(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
-            data = { ApiResultKeys.DATA: get_environments(active_view)}
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).information_retrieved(data, len(**data))
-            )
-            self.set_status(results['http_status'])
-            self.modified_output(results, output, 'environments')
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        results = self.get_environments(active_view)
+        self.set_status(results.http_status_code)
+        self.modified_output(results, output, 'environments')
 
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Retrieving environment broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
 
+    @results_message
+    @check_permissions(Permissions.READ)
+    def get_environments(self, active_view):
+        results = ExternalApiResults()
+        results.fill_in_defaults()
+        results.data = get_environments(active_view)
+        results.count = len(results.data)
+        results.generic_status_code = AgentCodes.InformationRetrieved
+        results.vfense_status_code = AgentCodes.InformationRetrieved
+        return results
 
 class FetchSupportedOperatingSystems(BaseHandler):
     @authenticated_request
@@ -121,45 +98,40 @@ class FetchSupportedOperatingSystems(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            os_code = self.get_argument('os_code', None)
-            os_string = self.get_argument('os_string', None)
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        os_code = self.get_argument('os_code', None)
+        os_string = self.get_argument('os_string', None)
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
-            if not os_code and not os_string or os_code and not os_string:
-                os_data = get_supported_os_codes()
+        if os_code and not os_string:
+            results = self.get_os_codes()
 
-            elif os_string:
-                os_data = get_supported_os_strings(active_view)
+        else:
+            results = self.get_os_strings(active_view)
 
-            data = {
-                ApiResultKeys.DATA: os_data,
-                ApiResultKeys.COUNT: len(os_data)
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).information_retrieved(**data)
-            )
+        self.set_status(results.http_status_code)
+        self.modified_output(results, output, 'platforms')
 
-            self.set_status(results['http_status'])
-            self.modified_output(results, output, 'platforms')
+    @results_message
+    @check_permissions(Permissions.READ)
+    def get_os_codes(self):
+        results = ExternalApiResults()
+        results.fill_in_defaults()
+        results.data = get_supported_os_codes()
+        results.count = len(results.data)
+        results.generic_status_code = AgentCodes.InformationRetrieved
+        results.vfense_status_code = AgentCodes.InformationRetrieved
+        return results
 
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Retrieving supported platforms broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+    @results_message
+    @check_permissions(Permissions.READ)
+    def get_os_strings(self, active_view):
+        results = ExternalApiResults()
+        results.fill_in_defaults()
+        results.data = get_supported_os_strings(active_view)
+        results.count = len(results.data)
+        results.generic_status_code = AgentCodes.InformationRetrieved
+        results.vfense_status_code = AgentCodes.InformationRetrieved
+        return results
 
 
 class AgentsHandler(BaseHandler):
@@ -169,15 +141,27 @@ class AgentsHandler(BaseHandler):
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
         try:
-            count = int(self.get_argument('count', 30))
-            offset = int(self.get_argument('offset', 0))
-            query = self.get_argument('query', None)
-            fkey = self.get_argument('filter_key', None)
-            fval = self.get_argument('filter_val', None)
-            ip = self.get_argument('ip', None)
-            mac = self.get_argument('mac', None)
-            sort = self.get_argument('sort', 'asc')
-            sort_by = self.get_argument('sort_by', AgentKeys.ComputerName)
+            count = int(
+                self.get_argument(
+                    ApiArguments.COUNT, DefaultQueryValues.COUNT
+                )
+            )
+            offset = int(
+                self.get_argument(
+                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
+                )
+            )
+            query = self.get_argument(ApiArguments.QUERY, None)
+            fkey = self.get_argument(ApiArguments.FILTER_KEY, None)
+            fval = self.get_argument(ApiArguments.FILTER_VAL, None)
+            ip = self.get_argument(AgentApiArguments.IP, None)
+            mac = self.get_argument(AgentApiArguments.MAC, None)
+            sort = int(
+                self.get_argument(
+                    ApiArguments.SORT, DefaultQueryValues.SORT
+                )
+            )
+            sort_by = self.get_argument(ApiArguments.SORT_BY, AgentKeys.ComputerName)
             output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
             search = (
@@ -219,24 +203,22 @@ class AgentsHandler(BaseHandler):
                     )
                 )
 
-            self.set_status(results['http_status'])
+            self.set_status(results.http_status_code)
             self.modified_output(results, output, 'agents')
 
         except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Searching for agents broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
             logger.exception(e)
-            self.set_status(results['http_status'])
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = AgentCodes.SomethingBroke
+            results.vfense_status_code = AgentCodes.SomethingBroke
+            results.message = 'Searching for agents broke: {0}'.format(e)
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = active_user
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.READ)

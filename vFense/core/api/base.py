@@ -33,7 +33,6 @@ LISTENERS = []
 
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
-        #self.clear_all_cookies()
         return self.get_secure_cookie(CommonKeys.USER)
 
     def modified_output(self, results, content_type, file_name):
@@ -49,11 +48,11 @@ class BaseHandler(tornado.web.RequestHandler):
         elif content_type == Outputs.TEXT:
             data = tableify(results.data)
             self.set_header('Content-Type', ContentTypes.TEXT)
-            self.write(data)
+            self.write(results.to_dict_non_null())
 
         else:
             self.set_header('Content-Type', ContentTypes.JSON)
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
 
 class RootHandler(BaseHandler):
