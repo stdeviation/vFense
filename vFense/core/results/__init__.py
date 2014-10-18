@@ -95,6 +95,7 @@ class ExternalApiResults(ApiResults):
         self.http_method = http_method
         self.username = username
         self.count = count
+        self.http_status_code = http_status_code
 
     def to_dict(self):
         data = {

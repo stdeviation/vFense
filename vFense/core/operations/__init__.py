@@ -224,9 +224,10 @@ class AgentOperation(Base):
         plugin=None, cpu_throttle=None, net_throttle=None,
         agents_total_count=None, agents_failed_count=None,
         agents_completed_count=None, agents_expired_count=None,
-        agents_pending_results_count=None,
+        agents_pending_results_count=None, token=None,
         agents_pending_pickup_count=None,
-        agents_completed_with_errors_count=None, applications=None
+        agents_completed_with_errors_count=None, applications=None,
+
     ):
         """
         Kwargs:
@@ -260,7 +261,9 @@ class AgentOperation(Base):
             agents_completed_with_errors_count (int): Number of agents, that
                 this operation failed with some errors.
             applications (list): List of application ids, this operation
-                affects.
+                affects.A
+            token (str): This is the token that the agent is using to
+                communicate with the server.
         """
         self.created_by = created_by
         self.operation_id = operation_id
@@ -289,6 +292,7 @@ class AgentOperation(Base):
             agents_completed_with_errors_count
         )
         self.applications = applications
+        self.token = token
 
 
     def fill_in_defaults(self):
@@ -369,6 +373,35 @@ class AgentOperation(Base):
                     ]
         """
         invalid_fields = []
+        if self.agent_ids:
+            if not isinstance(self.agent_ids, list):
+                invalid_fields.append(
+                    {
+                        AgentOperationKey.AgentIds: self.agent_ids,
+                        CommonKeys.REASON: (
+                            'Expecting a list and not a %s' %
+                            (type(self.agent_ids))
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericFailureCodes.InvalidInstanceType
+                        )
+                    }
+                )
+
+        if self.tag_id:
+            if not isinstance(self.tag_id, str):
+                invalid_fields.append(
+                    {
+                        AgentOperationKey.TagId: self.tag_id,
+                        CommonKeys.REASON: (
+                            'Expecting a string and not a %s' %
+                            (type(self.tag_id))
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericFailureCodes.InvalidInstanceType
+                        )
+                    }
+                )
 
         return invalid_fields
 

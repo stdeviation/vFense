@@ -23,6 +23,7 @@ class AgentCodes(GenericCodes):
     ViewsRemovedFromAgent = 3020
     ViewsRemovedFromAgents = 3021
     Disabled = 3022
+    NewToken = 3023
 
 
 class AgentFailureCodes(GenericFailureCodes):
@@ -42,3 +43,4 @@ class AgentFailureCodes(GenericFailureCodes):
     FailedToAddViewsToAgents = 3513
     FailedToRemoveViewsFromAgents = 3514
     FailedToDeleteAgents = 3515
+    InvalidToken = 3516

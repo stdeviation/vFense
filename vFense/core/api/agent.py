@@ -10,6 +10,7 @@ from vFense.core.api._constants import (
 )
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
+from vFense.core.operations import AgentOperation
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
@@ -23,7 +24,7 @@ from vFense.core.tag.manager import TagManager
 from vFense.core.view.manager import ViewManager
 from vFense.core.view._db import token_exist_in_current
 from vFense.core.queue.uris import get_result_uris
-from vFense.core.results import Results
+from vFense.core.results import Results, ApiResults, ExternalApiResults
 
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
@@ -531,10 +532,11 @@ class AgentsHandler(BaseHandler):
         for agent_id in agents:
             manager = AgentManager(agent_id)
             results = manager.remove()
-            if (results.vfense_status_code
-                    == AgentCodes.AgentDeleted):
+            if results.vfense_status_code == AgentCodes.AgentDeleted:
                 agents_deleted.append(agent_id)
-                delete_oper.uninstall_agent(agent_ids=[agent_id])
+                agent_operation = AgentOperation()
+                agent_operation.agent_ids = [agent_id]
+                delete_oper.uninstall_agent(agent_operation)
             else:
                 agents_unchanged.append(agent_id)
 
@@ -740,8 +742,9 @@ class AgentHandler(BaseHandler):
         )
         try:
             agent = AgentManager(agent_id)
+            operation = AgentOperation(agent_ids=[agent_id])
             delete_oper = StoreAgentOperations(active_user, active_view)
-            delete_oper.uninstall_agent(agent_id)
+            delete_oper.uninstall_agent(operation)
             results = self.remove_agent(agent)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -788,28 +791,16 @@ class AgentHandler(BaseHandler):
             operation = (
                 StoreAgentOperations(active_user, active_view)
             )
+            agent_operation = AgentOperation(agent_ids=[agent_id])
             if reboot:
-                results = self.reboot(operation, [agent_id])
+                results = self.reboot(operation, agent_operation)
 
             elif shutdown:
-                results = self.shutdown(operation, [agent_id])
+                results = self.shutdown(operation, agent_operation)
 
             elif token:
-                if token_exist_in_current(token):
-                    results = self.new_token(operation, [agent_id], token)
-                else:
-                    msg = 'Invalid token {0}'.format(token)
-                    result = (
-                        Results(
-                            active_user, self.request.uri, self.request.method
-                        )
-                    )
-                    results = result.invalid_token(
-                        **{
-                            ApiResultKeys.INVALID_ID: token,
-                            ApiResultKeys.MESSAGE: msg,
-                        }
-                    )
+                agent_operation.token = token
+                results = self.new_token(operation, agent_operation)
 
 
             elif refresh_apps:
@@ -853,26 +844,38 @@ class AgentHandler(BaseHandler):
 
     @check_permissions(Permissions.REBOOT)
     @results_message
-    def reboot(self, operation, agent_ids):
-        results = operation.reboot(agent_ids)
+    def reboot(self, operation, agent_operation):
+        results = operation.reboot(agent_operation)
 
         return results
 
     @check_permissions(Permissions.SHUTDOWN)
     @results_message
-    def shutdown(self, operation, agent_ids):
-        results = operation.shutdown(agent_ids)
+    def shutdown(self, operation, agent_operation):
+        results = operation.shutdown(agent_operation)
         return results
 
     @check_permissions(Permissions.ASSIGN_NEW_TOKEN)
     @results_message
-    def new_token(self, operation, agent_ids, token):
-        results = operation.new_token(token, agent_ids)
+    def new_token(self, operation, agent_operation):
+        if token_exist_in_current(agent_operation.token):
+            results = operation.new_token(agent_operation)
+        else:
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            msg = 'Invalid token {0}'.format(agent_operation.token)
+            results.message = msg
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = self.get_current_user()
+            results.invalid_ids.append(agent_operation.token)
+            results.vfense_status_code = AgentFailureCodes.InvalidToken
+            results.http_status_code = 200
         return results
 
     @results_message
-    def refresh_apps(self, operation, agent_ids):
-        results = operation.refresh_apps(agent_ids)
+    def refresh_apps(self, operation, agent_operation):
+        results = operation.refresh_apps(agent_operation)
         return results
 
 
@@ -898,21 +901,22 @@ class AgentTagHandler(BaseHandler):
             self.modified_output(results, output, 'agent')
 
         except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Retrieving tags for agent {0} broke: {1}'
-                    .format(agent_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
             logger.exception(e)
-            self.set_status(results['http_status'])
+            msg =  (
+                'Retrieving tags for agent {0} broke: {1}'.format(agent_id, e)
+            )
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.message = msg
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = self.get_current_user()
+            results.invalid_ids.append(agent_id)
+            results.vfense_status_code = AgentFailureCodes.InvalidId
+            results.http_status_code = 404
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     def get_tags_by_agent_id(self, search, agent_id):
