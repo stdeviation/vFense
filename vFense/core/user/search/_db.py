@@ -218,7 +218,7 @@ class FetchUsers(object):
                     r
                     .table(UserCollections.Users)
                     .get_all(self.view_name, index=UserIndexes.Views)
-                    .filter({UserKeys.Global: False})
+                    .filter({UserKeys.IsGlobal: False})
                 )
         else:
             if self.is_global:
@@ -230,7 +230,7 @@ class FetchUsers(object):
                 base = (
                     r
                     .table(UserCollections.Users)
-                    .filter({UserKeys.Global: False})
+                    .filter({UserKeys.IsGlobal: False})
                 )
 
         return base

@@ -79,7 +79,7 @@ class Tag(Base):
             if not isinstance(self.is_global, bool):
                 invalid_fields.append(
                     {
-                        TagKeys.Global: self.is_global,
+                        TagKeys.IsGlobal: self.is_global,
                         CommonKeys.REASON: 'Must be a boolean value',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             GenericCodes.InvalidValue
@@ -149,7 +149,7 @@ class Tag(Base):
             TagKeys.Environment: self.environment,
             TagKeys.TagName: self.tag_name,
             TagKeys.ViewName: self.view_name,
-            TagKeys.Global: self.is_global,
+            TagKeys.IsGlobal: self.is_global,
             TagKeys.DateAdded: self.date_added,
             TagKeys.DateModified: self.date_modified,
             TagKeys.TagId: self.tag_id,

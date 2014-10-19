@@ -45,7 +45,7 @@ class ViewHandler(BaseHandler):
     def get(self, view_name):
         active_user = self.get_current_user()
         user = UserManager(active_user)
-        is_global = user.get_attribute(UserKeys.Global)
+        is_global = user.get_attribute(UserKeys.IsGlobal)
         current_view = user.get_attribute(UserKeys.CurrentView)
         try:
             output = self.get_argument(ApiArguments.OUTPUT, 'json')
@@ -333,7 +333,7 @@ class ViewsHandler(BaseHandler):
         active_user = self.get_current_user()
         all_views = None
         user = UserManager(active_user)
-        is_global = user.get_attribute(UserKeys.Global)
+        is_global = user.get_attribute(UserKeys.IsGlobal)
         view_context = self.get_argument('view_context', None)
         parent_view = self.get_argument('parent_view', None)
         query = self.get_argument('query', None)

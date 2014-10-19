@@ -742,7 +742,7 @@ def fetch_groupids(is_global=False, conn=None):
             data = list(
                 r
                 .table(GroupCollections.Groups)
-                .filter(lambda x: x[GroupKeys.Global] == True)
+                .filter(lambda x: x[GroupKeys.IsGlobal] == True)
                 .map(lambda x: x[GroupKeys.GroupId])
                 .run(conn)
             )
@@ -751,7 +751,7 @@ def fetch_groupids(is_global=False, conn=None):
             data = list(
                 r
                 .table(GroupCollections.Groups)
-                .filter(lambda x: x[GroupKeys.Global] == False)
+                .filter(lambda x: x[GroupKeys.IsGlobal] == False)
                 .map(lambda x: x[GroupKeys.GroupId])
                 .run(conn)
             )

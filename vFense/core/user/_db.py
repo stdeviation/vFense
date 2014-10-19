@@ -95,7 +95,7 @@ def fetch_usernames(is_global=False, conn=None):
             data = list(
                 r
                 .table(UserCollections.Users)
-                .filter(lambda x: x[UserKeys.Global] == True)
+                .filter(lambda x: x[UserKeys.IsGlobal] == True)
                 .map(lambda x: x[UserKeys.UserName])
                 .run(conn)
             )
@@ -104,7 +104,7 @@ def fetch_usernames(is_global=False, conn=None):
             data = list(
                 r
                 .table(UserCollections.Users)
-                .filter(lambda x: x[UserKeys.Global] == False)
+                .filter(lambda x: x[UserKeys.IsGlobal] == False)
                 .map(lambda x: x[UserKeys.UserName])
                 .run(conn)
             )
@@ -160,7 +160,7 @@ def fetch_user_and_all_properties(username, conn=None):
             UserKeys.FullName: r.row[UserKeys.FullName],
             UserKeys.UserName: r.row[UserKeys.UserName],
             UserKeys.Enabled: r.row[UserKeys.Enabled],
-            UserKeys.Global: r.row[UserKeys.Global],
+            UserKeys.IsGlobal: r.row[UserKeys.IsGlobal],
             UserMappedKeys.Groups: (
                 r
                 .table(GroupCollections.Groups)

@@ -43,7 +43,7 @@ class GroupHandler(BaseHandler):
     @authenticated_request
     def get(self, group_id):
         active_user = self.get_current_user()
-        is_global = UserManager(active_user).get_attribute(UserKeys.Global)
+        is_global = UserManager(active_user).get_attribute(UserKeys.IsGlobal)
         try:
             output = self.get_argument(ApiArguments.OUTPUT, 'json')
             results = self.get_group(group_id, is_global)
@@ -238,7 +238,7 @@ class GroupsHandler(BaseHandler):
         active_user = self.get_current_user()
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
-        is_global = user.get_attribute(UserKeys.Global)
+        is_global = user.get_attribute(UserKeys.IsGlobal)
         view_context = self.get_argument('view_context', None)
         group_id = self.get_argument('group_id', None)
         all_views = self.get_argument('all_views', None)

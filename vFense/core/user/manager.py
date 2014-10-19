@@ -404,7 +404,7 @@ class UserManager(object):
             views = views.split(',')
 
         views_are_valid, _, _ = validate_view_names(views)
-        if self.properties[UserKeys.Global]:
+        if self.properties[UserKeys.IsGlobal]:
             views = fetch_all_view_names()
 
         results = ApiResults()
@@ -501,7 +501,7 @@ class UserManager(object):
         generated_ids = []
         users_group_exist = []
         if user_exist:
-            is_global = user_exist[UserKeys.Global]
+            is_global = user_exist[UserKeys.IsGlobal]
             invalid_groups, valid_global_groups, valid_local_groups = (
                 validate_groups_in_views(
                     group_ids, user_exist[UserKeys.Views]
@@ -1152,7 +1152,7 @@ class UserManager(object):
 
         if user_exist and view:
 
-            if user_exist[UserKeys.Global] and view:
+            if user_exist[UserKeys.IsGlobal] and view:
                 results = self.__edit_user_properties(user)
             elif view in views_in_db:
                 results = self.__edit_user_properties(user)

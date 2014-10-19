@@ -66,7 +66,7 @@ class GroupManager(object):
              }
         """
         if self.group_id:
-            data = fetch_group(self.group_id)
+            data = Group(**fetch_group(self.group_id))
             if not data:
                 data = {}
         else:
@@ -512,7 +512,7 @@ class GroupManager(object):
         users_exist_in_group = bool(set(users).intersection(self.users))
         results = ApiResults()
 
-        is_global = self.properties[GroupKeys.Global]
+        is_global = self.properties[GroupKeys.IsGlobal]
         invalid_users, global_valid_users, local_valid_users = (
             validate_users_in_views(users, self.properties[GroupKeys.Views])
         )
@@ -697,6 +697,7 @@ class GroupManager(object):
         """
         group_exist = self.properties
         results = ApiResults()
+        results.fill_in_defaults()
         if group_exist:
             group = Group(
                 group_exist[GroupKeys.GroupName], permissions=permissions
@@ -779,6 +780,7 @@ class GroupManager(object):
         """
         group_exist = self.properties
         results = ApiResults()
+        results.fill_in_defaults()
         if group_exist:
             group = (
                 Group(
@@ -803,7 +805,7 @@ class GroupManager(object):
                     results.vfense_status_code = (
                         GroupCodes.PermissionsUpdated
                     )
-                    results.updated_ids = [self.group_id]
+                    results.updated_ids.append(self.group_id)
 
                 if status_code == DbCodes.Unchanged:
                     msg = (
@@ -817,7 +819,7 @@ class GroupManager(object):
                     results.vfense_status_code = (
                         GroupCodes.PermissionsUnchanged
                     )
-                    results.unchanged_ids = [self.group_id]
+                    results.unchanged_ids.append(self.group_id)
 
             else:
                 msg = 'Invalid permissions: %s' % (permissions)
@@ -828,8 +830,8 @@ class GroupManager(object):
                 results.vfense_status_code = (
                     GroupFailureCodes.InvalidPermissions
                 )
-                results.unchanged_ids = [self.group_id]
-                results[ApiResultKeys.INVALID_IDS] = permissions
+                results.unchanged_ids.append(self.group_id)
+                results.invalid_ids = permissions
 
         else:
             msg = 'group_id %s does not exist' % (self.group_id)
@@ -840,8 +842,8 @@ class GroupManager(object):
                 GroupCodes.GroupUnchanged
             )
             results.message = msg
-            results.unchanged_ids = [self.group_id]
-            results[ApiResultKeys.INVALID_IDS] = [self.group_id]
+            results.unchanged_ids.append(self.group_id)
+            results.invalid_ids.append(self.group_id)
 
         return results
 
@@ -905,6 +907,7 @@ class GroupManager(object):
         """
         group_exist = self.properties
         results = ApiResults()
+        results.fill_in_defaults()
         invalid_fields = group.get_invalid_fields()
         if group_exist and not invalid_fields and isinstance(group, Group):
             status_code, _, _, _ = (
@@ -922,7 +925,7 @@ class GroupManager(object):
                 results.vfense_status_code = (
                     GroupCodes.GroupUpdated
                 )
-                results.updated_ids = [self.group_id]
+                results.updated_ids.append(self.group_id)
 
             if status_code == DbCodes.Unchanged:
                 msg = (
@@ -936,7 +939,7 @@ class GroupManager(object):
                 results.vfense_status_code = (
                     GroupCodes.GroupUnchanged
                 )
-                results.unchanged_ids = [self.group_id]
+                results.unchanged_ids.append(self.group_id)
 
         elif invalid_fields:
             msg = 'Invalid fields: %s' % (invalid_fields)
@@ -947,8 +950,8 @@ class GroupManager(object):
                 GroupFailureCodes.InvalidFields
             )
             results.message = msg
-            results.unchanged_ids = [self.group_id]
-            results[ApiResultKeys.INVALID_DATA] = [invalid_fields]
+            results.unchanged_ids.append(self.group_id)
+            results.errors.append(invalid_fields)
 
         elif not isinstance(group, Group):
             msg = 'Group not of instance type Group: %s' % (type(group))
@@ -959,7 +962,7 @@ class GroupManager(object):
                 GroupFailureCodes.InvalidValue
             )
             results.message = msg
-            results.unchanged_ids = [self.group_id]
+            results.unchanged_ids.append(self.group_id)
 
         else:
             msg = 'group_id %s does not exist' % (self.group_id)
@@ -970,7 +973,7 @@ class GroupManager(object):
                 GroupCodes.GroupUnchanged
             )
             results.message = msg
-            results.unchanged_ids = [self.group_id]
-            results[ApiResultKeys.INVALID_IDS] = [self.group_id]
+            results.unchanged_ids.append(self.group_id)
+            results.invalid_ids.append(self.group_id)
 
         return results

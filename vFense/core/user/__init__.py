@@ -149,7 +149,7 @@ class User(object):
             if not isinstance(self.is_global, bool):
                 invalid_fields.append(
                     {
-                        UserKeys.Global: self.is_global,
+                        UserKeys.IsGlobal: self.is_global,
                         CommonKeys.REASON: 'Must be a boolean value',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             UserCodes.InvalidValue
@@ -200,7 +200,7 @@ class User(object):
             UserKeys.Password: self.password,
             UserKeys.FullName: self.full_name,
             UserKeys.Email: self.email,
-            UserKeys.Global: self.is_global,
+            UserKeys.IsGlobal: self.is_global,
             UserKeys.Enabled: self.enabled
         }
 

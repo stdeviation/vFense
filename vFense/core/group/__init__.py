@@ -1,4 +1,5 @@
 import re
+from vFense import Base
 from vFense.core.group._constants import GroupDefaults
 from vFense.core.permissions._constants import Permissions
 from vFense.core.results import ApiResultKeys
@@ -14,27 +15,31 @@ from vFense.core.group._db_model import (
 
 #from vFense.core.view.views import validate_view_names
 
-class Group(object):
+class Group(Base):
     """Used to represent an instance of a group."""
 
     def __init__(
-            self, name=None, permissions=None,
-            views=None, is_global=None, users=None, email=None
+            self, group_name=None, permissions=None,
+            views=None, is_global=None, users=None, email=None,
+            group_id=None
         ):
         """
         Kwargs:
-            name (str): The name of the group.
+            group_name (str): The name of the group.
             permissions (list): List of valid permissions.
-            views (list): List of views.
+            views (list): List of views, this group is a part of.
+            users (list): List of users in this group.
             is_global (boolean): Is this group a global group.
-            email (str): The group email address/
+            email (str): The group email address.
+            group_id (str): The 36 character UUID of the group.
         """
-        self.name = name
+        self.group_name = group_name
         self.permissions = permissions
         self.views = views
         self.is_global = is_global
         self.users = users
         self.email = email
+        self.group_id = group_id
 
 
     def fill_in_defaults(self):
@@ -76,21 +81,21 @@ class Group(object):
                     ]
         """
         invalid_fields = []
-        if self.name:
-            if isinstance(self.name, basestring):
+        if self.group_name:
+            if isinstance(self.group_name, basestring):
                 valid_symbols = re.search(
-                    RegexPattern.GROUP_NAME, self.name
+                    RegexPattern.GROUP_NAME, self.group_name
                 )
                 valid_length = (
-                    len(self.name) <= DefaultStringLength.GROUP_NAME
+                    len(self.group_name) <= DefaultStringLength.GROUP_NAME
                 )
 
                 if not valid_symbols and valid_length:
                     invalid_fields.append(
                         {
-                            GroupKeys.UserName: self.name,
+                            GroupKeys.GroupName: self.group_name,
                             CommonKeys.REASON: (
-                                'Invalid characters in username'
+                                'Invalid characters in group name'
                             ),
                             ApiResultKeys.VFENSE_STATUS_CODE: (
                                 GroupFailureCodes.InvalidGroupName
@@ -101,7 +106,7 @@ class Group(object):
                 elif not valid_length and valid_symbols:
                     invalid_fields.append(
                         {
-                            GroupKeys.UserName: self.name,
+                            GroupKeys.UserName: self.group_name,
                             CommonKeys.REASON: (
                                 'Groupname is too long. ' +
                                 'The groupname must be ' +
@@ -117,7 +122,7 @@ class Group(object):
                 elif not valid_length and not valid_symbols:
                     invalid_fields.append(
                         {
-                            GroupKeys.UserName: self.name,
+                            GroupKeys.GroupName: self.group_name,
                             CommonKeys.REASON: (
                                 'Groupname is too long. ' +
                                 'The groupname must be ' +
@@ -135,7 +140,7 @@ class Group(object):
             if not isinstance(self.is_global, bool):
                 invalid_fields.append(
                     {
-                        GroupKeys.Global: self.is_global,
+                        GroupKeys.IsGlobal: self.is_global,
                         CommonKeys.REASON: 'Must be a boolean value',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             GroupCodes.InvalidValue
@@ -182,19 +187,6 @@ class Group(object):
                     }
                 )
 
-            #else:
-            #    valid_views, _, _ = validate_view_names(self.views)
-            #    if not valid_views:
-            #        invalid_fields.append(
-            #            {
-            #                GroupKeys.Views: self.views,
-            #                CommonKeys.REASON: 'Invalid views',
-            #                ApiResultKeys.VFENSE_STATUS_CODE: (
-            #                    GroupCodes.InvalidValue
-            #                )
-            #            }
-            #        )
-
         if self.users:
             if not isinstance(self.users, list):
                 invalid_fields.append(
@@ -213,32 +205,14 @@ class Group(object):
         """ Turn the group fields into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                group.
-
-                Ex:
-                {
-                }
-
+            (dict): A dictionary with the fields.
         """
 
         return {
-            GroupKeys.GroupName: self.name,
-            GroupKeys.Global: self.is_global,
+            GroupKeys.GroupName: self.group_name,
+            GroupKeys.IsGlobal: self.is_global,
             GroupKeys.Permissions: self.permissions,
             GroupKeys.Views: self.views,
             GroupKeys.Users: self.users,
             GroupKeys.Email: self.email,
         }
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields of group. Useful when
-        filling out just a few fields to update the group in the db.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this group.
-        """
-        group_dict = self.to_dict()
-
-        return {k:group_dict[k] for k in group_dict
-                if group_dict[k] != None}

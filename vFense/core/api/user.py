@@ -40,7 +40,7 @@ class UserHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def get(self, username):
         active_user = self.get_current_user()
-        is_global = UserManager(active_user).get_attribute(UserKeys.Global)
+        is_global = UserManager(active_user).get_attribute(UserKeys.IsGlobal)
         try:
             output = self.get_argument(ApiArguments.OUTPUT, 'json')
             granted, status_code = (
@@ -367,7 +367,7 @@ class UsersHandler(BaseHandler):
         active_user = self.get_current_user()
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
-        is_global = user.get_attribute(UserKeys.Global)
+        is_global = user.get_attribute(UserKeys.IsGlobal)
         results = []
         try:
             view_context = self.get_argument(ApiArguments.VIEW_CONTEXT, None)
