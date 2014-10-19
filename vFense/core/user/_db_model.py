@@ -11,7 +11,7 @@ class UserKeys():
     Password = 'password' #string
     UserName = 'user_name' #string
     Email = 'email' #string
-    Global = 'global' #bool
+    IsGlobal = 'is_global' #bool
 
 
 class UserMappedKeys():
