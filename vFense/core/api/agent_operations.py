@@ -14,9 +14,12 @@ from vFense.core.operations._db_model import (
 from vFense.core.operations.agent_operations import get_agent_operation
 from vFense.core.operations.search.agent_search import AgentOperationRetriever
 from vFense.core.decorators import authenticated_request, results_message
-from vFense.core.results import Results, ApiResultKeys
+from vFense.core.results import (
+    ExternalApiResults
+)
 from vFense.core.user.manager import UserManager
 from vFense.core.user import UserKeys
+from vFense.core.status_codes import GenericCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -69,24 +72,22 @@ class GetTransactionsHandler(BaseHandler):
             else:
                 results = self.get_all_operations(search)
 
-            self.set_status(results['http_status'])
-            self.modified_output(results, output, 'operations')
+            self.set_status(results.http_status_code)
+            self.modified_output(results.to_dict_non_null(), output, 'operations')
 
         except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Agent operations search broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(data)
-            )
-            logger.exception(results)
-            self.set_status(results['http_status'])
+            logger.exception(e)
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GenericCodes.SomethingBroke
+            results.vfense_status_code = GenericCodes.SomethingBroke
+            results.message = 'Searching for operations broke: {0}'.format(e)
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = active_user
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     def get_operations_by_type(self, search, operation):
@@ -138,25 +139,22 @@ class AgentOperationsHandler(BaseHandler):
 
             results = self.get_agent_operations(search, agent_id)
 
-            self.set_status(results['http_status'])
-            self.modified_output(results, output, 'operations')
+            self.set_status(results.http_status_code)
+            self.modified_output(results.to_dict_non_null(), output, 'operations')
 
         except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Searching for operations on agent {0} broke: {1}'
-                    .format(agent_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(data)
-            )
-            logger.exception(results)
-            self.set_status(results['http_status'])
+            logger.exception(e)
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GenericCodes.SomethingBroke
+            results.vfense_status_code = GenericCodes.SomethingBroke
+            results.message = 'Searching for operations broke: {0}'.format(e)
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = active_user
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     def get_agent_operations(self, search, agent_id):
@@ -204,25 +202,22 @@ class TagOperationsHandler(BaseHandler):
 
             results = self.get_tag_operations(search, tag_id)
 
-            self.set_status(results['http_status'])
-            self.modified_output(results, output, 'operations')
+            self.set_status(results.http_status_code)
+            self.modified_output(results.to_dict_non_null(), output, 'operations')
 
         except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Searching for operations on tag {0} broke: {1}'
-                    .format(tag_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(data)
-            )
-            logger.exception(results)
-            self.set_status(results['http_status'])
+            logger.exception(e)
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GenericCodes.SomethingBroke
+            results.vfense_status_code = GenericCodes.SomethingBroke
+            results.message = 'Searching for operations on tag broke: {0}'.format(e)
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = active_user
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     def get_tag_operations(self, search, tag_id):
@@ -274,24 +269,22 @@ class OperationHandler(BaseHandler):
                 else:
                     results = self.get_operation_by_id(search, operation_id)
 
-            self.set_status(results['http_status'])
-            self.modified_output(results, output, 'operations')
+            self.set_status(results.http_status_code)
+            self.modified_output(results.to_dict_non_null(), output, 'operations')
 
         except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Searching for operations broke: {o}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(data)
-            )
-            logger.exception(results)
-            self.set_status(results['http_status'])
+            logger.exception(e)
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GenericCodes.SomethingBroke
+            results.vfense_status_code = GenericCodes.SomethingBroke
+            results.message = 'retrieving operation id broke: {0}'.format(e)
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = active_user
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     def get_operation_by_id(self, search, operation_id):
