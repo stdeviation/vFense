@@ -141,7 +141,7 @@ class Base(object):
         output = ''
         data = self.to_dict_all()
         for key, val in data.items():
-            output += '%r=%r,' % (key, val)
-        output = re.sub(r'\\\\', '', output.strip(','))
+            output += '%s=%s,' % (key, val)
+        output = output.strip(',')
 
         return '%s(%r)' % (self.__class__.__name__, output)
