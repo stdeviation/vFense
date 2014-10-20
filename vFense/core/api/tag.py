@@ -10,11 +10,11 @@ from vFense.core.permissions.decorators import check_permissions
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
-from vFense.core.results import Results, ApiResultKeys
 from vFense.core.tag.status_codes import (
     TagCodes, TagFailureCodes
 )
 from vFense.core.agent._constants import Environments
+from vFense.core.agent.status_codes import AgentFailureCodes
 from vFense.core.agent.manager import AgentManager
 from vFense.core.tag._db_model import TagKeys
 from vFense.core.tag._db import fetch_agent_ids_in_tag
@@ -197,7 +197,6 @@ class TagsHandler(BaseHandler):
         try:
             tag_ids = self.arguments.get(TagApiArguments.TAG_IDS)
             results = self.remove_tags(tag_ids)
-
             self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results.to_dict_non_null(), indent=4))
@@ -212,6 +211,7 @@ class TagsHandler(BaseHandler):
             results.uri = self.request.uri
             results.http_method = self.request.method
             results.username = active_user
+            results.http_status_code = 500
             self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results.to_dict_non_null(), indent=4))
@@ -308,8 +308,6 @@ class TagHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        uri = self.request.uri
-        http_method = self.request.method
         try:
             reboot = self.arguments.get(TagApiArguments.REBOOT, None)
             shutdown = self.arguments.get(TagApiArguments.SHUTDOWN, None)
@@ -335,14 +333,18 @@ class TagHandler(BaseHandler):
                 if token_exist_in_current(token):
                     results = self.assign_new_token(operation, tag_id, token)
                 else:
-                    msg = 'Invalid token {0}'.format(token)
-                    result = Results(active_user, uri, http_method)
-                    results = result.invalid_token(
-                        **{
-                            ApiResultKeys.INVALID_ID: token,
-                            ApiResultKeys.MESSAGE: msg,
-                        }
+                    results = ExternalApiResults()
+                    results.fill_in_defaults()
+                    results.generic_status_code = TagCodes.InvalidId
+                    results.vfense_status_code = AgentFailureCodes.InvalidToken
+                    results.message = (
+                        'Invalid token: {0}'.format(token)
                     )
+                    results.uri = self.request.uri
+                    results.http_method = self.request.method
+                    results.username = active_user
+                    results.http_status_code = 400
+
 
             else:
                 results = ExternalApiResults()
@@ -355,6 +357,7 @@ class TagHandler(BaseHandler):
                 results.uri = self.request.uri
                 results.http_method = self.request.method
                 results.username = active_user
+                results.http_status_code = 400
 
             self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
@@ -370,6 +373,7 @@ class TagHandler(BaseHandler):
             results.uri = self.request.uri
             results.http_method = self.request.method
             results.username = active_user
+            results.http_status_code = 500
             self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results.to_dict_non_null(), indent=4))
@@ -451,6 +455,7 @@ class TagHandler(BaseHandler):
             results.uri = self.request.uri
             results.http_method = self.request.method
             results.username = active_user
+            results.http_status_code = 500
             self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results.to_dict_non_null(), indent=4))
@@ -501,6 +506,7 @@ class TagHandler(BaseHandler):
             results.uri = self.request.uri
             results.http_method = self.request.method
             results.username = active_user
+            results.http_status_code = 500
             self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
             self.write(json.dumps(results.to_dict_non_null(), indent=4))

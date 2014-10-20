@@ -44,28 +44,11 @@ class GroupHandler(BaseHandler):
     def get(self, group_id):
         active_user = self.get_current_user()
         is_global = UserManager(active_user).get_attribute(UserKeys.IsGlobal)
-        try:
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
-            results = self.get_group(group_id, is_global)
-            self.set_status(results['http_status'])
-            self.modified_output(results, output, 'group')
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        results = self.get_group(group_id, is_global)
+        self.set_status(results.http_status_code)
+        self.modified_output(results, output, 'group')
 
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Retrieving group {0} broke: {1}'
-                    .format(group_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
 
     @results_message
     @check_permissions(Permissions.ADMINISTRATOR)
