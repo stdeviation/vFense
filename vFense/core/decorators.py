@@ -10,11 +10,9 @@ from vFense.core.results import ApiResults, ExternalApiResults
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes
 )
-from vFense.core.results import Results
-
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('vFense_stats')
+logger = logging.getLogger('rvapi')
 
 
 def return_status_tuple(fn):
@@ -219,6 +217,34 @@ def time_it(fn):
         return(output)
 
     return wraps(fn)(db_wrapper)
+
+def catch_it(fn):
+    """wrap all external api calls in a try catch exception"""
+    def db_wrapper(*args, **kwargs):
+        tornado_handler = args[0]
+        try:
+            results = fn(*args, **kwargs)
+        except Exception as e:
+            logger.exception(e)
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GenericCodes.SomethingBroke
+            results.vfense_status_code = GenericCodes.SomethingBroke
+            results.message = 'Something broke: {0}'.format(e)
+            results.uri = tornado_handler.request.uri
+            results.http_method = tornado_handler.request.method
+            results.username = tornado_handler.get_current_user()
+            results.http_status_code = 500
+            tornado_handler.set_status(results.http_status_code)
+            tornado_handler.set_header('Content-Type', 'application/json')
+            tornado_handler.write(json.dumps(results.to_dict_non_null(), indent=4))
+
+        return results
+
+    return wraps(fn)(db_wrapper)
+
+
+
 
 
 def authenticated_request(method):

@@ -7,6 +7,7 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 
 from vFense.core.api._constants import ApiArguments, ApiValues
+from vFense.core._constants import DefaultQueryValues
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.permissions import (
     verify_permission_for_user, return_results_for_permissions
@@ -96,43 +97,40 @@ class GroupHandler(BaseHandler):
 
 
             if results:
-                self.set_status(results['http_status'])
+                self.set_status(results.http_status_code)
                 self.set_header('Content-Type', 'application/json')
-                self.write(json.dumps(results, indent=4))
+                self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
             else:
-                data = {
-                    ApiResultKeys.MESSAGE: (
-                        'Invalid arguments were passed for group {0}'
-                        .format(group_id)
-                    )
-                }
-                results = (
-                    Results(
-                        active_user, self.request.uri, self.request.method
-                    ).something_broke(**data)
-                )
-
-                self.set_status(results['http_status'])
+                results = ExternalApiResults()
+                results.fill_in_defaults()
+                results.generic_status_code = GroupCodes.IncorrectArguments
+                results.vfense_status_code = GroupCodes.IncorrectArguments
+                results.message = 'Incorrect arguments:'
+                results.uri = self.request.uri
+                results.http_method = self.request.method
+                results.username = active_user
+                results.http_status_code = 400
+                self.set_status(results.http_status_code)
                 self.set_header('Content-Type', 'application/json')
-                self.write(json.dumps(results, indent=4))
+                self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
         except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Adding views or permissions to group {0} broke: {1}'
-                    .format(group_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
             logger.exception(e)
-            self.set_status(results['http_status'])
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GroupCodes.SomethingBroke
+            results.vfense_status_code = GroupCodes.SomethingBroke
+            results.message = (
+                'Adding views or permissions to group {0} broke: {1}'
+                .format(group_id, e)
+            )
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = active_user
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -179,32 +177,13 @@ class GroupHandler(BaseHandler):
     @authenticated_request
     @convert_json_to_arguments
     def delete(self, group_id):
-        active_user = self.get_current_user()
         manager = GroupManager(group_id)
-        try:
-            ###Remove GroupId###
-            results = self.remove_group(manager)
+        ###Remove GroupId###
+        results = self.remove_group(manager)
 
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Deleting of group {0} broke: {1}'
-                    .format(group_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -222,16 +201,28 @@ class GroupsHandler(BaseHandler):
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
         is_global = user.get_attribute(UserKeys.IsGlobal)
-        view_context = self.get_argument('view_context', None)
-        group_id = self.get_argument('group_id', None)
-        all_views = self.get_argument('all_views', None)
-        count = int(self.get_argument('count', 30))
-        offset = int(self.get_argument('offset', 0))
-        sort = self.get_argument('sort', 'asc')
-        sort_by = self.get_argument('sort_by', GroupKeys.GroupName)
-        regex = self.get_argument('query', None)
-        output = self.get_argument(ApiArguments.OUTPUT, 'json')
         try:
+            view_context = self.get_argument(ApiArguments.VIEW_CONTEXT, None)
+            group_id = self.get_argument(ApiArguments.GROUP_ID, None)
+            all_views = self.get_argument(ApiArguments.ALL_VIEWS, None)
+            count = int(
+                self.get_argument(
+                    ApiArguments.COUNT, DefaultQueryValues.COUNT
+                )
+            )
+            offset = int(
+                self.get_argument(
+                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
+                )
+            )
+            sort = (
+                self.get_argument(ApiArguments.SORT, DefaultQueryValues.SORT)
+            )
+            sort_by = (
+                self.get_argument(ApiArguments.SORT_BY, GroupKeys.GroupName)
+            )
+            regex = self.get_argument(ApiArguments.QUERY, None)
+            output = self.get_argument(ApiArguments.OUTPUT, 'json')
             granted, status_code = (
                 verify_permission_for_user(
                     active_user, Permissions.ADMINISTRATOR, view_context
@@ -288,25 +279,22 @@ class GroupsHandler(BaseHandler):
                     )
                 )
 
-            self.set_status(results['http_status'])
+            self.set_status(results.http_status_code)
             self.modified_output(results, output, 'groups')
 
-
         except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Searching for groups broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
             logger.exception(e)
-            self.set_status(results['http_status'])
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GroupCodes.SomethingBroke
+            results.vfense_status_code = GroupCodes.SomethingBroke
+            results.message = 'Searching of groups broke: {0}'.format(e)
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = active_user
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -325,7 +313,6 @@ class GroupsHandler(BaseHandler):
     def get_group_by_id(self, fetch_groups, group_id):
         results = fetch_groups.by_id(group_id)
         return results
-
 
     @authenticated_request
     @convert_json_to_arguments
@@ -358,38 +345,33 @@ class GroupsHandler(BaseHandler):
             if not invalid_value:
                 results = self.create_group(group)
             else:
-                msg = {
-                    ApiResultKeys.MESSAGE: (
-                        'Invalid value for argument is_global: %s' %
-                        (is_global)
-                    )
-                }
-
-                results = (
-                    Results(
-                        active_user, self.request.uri, self.request.method
-                    ).objects_failed_to_create(msg)
-                )
-
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+                results = ExternalApiResults()
+                results.fill_in_defaults()
+                results.generic_status_code = GroupCodes.IncorrectArguments
+                results.vfense_status_code = GroupCodes.IncorrectArguments
+                results.message = 'Incorrect arguments:'
+                results.uri = self.request.uri
+                results.http_method = self.request.method
+                results.username = active_user
+                results.http_status_code = 400
+                self.set_status(results.http_status_code)
+                self.set_header('Content-Type', 'application/json')
+                self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
         except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Failed to create group broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
             logger.exception(e)
-            self.set_status(results['http_status'])
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GroupCodes.IncorrectArguments
+            results.vfense_status_code = GroupCodes.IncorrectArguments
+            results.message = 'Incorrect arguments:'
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = active_user
+            results.http_status_code = 400
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
 
     @results_message

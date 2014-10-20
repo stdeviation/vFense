@@ -38,9 +38,9 @@ from vFense.core.agent.agents import (
 )
 
 from vFense.core.decorators import (
-    authenticated_request, convert_json_to_arguments, results_message
+    authenticated_request, convert_json_to_arguments, results_message,
+    catch_it
 )
-from vFense.core.results import ApiResultKeys
 from vFense.core.agent.status_codes import (
     AgentCodes, AgentFailureCodes
 )
@@ -53,6 +53,7 @@ logger = logging.getLogger('rvapi')
 
 
 class AgentResultURIs(BaseHandler):
+    @catch_it
     @authenticated_request
     def get(self, agent_id):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
@@ -69,6 +70,7 @@ class AgentResultURIs(BaseHandler):
 
 
 class FetchValidEnvironments(BaseHandler):
+    @catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user().encode('utf-8')
@@ -90,10 +92,12 @@ class FetchValidEnvironments(BaseHandler):
         results.count = len(results.data)
         results.generic_status_code = AgentCodes.InformationRetrieved
         results.vfense_status_code = AgentCodes.InformationRetrieved
+        results.http_status_code = 200
         return results
 
 
 class FetchSupportedOperatingSystems(BaseHandler):
+    @catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user().encode('utf-8')
@@ -123,6 +127,7 @@ class FetchSupportedOperatingSystems(BaseHandler):
         results.count = len(results.data)
         results.generic_status_code = AgentCodes.InformationRetrieved
         results.vfense_status_code = AgentCodes.InformationRetrieved
+        results.http_status_code = 200
         return results
 
     @results_message
@@ -134,94 +139,71 @@ class FetchSupportedOperatingSystems(BaseHandler):
         results.count = len(results.data)
         results.generic_status_code = AgentCodes.InformationRetrieved
         results.vfense_status_code = AgentCodes.InformationRetrieved
+        results.http_status_code = 200
         return results
 
 
 class AgentsHandler(BaseHandler):
+    @catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user()
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
-        try:
-            count = int(
-                self.get_argument(
-                    ApiArguments.COUNT, DefaultQueryValues.COUNT
+        count = int(
+            self.get_argument(ApiArguments.COUNT, DefaultQueryValues.COUNT)
+        )
+        offset = int(
+            self.get_argument(ApiArguments.OFFSET, DefaultQueryValues.OFFSET)
+        )
+        query = self.get_argument(ApiArguments.QUERY, None)
+        fkey = self.get_argument(ApiArguments.FILTER_KEY, None)
+        fval = self.get_argument(ApiArguments.FILTER_VAL, None)
+        ip = self.get_argument(AgentApiArguments.IP, None)
+        mac = self.get_argument(AgentApiArguments.MAC, None)
+        sort = int(
+            self.get_argument(ApiArguments.SORT, DefaultQueryValues.SORT)
+        )
+        sort_by = (
+            self.get_argument(ApiArguments.SORT_BY, AgentKeys.ComputerName)
+        )
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+
+        search = RetrieveAgents(active_view, count, offset, sort, sort_by)
+        if not ip and not mac and not query and not fkey and not fval:
+            results = self.get_all_agents(search)
+
+        elif query and not ip and not mac and not fkey and not fval:
+            results = self.get_all_agents_by_name(search, query)
+
+        elif ip and not mac and not query and not fkey and not fval:
+            results = self.get_all_agents_by_ip(search, ip)
+
+        elif mac and not ip and not query and not fkey and not fval:
+            results = self.get_all_agents_by_mac(search, mac)
+
+        elif fkey and fval and not ip and not mac and not query:
+            results = self.get_all_agents_by_key_val(search, fkey, fval)
+
+        elif query and fkey and fval and not mac and not ip:
+            results = (
+                self.get_all_agents_by_key_val_and_query(
+                    search, fkey, fval, query
                 )
             )
-            offset = int(
-                self.get_argument(
-                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
-                )
+
+        elif ip and fkey and fval and not mac and not query:
+            results = (
+                self.get_all_agents_by_ip_and_filter(search, ip, fkey, fval)
             )
-            query = self.get_argument(ApiArguments.QUERY, None)
-            fkey = self.get_argument(ApiArguments.FILTER_KEY, None)
-            fval = self.get_argument(ApiArguments.FILTER_VAL, None)
-            ip = self.get_argument(AgentApiArguments.IP, None)
-            mac = self.get_argument(AgentApiArguments.MAC, None)
-            sort = int(
-                self.get_argument(
-                    ApiArguments.SORT, DefaultQueryValues.SORT
-                )
+
+        elif mac and fkey and fval and not ip and not query:
+            results = (
+                self.get_all_agents_by_mac_and_filter(search, mac, fkey, fval)
             )
-            sort_by = self.get_argument(ApiArguments.SORT_BY, AgentKeys.ComputerName)
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
-            search = (
-                RetrieveAgents(active_view, count, offset, sort, sort_by)
-            )
-            if not ip and not mac and not query and not fkey and not fval:
-                results = self.get_all_agents(search)
-
-            elif query and not ip and not mac and not fkey and not fval:
-                results = self.get_all_agents_by_name(search, query)
-
-            elif ip and not mac and not query and not fkey and not fval:
-                results = self.get_all_agents_by_ip(search, ip)
-
-            elif mac and not ip and not query and not fkey and not fval:
-                results = self.get_all_agents_by_mac(search, mac)
-
-            elif fkey and fval and not ip and not mac and not query:
-                results = self.get_all_agents_by_key_val(search, fkey, fval)
-
-            elif query and fkey and fval and not mac and not ip:
-                results = (
-                    self.get_all_agents_by_key_val_and_query(
-                        search, fkey, fval, query
-                    )
-                )
-
-            elif ip and fkey and fval and not mac and not query:
-                results = (
-                    self.get_all_agents_by_ip_and_filter(
-                        search, ip, fkey, fval
-                    )
-                )
-
-            elif mac and fkey and fval and not ip and not query:
-                results = (
-                    self.get_all_agents_by_mac_and_filter(
-                        search, mac, fkey, fval
-                    )
-                )
-
-            self.set_status(results.http_status_code)
-            self.modified_output(results, output, 'agents')
-
-        except Exception as e:
-            logger.exception(e)
-            results = ExternalApiResults()
-            results.fill_in_defaults()
-            results.generic_status_code = AgentCodes.SomethingBroke
-            results.vfense_status_code = AgentCodes.SomethingBroke
-            results.message = 'Searching for agents broke: {0}'.format(e)
-            results.uri = self.request.uri
-            results.http_method = self.request.method
-            results.username = active_user
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        self.set_status(results.http_status_code)
+        self.modified_output(results, output, 'agents')
 
     @results_message
     @check_permissions(Permissions.READ)
@@ -271,64 +253,47 @@ class AgentsHandler(BaseHandler):
         results = search.by_mac_and_filter(mac, key, val)
         return results
 
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     def put(self):
         active_user = self.get_current_user()
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
-        try:
-            agent_ids = self.arguments.get(ApiArguments.AGENT_IDS)
-            views = self.arguments.get(ApiArguments.VIEWS)
-            action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
-            token = self.arguments.get(AgentApiArguments.TOKEN, None)
-            if not isinstance(agent_ids, list):
-                agent_ids = agent_ids.split()
+        agent_ids = self.arguments.get(ApiArguments.AGENT_IDS)
+        views = self.arguments.get(ApiArguments.VIEWS)
+        action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
+        token = self.arguments.get(AgentApiArguments.TOKEN, None)
+        if not isinstance(agent_ids, list):
+            agent_ids = agent_ids.split()
 
-            if not isinstance(views, list):
-                views = views.split()
+        if not isinstance(views, list):
+            views = views.split()
 
-            if action == ApiValues.ADD:
-                results = self.add_agents_to_views(agent_ids, views)
+        if action == ApiValues.ADD:
+            results = self.add_agents_to_views(agent_ids, views)
 
-            elif action == ApiValues.DELETE:
-                results = self.remove_agents_from_views(agent_ids, views)
+        elif action == ApiValues.DELETE:
+            results = self.remove_agents_from_views(agent_ids, views)
 
-            elif token:
-                operation = (
-                    StoreAgentOperations(
-                        active_user, active_view
-                    )
-                )
-                results = self.new_token(operation, agent_ids, token)
+        elif token:
+            operation = StoreAgentOperations(active_user, active_view)
+            results = self.new_token(operation, agent_ids, token)
 
-            else:
-                results = ExternalApiResults()
-                results.fill_in_defaults()
-                results.generic_status_code = AgentCodes.IncorrectArguments
-                results.vfense_status_code = AgentCodes.IncorrectArguments
-                results.message = 'Incorrect arguments:'
-                results.uri = self.request.uri
-                results.http_method = self.request.method
-                results.username = active_user
-
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
-
-        except Exception as e:
-            logger.exception(e)
+        else:
             results = ExternalApiResults()
             results.fill_in_defaults()
-            results.generic_status_code = AgentCodes.SomethingBroke
-            results.vfense_status_code = AgentCodes.SomethingBroke
-            results.message = 'Editing of agents broke: {0}'.format(e)
+            results.generic_status_code = AgentCodes.IncorrectArguments
+            results.vfense_status_code = AgentCodes.IncorrectArguments
+            results.message = 'Incorrect arguments:'
             results.uri = self.request.uri
             results.http_method = self.request.method
             results.username = active_user
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+            results.http_status_code = 400
+
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.ASSIGN_NEW_TOKEN)
@@ -471,6 +436,7 @@ class AgentsHandler(BaseHandler):
 
         return end_results
 
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     def delete(self):
@@ -485,7 +451,7 @@ class AgentsHandler(BaseHandler):
         results = self.delete_agents(agent_ids, delete_oper)
         self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.DELETE_AGENT)
@@ -554,6 +520,7 @@ class AgentsHandler(BaseHandler):
 
 
 class AgentHandler(BaseHandler):
+    @catch_it
     @authenticated_request
     @check_permissions(Permissions.READ)
     def get(self, agent_id):
@@ -568,7 +535,6 @@ class AgentHandler(BaseHandler):
         results = self.get_agent_by_id(search, agent_id)
         self.modified_output(results, output, 'agent')
 
-
     @results_message
     @check_permissions(Permissions.READ)
     def get_agent_by_id(self, search, agent_id):
@@ -577,84 +543,44 @@ class AgentHandler(BaseHandler):
             results.data = results.data.pop()
         return results
 
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
         active_user = self.get_current_user()
-        try:
-            action = (
-                self.arguments.get(ApiArguments.ACTION, None)
-            )
-            displayname = (
-                self.arguments.get(AgentApiArguments.DISPLAY_NAME, None)
-            )
-            environment = (
-                self.arguments.get(AgentApiArguments.ENVIRONMENT, None)
-            )
-            views = (
-                self.arguments.get(AgentApiArguments.VIEWS, None)
-            )
-            manager = AgentManager(agent_id)
+        action = self.arguments.get(ApiArguments.ACTION, None)
+        displayname = self.arguments.get(AgentApiArguments.DISPLAY_NAME, None)
+        environment = self.arguments.get(AgentApiArguments.ENVIRONMENT, None)
+        views = self.arguments.get(AgentApiArguments.VIEWS, None)
+        manager = AgentManager(agent_id)
 
-            if displayname and not environment and not views and not action:
-                results = self.edit_display_name(manager, displayname)
+        if displayname and not environment and not views and not action:
+            results = self.edit_display_name(manager, displayname)
 
-            elif environment and not displayname and not views and not action:
+        elif environment and not displayname and not views and not action:
                 results = self.edit_environment(manager, environment)
 
-            elif action and views and not environment and not displayname:
-                if action == ApiValues.ADD:
-                    results = self.add_agent_to_views(manager, views)
+        elif action and views and not environment and not displayname:
+            if action == ApiValues.ADD:
+                results = self.add_agent_to_views(manager, views)
 
-                elif action == ApiValues.DELETE:
-                    results = self.remove_agent_from_views(manager, views)
-
-                else:
-                    data = {
-                        ApiResultKeys.MESSAGE: (
-                            'Incorrect arguments for agent {0}'
-                            .format(agent_id)
-                        )
-                    }
-                    results = (
-                        Results(
-                            active_user, self.request.uri, self.request.method
-                        ).incorrect_arguments(**data)
-                    )
+            elif action == ApiValues.DELETE:
+                results = self.remove_agent_from_views(manager, views)
 
             else:
-                data = {
-                    ApiResultKeys.MESSAGE: (
-                        'Incorrect arguments for agent {0}'
-                        .format(agent_id)
-                    )
-                }
-                results = (
-                    Results(
-                        active_user, self.request.uri, self.request.method
-                    ).incorrect_arguments(**data)
-                )
+                results = ExternalApiResults()
+                results.fill_in_defaults()
+                results.generic_status_code = AgentCodes.IncorrectArguments
+                results.vfense_status_code = AgentCodes.IncorrectArguments
+                results.message = 'Incorrect arguments:'
+                results.uri = self.request.uri
+                results.http_method = self.request.method
+                results.username = active_user
+                results.http_status_code = 400
 
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Editing of agent {0} broke: {1}'
-                    .format(agent_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.EDIT_AGENT)
@@ -684,38 +610,21 @@ class AgentHandler(BaseHandler):
         results = manager.remove_from_views(views)
         return results
 
+    @catch_it
     @authenticated_request
     def delete(self, agent_id):
         active_user = self.get_current_user()
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            agent = AgentManager(agent_id)
-            operation = AgentOperation(agent_ids=[agent_id])
-            delete_oper = StoreAgentOperations(active_user, active_view)
-            delete_oper.uninstall_agent(operation)
-            results = self.remove_agent(agent)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Deleting of agent {0} broke: {1}'
-                    .format(agent_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        agent = AgentManager(agent_id)
+        operation = AgentOperation(agent_ids=[agent_id])
+        delete_oper = StoreAgentOperations(active_user, active_view)
+        delete_oper.uninstall_agent(operation)
+        results = self.remove_agent(agent)
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.DELETE_AGENT)
@@ -724,6 +633,7 @@ class AgentHandler(BaseHandler):
         results = manager.remove()
         return results
 
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     def post(self, agent_id):
@@ -731,72 +641,48 @@ class AgentHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            reboot = self.arguments.get(AgentApiArguments.REBOOT, None)
-            shutdown = self.arguments.get(AgentApiArguments.SHUTDOWN, None)
-            token = self.arguments.get(AgentApiArguments.TOKEN, None)
-            refresh_apps = (
-                self.arguments.get(AgentApiArguments.REFRESH_APPS, None)
-            )
-            operation = (
-                StoreAgentOperations(active_user, active_view)
-            )
-            agent_operation = AgentOperation(agent_ids=[agent_id])
-            if reboot:
-                results = self.reboot(operation, agent_operation)
+        reboot = self.arguments.get(AgentApiArguments.REBOOT, None)
+        shutdown = self.arguments.get(AgentApiArguments.SHUTDOWN, None)
+        token = self.arguments.get(AgentApiArguments.TOKEN, None)
+        refresh_apps = (
+            self.arguments.get(AgentApiArguments.REFRESH_APPS, None)
+        )
+        operation = StoreAgentOperations(active_user, active_view)
+        agent_operation = AgentOperation(agent_ids=[agent_id])
+        if reboot:
+            results = self.reboot(operation, agent_operation)
 
-            elif shutdown:
-                results = self.shutdown(operation, agent_operation)
+        elif shutdown:
+            results = self.shutdown(operation, agent_operation)
 
-            elif token:
-                agent_operation.token = token
-                results = self.new_token(operation, agent_operation)
+        elif token:
+            agent_operation.token = token
+            results = self.new_token(operation, agent_operation)
 
 
-            elif refresh_apps:
-                operation = (
-                    StorePatchingOperation(active_user, active_view)
-                )
-                results = self.refresh_apps(operation, [agent_id])
+        elif refresh_apps:
+            operation = StorePatchingOperation(active_user, active_view)
+            results = self.refresh_apps(operation, [agent_id])
 
-            else:
-                data = {
-                    ApiResultKeys.MESSAGE: (
-                        'Invalid arguments for agent {0}'.format(agent_id)
-                    )
-                }
-                results = (
-                    Results(
-                        active_user, self.request.uri, self.request.method
-                    ).something_broke(**data)
-                )
+        else:
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = AgentCodes.IncorrectArguments
+            results.vfense_status_code = AgentCodes.IncorrectArguments
+            results.message = 'Incorrect arguments:'
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.username = active_user
+            results.http_status_code = 400
 
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Operation for agent {0} broke: {1}'
-                    .format(agent_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @check_permissions(Permissions.REBOOT)
     @results_message
     def reboot(self, operation, agent_operation):
         results = operation.reboot(agent_operation)
-
         return results
 
     @check_permissions(Permissions.SHUTDOWN)
@@ -830,6 +716,7 @@ class AgentHandler(BaseHandler):
 
 
 class AgentTagHandler(BaseHandler):
+    @catch_it
     @authenticated_request
     @check_permissions(Permissions.READ)
     def get(self, agent_id):
@@ -837,36 +724,15 @@ class AgentTagHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            name = self.get_argument(ApiArguments.QUERY, None)
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
-            search = (
-                RetrieveAgents(active_view)
-            )
-            if name:
-                results = self.search_tags_by_name(search, name)
-            else:
-                results = self.get_tags_by_agent_id(search, agent_id)
+        name = self.get_argument(ApiArguments.QUERY, None)
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        search = RetrieveAgents(active_view)
+        if name:
+            results = self.search_tags_by_name(search, name)
+        else:
+            results = self.get_tags_by_agent_id(search, agent_id)
 
-            self.modified_output(results, output, 'agent')
-
-        except Exception as e:
-            logger.exception(e)
-            msg =  (
-                'Retrieving tags for agent {0} broke: {1}'.format(agent_id, e)
-            )
-            results = ExternalApiResults()
-            results.fill_in_defaults()
-            results.message = msg
-            results.uri = self.request.uri
-            results.http_method = self.request.method
-            results.username = self.get_current_user()
-            results.invalid_ids.append(agent_id)
-            results.vfense_status_code = AgentFailureCodes.InvalidId
-            results.http_status_code = 404
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        self.modified_output(results, output, 'agent')
 
     @results_message
     def get_tags_by_agent_id(self, search, agent_id):
@@ -878,6 +744,7 @@ class AgentTagHandler(BaseHandler):
         results = search.by_name(name)
         return results
 
+    @catch_it
     @authenticated_request
     def put(self, agent_id):
         active_user = self.get_current_user()
