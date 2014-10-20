@@ -23,7 +23,6 @@ from vFense.core.decorators import (
     catch_it
 )
 
-from vFense.core.user._db_model import UserKeys
 from vFense.core.user.manager import UserManager
 
 from vFense.core.group import Group
@@ -45,7 +44,7 @@ class GroupHandler(BaseHandler):
     @authenticated_request
     def get(self, group_id):
         active_user = self.get_current_user()
-        is_global = UserManager(active_user).get_attribute(UserKeys.IsGlobal)
+        is_global = UserManager(active_user).properties.is_global
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         results = self.get_group(group_id, is_global)
         self.set_status(results.http_status_code)
@@ -186,8 +185,8 @@ class GroupsHandler(BaseHandler):
     def get(self):
         active_user = self.get_current_user()
         user = UserManager(active_user)
-        active_view = user.get_attribute(UserKeys.CurrentView)
-        is_global = user.get_attribute(UserKeys.IsGlobal)
+        active_view = user.properties.current_view
+        is_global = user.properties.is_global
         view_context = self.get_argument(ApiArguments.VIEW_CONTEXT, None)
         group_id = self.get_argument(ApiArguments.GROUP_ID, None)
         all_views = self.get_argument(ApiArguments.ALL_VIEWS, None)
@@ -283,9 +282,7 @@ class GroupsHandler(BaseHandler):
         active_user = self.get_current_user()
         results = None
         user = UserManager(active_user)
-        active_view = (
-            user.get_attribute(UserKeys.CurrentView)
-        )
+        active_view = user.properties.current_view
         invalid_value = False
         ###Create Group###
         group_name = self.arguments.get(ApiArguments.GROUP_NAME)

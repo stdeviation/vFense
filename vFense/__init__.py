@@ -90,7 +90,7 @@ def import_modules_by_regex(regex):
 
 
 class Base(object):
-    """Used to represent an instance of an agent."""
+    """Used to represent an instance."""
 
     def __init__(self, **kwargs):
         for key, val in kwargs.items():
@@ -114,9 +114,14 @@ class Base(object):
         return invalid_fields
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary."""
+        """ Turn the fields into a dictionary."""
 
         return {}
+
+    def to_dict_all(self):
+        """ Turn all the fields into a dictionary."""
+        return self.__dict__
+
 
     def to_dict_non_null(self):
         """ Use to get non None fields. Useful when

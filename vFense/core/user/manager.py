@@ -143,7 +143,7 @@ class UserManager(object):
                 ]
             }
         """
-        user_data = fetch_user_and_all_properties(self.username)
+        user_data = User(**fetch_user_and_all_properties(self.username))
         return user_data
 
     @time_it
