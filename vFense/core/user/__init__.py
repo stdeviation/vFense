@@ -1,4 +1,5 @@
 import re
+from vFense import Base
 from vFense.core.user._db_model import UserKeys
 from vFense.core._constants import (
     RegexPattern, DefaultStringLength, CommonKeys
@@ -9,13 +10,13 @@ from vFense.core.user.status_codes import UserFailureCodes, UserCodes
 from vFense.utils.security import check_password
 
 
-class User(object):
+class User(Base):
     """Used to represent an instance of a user."""
 
     def __init__(
             self, name, password=None, full_name=None, email=None,
             current_view=None, default_view=None,
-            enabled=None, is_global=None
+            enabled=None, is_global=None, **kwargs
     ):
         """
         Args:
@@ -30,6 +31,7 @@ class User(object):
             enabled (boolean): Disable or enable this user.
             is_global (boolean):Is this user a global user.
         """
+        super(User, self).__init__(**kwargs)
         self.name = name
         self.full_name = full_name
         self.email = email

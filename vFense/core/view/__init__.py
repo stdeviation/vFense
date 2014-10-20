@@ -1,8 +1,8 @@
 import re
 import logging
 from time import time
-from vFense import VFENSE_LOGGING_CONFIG
 from vFense import Base
+from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core._db_constants import DbTime
 
 from vFense.core._constants import (
@@ -31,7 +31,7 @@ class View(Base):
         users=None, net_throttle=None, cpu_throttle=None,
         server_queue_ttl=None, agent_queue_ttl=None,
         package_download_url_base=None, token=None, previous_tokens=None,
-        time_zone=None, date_added=None, date_modified=None
+        time_zone=None, date_added=None, date_modified=None, **kwargs
     ):
         """
         Kwargs:
@@ -61,6 +61,7 @@ class View(Base):
             date_added (epoch_time): time in epoch.
             date_modified (epoch_time): time in epoch.
         """
+        super(View, self).__init__(**kwargs)
         self.view_name = view_name
         self.parent = parent
         self.ancestors = ancestors

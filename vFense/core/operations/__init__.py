@@ -1,4 +1,3 @@
-import re
 from vFense import Base
 from vFense.core._db_constants import DbTime
 from vFense.core.operations._db_model import (
@@ -34,7 +33,7 @@ class AdminOperation(Base):
         performed_on=None, status_message=None, generic_status_code=None,
         vfense_status_code=None, errors=None, current_view=None,
         completed_time=None, created_time=None, object_data=None,
-        ids_created=None, ids_updated=None, ids_removed=None
+        ids_created=None, ids_updated=None, ids_removed=None, **kwargs
     ):
         """
         Kwargs:
@@ -56,6 +55,7 @@ class AdminOperation(Base):
             ids_updated (list): List of ids that were updated.
             ids_removed (list): List of ids that were removed.
         """
+        super(AdminOperation, self).__init__(**kwargs)
         self.operation_id = operation_id
         self.created_by = created_by
         self.action = action
@@ -226,7 +226,7 @@ class AgentOperation(Base):
         agents_completed_count=None, agents_expired_count=None,
         agents_pending_results_count=None, token=None,
         agents_pending_pickup_count=None,
-        agents_completed_with_errors_count=None, applications=None,
+        agents_completed_with_errors_count=None, applications=None, **kwargs
 
     ):
         """
@@ -265,6 +265,7 @@ class AgentOperation(Base):
             token (str): This is the token that the agent is using to
                 communicate with the server.
         """
+        super(AgentOperation, self).__init__(**kwargs)
         self.created_by = created_by
         self.operation_id = operation_id
         self.action_performed_on = action_performed_on
@@ -476,7 +477,7 @@ class OperPerAgent(Base):
         self, operation_id=None, agent_id=None, picked_up_time=None, id=None,
         expired_time=None, completed_time=None, view_name=None, status=None,
         tag_id=None, errors=None, apps_total_count=0, apps_pending_count=0,
-        apps_failed_count=0, apps_completed_count=0, id=None
+        apps_failed_count=0, apps_completed_count=0, **kwargs
     ):
         """
         Kwargs:
@@ -502,6 +503,7 @@ class OperPerAgent(Base):
             apps_completed_count (int): Number of applications that were
                 successfully installed.
         """
+        super(OperPerAgent, self).__init__(**kwargs)
         self.id = id
         self.operation_id = operation_id
         self.agent_id = agent_id
@@ -626,7 +628,7 @@ class OperPerApp(Base):
     def __init__(
         self, operation_id=None, agent_id=None, app_id=None, id=None,
         app_name=None, app_version=None, apps_removed=None, view_name=None,
-        results=None, results_received_time=None, errors=None
+        results=None, results_received_time=None, errors=None, **kwargs
     ):
         """
         Kwargs:
@@ -643,6 +645,7 @@ class OperPerApp(Base):
                 application was returnd by the agent in epoch.
             errors (list): List of error messages.
         """
+        super(OperPerApp, self).__init__(**kwargs)
         self.id = id
         self.operation_id = operation_id
         self.agent_id = agent_id

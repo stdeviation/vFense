@@ -1,5 +1,6 @@
 import re
 from time import time
+from vFense import Base
 from vFense.core._db_constants import DbTime
 from vFense.core.stats._db_model import (
     CpuStatKeys, AgentStatKeys, MemoryStatKeys, FileSystemStatKeys
@@ -14,11 +15,11 @@ from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 
 
-class Stats(object):
+class Stats(Base):
     """Used to represent an instance of an agent."""
 
     def __init__(self, agent_id=None, stat_type=None, last_updated=None,
-                 id=None):
+                 id=None, **kwargs):
         """
         Kwargs:
             id (str): The 36 Character UUID of this stat.
@@ -26,6 +27,7 @@ class Stats(object):
             stat_type (str): The type of the stat.
             last_updated (float): The unixtimestamp
         """
+        super(Stats, self).__init__(**kwargs)
         self.id = id
         self.agent_id = agent_id
         self.stat_type = stat_type
@@ -85,18 +87,6 @@ class Stats(object):
         }
 
         return data
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields. Useful when
-        filling out just a few fields to update the db.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this view.
-        """
-        agent_dict = self.to_dict()
-
-        return {k:agent_dict[k] for k in agent_dict
-                if agent_dict[k] != None}
 
     def to_dict_db(self):
         """ Turn the fields into a dictionary, with db related fields.

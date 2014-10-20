@@ -21,7 +21,7 @@ class Group(Base):
     def __init__(
             self, group_name=None, permissions=None,
             views=None, is_global=None, users=None, email=None,
-            group_id=None
+            group_id=None, **kwargs
         ):
         """
         Kwargs:
@@ -33,6 +33,7 @@ class Group(Base):
             email (str): The group email address.
             group_id (str): The 36 character UUID of the group.
         """
+        super(Group, self).__init__(**kwargs)
         self.group_name = group_name
         self.permissions = permissions
         self.views = views

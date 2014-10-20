@@ -1,3 +1,4 @@
+from vFense import Base
 from vFense.plugins.patching._constants import (
     InstallDefaults
 )
@@ -13,12 +14,12 @@ from vFense.core._constants import (
 from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 
-class Install(object):
+class Install(Base):
     """Used to represent an instance of an agent."""
 
     def __init__(self, app_ids=None, agent_ids=None, tag_id=None,
                  user_name=None, view_name=None, restart=None,
-                 net_throttle=None, cpu_throttle=None):
+                 net_throttle=None, cpu_throttle=None, **kwargs):
         """
         Kwargs:
             app_ids (list): List of application ids.
@@ -37,6 +38,7 @@ class Install(object):
             net_throttle (str): The amount of traffic in KB to use.
                 default=0 (unlimitted)
         """
+        super(Install, self).__init__(**kwargs)
         self.app_ids = app_ids
         self.agent_ids = agent_ids
         self.tag_id = tag_id
@@ -204,15 +206,3 @@ class Install(object):
             InstallKeys.USER_NAME: self.user_name,
             InstallKeys.VIEW_NAME: self.view_name
         }
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}

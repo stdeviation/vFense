@@ -19,7 +19,7 @@ class Tag(Base):
 
     def __init__(self, tag_id=None, tag_name=None, environment=None,
                  view_name=None, is_global=None, agents=None, date_added=None,
-                 date_modified=None, agent_id=None
+                 date_modified=None, agent_id=None, **kwargs
                  ):
         """
         Kwargs:
@@ -33,6 +33,7 @@ class Tag(Base):
             date_added (epoch_time): time in epoch.
             date_modified (epoch_time): time in epoch.
         """
+        super(Tag, self).__init__(**kwargs)
         self.tag_id = tag_id
         self.tag_name = tag_name
         self.environment = environment

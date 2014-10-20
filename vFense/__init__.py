@@ -89,13 +89,12 @@ def import_modules_by_regex(regex):
     return db_files
 
 
-
 class Base(object):
     """Used to represent an instance of an agent."""
 
-    def __init__(self):
-        pass
-
+    def __init__(self, **kwargs):
+        for key, val in kwargs.items():
+            self.__dict__[key] = val
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with

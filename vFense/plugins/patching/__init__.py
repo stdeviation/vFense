@@ -1,5 +1,4 @@
-import logging, logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense import Base
 from vFense.core._constants import CommonKeys
 from vFense.core._db_constants import DbTime
 from vFense.core.results import ApiResultKeys
@@ -18,10 +17,8 @@ from vFense.plugins.patching.status_codes import (
 from vFense.plugins.patching.utils import (
     build_app_id, build_agent_app_id, get_proper_severity
 )
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
 
-class Apps(object):
+class Apps(Base):
     """Used to represent an instance of an app."""
 
     def __init__(self, name=None, version=None,
@@ -33,7 +30,8 @@ class Apps(object):
                  repo=None, files_download_status=None, vulnerability_id=None,
                  id=None, update=None,install_date=None, status=None,
                  agent_id=None, dependencies=None, last_modified_time=None,
-                 vulnerability_categories=None, cve_ids=None, views=None):
+                 vulnerability_categories=None, cve_ids=None, views=None,
+                 **kwargs):
         """
         Kwargs:
             name (str): Name of the application.
@@ -70,6 +68,7 @@ class Apps(object):
             views (list): List of views, this application is associated with.
 
         """
+        super(Apps, self).__init__(**kwargs)
         self.name = name
         self.version = version
         self.arch = arch
@@ -472,24 +471,11 @@ class Apps(object):
         return dict(self.to_dict_apps_per_agent().items() + data.items())
 
 
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}
-
-
-class Files(object):
+class Files(Base):
     """Used to represent an instance of an app."""
 
     def __init__(self, file_name=None, file_hash=None, file_size=None,
-                 file_uri=None, app_ids=None, agent_ids=None):
+                 file_uri=None, app_ids=None, agent_ids=None, **kwargs):
         """
         Kwargs:
             file_name (str): Name of the file.
@@ -499,6 +485,7 @@ class Files(object):
             app_ids (list): The application ids, this file is associated with.
             agent_ids (list): The agent ids this file is associated with.
         """
+        super(Files, self).__init__(**kwargs)
         self.file_name = file_name
         self.file_hash = file_hash
         self.file_size = file_size
@@ -646,15 +633,3 @@ class Files(object):
             FilesKey.FileHash: self.file_hash,
             FilesKey.FileSize: self.file_size,
         }
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}

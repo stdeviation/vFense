@@ -85,7 +85,7 @@ class UserManager(object):
                 "email": ""
             }
         """
-        data = fetch_user(self.username, without_fields)
+        data = User(**fetch_user(self.username, without_fields))
         return data
 
     @time_it

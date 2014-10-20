@@ -21,7 +21,8 @@ class Agent(Base):
                  environment=None, machine_type=None,
                  rebooted=None, hardware=None, bit_type=None,
                  version=None, date_added=None, last_agent_update=None,
-                 token=None, assign_new_token=False, tags=None, enabled=True
+                 token=None, assign_new_token=False, tags=None, enabled=True,
+                 **kwargs
                  ):
         """
         Kwargs:
@@ -49,6 +50,7 @@ class Agent(Base):
             tags (list): List of tags, this agent is a part of.
             enabled (bool): True or False
         """
+        super(Agent, self).__init__(**kwargs)
         self.agent_id = agent_id
         self.computer_name = computer_name
         self.display_name = display_name

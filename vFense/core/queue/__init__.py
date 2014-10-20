@@ -21,7 +21,8 @@ class AgentQueue(Base):
     def __init__(self, id=None, agent_id=None, view_name=None,
                  request_method=None, response_uri=None, order_id=None,
                  created_time=None, expire_minutes=None,
-                 server_queue_ttl=None, agent_queue_ttl=None, operation=None
+                 server_queue_ttl=None, agent_queue_ttl=None, operation=None,
+                 **kwargs
                  ):
         """
         Kwargs:
@@ -41,6 +42,7 @@ class AgentQueue(Base):
                 is considered expired on the agent.
             operation (dict): The dictionary version of the operation.
         """
+        super(AgentQueue, self).__init__(**kwargs)
         self.id = id
         self.agent_id = agent_id
         self.view_name = view_name
@@ -211,7 +213,7 @@ class AgentQueueOperation(Base):
     """Used to represent an instance of an admin operation."""
 
     def __init__(self, agent_id=None, operation=None, operation_id=None,
-                 plugin=None
+                 plugin=None, **kwargs
                  ):
         """
         Kwargs:
@@ -221,6 +223,7 @@ class AgentQueueOperation(Base):
             operation_id (str): The operation id, this operation belongs too.
             plugin (str): rv, core, vuln, etc ..
         """
+        super(AgentQueueOperation, self).__init__(**kwargs)
         self.agent_id = agent_id
         self.operation = operation
         self.operation_id = operation_id

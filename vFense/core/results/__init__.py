@@ -13,11 +13,12 @@ class ApiResults(Base):
                  deleted_ids=None, generic_status_code=None, data=None,
                  vfense_status_code=None, db_status_code=None,
                  message=None, errors=None, agent_id=None, tag_id=None,
-                 generated_ids=None
+                 generated_ids=None, **kwargs
                  ):
         """
         Kwargs:
         """
+        super(ApiResults, self).__init__(**kwargs)
         self.updated_ids = updated_ids
         self.invalid_ids = invalid_ids
         self.unchanged_ids = unchanged_ids

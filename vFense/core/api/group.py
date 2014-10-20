@@ -29,7 +29,7 @@ from vFense.core.group._db_model import GroupKeys
 from vFense.core.group.manager import GroupManager
 from vFense.core.group.search.search import RetrieveGroups
 
-from vFense.core.results import ApiResultKeys, Results
+from vFense.core.results import ApiResults, ExternalApiResults
 from vFense.core.group.status_codes import (
     GroupCodes, GroupFailureCodes
 )
