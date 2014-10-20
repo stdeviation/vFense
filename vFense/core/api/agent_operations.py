@@ -13,7 +13,9 @@ from vFense.core.operations._db_model import (
 )
 from vFense.core.operations.agent_operations import get_agent_operation
 from vFense.core.operations.search.agent_search import AgentOperationRetriever
-from vFense.core.decorators import authenticated_request, results_message
+from vFense.core.decorators import (
+    authenticated_request, results_message, catch_it
+)
 from vFense.core.results import (
     ExternalApiResults
 )
@@ -26,68 +28,50 @@ logger = logging.getLogger('rvapi')
 
 
 class GetTransactionsHandler(BaseHandler):
+    @catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user()
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            count = (
-                int(
-                    self.get_argument(ApiArguments.COUNT,
-                        DefaultQueryValues.COUNT
-                    )
-                )
-            )
-            offset = (
-                int(
-                    self.get_argument(
-                        ApiArguments.OFFSET,
-                        DefaultQueryValues.OFFSET
-                    )
-                )
-            )
-            sort = self.get_argument(ApiArguments.SORT, SortValues.DESC)
-            sort_by = (
+        count = (
+            int(
                 self.get_argument(
-                    ApiArguments.SORT_BY,
-                    AgentOperationKey.CreatedTime
+                    ApiArguments.COUNT, DefaultQueryValues.COUNT
                 )
             )
-            operation = (
-                self.get_argument(AgentOperationsApiArguments.OPERATION, None)
-            )
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
-
-            search = (
-                AgentOperationRetriever(
-                    active_view, count, offset, sort, sort_by,
+        )
+        offset = (
+            int(
+                self.get_argument(
+                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
                 )
             )
+        )
+        sort = self.get_argument(ApiArguments.SORT, SortValues.DESC)
+        sort_by = (
+            self.get_argument(
+                ApiArguments.SORT_BY, AgentOperationKey.CreatedTime
+            )
+        )
+        operation = (
+            self.get_argument(AgentOperationsApiArguments.OPERATION, None)
+        )
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
-            if operation:
-                results = self.get_operations_by_type(search, operation)
+        search = (
+            AgentOperationRetriever(active_view, count, offset, sort, sort_by)
+        )
 
-            else:
-                results = self.get_all_operations(search)
+        if operation:
+            results = self.get_operations_by_type(search, operation)
 
-            self.set_status(results.http_status_code)
-            self.modified_output(results.to_dict_non_null(), output, 'operations')
+        else:
+            results = self.get_all_operations(search)
 
-        except Exception as e:
-            logger.exception(e)
-            results = ExternalApiResults()
-            results.fill_in_defaults()
-            results.generic_status_code = GenericCodes.SomethingBroke
-            results.vfense_status_code = GenericCodes.SomethingBroke
-            results.message = 'Searching for operations broke: {0}'.format(e)
-            results.uri = self.request.uri
-            results.http_method = self.request.method
-            results.username = active_user
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        self.set_status(results.http_status_code)
+        self.modified_output(results.to_dict_non_null(), output, 'operations')
 
     @results_message
     def get_operations_by_type(self, search, operation):
@@ -100,61 +84,43 @@ class GetTransactionsHandler(BaseHandler):
         return results
 
 class AgentOperationsHandler(BaseHandler):
+    @catch_it
     @authenticated_request
     def get(self, agent_id):
         active_user = self.get_current_user()
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            count = (
-                int(
-                    self.get_argument(ApiArguments.COUNT,
-                        DefaultQueryValues.COUNT
-                    )
-                )
-            )
-            offset = (
-                int(
-                    self.get_argument(
-                        ApiArguments.OFFSET,
-                        DefaultQueryValues.OFFSET
-                    )
-                )
-            )
-            sort = self.get_argument(ApiArguments.SORT, SortValues.DESC)
-            sort_by = (
+        count = (
+            int(
                 self.get_argument(
-                    ApiArguments.SORT_BY,
-                    AgentOperationKey.CreatedTime
+                    ApiArguments.COUNT, DefaultQueryValues.COUNT
                 )
             )
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
-
-            search = (
-                AgentOperationRetriever(
-                    active_view, count, offset, sort, sort_by,
+        )
+        offset = (
+            int(
+                self.get_argument(
+                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
                 )
             )
+        )
+        sort = self.get_argument(ApiArguments.SORT, SortValues.DESC)
+        sort_by = (
+            self.get_argument(
+                ApiArguments.SORT_BY, AgentOperationKey.CreatedTime
+            )
+        )
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
-            results = self.get_agent_operations(search, agent_id)
+        search = (
+            AgentOperationRetriever(active_view, count, offset, sort, sort_by)
+        )
 
-            self.set_status(results.http_status_code)
-            self.modified_output(results.to_dict_non_null(), output, 'operations')
+        results = self.get_agent_operations(search, agent_id)
 
-        except Exception as e:
-            logger.exception(e)
-            results = ExternalApiResults()
-            results.fill_in_defaults()
-            results.generic_status_code = GenericCodes.SomethingBroke
-            results.vfense_status_code = GenericCodes.SomethingBroke
-            results.message = 'Searching for operations broke: {0}'.format(e)
-            results.uri = self.request.uri
-            results.http_method = self.request.method
-            results.username = active_user
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        self.set_status(results.http_status_code)
+        self.modified_output(results.to_dict_non_null(), output, 'operations')
 
     @results_message
     def get_agent_operations(self, search, agent_id):
@@ -163,61 +129,42 @@ class AgentOperationsHandler(BaseHandler):
 
 
 class TagOperationsHandler(BaseHandler):
+    @catch_it
     @authenticated_request
     def get(self, tag_id):
         active_user = self.get_current_user()
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            count = (
-                int(
-                    self.get_argument(ApiArguments.COUNT,
-                        DefaultQueryValues.COUNT
-                    )
-                )
-            )
-            offset = (
-                int(
-                    self.get_argument(
-                        ApiArguments.OFFSET,
-                        DefaultQueryValues.OFFSET
-                    )
-                )
-            )
-            sort = self.get_argument(ApiArguments.SORT, SortValues.DESC)
-            sort_by = (
+        count = (
+            int(
                 self.get_argument(
-                    ApiArguments.SORT_BY,
-                    AgentOperationKey.CreatedTime
+                    ApiArguments.COUNT, DefaultQueryValues.COUNT
                 )
             )
-
-            search = (
-                AgentOperationRetriever(
-                    active_view, count, offset, sort, sort_by,
+        )
+        offset = (
+            int(
+                self.get_argument(
+                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
                 )
             )
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        )
+        sort = self.get_argument(ApiArguments.SORT, SortValues.DESC)
+        sort_by = (
+            self.get_argument(
+                ApiArguments.SORT_BY, AgentOperationKey.CreatedTime
+            )
+        )
 
-            results = self.get_tag_operations(search, tag_id)
+        search = (
+            AgentOperationRetriever(active_view, count, offset, sort, sort_by)
+        )
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        results = self.get_tag_operations(search, tag_id)
 
-            self.set_status(results.http_status_code)
-            self.modified_output(results.to_dict_non_null(), output, 'operations')
-
-        except Exception as e:
-            logger.exception(e)
-            results = ExternalApiResults()
-            results.fill_in_defaults()
-            results.generic_status_code = GenericCodes.SomethingBroke
-            results.vfense_status_code = GenericCodes.SomethingBroke
-            results.message = 'Searching for operations on tag broke: {0}'.format(e)
-            results.uri = self.request.uri
-            results.http_method = self.request.method
-            results.username = active_user
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        self.set_status(results.http_status_code)
+        self.modified_output(results.to_dict_non_null(), output, 'operations')
 
     @results_message
     def get_tag_operations(self, search, tag_id):
@@ -225,66 +172,48 @@ class TagOperationsHandler(BaseHandler):
         return results
 
 class OperationHandler(BaseHandler):
+    @catch_it
     @authenticated_request
     def get(self, operation_id):
         active_user = self.get_current_user()
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            count = (
-                int(
-                    self.get_argument(ApiArguments.COUNT,
-                        DefaultQueryValues.COUNT
-                    )
-                )
-            )
-            offset = (
-                int(
-                    self.get_argument(
-                        ApiArguments.OFFSET,
-                        DefaultQueryValues.OFFSET
-                    )
-                )
-            )
-            sort = self.get_argument(ApiArguments.SORT, SortValues.DESC)
-            sort_by = (
+        count = (
+            int(
                 self.get_argument(
-                    ApiArguments.SORT_BY,
-                    AgentOperationKey.CreatedTime
+                    ApiArguments.COUNT, DefaultQueryValues.COUNT
                 )
             )
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
-
-            search = (
-                AgentOperationRetriever(
-                    active_view, count, offset, sort, sort_by,
+        )
+        offset = (
+            int(
+                self.get_argument(
+                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
                 )
             )
+        )
+        sort = self.get_argument(ApiArguments.SORT, SortValues.DESC)
+        sort_by = (
+            self.get_argument(
+                ApiArguments.SORT_BY, AgentOperationKey.CreatedTime
+            )
+        )
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
-            operation_data = get_agent_operation(operation_id)
-            if operation_data:
-                if re.search('install', operation_data[AgentOperationKey.Operation]):
-                    results = self.get_install_operation_by_id(search, operation_id)
-                else:
-                    results = self.get_operation_by_id(search, operation_id)
+        search = (
+            AgentOperationRetriever(active_view, count, offset, sort, sort_by)
+        )
 
-            self.set_status(results.http_status_code)
-            self.modified_output(results.to_dict_non_null(), output, 'operations')
+        operation_data = get_agent_operation(operation_id)
+        if operation_data:
+            if re.search('install', operation_data[AgentOperationKey.Operation]):
+                results = self.get_install_operation_by_id(search, operation_id)
+            else:
+                results = self.get_operation_by_id(search, operation_id)
 
-        except Exception as e:
-            logger.exception(e)
-            results = ExternalApiResults()
-            results.fill_in_defaults()
-            results.generic_status_code = GenericCodes.SomethingBroke
-            results.vfense_status_code = GenericCodes.SomethingBroke
-            results.message = 'retrieving operation id broke: {0}'.format(e)
-            results.uri = self.request.uri
-            results.http_method = self.request.method
-            results.username = active_user
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        self.set_status(results.http_status_code)
+        self.modified_output(results.to_dict_non_null(), output, 'operations')
 
     @results_message
     def get_operation_by_id(self, search, operation_id):
