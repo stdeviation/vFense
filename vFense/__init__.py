@@ -133,3 +133,15 @@ class Base(object):
         agent_dict = self.to_dict()
 
         return {k:agent_dict[k] for k in agent_dict}
+
+    def __str__(self):
+        return(repr(self.to_dict_all()))
+
+    def __repr__(self):
+        output = ''
+        data = self.to_dict_all()
+        for key, val in data.items():
+            output += '%r=%r,' % (key, val)
+        output = re.sub(r'\\\\', '', output.strip(','))
+
+        return '%s(%r)' % (self.__class__.__name__, output)
