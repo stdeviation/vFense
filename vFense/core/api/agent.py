@@ -705,6 +705,7 @@ class AgentHandler(BaseHandler):
             results.http_method = self.request.method
             results.username = self.get_current_user()
             results.invalid_ids.append(agent_operation.token)
+            results.generic_status_code = AgentFailureCodes.InvalidToken
             results.vfense_status_code = AgentFailureCodes.InvalidToken
             results.http_status_code = 200
         return results
