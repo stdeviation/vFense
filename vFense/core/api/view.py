@@ -124,79 +124,62 @@ class ViewHandler(BaseHandler):
         results = view.remove_groups(group_ids)
         return results
 
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, view_name):
-        active_user = self.get_current_user()
         view = ViewManager(view_name)
         results = {}
         data = []
-        try:
-            net_throttle = self.arguments.get(ViewApiArguments.NET_THROTTLE, None)
-            cpu_throttle = self.arguments.get(ViewApiArguments.CPU_THROTTLE, None)
-            server_queue_ttl = self.arguments.get(ViewApiArguments.SERVER_QUEUE_TTL, None)
-            agent_queue_ttl = self.arguments.get(ViewApiArguments.AGENT_QUEUE_TTL, None)
-            download_url = self.arguments.get(ViewApiArguments.DOWNLOAD_URL, None)
-            time_zone = self.arguments.get(ViewApiArguments.TIME_ZONE, None)
-            token = self.arguments.get(ViewApiArguments.TOKEN, None)
+        net_throttle = self.arguments.get(ViewApiArguments.NET_THROTTLE, None)
+        cpu_throttle = self.arguments.get(ViewApiArguments.CPU_THROTTLE, None)
+        server_queue_ttl = self.arguments.get(ViewApiArguments.SERVER_QUEUE_TTL, None)
+        agent_queue_ttl = self.arguments.get(ViewApiArguments.AGENT_QUEUE_TTL, None)
+        download_url = self.arguments.get(ViewApiArguments.DOWNLOAD_URL, None)
+        time_zone = self.arguments.get(ViewApiArguments.TIME_ZONE, None)
+        token = self.arguments.get(ViewApiArguments.TOKEN, None)
 
-            if net_throttle:
-                results = self.edit_net_throttle(view, net_throttle)
-                if results.get(ApiResultKeys.DATA, None):
-                    data.append(results.get(ApiResultKeys.DATA))
+        if net_throttle:
+            results = self.edit_net_throttle(view, net_throttle)
+            if results.data:
+                data.append(results.data)
 
-            if cpu_throttle:
-                results = self.edit_cpu_throttle(view, cpu_throttle)
-                if results.get(ApiResultKeys.DATA, None):
-                    data.append(results.get(ApiResultKeys.DATA))
+        if cpu_throttle:
+            results = self.edit_cpu_throttle(view, cpu_throttle)
+            if results.data:
+                data.append(results.data)
 
-            if server_queue_ttl:
-                results = self.edit_server_queue_ttl(view, server_queue_ttl)
-                if results.get(ApiResultKeys.DATA, None):
-                    data.append(results.get(ApiResultKeys.DATA))
+        if server_queue_ttl:
+            results = self.edit_server_queue_ttl(view, server_queue_ttl)
+            if results.data:
+                data.append(results.data)
 
-            if agent_queue_ttl:
-                results = self.edit_agent_queue_ttl(view, agent_queue_ttl)
-                if results.get(ApiResultKeys.DATA, None):
-                    data.append(results.get(ApiResultKeys.DATA))
+        if agent_queue_ttl:
+            results = self.edit_agent_queue_ttl(view, agent_queue_ttl)
+            if results.data:
+                data.append(results.data)
 
-            if download_url:
-                results = self.edit_download_url(view, download_url)
-                if results.get(ApiResultKeys.DATA, None):
-                    data.append(results.get(ApiResultKeys.DATA))
+        if download_url:
+            results = self.edit_download_url(view, download_url)
+            if results.data:
+                data.append(results.data)
 
-            if time_zone:
-                results = self.edit_time_zone(view, time_zone)
-                if results.get(ApiResultKeys.DATA, None):
-                    data.append(results.get(ApiResultKeys.DATA))
+        if time_zone:
+            results = self.edit_time_zone(view, time_zone)
+            if results.data:
+                data.append(results.data)
 
-            if token:
-                results = self.update_token(view)
-                if results.get(ApiResultKeys.DATA, None):
-                    data.append(results.get(ApiResultKeys.DATA))
+        if token:
+            results = self.update_token(view)
+            if results.data:
+                data.append(results.data)
 
-            results.data = data
+        results.data = data
 
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Editing of view {0} broke: {1}'.format(view_name, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @log_operation(AdminActions.EDIT_NET_THROTTLE, vFenseObjects.VIEW)
@@ -240,41 +223,19 @@ class ViewHandler(BaseHandler):
         results = view.update_token()
         return results
 
-
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self, view_name):
-        active_user = self.get_current_user()
         view = ViewManager(view_name)
-        try:
-            delete_agents = (
-                self.arguments.get(ApiArguments.DELETE_ALL_AGENTS)
-            )
-            view_name= (
-                self.arguments.get(ApiArguments.VIEW_NAME, None)
-            )
-            results = self.remove_view(view, delete_agents, view_name)
+        delete_agents = self.arguments.get(ApiArguments.DELETE_ALL_AGENTS)
+        view_name= self.arguments.get(ApiArguments.VIEW_NAME, None)
+        results = self.remove_view(view, delete_agents, view_name)
 
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Deleting of view {0} broke: {1}'.format(view_name, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @log_operation(AdminActions.REMOVE_VIEW, vFenseObjects.VIEW)
@@ -291,7 +252,7 @@ class ViewHandler(BaseHandler):
 
 
 class ViewsHandler(BaseHandler):
-
+    @catch_it
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
     def get(self):
@@ -315,58 +276,41 @@ class ViewsHandler(BaseHandler):
         if not view_context and active_user == DefaultUsers.GLOBAL_ADMIN:
             all_views = True
 
-        try:
-            if view_context:
-                granted, status_code = (
-                    verify_permission_for_user(
-                        active_user, Permissions.ADMINISTRATOR, view_context
-                    )
+        if view_context:
+            granted, status_code = (
+                verify_permission_for_user(
+                    active_user, Permissions.ADMINISTRATOR, view_context
                 )
-            else:
-                granted, status_code = (
-                    verify_permission_for_user(
-                        active_user, Permissions.ADMINISTRATOR
-                    )
-                )
-            if granted and not all_views and not view_context:
-                results = self.get_all_views_for_user(fetch_views, active_user)
-
-            elif granted and all_views and not view_context:
-                results = self.get_all_views(fetch_views)
-
-            elif granted and view_context and not all_views:
-                results = self.get_view(fetch_views, view_context)
-
-            elif granted and query:
-                results = self.get_all_views_by_regex(fetch_views, query)
-
-            elif not granted:
-                results = (
-                    return_results_for_permissions(
-                        active_user, granted, status_code,
-                        Permissions.ADMINISTRATOR, self.request.uri,
-                        self.request.method
-                    )
-                )
-
-            self.set_status(results['http_status'])
-            self.modified_output(results, output, 'views')
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Retrieving of views broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
             )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        else:
+            granted, status_code = (
+                verify_permission_for_user(
+                    active_user, Permissions.ADMINISTRATOR
+                )
+            )
+        if granted and not all_views and not view_context:
+            results = self.get_all_views_for_user(fetch_views, active_user)
+
+        elif granted and all_views and not view_context:
+            results = self.get_all_views(fetch_views)
+
+        elif granted and view_context and not all_views:
+            results = self.get_view(fetch_views, view_context)
+
+        elif granted and query:
+            results = self.get_all_views_by_regex(fetch_views, query)
+
+        elif not granted:
+            results = (
+                return_results_for_permissions(
+                    active_user, granted, status_code,
+                    Permissions.ADMINISTRATOR, self.request.uri,
+                    self.request.method
+                )
+            )
+
+        self.set_status(results.http_status_code)
+        self.modified_output(results.to_dict_non_null(), output, 'views')
 
     @results_message
     def get_all_views(self, fetch_views):
@@ -388,7 +332,7 @@ class ViewsHandler(BaseHandler):
         results = fetch_views.by_name(view_name)
         return results
 
-
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -396,63 +340,37 @@ class ViewsHandler(BaseHandler):
         active_user = self.get_current_user()
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
-        try:
-            parent_view = self.get_argument('view_context', active_view)
-            view_name = (
-                self.arguments.get(ViewApiArguments.VIEW_NAME)
+        parent_view = self.get_argument('view_context', active_view)
+        view_name = self.arguments.get(ViewApiArguments.VIEW_NAME)
+        pkg_url = self.arguments.get(ViewApiArguments.DOWNLOAD_URL, None)
+        net_throttle = self.arguments.get(ViewApiArguments.NET_THROTTLE, 0)
+        cpu_throttle = (
+            self.arguments.get(
+                ViewApiArguments.CPU_THROTTLE, CPUThrottleValues.NORMAL
             )
-            pkg_url = (
-                self.arguments.get(ViewApiArguments.DOWNLOAD_URL, None)
-            )
-            net_throttle = (
-                self.arguments.get(ViewApiArguments.NET_THROTTLE, 0)
-            )
-            cpu_throttle = (
-                self.arguments.get(
-                    ViewApiArguments.CPU_THROTTLE, CPUThrottleValues.NORMAL
-                )
-            )
-            server_queue_ttl = (
-                self.arguments.get(ViewApiArguments.SERVER_QUEUE_TTL, 10)
-            )
-            agent_queue_ttl = (
-                self.arguments.get(ViewApiArguments.AGENT_QUEUE_TTL, 10)
-            )
-            time_zone = (
-                self.arguments.get(ViewApiArguments.TIME_ZONE, 'UTC')
-            )
-            view = View(
-                view_name, parent_view,
-                users=[active_user],
-                net_throttle=net_throttle,
-                cpu_throttle=cpu_throttle,
-                server_queue_ttl=server_queue_ttl,
-                agent_queue_ttl=agent_queue_ttl,
-                package_download_url=pkg_url,
-                time_zone=time_zone
-            )
+        )
+        server_queue_ttl = (
+            self.arguments.get(ViewApiArguments.SERVER_QUEUE_TTL, 10)
+        )
+        agent_queue_ttl = (
+            self.arguments.get(ViewApiArguments.AGENT_QUEUE_TTL, 10)
+        )
+        time_zone = (
+            self.arguments.get(ViewApiArguments.TIME_ZONE, 'UTC')
+        )
+        view = View(
+            view_name, parent_view, users=[active_user],
+            net_throttle=net_throttle, cpu_throttle=cpu_throttle,
+            server_queue_ttl=server_queue_ttl,
+            agent_queue_ttl=agent_queue_ttl, package_download_url=pkg_url,
+            time_zone=time_zone
+        )
 
-            results = self.create_view(view)
+        results = self.create_view(view)
 
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Create view broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @log_operation(AdminActions.CREATE_VIEW, vFenseObjects.VIEW)
@@ -461,45 +379,26 @@ class ViewsHandler(BaseHandler):
         results = manager.create(view)
         return results
 
-
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def delete(self):
-        active_user = self.get_current_user()
-        try:
-            view_names = (
-                self.arguments.get(ApiArguments.VIEW_NAMES)
-            )
+        view_names = self.arguments.get(ApiArguments.VIEW_NAMES)
 
-            if not isinstance(view_names, list):
-                view_names = view_names.split(',')
+        if not isinstance(view_names, list):
+            view_names = view_names.split(',')
 
-            results = self.remove_views(view_names, True)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Deleting of views broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        results = self.remove_views(view_names, True)
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @log_operation(AdminActions.REMOVE_VIEWS, vFenseObjects.VIEW)
     def remove_views(self, view_names, force=False):
-        end_results = {}
+        end_results = ApiResults()
+        end_results.fill_in_defaults()
         views_deleted = []
         views_unchanged = []
         for view_name in view_names:

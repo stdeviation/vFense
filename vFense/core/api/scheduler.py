@@ -17,7 +17,7 @@ from vFense.core.scheduler._db_model import JobKeys
 from vFense.core.user._db_model import UserKeys
 from vFense.core.user.manager import UserManager
 from vFense.core.scheduler.search.search import RetrieveJobs
-from vFense.core.results import Results, ApiResultKeys
+from vFense.core.results import ApiResults, ExternalApiResults
 from pytz import all_timezones
 
 from vFense.plugins.patching.operations.store_operations import (
@@ -49,15 +49,14 @@ class TimeZonesHandler(BaseHandler):
 
     @results_message
     def get_timezones(self):
+        results = ApiResults()
         data = all_timezones
-        results = (
-            {
-                ApiResultKeys.DATA: data,
-                ApiResultKeys.COUNT: len(data),
-                ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved
-            }
-        )
+        results.data = data
+        results.count = len(data)
+        results.generic_status_code = GenericCodes.InformationRetrieved
+        results.vfense_status_code = GenericCodes.InformationRetrieved
         return results
+
 
 class JobHandler(BaseHandler):
     @authenticated_request
@@ -70,7 +69,7 @@ class JobHandler(BaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         search = RetrieveJobs(active_view)
         results = self.get_job_by_id(search, job_id)
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.modified_output(results, output, 'job')
 
     @results_message
@@ -86,14 +85,14 @@ class JobsHandler(BaseHandler):
         active_user = self.get_current_user()
         user = UserManager(active_user)
         active_view = user.get_attribute(UserKeys.CurrentView)
-        count = int(self.get_argument('count', 30))
-        offset = int(self.get_argument('offset', 0))
-        query = self.get_argument('query', None)
-        operation = self.get_argument('operation', None)
+        count = int(self.get_argument(ApiArguments.COUNT, 30))
+        offset = int(self.get_argument(ApiArguments.OFFSET, 0))
+        query = self.get_argument(ApiArguments.QUERY, None)
+        operation = self.get_argument(ApiArguments.OPERATION, None)
         trigger = self.get_argument('trigger', None)
         timezone = self.get_argument('timezone', None)
-        sort = self.get_argument('sort', 'desc')
-        sort_by = self.get_argument('sort_by', JobKeys.NextRunTime)
+        sort = self.get_argument(ApiArguments.SORT, 'desc')
+        sort_by = self.get_argument(ApiArguments.SORT_BY, JobKeys.NextRunTime)
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
@@ -131,7 +130,7 @@ class JobsHandler(BaseHandler):
                 )
             )
 
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.modified_output(results, output, 'jobs')
 
     @results_message
@@ -185,14 +184,14 @@ class AgentJobsHandler(BaseHandler):
     @authenticated_request
     @check_permissions(Permissions.READ)
     def get(self, agent_id):
-        count = int(self.get_argument('count', 30))
-        offset = int(self.get_argument('offset', 0))
-        query = self.get_argument('query', None)
-        operation = self.get_argument('operation', None)
+        count = int(self.get_argument(ApiArguments.COUNT, 30))
+        offset = int(self.get_argument(ApiArguments.OFFSET, 0))
+        query = self.get_argument(ApiArguments.QUERY, None)
+        operation = self.get_argument(ApiArguments.OPERATION, None)
         trigger = self.get_argument('trigger', None)
         timezone = self.get_argument('timezone', None)
-        sort = self.get_argument('sort', 'desc')
-        sort_by = self.get_argument('sort_by', JobKeys.NextRunTime)
+        sort = self.get_argument(ApiArguments.SORT, 'desc')
+        sort_by = self.get_argument(ApiArguments.SORT_BY, JobKeys.NextRunTime)
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
@@ -230,7 +229,7 @@ class AgentJobsHandler(BaseHandler):
                 )
             )
 
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.modified_output(results, output, 'jobs')
 
     @results_message
@@ -283,14 +282,14 @@ class TagJobsHandler(BaseHandler):
     @authenticated_request
     @check_permissions(Permissions.READ)
     def get(self, tag_id):
-        count = int(self.get_argument('count', 30))
-        offset = int(self.get_argument('offset', 0))
-        query = self.get_argument('query', None)
-        operation = self.get_argument('operation', None)
+        count = int(self.get_argument(ApiArguments.COUNT, 30))
+        offset = int(self.get_argument(ApiArguments.OFFSET, 0))
+        query = self.get_argument(ApiArguments.QUERY, None)
+        operation = self.get_argument(ApiArguments.OPERATION, None)
         trigger = self.get_argument('trigger', None)
         timezone = self.get_argument('timezone', None)
-        sort = self.get_argument('sort', 'desc')
-        sort_by = self.get_argument('sort_by', JobKeys.NextRunTime)
+        sort = self.get_argument(ApiArguments.SORT, 'desc')
+        sort_by = self.get_argument(ApiArguments.SORT_BY, JobKeys.NextRunTime)
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
@@ -328,7 +327,7 @@ class TagJobsHandler(BaseHandler):
                 )
             )
 
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.modified_output(results, output, 'jobs')
 
     @results_message
