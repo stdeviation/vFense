@@ -176,6 +176,7 @@ class JobManager(object):
             Dictionary of the results.
         """
         results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(job, Schedule):
             job.fill_in_defaults()
             if job.trigger == ScheduleTriggers.CRON:
@@ -243,6 +244,7 @@ class JobManager(object):
             Dictionary of the results.
         """
         results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(job, Schedule):
             job.fill_in_defaults()
             if job.trigger == ScheduleTriggers.INTERVAL:
@@ -303,6 +305,7 @@ class JobManager(object):
             Dictionary of the results.
         """
         results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(job, Schedule):
             job.fill_in_defaults()
             if job.run_date and job.trigger == ScheduleTriggers.DATE:
@@ -365,6 +368,7 @@ class JobManager(object):
         """
         job_status = None
         results = ApiResults()
+        results.fill_in_defaults()
         try:
             if isinstance(job, Schedule):
                 invalid_fields = job.get_invalid_fields()
