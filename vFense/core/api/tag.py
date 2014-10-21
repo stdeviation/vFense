@@ -27,7 +27,8 @@ from vFense.core.api._constants  import (
     ApiArguments, TagApiArguments, ApiValues
 )
 from vFense.core.decorators import (
-    authenticated_request, convert_json_to_arguments, results_message
+    authenticated_request, convert_json_to_arguments, results_message,
+    catch_it
 )
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
@@ -44,72 +45,46 @@ logger = logging.getLogger('rvapi')
 
 
 class TagsHandler(BaseHandler):
+    @catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user()
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            query = self.get_argument(ApiArguments.QUERY, None)
-            count = int(
-                self.get_argument(
-                    ApiArguments.COUNT, DefaultQueryValues.COUNT
+        query = self.get_argument(ApiArguments.QUERY, None)
+        count = int(
+            self.get_argument(ApiArguments.COUNT, DefaultQueryValues.COUNT)
+        )
+        offset = int(
+            self.get_argument(ApiArguments.OFFSET, DefaultQueryValues.OFFSET)
+            )
+        sort = (
+            self.get_argument(ApiArguments.SORT, DefaultQueryValues.SORT)
+        )
+        sort_by = self.get_argument(ApiArguments.SORT_BY, TagKeys.TagName)
+        environment = self.get_argument(TagApiArguments.ENVIRONMENT, None)
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+
+        search = RetrieveTags(active_view, count, offset, sort, sort_by)
+        if not query and not environment:
+            results = self.get_all_tags(search)
+
+        elif query and not environment:
+            results = self.get_all_tags_by_name(search, query)
+
+        elif environment and not query:
+            results = self.get_all_tags_by_prod_level(search, environment)
+
+        elif query and environment:
+            results = (
+                self.get_all_tags_by_prod_level_and_regex(
+                    search, environment, query
                 )
             )
-            offset = int(
-                self.get_argument(
-                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
-                )
-            )
-            sort = (
-                self.get_argument(
-                    ApiArguments.SORT, DefaultQueryValues.SORT
-                )
-            )
-            sort_by = (
-                self.get_argument(ApiArguments.SORT_BY, TagKeys.TagName)
-            )
-            environment = (
-                self.get_argument(TagApiArguments.ENVIRONMENT, None)
-            )
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
-            search = (
-                RetrieveTags(active_view, count, offset, sort, sort_by)
-            )
-            if not query and not environment:
-                results = self.get_all_tags(search)
-
-            elif query and not environment:
-                results = self.get_all_tags_by_name(search, query)
-
-            elif environment and not query:
-                results = self.get_all_tags_by_prod_level(search, environment)
-
-            elif query and environment:
-                results = (
-                    self.get_all_tags_by_prod_level_and_regex(
-                        search, environment, query
-                    )
-                )
-
-            self.set_status(results.http_status_code)
-            self.modified_output(results, output, 'tags')
-
-        except Exception as e:
-            logger.exception(e)
-            results = ExternalApiResults()
-            results.fill_in_defaults()
-            results.generic_status_code = TagCodes.SomethingBroke
-            results.vfense_status_code = TagCodes.SomethingBroke
-            results.message = 'Searching for tags broke: {0}'.format(e)
-            results.uri = self.request.uri
-            results.http_method = self.request.method
-            results.username = active_user
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        self.set_status(results.http_status_code)
+        self.modified_output(results, output, 'tags')
 
     @results_message
     @check_permissions(Permissions.READ)
@@ -141,6 +116,7 @@ class TagsHandler(BaseHandler):
         )
         return results
 
+    @catch_it
     @convert_json_to_arguments
     @authenticated_request
     def post(self):
@@ -148,39 +124,23 @@ class TagsHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            tag_name = self.arguments.get(TagApiArguments.TAG_NAME)
-            environment = (
-                self.arguments.get(
-                    TagApiArguments.ENVIRONMENT,
-                    Environments.PRODUCTION
-                )
+        tag_name = self.arguments.get(TagApiArguments.TAG_NAME)
+        environment = (
+            self.arguments.get(
+                TagApiArguments.ENVIRONMENT, Environments.PRODUCTION
             )
-            if active_view == DefaultViews.GLOBAL:
-                is_global = True
-            else:
-                is_global = False
+        )
+        if active_view == DefaultViews.GLOBAL:
+            is_global = True
+        else:
+            is_global = False
 
-            tag = Tag(tag_name, environment, active_view, is_global)
-            results = self.create_tag(tag)
+        tag = Tag(tag_name, environment, active_view, is_global)
+        results = self.create_tag(tag)
 
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
-
-        except Exception as e:
-            logger.exception(e)
-            results = ExternalApiResults()
-            results.fill_in_defaults()
-            results.generic_status_code = TagCodes.SomethingBroke
-            results.vfense_status_code = TagCodes.SomethingBroke
-            results.message = 'Create tags broke: {0}'.format(e)
-            results.uri = self.request.uri
-            results.http_method = self.request.method
-            results.username = active_user
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.CREATE_TAG)
@@ -190,31 +150,15 @@ class TagsHandler(BaseHandler):
         results = manager.create(tag)
         return results
 
+    @catch_it
     @convert_json_to_arguments
     @authenticated_request
     def delete(self):
-        active_user = self.get_current_user()
-        try:
-            tag_ids = self.arguments.get(TagApiArguments.TAG_IDS)
-            results = self.remove_tags(tag_ids)
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
-
-        except Exception as e:
-            logger.exception(e)
-            results = ExternalApiResults()
-            results.fill_in_defaults()
-            results.generic_status_code = TagCodes.SomethingBroke
-            results.vfense_status_code = TagCodes.SomethingBroke
-            results.message = 'Delete tags broke: {0}'.format(e)
-            results.uri = self.request.uri
-            results.http_method = self.request.method
-            results.username = active_user
-            results.http_status_code = 500
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        tag_ids = self.arguments.get(TagApiArguments.TAG_IDS)
+        results = self.remove_tags(tag_ids)
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.REMOVE_TAG)
@@ -282,6 +226,7 @@ class TagsHandler(BaseHandler):
         return end_results
 
 class TagHandler(BaseHandler):
+    @catch_it
     @authenticated_request
     def get(self, tag_id):
         active_user = self.get_current_user()
@@ -301,6 +246,7 @@ class TagHandler(BaseHandler):
         return results
 
 
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     def post(self, tag_id):
@@ -308,75 +254,48 @@ class TagHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            reboot = self.arguments.get(TagApiArguments.REBOOT, None)
-            shutdown = self.arguments.get(TagApiArguments.SHUTDOWN, None)
-            token = self.arguments.get(TagApiArguments.TOKEN, None)
-            refresh_apps = (
-                self.arguments.get(TagApiArguments.REFRESH_APPS, None)
-            )
-            operation = StoreAgentOperations(active_user, active_view)
-            if reboot:
-                results = (
-                    self.reboot(operation, tag_id)
-                )
-            elif shutdown:
-                results = self.shutdown(operation, tag_id)
+        reboot = self.arguments.get(TagApiArguments.REBOOT, None)
+        shutdown = self.arguments.get(TagApiArguments.SHUTDOWN, None)
+        token = self.arguments.get(TagApiArguments.TOKEN, None)
+        refresh_apps = self.arguments.get(TagApiArguments.REFRESH_APPS, None)
+        operation = StoreAgentOperations(active_user, active_view)
+        if reboot:
+            results = self.reboot(operation, tag_id)
+        elif shutdown:
+            results = self.shutdown(operation, tag_id)
 
-            elif refresh_apps:
-                operation = (
-                    StorePatchingOperation(active_user, active_view)
-                )
-                results = self.refresh_apps(operation, tag_id)
+        elif refresh_apps:
+            operation = StorePatchingOperation(active_user, active_view)
+            results = self.refresh_apps(operation, tag_id)
 
-            elif token:
-                if token_exist_in_current(token):
-                    results = self.assign_new_token(operation, tag_id, token)
-                else:
-                    results = ExternalApiResults()
-                    results.fill_in_defaults()
-                    results.generic_status_code = TagCodes.InvalidId
-                    results.vfense_status_code = AgentFailureCodes.InvalidToken
-                    results.message = (
-                        'Invalid token: {0}'.format(token)
-                    )
-                    results.uri = self.request.uri
-                    results.http_method = self.request.method
-                    results.username = active_user
-                    results.http_status_code = 400
-
-
+        elif token:
+            if token_exist_in_current(token):
+                results = self.assign_new_token(operation, tag_id, token)
             else:
                 results = ExternalApiResults()
                 results.fill_in_defaults()
-                results.generic_status_code = TagCodes.SomethingBroke
-                results.vfense_status_code = TagCodes.SomethingBroke
-                results.message = (
-                    'Invalid arguments on tag: {0}'.format(tag_id)
-                )
+                results.generic_status_code = TagCodes.InvalidId
+                results.vfense_status_code = AgentFailureCodes.InvalidToken
+                results.message = 'Invalid token: {0}'.format(token)
                 results.uri = self.request.uri
                 results.http_method = self.request.method
                 results.username = active_user
                 results.http_status_code = 400
 
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
-
-        except Exception as e:
-            logger.exception(e)
+        else:
             results = ExternalApiResults()
             results.fill_in_defaults()
             results.generic_status_code = TagCodes.SomethingBroke
             results.vfense_status_code = TagCodes.SomethingBroke
-            results.message = 'Agent operations tags broke: {0}'.format(e)
+            results.message = 'Invalid arguments on tag: {0}'.format(tag_id)
             results.uri = self.request.uri
             results.http_method = self.request.method
             results.username = active_user
-            results.http_status_code = 500
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+            results.http_status_code = 400
+
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.REBOOT)
@@ -408,57 +327,38 @@ class TagHandler(BaseHandler):
         results = operation.new_token(agents, token=token)
         return results
 
+    @check_it
     @convert_json_to_arguments
     @authenticated_request
     def put(self, tag_id):
         active_user = self.get_current_user()
-        try:
-            agent_ids = self.arguments.get('agent_ids', None)
-            action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
-            environment = (
-                self.arguments.get(TagApiArguments.ENVIRONMENT, None)
-            )
-            manager = TagManager(tag_id)
-            if agent_ids:
-                if not isinstance(agent_ids, list):
-                    agent_ids = agent_ids.split()
+        agent_ids = self.arguments.get('agent_ids', None)
+        action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
+        environment = self.arguments.get(TagApiArguments.ENVIRONMENT, None)
+        manager = TagManager(tag_id)
+        if agent_ids:
+            if not isinstance(agent_ids, list):
+                agent_ids = agent_ids.split()
 
-            if action == ApiValues.ADD and agent_ids and not environment:
-                results = self.add_agents_to_tag(manager, agent_ids)
-            elif action == ApiValues.DELETE and agent_ids and not environment:
-                results = self.remove_agents_from_tag(manager, agent_ids)
-            elif environment and not agent_ids:
-                results = self.edit_environment(manager, environment)
-            else:
-                results = ExternalApiResults()
-                results.fill_in_defaults()
-                results.generic_status_code = TagCodes.SomethingBroke
-                results.vfense_status_code = TagCodes.SomethingBroke
-                results.message = (
-                    'Invalid arguments on tag: {0}'.format(tag_id)
-                )
-                results.uri = self.request.uri
-                results.http_method = self.request.method
-                results.username = active_user
-
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
-
-        except Exception as e:
-            logger.exception(e)
+        if action == ApiValues.ADD and agent_ids and not environment:
+            results = self.add_agents_to_tag(manager, agent_ids)
+        elif action == ApiValues.DELETE and agent_ids and not environment:
+            results = self.remove_agents_from_tag(manager, agent_ids)
+        elif environment and not agent_ids:
+            results = self.edit_environment(manager, environment)
+        else:
             results = ExternalApiResults()
             results.fill_in_defaults()
             results.generic_status_code = TagCodes.SomethingBroke
             results.vfense_status_code = TagCodes.SomethingBroke
-            results.message = 'Editing of tags broke: {0}'.format(e)
+            results.message = 'Invalid arguments on tag: {0}'.format(tag_id)
             results.uri = self.request.uri
             results.http_method = self.request.method
             results.username = active_user
-            results.http_status_code = 500
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.ADD_AGENTS_TO_TAG)
@@ -485,31 +385,15 @@ class TagHandler(BaseHandler):
         results = manager.edit_environment(environment)
         return results
 
+    @catch_it
     @convert_json_to_arguments
     @authenticated_request
     def delete(self, tag_id):
-        active_user = self.get_current_user()
-        try:
-            manager = TagManager(tag_id)
-            results = self.remove_tag(manager)
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
-
-        except Exception as e:
-            logger.exception(e)
-            results = ExternalApiResults()
-            results.fill_in_defaults()
-            results.generic_status_code = TagCodes.SomethingBroke
-            results.vfense_status_code = TagCodes.SomethingBroke
-            results.message = 'Deleting of tags broke: {0}'.format(e)
-            results.uri = self.request.uri
-            results.http_method = self.request.method
-            results.username = active_user
-            results.http_status_code = 500
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        manager = TagManager(tag_id)
+        results = self.remove_tag(manager)
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @check_permissions(Permissions.REMOVE_TAG)
