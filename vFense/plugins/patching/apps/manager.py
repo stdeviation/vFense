@@ -157,6 +157,7 @@ class AppsManager(object):
         Returns:
         """
         results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(app, Apps) and isinstance(file_data, list):
             app_invalid_fields = app.get_invalid_fields()
             if not app_invalid_fields:

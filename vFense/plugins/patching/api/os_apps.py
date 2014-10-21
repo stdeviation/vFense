@@ -7,11 +7,12 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core._constants import CommonKeys
-from vFense.core.results import Results, ApiResultKeys
+from vFense.core.results import ApiResults, ExternalApiResults
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.decorators import (
-    authenticated_request, convert_json_to_arguments, results_message
+    authenticated_request, convert_json_to_arguments, results_message,
+    catch_it
 )
 from vFense.core._constants import DefaultQueryValues, SortValues
 from vFense.core.user import UserKeys
@@ -49,40 +50,24 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class UploadHandler(BaseHandler):
+    @catch_it
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
-        active_user = self.get_current_user()
-        try:
-            file_name = self.request.headers.get('x-Filename')
-            tmp_path = self.request.headers.get('x-File')
-            uuid = self.request.headers.get('x-Fileuuid')
-            results = self.return_uploaded_data(file_name, tmp_path, uuid)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Failed to upload file, error: {0}'.format(e)
-                ),
-                ApiResultKeys.DATA: [],
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        file_name = self.request.headers.get('x-Filename')
+        tmp_path = self.request.headers.get('x-File')
+        uuid = self.request.headers.get('x-Fileuuid')
+        results = self.return_uploaded_data(file_name, tmp_path, uuid)
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     def return_uploaded_data(self, file_name, tmp_path, uuid):
         results = move_app_from_tmp(file_name, tmp_path, uuid)
         return results
 
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -91,46 +76,42 @@ class UploadHandler(BaseHandler):
         active_view = (
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
-        try:
-            name = self.arguments.get('name')
-            version = self.arguments.get('version')
-            md5 = self.arguments.get('md5')
-            arch = self.arguments.get('arch')
-            uuid = self.arguments.get('uuid')
-            size = self.arguments.get('size', None)
-            kb = self.arguments.get('kb', '')
-            support_url = self.arguments.get('support_url', '')
-            severity = self.arguments.get('severity', 'Optional')
-            operating_system = self.arguments.get('operating_system')
-            platform = self.arguments.get('platform')
-            vendor_name = self.arguments.get('vendor_name', None)
-            description = self.arguments.get('description', None)
-            cli_options = self.arguments.get('cli_options', None)
-            release_date = self.arguments.get('release_date', None)
-            reboot_required = self.arguments.get('reboot_required', None)
-            vulnerability_id = self.arguments.get('vulnerability_id', None)
-            vulnerability_categories = (
-                self.arguments.get('vulnerability_categories', None)
+        name = self.arguments.get('name')
+        version = self.arguments.get('version')
+        md5 = self.arguments.get('md5')
+        arch = self.arguments.get('arch')
+        uuid = self.arguments.get('uuid')
+        size = self.arguments.get('size', None)
+        kb = self.arguments.get('kb', '')
+        support_url = self.arguments.get('support_url', '')
+        severity = self.arguments.get('severity', 'Optional')
+        operating_system = self.arguments.get('operating_system')
+        platform = self.arguments.get('platform')
+        vendor_name = self.arguments.get('vendor_name', None)
+        description = self.arguments.get('description', None)
+        cli_options = self.arguments.get('cli_options', None)
+        release_date = self.arguments.get('release_date', None)
+        reboot_required = self.arguments.get('reboot_required', None)
+        vulnerability_id = self.arguments.get('vulnerability_id', None)
+        vulnerability_categories = (
+            self.arguments.get('vulnerability_categories', None)
+        )
+        cve_ids = self.arguments.get('cve_ids', None)
+        app = (
+            Apps(
+                name, version, arch, uuid, kb, support_url, severity,
+                operating_system, platform, vendor_name, description,
+                cli_options, release_date,
+                reboot_required=reboot_required,
+                vulnerability_id=vulnerability_id,
+                vulnerability_categories=vulnerability_categories,
+                cve_ids=cve_ids
             )
-            cve_ids = self.arguments.get('cve_ids', None)
-            app = (
-                Apps(
-                    name, version, arch, uuid, kb, support_url, severity,
-                    operating_system, platform, vendor_name, description,
-                    cli_options, release_date,
-                    reboot_required=reboot_required,
-                    vulnerability_id=vulnerability_id,
-                    vulnerability_categories=vulnerability_categories,
-                    cve_ids=cve_ids
-                )
-            )
-            file_data = Files(name, md5, size)
-            results = self.finalize_upload(app, file_data, active_view)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            logger.exception(e)
+        )
+        file_data = Files(name, md5, size)
+        results = self.finalize_upload(app, file_data, active_view)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     def finalize_upload(self, app, file_data, active_view):
@@ -138,6 +119,7 @@ class UploadHandler(BaseHandler):
 
 
 class AgentIdAppsHandler(AppsBaseHandler):
+    @catch_it
     @authenticated_request
     def get(self, agent_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
@@ -145,7 +127,7 @@ class AgentIdAppsHandler(AppsBaseHandler):
         oper = self.return_operation_type(oper_type)
         search = self.set_search_for_agent(oper, agent_id)
         results = self.app_search_results(search, active_user)
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.modified_output(results, self.output, 'apps')
 
 
@@ -177,11 +159,11 @@ class AgentIdAppsHandler(AppsBaseHandler):
                 operation, install, active_user, job, oper
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
-
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.UNINSTALL)
@@ -210,12 +192,13 @@ class AgentIdAppsHandler(AppsBaseHandler):
                 operation, install, active_user, job
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
 
 class TagIdAppsHandler(AppsBaseHandler):
+    @catch_it
     @authenticated_request
     def get(self, tag_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
@@ -223,9 +206,10 @@ class TagIdAppsHandler(AppsBaseHandler):
         oper = self.return_operation_type(oper_type)
         search = self.set_search_for_tag(oper, tag_id)
         results = self.app_search_results(search, active_user)
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.modified_output(results, self.output, 'apps')
 
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     def put(self, tag_id, oper_type):
@@ -254,12 +238,12 @@ class TagIdAppsHandler(AppsBaseHandler):
                 operation, install, active_user, job, oper
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
         return results
 
-
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     def delete(self, tag_id, oper_type):
@@ -287,12 +271,13 @@ class TagIdAppsHandler(AppsBaseHandler):
                 operation, install, active_user, job
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
 
 class AppIdAppsHandler(AppsBaseHandler):
+    @catch_it
     @authenticated_request
     def get(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
@@ -302,7 +287,7 @@ class AppIdAppsHandler(AppsBaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         search = RetrieveApps(active_view)
         results = self.by_id(search, app_id)
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.modified_output(results, output, 'app')
 
     @results_message
@@ -310,6 +295,7 @@ class AppIdAppsHandler(AppsBaseHandler):
         results = search.by_id(app_id)
         return results
 
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -340,9 +326,9 @@ class AppIdAppsHandler(AppsBaseHandler):
                         active_user, uri, method
                     ).object_updated(**data)
                 )
-                self.set_status(results['http_status'])
+                self.set_status(results.http_status_code)
                 self.set_header('Content-Type', 'application/json')
-                self.write(json.dumps(results, indent=4))
+                self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
             else:
                 data = {
@@ -358,9 +344,9 @@ class AppIdAppsHandler(AppsBaseHandler):
                         active_user, uri, method
                     ).objects_failed_to_update(severity)
                 )
-                self.set_status(results['http_status'])
+                self.set_status(results.http_status_code)
                 self.set_header('Content-Type', 'application/json')
-                self.write(json.dumps(results, indent=4))
+                self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
         except Exception as e:
             data = {
@@ -377,9 +363,9 @@ class AppIdAppsHandler(AppsBaseHandler):
                 ).something_broke(**data)
             )
             logger.exception(e)
-            self.set_status(results['http_status'])
+            self.set_status(results.http_status_code)
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+            self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @authenticated_request
     @convert_json_to_arguments
@@ -411,9 +397,9 @@ class AppIdAppsHandler(AppsBaseHandler):
                 operation, install, active_user, job, oper
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
         return results
 
     @authenticated_request
@@ -445,9 +431,9 @@ class AppIdAppsHandler(AppsBaseHandler):
                 operation, install, active_user, job
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
         return results
 
 
@@ -508,7 +494,7 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
                 ).incorrect_arguments()
             )
 
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.modified_output(results, output, 'apps')
 
     @results_message
@@ -557,9 +543,9 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
                 operation, install, active_user, job, oper
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
         return results
 
 
@@ -592,9 +578,9 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
                 operation, install, active_user, job
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
         return results
 
 
@@ -615,7 +601,7 @@ class AppsHandler(AppsBaseHandler):
         else:
             results = self.app_search_results(search, active_user)
 
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.modified_output(results, self.output, 'apps')
 
     @results_message
@@ -634,6 +620,6 @@ class AppsHandler(AppsBaseHandler):
         self.toggle = self.arguments.get('hide', 'toggle')
         results = self.set_toggle_status(oper)
 
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
