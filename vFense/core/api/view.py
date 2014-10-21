@@ -9,7 +9,8 @@ from vFense.core.api._constants import (
 )
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import (
-    authenticated_request, convert_json_to_arguments, results_message
+    authenticated_request, convert_json_to_arguments, results_message,
+    catch_it
 )
 
 from vFense.core.permissions._constants import Permissions
@@ -31,7 +32,7 @@ from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
 
-from vFense.core.results import ApiResultKeys, Results
+from vFense.core.results import ApiResults, ExternalApiResults
 from vFense.core.view.status_codes import ViewFailureCodes, ViewCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -39,7 +40,7 @@ logger = logging.getLogger('rvapi')
 
 
 class ViewHandler(BaseHandler):
-
+    @catch_it
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
     def get(self, view_name):
@@ -47,27 +48,10 @@ class ViewHandler(BaseHandler):
         user = UserManager(active_user)
         is_global = user.get_attribute(UserKeys.IsGlobal)
         current_view = user.get_attribute(UserKeys.CurrentView)
-        try:
-            output = self.get_argument(ApiArguments.OUTPUT, 'json')
-            results = self.get_view(view_name, is_global, current_view)
-            self.set_status(results['http_status'])
-            self.modified_output(results, output, 'view')
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Retrieving of view broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        results = self.get_view(view_name, is_global, current_view)
+        self.set_status(results.http_status_code)
+        self.modified_output(results, output, 'view')
 
     @results_message
     def get_view(self, view, is_global, current_view):
@@ -81,58 +65,40 @@ class ViewHandler(BaseHandler):
             results.data = results.data[0]
         return results
 
-
+    @catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, view_name):
-        active_user = self.get_current_user()
         view = ViewManager(view_name)
-        try:
-            action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
-            ### Add Users to this view or Remove users from this view
-            usernames = self.arguments.get(ApiArguments.USERNAMES, None)
-            if not isinstance(usernames, list) and isinstance(usernames, str):
-                usernames = usernames.split(',')
+        action = self.arguments.get(ApiArguments.ACTION, ApiValues.ADD)
+        ### Add Users to this view or Remove users from this view
+        usernames = self.arguments.get(ApiArguments.USERNAMES, None)
+        if not isinstance(usernames, list) and isinstance(usernames, str):
+            usernames = usernames.split(',')
 
-            if usernames:
-                if action == ApiValues.ADD:
-                    results = self.add_users(view, usernames)
+        if usernames:
+            if action == ApiValues.ADD:
+                results = self.add_users(view, usernames)
 
-                elif action == ApiValues.DELETE:
-                    results = self.remove_users(view, usernames)
+            elif action == ApiValues.DELETE:
+                results = self.remove_users(view, usernames)
 
-            ### Add groups to this view or Remove groups from this view
-            group_ids = self.arguments.get(ApiArguments.GROUP_IDS, None)
-            if not isinstance(group_ids, list) and isinstance(group_ids, str):
-                group_ids = group_ids.split(',')
+        ### Add groups to this view or Remove groups from this view
+        group_ids = self.arguments.get(ApiArguments.GROUP_IDS, None)
+        if not isinstance(group_ids, list) and isinstance(group_ids, str):
+            group_ids = group_ids.split(',')
 
-            if group_ids:
-                if action == ApiValues.ADD:
-                    results = self.add_groups(view, group_ids)
+        if group_ids:
+            if action == ApiValues.ADD:
+                results = self.add_groups(view, group_ids)
 
-                elif action == ApiValues.DELETE:
-                    results = self.remove_groups(view, group_ids)
+            elif action == ApiValues.DELETE:
+                results = self.remove_groups(view, group_ids)
 
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Editing of view {0} broke: {1}'.format(view_name, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     @log_operation(AdminActions.ADD_USERS_TO_VIEW, vFenseObjects.VIEW)
@@ -157,7 +123,6 @@ class ViewHandler(BaseHandler):
     def remove_groups(self, view, group_ids):
         results = view.remove_groups(group_ids)
         return results
-
 
     @authenticated_request
     @convert_json_to_arguments
