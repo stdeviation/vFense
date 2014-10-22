@@ -252,8 +252,8 @@ class UserManager(object):
         """
         user_exist = self.properties
         user.fill_in_defaults()
-        user_data = user.to_dict()
         results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(user, User) and not user_exist:
             invalid_fields = user.get_invalid_fields()
             results.errors = invalid_fields
@@ -267,8 +267,8 @@ class UserManager(object):
                 )
 
             else:
-                encrypted_password = Crypto().hash_bcrypt(user.password)
-                user_data[UserKeys.Password] = encrypted_password
+                user.unencrypted_password = user.password
+                user.password = Crypto().hash_bcrypt(user.password)
                 current_view_is_valid = fetch_view(user.current_view)
                 default_view_is_valid = fetch_view(user.default_view)
                 validated_groups, _, invalid_groups = (
@@ -279,15 +279,14 @@ class UserManager(object):
                 views = (list(set([user.current_view, user.default_view])))
                 if user.is_global:
                     views = fetch_all_view_names()
-                user_data[UserKeys.Views] = views
+                user.views = views
 
 
                 if (current_view_is_valid and default_view_is_valid and
                         validated_groups):
                     object_status, _, _, generated_ids = (
-                        insert_user(user_data)
+                        insert_user(user.to_dict())
                     )
-                    user_data.pop(UserKeys.Password)
 
                     if object_status == DbCodes.Inserted:
                         msg = 'user name %s created' % (self.username)
@@ -300,9 +299,10 @@ class UserManager(object):
                         results.vfense_status_code = (
                             UserCodes.UserCreated
                         )
-                        results.generated_ids = [self.username]
+                        results.generated_ids.append(self.username)
                         results.message = msg
-                        results.data = [user_data]
+                        user.password = None
+                        results.data.append(user.to_dict())
 
                 elif (not current_view_is_valid or not default_view_is_valid
                       and validated_groups):
@@ -404,7 +404,7 @@ class UserManager(object):
             views = views.split(',')
 
         views_are_valid, _, _ = validate_view_names(views)
-        if self.properties[UserKeys.IsGlobal]:
+        if self.properties.is_global:
             views = fetch_all_view_names()
 
         results = ApiResults()
@@ -498,13 +498,14 @@ class UserManager(object):
         """
         user_exist = self.properties
         results = ApiResults()
+        results.fill_in_defaults()
         generated_ids = []
         users_group_exist = []
-        if user_exist:
-            is_global = user_exist[UserKeys.IsGlobal]
+        if user_exist.username:
+            is_global = user_exist.is_global
             invalid_groups, valid_global_groups, valid_local_groups = (
                 validate_groups_in_views(
-                    group_ids, user_exist[UserKeys.Views]
+                    group_ids, user_exist.views
                 )
             )
             if (
@@ -1298,9 +1299,10 @@ class UserManager(object):
 
         user_exist = self.properties
         results = ApiResults()
+        results.fill_in_defaults()
         data = {}
         results.data = []
-        if user_exist:
+        if user_exist.username:
             invalid_fields = user.get_invalid_fields()
             data = user.to_dict_non_null()
             data.pop(UserKeys.UserName, None)
@@ -1311,32 +1313,36 @@ class UserManager(object):
                 )
 
                 if object_status == DbCodes.Replaced:
-                    msg = 'User %s was updated - ' % (self.username)
-                    generic_status_code = GenericCodes.ObjectUpdated
-                    vfense_status_code = UserCodes.UserUpdated
+                    results.message = (
+                        'User %s was updated - ' % (self.username)
+                    )
+                    results.generic_status_code = GenericCodes.ObjectUpdated
+                    results.vfense_status_code = UserCodes.UserUpdated
                     results.updated_ids = [self.username]
                     results.data = [data]
 
                 elif object_status == DbCodes.Unchanged:
-                    msg = 'User %s was not updated - ' % (self.username)
-                    generic_status_code = GenericCodes.ObjectUnchanged
-                    vfense_status_code = UserCodes.UserUnchanged
+                    results.message = (
+                        'User %s was not updated - ' % (self.username)
+                    )
+                    results.generic_status_code = GenericCodes.ObjectUnchanged
+                    results.vfense_status_code = UserCodes.UserUnchanged
                     results.unchanged_ids = [self.username]
 
             else:
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = UserFailureCodes.FailedToUpdateUser
-                msg = 'User %s properties were invalid - ' % (self.username)
+                results.generic_status_code = GenericCodes.InvalidId
+                results.vfense_status_code = (
+                    UserFailureCodes.FailedToUpdateUser
+                )
+                results.message = (
+                    'User %s properties were invalid - ' % (self.username)
+                )
                 results.unchanged_ids = [self.username]
 
         else:
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = UserFailureCodes.UserNameDoesNotExist
-            msg = 'User %s does not exist - ' % (self.username)
+            results.generic_status_code = GenericCodes.InvalidId
+            results.vfense_status_code = UserFailureCodes.UserNameDoesNotExist
+            results.message = 'User %s does not exist - ' % (self.username)
             results.unchanged_ids = [self.username]
-
-        results.generic_status_code = generic_status_code
-        results.vfense_status_code = vfense_status_code
-        results.message = msg
 
         return results
