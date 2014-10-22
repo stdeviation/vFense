@@ -16,7 +16,7 @@ class User(Base):
     def __init__(
             self, username=None, password=None, full_name=None, email=None,
             current_view=None, default_view=None, enabled=None,
-            is_global=None, **kwargs
+            is_global=None, views=None, **kwargs
     ):
         """
         Args:
@@ -29,7 +29,8 @@ class User(Base):
             current_view (str): The view you are currently logged into.
             default_view (str): The default view of the user.
             enabled (boolean): Disable or enable this user.
-            is_global (boolean):Is this user a global user.
+            is_global (boolean): Is this user a global user.
+            views (list): List of views this user belongs too.
         """
         super(User, self).__init__(**kwargs)
         self.username = username
@@ -40,6 +41,7 @@ class User(Base):
         self.default_view = default_view
         self.enabled = enabled
         self.is_global = is_global
+        self.views = views
 
 
     def fill_in_defaults(self):
@@ -53,16 +55,19 @@ class User(Base):
         """
 
         if not self.full_name:
-            self.full_name = UserDefaults.FULL_NAME
+            self.full_name = UserDefaults.full_name()
 
         if not self.email:
-            self.email = UserDefaults.EMAIL
+            self.email = UserDefaults.email()
 
         if not self.enabled:
-            self.enabled = UserDefaults.ENABLED
+            self.enabled = UserDefaults.enabled()
 
         if not self.is_global:
-            self.is_global = UserDefaults.IS_GLOBAL
+            self.is_global = UserDefaults.is_global()
+
+        if not self.views:
+            self.views = UserDefaults.views()
 
     def get_invalid_fields(self):
         """Check the user for any invalid fields.
@@ -174,6 +179,19 @@ class User(Base):
                     }
                 )
 
+        if not isinstance(self.views, list):
+            invalid_fields.append(
+                {
+                    UserKeys.Views: self.views,
+                    CommonKeys.REASON: (
+                        'Invalid type in views {0}'.format(type(self.views))
+                    ),
+                    ApiResultKeys.VFENSE_STATUS_CODE: (
+                        UserFailureCodes.InvalidInstanceType
+                    )
+                }
+            )
+
         return invalid_fields
 
     def to_dict(self):
@@ -203,5 +221,6 @@ class User(Base):
             UserKeys.FullName: self.full_name,
             UserKeys.Email: self.email,
             UserKeys.IsGlobal: self.is_global,
-            UserKeys.Enabled: self.enabled
+            UserKeys.Enabled: self.enabled,
+            UserKeys.Views: self.views
         }

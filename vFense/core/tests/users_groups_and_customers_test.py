@@ -26,8 +26,8 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
 
     def test_a_create_view1(self):
         view = View(
-            DefaultViews.GLOBAL,
-            package_download_url='https://10.0.0.15/packages/'
+            view_name=DefaultViews.GLOBAL,
+            package_download_url_base='https://10.0.0.15/packages/'
         )
         manager = ViewManager(view.view_name)
         results = manager.create(view)
@@ -192,7 +192,7 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
             default_view=DefaultViews.GLOBAL,
             enabled=True, is_global=True
         )
-        manager = UserManager(user.name)
+        manager = UserManager(user.username)
         results = manager.create(user, [global_group_id])
         print dumps(results.to_dict_non_null(), indent=4)
         status_code = results.vfense_status_code
@@ -211,7 +211,7 @@ class UsersGroupsAndViewsTests(unittest.TestCase):
             default_view='Test View 1',
             enabled=True, is_global=False
         )
-        manager = UserManager(user.name)
+        manager = UserManager(user.username)
         results = manager.create(user, [group_id_1])
         print dumps(results.to_dict_non_null(), indent=4)
         status_code = results.vfense_status_code

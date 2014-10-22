@@ -85,8 +85,12 @@ class UserManager(object):
                 "email": ""
             }
         """
-        data = User(**fetch_user(self.username, without_fields))
-        return data
+        data = fetch_user(self.username, without_fields)
+        if data:
+            user = User(**data)
+        else:
+            user = User()
+        return user
 
     @time_it
     def get_attribute(self, user_attribute):
@@ -108,7 +112,8 @@ class UserManager(object):
         user_data = fetch_user(self.username)
         user_key = None
         if user_data:
-            user_key = user_data.get(user_attribute, None)
+            user = User(**user_data)
+            user_key = user.to_dict().get(user_attribute, None)
 
         return user_key
 
@@ -144,7 +149,11 @@ class UserManager(object):
             }
         """
         user_data = User(**fetch_user_and_all_properties(self.username))
-        return user_data
+        if user_data:
+            user = User(**user_data)
+        else:
+            user = User()
+        return user
 
     @time_it
     def toggle_status(self):
@@ -166,6 +175,7 @@ class UserManager(object):
                 }
         """
         results = ApiResults()
+        results.fill_in_defaults()
         status_code, _, _, _ = (
             user_status_toggle(self.username)
         )
@@ -408,6 +418,7 @@ class UserManager(object):
             views = fetch_all_view_names()
 
         results = ApiResults()
+        results.fill_in_defaults()
         user_exist = self.properties
         if views_are_valid and user_exist:
             status_code, _, _, _ = update_views_for_user(self.username, views)
@@ -636,6 +647,7 @@ class UserManager(object):
         username_not_to_delete = []
         username_to_delete = []
         results = ApiResults()
+        results.fill_in_defaults()
         if (user_exist and self.username != DefaultUsers.GLOBAL_ADMIN
                 and not force
                 or user_exist and force):
@@ -719,6 +731,7 @@ class UserManager(object):
         admin_group_id = None
         admin_group_id_exists_in_group_ids = False
         results = ApiResults()
+        results.fill_in_defaults()
         if user_exist:
             group_ids_in_db = fetch_groupids_for_user(self.username)
             if self.username == DefaultUsers.GLOBAL_ADMIN:
@@ -847,6 +860,7 @@ class UserManager(object):
         """
         user_exist = self.properties
         results = ApiResults()
+        results.fill_in_defaults()
 
         if user_exist:
             views_in_db = user_exist.views
@@ -862,6 +876,7 @@ class UserManager(object):
                     delete_user_in_views(self.username, views)
                 )
                 delete_views_in_user(self.username, views)
+                print type(views), views
                 if status_code == DbCodes.Replaced:
                     msg = (
                         'removed views from user %s: views = %s' %
@@ -947,6 +962,7 @@ class UserManager(object):
         """
         user_exist = self.properties
         results = ApiResults()
+        results.fill_in_defaults()
         if user_exist:
             valid_passwd, strength = check_password(new_password)
             original_encrypted_password = (
@@ -1062,6 +1078,7 @@ class UserManager(object):
         """
         user_exist = self.properties
         results = ApiResults()
+        results.fill_in_defaults()
         if user_exist:
             valid_passwd, strength = check_password(password)
             encrypted_password = Crypto().hash_bcrypt(password)
@@ -1073,30 +1090,30 @@ class UserManager(object):
                 )
 
                 if object_status == DbCodes.Replaced:
-                    msg = 'Password changed for user %s - ' % (self.username)
-                    generic_status_code = GenericCodes.ObjectUpdated
-                    vfense_status_code = UserCodes.PasswordChanged
+                    results.message = (
+                        'Password changed for user %s - ' % (self.username)
+                    )
+                    results.generic_status_code = GenericCodes.ObjectUpdated
+                    results.vfense_status_code = UserCodes.PasswordChanged
                     results.updated_ids = [self.username]
 
             else:
-                msg = (
+                results.message = (
                     'New password is to weak for user %s - ' %
                     (self.username)
                 )
-                generic_status_code = GenericFailureCodes.FailedToUpdateObject
-                vfense_status_code = UserFailureCodes.WeakPassword
+                results.generic_status_code = (
+                    GenericFailureCodes.FailedToUpdateObject
+                )
+                results.vfense_status_code = UserFailureCodes.WeakPassword
                 results.unchanged_ids = [self.username]
 
         else:
-            msg = 'User %s does not exist - ' % (self.username)
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = UserFailureCodes.UserNameDoesNotExist
+            results.message = 'User %s does not exist - ' % (self.username)
+            results.generic_status_code = GenericCodes.InvalidId
+            results.vfense_status_code = UserFailureCodes.UserNameDoesNotExist
             results.unchanged_ids = [self.username]
 
-        results.generic_status_code = generic_status_code
-        results.vfense_status_code = vfense_status_code
-        results.message = msg
-        results.data = []
 
         return results
 
@@ -1139,7 +1156,7 @@ class UserManager(object):
         user_exist = self.properties
         status = self.change_view.func_name + ' - '
         results = ApiResults()
-        results.data = []
+        results.fill_in_defaults()
         view = None
         views_in_db = user_exist[UserKeys.Views]
         data = user.to_dict_non_null()
@@ -1301,7 +1318,6 @@ class UserManager(object):
         results = ApiResults()
         results.fill_in_defaults()
         data = {}
-        results.data = []
         if user_exist.username:
             invalid_fields = user.get_invalid_fields()
             data = user.to_dict_non_null()

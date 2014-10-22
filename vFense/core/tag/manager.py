@@ -35,10 +35,15 @@ class TagManager(object):
         self.agents = self.get_agents()
 
     def _tag_attributes(self):
-        tag_data = {}
         if self.tag_id:
-            tag_data = Tag(**fetch_tag(self.tag_id))
-        return tag_data
+            data = fetch_tag(self.tag_id)
+            if data:
+                tag = Tag(**data)
+            else:
+                tag = Tag()
+        else:
+            tag = Tag()
+        return tag
 
     def get_attribute(self, tag_attribute):
         """Retrieve an attribute for this tag.
@@ -56,9 +61,10 @@ class TagManager(object):
         """
         tag_key = None
         if self.tag_id:
-            tag_data = fetch_tag(self.tag_id)
-            if tag_data:
-                tag_key = tag_data.get(tag_attribute, None)
+            data = fetch_tag(self.tag_id)
+            if data:
+                tag = Tag(**data)
+                tag_key = tag.to_dict().get(tag_attribute, None)
 
         return tag_key
 

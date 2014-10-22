@@ -130,9 +130,10 @@ class Base(object):
         Returns:
             (dict): a dictionary with the non None fields of this view.
         """
-        agent_dict = self.to_dict()
+        data = self.to_dict()
 
-        return {k:agent_dict[k] for k in agent_dict}
+        return {k:data[k] for k in data
+                if data[k] != None}
 
     def __str__(self):
         return(repr(self.to_dict_all()))

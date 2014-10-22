@@ -90,7 +90,8 @@ class ViewManager(object):
         view_data = fetch_view(self.view_name)
         view_key = None
         if view_data:
-            view_key = view_data.get(view_attribute, None)
+            view = View(**view_data)
+            view_key = view.to_dict().get(view_attribute, None)
 
         return view_key
 
@@ -179,7 +180,7 @@ class ViewManager(object):
                             view.ancestors.append(view.parent)
 
                 if not view.package_download_url_base:
-                    print view
+                    print 'WHOA', view
                     view.package_download_url_base = (
                         View(**fetch_view(DefaultViews.GLOBAL))
                         .package_download_url_base
@@ -208,9 +209,9 @@ class ViewManager(object):
                     if groupids:
                         add_view_to_groups(groupids, view.view_name)
 
-                    if parent_view:
+                    if view.parent:
                         update_children_for_view(
-                            parent_view.view_name, view.view_name
+                            view.parent, view.view_name
                         )
 
                 else:

@@ -5,7 +5,22 @@ class DefaultUsers():
     AGENT = 'agent_api'
 
 class UserDefaults():
-    FULL_NAME = None
-    EMAIL = None
-    ENABLED = True
-    IS_GLOBAL = False
+    @staticmethod
+    def full_name():
+        return None
+
+    @staticmethod
+    def email():
+        return None
+
+    @staticmethod
+    def enabled():
+        return True
+
+    @staticmethod
+    def is_global():
+        return False
+
+    @staticmethod
+    def views():
+        return list()
