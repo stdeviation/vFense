@@ -179,12 +179,11 @@ class ViewManager(object):
                             view.ancestors.append(view.parent)
 
                 if not view.package_download_url_base:
+                    print view
                     view.package_download_url_base = (
-                        fetch_view(
-                            DefaultViews.GLOBAL,
-                            [ViewKeys.PackageUrl]
-                        ).get(ViewKeys.PackageUrl)
-                )
+                        View(**fetch_view(DefaultViews.GLOBAL))
+                        .package_download_url_base
+                    )
 
                 usernames = list(set(fetch_usernames(True) + view.users))
                 groupids = list(set(fetch_groupids(True) + view.users))

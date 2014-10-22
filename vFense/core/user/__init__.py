@@ -14,13 +14,13 @@ class User(Base):
     """Used to represent an instance of a user."""
 
     def __init__(
-            self, name, password=None, full_name=None, email=None,
-            current_view=None, default_view=None,
-            enabled=None, is_global=None, **kwargs
+            self, username=None, password=None, full_name=None, email=None,
+            current_view=None, default_view=None, enabled=None,
+            is_global=None, **kwargs
     ):
         """
         Args:
-            name (str): The name of the user.
+            username (str): The name of the user.
 
         Kwargs:
             password (str): The users password.
@@ -32,7 +32,7 @@ class User(Base):
             is_global (boolean):Is this user a global user.
         """
         super(User, self).__init__(**kwargs)
-        self.name = name
+        self.username = username
         self.full_name = full_name
         self.email = email
         self.password = password
@@ -79,16 +79,16 @@ class User(Base):
         """
         invalid_fields = []
 
-        if isinstance(self.name, basestring):
+        if isinstance(self.username, basestring):
             valid_symbols = re.search(
-                RegexPattern.USERNAME, self.name
+                RegexPattern.USERNAME, self.username
             )
-            valid_length = len(self.name) <= DefaultStringLength.USER_NAME
+            valid_length = len(self.username) <= DefaultStringLength.USER_NAME
 
             if not valid_symbols and valid_length:
                 invalid_fields.append(
                     {
-                        UserKeys.UserName: self.name,
+                        UserKeys.UserName: self.username,
                         CommonKeys.REASON: 'Invalid characters in username',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             UserFailureCodes.InvalidUserName
@@ -98,7 +98,7 @@ class User(Base):
             elif not valid_length and valid_symbols:
                 invalid_fields.append(
                     {
-                        UserKeys.UserName: self.name,
+                        UserKeys.UserName: self.username,
                         CommonKeys.REASON: (
                             'Username is too long. The username must be ' +
                             'less than %d characters long' %
@@ -112,7 +112,7 @@ class User(Base):
             elif not valid_length and not valid_symbols:
                 invalid_fields.append(
                     {
-                        UserKeys.UserName: self.name,
+                        UserKeys.UserName: self.username,
                         CommonKeys.REASON: (
                             'Username is too long. The username must be ' +
                             'less than %d characters long' %
@@ -127,7 +127,7 @@ class User(Base):
         else:
             invalid_fields.append(
                 {
-                    UserKeys.UserName: self.name,
+                    UserKeys.UserName: self.username,
                     CommonKeys.REASON: 'username is not a valid string',
                     ApiResultKeys.VFENSE_STATUS_CODE: (
                         UserFailureCodes.InvalidUserName
@@ -196,7 +196,7 @@ class User(Base):
         """
 
         return {
-            UserKeys.UserName: self.name,
+            UserKeys.UserName: self.username,
             UserKeys.CurrentView: self.current_view,
             UserKeys.DefaultView: self.default_view,
             UserKeys.Password: self.password,
@@ -205,15 +205,3 @@ class User(Base):
             UserKeys.IsGlobal: self.is_global,
             UserKeys.Enabled: self.enabled
         }
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields of view. Useful when
-        filling out just a few fields to update the view in the db.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this view.
-        """
-        user_dict = self.to_dict()
-
-        return {k:user_dict[k] for k in user_dict
-                if user_dict[k] != None}

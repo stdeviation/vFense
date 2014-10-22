@@ -171,7 +171,7 @@ class UserManager(object):
         )
         self.properties = self._user_attributes()
         if status_code == DbCodes.Replaced:
-            if self.properties[UserKeys.Enabled]:
+            if self.properties.enabled:
                 msg = 'user %s is enabled' % (self.username)
 
             else:
@@ -452,7 +452,7 @@ class UserManager(object):
             results.vfense_status_code = (
                 UserFailureCodes.UserNameDoesNotExist
             )
-            results[ApiResultKeys.INVALID_IDS] = [self.username]
+            results.invalid_ids = [self.username]
 
         elif not views_are_valid[0]:
             msg = (
@@ -467,7 +467,7 @@ class UserManager(object):
             results.vfense_status_code = (
                 ViewFailureCodes.InvalidViewName
             )
-            results[ApiResultKeys.INVALID_IDS] = [views]
+            results.invalid_ids = [views]
 
         return results
 
@@ -587,7 +587,7 @@ class UserManager(object):
                 results.vfense_status_code = (
                     GroupFailureCodes.InvalidGroupId
                 )
-                results[ApiResultKeys.INVALID_IDS] = [group_ids]
+                results.invalid_ids = [group_ids]
                 results.unchanged_ids = [self.username]
                 results.message = msg
 
@@ -599,7 +599,7 @@ class UserManager(object):
             results.vfense_status_code = (
                 UserFailureCodes.InvalidUserName
             )
-            results[ApiResultKeys.INVALID_IDS] = [self.username]
+            results.invalid_ids = [self.username]
             results.unchanged_ids = [self.username]
             results.message = msg
 
@@ -684,7 +684,7 @@ class UserManager(object):
                 UserFailureCodes.UserNameDoesNotExist
             )
             results.message = msg
-            results[ApiResultKeys.INVALID_IDS] =  [self.username]
+            results.invalid_ids =  [self.username]
             results.unchanged_ids =  [self.username]
 
         return results
@@ -802,7 +802,7 @@ class UserManager(object):
                     GroupFailureCodes.GroupDoesNotExistForUser
                 )
                 results.message =  msg
-                results[ApiResultKeys.INVALID_IDS] = group_ids
+                results.invalid_ids = group_ids
                 results.unchanged_ids =  [self.username]
 
         else:
@@ -814,7 +814,7 @@ class UserManager(object):
                 GroupFailureCodes.InvalidGroupId
             )
             results.message =  msg
-            results[ApiResultKeys.INVALID_IDS] =  [self.username]
+            results.invalid_ids =  [self.username]
             results.unchanged_ids =  [self.username]
 
         return results
@@ -848,7 +848,7 @@ class UserManager(object):
         results = ApiResults()
 
         if user_exist:
-            views_in_db = user_exist[UserKeys.Views]
+            views_in_db = user_exist.views
             views_exist = False
             if not views:
                 views = views_in_db
@@ -885,7 +885,7 @@ class UserManager(object):
                     results.vfense_status_code = (
                         ViewFailureCodes.UsersDoNotExistForView
                     )
-                    results[ApiResultKeys.INVALID_IDS] = [views]
+                    results.invalid_ids = [views]
                     results.unchanged_ids = [self.username]
                     results.message = msg
 
@@ -900,7 +900,7 @@ class UserManager(object):
                 results.vfense_status_code = (
                     ViewFailureCodes.UsersDoNotExistForView
                 )
-                results[ApiResultKeys.INVALID_IDS] = [views]
+                results.invalid_ids = [views]
                 results.unchanged_ids = [self.username]
                 results.message = msg
 
@@ -913,7 +913,7 @@ class UserManager(object):
             results.vfense_status_code = (
                 ViewFailureCodes.InvalidViewName
             )
-            results[ApiResultKeys.INVALID_IDS] = [self.username]
+            results.invalid_ids = [self.username]
             results.unchanged_ids = [self.username]
 
         return results

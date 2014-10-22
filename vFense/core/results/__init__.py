@@ -13,7 +13,7 @@ class ApiResults(Base):
                  deleted_ids=None, generic_status_code=None, data=None,
                  vfense_status_code=None, db_status_code=None,
                  message=None, errors=None, agent_id=None, tag_id=None,
-                 generated_ids=None, **kwargs
+                 generated_ids=None, count=0, **kwargs
                  ):
         """
         Kwargs:
@@ -30,6 +30,7 @@ class ApiResults(Base):
         self.data = data
         self.generated_ids = generated_ids
         self.errors = errors
+        self.count = count
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -56,8 +57,8 @@ class ApiResults(Base):
         if not self.data:
             self.data = ApiResultDefaults.data()
 
-        if not self.operations:
-            self.operations = ApiResultDefaults.operations()
+        if not self.count:
+            self.count = 0
 
         if not self.generated_ids:
             self.generated_ids = ApiResultDefaults.generated_ids()
@@ -86,6 +87,7 @@ class ApiResults(Base):
             ApiResultKeys.DATA: self.data,
             ApiResultKeys.MESSAGE: self.message,
             ApiResultKeys.ERRORS: self.errors,
+            ApiResultKeys.COUNT: self.count,
         }
 
 

@@ -1,9 +1,9 @@
 import logging, logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.plugins.notifications._db_model import (
-    NotificationCollections, NotificationPluginIndexes,
-    NotificationPluginKeys
+from vFense.plugins.notifications._db_model import NotificationCollections
+from vFense.plugins.notifications.mailer._db_model import (
+    NotificationPluginIndexes, NotificationPluginKeys
 )
 from vFense.core._db import (
     retrieve_collections, create_collection, retrieve_indexes

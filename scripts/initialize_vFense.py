@@ -253,7 +253,7 @@ def create_views(conn=None):
         server_queue_ttl=args.queue_ttl,
         package_download_url=url
     )
-    view_manager = ViewManager(view.name)
+    view_manager = ViewManager(view.view_name)
     view_manager.create(view)
     print 'Global Token: {0}'.format(view_manager.get_token())
     print 'Place this token in the agent.config file'
