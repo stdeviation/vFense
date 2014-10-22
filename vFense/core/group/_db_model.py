@@ -10,6 +10,8 @@ class GroupKeys():
     IsGlobal = 'is_global'
     Users = 'users'
     Email = 'email'
+    DateAdded = 'date_added'
+    DateModified = 'date_modified'
 
 
 class GroupMappedKeys():

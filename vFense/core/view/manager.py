@@ -180,7 +180,6 @@ class ViewManager(object):
                             view.ancestors.append(view.parent)
 
                 if not view.package_download_url_base:
-                    print 'WHOA', view
                     view.package_download_url_base = (
                         View(**fetch_view(DefaultViews.GLOBAL))
                         .package_download_url_base
@@ -196,6 +195,7 @@ class ViewManager(object):
                 )
 
                 if object_status == DbCodes.Inserted:
+                    self.properties = self._view_properties()
                     generated_ids.append(view.view_name)
                     msg = 'view %s created - ' % (view.view_name)
                     results.generic_status_code = GenericCodes.ObjectCreated
@@ -1217,11 +1217,11 @@ class ViewManager(object):
         view_exist = self.properties
         results = ApiResults()
         results.fill_in_defaults()
-        if view_exist:
+        if view_exist.view_name:
             if isinstance(view, View):
                 invalid_fields = view.get_invalid_fields()
                 if not invalid_fields:
-                    status_code, _, _, _ = (
+                    status_code, count, errors, _ = (
                         update_view(self.view_name, view.to_dict_db_update())
                     )
                     if status_code == DbCodes.Replaced:
@@ -1244,6 +1244,7 @@ class ViewManager(object):
                         results.generic_status_code = GenericCodes.ObjectUnchanged
                         results.vfense_status_code = ViewCodes.ViewUnchanged
                         results.unchanged_ids.append(self.view_name)
+                        results.data.append(view.to_dict_non_null())
 
                 else:
                     msg = (
@@ -1255,8 +1256,9 @@ class ViewManager(object):
                     results.vfense_status_code = (
                         ViewFailureCodes.InvalidFields
                     )
-                    results.unchanged_ids = [self.view_name]
-                    results.errors = invalid_fields
+                    results.unchanged_ids.append(self.view_name)
+                    results.errors.append(invalid_fields)
+                    results.data.append(view.to_dict_non_null())
 
             else:
                 msg = (

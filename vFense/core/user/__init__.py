@@ -1,5 +1,7 @@
 import re
+from time import time
 from vFense import Base
+from vFense.core._db_constants import DbTime
 from vFense.core.user._db_model import UserKeys
 from vFense.core._constants import (
     RegexPattern, DefaultStringLength, CommonKeys
@@ -16,7 +18,8 @@ class User(Base):
     def __init__(
             self, username=None, password=None, full_name=None, email=None,
             current_view=None, default_view=None, enabled=None,
-            is_global=None, views=None, **kwargs
+            is_global=None, views=None, date_added=None, date_modified=None,
+            **kwargs
     ):
         """
         Args:
@@ -31,6 +34,8 @@ class User(Base):
             enabled (boolean): Disable or enable this user.
             is_global (boolean): Is this user a global user.
             views (list): List of views this user belongs too.
+            date_added (epoch_time): time in epoch.
+            date_modified (epoch_time): time in epoch.
         """
         super(User, self).__init__(**kwargs)
         self.username = username
@@ -42,6 +47,8 @@ class User(Base):
         self.enabled = enabled
         self.is_global = is_global
         self.views = views
+        self.date_added = date_added
+        self.date_modified = date_modified
 
 
     def fill_in_defaults(self):
@@ -53,6 +60,7 @@ class User(Base):
             in a few fields, then allow the create user functions call this
             method to fill in the rest.
         """
+        now = time()
 
         if not self.full_name:
             self.full_name = UserDefaults.full_name()
@@ -68,6 +76,12 @@ class User(Base):
 
         if not self.views:
             self.views = UserDefaults.views()
+
+        if not self.date_added:
+            self.date_added = now
+
+        if not self.date_modified:
+            self.date_modified = now
 
     def get_invalid_fields(self):
         """Check the user for any invalid fields.
@@ -195,21 +209,10 @@ class User(Base):
         return invalid_fields
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the fields into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                view.
-
-                Ex:
-                {
-                    "agent_queue_ttl": 100 ,
-                    "cpu_throttle":  "high" ,
-                    "view_name":  "default" ,
-                    "net_throttle": 100 ,
-                    "package_download_url_base": https://192.168.8.14/packages/,
-                    "server_queue_ttl": 100
-                }
+            (dict): A dictionary with the fields.
 
         """
 
@@ -222,5 +225,46 @@ class User(Base):
             UserKeys.Email: self.email,
             UserKeys.IsGlobal: self.is_global,
             UserKeys.Enabled: self.enabled,
-            UserKeys.Views: self.views
+            UserKeys.Views: self.views,
+            UserKeys.DateAdded: self.date_added,
+            UserKeys.DateModified: self.date_modified,
         }
+
+    def to_dict_db(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+        data = {
+            UserKeys.DateAdded: (
+                DbTime.epoch_time_to_db_time(self.date_added)
+            ),
+            UserKeys.DateModified: (
+                DbTime.epoch_time_to_db_time(self.date_modified)
+            ),
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        return combined_data
+
+    def to_dict_db_update(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+        if not self.date_modified:
+            self.date_modified = time()
+
+        data = {
+            UserKeys.DateModified: (
+                DbTime.epoch_time_to_db_time(self.date_modified)
+            ),
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        combined_data.pop(UserKeys.UserName, None)
+        return combined_data

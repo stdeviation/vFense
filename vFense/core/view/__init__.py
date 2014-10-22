@@ -9,10 +9,7 @@ from vFense.core._constants import (
     CPUThrottleValues, DefaultStringLength, RegexPattern, CommonKeys
 )
 
-from vFense.core.view._db_model import (
-    ViewKeys
-)
-
+from vFense.core.view._db_model import ViewKeys
 from vFense.core.view._constants import ViewDefaults
 from vFense.core.results import ApiResultKeys
 
@@ -349,6 +346,8 @@ class View(Base):
             (dict): A dictionary with the fields.
 
         """
+        if not self.date_modified:
+            self.date_modified = time()
 
         data = {
             ViewKeys.DateModified: (

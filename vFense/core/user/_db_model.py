@@ -12,6 +12,8 @@ class UserKeys():
     UserName = 'user_name' #string
     Email = 'email' #string
     IsGlobal = 'is_global' #bool
+    DateAdded = 'date_added'
+    DateModified = 'date_modified'
 
 
 class UserMappedKeys():
