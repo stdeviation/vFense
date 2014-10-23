@@ -16,14 +16,14 @@ class User(Base):
     """Used to represent an instance of a user."""
 
     def __init__(
-            self, username=None, password=None, full_name=None, email=None,
+            self, user_name=None, password=None, full_name=None, email=None,
             current_view=None, default_view=None, enabled=None,
             is_global=None, views=None, date_added=None, date_modified=None,
             **kwargs
     ):
         """
         Args:
-            username (str): The name of the user.
+            user_name (str): The name of the user.
 
         Kwargs:
             password (str): The users password.
@@ -38,7 +38,7 @@ class User(Base):
             date_modified (epoch_time): time in epoch.
         """
         super(User, self).__init__(**kwargs)
-        self.username = username
+        self.user_name = user_name
         self.full_name = full_name
         self.email = email
         self.password = password
@@ -98,58 +98,58 @@ class User(Base):
         """
         invalid_fields = []
 
-        if isinstance(self.username, basestring):
+        if isinstance(self.user_name, basestring):
             valid_symbols = re.search(
-                RegexPattern.USERNAME, self.username
+                RegexPattern.USERNAME, self.user_name
             )
-            valid_length = len(self.username) <= DefaultStringLength.USER_NAME
+            valid_length = len(self.user_name) <= DefaultStringLength.USER_NAME
 
             if not valid_symbols and valid_length:
                 invalid_fields.append(
                     {
-                        UserKeys.UserName: self.username,
-                        CommonKeys.REASON: 'Invalid characters in username',
+                        UserKeys.UserName: self.user_name,
+                        CommonKeys.REASON: 'Invalid characters in user_name',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            UserFailureCodes.InvalidUserName
+                            UserFailureCodes.Invaliduser_name
                         )
                     }
                 )
             elif not valid_length and valid_symbols:
                 invalid_fields.append(
                     {
-                        UserKeys.UserName: self.username,
+                        UserKeys.user_name: self.user_name,
                         CommonKeys.REASON: (
-                            'Username is too long. The username must be ' +
+                            'user_name is too long. The user_name must be ' +
                             'less than %d characters long' %
                             (DefaultStringLength.USER_NAME)
                         ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            UserFailureCodes.InvalidUserName
+                            UserFailureCodes.Invaliduser_name
                         )
                     }
                 )
             elif not valid_length and not valid_symbols:
                 invalid_fields.append(
                     {
-                        UserKeys.UserName: self.username,
+                        UserKeys.user_name: self.user_name,
                         CommonKeys.REASON: (
-                            'Username is too long. The username must be ' +
+                            'user_name is too long. The user_name must be ' +
                             'less than %d characters long' %
                             (DefaultStringLength.USER_NAME) +
-                            '\nInvalid characters in username'
+                            '\nInvalid characters in user_name'
                         ),
                         ApiResultKeys.VFENSE_STATUS_CODE: (
-                            UserFailureCodes.InvalidUserName
+                            UserFailureCodes.Invaliduser_name
                         )
                     }
                 )
         else:
             invalid_fields.append(
                 {
-                    UserKeys.UserName: self.username,
-                    CommonKeys.REASON: 'username is not a valid string',
+                    UserKeys.user_name: self.user_name,
+                    CommonKeys.REASON: 'user_name is not a valid string',
                     ApiResultKeys.VFENSE_STATUS_CODE: (
-                        UserFailureCodes.InvalidUserName
+                        UserFailureCodes.Invaliduser_name
                     )
                 }
             )
@@ -192,19 +192,20 @@ class User(Base):
                         )
                     }
                 )
-
-        if not isinstance(self.views, list):
-            invalid_fields.append(
-                {
-                    UserKeys.Views: self.views,
-                    CommonKeys.REASON: (
-                        'Invalid type in views {0}'.format(type(self.views))
-                    ),
-                    ApiResultKeys.VFENSE_STATUS_CODE: (
-                        UserFailureCodes.InvalidInstanceType
-                    )
-                }
-            )
+        if self.views:
+            if not isinstance(self.views, list):
+                invalid_fields.append(
+                    {
+                        UserKeys.Views: self.views,
+                        CommonKeys.REASON: (
+                            'Invalid type in views {0}'
+                            .format(type(self.views))
+                        ),
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            UserFailureCodes.InvalidInstanceType
+                        )
+                    }
+                )
 
         return invalid_fields
 
@@ -217,7 +218,7 @@ class User(Base):
         """
 
         return {
-            UserKeys.UserName: self.username,
+            UserKeys.UserName: self.user_name,
             UserKeys.CurrentView: self.current_view,
             UserKeys.DefaultView: self.default_view,
             UserKeys.Password: self.password,
