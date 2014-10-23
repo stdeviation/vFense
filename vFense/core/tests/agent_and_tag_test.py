@@ -11,9 +11,10 @@ from vFense.core.agent._db import fetch_agent_ids_in_views
 from vFense.core.tag.manager import TagManager
 from vFense.core.agent import Agent
 from vFense.core.agent.manager import AgentManager
-from vFense.core.status_codes import (
-    AgentCodes, AgentResultCodes, TagCodes, ViewCodes
-)
+from vFense.core.agent.status_codes import AgentCodes
+from vFense.receiver.status_codes import AgentResultCodes
+from vFense.core.tag.status_codes import TagCodes
+from vFense.core.view.status_codes import ViewCodes
 from vFense.core.results import ApiResultKeys
 from vFense.core.agent._constants import AgentDefaults
 from vFense.core.tests.agent_and_tag_data import AGENT_DATA
@@ -29,8 +30,8 @@ class AgentsAndTagsTests(unittest.TestCase):
         )
         manager = ViewManager(view.name)
         results = manager.create(view)
-        print dumps(results, indent=4)
-        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        print dumps(results.to_dict(), indent=4)
+        status_code = results.vfense_status_code
         self.failUnless(status_code == ViewCodes.ViewCreated)
 
     def test_a_create_view2(self):
@@ -39,8 +40,8 @@ class AgentsAndTagsTests(unittest.TestCase):
         )
         manager = ViewManager(view.name)
         results = manager.create(view)
-        print dumps(results, indent=4)
-        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        print dumps(results.to_dict(), indent=4)
+        status_code = results.vfense_status_code
         self.failUnless(status_code == ViewCodes.ViewCreated)
 
     def test_b_create_tag1(self):
@@ -165,22 +166,22 @@ class AgentsAndTagsTests(unittest.TestCase):
     def test_h_view_remove1(self):
         manager = ViewManager('Test View 2')
         results = manager.remove()
-        print dumps(results, indent=4)
-        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        print dumps(results.to_dict(), indent=4)
+        status_code = results.vfense_status_code
         self.failUnless(status_code == ViewCodes.ViewDeleted)
 
     def test_h_view_remove2(self):
         manager = ViewManager('Test View 1')
         results = manager.remove()
-        print dumps(results, indent=4)
-        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        print dumps(results.to_dict(), indent=4)
+        status_code = results.vfense_status_code
         self.failUnless(status_code == ViewCodes.ViewDeleted)
 
     def test_i_view_delete_agents1(self):
         manager = ViewManager('global')
         results = manager.delete_agents()
-        print dumps(results, indent=4)
-        status_code = results.get(ApiResultKeys.VFENSE_STATUS_CODE)
+        print dumps(results.to_dict(), indent=4)
+        status_code = results.vfense_status_code
         self.failUnless(status_code == AgentCodes.AgentsDeleted)
 
 

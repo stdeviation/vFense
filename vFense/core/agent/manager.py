@@ -44,11 +44,13 @@ class AgentManager(object):
         self.views = self.get_views()
 
     def _agent_attributes(self):
-        agent_data = {}
+        agent = Agent()
         if self.agent_id:
-            agent_data = Agent(**fetch_agent(self.agent_id))
+            agent_data = fetch_agent(self.agent_id)
+            if agent_data:
+                agent = Agent(**agent_data)
 
-        return agent_data
+        return agent
 
     def get_attribute(self, agent_attribute):
         agent_key = None
@@ -95,11 +97,13 @@ class AgentManager(object):
             invalid_fields = agent.get_invalid_fields()
             agent.fill_in_defaults()
             agent.enabled = True
-            views_are_valid, valid_view_names, invalid_view_names = (
+            _, valid_view_names, _ = (
                 validate_view_names(agent.views)
             )
             if not invalid_fields:
-                agent.views = valid_view_names
+                if valid_view_names:
+                    agent.views = valid_view_names
+
                 status_code, _, _, generated_ids = (
                     insert_agent(agent.to_dict_db())
                 )
@@ -110,7 +114,6 @@ class AgentManager(object):
                     self.add_hardware(agent.hardware)
                     if tags:
                         self.add_to_tags(tags)
-                    agent.agent_id = self.agent_id
                     msg = 'Agent {0} added successfully'.format(self.agent_id)
                     results.generic_status_code = GenericCodes.ObjectCreated
                     results.vfense_status_code = (
@@ -121,7 +124,9 @@ class AgentManager(object):
                     results.generated_ids = self.agent_id
 
                 else:
-                    msg = 'Failed to add agent.'
+                    msg = (
+                        'Failed to add agent {0}.'.format(agent.computer_name)
+                    )
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToCreateObject
                     )
@@ -193,7 +198,7 @@ class AgentManager(object):
                 validate_view_names(agent.views)
             )
 
-            if views_are_valid and not invalid_fields and agent_exist:
+            if views_are_valid and not invalid_fields and agent_exist.agent_id:
                 agent.views = list(set(agent.views).union(self.views))
                 agent.display_name = agent_exist[AgentKeys.DisplayName]
                 status_code, _, errors, generated_ids = (
@@ -213,7 +218,7 @@ class AgentManager(object):
                         AgentResultCodes.StartUpSucceeded
                     )
                     results.message = msg
-                    results.data.append(agent.to_dict_db_update())
+                    results.data.append(agent.to_dict_non_null())
 
                 else:
                     msg = 'Failed to update agent {0}.'.format(self.agent_id)
@@ -224,7 +229,7 @@ class AgentManager(object):
                         AgentFailureResultCodes.StartupFailed
                     )
                     results.message = msg
-                    results.data.append(agent.to_dict_db_update())
+                    results.data.append(agent.to_dict_non_null())
 
             elif invalid_fields:
                 msg = (
@@ -239,7 +244,7 @@ class AgentManager(object):
                 )
                 results.message = msg
                 results.errors = invalid_fields
-                results.data.append(agent.to_dict_db_update())
+                results.data.append(agent.to_dict_non_null())
 
             elif not agent_exist:
                 msg = (
@@ -251,7 +256,7 @@ class AgentManager(object):
                     AgentFailureResultCodes.StartupFailed
                 )
                 results.message = msg
-                results.data.append(agent.to_dict_db_update())
+                results.data.append(agent.to_dict_non_null())
 
             else:
                 msg = (
@@ -265,7 +270,7 @@ class AgentManager(object):
                     AgentFailureResultCodes.NewAgentFailed
                 )
                 results.message = msg
-                results.data.append(agent.to_dict_db_update())
+                results.data.append(agent.to_dict_non_null())
 
         else:
             msg = (
@@ -302,7 +307,7 @@ class AgentManager(object):
         results = ApiResults()
         results.fill_in_defaults()
         agent_exist = self.properties
-        if agent_exist:
+        if agent_exist.agent_id:
             views_are_valid, valid_views, invalid_views = (
                 validate_view_names(views)
             )
@@ -411,6 +416,7 @@ class AgentManager(object):
                         AgentCodes.ViewsRemovedFromAgent
                    )
                     results.message = msg
+                    results.data = views
                     results.updated_ids.append(self.agent_id)
 
                 else:
@@ -425,6 +431,7 @@ class AgentManager(object):
                         AgentFailureCodes.FailedToRemoveViewsFromAgent
                     )
                     results.message = msg
+                    results.data = views
                     results.unchanged_id.append(self.agent_id)
 
             else:
@@ -434,6 +441,7 @@ class AgentManager(object):
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
+                results.data = views
                 results.unchanged_ids.append(self.agent_id)
 
         else:
@@ -493,8 +501,8 @@ class AgentManager(object):
 
                 else:
                     msg = (
-                        'Failed to add tags: {0} to agent: {1}.'
-                        .format(', '.join(tag_ids, self.agent_id))
+                        'Failed to add tags to agent: {0}.'
+                        .format(self.agent_id)
                     )
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToCreateObject
@@ -508,21 +516,20 @@ class AgentManager(object):
 
             elif set(valid_tags).issubset(self.tags):
                 msg = (
-                    'Some of the tag ids: {0} already exist for agent: {1}.'
-                    .format(', '.join(tag_ids), self.agent_id)
+                    'Some of the tags already exist for agent: {0}.'
+                    .format(self.agent_id)
                 )
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
+                results.data = tag_ids
                 results.unchanged_ids.append(self.agent_id)
 
             else:
-                msg = (
-                    'Invalid tag ids: {0}.'.format(', '.join(tag_ids))
-                )
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
-                results.message = msg
+                results.message = 'Invalid tags'
+                results.data = tag_ids
                 results.unchanged_ids.append(self.agent_id)
 
         else:
@@ -563,20 +570,21 @@ class AgentManager(object):
                     self.properties = self._agent_attributes()
                     self.tags = self.get_tags()
                     msg = (
-                        'Tag ids {0} were removed successfully from agent {1}'
-                        .format(', '.join(tag_ids), self.agent_id)
+                        'Tags were removed successfully from agent {0}'
+                        .format(self.agent_id)
                     )
                     results.generic_status_code = GenericCodes.ObjectDeleted
                     results.vfense_status_code = (
                         AgentCodes.TagsRemovedFromAgent
                    )
                     results.message = msg
+                    results.data = tag_ids
                     results.updated_ids.append(self.agent_id)
 
                 else:
                     msg = (
-                        'Failed to remove tags: {0} from agent: {1}.'
-                        .format(', '.join(tag_ids), self.agent_id)
+                        'Failed to remove tags from agent: {0}.'
+                        .format(self.agent_id)
                     )
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToDeleteObject
@@ -585,15 +593,14 @@ class AgentManager(object):
                         AgentFailureCodes.FailedToRemoveTagsFromAgent
                     )
                     results.message = msg
+                    results.data = tag_ids
                     results.unchanged_ids.append(self.agent_id)
 
             else:
-                msg = (
-                    'Invalid tag ids: {0}.'.format(', '.join(tag_ids))
-                )
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
-                results.message = msg
+                results.message = 'Invalid tags'
+                results.data = tag_ids
                 results.unchanged_ids.append(self.agent_id)
 
         else:
@@ -873,30 +880,30 @@ class AgentManager(object):
                     results.unchanged_ids.append(self.agent_id)
 
             else:
-                generic_status_code = GenericCodes.InvalidId
-                vfense_status_code = AgentFailureCodes.FailedToUpdateAgent
-                msg = 'Agent %s properties were invalid - ' % (self.agent_id)
+                results.generic_status_code = GenericCodes.InvalidId
+                results.vfense_status_code = (
+                    AgentFailureCodes.FailedToUpdateAgent
+                )
+                results.message = (
+                    'Agent {0} properties were invalid'.format(self.agent_id)
+                )
                 results.unchanged_ids.append(self.agent_id)
                 results.errors = invalid_fields
 
         elif not isinstance(agent, Agent):
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = GenericFailureCodes.InvalidInstanceType
-            msg = (
+            results.generic_status_code = GenericCodes.InvalidId
+            results.vfense_status_code = GenericFailureCodes.InvalidInstanceType
+            results.message = (
                 'Agent {0} is not of instance Agent., instanced passed {1}'
                 .format(self.agent_id, type(agent))
             )
             results.unchanged_ids.append(self.agent_id)
 
         else:
-            generic_status_code = GenericCodes.InvalidId
-            vfense_status_code = AgentFailureCodes.AgentIdDoesNotExist
-            msg = 'Agent %s does not exist - ' % (self.agent_id)
+            results.generic_status_code = GenericCodes.InvalidId
+            results.vfense_status_code = AgentFailureCodes.AgentIdDoesNotExist
+            results.message = 'Agent %s does not exist - ' % (self.agent_id)
             results.unchanged_id.append(self.agent_id)
-
-        results.generic_status_code = generic_status_code
-        results.vfense_status_code = vfense_status_code
-        results.message = msg
 
         return results
 
