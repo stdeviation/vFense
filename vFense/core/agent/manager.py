@@ -114,7 +114,10 @@ class AgentManager(object):
                     self.add_hardware(agent.hardware)
                     if tags:
                         self.add_to_tags(tags)
-                    msg = 'Agent {0} added successfully'.format(self.agent_id)
+                    msg = (
+                        'Agent {0}:{1} was added successfully'
+                        .format(self.agent_id, agent.computer_name)
+                    )
                     results.generic_status_code = GenericCodes.ObjectCreated
                     results.vfense_status_code = (
                         AgentResultCodes.NewAgentSucceeded
@@ -187,7 +190,6 @@ class AgentManager(object):
         results = ApiResults()
         results.fill_in_defaults()
         if isinstance(agent, Agent):
-            agent_exist = self.properties
             invalid_fields = agent.get_invalid_fields()
             last_agent_update = time()
             agent.last_agent_update = last_agent_update
@@ -198,9 +200,9 @@ class AgentManager(object):
                 validate_view_names(agent.views)
             )
 
-            if views_are_valid and not invalid_fields and agent_exist.agent_id:
+            if views_are_valid and not invalid_fields and self.properties.agent_id:
                 agent.views = list(set(agent.views).union(self.views))
-                agent.display_name = agent_exist[AgentKeys.DisplayName]
+                agent.display_name = self.properties.display_name
                 status_code, _, errors, generated_ids = (
                     update_agent(self.agent_id, agent.to_dict_db_update())
                 )
@@ -210,8 +212,8 @@ class AgentManager(object):
                     if tags:
                         self.add_to_tags(tags)
                     msg = (
-                        'Agent {0} updated successfully'
-                        .format(self.agent_id)
+                        'Agent {0}:{1} updated successfully'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.generic_status_code = GenericCodes.ObjectUpdated
                     results.vfense_status_code = (
@@ -221,7 +223,10 @@ class AgentManager(object):
                     results.data.append(agent.to_dict_non_null())
 
                 else:
-                    msg = 'Failed to update agent {0}.'.format(self.agent_id)
+                    msg = (
+                        'Failed to update agent {0}:{1}'
+                        .format(self.agent_id, self.properties.computer_name)
+                    )
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToUpdateObject
                     )
@@ -233,8 +238,8 @@ class AgentManager(object):
 
             elif invalid_fields:
                 msg = (
-                    'Failed to update agent {0}, invalid fields were passed'
-                    .format(self.agent_id)
+                    'Failed to update agent {0}:{1}, invalid fields were passed'
+                    .format(self.agent_id, self.properties.computer_name)
                 )
                 results.generic_status_code = (
                     GenericFailureCodes.FailedToUpdateObject
@@ -246,7 +251,7 @@ class AgentManager(object):
                 results.errors = invalid_fields
                 results.data.append(agent.to_dict_non_null())
 
-            elif not agent_exist:
+            elif not self.properties.agent_id:
                 msg = (
                     'Failed to update, agent {0} does not exist'
                     .format(self.agent_id)
@@ -260,8 +265,8 @@ class AgentManager(object):
 
             else:
                 msg = (
-                    'Failed to update agent, invalid views were passed: {0}.'
-                    .format(', '.join(invalid_view_names))
+                    'Failed to update agent {0}:{1}, invalid views were passed.'
+                    .format(self.agent_id, self.properties.computer_name)
                 )
                 results.generic_status_code = (
                     GenericFailureCodes.FailedToCreateObject
@@ -270,6 +275,7 @@ class AgentManager(object):
                     AgentFailureResultCodes.NewAgentFailed
                 )
                 results.message = msg
+                results.errors = invalid_view_names
                 results.data.append(agent.to_dict_non_null())
 
         else:
@@ -286,7 +292,6 @@ class AgentManager(object):
             results.message = msg
 
         return results
-
 
     @time_it
     def add_to_views(self, views):
@@ -306,8 +311,7 @@ class AgentManager(object):
         """
         results = ApiResults()
         results.fill_in_defaults()
-        agent_exist = self.properties
-        if agent_exist.agent_id:
+        if self.properties.agent_id:
             views_are_valid, valid_views, invalid_views = (
                 validate_view_names(views)
             )
@@ -323,8 +327,8 @@ class AgentManager(object):
                     self.properties = self._agent_attributes()
                     self.views = self.get_views()
                     msg = (
-                        'Views {0} were added successfully to agent {1}'
-                        .format(', '.join(views), self.agent_id)
+                        'Views were added successfully to agent {0}:{1}'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.generic_status_code = GenericCodes.ObjectCreated
                     results.vfense_status_code = AgentCodes.ViewsAddedToAgent
@@ -334,8 +338,8 @@ class AgentManager(object):
 
                 else:
                     msg = (
-                        'Failed to add viewstags: {0} to agent: {1}.'
-                        .format(', '.join(views, self.agent_id))
+                        'Failed to add views to agent: {0}:{1}.'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToCreateObject
@@ -349,21 +353,24 @@ class AgentManager(object):
 
             elif views_exist_in_agent:
                 msg = (
-                    'Some of the views: {0} already exist for agent: {1}.'
-                    .format(', '.join(views), self.agent_id)
+                    'Some of the views already exist for agent {0}:{1}'
+                    .format(self.agent_id. self.properties.computer_name)
                 )
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
+                results.data = views
                 results.unchanged_ids.append(self.agent_id)
 
             else:
                 msg = (
-                    'Invalid views: {0}.'.format(', '.join(views))
+                    'Invalid views were passed for agent {0}:{1}'
+                    .format(self.agent_id, self.properties.computer_name)
                 )
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
                 results.message = msg
+                results.data = invalid_views
                 results.unchanged_ids.append(self.agent_id)
 
         else:
@@ -408,8 +415,8 @@ class AgentManager(object):
                     self.properties = self._agent_attributes()
                     self.views = self.get_views()
                     msg = (
-                        'Views {0} were removed successfully from agent {1}'
-                        .format(', '.join(views), self.agent_id)
+                        'Views were removed successfully from agent {0}:{1}'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.generic_status_code = GenericCodes.ObjectDeleted
                     results.vfense_status_code = (
@@ -421,8 +428,8 @@ class AgentManager(object):
 
                 else:
                     msg = (
-                        'Failed to remove views: {0} from agent: {1}.'
-                        .format(', '.join(views), self.agent_id)
+                        'Failed to remove views from agent {0}:{1}.'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToDeleteObject
@@ -436,7 +443,8 @@ class AgentManager(object):
 
             else:
                 msg = (
-                    'Invalid views: {0}.'.format(', '.join(views))
+                    'Invalid views were passed for agent {0}:{1}'
+                    .format(self.agent_id, self.properties.computer_name)
                 )
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
@@ -490,19 +498,19 @@ class AgentManager(object):
                     self.properties = self._agent_attributes()
                     self.tags = self.get_tags()
                     msg = (
-                        'Tag ids {0} were added successfully to agent {1}'
-                        .format(', '.join(tag_ids), self.agent_id)
+                        'Tag ids were added successfully to agent {0}:{1}'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.generic_status_code = GenericCodes.ObjectCreated
                     results.vfense_status_code = AgentCodes.TagsAddedToAgent
                     results.message = msg
-                    results.data = tag_data
+                    results.data = tag_ids
                     results.updated_ids.append(self.agent_id)
 
                 else:
                     msg = (
-                        'Failed to add tags to agent: {0}.'
-                        .format(self.agent_id)
+                        'Failed to add tags to agent {0}:{1}'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToCreateObject
@@ -511,13 +519,13 @@ class AgentManager(object):
                         AgentFailureCodes.FailedToAddTagsToAgent
                     )
                     results.message = msg
-                    results.data = tag_data
+                    results.data = tag_ids
                     results.unchanged_ids.append(self.agent_id)
 
             elif set(valid_tags).issubset(self.tags):
                 msg = (
-                    'Some of the tags already exist for agent: {0}.'
-                    .format(self.agent_id)
+                    'Some of the tags already exist for agent {0}:{1}'
+                    .format(self.agent_id, self.properties.computer_name)
                 )
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
@@ -528,7 +536,10 @@ class AgentManager(object):
             else:
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
-                results.message = 'Invalid tags'
+                results.message = (
+                    'Invalid tags for agent {0}:{1}'
+                    .format(self.agent_id, self.properties.computer_name)
+                )
                 results.data = tag_ids
                 results.unchanged_ids.append(self.agent_id)
 
@@ -560,8 +571,7 @@ class AgentManager(object):
         """
         results = ApiResults()
         results.fill_in_defaults()
-        agent_exist = self.properties
-        if agent_exist:
+        if self.properties.agent_id:
             if set(tag_ids).issubset(self.tags):
                 status_code, _, _, _ = (
                     delete_tag_ids_from_agent(self.agent_id, tag_ids)
@@ -570,8 +580,8 @@ class AgentManager(object):
                     self.properties = self._agent_attributes()
                     self.tags = self.get_tags()
                     msg = (
-                        'Tags were removed successfully from agent {0}'
-                        .format(self.agent_id)
+                        'Tags were removed successfully from agent {0}:{1}'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.generic_status_code = GenericCodes.ObjectDeleted
                     results.vfense_status_code = (
@@ -583,8 +593,8 @@ class AgentManager(object):
 
                 else:
                     msg = (
-                        'Failed to remove tags from agent: {0}.'
-                        .format(self.agent_id)
+                        'Failed to remove tags from agent {0}:{1}'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToDeleteObject
@@ -599,7 +609,10 @@ class AgentManager(object):
             else:
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId
-                results.message = 'Invalid tags'
+                results.message = (
+                    'Invalid tags passed for agent {0}:{1}'
+                    .format(self.agent_id, self.properties.computer_name)
+                )
                 results.data = tag_ids
                 results.unchanged_ids.append(self.agent_id)
 
@@ -640,9 +653,8 @@ class AgentManager(object):
         """
         results = ApiResults()
         results.fill_in_defaults()
-        agent_exist = self.properties
         hw_data = []
-        if agent_exist:
+        if self.properties.agent_id:
             if isinstance(hardware, dict):
                 for hw in hardware.keys():
                     hw_info = (
@@ -670,8 +682,10 @@ class AgentManager(object):
                     if status_code == DbCodes.Inserted:
                         self.properties = self._agent_attributes()
                         msg = (
-                            'Hardware added successfully to agent {0}'
-                            .format(self.agent_id)
+                            'Hardware added successfully to agent {0}:{1}'
+                            .format(
+                                self.agent_id, self.properties.computer_name
+                            )
                         )
                         results.generic_status_code = (
                             GenericCodes.ObjectCreated
@@ -685,8 +699,8 @@ class AgentManager(object):
 
                 else:
                     msg = (
-                        'Empty hardware list, agent {0} could not be updated.'
-                        .format(self.agent_id)
+                        'Empty hardware list, agent {0}:{1} couldnt be updated'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToCreateObject
@@ -696,7 +710,7 @@ class AgentManager(object):
                     )
                     results.message = msg
                     results.data = [hw_data]
-                    results.unchanged_ids = [self.agent_id]
+                    results.unchanged_ids.append(self.agent_id)
 
             else:
                 msg = (
@@ -738,7 +752,6 @@ class AgentManager(object):
         agent = Agent(environment=environment)
         results = self.__edit_properties(agent)
         return results
-
 
     @time_it
     def edit_display_name(self, display_name):
@@ -801,7 +814,6 @@ class AgentManager(object):
         results = self.__edit_properties(agent)
         return results
 
-
     @time_it
     def update_last_checkin_time(self):
         """Update the timestamp for the last time the agent communicated.
@@ -836,7 +848,6 @@ class AgentManager(object):
         results = self.__edit_properties(agent)
         return results
 
-
     @time_it
     def __edit_properties(self, agent):
         """ Edit the properties of this agent.
@@ -869,7 +880,10 @@ class AgentManager(object):
 
                     if object_status == DbCodes.Replaced:
                         results.message = (
-                            'Agent %s was updated - ' % (self.agent_id)
+                            'Agent {0}:{1} was updated'
+                            .format(
+                                self.agent_id, self.properties.computer_name
+                            )
                         )
                         results.generic_status_code = (
                             GenericCodes.ObjectUpdated
@@ -880,7 +894,10 @@ class AgentManager(object):
 
                     elif object_status == DbCodes.Unchanged:
                         results.message = (
-                            'Agent %s was not updated - ' % (self.agent_id)
+                            'Agent {0}:{1} was not updated'
+                            .format(
+                                self.agent_id, self.properties.computer_name
+                            )
                         )
                         results.generic_status_code = (
                             GenericCodes.ObjectUnchanged
@@ -895,8 +912,8 @@ class AgentManager(object):
                         AgentFailureCodes.FailedToUpdateAgent
                     )
                     results.message = (
-                        'Agent {0} properties were invalid'
-                        .format(self.agent_id)
+                        'Agent {0}:{1} properties were invalid'
+                        .format(self.agent_id, self.properties.computer_name)
                     )
                     results.unchanged_ids.append(self.agent_id)
                     results.errors = invalid_fields
@@ -945,21 +962,27 @@ class AgentManager(object):
             delete_hardware_for_agent(self.agent_id)
             status_code, _, _, _ = delete_agent(self.agent_id)
             if status_code == DbCodes.Deleted:
-                msg = 'Agent %s was deleted - ' % (self.agent_id)
+                msg = (
+                    'Agent {0}:{1} was deleted'
+                    .format(self.agent_id, self.properties.computer_name)
+                )
                 results.message = msg
                 results.generic_status_code = GenericCodes.ObjectDeleted
                 results.vfense_status_code = AgentCodes.AgentDeleted
                 results.deleted_ids.append(self.agent_id)
 
             else:
-                msg = 'Invalid agent id %s' % (self.agent_id)
+                msg = (
+                    'Invalid agent id {0}:{1}'
+                    .format(self.agent_id, self.properties.computer_name)
+                )
                 results.message = msg
                 results.generic_status_code = GenericCodes.InvalidId
                 results.vfense_status_code = GenericCodes.InvalidId
                 results.unchanged_ids.append(self.agent_id)
 
         else:
-            msg = 'Invalid agent id %s' % (self.agent_id)
+            msg = 'Invalid agent id {0}'.format(self.agent_id)
             results.message = msg
             results.generic_status_code = GenericCodes.InvalidId
             results.vfense_status_code = GenericCodes.InvalidId
