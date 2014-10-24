@@ -86,10 +86,14 @@ class AgentManager(object):
             >>> from vFense.core.agent import Agent
             >>> agent = Agent(computer_name='DISCIPLINE-1', etc...)
             >>> manager = AgentManager()
-            >>> manager.create(agent)
+            >>> results = manager.create(agent)
+            >>> results.generated_ids
+            u'8414ff14-5109-4e5d-9028-60a000a84c35'
 
         Returns:
             ApiResults instance
+            Check vFense.core.results for all the attributes and methods
+            for the instance.
         """
         results = ApiResults()
         results.fill_in_defaults()

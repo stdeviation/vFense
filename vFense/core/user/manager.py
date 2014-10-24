@@ -118,61 +118,19 @@ class UserManager(object):
         return user_key
 
     @time_it
-    def get_all_attributes(self):
-        """Retrieve a user and all of its properties by user_name.
-        Basic Usage:
-            >>> from vFense.user.manager import UserManager
-            >>> user_name = 'admin'
-            >>> user.get_all_attributes()
-
-        Returns:
-            Dictionary of user properties.
-            {
-                "current_view": "default",
-                "views": [
-                    {
-                        "admin": true,
-                        "name": "default"
-                    }
-                ],
-                "groups": [
-                    {
-                        "group_id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
-                        "group_name": "Administrator"
-                    }
-                ],
-                "default_view": "default",
-                "user_name": "admin",
-                "permissions": [
-                    "administrator"
-                ]
-            }
-        """
-        user_data = User(**fetch_user_and_all_properties(self.user_name))
-        if user_data:
-            user = User(**user_data)
-        else:
-            user = User()
-        return user
-
-    @time_it
     def toggle_status(self):
         """Enable or disable a user
         Basic Usage:
             >>> from vFense.user.manager import UserManager
             >>> user_name = 'admin'
-            >>> user.toggle_status()
+            >>> results = user.toggle_status()
+            >>> results.message
+            u'user admin is enabled'
 
         Returns:
-            Dictionary of the status of the operation.
-            >>>
-                {
-                    "vfense_status_code": 13001,
-                    "updated_ids": [
-                        "tester"
-                    ],
-                    "message": "toggle_user_status - user tester is enabled",
-                }
+            ApiResults instance
+            Check vFense.core.results for all the attributes and methods
+            for the instance.
         """
         results = ApiResults()
         results.fill_in_defaults()
@@ -182,27 +140,19 @@ class UserManager(object):
         self.properties = self._user_attributes()
         if status_code == DbCodes.Replaced:
             if self.properties.enabled:
-                msg = 'user %s is enabled' % (self.user_name)
+                msg = 'user {0} is enabled'.format(self.user_name)
 
             else:
-                msg = 'user %s is disabled' % (self.user_name)
+                msg = 'user {0} is disabled'.format(self.user_name)
 
-            results.generic_status_code = (
-                GenericCodes.ObjectUpdated
-            )
-            results.vfense_status_code = (
-                UserCodes.UserUpdated
-            )
-            results.updated_ids = [self.user_name]
+            results.generic_status_code = GenericCodes.ObjectUpdated
+            results.vfense_status_code = UserCodes.UserUpdated
+            results.updated_ids.append(self.user_name)
 
         elif status_code == DbCodes.Skipped:
-            msg = 'user %s is invalid' % (self.user_name)
-            results.generic_status_code = (
-                GenericCodes.InvalidId
-            )
-            results.vfense_status_code = (
-                UserFailureCodes.Invaliduser_name
-            )
+            msg = 'user {0} is invalid'.format(self.user_name)
+            results.generic_status_code = GenericCodes.InvalidId
+            results.vfense_status_code = UserFailureCodes.Invaliduser_name
 
         results.message = msg
 
@@ -231,34 +181,14 @@ class UserManager(object):
                     )
                 )
             >>> manager = UserManager(user_name)
-            >>> manager.create(user, group_ids)
+            >>> results = manager.create(user, group_ids)
+            >>> results.message
+            u'user name global_admin created'
 
-        Return:
-            Dictionary of the status of the operation.
-            >>>
-            {
-                "errors": [],
-                "data": [
-                    {
-                        "default_view": "global",
-                        "global": true,
-                        "full_name": "Global Administrator",
-                        "views": [
-                            "global"
-                        ],
-                        "current_view": "global",
-                        "user_name": "global_admin",
-                        "email": null,
-                        "enabled": true
-                    }
-                ],
-                "generic_status_code": 1010,
-                "generated_ids": [
-                    "global_admin"
-                ],
-                "message": "create - user name global_admin created",
-                "vfense_status_code": 13000
-            }
+        Returns:
+            ApiResults instance
+            Check vFense.core.results for all the attributes and methods
+            for the instance.
         """
         user_exist = self.properties
         user.fill_in_defaults()
