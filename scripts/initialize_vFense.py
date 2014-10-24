@@ -249,9 +249,9 @@ def add_local_user():
 @db_create_close
 def create_views(conn=None):
     view = View(
-        DefaultViews.GLOBAL,
+        view_name=DefaultViews.GLOBAL,
         server_queue_ttl=args.queue_ttl,
-        package_download_url=url
+        package_download_url_base=url
     )
     view_manager = ViewManager(view.view_name)
     view_manager.create(view)
@@ -266,7 +266,7 @@ def create_groups(conn=None):
     )
     group_manager = GroupManager()
     group_results = group_manager.create(group)
-    admin_group_id = group_results['generated_ids'][0]
+    admin_group_id = group_results.generated_ids[0]
 
     agent_group = Group(
         DefaultGroups.GLOBAL_READ_ONLY, [Permissions.READ],
@@ -274,7 +274,7 @@ def create_groups(conn=None):
     )
     agent_group_manager = GroupManager()
     agent_group_results = agent_group_manager.create(agent_group)
-    agent_group_id = agent_group_results['generated_ids'][0]
+    agent_group_id = agent_group_results.generated_ids[0]
 
     return(admin_group_id, agent_group_id)
 
@@ -282,13 +282,13 @@ def create_groups(conn=None):
 @db_create_close
 def create_users(admin_group_id, agent_group_id, conn=None):
     admin_user = User(
-        DefaultUsers.GLOBAL_ADMIN,
-        args.admin_password, DefaultGroups.GLOBAL_ADMIN,
+        user_name=DefaultUsers.GLOBAL_ADMIN,
+        password=args.admin_password, groups=DefaultGroups.GLOBAL_ADMIN,
         current_view=DefaultViews.GLOBAL,
         default_view=DefaultViews.GLOBAL,
         enabled=True, is_global=True
      )
-    user_manager = UserManager(admin_user.name)
+    user_manager = UserManager(admin_user.user_name)
     user_manager.create(admin_user, [admin_group_id])
     print 'Admin username = %s' % (DefaultUsers.GLOBAL_ADMIN)
     print 'Admin password = %s' % (args.admin_password)
