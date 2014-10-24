@@ -26,9 +26,9 @@ class AgentsAndTagsTests(unittest.TestCase):
 
     def test_a_create_view1(self):
         view = View(
-            'Test View 1',
+            'Test View 1', package_download_url_base='http://localhost/packages'
         )
-        manager = ViewManager(view.name)
+        manager = ViewManager(view.view_name)
         results = manager.create(view)
         print dumps(results.to_dict(), indent=4)
         status_code = results.vfense_status_code
@@ -36,9 +36,9 @@ class AgentsAndTagsTests(unittest.TestCase):
 
     def test_a_create_view2(self):
         view = View(
-            'Test View 2',
+            'Test View 2', package_download_url_base='http://localhost/packages'
         )
-        manager = ViewManager(view.name)
+        manager = ViewManager(view.view_name)
         results = manager.create(view)
         print dumps(results.to_dict(), indent=4)
         status_code = results.vfense_status_code
@@ -47,7 +47,7 @@ class AgentsAndTagsTests(unittest.TestCase):
     def test_b_create_tag1(self):
         tag = (
             Tag(
-                'Global Test Tag 1', view_name=DefaultViews.GLOBAL,
+                tag_name='Global Test Tag 1', view_name=DefaultViews.GLOBAL,
                 is_global=True
             )
         )
@@ -58,7 +58,7 @@ class AgentsAndTagsTests(unittest.TestCase):
         self.failUnless(status_code == TagCodes.TagCreated)
 
     def test_b_create_tag2(self):
-        tag = Tag('Local Test Tag 1', view_name='Test View 2')
+        tag = Tag(tag_name='Local Test Tag 1', view_name='Test View 2')
         manager = TagManager()
         results = manager.create(tag)
         print dumps(results.to_dict(), indent=4)
