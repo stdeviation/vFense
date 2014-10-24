@@ -126,7 +126,8 @@ def fetch_supported_os_strings(view_name, conn=None):
 def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
     """Retrieve a list of agent ids
     Kwargs:
-        view_name (str): Name of the view, where the agent is located
+        views (list): List of views, from where you want to retrieve agents
+            from.
 
     Basic Usage:
         >>> from vFense.core.agent._db import fetch_agent_ids_in_views

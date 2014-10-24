@@ -859,38 +859,60 @@ class AgentManager(object):
 
         results = ApiResults()
         results.fill_in_defaults()
-        if self.properties.agent_id and isinstance(agent, Agent):
-            invalid_fields = agent.get_invalid_fields()
-            if not invalid_fields:
-                object_status, _, _, _ = (
-                    update_agent(self.agent_id, agent.to_dict_db_update())
-                )
+        if isinstance(agent, Agent):
+            if self.properties.agent_id:
+                invalid_fields = agent.get_invalid_fields()
+                if not invalid_fields:
+                    object_status, count, errors, _ = (
+                        update_agent(self.agent_id, agent.to_dict_db_update())
+                    )
 
-                if object_status == DbCodes.Replaced:
-                    msg = 'Agent %s was updated - ' % (self.agent_id)
-                    generic_status_code = GenericCodes.ObjectUpdated
-                    vfense_status_code = AgentCodes.AgentUpdated
-                    results.updated_ids.append(self.agent_id)
-                    results.data.append(agent.to_dict_non_null())
+                    if object_status == DbCodes.Replaced:
+                        results.message = (
+                            'Agent %s was updated - ' % (self.agent_id)
+                        )
+                        results.generic_status_code = (
+                            GenericCodes.ObjectUpdated
+                        )
+                        results.vfense_status_code = AgentCodes.AgentUpdated
+                        results.updated_ids.append(self.agent_id)
+                        results.data.append(agent.to_dict_non_null())
 
-                elif object_status == DbCodes.Unchanged:
-                    msg = 'Agent %s was not updated - ' % (self.agent_id)
-                    generic_status_code = GenericCodes.ObjectUnchanged
-                    vfense_status_code = AgentCodes.AgentUnchanged
+                    elif object_status == DbCodes.Unchanged:
+                        results.message = (
+                            'Agent %s was not updated - ' % (self.agent_id)
+                        )
+                        results.generic_status_code = (
+                            GenericCodes.ObjectUnchanged
+                        )
+                        results.vfense_status_code = AgentCodes.AgentUnchanged
+                        results.unchanged_ids.append(self.agent_id)
+                        results.data.append(agent.to_dict_non_null())
+
+                else:
+                    results.generic_status_code = GenericCodes.InvalidId
+                    results.vfense_status_code = (
+                        AgentFailureCodes.FailedToUpdateAgent
+                    )
+                    results.message = (
+                        'Agent {0} properties were invalid'
+                        .format(self.agent_id)
+                    )
                     results.unchanged_ids.append(self.agent_id)
+                    results.errors = invalid_fields
+                    results.data.append(agent.to_dict_non_null())
 
             else:
                 results.generic_status_code = GenericCodes.InvalidId
                 results.vfense_status_code = (
-                    AgentFailureCodes.FailedToUpdateAgent
+                    AgentFailureCodes.AgentIdDoesNotExist
                 )
                 results.message = (
-                    'Agent {0} properties were invalid'.format(self.agent_id)
+                    'Agent {0} does not exist'.format(self.agent_id)
                 )
                 results.unchanged_ids.append(self.agent_id)
-                results.errors = invalid_fields
 
-        elif not isinstance(agent, Agent):
+        else:
             results.generic_status_code = GenericCodes.InvalidId
             results.vfense_status_code = GenericFailureCodes.InvalidInstanceType
             results.message = (
@@ -898,12 +920,6 @@ class AgentManager(object):
                 .format(self.agent_id, type(agent))
             )
             results.unchanged_ids.append(self.agent_id)
-
-        else:
-            results.generic_status_code = GenericCodes.InvalidId
-            results.vfense_status_code = AgentFailureCodes.AgentIdDoesNotExist
-            results.message = 'Agent %s does not exist - ' % (self.agent_id)
-            results.unchanged_id.append(self.agent_id)
 
         return results
 

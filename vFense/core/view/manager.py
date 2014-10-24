@@ -1035,7 +1035,7 @@ class ViewManager(object):
                     ViewFailureCodes.UsersExistForView
                 )
                 results.message = msg
-                results.unchanged_id.append(self.view_name)
+                results.unchanged_ids.append(self.view_name)
 
         else:
             msg = 'View %s does not exists' % (self.view_name)

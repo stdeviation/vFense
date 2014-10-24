@@ -7,7 +7,7 @@ from vFense.core.agent._db_model import (
 from vFense.core.tag import Tag
 from vFense.core.tag._db_model import TagKeys
 from vFense.core.tag._db import fetch_tag_by_name_and_view
-from vFense.core.agent._db import fetch_agent_ids_in_views
+from vFense.core.agent._db import fetch_agent_ids
 from vFense.core.tag.manager import TagManager
 from vFense.core.agent import Agent
 from vFense.core.agent.manager import AgentManager
@@ -15,8 +15,6 @@ from vFense.core.agent.status_codes import AgentCodes
 from vFense.receiver.status_codes import AgentResultCodes
 from vFense.core.tag.status_codes import TagCodes
 from vFense.core.view.status_codes import ViewCodes
-from vFense.core.results import ApiResultKeys
-from vFense.core.agent._constants import AgentDefaults
 from vFense.core.tests.agent_and_tag_data import AGENT_DATA
 from vFense.core.view._constants import DefaultViews
 from vFense.core.view import View
@@ -82,7 +80,7 @@ class AgentsAndTagsTests(unittest.TestCase):
         self.failUnless(status_code == AgentResultCodes.NewAgentSucceeded)
 
     def test_d_edit1_agent_display_name(self):
-        agent_ids = fetch_agent_ids_in_views()
+        agent_ids = fetch_agent_ids('global')
         manager = AgentManager(agent_ids[0])
         results = manager.edit_display_name('Shaolin Testing')
         print dumps(results.to_dict_non_null(), indent=4)
@@ -90,7 +88,7 @@ class AgentsAndTagsTests(unittest.TestCase):
         self.failUnless(status_code == AgentCodes.AgentUpdated)
 
     def test_d_edit2_agent_environment(self):
-        agent_ids = fetch_agent_ids_in_views()
+        agent_ids = fetch_agent_ids('global')
         manager = AgentManager(agent_ids[0])
         results = manager.edit_environment('Development')
         print dumps(results.to_dict_non_null(), indent=4)
@@ -98,7 +96,7 @@ class AgentsAndTagsTests(unittest.TestCase):
         self.failUnless(status_code == AgentCodes.AgentUpdated)
 
     def test_d_edit3_agent_add_to_views1(self):
-        agent_ids = fetch_agent_ids_in_views()
+        agent_ids = fetch_agent_ids('global')
         manager = AgentManager(agent_ids[0])
         results = manager.add_to_views(['Test View 1', 'Test View 2'])
         print dumps(results.to_dict_non_null(), indent=4)
@@ -106,7 +104,7 @@ class AgentsAndTagsTests(unittest.TestCase):
         self.failUnless(status_code == AgentCodes.ViewsAddedToAgent)
 
     def test_d_edit4_agent_remove_from_views1(self):
-        agent_ids = fetch_agent_ids_in_views()
+        agent_ids = fetch_agent_ids('global')
         manager = AgentManager(agent_ids[0])
         results = manager.remove_from_views(['Test View 1'])
         print dumps(results.to_dict_non_null(), indent=4)
@@ -115,11 +113,9 @@ class AgentsAndTagsTests(unittest.TestCase):
 
     def test_e_tag_add_to_agent(self):
         tag = (
-            fetch_tag_by_name_and_view(
-                'Local Test Tag 1', 'Test View 2'
-            )
+            fetch_tag_by_name_and_view('Local Test Tag 1', 'Test View 2')
         )
-        agent_ids = fetch_agent_ids_in_views()
+        agent_ids = fetch_agent_ids('global')
         manager = TagManager(tag[TagKeys.TagId])
         results = manager.add_agents(agent_ids)
         print dumps(results.to_dict_non_null(), indent=4)
@@ -128,11 +124,9 @@ class AgentsAndTagsTests(unittest.TestCase):
 
     def test_f_tag_remove_from_agent(self):
         tag = (
-            fetch_tag_by_name_and_view(
-                'Local Test Tag 1', 'Test View 2'
-            )
+            fetch_tag_by_name_and_view('Local Test Tag 1', 'Test View 2')
         )
-        agent_ids = fetch_agent_ids_in_views()
+        agent_ids = fetch_agent_ids()
         manager = TagManager(tag[TagKeys.TagId])
         results = manager.remove_agents(agent_ids)
         print dumps(results.to_dict_non_null(), indent=4)
@@ -165,14 +159,14 @@ class AgentsAndTagsTests(unittest.TestCase):
 
     def test_h_view_remove1(self):
         manager = ViewManager('Test View 2')
-        results = manager.remove()
+        results = manager.remove(force=True)
         print dumps(results.to_dict(), indent=4)
         status_code = results.vfense_status_code
         self.failUnless(status_code == ViewCodes.ViewDeleted)
 
     def test_h_view_remove2(self):
         manager = ViewManager('Test View 1')
-        results = manager.remove()
+        results = manager.remove(force=True)
         print dumps(results.to_dict(), indent=4)
         status_code = results.vfense_status_code
         self.failUnless(status_code == ViewCodes.ViewDeleted)

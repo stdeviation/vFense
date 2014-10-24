@@ -16,12 +16,11 @@ class Agent(Base):
     """Used to represent an instance of an agent."""
 
     def __init__(self, agent_id=None, computer_name=None, display_name=None,
-                 os_code=None, os_string=None, views=None,
-                 needs_reboot=None, agent_status=None,
-                 environment=None, machine_type=None,
+                 os_code=None, os_string=None, views=None, needs_reboot=None,
+                 agent_status=None, environment=None, machine_type=None,
                  rebooted=None, hardware=None, bit_type=None,
                  version=None, date_added=None, last_agent_update=None,
-                 token=None, assign_new_token=False, tags=None, enabled=True,
+                 token=None, assign_new_token=None, tags=None, enabled=None,
                  **kwargs
                  ):
         """
@@ -109,6 +108,9 @@ class Agent(Base):
         if not self.enabled:
             self.enabled = True
 
+        if not self.assign_new_token:
+            self.assign_new_token = False
+
     def get_invalid_fields(self):
         """Check for any invalid fields.
         Returns:
@@ -179,6 +181,7 @@ class Agent(Base):
         """
 
         return {
+            AgentKeys.AgentId: self.agent_id,
             AgentKeys.ComputerName: self.computer_name,
             AgentKeys.DisplayName: self.display_name,
             AgentKeys.Views: self.views,
@@ -226,7 +229,7 @@ class Agent(Base):
             (dict): A dictionary with the fields.
 
         """
-
+        self.last_agent_update = time()
         data = {
             AgentKeys.LastAgentUpdate: (
                 DbTime.epoch_time_to_db_time(self.last_agent_update)
