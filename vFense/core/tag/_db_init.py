@@ -110,6 +110,7 @@ try:
         initialize_collections(collection, current_collections)
         name, _ = collection
         indexes = retrieve_indexes(name)
+        initialize_tag_per_agent_indexes(name, indexes)
 
 except Exception as e:
     logger.exception(e)
