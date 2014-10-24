@@ -71,18 +71,17 @@ class UserManager(object):
             >>> from vFense.user.manager import UserManager
             >>> name = 'admin'
             >>> user = UserManager(name)
-            >>> user._user_attributes()
+            >>> attributes = user._user_attributes()
+            >>> attributes.user_name
+            u'global_admin'
 
         Returns:
-            Dictionary
-            >>>
-            {
-                "current_view": "default",
-                "enabled": "yes",
-                "full_name": "vFense Admin Account",
-                "default_view": "default",
-                "user_name": "admin",
-                "email": ""
+            Instance of User
+            User(u"default_view=global,is_global=True,views=[u'global'],
+            current_view=global,date_modified=2014-10-24 11:37:05.583000+00:00,
+            enabled=True,full_name=None,
+            date_added=2014-10-24 11:37:05.583000+00:00,
+            password=None,user_name=global_admin,email=None")
             }
         """
         data = fetch_user(self.user_name, without_fields)
@@ -105,6 +104,7 @@ class UserManager(object):
             >>> user = UserManager(name)
             >>> property = 'current_view'
             >>> user.get_property(property)
+            u'global'
 
         Return:
             String
