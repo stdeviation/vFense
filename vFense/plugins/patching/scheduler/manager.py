@@ -3,13 +3,12 @@ from vFense.plugins.patching.operations import Install
 from vFense.plugins.patching.scheduler.jobs import (
     agent_apps_operation, tag_apps_operation)
 from vFense.core.scheduler import Schedule
-from vFense.plugins.patching.operations._constants import InstallKeys
 from vFense.core.scheduler._constants import (
-    ScheduleKeys, ScheduleTriggers
+    ScheduleTriggers
 )
 from vFense.core.scheduler.manager import JobManager
 from vFense.core.scheduler.status_codes import (
-    SchedulerCodes, SchedulerFailureCodes
+    SchedulerFailureCodes
 )
 from vFense.core.results import ApiResults
 
@@ -32,16 +31,16 @@ class AgentAppsJobManager(JobManager):
                 example install_os_apps, uninstall
         """
         results = ApiResults()
+        results.fill_in_defaults()
         self._set_funcs()
         if isinstance(install, Install):
             invalid_fields = install.get_invalid_fields()
             if not invalid_fields:
                 install.fill_in_defaults()
-                job_kwargs = install.to_dict()
-                job_kwargs[InstallKeys.OPERATION] = operation
+                install.operation = operation
                 job = (
                     Schedule(
-                        job_name, self.once_func, job_kwargs,
+                        job_name, self.once_func, install.to_dict(),
                         run_date=run_date, operation=operation,
                         time_zone=time_zone, trigger=ScheduleTriggers.DATE
                     )
@@ -106,13 +105,11 @@ class AgentAppsJobManager(JobManager):
             invalid_fields = install.get_invalid_fields()
             if not invalid_fields:
                 install.fill_in_defaults()
-                job_kwargs = install.to_dict()
-                job_kwargs[InstallKeys.OPERATION] = operation
+                install.operation = operation
                 job = (
                     Schedule(
-                        job_name, self.cron_func, job_kwargs,
-                        start_date,
-                        operation=operation, time_zone=time_zone,
+                        job_name, self.cron_func, install.to_dict(),
+                        start_date, operation=operation, time_zone=time_zone,
                         trigger=ScheduleTriggers.CRON, year=year,
                         hour=hour, day_of_week=day_of_week,
                         month=month, day=day, minute=minute, end_date=end_date

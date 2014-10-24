@@ -7,3 +7,4 @@ class InstallKeys():
     USER_NAME = 'user_name'
     VIEW_NAME = 'view_name'
     OPERATION = 'operation'
+    FILE_DATA = 'file_data'

@@ -261,7 +261,7 @@ class AgentOperation(Base):
             agents_completed_with_errors_count (int): Number of agents, that
                 this operation failed with some errors.
             applications (list): List of application ids, this operation
-                affects.A
+                affects.
             token (str): This is the token that the agent is using to
                 communicate with the server.
         """

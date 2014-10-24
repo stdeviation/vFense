@@ -1,14 +1,13 @@
 import os
 from vFense.core._constants import CommonKeys
-from vFense.core.operations import ApiResults
 from vFense.core.operations._constants import (
     BaseURIs, URIVersions, V2ListenerURIs, V1ListenerURIs,
     AuthenticationOperations
 )
 
 from vFense.core.decorators import time_it
-from vFense.core.results import ApiResultKeys
-from vFense.core.status_codes import *
+from vFense.core.results import ApiResults
+from vFense.core.status_codes import GenericCodes
 
 
 def _get_result_uris_dict(version, agent_id=None):
@@ -148,6 +147,7 @@ def get_result_uris(agent_id=None, version='v2'):
     """
     result_uris = _get_result_uris_dict(version, agent_id)
     results = ApiResults()
+    results.fill_in_defaults()
     results.generic_status_code = GenericCodes.InformationRetrieved
     results.vfense_status_code = GenericCodes.InformationRetrieved
     results.message = 'response uris retrieved successfully.'

@@ -662,7 +662,7 @@ class AgentHandler(BaseHandler):
 
         elif refresh_apps:
             operation = StorePatchingOperation(active_user, active_view)
-            results = self.refresh_apps(operation, [agent_id])
+            results = self.refresh_apps(operation, agent_operation)
 
         else:
             results = ExternalApiResults()
