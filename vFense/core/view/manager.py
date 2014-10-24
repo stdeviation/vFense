@@ -197,7 +197,7 @@ class ViewManager(object):
                 if object_status == DbCodes.Inserted:
                     self.properties = self._view_properties()
                     generated_ids.append(view.view_name)
-                    msg = 'view %s created - ' % (view.view_name)
+                    msg = 'view {0} created'.format(view.view_name)
                     results.generic_status_code = GenericCodes.ObjectCreated
                     results.vfense_status_code = ViewCodes.ViewCreated
                     results.message = msg
@@ -215,7 +215,7 @@ class ViewManager(object):
                         )
 
                 else:
-                    msg = 'Failed to create view {0}.'.format(view.view_name)
+                    msg = 'Failed to create view {0}'.format(view.view_name)
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToCreateObject
                     )
@@ -226,7 +226,7 @@ class ViewManager(object):
                     results.data.append(view.to_dict())
 
             elif self.properties.view_name:
-                msg = 'view name %s already exists' % (view.view_name)
+                msg = 'view name {0} already exists'.format(view.view_name)
                 results.generic_status_code = GenericCodes.ObjectExists
                 results.vfense_status_code = ViewFailureCodes.ViewExists
                 results.message = msg
@@ -239,6 +239,7 @@ class ViewManager(object):
                 results.generic_status_code = GenericCodes.ObjectExists
                 results.vfense_status_code = ViewFailureCodes.ViewExists
                 results.message = msg
+                results.data = view.to_dict_non_null()
                 results.errors = invalid_fields
 
         else:
@@ -300,48 +301,53 @@ class ViewManager(object):
                 update_views_for_users(users, [self.view_name])
                 if status_code == DbCodes.Replaced:
                     msg = (
-                        'The following users: {0} were added to view {1}'
-                        .format(', '.join(users), self.view_name)
+                        'Users were added to view {0}'
+                        .format(self.view_name)
                     )
 
                     results.generic_status_code = GenericCodes.ObjectUpdated
                     results.vfense_status_code = ViewCodes.ViewsAddedToUser
                     results.message = msg
+                    results.data = users
                     results.updated_ids.append(self.view_name)
 
             elif users and invalid_users:
                 msg = (
-                    'Users {0} are not valid for this view {1}'
-                    .format(', '.join(invalid_users), self.view_name)
+                    'Users are not valid for this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.UsersDoNotExistForView
                 )
                 results.message = msg
+                results.data = invalid_users
                 results.unchanged_ids.append(self.view_name)
 
             elif users and users_exist_in_view:
                 msg = (
-                    'Users {0} already exist in this view {1}'
-                    .format(', '.join(users_exist), self.view_name)
+                    'Users already exist in this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.UsersDoNotExistForView
                 )
                 results.message = msg
+                results.data = users_exist
                 results.unchanged_ids.append(self.view_name)
 
             else:
                 msg = (
-                    'Users do not exist in this view {0}'.format(self.view_name)
+                    'Users do not exist in this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.UsersDoNotExistForView
                 )
                 results.message = msg
+                results.data = users
                 results.unchanged_ids.append(self.view_name)
 
         else:
@@ -395,48 +401,53 @@ class ViewManager(object):
                 )
                 if status_code == DbCodes.Replaced:
                     msg = (
-                        'The following groups: {0} were added to view {1}'
-                        .format(', '.join(groups), self.view_name)
+                        'Groups were added to view {0}'
+                        .format(self.view_name)
                     )
 
                     results.generic_status_code = GenericCodes.ObjectUpdated
                     results.vfense_status_code = ViewCodes.ViewsAddedToGroup
                     results.message = msg
+                    results.data = groups
                     results.updated_ids.append(self.view_name)
 
             elif groups and invalid_groups:
                 msg = (
-                    'Groups {0} are not valid for this view {1}'
-                    .format(', '.join(invalid_groups), self.view_name)
+                    'Groups are not valid for this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.UsersDoNotExistForView
                 )
                 results.message = msg
+                results.data = invalid_groups
                 results.unchanged_ids.append(self.view_name)
 
             elif groups and groups_exist_in_view:
                 msg = (
-                    'Groups {0} already exist in this view {1}'
-                    .format(', '.join(groups_exist), self.view_name)
+                    'Groups already exist in this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.UsersDoNotExistForView
                 )
                 results.message = msg
+                results.data = groups_exist
                 results.unchanged_ids.append(self.view_name)
 
             else:
                 msg = (
-                    'Groups do not exist in this view {0}'.format(self.view_name)
+                    'Groups do not exist in this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.UsersDoNotExistForView
                 )
                 results.message = msg
+                results.data = groups
                 results.unchanged_ids.append(self.view_name)
 
         else:
@@ -490,8 +501,8 @@ class ViewManager(object):
                 delete_users_in_group_containing_view(users, self.view_name)
                 if status_code == DbCodes.Replaced:
                     msg = (
-                        'The following users: {0} were removed from view {1}'
-                        .format(', '.join(users), self.view_name)
+                        'Users were removed from view {0}'
+                        .format(self.view_name)
                     )
 
                     results.generic_status_code = GenericCodes.ObjectUpdated
@@ -499,33 +510,37 @@ class ViewManager(object):
                         ViewCodes.ViewsRemovedFromUser
                     )
                     results.message = msg
+                    results.data = users
                     results.updated_ids.append(self.view_name)
 
             elif users and not valid_users:
                 msg = (
-                    'Users %s are not valid for this view %s'%
-                    (', '.join(users), self.view_name)
+                    'Users are not valid for this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.UsersDoNotExistForView
                 )
                 results.message = msg
+                results.data = users
                 results.unchanged_ids.append(self.view_name)
 
             else:
                 msg = (
-                    'Users do not exist in this view %s'% (self.view_name)
+                    'Users do not exist in this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.UsersDoNotExistForView
                 )
                 results.message = msg
+                results.data = users
                 results.unchanged_ids.append(self.view_name)
 
         else:
-            msg = 'View %s does not exists' % (self.view_name)
+            msg = 'View {0} does not exists'.format(self.view_name)
             results.generic_status_code = GenericCodes.ObjectExists
             results.vfense_status_code = ViewFailureCodes.ViewExists
             results.message = msg
@@ -561,29 +576,30 @@ class ViewManager(object):
                 )
                 if status_code == DbCodes.Replaced:
                     msg = (
-                        'The following agents: {0} were added to view {1}'
-                        .format(', '.join(agents), self.view_name)
+                        'Agents were added to view {0}'
+                        .format(self.view_name)
                     )
 
                     results.generic_status_code = GenericCodes.ObjectUpdated
                     results.vfense_status_code = ViewCodes.AgentsAddedToView
                     results.message = msg
+                    results.data = agents
                     results.updated_ids.append(self.view_name)
 
             else:
                 msg = (
-                    'Agents %s are not valid %s'%
-                    (', '.join(agents), self.view_name)
+                    'Agents are not valid {0}'.format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     AgentFailureCodes.AgentsDoNotExist
                 )
                 results.message = msg
+                results.data = agents
                 results.unchanged_ids.append(self.view_name)
 
         else:
-            msg = 'View %s does not exists' % (self.view_name)
+            msg = 'View %s does not exists'.format(self.view_name)
             results.generic_status_code = GenericCodes.ObjectExists
             results.vfense_status_code = ViewFailureCodes.ViewDoesNotExist
             results.message = msg
@@ -637,36 +653,41 @@ class ViewManager(object):
                 )
                 if status_code == DbCodes.Replaced:
                     msg = (
-                        'Agents: {0} were moved from view {1} to view {2}'
-                        .format(', '.join(agents), self.view_name, view_name)
+                        'Agents were moved from view {1} to view {2}'
+                        .format(self.view_name, view_name)
                     )
 
                     results.generic_status_code = GenericCodes.ObjectUpdated
                     results.vfense_status_code = ViewCodes.AgentsMovedToView
                     results.message = msg
+                    results.data = agents
                     results.updated_ids.append(self.view_name)
+                    results.updated_ids.append(view_name)
 
             elif agents and not valid_agents and not new_view_exist:
                 msg = (
-                    'Agents %s are not valid for this view %s'%
-                    (', '.join(agents), self.view_name)
+                    'Agents are not valid for this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.AgentsDoNotExistForView
                 )
                 results.message = msg
+                results.data = agents
                 results.unchanged_ids.append(self.view_name)
 
             else:
                 msg = (
-                    'Agents do not exist in this view %s'% (self.view_name)
+                    'Agents do not exist in this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.AgentsDoNotExistForView
                 )
                 results.message = msg
+                results.data = agents
                 results.unchanged_ids.append(self.view_name)
 
         elif self.view_name == DefaultViews.GLOBAL:
@@ -675,6 +696,7 @@ class ViewManager(object):
             results.vfense_status_code = (
                 ViewFailureCodes.CantRemoveAgentsFromGlobalView
             )
+            results.data = agents
             results.message = msg
 
         elif not new_view_exist:
@@ -684,16 +706,16 @@ class ViewManager(object):
             )
             results.generic_status_code = GenericCodes.ObjectExists
             results.vfense_status_code = ViewFailureCodes.ViewDoesNotExist
+            results.data = agents
             results.message = msg
 
         else:
-            msg = 'View %s does not exists' % (self.view_name)
+            msg = 'View {0} does not exists'.format(self.view_name)
             results.generic_status_code = GenericCodes.ObjectExists
             results.vfense_status_code = ViewFailureCodes.ViewDoesNotExist
             results.message = msg
 
         return results
-
 
     @time_it
     def remove_agents(self, agents=None):
@@ -738,8 +760,8 @@ class ViewManager(object):
                 delete_agent_ids_from_tags_in_view(agents, self.view_name)
                 if status_code == DbCodes.Replaced:
                     msg = (
-                        'The following agents: {0} were removed from view {1}'
-                        .format(', '.join(agents), self.view_name)
+                        'Agents were removed from view {0}'
+                        .format(self.view_name)
                     )
 
                     results.generic_status_code = GenericCodes.ObjectUpdated
@@ -747,29 +769,33 @@ class ViewManager(object):
                         ViewCodes.ViewsRemovedFromAgent
                     )
                     results.message = msg
+                    results.data = agents
                     results.updated_ids.append(self.view_name)
 
             elif agents and not valid_agents:
                 msg = (
-                    'Agents %s are not valid for this view %s'%
-                    (', '.join(agents), self.view_name)
+                    'Agents are not valid for this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.AgentsDoNotExistForView
                 )
                 results.message = msg
+                results.data = agents
                 results.unchanged_ids.append(self.view_name)
 
             else:
                 msg = (
-                    'Agents do not exist in this view %s'% (self.view_name)
+                    'Agents do not exist in this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.AgentsDoNotExistForView
                 )
                 results.message = msg
+                results.data = agents
                 results.unchanged_ids.append(self.view_name)
 
         elif self.view_name == DefaultViews.GLOBAL:
@@ -778,12 +804,14 @@ class ViewManager(object):
             results.vfense_status_code = (
                 ViewFailureCodes.CantRemoveAgentsFromGlobalView
             )
+            results.data = agents
             results.message = msg
 
         else:
             msg = 'View %s does not exists' % (self.view_name)
             results.generic_status_code = GenericCodes.ObjectExists
             results.vfense_status_code = ViewFailureCodes.ViewDoesNotExist
+            results.data = agents
             results.message = msg
 
         return results
@@ -832,18 +860,19 @@ class ViewManager(object):
                 delete_hardware_for_agents(agents)
                 if status_code == DbCodes.Deleted:
                     msg = (
-                        'The following agents: {0} were deleted from view {1}'
-                        .format(', '.join(agents), self.view_name)
+                        'Agents were deleted from view {0}'
+                        .format(self.view_name)
                     )
                     results.generic_status_code = GenericCodes.ObjectUpdated
                     results.vfense_status_code = AgentCodes.AgentsDeleted
                     results.message = msg
+                    results.data = agents
                     results.updated_ids.append(self.view_name)
 
             elif agents and not valid_agents:
                 msg = (
-                    'Agents %s are not valid for this view %s'%
-                    (', '.join(agents), self.view_name)
+                    'Agents are not valid for this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = (
                     GenericCodes.ObjectUnchanged
@@ -852,23 +881,27 @@ class ViewManager(object):
                     ViewFailureCodes.AgentsDoNotExistForView
                 )
                 results.message = msg
+                results.data = agents
                 results.unchanged_ids.append(self.view_name)
 
             else:
                 msg = (
-                    'Agents do not exist in this view %s'% (self.view_name)
+                    'Agents do not exist in this view {0}'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = GenericCodes.ObjectUnchanged
                 results.vfense_status_code = (
                     ViewFailureCodes.AgentsDoNotExistForView
                 )
                 results.message = msg
+                results.data = agents
                 results.unchanged_ids.append(self.view_name)
 
         else:
-            msg = 'View %s does not exists' % (self.view_name)
+            msg = 'View {0} does not exists'.format(self.view_name)
             results.generic_status_code = GenericCodes.ObjectExists
             results.vfense_status_code = ViewFailureCodes.ViewExists
+            results.data = agents
             results.message = msg
 
         return results
@@ -1007,15 +1040,16 @@ class ViewManager(object):
                             'and all users: {users} and groups: {groups}' +
                             'were deleted'
                         )
-                        msg = text.format(
-                            **{
-                                'view_name': self.view_name,
-                                'users': self.users,
-                                'groups': self.groups
-                            }
-                        )
+                        deleted_data =  {
+                            'view_name': self.view_name,
+                            'users': self.users,
+                            'groups': self.groups
+                        }
+                        msg = text.format(**deleted_data)
+                        results.data = deleted_data
                     else:
                         msg = 'View %s deleted - ' % (self.view_name)
+                        results.data.append(self.view_name)
 
                     results.generic_status_code = GenericCodes.ObjectDeleted
                     results.vfense_status_code = ViewCodes.ViewDeleted
@@ -1025,8 +1059,8 @@ class ViewManager(object):
 
             else:
                 msg = (
-                    'Can not remove view %s, while users: %s'
-                    % (self.view_name, ', '.join(self.users))
+                    'Can not remove view {0}, while users exist in view'
+                    .format(self.view_name)
                 )
                 results.generic_status_code = (
                     GenericCodes.ObjectUnchanged
@@ -1035,10 +1069,11 @@ class ViewManager(object):
                     ViewFailureCodes.UsersExistForView
                 )
                 results.message = msg
+                results.data = self.users
                 results.unchanged_ids.append(self.view_name)
 
         else:
-            msg = 'View %s does not exists' % (self.view_name)
+            msg = 'View {0} does not exists'.format(self.view_name)
             results.generic_status_code = GenericCodes.ObjectExists
             results.vfense_status_code = ViewFailureCodes.ViewExists
             results.message = msg
@@ -1226,8 +1261,7 @@ class ViewManager(object):
                     )
                     if status_code == DbCodes.Replaced:
                         msg = (
-                            'view %s updated with data: %s'
-                            % (self.view_name, view.to_dict_non_null())
+                            'View {0} updated'.format(self.view_name)
                         )
                         results.message = msg
                         results.generic_status_code = GenericCodes.ObjectUpdated
@@ -1237,8 +1271,8 @@ class ViewManager(object):
 
                     if status_code == DbCodes.Unchanged:
                         msg = (
-                            'View data: %s is the same as the previous values'
-                            % (view.to_dict_non_null())
+                            'View {0} unchanged, data is the same as the previous values'
+                            .format(view.view_name)
                         )
                         results.message = msg
                         results.generic_status_code = GenericCodes.ObjectUnchanged
@@ -1248,8 +1282,8 @@ class ViewManager(object):
 
                 else:
                     msg = (
-                        'View data: %s contains invalid_data'
-                        % (self.view_name)
+                        'View {0} unchanged, data is invalid'
+                        .format(self.view_name)
                     )
                     results.message = msg
                     results.generic_status_code = GenericCodes.ObjectUnchanged
@@ -1262,8 +1296,8 @@ class ViewManager(object):
 
             else:
                 msg = (
-                    'Argument must be an instance of View and not %s'
-                    % (type(view))
+                    'Argument must be an instance of View and not {0}'
+                    .format(type(view))
                 )
                 results.message = msg
                 results.generic_status_code = GenericCodes.InvalidValue
@@ -1271,7 +1305,7 @@ class ViewManager(object):
                 results.unchanged_ids.append(self.view_name)
 
         else:
-            msg = 'view %s does not exist' % (self.view_name)
+            msg = 'view {0} does not exist'.format(self.view_name)
             results.generic_status_code = GenericCodes.ObjectUnchanged
             results.vfense_status_code = ViewCodes.ViewUnchanged
             results.message = msg
