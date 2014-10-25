@@ -683,23 +683,6 @@ class OperPerApp(Base):
             self.results = OperPerAppDefaults.results()
 
 
-    def get_invalid_fields(self):
-        """Check the user for any invalid fields.
-
-        Returns:
-            (list): List of key/value pair dictionaries corresponding
-                to the invalid fields.
-
-                Ex:
-                    [
-                        {'view_name': 'the invalid name in question'},
-                        {'net_throttle': -10}
-                    ]
-        """
-        invalid_fields = []
-
-        return invalid_fields
-
     def to_dict(self):
         """ Turn the fields into a dictionary.
 

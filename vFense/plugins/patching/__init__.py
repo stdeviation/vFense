@@ -4,7 +4,8 @@ from vFense.core._db_constants import DbTime
 from vFense.core.results import ApiResultKeys
 from vFense.plugins.patching._constants import (
     AppDefaults, RebootValues, HiddenValues, UninstallableValues,
-    CommonSeverityKeys, FileDefaults, AppStatuses
+    CommonSeverityKeys, FileDefaults, AppStatuses, CommonAppKeys,
+    CommonFileKeys
 )
 from vFense.plugins.patching._db_model import (
     DbCommonAppKeys, FilesKey, DbCommonAppPerAgentKeys
@@ -617,11 +618,10 @@ class Files(Base):
         return invalid_fields
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the fields into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                install operation.
+            (dict): A dictionary with the fields.
 
         """
 
@@ -633,3 +633,34 @@ class Files(Base):
             FilesKey.FileHash: self.file_hash,
             FilesKey.FileSize: self.file_size,
         }
+
+
+class AgentAppData(Base):
+    def __init__(self, app_id=None, app_name=None, app_version=None,
+                 app_uris=None, cli_options=None, **kwargs
+                 ):
+        super(AgentAppData, self).__init__(**kwargs)
+        self.app_id = app_id
+        self.app_name = app_name
+        self.app_version = app_version
+        self.app_uris = app_uris
+        self.cli_options = cli_options
+
+
+    def to_dict(self):
+        """ Turn the fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        return {
+            CommonAppKeys.APP_ID: self.app_id,
+            CommonAppKeys.APP_NAME: self.app_name,
+            CommonAppKeys.APP_VERSION: self.app_version,
+            CommonAppKeys.APP_URIS: self.app_uris,
+            CommonFileKeys.PKG_CLI_OPTIONS: self.cli_options
+        }
+
+

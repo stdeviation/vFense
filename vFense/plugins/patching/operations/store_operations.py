@@ -5,15 +5,18 @@ from vFense.plugins.patching.operations.patching_operations import (
     PatchingOperation
 )
 from vFense.core.operations._constants import AgentOperation
+from vFense.plugins.patching._constants import CommonAppKeys, CommonFileKeys
 from vFense.core.operations._constants import (
     AgentOperations, vFensePlugins, vFenseObjects
 )
 from vFense.core.operations.store_agent_operation import (
     StoreAgentOperationManager
 )
-from vFense.core.operations._db_model import AgentOperationKey, OperationPerAgentKey
+from vFense.core.operations._db_model import (
+    AgentOperationKey, OperationPerAgentKey
+)
 from vFense.core._constants import CPUThrottleValues, RebootValues
-from vFense.plugins.patching.operations import Install
+from vFense.plugins.patching.operations import Install, AgentAppData
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys, DbCommonAppPerAgentKeys
 )
@@ -21,7 +24,6 @@ from vFense.plugins.patching._db import (
     fetch_app_data_to_send_to_agent, return_valid_appids_for_agent
 )
 
-from vFense.plugins.patching._constants import CommonAppKeys, CommonFileKeys
 from vFense.plugins.patching.patching import (
     get_download_urls, update_app_status_by_agentid_and_appid
 )
@@ -428,13 +430,11 @@ class StorePatchingOperation(StoreAgentOperationManager):
                 self.view_name, app_id, pkg[CommonFileKeys.PKG_FILEDATA]
             )
         )
+        app_data = AgentAppData()
+        app_data.app_id = app_id
+        app_data.app_name = pkg[DbCommonAppKeys.Name]
+        app_data.app_version = pkg[DbCommonAppKeys.Version]
+        app_data.app_uris = uris
+        app_data.cli_options = pkg[CommonFileKeys.PKG_CLI_OPTIONS]
 
-        pkg_data = {
-            CommonAppKeys.APP_NAME: pkg[DbCommonAppKeys.Name],
-            CommonAppKeys.APP_VERSION: pkg[DbCommonAppKeys.Version],
-            CommonAppKeys.APP_URIS: uris,
-            CommonAppKeys.APP_ID: app_id,
-            CommonFileKeys.PKG_CLI_OPTIONS: pkg[CommonFileKeys.PKG_CLI_OPTIONS]
-        }
-
-        return pkg_data
+        return app_data.to_dict()
