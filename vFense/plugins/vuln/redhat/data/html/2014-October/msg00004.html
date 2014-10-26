@@ -1,0 +1,260 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1359&#45;01] Important: polkit&#45;qt security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 6 Oct 2014 13:03:50 &#45;0400 -->
+<!--X-Message-Id: 201410061703.s96H3npx027670@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1359-01] Important: polkit-qt security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1359-01] Important: polkit-qt security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1359-01] Important: polkit-qt security update</li>
+<li><em>Date</em>: Mon, 6 Oct 2014 17:03:49 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: polkit-qt security update
+Advisory ID:       RHSA-2014:1359-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1359.html">https://rhn.redhat.com/errata/RHSA-2014-1359.html</a>
+Issue date:        2014-10-06
+CVE Names:         CVE-2014-5033 
+=====================================================================
+
+1. Summary:
+
+Updated polkit-qt packages that fix one security issue are now available
+for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 7) - x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - noarch, x86_64
+
+3. Description:
+
+Polkit-qt is a library that lets developers use the PolicyKit API through a
+Qt-styled API. The polkit-qt library is used by the KDE Authentication
+Agent (KAuth), which is a part of kdelibs.
+
+It was found that polkit-qt handled authorization requests with PolicyKit
+via a D-Bus API that is vulnerable to a race condition. A local user could
+use this flaw to bypass intended PolicyKit authorizations. This update
+modifies polkit-qt to communicate with PolicyKit via a different API that
+is not vulnerable to the race condition. (CVE-2014-5033)
+
+All polkit-qt users are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1094890 - CVE-2014-5033 polkit-qt: insecure calling of polkit
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+polkit-qt-0.103.0-10.el7_0.src.rpm
+
+x86_64:
+polkit-qt-0.103.0-10.el7_0.i686.rpm
+polkit-qt-0.103.0-10.el7_0.x86_64.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.i686.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+noarch:
+polkit-qt-doc-0.103.0-10.el7_0.noarch.rpm
+
+x86_64:
+polkit-qt-debuginfo-0.103.0-10.el7_0.i686.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.x86_64.rpm
+polkit-qt-devel-0.103.0-10.el7_0.i686.rpm
+polkit-qt-devel-0.103.0-10.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+polkit-qt-0.103.0-10.el7_0.src.rpm
+
+x86_64:
+polkit-qt-0.103.0-10.el7_0.i686.rpm
+polkit-qt-0.103.0-10.el7_0.x86_64.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.i686.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+noarch:
+polkit-qt-doc-0.103.0-10.el7_0.noarch.rpm
+
+x86_64:
+polkit-qt-debuginfo-0.103.0-10.el7_0.i686.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.x86_64.rpm
+polkit-qt-devel-0.103.0-10.el7_0.i686.rpm
+polkit-qt-devel-0.103.0-10.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+polkit-qt-0.103.0-10.el7_0.src.rpm
+
+x86_64:
+polkit-qt-0.103.0-10.el7_0.i686.rpm
+polkit-qt-0.103.0-10.el7_0.x86_64.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.i686.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+Source:
+polkit-qt-0.103.0-10.el7_0.src.rpm
+
+noarch:
+polkit-qt-doc-0.103.0-10.el7_0.noarch.rpm
+
+ppc64:
+polkit-qt-0.103.0-10.el7_0.ppc.rpm
+polkit-qt-0.103.0-10.el7_0.ppc64.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.ppc.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.ppc64.rpm
+polkit-qt-devel-0.103.0-10.el7_0.ppc.rpm
+polkit-qt-devel-0.103.0-10.el7_0.ppc64.rpm
+
+s390x:
+polkit-qt-0.103.0-10.el7_0.s390.rpm
+polkit-qt-0.103.0-10.el7_0.s390x.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.s390.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.s390x.rpm
+polkit-qt-devel-0.103.0-10.el7_0.s390.rpm
+polkit-qt-devel-0.103.0-10.el7_0.s390x.rpm
+
+x86_64:
+polkit-qt-debuginfo-0.103.0-10.el7_0.i686.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.x86_64.rpm
+polkit-qt-devel-0.103.0-10.el7_0.i686.rpm
+polkit-qt-devel-0.103.0-10.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+polkit-qt-0.103.0-10.el7_0.src.rpm
+
+x86_64:
+polkit-qt-0.103.0-10.el7_0.i686.rpm
+polkit-qt-0.103.0-10.el7_0.x86_64.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.i686.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+noarch:
+polkit-qt-doc-0.103.0-10.el7_0.noarch.rpm
+
+x86_64:
+polkit-qt-debuginfo-0.103.0-10.el7_0.i686.rpm
+polkit-qt-debuginfo-0.103.0-10.el7_0.x86_64.rpm
+polkit-qt-devel-0.103.0-10.el7_0.i686.rpm
+polkit-qt-devel-0.103.0-10.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-5033.html">https://www.redhat.com/security/data/cve/CVE-2014-5033.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUMstcXlSAg2UNWIIRAntOAJ98zdZZe2DO94YkSDF3yuUkG1NjHgCfYh/+
+UzSK3g5uKhxwd+IE+HBuYtM=
+=miyB
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00003.html">Date Prev</a>][<a href="msg00005.html">Date Next</a>] &nbsp; [<a href="msg00003.html">Thread Prev</a>][<a href="msg00005.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00004">Thread Index</A>]
+[<A HREF="date.html#00004">Date Index</A>]
+[<A HREF="author.html#00004">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

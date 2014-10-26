@@ -1,0 +1,483 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie10 lt-ie9" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js lt-ie10" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" dir="ltr"> <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="Canonical" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>USN-2376-1: Linux kernel vulnerabilities | Ubuntu</title>
+
+        <link rel="shortcut icon" href="//assets.ubuntu.com/sites/ubuntu/latest/u/img/favicon.ico" type="image/x-icon" />
+
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="//assets.ubuntu.com/sites/ubuntu/latest/u/img/apple-touch-icon-144x144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="//assets.ubuntu.com/sites/ubuntu/latest/u/img/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="//assets.ubuntu.com/sites/ubuntu/latest/u/img/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="//assets.ubuntu.com/sites/ubuntu/latest/u/img/apple-touch-icon-precomposed.png">
+        <link type="text/plain" rel="author" href="//assets.ubuntu.com/sites/ubuntu/latest/u/files/humans.txt" />
+
+        <!-- google fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,700,700italic%7CUbuntu+Mono' rel='stylesheet' type='text/css' />
+
+        <!-- stylesheets -->
+        <link rel="stylesheet" type="text/css" media="screen" href="//assets.ubuntu.com/sites/guidelines/css/responsive/latest/ubuntu-styles.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="//assets.ubuntu.com/sites/ubuntu/latest/u/css/styles.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="//assets.ubuntu.com/sites/ubuntu/latest/u/css/beta/global-responsive.css" />
+        <link rel="stylesheet" type="text/css" media="print" href="//assets.ubuntu.com/sites/ubuntu/latest/u/css/core-print.css" />
+
+        <!-- javascript -->
+        <script src="http://assets.ubuntu.com/sites/ubuntu/1167/u/js/plugins/modernizr.2.7.1.js"></script>
+        
+<style>
+dt {
+	font-weight: 400;
+	padding: 12px 0 1em 0px;
+}
+dd, dt {
+	line-height: 16px;
+	color: #333;
+}
+dd {
+	padding-left: 16px;
+	margin-bottom: 1em;
+}
+dd span {
+    padding-left: 10px;
+}
+</style>
+
+    </head>
+<body class="">
+<header class="banner global" role="banner">
+
+    <nav role="navigation" class="nav-primary nav-right">
+        <span id="main-navigation-link"><a href="#main-navigation">Jump to site nav</a></span>
+        <div class="logo">
+            <a class="logo-ubuntu" href="/">
+                <img width="106" height="25" src="//assets.ubuntu.com/sites/ubuntu/latest/u/img/logos/logo-ubuntu-orange.svg" alt="" />
+            </a>
+        </div>
+        <ul>
+            <li class="accessibility-aid"><a accesskey="s" href="#main-content">Jump to content</a></li>
+            <li><a class="first" href="/cloud">Cloud</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/cloud">Overview</a></li>
+                    <li><a href="/cloud/ubuntu-openstack">Ubuntu OpenStack</a></li>
+                    <li><a href="/cloud/public-cloud">Public cloud</a></li>
+                    <li><a href="/cloud/tools">Cloud tools</a></li>
+                    <li><a href="/cloud/management">Cloud management</a></li>
+                    <li><a href="/cloud/ecosystem">Ecosystem</a></li>
+                    <li><a href="/cloud/labs">Cloud labs</a></li>
+                </ul>
+            </li>
+            <li><a href="/server">Server</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/server">Overview</a></li>
+                    <li><a href="/server/management">Server management</a></li>
+                    <li><a href="/server/hyperscale">Hyperscale</a></li>
+                </ul>
+            </li>
+            <li><a  href="/desktop">Desktop</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/desktop">Overview</a></li>
+                    <li><a href="/desktop/features">Features</a></li>
+                    <li><a href="/desktop/business">For business</a></li>
+                    <li><a href="/desktop/developers">For developers</a></li>
+                    <li><a href="/desktop/take-the-tour">Take the tour</a></li>
+                    <li><a href="/desktop/management">Desktop management</a></li>
+                    <li><a href="/desktop/ubuntu-kylin">Ubuntu Kylin</a></li>
+                </ul>
+            </li>
+            <li><a href="/phone">Phone</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/phone">Overview</a></li>
+                    <li><a href="/phone/features" >Features</a></li>
+                    <li><a href="/phone/scopes" >Scopes</a></li>
+                    <li><a href="/phone/app-ecosystem">App ecosystem</a></li>
+                    <li><a href="/phone/operators-and-oems" >Operators and OEMs</a></li>
+                    <li><a href="/phone/carrier-advisory-group">Carrier Advisory Group</a></li>
+                    <li><a href="/phone/ubuntu-for-android">Ubuntu for Android</a></li>
+                </ul>
+            </li>
+            <li><a href="/tablet">Tablet</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/tablet">Design</a></li>
+                    <li><a href="/tablet/operators-and-oems">Operators and OEMs</a></li>
+                    <li><a href="/tablet/app-ecosystem">App ecosystem</a></li>
+                </ul>
+            </li>
+            <li><a href="/tv">TV</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/tv">Overview</a></li>
+                    <li><a href="/tv/experience">Experience</a></li>
+                    <li><a href="/tv/industry">Industry</a></li>
+                    <li><a href="/tv/contributors">Contributors</a></li>
+                    <li><a href="/tv/features-and-specs">Features and specs</a></li>
+                    <li><a href="/tv/commercial-info">Commercial info</a></li>
+                </ul>
+            </li>
+            <li><a href="/management">Management</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/management">Overview</a></li>
+                    <li><a href="/management/landscape-features">Landscape features</a></li>
+                    <li><a href="/management/working-with-landscape">Working with Landscape</a></li>
+                    <li><a href="/management/return-on-investment">Return on investment</a></li>
+                    <li><a href="/management/compliance">Compliance</a></li>
+                    <li><a href="/management/ubuntu-advantage">Ubuntu Advantage</a></li>
+                </ul>
+            </li>
+            <li><a href="/download">Download</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/download">Overview</a></li>
+                    <li><a href="/download/cloud">Cloud</a></li>
+                    <li><a href="/download/server">Server</a></li>
+                    <li><a href="/download/desktop">Desktop</a></li>
+                    <li><a href="/download/ubuntu-kylin">Ubuntu Kylin</a></li>
+                    <li><a href="/download/alternative-downloads">Alternative downloads</a></li>
+                </ul>
+            </li>
+        </ul>
+        <form action="/search" id="google-appliance-search-form" class="header-search">
+            <label for="edit-keys" class="accessibility-aid">Search</label>
+            <input type="search" maxlength="255" name="q" id="edit-keys" class="form-text" placeholder="Search" value="" />
+            <button type="submit"><img src="//assets.ubuntu.com/sites/ubuntu/latest/u/img/search-white.svg" alt="Search" height="28" /></button>
+        </form>
+    </nav>
+</header>
+
+<div class="wrapper">
+<div id="main-content" class="inner-wrapper">
+    <div class="row no-border">
+        <div class="twelve-col">
+            <h1>USN-2376-1: Linux kernel vulnerabilities</h1>
+        </div>
+        
+    
+<h2>Ubuntu Security Notice USN-2376-1</h2>
+<p><em>9th October, 2014</em></p>
+<h3>linux vulnerabilities</h3>
+<p>A security issue affects these releases of Ubuntu and its 
+    derivatives:</p>
+<ul>
+
+    <li>Ubuntu 12.04 LTS</li>
+
+</ul>
+
+
+<h3>Summary</h3>
+<p>Several security issues were fixed in the kernel.
+</p>
+
+
+
+<h3>Software description</h3>
+<ul>
+
+  
+    <li>linux 
+    - Linux kernel
+    
+    </li>
+  
+
+</ul>
+
+
+<h3>Details</h3>
+<p>Steven Vittitoe reported multiple stack buffer overflows in Linux kernel&#39;s<br />magicmouse HID driver. A physically proximate attacker could exploit this<br />flaw to cause a denial of service (system crash) or possibly execute<br />arbitrary code via specially crafted devices. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3181">CVE-2014-3181</a>)</p>
+
+<p>Ben Hawkes reported some off by one errors for report descriptors in the<br />Linux kernel&#39;s HID stack. A physically proximate attacker could exploit<br />these flaws to cause a denial of service (out-of-bounds write) via a<br />specially crafted device. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3184">CVE-2014-3184</a>)</p>
+
+<p>Several bounds check flaws allowing for buffer overflows were discovered in<br />the Linux kernel&#39;s Whiteheat USB serial driver. A physically proximate<br />attacker could exploit these flaws to cause a denial of service (system<br />crash) via a specially crafted device. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3185">CVE-2014-3185</a>)</p>
+
+<p>Steven Vittitoe reported a buffer overflow in the Linux kernel&#39;s PicoLCD<br />HID device driver. A physically proximate attacker could exploit this flaw<br />to cause a denial of service (system crash) or possibly execute arbitrary<br />code via a specially craft device. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3186">CVE-2014-3186</a>)</p>
+
+<p>A flaw was discovered in the Linux kernel&#39;s UDF filesystem (used on some<br />CD-ROMs and DVDs) when processing indirect ICBs. An attacker who can cause<br />CD, DVD or image file with a specially crafted inode to be mounted can<br />cause a denial of service (infinite loop or stack consumption).<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-6410">CVE-2014-6410</a>)</p>
+
+<p>James Eckersall discovered a buffer overflow in the Ceph filesystem in the<br />Linux kernel. A remote attacker could exploit this flaw to cause a denial<br />of service (memory consumption and panic) or possibly have other<br />unspecified impact via a long unencrypted auth ticket. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-6416">CVE-2014-6416</a>)</p>
+
+<p>James Eckersall discovered a flaw in the handling of memory allocation<br />failures in the Ceph filesystem. A remote attacker could exploit this flaw<br />to cause a denial of service (system crash) or possibly have unspecified<br />other impact. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-6417">CVE-2014-6417</a>)</p>
+
+<p>James Eckersall discovered a flaw in how the Ceph filesystem validates auth<br />replies. A remote attacker could exploit this flaw to cause a denial of<br />service (system crash) or possibly have other unspecified impact.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-6418">CVE-2014-6418</a>)<br /></p>
+
+<h3>Update instructions</h3>
+<p> The problem can be corrected by updating your system to the following
+package version:</p>
+<dl>
+
+<dt>Ubuntu 12.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-3.2.0-70-generic-pae</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/linux/3.2.0-70.105">3.2.0-70.105</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-3.2.0-70-omap</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/linux/3.2.0-70.105">3.2.0-70.105</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-3.2.0-70-powerpc-smp</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/linux/3.2.0-70.105">3.2.0-70.105</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-3.2.0-70-powerpc64-smp</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/linux/3.2.0-70.105">3.2.0-70.105</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-3.2.0-70-generic</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/linux/3.2.0-70.105">3.2.0-70.105</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-3.2.0-70-highbank</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/linux/3.2.0-70.105">3.2.0-70.105</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/linux">linux-image-3.2.0-70-virtual</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/linux/3.2.0-70.105">3.2.0-70.105</a>
+    </span>
+  </dd>
+    
+  
+
+</dl>
+<p>To update your system, please follow these instructions:
+<a href="https://wiki.ubuntu.com/Security/Upgrades">https://wiki.ubuntu.com/Security/Upgrades</a>.
+</p>
+<p>After a standard system update you need to reboot your computer to make<br />all the necessary changes.</p>
+
+<p>ATTENTION: Due to an unavoidable ABI change the kernel updates have<br />been given a new version number, which requires you to recompile and<br />reinstall all third party kernel modules you might have installed. If<br />you use linux-restricted-modules, you have to update that package as<br />well to get modules which work with the new kernel version. Unless you<br />manually uninstalled the standard kernel metapackages (e.g. linux-generic,<br />linux-server, linux-powerpc), a standard system upgrade will automatically<br />perform this as well.<br /></p>
+
+
+
+<h3>References</h3>
+<p>
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3181">CVE-2014-3181</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3184">CVE-2014-3184</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3185">CVE-2014-3185</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-3186">CVE-2014-3186</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-6410">CVE-2014-6410</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-6416">CVE-2014-6416</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-6417">CVE-2014-6417</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-6418">CVE-2014-6418</a>
+        
+
+</p>
+
+
+
+
+
+    </div>
+</div>
+</div>
+
+<footer class="global clearfix">
+
+<div class="footer-c">
+    <p class="top-link"><a href="#">Back to top</a></p>
+</div>
+<nav id="main-navigation" role="navigation" class="clearfix">
+<div class="footer-a">
+    <div class="clearfix">
+        <ul>
+            <li class="secondary-cloud"><h2><a href="/cloud/">Cloud</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first active"><a href="/cloud">Overview</a></li>
+        <li><a href="/cloud/ubuntu-openstack">Ubuntu OpenStack</a></li>
+        <li><a href="/cloud/public-cloud">Public cloud</a></li>
+        <li><a href="/cloud/tools">Cloud tools</a></li>
+        <li><a href="/cloud/management">Cloud management</a></li>
+        <li><a href="/cloud/ecosystem">Ecosystem</a></li>
+        <li><a href="/cloud/labs">Cloud labs</a></li>
+    </ul>
+
+            </li>
+            <li class="secondary-server"><h2><a href="/server/">Server</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/server">Overview</a></li>
+        <li><a href="/server/management">Server management</a></li>
+        <li><a href="/server/hyperscale">Hyperscale</a></li>
+    </ul>
+
+            </li>
+            <li class="secondary-desktop"><h2><a href="/desktop/" class="active-trail">Desktop</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/desktop">Overview</a></li>
+        <li><a href="/desktop/features">Features</a></li>
+        <li><a href="/desktop/business">For business</a></li>
+        <li><a href="/desktop/developers">For developers</a></li>
+        <li><a href="/desktop/take-the-tour">Take the tour</a></li>
+        <li><a href="/desktop/management">Desktop management</a></li>
+        <li><a href="/desktop/ubuntu-kylin">Ubuntu Kylin</a></li>
+    </ul>
+            </li>
+            <li class="secondary-phone"><h2><a href="/phone/">Phone</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/phone">Overview</a></li>
+        <li><a href="/phone/features" >Features</a></li>
+        <li><a href="/phone/scopes" >Scopes</a></li>
+        <li><a href="/phone/app-ecosystem">App ecosystem</a></li>
+        <li><a href="/phone/operators-and-oems" >Operators and OEMs</a></li>
+        <li><a href="/phone/carrier-advisory-group">Carrier Advisory Group</a></li>
+        <li><a href="/phone/ubuntu-for-android">Ubuntu for Android</a></li>
+    </ul>
+
+            </li>
+            <li class="secondary-tablet"><h2><a href="/tablet/">Tablet</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/tablet">Design</a></li>
+        <li><a href="/tablet/operators-and-oems">Operators and OEMs</a></li>
+        <li><a href="/tablet/app-ecosystem">App ecosystem</a></li>
+    </ul>
+
+            </li>
+            <li class="secondary-tv"><h2><a href="/tv/">TV</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/tv">Overview</a></li>
+        <li><a href="/tv/experience">Experience</a></li>
+        <li><a href="/tv/industry">Industry</a></li>
+        <li><a href="/tv/contributors">Contributors</a></li>
+        <li><a href="/tv/features-and-specs">Features and specs</a></li>
+        <li><a href="/tv/commercial-info">Commercial info</a></li>
+    </ul>
+
+            </li>
+            <li class="secondary-management last-item"><h2><a href="/management/">Management</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/management">Overview</a></li>
+        <li><a href="/management/landscape-features">Landscape features</a></li>
+        <li><a href="/management/working-with-landscape">Working with Landscape</a></li>
+        <li><a href="/management/return-on-investment">Return on investment</a></li>
+        <li><a href="/management/compliance">Compliance</a></li>
+        <li><a href="/management/ubuntu-advantage">Ubuntu Advantage</a></li>
+    </ul>
+            </li>
+        </ul>
+    </div>
+</div><!-- /.footer-a -->
+<div class="footer-b inline-lists">
+    <ul class="clearfix">
+        <li><h2><a href="/download/">Download</a></h2>
+                <ul class="second-level-nav">
+        <li class="first"><a href="/download">Overview</a></li>
+        <li><a href="/download/cloud">Cloud</a></li>
+        <li><a href="/download/server">Server</a></li>
+        <li><a href="/download/desktop">Desktop</a></li>
+        <li><a href="/download/ubuntu-kylin">Ubuntu Kylin</a></li>
+        <li><a href="/download/alternative-downloads">Alternative downloads</a></li>
+    </ul>
+        </li>
+        <li><h2><a href="/support/">Support</a></h2>
+                <ul class="second-level-nav">
+        <li class="first"><a href="/support">Overview</a></li>
+        <li><a href="http://www.ubuntu.com/usn/">Security notices</a></li>
+    </ul>
+        </li>
+        <li><h2><a href="/partners/">Partners</a></h2>
+                <ul class="second-level-nav">
+        <li class="first"><a href="/partners">Overview</a></li>
+        <li class=""><a href="/partners/find-a-partner">Find a partner</a></li>
+        <li class=""><a href="/partners/ubuntu-certified">Ubuntu Certified</a></li>
+        <li class=""><a href="/partners/partner-programmes">Partner programmes</a></li>
+        <li class=""><a href="/partners/partner-services">Partner services</a></li>
+        <li class=""><a href="/partners/backed-by-canonical">Backed by Canonical</a></li>
+        <li class=""><a href="/partners/contact-us">Contact Canonical</a></li>
+    </ul>
+        </li>
+        <li><h2><a href="/about/">About</a></h2>
+            <ul class="second-level-nav">
+                <li><a href="/about/about-ubuntu">About Ubuntu</a></li>
+                <li><a href="http://www.canonical.com/careers">Careers</a></li>
+                <li><a href="/about/canonical-and-ubuntu">Canonical and Ubuntu</a></li>
+                <li><a accesskey="7" href="/about/contact-us">Contact us</a></li>
+                <li><a accesskey="2" href="http://insights.ubuntu.com/feed/">Canonical news feed</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</nav>
+<div class="legal clearfix">
+ <p class="twelve-col">&copy; 2014 Canonical Ltd. Ubuntu and Canonical are registered trademarks of Canonical Ltd.</p>
+ <ul class="inline clear">
+     <li><a href="/legal">Legal information</a></li>
+     <li><a href="https://bugs.launchpad.net/ubuntu-website-content/+filebug">Report a bug</a></li>
+</ul>
+<span class="accessibility-aid"><a href="#">Got to the top of the page</a></span>
+</div><!-- /.legal -->
+</footer>
+
+        <script src="//assets.ubuntu.com/sites/ubuntu/latest/u/js/plugins/yui-combined.min.js"></script>
+
+        
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-1018242-4']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+        
+
+        <script>
+            if(!core){ var core = {}; }
+            core.globalPrepend = 'body';
+        </script>
+
+        <script src="//assets.ubuntu.com/sites/guidelines/js/responsive/core.js"></script>
+        <script src="//assets.ubuntu.com/sites/ubuntu/latest/u/js/global.js"></script>
+        <script src="http://assets.ubuntu.com/sites/ubuntu/latest/u/js/scratch.js"></script>
+        
+    </body>
+</html>

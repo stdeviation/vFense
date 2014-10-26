@@ -1,0 +1,165 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1685&#45;01] Moderate: openstack&#45;glance security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 22 Oct 2014 14:07:08 &#45;0400 -->
+<!--X-Message-Id: 201410221807.s9MI77aJ006398@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1685-01] Moderate: openstack-glance security and bug fix	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00040.html">Date Prev</a>][<a href="msg00042.html">Date Next</a>] &nbsp; [<a href="msg00040.html">Thread Prev</a>][<a href="msg00042.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00041">Thread Index</A>]
+[<A HREF="date.html#00041">Date Index</A>]
+[<A HREF="author.html#00041">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1685-01] Moderate: openstack-glance security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1685-01] Moderate: openstack-glance security and bug fix	update</li>
+<li><em>Date</em>: Wed, 22 Oct 2014 18:07:07 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-glance security and bug fix update
+Advisory ID:       RHSA-2014:1685-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1685.html">https://rhn.redhat.com/errata/RHSA-2014-1685.html</a>
+Issue date:        2014-10-22
+CVE Names:         CVE-2014-5356 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-glance packages that fix one security issue and several
+bugs are now available for Red Hat Enterprise Linux OpenStack Platform 4.0.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0 - noarch
+
+3. Description:
+
+OpenStack Image service (glance) provides discovery, registration, and
+delivery services for disk and server images. It provides the ability to
+copy or snapshot a server image, and immediately store it away. Stored
+images can be used as a template to get new servers up and running quickly
+and more consistently than installing a server operating system and
+individually configuring additional services.
+
+It was discovered that the image_size_cap configuration option in glance
+was not honored. An authenticated user could use this flaw to upload an
+image to glance and consume all available storage space, resulting in a
+denial of service. (CVE-2014-5356)
+
+The openstack-glance packages have been upgraded to upstream version
+2013.2.4, which provides a number of bug fixes over the previous version.
+(BZ#1146089)
+
+All openstack-glance users are advised to upgrade to these updated
+packages, which correct these issues. After installing the updated
+packages, the running glance services will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1131770 - CVE-2014-5356 openstack-glance: Glance store disk space exhaustion
+1146089 - Rebase openstack-glance to 2013.2.4
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0:
+
+Source:
+openstack-glance-2013.2.4-1.el6ost.src.rpm
+
+noarch:
+openstack-glance-2013.2.4-1.el6ost.noarch.rpm
+openstack-glance-doc-2013.2.4-1.el6ost.noarch.rpm
+python-glance-2013.2.4-1.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-5356">https://access.redhat.com/security/cve/CVE-2014-5356</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://wiki.openstack.org/wiki/ReleaseNotes/2013.2.4">https://wiki.openstack.org/wiki/ReleaseNotes/2013.2.4</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUR/HOXlSAg2UNWIIRAvljAJ0RjqMKQxWfLjjbYAQkUOP6er2TlgCZARkZ
+ihhxAgrc95Ntnqc8zvZ3U4s=
+=zpwA
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00040.html">Date Prev</a>][<a href="msg00042.html">Date Next</a>] &nbsp; [<a href="msg00040.html">Thread Prev</a>][<a href="msg00042.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00041">Thread Index</A>]
+[<A HREF="date.html#00041">Date Index</A>]
+[<A HREF="author.html#00041">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

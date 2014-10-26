@@ -1,0 +1,215 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1688&#45;01] Important: openstack&#45;keystone security and bug	fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 22 Oct 2014 14:08:53 &#45;0400 -->
+<!--X-Message-Id: 201410221808.s9MI8q03027578@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1688-01] Important: openstack-keystone security and bug	fix u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00043.html">Date Prev</a>][<a href="msg00045.html">Date Next</a>] &nbsp; [<a href="msg00043.html">Thread Prev</a>][<a href="msg00045.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00044">Thread Index</A>]
+[<A HREF="date.html#00044">Date Index</A>]
+[<A HREF="author.html#00044">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1688-01] Important: openstack-keystone security and bug	fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1688-01] Important: openstack-keystone security and bug	fix update</li>
+<li><em>Date</em>: Wed, 22 Oct 2014 18:08:52 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openstack-keystone security and bug fix update
+Advisory ID:       RHSA-2014:1688-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1688.html">https://rhn.redhat.com/errata/RHSA-2014-1688.html</a>
+Issue date:        2014-10-22
+CVE Names:         CVE-2014-2828 CVE-2014-3621 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-keystone packages that fix two security issues and
+multiple bugs are now available for Red Hat Enterprise Linux OpenStack
+Platform 4.0.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0 - noarch
+
+3. Description:
+
+The OpenStack Identity service (keystone) authenticates and authorizes
+OpenStack users by keeping track of users and their permitted activities.
+The Identity service supports multiple forms of authentication, including
+user name and password credentials, token-based systems, and AWS-style
+logins.
+
+A flaw was found in the keystone V3 API. An attacker could send a single
+request with the same authentication method multiple times, possibly
+leading to a denial of service due to generating excessive load with
+minimal requests. Only keystone setups with the V3 API enabled were
+affected by this issue. (CVE-2014-2828)
+
+A flaw was found in the keystone catalog URL replacement. A user with
+permissions to register an endpoint could use this flaw to leak
+configuration data, including the master admin_token. Only keystone setups
+that allow non-cloud-admin users to create endpoints were affected by this
+issue. (CVE-2014-3621)
+
+Red Hat would like to thank the OpenStack project for reporting
+CVE-2014-3621. Upstream acknowledges Brant Knudson from IBM as the original
+reporter of this issue.
+
+The openstack-keystone packages have been upgraded to upstream version
+2013.2.4, which provides a number of bug fixes over the previous version.
+(BZ#1146083)
+
+This update fixes the following bugs:
+
+* When using an LDAP back end, the Identity service failed with a 'Bad
+search filter' error whenever a token request was made for a user whose ID
+contained a comma (for example, 'Doe, John'). However, if the user's ID
+contained no comma ('John Doe'), the Identity service grants token requests
+as expected. This was because the LDAP back end code of the Identity server
+did not properly escape special characters when creating search filters.
+This update adds the necessary escaping, thereby allowing the Identity
+server to perform LDAP search operations correctly. (BZ#1099628)
+
+* Previously, if the Identity service encountered a failed connection to a
+message broker, re-connection attempts kept failing as well. This was
+because the Identity service tried to reconnect to the same failing message
+broker, even if there were multiple hosts configured. This has been fixed
+by making the reconnect() implementation select the next broker in the
+list. As a result, when multiple broker hosts are provided, the Identity
+service will try the next one in the list at every connection attempt.
+This means that non-failure reconnect attempts will also switch from the
+current broker to the next in the list. Hence, users should not rely on any
+particular order when using brokers from the list. (BZ#1082669)
+
+* The Identity service now logs successful authentications of users.
+In previous releases, only authentication failures were logged.
+(BZ#1098635)
+
+* When using the LDAP back end and connecting to Active Directory
+anonymously, trying to use the top-level suffix as the user_tree_dn (or
+tenant/role_tree_dn) failed with a communication error. This is because the
+Identity service attempted to chase returned referrals, which is not
+allowed by default in Active Directory for security reasons. This update
+adds a new configuration option to disable referral chasing for LDAP search
+operations, namely chase_referrals. When this option is disabled, the
+Identity service will skip over any returned referrals without chasing
+them. (BZ#1093833)
+
+All openstack-keystone users are advised to upgrade to these updated
+packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1082669 - connection to multiple qpidd instances is broken
+1086211 - CVE-2014-2828 openstack-keystone: denial of service via V3 API authentication chaining
+1099628 - LDAP non-URL safe characters cause auth failure
+1139937 - CVE-2014-3621 openstack-keystone: configuration data information leak through Keystone catalog
+1146083 - Rebase openstack-keystone to 2013.2.4
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0:
+
+Source:
+openstack-keystone-2013.2.4-1.el6ost.src.rpm
+
+noarch:
+openstack-keystone-2013.2.4-1.el6ost.noarch.rpm
+openstack-keystone-doc-2013.2.4-1.el6ost.noarch.rpm
+python-keystone-2013.2.4-1.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-2828">https://access.redhat.com/security/cve/CVE-2014-2828</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3621">https://access.redhat.com/security/cve/CVE-2014-3621</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://wiki.openstack.org/wiki/ReleaseNotes/2013.2.4">https://wiki.openstack.org/wiki/ReleaseNotes/2013.2.4</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUR/KjXlSAg2UNWIIRApdmAJ9cJgU0+MsFYdzDXYObvNoojs/NJQCfYHPc
+JPFf+mM6Y4qSxhjHOdLMSzc=
+=sQ6V
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00043.html">Date Prev</a>][<a href="msg00045.html">Date Next</a>] &nbsp; [<a href="msg00043.html">Thread Prev</a>][<a href="msg00045.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00044">Thread Index</A>]
+[<A HREF="date.html#00044">Date Index</A>]
+[<A HREF="author.html#00044">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

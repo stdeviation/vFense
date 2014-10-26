@@ -1,0 +1,206 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1687&#45;02] Moderate: openstack&#45;heat security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 22 Oct 2014 14:08:24 &#45;0400 -->
+<!--X-Message-Id: 201410221808.s9MI8NRG032562@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1687-02] Moderate: openstack-heat security, bug fix,	and enha</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1687-02] Moderate: openstack-heat security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1687-02] Moderate: openstack-heat security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 22 Oct 2014 18:08:23 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-heat security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1687-02
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1687.html">https://rhn.redhat.com/errata/RHSA-2014-1687.html</a>
+Issue date:        2014-10-22
+CVE Names:         CVE-2014-3801 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-heat packages that fix one security issue, several bugs,
+and add various enhancements are now available for Red Hat Enterprise Linux
+OpenStack Platform 4.0.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0 - noarch
+
+3. Description:
+
+OpenStack Orchestration (heat) is a template-driven engine used to specify
+and deploy configurations for Compute, Storage, and OpenStack Networking.
+It can also be used to automate post-deployment actions, which in turn
+allows automated provisioning of infrastructure, services, and
+applications. Orchestration can also be integrated with Telemetry alarms to
+implement auto-scaling for certain infrastructure resources.
+
+It was discovered that a user could temporarily be able to see the URL of a
+provider template used in another tenant. If the template itself could be
+accessed, then additional information could be leaked that would otherwise
+not be visible. (CVE-2014-3801)
+
+The openstack-heat packages have been upgraded to upstream version
+2013.2.4, which provides a number of bug fixes and enhancements over the
+previous version. The most notable enhancements are:
+
+* Added OS profiler support into Orchestration (heat).
+* Multiple environment files can now be specified on the command line.
+* The command 'resource-list' now displays 'physical_resource_id'.
+(BZ#1146092)
+
+This update also fixes the following bugs:
+
+* Prior to this update, Qpid would attempt to reconnect to a broken message
+broker, even though multiple hosts were configured. With this update,
+reconnect() selects the next broker in the list for each connection
+attempt. (BZ#1082672)
+
+* Prior to this update, certain Qpid exceptions were not properly handled
+by the Qpid driver. As a result, the Qpid connection would fail and stop
+processing subsequent messages. With this update, all possible exceptions
+are handled to ensure the Qpid driver does not enter an unrecoverable
+failure loop. Consequently, Orchestration (heat) will continue to process
+Qpid messages, even after a major exception occur. (BZ#1085996)
+
+* The Qpid driver's v2 topology has been introduced to specifically address
+the slow growth of orphaned direct exchanges over time. By default,
+however, services still used the original v1 topology of the Qpid driver.
+The v2 topology had to be explicitly configured via the
+'qpid_topology_version = 2' parameter. With this fix, the Orchestration
+service's distribution configuration file (/usr/share/heat/heat-dist.conf)
+now contains the 'qpid_topology_version = 2' parameter. This effectively
+sets the Qpid driver's v2 topology as the default. In addition, the default
+value in the Qpid implementation has been changed to 2 as well.
+(BZ#1124137)
+
+* Previously, the version of Orchestration (heat) in Red Hat Enterprise
+Linux OpenStack Platform 4 did not include the &quot;host_routes&quot; property of
+the OS::Neutron::Subnet resource that was added in later releases of
+Orchestration. This change adds support for this property, which allows
+host routes to be specified for a subnet. (BZ#1095752)
+
+All openstack-heat users are advised to upgrade to these updated packages,
+which correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1082672 - connection to multiple qpidd instances is broken
+1085996 - Internal Error from python-qpid can cause qpid connection to never recover
+1099748 - CVE-2014-3801 openstack-heat: authenticated information leak in Heat
+1124137 - Heat messaging failure using default qpid_topology_version=1
+1146092 - Rebase openstack-heat to 2013.2.4
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0:
+
+Source:
+openstack-heat-2013.2.4-1.el6ost.src.rpm
+
+noarch:
+openstack-heat-api-2013.2.4-1.el6ost.noarch.rpm
+openstack-heat-api-cfn-2013.2.4-1.el6ost.noarch.rpm
+openstack-heat-api-cloudwatch-2013.2.4-1.el6ost.noarch.rpm
+openstack-heat-common-2013.2.4-1.el6ost.noarch.rpm
+openstack-heat-engine-2013.2.4-1.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3801">https://access.redhat.com/security/cve/CVE-2014-3801</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://wiki.openstack.org/wiki/ReleaseNotes/2013.2.4">https://wiki.openstack.org/wiki/ReleaseNotes/2013.2.4</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUR/KHXlSAg2UNWIIRAqHWAKCQkMssirciaTSHA5ryYA1pYtElYgCgwm/Y
+2vMufQJe36C+zJ9gc+MO9AA=
+=E6Id
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

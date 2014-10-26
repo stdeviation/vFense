@@ -1,0 +1,365 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1606&#45;02] Moderate: file security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 14 Oct 2014 00:59:46 &#45;0400 -->
+<!--X-Message-Id: 201410140459.s9E4xh79013214@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1606-02] Moderate: file security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1606-02] Moderate: file security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1606-02] Moderate: file security and bug fix update</li>
+<li><em>Date</em>: Tue, 14 Oct 2014 05:08:16 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: file security and bug fix update
+Advisory ID:       RHSA-2014:1606-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1606.html">https://rhn.redhat.com/errata/RHSA-2014-1606.html</a>
+Issue date:        2014-10-14
+CVE Names:         CVE-2012-1571 CVE-2014-0237 CVE-2014-0238 
+                   CVE-2014-1943 CVE-2014-2270 CVE-2014-3479 
+                   CVE-2014-3480 
+=====================================================================
+
+1. Summary:
+
+Updated file packages that fix multiple security issues and several bugs
+are now available for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The &quot;file&quot; command is used to identify a particular file according to the
+type of data contained in the file. The command can identify various file
+types, including ELF binaries, system libraries, RPM packages, and
+different graphics formats.
+
+Multiple denial of service flaws were found in the way file parsed certain
+Composite Document Format (CDF) files. A remote attacker could use either
+of these flaws to crash file, or an application using file, via a specially
+crafted CDF file. (CVE-2014-0237, CVE-2014-0238, CVE-2014-3479,
+CVE-2014-3480, CVE-2012-1571)
+
+Two denial of service flaws were found in the way file handled indirect and
+search rules. A remote attacker could use either of these flaws to cause
+file, or an application using file, to crash or consume an excessive amount
+of CPU. (CVE-2014-1943, CVE-2014-2270)
+
+This update also fixes the following bugs:
+
+* Previously, the output of the &quot;file&quot; command contained redundant white
+spaces. With this update, the new STRING_TRIM flag has been introduced to
+remove the unnecessary white spaces. (BZ#664513)
+
+* Due to a bug, the &quot;file&quot; command could incorrectly identify an XML
+document as a LaTex document. The underlying source code has been modified
+to fix this bug and the command now works as expected. (BZ#849621)
+
+* Previously, the &quot;file&quot; command could not recognize .JPG files and
+incorrectly labeled them as &quot;Minix filesystem&quot;. This bug has been fixed and
+the command now properly detects .JPG files. (BZ#873997)
+
+* Under certain circumstances, the &quot;file&quot; command incorrectly detected
+NETpbm files as &quot;x86 boot sector&quot;. This update applies a patch to fix this
+bug and the command now detects NETpbm files as expected. (BZ#884396)
+
+* Previously, the &quot;file&quot; command incorrectly identified ASCII text files as
+a .PIC image file. With this update, a patch has been provided to address
+this bug and the command now correctly recognizes ASCII text files.
+(BZ#980941)
+
+* On 32-bit PowerPC systems, the &quot;from&quot; field was missing from the output
+of the &quot;file&quot; command. The underlying source code has been modified to fix
+this bug and &quot;file&quot; output now contains the &quot;from&quot; field as expected.
+(BZ#1037279)
+
+* The &quot;file&quot; command incorrectly detected text files as &quot;RRDTool DB version
+ool - Round Robin Database Tool&quot;. This update applies a patch to fix this
+bug and the command now correctly detects text files. (BZ#1064463)
+
+* Previously, the &quot;file&quot; command supported only version 1 and 2 of the QCOW
+format. As a consequence, file was unable to detect a &quot;qcow2 compat=1.1&quot;
+file created on Red Hat Enterprise Linux 7. With this update, support for
+QCOW version 3 has been added so that the command now detects such files as
+expected. (BZ#1067771)
+
+All file users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+664513 - too many spaces ...
+805197 - CVE-2012-1571 file: out of bounds read in CDF parser
+849621 - file is coming back with 'LaTeX document text' instead of 'XML document text'
+873997 - file thinks the attached jpg is &quot;Minix filesystem, V2, 50968 zones&quot;
+884396 - file detects netpbm files as x86 boot sector type sometimes
+980941 - file reported wrong file type (reported .PIC image file instead of ASCII text file)
+1064463 - text file detected as 'RRDTool DB version ool - Round Robin Database Tool'
+1065836 - CVE-2014-1943 file: unrestricted recursion in handling of indirect type rules
+1067771 - file unable to detect qcow2 compat=1.1 img created by RHEL7
+1072220 - CVE-2014-2270 file: out-of-bounds access in search rules with offsets from input file
+1098155 - CVE-2014-0238 file: CDF property info parsing nelements infinite loop
+1098193 - CVE-2014-0237 file: cdf_unpack_summary_info() excessive looping DoS
+1104858 - CVE-2014-3480 file: cdf_count_chain insufficient boundary check
+1104869 - CVE-2014-3479 file: cdf_check_stream_offset insufficient boundary check
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+file-5.04-21.el6.src.rpm
+
+i386:
+file-5.04-21.el6.i686.rpm
+file-debuginfo-5.04-21.el6.i686.rpm
+file-libs-5.04-21.el6.i686.rpm
+
+x86_64:
+file-5.04-21.el6.x86_64.rpm
+file-debuginfo-5.04-21.el6.i686.rpm
+file-debuginfo-5.04-21.el6.x86_64.rpm
+file-libs-5.04-21.el6.i686.rpm
+file-libs-5.04-21.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+file-debuginfo-5.04-21.el6.i686.rpm
+file-devel-5.04-21.el6.i686.rpm
+file-static-5.04-21.el6.i686.rpm
+python-magic-5.04-21.el6.i686.rpm
+
+x86_64:
+file-debuginfo-5.04-21.el6.i686.rpm
+file-debuginfo-5.04-21.el6.x86_64.rpm
+file-devel-5.04-21.el6.i686.rpm
+file-devel-5.04-21.el6.x86_64.rpm
+file-static-5.04-21.el6.x86_64.rpm
+python-magic-5.04-21.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+file-5.04-21.el6.src.rpm
+
+x86_64:
+file-5.04-21.el6.x86_64.rpm
+file-debuginfo-5.04-21.el6.i686.rpm
+file-debuginfo-5.04-21.el6.x86_64.rpm
+file-libs-5.04-21.el6.i686.rpm
+file-libs-5.04-21.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+x86_64:
+file-debuginfo-5.04-21.el6.i686.rpm
+file-debuginfo-5.04-21.el6.x86_64.rpm
+file-devel-5.04-21.el6.i686.rpm
+file-devel-5.04-21.el6.x86_64.rpm
+file-static-5.04-21.el6.x86_64.rpm
+python-magic-5.04-21.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+file-5.04-21.el6.src.rpm
+
+i386:
+file-5.04-21.el6.i686.rpm
+file-debuginfo-5.04-21.el6.i686.rpm
+file-devel-5.04-21.el6.i686.rpm
+file-libs-5.04-21.el6.i686.rpm
+python-magic-5.04-21.el6.i686.rpm
+
+ppc64:
+file-5.04-21.el6.ppc64.rpm
+file-debuginfo-5.04-21.el6.ppc.rpm
+file-debuginfo-5.04-21.el6.ppc64.rpm
+file-devel-5.04-21.el6.ppc.rpm
+file-devel-5.04-21.el6.ppc64.rpm
+file-libs-5.04-21.el6.ppc.rpm
+file-libs-5.04-21.el6.ppc64.rpm
+python-magic-5.04-21.el6.ppc64.rpm
+
+s390x:
+file-5.04-21.el6.s390x.rpm
+file-debuginfo-5.04-21.el6.s390.rpm
+file-debuginfo-5.04-21.el6.s390x.rpm
+file-devel-5.04-21.el6.s390.rpm
+file-devel-5.04-21.el6.s390x.rpm
+file-libs-5.04-21.el6.s390.rpm
+file-libs-5.04-21.el6.s390x.rpm
+python-magic-5.04-21.el6.s390x.rpm
+
+x86_64:
+file-5.04-21.el6.x86_64.rpm
+file-debuginfo-5.04-21.el6.i686.rpm
+file-debuginfo-5.04-21.el6.x86_64.rpm
+file-devel-5.04-21.el6.i686.rpm
+file-devel-5.04-21.el6.x86_64.rpm
+file-libs-5.04-21.el6.i686.rpm
+file-libs-5.04-21.el6.x86_64.rpm
+python-magic-5.04-21.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+file-debuginfo-5.04-21.el6.i686.rpm
+file-static-5.04-21.el6.i686.rpm
+
+ppc64:
+file-debuginfo-5.04-21.el6.ppc64.rpm
+file-static-5.04-21.el6.ppc64.rpm
+
+s390x:
+file-debuginfo-5.04-21.el6.s390x.rpm
+file-static-5.04-21.el6.s390x.rpm
+
+x86_64:
+file-debuginfo-5.04-21.el6.x86_64.rpm
+file-static-5.04-21.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+file-5.04-21.el6.src.rpm
+
+i386:
+file-5.04-21.el6.i686.rpm
+file-debuginfo-5.04-21.el6.i686.rpm
+file-devel-5.04-21.el6.i686.rpm
+file-libs-5.04-21.el6.i686.rpm
+python-magic-5.04-21.el6.i686.rpm
+
+x86_64:
+file-5.04-21.el6.x86_64.rpm
+file-debuginfo-5.04-21.el6.i686.rpm
+file-debuginfo-5.04-21.el6.x86_64.rpm
+file-devel-5.04-21.el6.i686.rpm
+file-devel-5.04-21.el6.x86_64.rpm
+file-libs-5.04-21.el6.i686.rpm
+file-libs-5.04-21.el6.x86_64.rpm
+python-magic-5.04-21.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+file-debuginfo-5.04-21.el6.i686.rpm
+file-static-5.04-21.el6.i686.rpm
+
+x86_64:
+file-debuginfo-5.04-21.el6.x86_64.rpm
+file-static-5.04-21.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-1571.html">https://www.redhat.com/security/data/cve/CVE-2012-1571.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0237.html">https://www.redhat.com/security/data/cve/CVE-2014-0237.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-0238.html">https://www.redhat.com/security/data/cve/CVE-2014-0238.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-1943.html">https://www.redhat.com/security/data/cve/CVE-2014-1943.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2270.html">https://www.redhat.com/security/data/cve/CVE-2014-2270.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3479.html">https://www.redhat.com/security/data/cve/CVE-2014-3479.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3480.html">https://www.redhat.com/security/data/cve/CVE-2014-3480.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUPK2pXlSAg2UNWIIRAso7AKC/EbxFblMfli0lLhGrWgaITTXzWwCfVRz8
+WJQeVt3iCpD2AmTeeVy2qa8=
+=Jpq5
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
