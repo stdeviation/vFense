@@ -4,18 +4,15 @@ from vFense import VFENSE_LOGGING_CONFIG
 from vFense.plugins.patching.operations.patching_operations import (
     PatchingOperation
 )
-from vFense.core.operations._constants import AgentOperation
-from vFense.plugins.patching._constants import CommonAppKeys, CommonFileKeys
+from vFense.core.operations import AgentOperation
+from vFense.plugins.patching import InstallQueueOperation
+from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.operations._constants import (
     AgentOperations, vFensePlugins, vFenseObjects
 )
 from vFense.core.operations.store_agent_operation import (
     StoreAgentOperationManager
 )
-from vFense.core.operations._db_model import (
-    AgentOperationKey, OperationPerAgentKey
-)
-from vFense.core._constants import CPUThrottleValues, RebootValues
 from vFense.plugins.patching.operations import Install, AgentAppData
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys, DbCommonAppPerAgentKeys
@@ -103,7 +100,8 @@ class StorePatchingOperation(StoreAgentOperationManager):
             results = self.install_apps(install, oper_type)
 
         else:
-            results = {}
+            results = ApiResults()
+            results.fill_in_defaults()
             msg = (
                 'Invalid instance {0}, please pass an instance of Install'
                 .format(type(install))
@@ -155,7 +153,8 @@ class StorePatchingOperation(StoreAgentOperationManager):
             results = self.install_apps(install, oper_type)
 
         else:
-            results = {}
+            results = ApiResults()
+            results.fill_in_defaults()
             msg = (
                 'Invalid instance {0}, please pass an instance of Install'
                 .format(type(install))
@@ -207,7 +206,8 @@ class StorePatchingOperation(StoreAgentOperationManager):
             results = self.install_apps(install, oper_type)
 
         else:
-            results = {}
+            results = ApiResults()
+            results.fill_in_defaults()
             msg = (
                 'Invalid instance {0}, please pass an instance of Install'
                 .format(type(install))
@@ -259,7 +259,8 @@ class StorePatchingOperation(StoreAgentOperationManager):
             results = self.install_apps(install, oper_type)
 
         else:
-            results = {}
+            results = ApiResults()
+            results.fill_in_defaults()
             msg = (
                 'Invalid instance {0}, please pass an instance of Install'
                 .format(type(install))
@@ -312,6 +313,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
 
         else:
             results = ApiResults()
+            results.fill_in_defaults()
             msg = (
                 'Invalid instance {0}, please pass an instance of Install'
                 .format(type(install))
@@ -389,17 +391,17 @@ class StorePatchingOperation(StoreAgentOperationManager):
                         self._get_apps_data(app_id, agent_id)
                     )
 
-                operation_data = {
-                    AgentOperationKey.Operation: oper_type,
-                    AgentOperationKey.OperationId: operation_id,
-                    AgentOperationKey.Plugin: oper_plugin,
-                    AgentOperationKey.Restart: install.restart,
-                    CommonFileKeys.PKG_FILEDATA: pkg_data,
-                    OperationPerAgentKey.AgentId: agent_id,
-                    AgentOperationKey.CpuThrottle: install.cpu_throttle,
-                    AgentOperationKey.NetThrottle: install.net_throttle,
-                }
-                self._store_in_agent_queue(operation_data)
+                agent_queue = InstallQueueOperation()
+                agent_queue.operation = oper_type
+                agent_queue.operation_id = operation_id
+                agent_queue.plugin = oper_plugin
+                agent_queue.agent_id = agent_id
+                agent_queue.restart = install.restart
+                agent_queue.file_data = pkg_data
+                agent_queue.cpu_throttle = install.cpu_throttle
+                agent_queue.net_throttle = install.net_throttle
+
+                self._store_in_agent_queue(agent_queue.to_dict())
                 operation.add_agent_to_install_operation(
                     agent_id, operation_id, pkg_data
                 )
@@ -410,7 +412,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results.generated_ids = [operation_id],
+            results.generated_ids.append(operation_id)
             results.generic_status_code = status_code
             results.vfense_status_code = vfense_status_code
             results.message = msg
@@ -420,21 +422,21 @@ class StorePatchingOperation(StoreAgentOperationManager):
     def _get_apps_data(self, app_id, agent_id):
 
         collection = self.CurrentAppsCollection
-        pkg = (
+        data = (
             fetch_app_data_to_send_to_agent(
                 app_id, agent_id, collection,
             )
         )
         uris = (
             get_download_urls(
-                self.view_name, app_id, pkg[CommonFileKeys.PKG_FILEDATA]
+                self.view_name, app_id, data.file_data
             )
         )
         app_data = AgentAppData()
         app_data.app_id = app_id
-        app_data.app_name = pkg[DbCommonAppKeys.Name]
-        app_data.app_version = pkg[DbCommonAppKeys.Version]
+        app_data.app_name = data.name
+        app_data.app_version = data.version
         app_data.app_uris = uris
-        app_data.cli_options = pkg[CommonFileKeys.PKG_CLI_OPTIONS]
+        app_data.cli_options = data.cli_options
 
         return app_data.to_dict()

@@ -664,3 +664,24 @@ class AgentAppData(Base):
         }
 
 
+class AgentAppFileData(Apps):
+    def __init__(self, file_data=None, **kwargs):
+        super(AgentAppData, self).__init__(**kwargs)
+        self.file_data = file_data
+
+
+    def to_dict(self):
+        """ Turn the fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        return {
+            DbCommonAppKeys.AppId: self.app_id,
+            DbCommonAppKeys.Name: self.app_name,
+            DbCommonAppKeys.Version: self.app_version,
+            DbCommonAppKeys.FileData: self.file_data,
+            DbCommonAppKeys.CliOptions: self.cli_options
+        }
