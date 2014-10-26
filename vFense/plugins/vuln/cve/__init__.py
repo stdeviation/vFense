@@ -422,7 +422,7 @@ class CveDescriptions(Base):
     """Used to represent an instance of a vulnerability."""
 
     def __init__(self, description=None, source=None, **kwargs):
-        super(CvssVector, self).__init__(**kwargs)
+        super(CveDescriptions, self).__init__(**kwargs)
         self.description = description
         self.source = source
 
