@@ -295,9 +295,16 @@ class StorePatchingOperation(StoreAgentOperationManager):
             >>> agent_ids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
             >>> install = Install(app_ids, agent_ids, username, view_name, reboot, net, cpu)
             >>> operation = StorePatchingOperation(username, view_name)
-            >>> operation.uninstall_apps(install)
+            >>> results = operation.uninstall_apps(install)
 
         Returns:
+            >>> results.message
+            u'install_os_apps operation created: 3b6150ae-a143-4134-8338-a5aa65fa9e47'
+
+        Returns:
+            ApiResults instance
+            Check vFense.core.results for all the attributes and methods
+            for the instance.
 
         """
 
@@ -364,7 +371,10 @@ class StorePatchingOperation(StoreAgentOperationManager):
         operation.performed_on = performed_on
         operation_id = operation_manager.create_operation(operation)
         if operation_id:
-            msg = '{0} operation created'.format(oper_type)
+            msg = (
+                '{0} operation created, operation_id: {1}'
+                .format(oper_type, operation_id)
+            )
             status_code = AgentOperationCodes.ObjectCreated
             vfense_status_code = AgentOperationCodes.Created
             results.generated_ids.append(operation_id)
@@ -387,9 +397,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
                         self.CurrentAppsPerAgentCollection
                     )
 
-                    pkg_data.append(
-                        self._get_apps_data(app_id, agent_id)
-                    )
+                    pkg_data.append(self._get_apps_data(app_id, agent_id))
 
                 agent_queue = InstallQueueOperation()
                 agent_queue.operation = oper_type
@@ -407,7 +415,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
                 )
 
         else:
-            msg = 'operation failed to create'
+            msg = '{0} operation failed to create'.format(oper_type)
             status_code = AgentOperationFailureCodes.FailedToCreateObject
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation

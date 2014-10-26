@@ -1,8 +1,5 @@
-from vFense.core.operations._db_model import OperationPerAgentKey, \
-    OperationPerAppKey
-from vFense.core.operations import AgentOperation, OperPerAgent, OperPerApp
+from vFense.core.operations import OperPerAgent, OperPerApp
 from vFense.core.operations.agent_operations import AgentOperationManager
-from vFense.core._db_constants import DbTime
 from vFense.core.operations._db_agent import update_operation_per_agent, \
     group_operations_per_app_by_results, update_operation_per_app, \
     update_errors_and_pending_count, update_failed_and_pending_count, \
@@ -120,18 +117,14 @@ class PatchingOperation(AgentOperationManager):
         completed = False
         if not apps_removed:
             apps_removed = []
-
-        operation_data = (
-            {
-                OperationPerAppKey.Results: status,
-                OperationPerAppKey.ResultsReceivedTime: self.db_time,
-                OperationPerAppKey.AppsRemoved: apps_removed,
-                OperationPerAppKey.Errors: errors
-            }
-        )
+        operation_data = OperPerApp()
+        operation_data.results_received_time = self.now
+        operation_data.apps_removed = apps_removed
+        operation_data.errors = errors
+        operation_data.results = status
         status_code, count, errors, generated_ids = (
             update_operation_per_app(
-                operation_id, agent_id, app_id, operation_data
+                operation_id, agent_id, app_id, operation_data.to_dict_db()
             )
         )
 
@@ -171,14 +164,16 @@ class PatchingOperation(AgentOperationManager):
                 operation_id, agent_id
             )
         )
-        operation_data = {
-            OperationPerAgentKey.AppsCompletedCount: completed_count,
-            OperationPerAgentKey.AppsFailedCount: failed_count,
-            OperationPerAgentKey.AppsPendingCount: pending_count,
-        }
+
+        operation_data = OperPerAgent()
+        operation_data.completed_count = completed_count
+        operation_data.failed_count = failed_count
+        operation_data.pending_count = pending_count
 
         status_code, count, errors, generated_ids = (
-            update_operation_per_agent(operation_id, agent_id, operation_data)
+            update_operation_per_agent(
+                operation_id, agent_id, operation_data.to_dict_db()
+            )
         )
 
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:

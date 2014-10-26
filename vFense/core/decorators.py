@@ -225,7 +225,6 @@ def catch_it(fn):
         try:
             results = fn(*args, **kwargs)
         except Exception as e:
-            logger.exception(e)
             results = ExternalApiResults()
             results.fill_in_defaults()
             results.generic_status_code = GenericCodes.SomethingBroke
@@ -235,6 +234,8 @@ def catch_it(fn):
             results.http_method = tornado_handler.request.method
             results.username = tornado_handler.get_current_user()
             results.http_status_code = 500
+            results.errors.append(e)
+            logger.exception(results.to_dict_non_null())
             tornado_handler.set_status(results.http_status_code)
             tornado_handler.set_header('Content-Type', 'application/json')
             tornado_handler.write(json.dumps(results.to_dict_non_null(), indent=4))
