@@ -30,7 +30,7 @@ def fetch_vulnerability_categories(cve_id, conn=None):
             r
             .table(CVECollections.CVE)
             .get_all(cve_id)
-            .pluck(CveKeys.CveCategories)
+            .pluck(CveKeys.Categories)
             .run(conn)
         )
         if info:

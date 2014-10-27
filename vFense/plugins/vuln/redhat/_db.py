@@ -11,19 +11,57 @@ from vFense.plugins.vuln.redhat._db_model import (
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
+
 @time_it
 @db_create_close
-def get_redhat_vulnerability_data_by_vuln_id(vuln_id, conn=None):
-    info = {}
-    map_hash = (
+def fetch_vuln_ids(name, version, os_string, conn=None):
+    """Retrieve RedHat RHSA IDS and CVE_IDS for an Application
+    Args:
+        name (str): The name of the application
+        version (str): The version of the application
+        os_string (str): The Version of Ubuntu (Ubuntu 12.04 LTS)
+
+    Basic Usage:
+        >>> from vFense.plugins.vuln.redhat._db import fetch_ubuntu_vuln_ids
+        >>> name = 'nvidia-173'
+        >>> version = '173.14.22-0ubuntu11.2'
+        >>> os_string = 'Ubuntu 10.04 LTS'
+        >>> fetch_vuln_ids(name, version, os_string)
+
+    Returns:
+        Dictionary
         {
-            RedhatVulnerabilityKeys.VulnerabilityId: r.row[RedhatVulnerabilityKeys.VulnerabilityId],
-            RedhatVulnerabilityKeys.DatePosted: r.row[RedhatVulnerabilityKeys.DatePosted],
-            RedhatVulnerabilityKeys.Details: r.row[RedhatVulnerabilityKeys.Details],
-            RedhatVulnerabilityKeys.CveIds: r.row[RedhatVulnerabilityKeys.CveIds],
-            RedhatVulnerabilityKeys.Apps: r.row[RedhatVulnerabilityKeys.Apps],
-            RedhatVulnerabilityKeys.Product : r.row[RedhatVulnerabilityKeys.Product],
-            RedhatVulnerabilityKeys.AppsLink : r.row[RedhatVulnerabilityKeys.AppsLink],
+            "cve_ids": [],
+            "bulletin_id": "USN-1523-1"
+        }
+    """
+    data = []
+    try:
+        data = list(
+            r
+            .table(RedHatVulnerabilityCollections.Vulnerabilities)
+            .get_all(
+                [name, version],
+                index=RedhatVulnerabilityIndexes.NameAndVersion
+            )
+            .pluck(RedhatVulnerabilityKeys.VulnerabilityId, UbuntuVulnerabilityKeys.CveIds)
+            .run(conn)
+        )
+
+    except Exception as e:
+        logger.exception(e)
+
+    return(data)
+
+@time_it
+@db_create_close
+def fetch_vuln_data(vuln_id, conn=None):
+    info = {}
+    merge_hash = (
+        {
+            RedhatVulnerabilityKeys.DatePosted: (
+                r.row[RedhatVulnerabilityKeys.DatePosted].to_epoch_time()
+            ),
         }
     )
     try:
@@ -31,7 +69,7 @@ def get_redhat_vulnerability_data_by_vuln_id(vuln_id, conn=None):
             r
             .table(RedHatVulnerabilityCollections.Vulnerabilities)
             .get_all(vuln_id)
-            .map(map_hash)
+            .merge(merge_hash)
             .run(conn)
         )
         if info:

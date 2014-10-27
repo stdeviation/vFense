@@ -130,7 +130,7 @@ class Base(object):
         Returns:
             (dict): a dictionary with the non None fields of this view.
         """
-        data = self.to_dict()
+        data = self.to_dict_all()
 
         return {k:data[k] for k in data
                 if data[k] != None}

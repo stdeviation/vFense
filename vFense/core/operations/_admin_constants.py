@@ -82,6 +82,7 @@ class AdminActions():
     EDIT_USER_EMAIL = 'edit user email'
     EDIT_USER_FULL_NAME = 'edit user full name'
     TOGGLE_USER_STATUS = 'toggle user status'
+    HIDE_UNDHIDE_APPLICATION = 'Hide/Unhide application'
     EDIT_CURRENT_VIEW = 'edit current user view'
     EDIT_DEFAULT_VIEW = 'edit default user view'
     EDIT_LOG_SETTINGS = 'edit log settings'

@@ -405,6 +405,18 @@ class Apps(Base):
             DbCommonAppKeys.CveIds: self.cve_ids
         }
 
+    def to_dict_apps_non_null(self):
+        """ Turn the fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+        data = self.to_dict_apps()
+
+        return {k:data[k] for k in data
+                if data[k] != None}
+
     def to_dict_db_apps(self):
         """ Turn the view fields into a dictionary.
 
@@ -424,11 +436,10 @@ class Apps(Base):
 
 
     def to_dict_apps_per_agent(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the fields into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                install operation.
+            (dict): A dictionary with the fields.
 
         """
 
@@ -450,6 +461,18 @@ class Apps(Base):
             DbCommonAppPerAgentKeys.CveIds: self.cve_ids,
             DbCommonAppPerAgentKeys.Status: self.status
         }
+
+    def to_dict_apps_per_agent_non_null(self):
+        """ Turn the fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+        data = self.to_dict_apps_per_agent()
+
+        return {k:data[k] for k in data
+                if data[k] != None}
 
     def to_dict_db_apps_per_agent(self):
         """ Turn the view fields into a dictionary.
@@ -722,5 +745,3 @@ class FileUploadData(Base):
             'file_size': self.file_size,
             'file_hash': self.file_hash
         }
-
-

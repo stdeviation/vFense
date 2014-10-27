@@ -87,12 +87,11 @@ def fetch_vuln_data(vuln_id, conn=None):
     """
 
     data = []
-    map_hash = (
+    merge_hash = (
         {
-            UbuntuVulnerabilityKeys.VulnerabilityId: r.row[UbuntuVulnerabilityKeys.VulnerabilityId],
-            UbuntuVulnerabilityKeys.DatePosted: r.row[UbuntuVulnerabilityKeys.DatePosted].to_epoch_time(),
-            UbuntuVulnerabilityKeys.Details: r.row[UbuntuVulnerabilityKeys.Details],
-            UbuntuVulnerabilityKeys.CveIds: r.row[UbuntuVulnerabilityKeys.CveIds],
+            UbuntuVulnerabilityKeys.DatePosted: (
+                r.row[UbuntuVulnerabilityKeys.DatePosted].to_epoch_time()
+            ),
         }
     )
     try:
@@ -100,7 +99,7 @@ def fetch_vuln_data(vuln_id, conn=None):
             r
             .table(UbuntuVulnerabilityCollections.Vulnerabilities)
             .get_all(vuln_id)
-            .map(map_hash)
+            .merge(merge_hash)
             .run(conn)
         )
 

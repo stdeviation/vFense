@@ -8,38 +8,41 @@ from vFense.supported_platforms import REDHAT_DISTROS
 from vFense.core._constants import CommonKeys
 from vFense.core.agent._db import total_agents_in_view
 from vFense.core._db_constants import DbTime
-from vFense.core._db import object_exist, insert_data_in_table, \
-    delete_data_in_table
-
-from vFense.core.results import ApiResultKeys
-from vFense.core.status_codes import DbCodes, GenericCodes, \
-    GenericFailureCodes
-
-from vFense.plugins.patching.status_codes import (
-    PackageCodes, PackageFailureCodes
+from vFense.core._db import (
+    object_exist, insert_data_in_table, delete_data_in_table
 )
-from vFense.plugins.patching.file_data import add_file_data
-from vFense.plugins.patching.utils import build_agent_app_id
-from vFense.plugins.patching._db_model import AppsKey, AppCollections, \
-        DbCommonAppKeys, DbCommonAppPerAgentKeys, FileServerKeys
-from vFense.plugins.patching._constants import CommonAppKeys, \
-    FileLocationUris, CommonFileKeys
-from vFense.plugins.patching._db import (fetch_file_servers_addresses,
-    delete_app_data_for_agentid, update_apps_per_agent_by_view,
-    update_app_data_by_agentid, update_app_data_by_agentid_and_appid,
-    update_views_in_apps_by_view, update_apps_per_agent,
-    delete_apps_per_agent_older_than, update_hidden_status,
-    fetch_app_id_by_name_and_version, update_views_in_app_by_app_id,
-    update_app_data_by_app_id, delete_apps_by_view)
-
-
+from vFense.core.results import ApiResults
+from vFense.core.status_codes import (
+    DbCodes, GenericCodes, GenericFailureCodes
+)
 from vFense.core.decorators import time_it, results_message
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.manager import ViewManager
+from vFense.plugins.patching import Apps
+from vFense.plugins.patching.status_codes import (
+    PackageCodes, PackageFailureCodes
+)
+from vFense.plugins.patching.utils import build_agent_app_id
+from vFense.plugins.patching._db_model import (
+    AppsKey, AppCollections, DbCommonAppPerAgentKeys, FileServerKeys
+)
+from vFense.plugins.patching._constants import (
+    CommonAppKeys, FileLocationUris, CommonFileKeys
+)
+from vFense.plugins.patching._db import (
+    fetch_file_servers_addresses, delete_app_data_for_agentid,
+    update_apps_per_agent_by_view, update_app_data_by_agentid,
+    update_app_data_by_agentid_and_appid, update_views_in_apps_by_view,
+    update_apps_per_agent, delete_apps_per_agent_older_than,
+    update_hidden_status, fetch_app_id_by_name_and_version,
+    update_app_data_by_app_id, delete_apps_by_view
+)
 from vFense.plugins.vuln import VulnerabilityKeys
+from vFense.plugins.vuln.search.vuln_search import FetchVulns
 import vFense.plugins.vuln.windows.ms as ms
 import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.cve.cve as cve
+import vFense.plugins.vuln.redhat.rh as rh
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -660,12 +663,10 @@ def update_app_status_by_agentid_and_appid(
         Boolean
     """
     updated = False
-
+    app = Apps(status=status)
     if status in CommonAppKeys.ValidPackageStatuses:
-        app_status = {DbCommonAppPerAgentKeys.Status: status}
-
         status_code, _, _, _ = update_app_data_by_agentid_and_appid(
-            agent_id, app_id, app_status, collection
+            agent_id, app_id, app.to_dict_non_null(), collection
         )
 
         if status_code == DbCodes.Replaced:
@@ -699,46 +700,23 @@ def get_vulnerability_info_for_app(app):
     """
 
     vuln_data = Apps()
-
-    if app.kb != "" and re.search(r'Windows', app.os_string, re.IGNORECASE):
-        vuln_info = ms.get_vuln_ids(app.kb)
-
-    elif (
-            re.search(r'Ubuntu|Mint', app.os_string, re.IGNORECASE)
-            and app.name and app.version
-         ):
-        vuln_info = (
-            usn.get_vuln_ids(
-                app.name, app.version, app.os_string
-            )
-        )
-
-    elif (
-            re.search('|'.join(REDHAT_DISTROS), app.os_string, re.IGNORECASE)
-            and app.name and app.version
-         ):
-
-        vuln_info = (
-            usn.get_vuln_ids(
-                app.name, app.version, app.os_string
-            )
-        )
+    vuln_data.vulnerability_categories = []
+    search = FetchVulns(app.os_string)
+    vuln_info = search.by_app_info(app.name, app.version, app.kb).data
 
     if vuln_info:
-        vuln_data[AppsKey.CveIds] = vuln_info[VulnerabilityKeys.CveIds]
-        vuln_data[AppsKey.VulnerabilityId] = (
-            vuln_info[VulnerabilityKeys.VulnerabilityId]
-        )
-        for cve_id in vuln_data[AppsKey.CveIds]:
-            vuln_data[AppsKey.VulnerabilityCategories] += (
+        vuln_data.cve_ids = vuln_info.cve_ids
+        vuln_data.vulnerability_id = vuln_info.vulnerability_id
+        for cve_id in vuln_data.cve_ids:
+            vuln_data.vulnerability_categories += (
                 cve.get_vulnerability_categories(cve_id)
             )
 
-        vuln_data[AppsKey.VulnerabilityCategories] = (
-            list(set(vuln_data[AppsKey.VulnerabilityCategories]))
+        vuln_data.vulnerability_categories = (
+            list(set(vuln_data.vulnerability_categories))
         )
 
-    return vuln_data
+    return vuln_data.to_dict_non_null()
 
 @time_it
 def application_updater(app_data, file_data,
@@ -959,44 +937,42 @@ def toggle_hidden_status(
 
     Returns:
     """
-    status = toggle_hidden_status.func_name + ' - '
-    results = {
-        ApiResultKeys.DATA: [],
-    }
+    results = ApiResults()
+    results.fill_in_defaults()
     status_code, count, error, generated_ids = update_hidden_status(
         app_ids, hidden, collection
     )
 
     if status_code == DbCodes.Replaced:
-        msg = 'Hidden status updated'
-        generic_status_code = GenericCodes.ObjectUpdated
-        vfense_status_code = PackageCodes.ToggleHiddenSuccessful
+        results.message = 'Hidden status updated'
+        results.generic_status_code = GenericCodes.ObjectUpdated
+        results.vfense_status_code = PackageCodes.ToggleHiddenSuccessful
         results.updated_ids = app_ids
 
     elif status_code == DbCodes.Skipped or status_code == DbCodes.Unchanged:
         msg = 'Hidden status could not be updated.'
-        generic_status_code = GenericCodes.DoesNotExist
-        vfense_status_code = PackageFailureCodes.ToggleHiddenFailed
+        results.generic_status_code = GenericCodes.DoesNotExist
+        results.vfense_status_code = PackageFailureCodes.ToggleHiddenFailed
+        results.message = msg
 
     elif status_code == DbCodes.DoesNotExist:
         msg = (
             'Hidden status could not be updated: app_ids do not exist - %s.'
             % (','.join(app_ids))
         )
-        generic_status_code = GenericCodes.DoesNotExist
-        vfense_status_code = PackageFailureCodes.ApplicationDoesNotExist
+        results.generic_status_code = GenericCodes.DoesNotExist
+        results.vfense_status_code = (
+            PackageFailureCodes.ApplicationDoesNotExist
+        )
+        results.message = msg
 
     elif status_code == DbCodes.Errors:
         msg = (
             'Hidden status could not be updated: error occured - %s.'
             % (error)
         )
-        generic_status_code = GenericFailureCodes.FailedToUpdateObject
-        vfense_status_code = PackageFailureCodes.ToggleHiddenFailed
-
-    results[ApiResultKeys.DB_STATUS_CODE] = status_code
-    results.generic_status_code = generic_status_code
-    results.vfense_status_code = vfense_status_code
-    results.message = status + msg
+        results.generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        results.vfense_status_code = PackageFailureCodes.ToggleHiddenFailed
+        results.message = msg
 
     return results

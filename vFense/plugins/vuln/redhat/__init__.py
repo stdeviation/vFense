@@ -1,5 +1,6 @@
 from vFense import Base
 from vFense.plugins.vuln import Vulnerability
+from vFense.plugins.vuln._constants import VulnDefaults
 from vFense.plugins.vuln.redhat._constants import RedhatVulnSubKeys
 
 class Redhat(Vulnerability):
@@ -24,6 +25,21 @@ class RedhatVulnApp(Base):
         self.version = version
         self.arch = arch
         self.app_id = app_id
+
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+
+        Use case(s):
+            Useful when you want to create an install instance and only
+            want to fill in a few fields, then allow the install
+            functions to call this method to fill in the rest.
+        """
+        if not self.version:
+            self.version = VulnDefaults.version()
+
+        if not self.os_string:
+            self.os_string = VulnDefaults.os_string()
 
     def to_dict(self):
         """ Turn the view fields into a dictionary.

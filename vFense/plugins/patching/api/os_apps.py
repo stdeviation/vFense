@@ -613,7 +613,7 @@ class AppsHandler(AppsBaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
+    @check_permissions(Permissions.HIDE_UNHIDE_APPLICATIONS)
     def put(self, oper_type):
         oper = self.return_operation_type(oper_type)
 

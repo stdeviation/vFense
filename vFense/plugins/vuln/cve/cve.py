@@ -93,6 +93,6 @@ def get_vulnerability_categories(cve_id):
 
     data = fetch_vulnerability_categories(cve_id)
     if data:
-        info = data[CveKeys.CveCategories]
+        info = data[CveKeys.Categories]
 
     return(info)

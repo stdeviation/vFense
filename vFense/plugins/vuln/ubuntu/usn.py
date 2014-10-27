@@ -1,13 +1,9 @@
-import sys
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.decorators import return_status_tuple, time_it
+from vFense.core.decorators import time_it
 
-from vFense.plugins.vuln.ubuntu._db_model import (
-    UbuntuVulnerabilityCollections, UbuntuVulnerabilityIndexes,
-    UbuntuVulnerabilityKeys
-)
+from vFense.plugins.vuln.ubuntu import Ubuntu
 from vFense.plugins.vuln.ubuntu._db import (
     fetch_vuln_ids, fetch_vuln_data
 )
@@ -24,7 +20,7 @@ def get_vuln_ids(name, version, os_string):
         os_string (str): The Version of Ubuntu (Ubuntu 12.04 LTS)
 
     Basic Usage:
-        >>> from vFense.plugins.vuln.ubuntu.usn.py import get_vuln_ids
+        >>> from vFense.plugins.vuln.ubuntu.usn import get_vuln_ids
         >>> name = 'nvidia-173'
         >>> version = '173.14.22-0ubuntu11.2'
         >>> os_string = 'Ubuntu 10.04 LTS'
@@ -34,16 +30,15 @@ def get_vuln_ids(name, version, os_string):
         Dictionary
     """
 
-    info = {
-        UbuntuVulnerabilityKeys.VulnerabilityId: '',
-        UbuntuVulnerabilityKeys.CveIds: []
-    }
-
     data = fetch_vuln_ids(name, version, os_string)
     if data:
-        info = data[0]
+        vuln = Ubuntu(**data[0])
+    else:
+        vuln = Ubuntu()
+        vuln.vulnerability_id = ''
+        vuln.cve_ids = []
 
-    return(info)
+    return vuln
 
 
 @time_it
@@ -74,10 +69,10 @@ def get_vuln_data_by_vuln_id(vuln_id):
     }
     """
 
-    info = {}
+    vuln = Ubuntu()
 
     data = fetch_vuln_data(vuln_id)
     if data:
-        info = data[0]
+        vuln = Ubuntu(**data[0])
 
-    return(info)
+    return vuln

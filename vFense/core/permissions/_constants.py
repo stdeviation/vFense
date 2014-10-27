@@ -20,6 +20,7 @@ class Permissions():
     REMOVE_AGENTS_FROM_VIEW = 'remove agents from view'
     REMOTE_ASSISTANCE = 'remote assistance'
     EDIT_TIME_ZONE = 'edit time zone'
+    HIDE_UNHIDE_APPLICATIONS = 'hide_apps'
 
     @staticmethod
     def get_valid_permissions():
