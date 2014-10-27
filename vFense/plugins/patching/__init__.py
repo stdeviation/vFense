@@ -685,3 +685,42 @@ class AgentAppFileData(Apps):
             DbCommonAppKeys.FileData: self.file_data,
             DbCommonAppKeys.CliOptions: self.cli_options
         }
+
+
+class FileUploadData(Base):
+    """Used to represent an instance."""
+
+    def __init__(self, file_name=None, file_hash=None, file_size=None,
+                 file_path=None, file_uuid=None, **kwargs):
+        """
+        Kwargs:
+            file_name (str): Name of the file.
+            file_hash (str): The md5 hash of the file.
+            file_size (int): Size of the file in kb.
+            file_path (str): The path where this file can be downloaded from.
+            file_uuid (str): The primary key of this file.
+        """
+        super(FileUploadData, self).__init__(**kwargs)
+        self.file_name = file_name
+        self.file_hash = file_hash
+        self.file_size = file_size
+        self.file_path = file_path
+        self.file_uuid = file_uuid
+
+    def to_dict(self):
+        """ Turn the fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        return {
+            'file_uuid': self.file_uuid,
+            'file_name': self.file_name,
+            'file_path': self.file_path,
+            'file_size': self.file_size,
+            'file_hash': self.file_hash
+        }
+
+

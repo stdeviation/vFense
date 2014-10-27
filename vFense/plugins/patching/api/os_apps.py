@@ -6,7 +6,9 @@ from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core._constants import CommonKeys
+from vFense.core._constants import (
+    DefaultQueryValues, SortValues
+)
 from vFense.core.results import ApiResults, ExternalApiResults
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
@@ -14,7 +16,6 @@ from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message,
     catch_it
 )
-from vFense.core._constants import DefaultQueryValues, SortValues
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
 from vFense.core.operations._constants import AgentOperations

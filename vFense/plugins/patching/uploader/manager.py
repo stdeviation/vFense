@@ -7,11 +7,12 @@ from vFense.core.view.manager import ViewManager
 from vFense.core.view import ViewKeys
 from vFense.core._db_constants import DbTime
 from vFense.core.status_codes import DbCodes
+from vFense.core.results import ApiResults
 from vFense.plugins.patching.status_codes import (
     PackageCodes, PackageFailureCodes
 )
 from vFense.utils.common import md5sum
-from vFense.plugins.patching import Apps, Files
+from vFense.plugins.patching import Apps, Files, FileUploadData
 from vFense.plugins.patching._db import insert_app_data
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys
@@ -55,6 +56,7 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
     Returns:
     """
     results = ApiResults()
+    results.fill_in_defaults()
     base_app_dir = os.path.join(TMP_DIR, uuid)
     full_app_path = os.path.join(base_app_dir, file_name)
 
@@ -69,20 +71,15 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
             fsize = os.stat(tmp_path).st_size
             md5 = md5sum(tmp_path)
             shutil.move(tmp_path, full_app_path)
-            data = {
-                'uuid': uuid,
-                'name': file_name,
-                'size': fsize,
-                'hash': md5,
-                'file_path': full_app_path
-            }
-            results.generic_status_code = (
-                PackageCodes.ObjectCreated
-            )
-            results.vfense_status_code = (
-                PackageCodes.FileUploadedSuccessfully
-            )
-            results.data = data
+            file_data = FileUploadData()
+            file_data.file_name = file_name
+            file_data.file_hash = md5
+            file_data.file_size = fsize
+            file_data.file_uuid = uuid
+            file_data.file_path = full_app_path
+            results.generic_status_code = PackageCodes.ObjectCreated
+            results.vfense_status_code = PackageCodes.FileUploadedSuccessfully
+            results.data = file_data.to_dict()
             results.message = (
                 'File {0} successfully uploaded'.format(file_name)
             )
