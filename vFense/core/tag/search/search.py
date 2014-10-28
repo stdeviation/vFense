@@ -2,15 +2,14 @@ import logging
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.core.results import ApiResultKeys
-
 from vFense.core.agent._constants import AgentCommonKeys
-from vFense.core.view._constants import DefaultViews
-from vFense.core.tag._db_model import TagKeys
-
-from vFense.core.tag.search._db import FetchTags
 from vFense.core.decorators import time_it
+from vFense.core.results import ApiResults
 from vFense.core.status_codes import GenericCodes, GenericFailureCodes
+from vFense.core.tag._db_model import TagKeys
+from vFense.core.tag.search._db import FetchTags
+from vFense.core.view._constants import DefaultViews
+
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -102,8 +101,7 @@ class RetrieveTags(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @time_it
     def by_name(self, query):
@@ -138,7 +136,7 @@ class RetrieveTags(object):
             )
         )
 
-        return(results)
+        return results
 
     @time_it
     def by_agent_id(self, agent_id):
@@ -173,7 +171,7 @@ class RetrieveTags(object):
             )
         )
 
-        return(results)
+        return results
 
     @time_it
     def all(self):
@@ -205,7 +203,7 @@ class RetrieveTags(object):
             )
         )
 
-        return(results)
+        return results
 
 
     @time_it
@@ -253,7 +251,7 @@ class RetrieveTags(object):
             )
         )
 
-        return(results)
+        return results
 
 
     @time_it
@@ -306,17 +304,17 @@ class RetrieveTags(object):
             )
         )
 
-        return(results)
+        return results
 
-    def _set_results(self, gen_status_code, vfense_status_code,
+    def _set_results(self, generic_status_code, vfense_status_code,
                      msg, count, data):
 
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: msg,
-            ApiResultKeys.COUNT: count,
-            ApiResultKeys.DATA: data,
-        }
+        results = ApiResults()
+        results.fill_in_defaults()
+        results.generic_status_code = generic_status_code
+        results.vfense_status_code = vfense_status_code
+        results.message = msg
+        results.count = count
+        results.data = data
 
-        return(results)
+        return results

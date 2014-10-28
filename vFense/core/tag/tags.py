@@ -1,9 +1,8 @@
 import logging
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core.tag._db import fetch_tag
-from vFense.core.tag._db_model import TagKeys
-
 from vFense.core.decorators import time_it
+from vFense.core.tag import Tag
+from vFense.core.tag._db import fetch_tag
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -60,9 +59,10 @@ def validate_tag_ids_in_views(tag_ids, views):
         for tag_id in tag_ids:
             tag = fetch_tag(tag_id)
             if tag:
-                if tag[TagKeys.ViewName] in views:
+                tag = Tag(**tag)
+                if tag.view_name in views:
                     valid_ids.append(tag_id)
-                elif tag[TagKeys.IsGlobal]:
+                elif tag.is_global:
                     valid_ids.append(tag_id)
                 else:
                     invalid_ids.append(tag_id)

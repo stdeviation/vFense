@@ -714,7 +714,7 @@ def update_tag(tag_id, tag_data):
         >>> from vFense.tag._db import update_tag
         >>> tag_id = ""
         >>> tag_data = {'environment': 'Development'}
-        >>> udpate_tag(tag_id, tag_data)
+        >>> update_tag(tag_id, tag_data)
 
     Returns:
         Tuple (status_code, count, error, generated ids)
