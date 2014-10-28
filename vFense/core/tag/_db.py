@@ -4,7 +4,7 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import (
-    time_it, return_status_tuple
+    time_it, return_status_tuple, catch_it
 )
 from vFense.core.tag._db_model import (
     TagCollections, TagKeys, TagsPerAgentKeys,
@@ -21,6 +21,8 @@ from vFense.core._db import (
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
+@time_it
+@catch_it({})
 @db_create_close
 def fetch_tag(tag_id, keys_to_pluck=None, conn=None):
     """Retrieve information of a tag
@@ -44,33 +46,29 @@ def fetch_tag(tag_id, keys_to_pluck=None, conn=None):
             u'tag_name': u'Development'
         }
     """
-    tag_info = {}
+    if keys_to_pluck:
+        tag_info = (
+            r
+            .table(TagCollections.Tags)
+            .get(tag_id)
+            .merge(TagMerge.AGENTS)
+            .pluck(keys_to_pluck)
+            .run(conn)
+        )
 
-    try:
-        if keys_to_pluck:
-            tag_info = (
-                r
-                .table(TagCollections.Tags)
-                .get(tag_id)
-                .merge(TagMerge.AGENTS)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
-        else:
-            tag_info = (
-                r
-                .table(TagCollections.Tags)
-                .get(tag_id)
-                .merge(TagMerge.AGENTS)
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
+    else:
+        tag_info = (
+            r
+            .table(TagCollections.Tags)
+            .get(tag_id)
+            .merge(TagMerge.AGENTS)
+            .run(conn)
+        )
 
     return tag_info
 
 @time_it
+@catch_it(False)
 @db_create_close
 def tag_exist(tag_id, conn=None):
     """Return True, if the tag exist.
@@ -86,25 +84,22 @@ def tag_exist(tag_id, conn=None):
         Bool
         >>> True
     """
-    exist = False
-    try:
-        data = (
-            r
-            .table(TagCollections.Tags)
-            .get_all(tag_id)
-            .is_empty()
-            .run(conn)
-        )
-        if data:
-           exist = False
-        else:
-            exist = True
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(TagCollections.Tags)
+        .get_all(tag_id)
+        .is_empty()
+        .run(conn)
+    )
+    if data:
+        exist = False
+    else:
+        exist = True
 
     return exist
 
+@time_it
+@catch_it({})
 @db_create_close
 def fetch_tag_by_name_and_view(tag_name, view_name, conn=None):
     """Retrieve tag by name and view.
@@ -125,29 +120,25 @@ def fetch_tag_by_name_and_view(tag_name, view_name, conn=None):
             u'tag_name': u'Development'
         }
     """
-    tag_info = {}
-
-    try:
-        tag_info = list(
-            r
-            .table(TagCollections.Tags)
-            .get_all(view_name, index=TagsIndexes.ViewName)
-            .filter(
-                {
-                    TagKeys.TagName: tag_name
-                }
-            )
-            .merge(TagMerge.AGENTS)
-            .run(conn)
+    tag_info = list(
+        r
+        .table(TagCollections.Tags)
+        .get_all(view_name, index=TagsIndexes.ViewName)
+        .filter(
+            {
+                TagKeys.TagName: tag_name
+            }
         )
-        if tag_info:
-            tag_info = tag_info[0]
-
-    except Exception as e:
-        logger.exception(e)
+        .merge(TagMerge.AGENTS)
+        .run(conn)
+    )
+    if tag_info:
+        tag_info = tag_info[0]
 
     return tag_info
 
+@time_it
+@catch_it([])
 @db_create_close
 def fetch_tag_ids(view_name=None, conn=None):
     """Retrieve all tag_ids for a view or all.
@@ -163,30 +154,26 @@ def fetch_tag_ids(view_name=None, conn=None):
     Return:
         List of tag ids
     """
-    tag_info = {}
-
-    try:
-        if view_name:
-            tag_info = list(
-                r
-                .table(TagCollections.Tags)
-                .get_all(view_name, index=TagsIndexes.ViewName)
-                .map(lambda x: x[TagKeys.TagId])
-                .run(conn)
-            )
-        else:
-            tag_info = list(
-                r
-                .table(TagCollections.Tags)
-                .map(lambda x: x[TagKeys.TagId])
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
+    if view_name:
+        tag_info = list(
+            r
+            .table(TagCollections.Tags)
+            .get_all(view_name, index=TagsIndexes.ViewName)
+            .map(lambda x: x[TagKeys.TagId])
+            .run(conn)
+        )
+    else:
+        tag_info = list(
+            r
+            .table(TagCollections.Tags)
+            .map(lambda x: x[TagKeys.TagId])
+            .run(conn)
+        )
 
     return tag_info
 
+@time_it
+@catch_it([])
 @db_create_close
 def fetch_tags_by_id(tag_ids, keys_to_pluck=None, conn=None):
     """Retrieve information about tags, by a list of tag_ids.
@@ -204,40 +191,36 @@ def fetch_tags_by_id(tag_ids, keys_to_pluck=None, conn=None):
     Return:
         List of tag ids
     """
-    tag_info = {}
-
-    try:
-        if keys_to_pluck:
-            tag_info = list(
+    if keys_to_pluck:
+        tag_info = list(
+            r
+            .expr(tag_ids)
+            .concat_map(
+                lambda tag_id:
                 r
-                .expr(tag_ids)
-                .concat_map(
-                    lambda tag_id:
-                    r
-                    .table(TagCollections.Tags)
-                    .get_all(tag_id)
-                    .pluck(keys_to_pluck)
-                )
-                .run(conn)
+                .table(TagCollections.Tags)
+                .get_all(tag_id)
+                .pluck(keys_to_pluck)
             )
-        else:
-            tag_info = list(
+            .run(conn)
+        )
+    else:
+        tag_info = list(
+            r
+            .expr(tag_ids)
+            .concat_map(
+                lambda tag_id:
                 r
-                .expr(tag_ids)
-                .concat_map(
-                    lambda tag_id:
-                    r
-                    .table(TagCollections.Tags)
-                    .get_all(tag_id)
-                )
-                .run(conn)
+                .table(TagCollections.Tags)
+                .get_all(tag_id)
             )
-
-    except Exception as e:
-        logger.exception(e)
+            .run(conn)
+        )
 
     return tag_info
 
+@time_it
+@catch_it([])
 @db_create_close
 def fetch_tags_by_view(view_name=None, keys_to_pluck=None, conn=None):
     """Retrieve information about tags in a view.
@@ -255,47 +238,42 @@ def fetch_tags_by_view(view_name=None, keys_to_pluck=None, conn=None):
     Return:
         List of tag ids
     """
-    tag_info = {}
-
-    try:
-        if view_name:
-            if keys_to_pluck:
-                tag_info = list(
-                    r
-                    .table(TagCollections.Tags)
-                    .get_all(view_name, index=TagsIndexes.ViewName)
-                    .pluck(keys_to_pluck)
-                    .run(conn)
-                )
-            else:
-                tag_info = list(
-                    r
-                    .table(TagCollections.Tags)
-                    .get_all(view_name, index=TagsIndexes.ViewName)
-                    .run(conn)
-                )
+    if view_name:
+        if keys_to_pluck:
+            tag_info = list(
+                r
+                .table(TagCollections.Tags)
+                .get_all(view_name, index=TagsIndexes.ViewName)
+                .pluck(keys_to_pluck)
+                .run(conn)
+            )
         else:
-            if keys_to_pluck:
-                tag_info = list(
-                    r
-                    .table(TagCollections.Tags)
-                    .pluck(keys_to_pluck)
-                    .run(conn)
-                )
-            else:
-                tag_info = list(
-                    r
-                    .table(TagCollections.Tags)
-                    .run(conn)
-                )
+            tag_info = list(
+                r
+                .table(TagCollections.Tags)
+                .get_all(view_name, index=TagsIndexes.ViewName)
+                .run(conn)
+            )
+    else:
+        if keys_to_pluck:
+             tag_info = list(
+                 r
+                 .table(TagCollections.Tags)
+                 .pluck(keys_to_pluck)
+                 .run(conn)
+             )
+        else:
+             tag_info = list(
+                 r
+                 .table(TagCollections.Tags)
+                 .run(conn)
+            )
 
-    except Exception as e:
-        logger.exception(e)
 
     return tag_info
 
-
-
+@time_it
+@catch_it([])
 @db_create_close
 def fetch_agent_ids_in_tag(tag_id, conn=None):
     """Retrieve all agent_ids in a tag.
@@ -310,23 +288,18 @@ def fetch_agent_ids_in_tag(tag_id, conn=None):
     Return:
         List of tag ids
     """
-    tag_info = {}
-
-    try:
-        tag_info = list(
-           r
-           .table(TagCollections.TagsPerAgent)
-           .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-           .map(lambda x: x[TagsPerAgentKeys.AgentId])
-           .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    tag_info = list(
+        r
+        .table(TagCollections.TagsPerAgent)
+        .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+        .map(lambda x: x[TagsPerAgentKeys.AgentId])
+        .run(conn)
+    )
 
     return tag_info
 
-
+@time_it
+@catch_it([])
 @db_create_close
 def fetch_tag_ids_for_agent(agent_id, conn=None):
     """Retrieve all tag ids for an agent.
@@ -341,24 +314,19 @@ def fetch_tag_ids_for_agent(agent_id, conn=None):
     Return:
         List of tag ids
     """
-    tag_info = {}
-
-    try:
-        tag_info = list(
-           r
-           .table(TagCollections.TagsPerAgent)
-           .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
-           .map(lambda x: x[TagsPerAgentKeys.TagId])
-           .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    tag_info = list(
+        r
+        .table(TagCollections.TagsPerAgent)
+        .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
+        .map(lambda x: x[TagsPerAgentKeys.TagId])
+        .run(conn)
+    )
 
     return tag_info
 
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_agent_ids_from_tag(tag_id, agent_ids=None, conn=None):
@@ -380,41 +348,36 @@ def delete_agent_ids_from_tag(tag_id, agent_ids=None, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-
-    try:
-        if agent_ids:
-            data = (
-                r
-                .expr(agent_ids)
-                .for_each(
-                    lambda agent_id:
-                    r
-                    .table(TagCollections.TagsPerAgent)
-                    .get_all(
-                        [agent_id, tag_id],
-                        index=TagsPerAgentIndexes.AgentIdAndTagId
-                    )
-                    .delete()
-                )
-                .run(conn)
-            )
-
-        else:
-            data = (
+    if agent_ids:
+        data = (
+            r
+            .expr(agent_ids)
+            .for_each(
+                lambda agent_id:
                 r
                 .table(TagCollections.TagsPerAgent)
-                .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+                .get_all(
+                    [agent_id, tag_id],
+                    index=TagsPerAgentIndexes.AgentIdAndTagId
+                )
                 .delete()
-                .run(conn)
             )
+            .run(conn)
+        )
 
-    except Exception as e:
-        logger.exception(e)
+    else:
+        data = (
+            r
+            .table(TagCollections.TagsPerAgent)
+            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+            .delete()
+            .run(conn)
+        )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_tag_ids_from_view(view_name=None, conn=None):
@@ -436,35 +399,28 @@ def delete_tag_ids_from_view(view_name=None, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
+    if view_name:
+        data = (
+            r
+            .table(TagCollections.Tags)
+            .get_all(view_name, index=TagsIndexes.Views)
+            .delete()
+            .run(conn, no_reply=True)
+        )
 
-    try:
-        if view_name:
-            data = (
-                r
-                .table(TagCollections.Tags)
-                .get_all(
-                    view_name, index=TagsIndexes.Views
-                )
-                .delete()
-                .run(conn, no_reply=True)
-            )
-
-        else:
-            data = (
-                r
-                .table(TagCollections.Tags)
-                .delete()
-                .run(conn, no_reply=True)
-            )
-
-    except Exception as e:
-        logger.exception(e)
+    else:
+        data = (
+            r
+            .table(TagCollections.Tags)
+            .delete()
+            .run(conn, no_reply=True)
+        )
 
     return data
 
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_tag_ids_per_agent(tag_ids, conn=None):
@@ -481,30 +437,23 @@ def delete_tag_ids_per_agent(tag_ids, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-
-    try:
-        data = (
+    data = (
+        r
+        .expr(tag_ids)
+        .for_each(
+            lambda tag_id:
             r
-            .expr(tag_ids)
-            .for_each(
-                lambda tag_id:
-                r
-                .table(TagCollections.TagsPerAgent)
-                .get_all(
-                    tag_id, index=TagsPerAgentIndexes.TagId
-                )
-                .delete()
-            )
-            .run(conn, no_reply=True)
+            .table(TagCollections.TagsPerAgent)
+            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+            .delete()
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn, no_reply=True)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_agent_ids_from_all_tags(agent_ids, conn=None):
@@ -521,31 +470,23 @@ def delete_agent_ids_from_all_tags(agent_ids, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-
-    try:
-        data = (
+    data = (
+        r
+        .expr(agent_ids)
+        .for_each(
+            lambda agent_id:
             r
-            .expr(agent_ids)
-            .for_each(
-                lambda agent_id:
-                r
-                .table(TagCollections.TagsPerAgent)
-                .get_all(
-                    agent_id,
-                    index=TagsPerAgentIndexes.AgentId
-                )
-                .delete()
-            )
-            .run(conn, no_reply=True)
+            .table(TagCollections.TagsPerAgent)
+            .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
+            .delete()
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn, no_reply=True)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_agent_ids_from_tags_in_view(agent_ids, view_name, conn=None):
@@ -563,33 +504,24 @@ def delete_agent_ids_from_tags_in_view(agent_ids, view_name, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-
-    try:
-        data = (
+    data = (
+        r
+        .expr(agent_ids)
+        .for_each(
+            lambda agent_id:
             r
-            .expr(agent_ids)
-            .for_each(
-                lambda agent_id:
-                r
-                .table(TagCollections.TagsPerAgent)
-                .get_all(
-                    agent_id,
-                    index=TagsPerAgentIndexes.AgentId
-                )
-                .filter({TagsPerAgentKeys.ViewName: view_name})
-                .delete()
-            )
-            .run(conn, no_reply=True)
+            .table(TagCollections.TagsPerAgent)
+            .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
+            .filter({TagsPerAgentKeys.ViewName: view_name})
+            .delete()
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn, no_reply=True)
+    )
 
     return data
 
-
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_agent_from_tags_in_views(agent_id, views, conn=None):
@@ -608,35 +540,25 @@ def delete_agent_from_tags_in_views(agent_id, views, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-
-    try:
-        data = (
+    data = (
+        r
+        .expr(views)
+        .for_each(
+            lambda view:
             r
-            .expr(views)
-            .for_each(
-                lambda view:
-                r
-                .table(TagCollections.TagsPerAgent)
-                .get_all(
-                    agent_id,
-                    index=TagsPerAgentIndexes.AgentId
-                )
-                .filter({TagsPerAgentKeys.ViewName: view})
-                .delete()
-            )
-            .run(conn, no_reply=True)
+            .table(TagCollections.TagsPerAgent)
+            .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
+            .filter({TagsPerAgentKeys.ViewName: view})
+            .delete()
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn, no_reply=True)
+    )
 
     return data
 
 
-
-
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_tag_ids_from_agent(agent_id, tag_ids=None, conn=None):
@@ -658,40 +580,33 @@ def delete_tag_ids_from_agent(agent_id, tag_ids=None, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-
-    try:
-        if tag_ids:
-            data = (
-                r
-                .expr(tag_ids)
-                .for_each(
-                    lambda tag_id:
-                    r
-                    .table(TagCollections.TagsPerAgent)
-                    .get_all(
-                        [agent_id, tag_id],
-                        index=TagsPerAgentIndexes.AgentIdAndTagId
-                    )
-                    .delete()
-                )
-                .run(conn)
-            )
-
-        else:
-            data = (
+    if tag_ids:
+        data = (
+            r
+            .expr(tag_ids)
+            .for_each(
+                lambda tag_id:
                 r
                 .table(TagCollections.TagsPerAgent)
-                .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
+                .get_all(
+                    [agent_id, tag_id],
+                    index=TagsPerAgentIndexes.AgentIdAndTagId
+                )
                 .delete()
-                .run(conn)
             )
+            .run(conn)
+        )
 
-    except Exception as e:
-        logger.exception(e)
+    else:
+        data = (
+            r
+            .table(TagCollections.TagsPerAgent)
+            .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
+            .delete()
+            .run(conn)
+        )
 
     return data
-
 
 @time_it
 def add_agents_to_tag(tag_data):
@@ -741,7 +656,6 @@ def add_tags_to_agent(tag_data):
     )
     return data
 
-
 @time_it
 def insert_tag(tag_data):
     """ Insert a new tag and its properties into the database
@@ -765,8 +679,6 @@ def insert_tag(tag_data):
     )
     return data
 
-
-
 @time_it
 def delete_tag(tag_id):
     """ Delete a tag and its properties from the database
@@ -789,8 +701,6 @@ def delete_tag(tag_id):
         )
     )
     return data
-
-
 
 @time_it
 def update_tag(tag_id, tag_data):
