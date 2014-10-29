@@ -2,15 +2,18 @@ import logging
 import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
-from vFense.core.decorators import return_status_tuple, time_it
+from vFense.core.decorators import return_status_tuple, time_it, catch_it
 from vFense.db.client import r, db_create_close
-from vFense.core.queue._db_model import *
+from vFense.core.queue._db_model import (
+    QueueCollections, AgentQueueIndexes, AgentQueueKey
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def insert_into_agent_queue(operation, conn=None):
@@ -28,30 +31,17 @@ def insert_into_agent_queue(operation, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        operation[AgentQueueKey.CreatedTime] = (
-            r.epoch_time(operation[AgentQueueKey.CreatedTime])
-        )
-        operation[AgentQueueKey.ServerQueueTTL] = (
-            r.epoch_time(operation[AgentQueueKey.ServerQueueTTL])
-        )
-        operation[AgentQueueKey.AgentQueueTTL] = (
-            r.epoch_time(operation[AgentQueueKey.AgentQueueTTL])
-        )
+    data = (
+        r
+        .table(QueueCollections.Agent)
+        .insert(operation)
+        .run(conn)
+    )
 
-        data = (
-            r
-            .table(QueueCollections.Agent)
-            .insert(operation)
-            .run(conn)
-        )
+    return data
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+@time_it
+@catch_it(0)
 @db_create_close
 def get_next_avail_order_id_in_agent_queue(agent_id, conn=None):
     """Get the latest order id and return it.
@@ -68,21 +58,18 @@ def get_next_avail_order_id_in_agent_queue(agent_id, conn=None):
         Integer
     """
     last_num_in_queue = 0
-    try:
-        last_num_in_queue = (
-            r
-            .table(QueueCollections.Agent)
-            .get_all(agent_id, index=AgentQueueIndexes.AgentId)
-            .count()
-            .run(conn)
-        )
+    last_num_in_queue = (
+        r
+        .table(QueueCollections.Agent)
+        .get_all(agent_id, index=AgentQueueIndexes.AgentId)
+        .count()
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
+    return last_num_in_queue
 
-    return(last_num_in_queue)
-
-
+@time_it
+@catch_it([])
 @db_create_close
 def fetch_agent_queue(agent_id, conn=None):
     """Retrieve the queue for an agent
@@ -112,36 +99,31 @@ def fetch_agent_queue(agent_id, conn=None):
             }
         ]
     """
-    agent_queue = []
-    try:
-        agent_queue = list(
-            r
-            .table(QueueCollections.Agent)
-            .get_all(agent_id, index=AgentQueueIndexes.AgentId)
-            .merge(
-                {
-                    AgentQueueKey.CreatedTime: (
-                        r.row[AgentQueueKey.CreatedTime].to_epoch_time()
-                    ),
-                    AgentQueueKey.ServerQueueTTL: (
-                        r.row[AgentQueueKey.ServerQueueTTL].to_epoch_time()
-                    ),
-                    AgentQueueKey.AgentQueueTTL: (
-                        r.row[AgentQueueKey.AgentQueueTTL].to_epoch_time()
-                    ),
-                }
-            )
-            .order_by(AgentQueueKey.OrderId)
-            .run(conn)
+    agent_queue = list(
+        r
+        .table(QueueCollections.Agent)
+        .get_all(agent_id, index=AgentQueueIndexes.AgentId)
+        .merge(
+            {
+                AgentQueueKey.CreatedTime: (
+                    r.row[AgentQueueKey.CreatedTime].to_epoch_time()
+                ),
+                AgentQueueKey.ServerQueueTTL: (
+                    r.row[AgentQueueKey.ServerQueueTTL].to_epoch_time()
+                ),
+                AgentQueueKey.AgentQueueTTL: (
+                    r.row[AgentQueueKey.AgentQueueTTL].to_epoch_time()
+                ),
+            }
         )
+        .order_by(AgentQueueKey.OrderId)
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(agent_queue)
-
+    return agent_queue
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_job_in_queue(job_id, conn=None):
@@ -159,22 +141,19 @@ def delete_job_in_queue(job_id, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(QueueCollections.Agent)
-            .get(job_id)
-            .delete()
-            .run(conn)
-        )
+    data = (
+        r
+        .table(QueueCollections.Agent)
+        .get(job_id)
+        .delete()
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 
+@time_it
+@catch_it({})
 @db_create_close
 def get_all_expired_jobs(now=None, conn=None):
     """Retrieve all expired jobs
@@ -207,35 +186,29 @@ def get_all_expired_jobs(now=None, conn=None):
         ]
     """
     expired_jobs = []
-    try:
-        if not now:
-            expired_jobs = list(
-                r
-                .table(QueueCollections.Agent)
-                .filter(
-                    lambda x: x[AgentQueueKey.ServerQueueTTL] <= r.now()
-                )
-                .run(conn)
+    if not now:
+        expired_jobs = list(
+            r
+            .table(QueueCollections.Agent)
+            .filter(lambda x: x[AgentQueueKey.ServerQueueTTL] <= r.now())
+            .run(conn)
+        )
+
+    else:
+        expired_jobs = list(
+            r
+            .table(QueueCollections.Agent)
+            .filter(
+                lambda x:
+                x[AgentQueueKey.ServerQueueTTL].to_epoch_time() <= now
             )
+            .run(conn)
+        )
 
-        else:
-            expired_jobs = list(
-                r
-                .table(QueueCollections.Agent)
-                .filter(
-                    lambda x:
-                        x[AgentQueueKey.ServerQueueTTL].to_epoch_time() <= now
-                )
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return(expired_jobs)
-
+    return expired_jobs
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_all_expired_jobs(now=None, conn=None):
@@ -255,35 +228,31 @@ def delete_all_expired_jobs(now=None, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    try:
-        if not now:
-            data = (
-                r
-                .table(QueueCollections.Agent)
-                .filter(
-                    lambda x: x[AgentQueueKey.ServerQueueTTL] <= r.now()
-                )
-                .delete()
-                .run(conn)
+    if not now:
+        data = (
+            r
+            .table(QueueCollections.Agent)
+            .filter(lambda x: x[AgentQueueKey.ServerQueueTTL] <= r.now())
+            .delete()
+            .run(conn)
+        )
+
+    else:
+        data = (
+            r
+            .table(QueueCollections.Agent)
+            .filter(
+                lambda x:
+                x[AgentQueueKey.ServerQueueTTL].to_epoch_time() <= now
             )
+            .delete()
+            .run(conn)
+        )
 
-        else:
-            data = (
-                r
-                .table(QueueCollections.Agent)
-                .filter(
-                    lambda x:
-                        x[AgentQueueKey.ServerQueueTTL].to_epoch_time() <= now
-                )
-                .delete()
-                .run(conn)
-            )
+    return data
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+@time_it
+@catch_it({})
 @db_create_close
 def delete_multiple_jobs(job_ids, conn=None):
     """Delete all multiple jobs in the queue by job ids.
@@ -301,28 +270,24 @@ def delete_multiple_jobs(job_ids, conn=None):
         >>> (2001, 1, None, [])
     """
     jobs_deleted = 0
-    try:
-        if isinstance(job_ids, list):
-            jobs = (
-                r
-                .table(QueueCollections.Agent)
-                .get_all(*job_ids)
-                .delete()
-                .run(conn)
-            )
-            jobs_deleted = jobs.get('deleted')
+    if isinstance(job_ids, list):
+        jobs = (
+            r
+            .table(QueueCollections.Agent)
+            .get_all(*job_ids)
+            .delete()
+            .run(conn)
+        )
+        jobs_deleted = jobs.get('deleted')
 
-        else:
-            jobs = (
-                r
-                .table(QueueCollections.Agent)
-                .get(job_ids)
-                .delete()
-                .run(conn)
-            )
-            jobs_deleted = jobs.get('deleted')
+    else:
+        jobs = (
+            r
+            .table(QueueCollections.Agent)
+            .get(job_ids)
+            .delete()
+            .run(conn)
+        )
+        jobs_deleted = jobs.get('deleted')
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(jobs_deleted)
+    return jobs_deleted
