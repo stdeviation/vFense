@@ -5,9 +5,9 @@ import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
+from vFense.core._constants import DefaultQueryValues
 from vFense.core.api._constants import (
-    ApiArguments, AgentApiArguments, ApiValues, TagApiArguments,
-    DefaultQueryValues
+    ApiArguments, AgentApiArguments, ApiValues, TagApiArguments
 )
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
@@ -41,12 +41,8 @@ from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message,
     catch_it
 )
-from vFense.core.agent.status_codes import (
-    AgentCodes, AgentFailureCodes
-)
-from vFense.core.view.status_codes import (
-    ViewCodes
-)
+from vFense.core.agent.status_codes import AgentCodes, AgentFailureCodes
+from vFense.core.view.status_codes import ViewCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

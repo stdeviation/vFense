@@ -1,34 +1,33 @@
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-from vFense.plugins.patching.operations.patching_operations import (
-    PatchingOperation
-)
 from vFense.core.operations import AgentOperation
-from vFense.plugins.patching import InstallQueueOperation
-from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.operations._constants import (
     AgentOperations, vFensePlugins, vFenseObjects
 )
 from vFense.core.operations.store_agent_operation import (
     StoreAgentOperationManager
 )
-from vFense.plugins.patching.operations import Install, AgentAppData
+from vFense.core.tag._db import fetch_agent_ids_in_tag
+from vFense.core.results import ApiResults
+from vFense.core.operations.status_codes import (
+    AgentOperationCodes, AgentOperationFailureCodes
+)
+from vFense.plugins.patching import AgentAppData
+from vFense.plugins.patching.queue import InstallQueueOperation
+from vFense.plugins.patching._constants import CommonAppKeys
+from vFense.plugins.patching.operations.patching_operations import (
+    PatchingOperation
+)
+from vFense.plugins.patching.operations import Install
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys, DbCommonAppPerAgentKeys
 )
 from vFense.plugins.patching._db import (
     fetch_app_data_to_send_to_agent, return_valid_appids_for_agent
 )
-
 from vFense.plugins.patching.patching import (
     get_download_urls, update_app_status_by_agentid_and_appid
-)
-
-from vFense.core.tag._db import fetch_agent_ids_in_tag
-from vFense.core.results import ApiResults
-from vFense.core.operations.status_codes import (
-    AgentOperationCodes, AgentOperationFailureCodes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

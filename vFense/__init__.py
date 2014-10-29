@@ -88,6 +88,40 @@ def import_modules_by_regex(regex):
                 importlib.import_module(module)
     return db_files
 
+def import_all_classes_in_dirs_by_regex(regex):
+    """Import all vFense classes in a directory by the name of the directory.
+    Args:
+        regex (str): The dir you want to import.
+            example.. api
+    Returns:
+        List of the imported classes.
+    """
+    imported_classes = []
+    for root, dirs, files in os.walk(VFENSE_BASE_PATH):
+        for dirname in fnmatch.filter(dirs, regex):
+            dir_match = (
+                re.search(r'vFense/(vFense.*)', os.path.join(root, dirname))
+            )
+            if dir_match:
+                dir_path = os.path.join(root, dirname)
+                for py_file in os.listdir(dir_path):
+                    if (py_file.endswith('.py') and py_file != '__init__.py'
+                            and not py_file.startswith('_')):
+                        file_path = os.path.join(dir_match.group(1), py_file)
+                        print file_path
+                        file_module = file_path.replace('/', '.')[:-3]
+                        mod = importlib.import_module(file_module)
+                        classes = []
+                        for x in dir(mod):
+                            if isinstance(getattr(mod, x), type):
+                                classes.append(getattr(mod, x))
+                        for cls in classes:
+                            imported_classes.append(
+                                (sys.modules[__name__], cls.__name__)
+                            )
+                            setattr(sys.modules[__name__], cls.__name__, cls)
+    return imported_classes
+
 
 class Base(object):
     """Used to represent an instance."""

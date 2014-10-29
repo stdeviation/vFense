@@ -1,20 +1,11 @@
 import tornado.httpserver
-import tornado.web
 import simplejson as json
 
 import logging
 import logging.config
 from vFense import VFENSE_LOGGING_CONFIG
-from server.handlers import BaseHandler
-from db.client import *
-from errorz.error_messages import Results
-from errorz.status_codes import GenericCodes
-from reports.filter_reports import *
-from server.hierarchy.manager import get_current_view_name
-from server.hierarchy.decorators import authenticated_request, permission_check
-from server.hierarchy.permissions import Permission
+from vFense.core.api.base import BaseHandler
 from utils.common import *
-from server.hierarchy.decorators import convert_json_to_arguments
 from datetime import datetime
 
 from jsonpickle import encode
@@ -23,7 +14,7 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class AgentsOsQueryDetailsHandler(BaseHandler):
-    @authenticated_request 
+    @authenticated_request
     def get(self):
         username = self.get_current_user()
         view_name = get_current_view_name(username)
@@ -60,8 +51,8 @@ class AgentsHardwareQueryDetailsHandler(BaseHandler):
             results= None
             key=self.get_argument('key')
             query=self.get_argument('query')
-            results = systems_hardware_details(username=username, view_name=view_name, 
-                    key=key, query=query, 
+            results = systems_hardware_details(username=username, view_name=view_name,
+                    key=key, query=query,
                     uri=uri, method=method)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
@@ -196,7 +187,7 @@ class AgentsNetworkQueryDetailsHandler(BaseHandler):
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))                    
+            self.write(json.dumps(results, indent=4))
 
 class AgentsLastUpdatedHandler(BaseHandler):
     @authenticated_request
@@ -226,7 +217,7 @@ class AgentsLastUpdatedHandler(BaseHandler):
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4)) 
+            self.write(json.dumps(results, indent=4))
 
 
 class AgentsRequireRebootHandler(BaseHandler):
@@ -288,5 +279,5 @@ class AgentsConnectionStatusHandler(BaseHandler):
             logger.exception(e)
             self.set_status(results['http_status'])
             self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))                    
+            self.write(json.dumps(results, indent=4))
 
