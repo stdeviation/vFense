@@ -7,9 +7,6 @@ from vFense.core.decorators import time_it
 from vFense.core.stats import (
     CPUStats, MemoryStats, FileSystemStats
 )
-from vFense.core.stats._db_model import (
-    AgentStatKeys, CpuStatKeys, MemoryStatKeys, FileSystemStatKeys
-)
 from vFense.core.stats._db import (
     fetch_stats_by_agent_id_and_type, insert_stat,
     update_stat
@@ -212,6 +209,6 @@ class FileSystemStatManager(StatManager):
         fs_objects = []
         if filesystems:
             for fs in filesystems:
-                fs_objects.append(MemoryStats(**fs))
+                fs_objects.append(FileSystemStats(**fs))
 
         return fs_objects

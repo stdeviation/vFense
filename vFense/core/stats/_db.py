@@ -10,12 +10,13 @@ from vFense.core.stats._db_model import (
     StatsCollections, AgentStatKeys, StatsPerAgentIndexes,
     CpuStatKeys, MemoryStatKeys, FileSystemStatKeys
 )
-from vFense.core.decorators import return_status_tuple, time_it
+from vFense.core.decorators import return_status_tuple, time_it, catch_it
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_stats_by_agent_id_and_type(agent_id, stat_type, conn=None):
     """Retrieve information of an agent
@@ -35,24 +36,20 @@ def fetch_stats_by_agent_id_and_type(agent_id, stat_type, conn=None):
             u'environment': u'Development'
         }
     """
-    data = []
-    try:
-        data = list(
-            r
-            .table(StatsCollections.AgentStats)
-            .get_all(
-                [agent_id, stat_type],
-                index=StatsPerAgentIndexes.AgentIdAndStatType
-            )
-            .run(conn)
+    data = list(
+        r
+        .table(StatsCollections.AgentStats)
+        .get_all(
+            [agent_id, stat_type],
+            index=StatsPerAgentIndexes.AgentIdAndStatType
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_stats_by_agent_id_and_device_path(agent_id, device_path, conn=None):
     """Retrieve stats by the device path and agent_id.
@@ -72,19 +69,14 @@ def fetch_stats_by_agent_id_and_device_path(agent_id, device_path, conn=None):
             u'environment': u'Development'
         }
     """
-    data = []
-    try:
-        data = list(
-            r
-            .table(StatsCollections.AgentStats)
-            .get_all(agent_id)
-            .filter(lambda x: x.contains(FileSystemStatKeys.Name))
-            .filter({FileSystemStatKeys.Name: device_path})
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = list(
+        r
+        .table(StatsCollections.AgentStats)
+        .get_all(agent_id)
+        .filter(lambda x: x.contains(FileSystemStatKeys.Name))
+        .filter({FileSystemStatKeys.Name: device_path})
+        .run(conn)
+    )
 
     return data
 
@@ -141,6 +133,7 @@ def update_stat(agent_id, stat):
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_stats(agent_id, conn=None):
@@ -158,22 +151,18 @@ def delete_stats(agent_id, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    try:
-        data = (
-            r
-            .table(StatsCollections.AgentStats)
-            .get_all(agent_id, index=StatsPerAgentIndexes.AgentId)
-            .delete()
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
-
+    data = (
+        r
+        .table(StatsCollections.AgentStats)
+        .get_all(agent_id, index=StatsPerAgentIndexes.AgentId)
+        .delete()
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_stats_for_agents(agent_ids, conn=None):
@@ -191,21 +180,17 @@ def delete_stats_for_agents(agent_ids, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    try:
-        data = (
+    data = (
+        r
+        .expr(agent_ids)
+        .for_each(
+            lambda agent_id:
             r
-            .expr(agent_ids)
-            .for_each(
-                lambda agent_id:
-                r
-                .table(StatsCollections.AgentStat)
-                .get_all(agent_id, index=StatsPerAgentIndexes.AgentId)
-                .delete()
-            )
-            .run(conn, no_reply=True)
+            .table(StatsCollections.AgentStat)
+            .get_all(agent_id, index=StatsPerAgentIndexes.AgentId)
+            .delete()
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn, no_reply=True)
+    )
 
     return data
