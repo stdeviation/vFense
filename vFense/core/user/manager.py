@@ -21,8 +21,7 @@ from vFense.core.view._db import (
 
 from vFense.core.user._db import (
     insert_user, fetch_user, delete_user, update_user,
-    fetch_user_and_all_properties, user_status_toggle,
-    update_views_for_user, delete_views_in_user
+    user_status_toggle, update_views_for_user, delete_views_in_user
 )
 
 from vFense.core.group.groups import (

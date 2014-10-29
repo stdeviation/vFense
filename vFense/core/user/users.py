@@ -1,9 +1,7 @@
 import logging
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core.user._db_model import UserKeys
-
+from vFense.core.user import User
 from vFense.core.user._db import fetch_user
-
 from vFense.core.decorators import time_it
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -24,12 +22,15 @@ def user_is_global(username):
     Returns:
         Boolean
     """
-    data = fetch_user(username)
-    if data:
-        if data[UserKeys.IsGlobal]:
+    user = fetch_user(username)
+    if user:
+        user = User(**user)
+        if user.is_global:
             data = True
         else:
             data = False
+    else:
+        data = False
 
     return data
 
@@ -54,7 +55,8 @@ def validate_user_names(user_names, is_global=False):
         for user_name in user_names:
             user = fetch_user(user_name)
             if user:
-                if user[UserKeys.IsGlobal] == is_global:
+                user = User(**user)
+                if user.is_global == is_global:
                     valid_user_names.append(user_name)
                 else:
                     invalid_user_names.append(user_name)
@@ -94,10 +96,11 @@ def validate_users_in_views(usernames, views):
         for user in usernames:
             user_data = fetch_user(user)
             if user_data:
-                if user_data[UserKeys.IsGlobal]:
+                user_data = User(**user_data)
+                if user_data.is_global:
                     valid_global_users.append(user)
                 else:
-                    if set(views).issubset(user_data[UserKeys.Views]):
+                    if set(views).issubset(user_data.views):
                         valid_local_users.append(user)
                     else:
                         invalid_users.append(user)
@@ -105,7 +108,6 @@ def validate_users_in_views(usernames, views):
                 invalid_users.append(user)
 
     return(invalid_users, valid_global_users, valid_local_users)
-
 
 @time_it
 def validate_users(user_names):

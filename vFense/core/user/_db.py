@@ -1,17 +1,17 @@
 import logging
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
-from vFense.core._constants import *
+from vFense.core._constants import
 from vFense.core.user._db_model import (
     UserKeys, UserCollections, UserMappedKeys, UserIndexes
 )
-from vFense.core.user._constants import *
+from vFense.core.user._constants import
 from vFense.core.group._db_model import (
     GroupCollections, GroupKeys, GroupIndexes
 )
 from vFense.core.view._db_model import ViewMappedKeys
-from vFense.core.view._constants import *
-from vFense.core.permissions._constants import *
+from vFense.core.view._constants import
+from vFense.core.permissions._constants import
 from vFense.core.decorators import return_status_tuple, time_it, catch_it
 from vFense.db.client import db_create_close, r
 
@@ -71,6 +71,7 @@ def fetch_user(username, without_fields=None, conn=None):
     return data
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_usernames(is_global=False, conn=None):
     """Retrieve a list of usernames from the database
@@ -85,33 +86,28 @@ def fetch_usernames(is_global=False, conn=None):
     Returns:
         List of usernames
     """
-    data = []
-    try:
-        if is_global:
-            data = list(
-                r
-                .table(UserCollections.Users)
-                .filter(lambda x: x[UserKeys.IsGlobal] == True)
-                .map(lambda x: x[UserKeys.UserName])
-                .run(conn)
-            )
+    if is_global:
+        data = list(
+            r
+            .table(UserCollections.Users)
+            .filter(lambda x: x[UserKeys.IsGlobal] == True)
+            .map(lambda x: x[UserKeys.UserName])
+            .run(conn)
+        )
 
-        else:
-            data = list(
-                r
-                .table(UserCollections.Users)
-                .filter(lambda x: x[UserKeys.IsGlobal] == False)
-                .map(lambda x: x[UserKeys.UserName])
-                .run(conn)
-            )
+    else:
+        data = list(
+            r
+            .table(UserCollections.Users)
+            .filter(lambda x: x[UserKeys.IsGlobal] == False)
+            .map(lambda x: x[UserKeys.UserName])
+            .run(conn)
+        )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 def fetch_user_and_all_properties(username, conn=None):
     """Retrieve a user and all of its properties
@@ -203,24 +199,20 @@ def fetch_user_and_all_properties(username, conn=None):
         }
     )
 
-    try:
-        data = (
-            r
-            .table(UserCollections.Users)
-            .get_all(username)
-            .map(map_hash)
-            .run(conn)
-        )
-        if data:
-            data = data[0]
+    data = (
+        r
+        .table(UserCollections.Users)
+        .get_all(username)
+        .map(map_hash)
+        .run(conn)
+    )
+    if data:
+        data = data[0]
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_users_and_all_properties(view_name=None, conn=None):
     """Retrieve a user and all of its properties
@@ -305,30 +297,27 @@ def fetch_users_and_all_properties(view_name=None, conn=None):
         }
     )
 
-    try:
-        if view_name:
-            data = list(
-                r
-                .table(UserCollections.User)
-                .get_all(view, index=UserIndexes.Views)
-                .map(map_hash)
-                .run(conn)
-            )
+    if view_name:
+        data = list(
+            r
+            .table(UserCollections.User)
+            .get_all(view, index=UserIndexes.Views)
+            .map(map_hash)
+            .run(conn)
+        )
 
-        else:
-            data = list(
-                r
-                .table(UserCollections.Users)
-                .map(map_hash)
-                .run(conn)
-            )
+    else:
+        data = list(
+            r
+            .table(UserCollections.Users)
+            .map(map_hash)
+            .run(conn)
+        )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def user_status_toggle(username, conn=None):
@@ -345,32 +334,28 @@ def user_status_toggle(username, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    try:
-        toggled = (
-            r
-            .table(UserCollections.Users)
-            .get(username)
-            .update(
-                {
-                    UserKeys.Enabled: (
-                        r.branch(
-                            r.row[UserKeys.Enabled] == True,
-                            False,
-                            True
-                        )
+    toggled = (
+        r
+        .table(UserCollections.Users)
+        .get(username)
+        .update(
+            {
+                UserKeys.Enabled: (
+                    r.branch(
+                        r.row[UserKeys.Enabled] == True,
+                        False,
+                        True
                     )
-                }
-            )
-            .run(conn)
+                )
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(toggled)
-
+    return toggled
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_users(
     view_name=None, username=None,
@@ -408,85 +393,79 @@ def fetch_users(
         ]
     """
     data = []
-    try:
-        if not view_name and not username and not without_fields:
-            data = list(
-                r
-                .table(UserCollections.Users)
-                .run(conn)
+    if not view_name and not username and not without_fields:
+        data = list(
+            r
+            .table(UserCollections.Users)
+            .run(conn)
+        )
+
+    elif not view_name and not username and without_fields:
+        data = list(
+            r
+            .table(UserCollections.Users)
+            .without(without_fields)
+            .run(conn)
+        )
+
+    elif not view_name and username and without_fields:
+        data = list(
+            r
+            .table(UserCollections.Users)
+            .filter(
+                lambda x:
+                x[UserKeys.UserName].match("(?i)" + username)
             )
+            .without(without_fields)
+            .run(conn)
+        )
 
-        elif not view_name and not username and without_fields:
-            data = list(
-                r
-                .table(UserCollections.Users)
-                .without(without_fields)
-                .run(conn)
+    elif view_name and username and without_fields:
+        data = list(
+            r
+            .table(UserCollections.Users)
+            .get_all(view_name, index=UserIndexes.Views)
+            .filter(
+                lambda x:
+                x[UserKeys.UserName].match("(?i)" + username)
             )
+            .without(without_fields)
+            .run(conn)
+        )
 
-        elif not view_name and username and without_fields:
-            data = list(
-                r
-                .table(UserCollections.Users)
-                .filter(
-                    lambda x:
-                    x[UserKeys.UserName].match("(?i)" + username)
-                )
-                .without(without_fields)
-                .run(conn)
+    elif view_name and not username and not without_fields:
+        data = list(
+            r
+            .table(UserCollections.Users)
+            .get_all(view_name, index=UserIndexes.Views)
+            .run(conn)
+        )
+
+    elif view_name and not username and without_fields:
+        data = list(
+            r
+            .table(UserCollections.Users)
+            .get_all(view_name, index=UserIndexes.Views)
+            .without(without_fields)
+            .run(conn)
+        )
+
+    elif view_name and username and not without_fields:
+        data = list(
+            r
+            .table(UserCollections.Users)
+            .get_all(view_name, index=UserIndexes.Views)
+            .filter(
+                lambda x:
+                x[UserKeys.UserName].match("(?i)" + username)
             )
+            .run(conn)
+        )
 
-        elif view_name and username and without_fields:
-            data = list(
-                r
-                .table(UserCollections.Users)
-                .get_all(view_name, index=UserIndexes.Views)
-                .filter(
-                    lambda x:
-                    x[UserKeys.UserName].match("(?i)" + username)
-                )
-                .without(without_fields)
-                .run(conn)
-            )
-
-        elif view_name and not username and not without_fields:
-            data = list(
-                r
-                .table(UserCollections.Users)
-                .get_all(view_name, index=UserIndexes.Views)
-                .run(conn)
-            )
-
-        elif view_name and not username and without_fields:
-            data = list(
-                r
-                .table(UserCollections.Users)
-                .get_all(
-                    view_name, index=UserIndexes.Views
-                )
-                .without(without_fields)
-                .run(conn)
-            )
-
-        elif view_name and username and not without_fields:
-            data = list(
-                r
-                .table(UserCollections.Users)
-                .get_all(view_name, index=UserIndexes.Views)
-                .filter(
-                    lambda x:
-                    x[UserKeys.UserName].match("(?i)" + username)
-                )
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def insert_user(user_data, conn=None):
@@ -505,22 +484,17 @@ def insert_user(user_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(UserCollections.Users)
-            .insert(user_data)
-            .run(conn)
-        )
+    data = (
+        r
+        .table(UserCollections.Users)
+        .insert(user_data)
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_user(username, user_data, conn=None):
@@ -539,22 +513,18 @@ def update_user(username, user_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(UserCollections.Users)
-            .get(username)
-            .update(user_data)
-            .run(conn)
-        )
+    data = (
+        r
+        .table(UserCollections.Users)
+        .get(username)
+        .update(user_data)
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_views_for_user(username, views, conn=None):
@@ -573,28 +543,22 @@ def update_views_for_user(username, views, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(UserCollections.Users)
-            .get(username)
-            .update(
-                {
-                    UserKeys.Views: (
-                        r.row[UserKeys.Views].set_union(views)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(UserCollections.Users)
+        .get(username)
+        .update(
+            {
+                UserKeys.Views: r.row[UserKeys.Views].set_union(views)
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_views_for_users(usernames, views, conn=None):
@@ -613,35 +577,28 @@ def update_views_for_users(usernames, views, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(usernames)
+        .for_each(
+            lambda x:
             r
-            .expr(usernames)
-            .for_each(
-                lambda x:
-                r
-                .table(UserCollections.Users)
-                .get_all(x)
-                .update(
-                    lambda y:
-                    {
-                        UserKeys.Views: (
-                            y[UserKeys.Views].set_union(views)
-                        )
-                    }
-                )
+            .table(UserCollections.Users)
+            .get_all(x)
+            .update(
+                lambda y:
+                {
+                    UserKeys.Views: y[UserKeys.Views].set_union(views)
+                }
             )
-            .run(conn)
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_user(username, conn=None):
@@ -658,23 +615,18 @@ def delete_user(username, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(UserCollections.Users)
-            .get(username)
-            .delete()
-            .run(conn)
-        )
+    data = (
+        r
+        .table(UserCollections.Users)
+        .get(username)
+        .delete()
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_users(usernames, conn=None):
@@ -691,28 +643,23 @@ def delete_users(usernames, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(usernames)
+        .for_each(
+            lambda username:
             r
-            .expr(usernames)
-            .for_each(
-                lambda username:
-                r
-                .table(UserCollections.Users)
-                .get(username)
-                .delete()
-            )
-            .run(conn)
+            .table(UserCollections.Users)
+            .get(username)
+            .delete()
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_views_in_user(username, view_names, conn=None):
@@ -731,29 +678,24 @@ def delete_views_in_user(username, view_names, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(UserCollections.Users)
-            .get(username)
-            .update(
-                {
-                    UserKeys.Views: (
-                        r.row[UserKeys.Views].set_difference(view_names)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(UserCollections.Users)
+        .get(username)
+        .update(
+            {
+                UserKeys.Views: (
+                    r.row[UserKeys.Views].set_difference(view_names)
+                )
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_view_in_users(view_name, users, conn=None):
@@ -772,36 +714,30 @@ def delete_view_in_users(view_name, users, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(users)
+        .for_each(
+            lambda user:
             r
-            .expr(users)
-            .for_each(
-                lambda user:
-                r
-                .table(UserCollections.Users)
-                .get_all(user)
-                .update(
-                    lambda y:
-                    {
-                        UserKeys.Views: (
-                            y[UserKeys.Views].set_difference([view_name])
-                        )
-                    }
-                )
+            .table(UserCollections.Users)
+            .get_all(user)
+            .update(
+                lambda y:
+                {
+                    UserKeys.Views: (
+                        y[UserKeys.Views].set_difference([view_name])
+                    )
+                }
             )
-            .run(conn)
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_all_users_from_view(view_name, conn=None):
@@ -818,23 +754,18 @@ def delete_all_users_from_view(view_name, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(UserCollections.Users)
-            .get_all(view_name, index=UserIndexes.Views)
-            .update(
-                {
-                    UserKeys.Views: (
-                        r.row[UserKeys.Views].set_difference([view_name])
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(UserCollections.Users)
+        .get_all(view_name, index=UserIndexes.Views)
+        .update(
+            {
+                UserKeys.Views: (
+                    r.row[UserKeys.Views].set_difference([view_name])
+                )
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
