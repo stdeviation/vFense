@@ -5,6 +5,7 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._constants import SortValues, DefaultQueryValues
+from vFense.core.decorators import catch_it, time_it
 
 from vFense.core.group._db_model import (
     GroupCollections, GroupKeys, GroupIndexes
@@ -59,7 +60,8 @@ class FetchViews(object):
         else:
             self.sort = r.desc
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def all(self, conn=None):
         """Retrieve all views and all of its properties
@@ -110,28 +112,25 @@ class FetchViews(object):
         data = []
         base_filter = self._set_base_query()
         merge_hash = self._set_merge_hash()
+        count = (
+            base_filter
+            .count()
+            .run(conn)
+        )
 
-        try:
-            count = (
-                base_filter
-                .count()
-                .run(conn)
-            )
-
-            data = list(
-                base_filter
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .merge(merge_hash)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .merge(merge_hash)
+            .run(conn)
+        )
 
         return(count, data)
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_name(self, view_name, conn=None):
         """Retrieve view by view name and all of its properties
@@ -182,31 +181,28 @@ class FetchViews(object):
         data = []
         base_filter = self._set_base_query()
         merge_hash = self._set_merge_hash()
+        count = (
+            base_filter
+            .filter({ViewKeys.ViewName: view_name})
+            .count()
+            .run(conn)
+        )
 
-        try:
-            count = (
-                base_filter
-                .filter({ViewKeys.ViewName: view_name})
-                .count()
-                .run(conn)
-            )
-
-            data = list(
-                base_filter
-                .filter({ViewKeys.ViewName: view_name})
-                .coerce_to('array')
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .merge(merge_hash)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .filter({ViewKeys.ViewName: view_name})
+            .coerce_to('array')
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .merge(merge_hash)
+            .run(conn)
+        )
 
         return(count, data)
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_regex(self, name, conn=None):
         """Retrieve views by regex and all of its properties
@@ -258,37 +254,34 @@ class FetchViews(object):
         base_filter = self._set_base_query()
         merge_hash = self._set_merge_hash()
 
-        try:
-            count = (
-                base_filter
-                .filter(
-                    lambda x:
-                    x[ViewKeys.ViewName].match("(?i)^"+name)
-                )
-                .count()
-                .run(conn)
+        count = (
+            base_filter
+            .filter(
+                lambda x:
+                x[ViewKeys.ViewName].match("(?i)^"+name)
             )
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter(
-                    lambda x:
-                    x[ViewKeys.ViewName].match("(?i)^"+name)
-                )
-                .coerce_to('array')
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .merge(merge_hash)
-                .run(conn)
+        data = list(
+            base_filter
+            .filter(
+                lambda x:
+                x[ViewKeys.ViewName].match("(?i)^"+name)
             )
-
-        except Exception as e:
-            logger.exception(e)
+            .coerce_to('array')
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .merge(merge_hash)
+            .run(conn)
+        )
 
         return(count, data)
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def for_user(self, name, conn=None):
         """Retrieve views for user and all of its properties
@@ -339,37 +332,31 @@ class FetchViews(object):
         data = []
         base_filter = self._set_base_query()
         merge_hash = self._set_merge_hash()
-
-        try:
-            count = (
-                base_filter
-                .filter(
-                    lambda x:
-                    x[ViewKeys.Users].contains(name)
-                )
-                .count()
-                .run(conn)
+        count = (
+            base_filter
+            .filter(
+                lambda x:
+                x[ViewKeys.Users].contains(name)
             )
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter(
-                    lambda x:
-                    x[ViewKeys.Users].contains(name)
-                )
-                .coerce_to('array')
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .merge(merge_hash)
-                .run(conn)
+        data = list(
+            base_filter
+            .filter(
+                lambda x:
+                x[ViewKeys.Users].contains(name)
             )
-
-        except Exception as e:
-            logger.exception(e)
+            .coerce_to('array')
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .merge(merge_hash)
+            .run(conn)
+        )
 
         return(count, data)
-
 
     def _set_base_query(self):
         if self.parent_view:

@@ -3,7 +3,7 @@
 import logging
 import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core._constants import SortValues, DefaultQueryValues
 
 from vFense.core.view._db_model import ViewKeys
@@ -192,15 +192,15 @@ class RetrieveViews(object):
         return results
 
 
-    def _set_results(self, gen_status_code, vfense_status_code,
+    def _set_results(self, generic_status_code, vfense_status_code,
                      msg, count, data):
 
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: msg,
-            ApiResultKeys.COUNT: count,
-            ApiResultKeys.DATA: data,
-        }
+        results = ApiResults()
+        results.fill_in_defaults()
+        results.generic_status_code = generic_status_code
+        results.vfense_status_code = vfense_status_code
+        results.message = msg
+        results.count = count
+        results.data = data
 
         return results

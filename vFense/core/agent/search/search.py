@@ -654,11 +654,11 @@ class RetrieveAgents(object):
 
         return results
 
-    def _set_results(self, gen_status_code, vfense_status_code,
+    def _set_results(self, generic_status_code, vfense_status_code,
                      msg, count, data):
         results = ApiResults()
         results.fill_in_defaults()
-        results.generic_status_code = gen_status_code
+        results.generic_status_code = generic_status_code
         results.vfense_status_code = vfense_status_code
         results.message = msg
         results.count = count

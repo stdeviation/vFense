@@ -7,7 +7,7 @@ from vFense.core.view._db_model import (
 from vFense.core.group._db_model import (
     GroupCollections, GroupKeys, GroupIndexes
 )
-from vFense.core.decorators import return_status_tuple, time_it
+from vFense.core.decorators import return_status_tuple, time_it, catch_it
 from vFense.db.client import db_create_close, r
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -15,6 +15,7 @@ logger = logging.getLogger('rvapi')
 
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_view(view_name, keys_to_pluck=None, conn=None):
     """Retrieve view information
@@ -40,29 +41,26 @@ def fetch_view(view_name, keys_to_pluck=None, conn=None):
         }
     """
     data = []
-    try:
-        if view_name and keys_to_pluck:
-            data = (
-                r
-                .table(ViewCollections.Views)
-                .get(view_name)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
-        elif view_name and not keys_to_pluck:
-            data = (
-                r
-                .table(ViewCollections.Views)
-                .get(view_name)
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
+    if view_name and keys_to_pluck:
+        data = (
+            r
+            .table(ViewCollections.Views)
+            .get(view_name)
+            .pluck(keys_to_pluck)
+            .run(conn)
+        )
+    elif view_name and not keys_to_pluck:
+        data = (
+            r
+            .table(ViewCollections.Views)
+            .get(view_name)
+            .run(conn)
+        )
 
     return data
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_all_current_tokens(conn=None):
     """Retrieve a list of all current tokens
@@ -74,24 +72,20 @@ def fetch_all_current_tokens(conn=None):
     Returns:
         Returns a list of tokens.
     """
-    data = []
-    try:
-        data = list(
-            r
-            .table(ViewCollections.Views)
-            .map(
-                lambda token:
-                token[ViewKeys.Token]
-            )
-            .run(conn)
+    data = list(
+        r
+        .table(ViewCollections.Views)
+        .map(
+            lambda token:
+            token[ViewKeys.Token]
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it(None)
 @db_create_close
 def fetch_view_for_token(token, conn=None):
     """Retrieve the view associated for this token.
@@ -101,34 +95,31 @@ def fetch_view_for_token(token, conn=None):
     Basic Usage::
         >>> from vFense.view._db import fetch_view_for_token
         >>> fetch_view_for_token(token)
+        >>> 'global'
 
     Returns:
-        Returns True or False
+        String.
     """
     view_name = None
-    try:
-        data = list(
-            r
-            .table(ViewCollections.Views)
-            .filter(
-                lambda x:
-                (x[ViewKeys.Token] ==  token)
-                |
-                (x[ViewKeys.PreviousTokens].contains(token))
-            )
-            .run(conn)
+    data = list(
+        r
+        .table(ViewCollections.Views)
+        .filter(
+            lambda x:
+            (x[ViewKeys.Token] ==  token)
+            |
+            (x[ViewKeys.PreviousTokens].contains(token))
         )
-        if data:
-            view_name = data[ViewKeys.ViewName]
-
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
+    if data:
+        view_name = data[ViewKeys.ViewName]
 
     return view_name
 
 
 @time_it
+@catch_it(False)
 @db_create_close
 def token_exist_in_current(token, conn=None):
     """Retrieve a list of all current tokens
@@ -143,23 +134,20 @@ def token_exist_in_current(token, conn=None):
         Returns True or False
     """
     exist = False
-    try:
-        is_empty = (
-            r
-            .table(ViewCollections.Views)
-            .get_all(token, index=ViewIndexes.Token)
-            .is_empty()
-            .run(conn)
-        )
-        if not is_empty:
-            exist = True
-
-    except Exception as e:
-        logger.exception(e)
+    is_empty = (
+        r
+        .table(ViewCollections.Views)
+        .get_all(token, index=ViewIndexes.Token)
+        .is_empty()
+        .run(conn)
+    )
+    if not is_empty:
+        exist = True
 
     return exist
 
 @time_it
+@catch_it(False)
 @db_create_close
 def token_exist_in_previous(token, conn=None):
     """Verify if the token existed previously.
@@ -174,23 +162,20 @@ def token_exist_in_previous(token, conn=None):
         Returns True or False
     """
     exist = False
-    try:
-        is_empty = (
-            r
-            .table(ViewCollections.Views)
-            .get_all(token, index=ViewIndexes.PreviousTokens)
-            .is_empty()
-            .run(conn)
-        )
-        if not is_empty:
-            exist = True
-
-    except Exception as e:
-        logger.exception(e)
+    is_empty = (
+        r
+        .table(ViewCollections.Views)
+        .get_all(token, index=ViewIndexes.PreviousTokens)
+        .is_empty()
+        .run(conn)
+    )
+    if not is_empty:
+        exist = True
 
     return exist
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_all_previous_tokens(conn=None):
     """Retrieve a list of all current tokens
@@ -203,24 +188,20 @@ def fetch_all_previous_tokens(conn=None):
         Returns a list of tokens.
     """
     data = []
-    try:
-        data = list(
-            r
-            .table(ViewCollections.Views)
-            .map(
-                lambda token:
-                token[ViewKeys.PreviousTokens]
-            )
-            .run(conn)
+    data = list(
+        r
+        .table(ViewCollections.Views)
+        .map(
+            lambda token:
+            token[ViewKeys.PreviousTokens]
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
-
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_all_view_names(conn=None):
     """Retrieve all view names
@@ -237,21 +218,17 @@ def fetch_all_view_names(conn=None):
         ]
     """
     data = []
-    try:
-        data = list(
-            r
-            .table(ViewCollections.Views)
-            .map(lambda x: x[ViewKeys.ViewName])
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = list(
+        r
+        .table(ViewCollections.Views)
+        .map(lambda x: x[ViewKeys.ViewName])
+        .run(conn)
+    )
 
     return data
 
-
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_views(match=None, keys_to_pluck=None, conn=None):
     """Retrieve all views or just views based on regular expressions
@@ -287,52 +264,48 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
         ]
     """
     data = []
-    try:
-        if match and keys_to_pluck:
-            data = list(
-                r
-                .table(ViewCollections.Views)
-                .filter(
-                    lambda name:
-                    name[ViewKeys.ViewName].match("(?i)" + match)
-                )
-                .pluck(keys_to_pluck)
-                .run(conn)
+    if match and keys_to_pluck:
+        data = list(
+            r
+            .table(ViewCollections.Views)
+            .filter(
+                lambda name:
+                name[ViewKeys.ViewName].match("(?i)" + match)
             )
+            .pluck(keys_to_pluck)
+            .run(conn)
+        )
 
-        elif match and not keys_to_pluck:
-            data = list(
-                r
-                .table(ViewCollections.Views)
-                .filter(
-                    lambda name:
-                    name[ViewKeys.ViewName].match("(?i)" + match)
-                )
-                .run(conn)
+    elif match and not keys_to_pluck:
+        data = list(
+            r
+            .table(ViewCollections.Views)
+            .filter(
+                lambda name:
+                name[ViewKeys.ViewName].match("(?i)" + match)
             )
+            .run(conn)
+        )
 
-        elif not match and not keys_to_pluck:
-            data = list(
-                r
-                .table(ViewCollections.Views)
-                .run(conn)
-            )
+    elif not match and not keys_to_pluck:
+        data = list(
+            r
+            .table(ViewCollections.Views)
+            .run(conn)
+        )
 
-        elif not match and keys_to_pluck:
-            data = list(
-                r
-                .table(ViewCollections.Views)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
+    elif not match and keys_to_pluck:
+        data = list(
+            r
+            .table(ViewCollections.Views)
+            .pluck(keys_to_pluck)
+            .run(conn)
+        )
 
     return data
 
-
 @time_it
+@catch_it({})
 @db_create_close
 def fetch_properties_for_view(view_name, conn=None):
     """Retrieve a view and all its properties.
@@ -372,22 +345,18 @@ def fetch_properties_for_view(view_name, conn=None):
         }
     )
 
-    data = []
-    try:
-        data = list(
-            r
-            .table(ViewCollections.Views)
-            .get_all(view_name)
-            .map(map_hash)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = list(
+        r
+        .table(ViewCollections.Views)
+        .get_all(view_name)
+        .map(map_hash)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def insert_view(view_data, conn=None):
@@ -405,22 +374,17 @@ def insert_view(view_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(ViewCollections.Views)
-            .insert(view_data)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(ViewCollections.Views)
+        .insert(view_data)
+        .run(conn)
+    )
 
     return data
 
-
 @time_it
+@catch_it
 @db_create_close
 @return_status_tuple
 def update_view(view_name, view_data, conn=None):
@@ -439,23 +403,18 @@ def update_view(view_name, view_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(ViewCollections.Views)
-            .get(view_name)
-            .update(view_data)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(ViewCollections.Views)
+        .get(view_name)
+        .update(view_data)
+        .run(conn)
+    )
 
     return data
 
-
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_user_in_views(username, view_names=None, conn=None):
@@ -475,34 +434,15 @@ def delete_user_in_views(username, view_names=None, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        if view_names:
-            data = (
-                r
-                .expr(view_names)
-                .for_each(
-                    lambda view_name:
-                    r
-                    .table(ViewCollections.Views)
-                    .get(view_name)
-                    .update(
-                        lambda x:
-                        {
-                            ViewKeys.Users: (
-                                x[ViewKeys.Users]
-                                .set_difference([username])
-                            )
-                        }
-                    )
-                )
-                .run(conn)
-            )
-
-        else:
-            data = (
+    if view_names:
+        data = (
+            r
+            .expr(view_names)
+            .for_each(
+                lambda view_name:
                 r
                 .table(ViewCollections.Views)
+                .get(view_name)
                 .update(
                     lambda x:
                     {
@@ -511,16 +451,29 @@ def delete_user_in_views(username, view_names=None, conn=None):
                         )
                     }
                 )
-                .run(conn)
             )
+            .run(conn)
+        )
 
-    except Exception as e:
-        logger.exception(e)
+    else:
+        data = (
+            r
+            .table(ViewCollections.Views)
+            .update(
+                lambda x:
+                {
+                    ViewKeys.Users: (
+                        x[ViewKeys.Users].set_difference([username])
+                    )
+                }
+            )
+            .run(conn)
+        )
 
     return data
 
-
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_users_in_view(usernames, view_name, conn=None):
@@ -541,30 +494,24 @@ def delete_users_in_view(usernames, view_name, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(ViewCollections.Views)
-            .get_all(view_name)
-            .update(
-                lambda x:
-                {
-                    ViewKeys.Users: (
-                        x[ViewKeys.Users].set_difference(usernames)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(ViewCollections.Views)
+        .get_all(view_name)
+        .update(
+            lambda x:
+            {
+                ViewKeys.Users: x[ViewKeys.Users].set_difference(usernames)
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_view(view_name, conn=None):
@@ -581,23 +528,18 @@ def delete_view(view_name, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(ViewCollections.Views)
-            .get(view_name)
-            .delete()
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(ViewCollections.Views)
+        .get(view_name)
+        .delete()
+        .run(conn)
+    )
 
     return data
 
-
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_views(view_names, conn=None):
@@ -614,27 +556,23 @@ def delete_views(view_names, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(view_names)
+        .for_each(
+            lambda view_name:
             r
-            .expr(view_names)
-            .for_each(
-                lambda view_name:
-                r
-                .table(ViewCollections.Views)
-                .get(view_name)
-                .delete()
-            )
-            .run(conn)
+            .table(ViewCollections.Views)
+            .get(view_name)
+            .delete()
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_usernames_for_view(usernames, view, conn=None):
@@ -653,29 +591,23 @@ def update_usernames_for_view(usernames, view, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(ViewCollections.Views)
-            .get(view)
-            .update(
-                lambda y:
-                {
-                    ViewKeys.Users: (
-                        y[ViewKeys.Users].set_union(usernames)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(ViewCollections.Views)
+        .get(view)
+        .update(
+            lambda y:
+            {
+                ViewKeys.Users: y[ViewKeys.Users].set_union(usernames)
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_usernames_for_views(views, usernames, conn=None):
@@ -694,35 +626,28 @@ def update_usernames_for_views(views, usernames, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(views)
+        .for_each(
+            lambda x:
             r
-            .expr(views)
-            .for_each(
-                lambda x:
-                r
-                .table(ViewCollections.Views)
-                .get(x)
-                .update(
-                    lambda y:
-                    {
-                        ViewKeys.Users: (
-                            y[ViewKeys.Users].set_union(usernames)
-                        )
-                    }
-                )
+            .table(ViewCollections.Views)
+            .get(x)
+            .update(
+                lambda y:
+                {
+                    ViewKeys.Users: y[ViewKeys.Users].set_union(usernames)
+                }
             )
-            .run(conn)
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
-
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_children_for_view(view, child, conn=None):
@@ -741,23 +666,16 @@ def update_children_for_view(view, child, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(ViewCollections.Views)
-            .get(view)
-            .update(
-                {
-                    ViewKeys.Children: (
-                        r.row[ViewKeys.Children].set_insert(child)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(ViewCollections.Views)
+        .get(view)
+        .update(
+            {
+                ViewKeys.Children: r.row[ViewKeys.Children].set_insert(child)
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
