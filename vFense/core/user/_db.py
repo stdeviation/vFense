@@ -48,28 +48,27 @@ def fetch_user(username, without_fields=None, conn=None):
     """
     data = {}
     if not without_fields:
-            data = (
-                r
-                .table(UserCollections.Users)
-                .get(username)
-                .run(conn)
-            )
+        data = (
+            r
+            .table(UserCollections.Users)
+            .get(username)
+            .run(conn)
+        )
 
+    else:
+        data = (
+            r
+            .table(UserCollections.Users)
+            .get_all(username)
+            .without(without_fields)
+            .run(conn)
+        )
+        if data:
+            data = data[0]
         else:
-            data = (
-                r
-                .table(UserCollections.Users)
-                .get_all(username)
-                .without(without_fields)
-                .run(conn)
-            )
-            if data:
-                data = data[0]
-            else:
-                data = {}
+            data = {}
 
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
