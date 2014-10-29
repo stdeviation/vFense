@@ -2,8 +2,7 @@ import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.group._db_model import (
-    GroupCollections, GroupKeys, GroupsPerUserKeys, GroupsPerUserIndexes,
-    GroupIndexes
+    GroupCollections, GroupKeys, GroupIndexes
 )
 from vFense.core.decorators import return_status_tuple, time_it, catch_it
 from vFense.db.client import db_create_close, r
@@ -44,137 +43,6 @@ def fetch_group(group_id, conn=None):
     )
 
     return(data)
-
-@time_it
-@catch_it({})
-@db_create_close
-def fetch_group_properties(group_id, conn=None):
-    """Retrieve a group and all of its properties.
-    Args:
-        group_id: 36 Character UUID.
-
-    Basic Usage:
-        >>> from vFense.group._db import fetch_group_properties
-        >>> group_id = 'a7d4690e-5851-4d92-9626-07e16acaea1f'
-        >>> fetch_group_properties(group_id)
-
-    Returns:
-        Returns a Dict of the properties of a group
-        {
-            "users": [
-                {
-                    "user_name": "admin"
-                },
-                {
-                    "user_name": "agent_api"
-                }
-            ],
-            "permissions": [
-                "administrator"
-            ],
-            "group_name": "Administrator",
-            "id": "1b74a706-34e5-482a-bedc-ffbcd688f066",
-            "view_name": "default"
-        }
-    """
-    map_hash = (lambda x:
-        {
-            GroupKeys.GroupId: x[GroupKeys.GroupId],
-            GroupKeys.GroupName: x[GroupKeys.GroupName],
-            GroupKeys.ViewName: x[GroupKeys.ViewName],
-            GroupKeys.Permissions: x[GroupKeys.Permissions],
-            GroupKeys.Users: (
-                r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
-                .coerce_to('array')
-                .pluck(GroupsPerUserKeys.UserName)
-            )
-        }
-    )
-    data = (
-        r
-        .table(GroupCollections.Groups)
-        .get_all(group_id)
-        .map(map_hash)
-        .run(conn)
-    )
-    if data:
-        data = data[0]
-
-    return data
-
-@time_it
-@catch_it([])
-@db_create_close
-def fetch_properties_for_all_groups(view_name=None, conn=None):
-    """Retrieve properties for all groupcs.
-    Kwargs:
-        view_name: Name of the view, which the group is part of.
-
-    Basic Usage:
-        >>> from vFense.group._db import fetch_properties_for_all_groups
-        >>> view_name = 'test'
-        >>> fetch_properties_for_all_groups(view_name)
-
-    Returns:
-        Returns a List of a groups and their properties.
-        [
-            {
-                "users": [
-                    {
-                        "user_name": "admin"
-                    },
-                    {
-                        "user_name": "agent_api"
-                    }
-                ],
-                "permissions": [
-                    "install",
-                    "uninstall"
-                ],
-                "group_name": "JR ADMIN",
-                "id": "2171dff9-cf6d-4deb-9da3-18434acbd1c7",
-                "view_name": "Test"
-            },
-        ]
-    """
-    map_hash = (lambda x:
-        {
-            GroupKeys.GroupId: x[GroupKeys.GroupId],
-            GroupKeys.GroupName: x[GroupKeys.GroupName],
-            GroupKeys.ViewName: x[GroupKeys.ViewName],
-            GroupKeys.Permissions: x[GroupKeys.Permissions],
-            GroupKeys.Users: (
-                r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(
-                    x[GroupKeys.GroupId],
-                    index=GroupsPerUserIndexes.GroupId
-                )
-                .coerce_to('array')
-                .pluck(GroupsPerUserKeys.UserName)
-            )
-        }
-    )
-    if view_name:
-        data = list(
-            r
-            .table(GroupCollections.Groups)
-            .get_all(view_name, index=GroupsPerUserIndexes.ViewName)
-            .map(map_hash)
-            .run(conn)
-        )
-
-    else:
-        data = list(
-            r
-            .table(GroupCollections.Groups)
-            .map(map_hash)
-            .run(conn)
-        )
-
-    return data
 
 @time_it
 @catch_it({})
@@ -260,55 +128,6 @@ def fetch_group_ids_for_view(view_name, conn=None):
 @time_it
 @catch_it([])
 @db_create_close
-def fetch_users_in_group(group_id, fields_to_pluck=None, conn=None):
-    """Fetch all users for group_id
-    Args:
-        group_id (str): 36 Character UUID
-
-    Kwargs:
-        fields_to_pluck (list): List of fields you want to
-        pluck from the database.
-
-    Basic Usage:
-        >>> from vFense.group._db import fetch_users_in_group
-        >>> group_id = 'a7d4690e-5851-4d92-9626-07e16acaea1f'
-        >>> fetch_users_in_group(group_id, [GroupsPerUserKeys.UserName])
-
-    Returns:
-        Returns a list of users
-        [
-            {
-                u'user_name': u'testing123'
-            },
-            {
-                u'user_name': u'tester'
-            },
-            {
-                u'user_name': u'testing'
-            }
-        ]
-    """
-    if fields_to_pluck:
-        data = list(
-            r
-            .table(GroupCollections.GroupsPerUser)
-            .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
-            .pluck(fields_to_pluck)
-            .run(conn)
-        )
-    else:
-        data = list(
-            r
-            .table(GroupCollections.GroupsPerUser)
-            .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
-            .run(conn)
-        )
-
-    return data
-
-@time_it
-@catch_it([])
-@db_create_close
 def fetch_usernames_in_group(group_id, conn=None):
     """Fetch all users for group_id
     Args:
@@ -339,61 +158,6 @@ def fetch_usernames_in_group(group_id, conn=None):
     )
     if data:
         data = data[GroupKeys.Users]
-
-    return data
-
-@time_it
-@catch_it([])
-@db_create_close
-def fetch_groups_for_user(username, fields_to_pluck=None, conn=None):
-    """Retrieve all groups for a user by username
-    Args:
-        username (str): Get all groups for which this user is part of.
-
-    Kwargs:
-        fields_to_pluck (list): List of fields you want to pluck
-        from the database
-
-    Basic Usage:
-        >>> from vFense.group._db import fetch_groups_for_user
-        >>> username = 'alien'
-        >>> fetch_groups_for_user(username)
-
-    Returns:
-        Returns a list of groups that the user belongs to.
-        [
-            {
-                u'group_name': u'FooLah',
-                u'group_id': u'0834e656-27a5-4b13-ba56-635797d0d1fc',
-                u'user_name': u'alien',
-                u'id': u'ee54820c-cb4e-46a1-9d11-73afe8c4c4e3',
-                u'view_name': u'default'
-            },
-            {
-                u'group_name': u'Administrator',
-                u'group_id': u'8757b79c-7321-4446-8882-65457f28c78b',
-                u'user_name': u'alien',
-                u'id': u'6bd51a04-fcec-46a7-bbe1-48c6221115ec',
-                u'view_name': u'default'
-            }
-        ]
-    """
-    if username and not fields_to_pluck:
-        data = list(
-            r
-            .table(GroupCollections.GroupsPerUser)
-            .get_all(username, index=GroupsPerUserIndexes.UserName)
-            .run(conn)
-        )
-
-    elif username and fields_to_pluck:
-        data = list(
-            r
-            .table(GroupCollections.GroupsPerUser)
-            .get_all(username, index=GroupsPerUserIndexes.UserName)
-            .pluck(fields_to_pluck)
-            .run(conn)
-        )
 
     return data
 
@@ -453,69 +217,6 @@ def user_exist_in_group(username, group_id, conn=None):
 
     if not is_empty:
        exist = True
-
-    return exist
-
-@time_it
-@catch_it(False)
-@db_create_close
-def usernames_exist_in_group_id(usernames, group_id, conn=None):
-    """Return True if and user is part of group_id
-    Args:
-        usernames (list): List of usernames.
-        group_id (str): 36 Character UUID
-
-    Basic Usage:
-        >>> from vFense.group._db import users_exist_in_group
-        >>> usernames = ['alien', 'tester']
-        >>> group_id = '0834e656-27a5-4b13-ba56-635797d0d1fc'
-        >>> users_exist_in_group(usernames, group_id)
-
-    Returns:
-        Returns a boolean True or False
-    """
-    exist = False
-    for username in usernames:
-        is_empty = (
-            r
-            .table(GroupCollections.GroupsPerUser)
-            .get_all(username, index=GroupsPerUserIndexes.UserName)
-            .filter({GroupsPerUserKeys.GroupId: group_id})
-            .is_empty()
-            .run(conn)
-        )
-        if not is_empty:
-            exist = True
-
-    return exist
-
-@time_it
-@catch_it(False)
-@db_create_close
-def users_exist_in_group_ids(group_ids, conn=None):
-    """Return True if and user is part of group_id
-    Args:
-        group_ids (list): List of group ids.
-
-    Basic Usage:
-        >>> from vFense.group._db import users_exist_in_group_ids
-        >>> group_ids = ['0834e656-27a5-4b13-ba56-635797d0d1fc']
-        >>> users_exist_in_group_ids(group_ids)
-
-    Returns:
-        Returns a boolean True or False
-    """
-    exist = False
-    for group_id in group_ids:
-        is_empty = (
-            r
-            .table(GroupCollections.GroupsPerUser)
-            .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
-            .is_empty()
-            .run(conn)
-        )
-        if not is_empty:
-            exist = True
 
     return exist
 
@@ -713,36 +414,6 @@ def insert_group(group_data, conn=None):
     )
 
     return data
-
-
-@time_it
-@catch_it({})
-@db_create_close
-@return_status_tuple
-def insert_group_per_user(group_data, conn=None):
-    """Add a group to a user, this function should not be called directly.
-    Args:
-        group_data (list|dict): Can either be a list of dictionaries or a dictionary
-        of the data you are inserting.
-
-    Basic Usage:
-        >>> from vFense.group._db import insert_group_per_user
-        >>> group_data = {'view_name': 'vFense', 'needs_reboot': 'no'}
-        >>> insert_group_per_user(group_data)
-
-    Return:
-        Tuple (status_code, count, error, generated ids)
-        >>> (2001, 1, None, [])
-    """
-    data = (
-        r
-        .table(GroupCollections.GroupsPerUser)
-        .insert(group_data)
-        .run(conn)
-    )
-
-    return data
-
 
 @time_it
 @catch_it({})
