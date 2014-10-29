@@ -1,6 +1,6 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core.group._db_model import GroupKeys
+from vFense.core.group import Group
 from vFense.core.group._db import fetch_group
 
 from vFense.core.decorators import time_it
@@ -34,9 +34,10 @@ def validate_group_ids(group_ids, view_name=None, is_global=False):
         for group_id in group_ids:
             group = fetch_group(group_id)
             if group:
+                group = Group(**group)
                 if view_name:
-                    if view_name in group.get(GroupKeys.Views):
-                        if group.get(GroupKeys.IsGlobal) == is_global:
+                    if view_name in group.views:
+                        if group.is_global == is_global:
                             valid_groups.append(group_id)
                         else:
                             invalid_groups.append(group_id)
@@ -45,7 +46,7 @@ def validate_group_ids(group_ids, view_name=None, is_global=False):
                         invalid_groups.append(group_id)
                         validated = False
                 else:
-                    if group.get(GroupKeys.IsGlobal) == is_global:
+                    if group.is_global == is_global:
                         valid_groups.append(group_id)
                     else:
                         invalid_groups.append(group_id)
@@ -84,12 +85,13 @@ def validate_groups_in_views(group_ids, views):
     valid_local_groups = []
     if isinstance(group_ids, list) and isinstance(views, list):
         for group_id in group_ids:
-            group_data = fetch_group(group_id)
-            if group_data:
-                if group_data[GroupKeys.IsGlobal]:
+            group = fetch_group(group_id)
+            if group:
+                group = Group(**group)
+                if group.is_global:
                     valid_global_groups.append(group_id)
                 else:
-                    if set(group_data[GroupKeys.Views]).issubset(views):
+                    if set(group.views).issubset(views):
                         valid_local_groups.append(group_id)
                     else:
                         invalid_groups.append(group_id)

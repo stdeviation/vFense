@@ -4,6 +4,7 @@ import logging
 import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
+from vFense.core.decorators import catch_it, time_it
 from vFense.core._constants import SortValues, DefaultQueryValues
 
 from vFense.core.group._db_model import (
@@ -56,7 +57,8 @@ class FetchGroups(object):
         else:
             self.sort = r.desc
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_id(self, group_id, conn=None):
         """Retrieve all users and all of its properties
@@ -104,29 +106,27 @@ class FetchGroups(object):
         )
         map_hash = self._set_map_hash()
 
-        try:
-            count = (
-                base_filter
-                .get_all(group_id)
-                .count()
-                .run(conn)
-            )
+        count = (
+            base_filter
+            .get_all(group_id)
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .get_all(group_id)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .map(map_hash)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .get_all(group_id)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .map(map_hash)
+            .run(conn)
+        )
 
         return(count, data)
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def all(self, conn=None):
         """Retrieve all users and all of its properties
@@ -170,29 +170,25 @@ class FetchGroups(object):
         data = []
         base_filter = self._set_base_query()
         map_hash = self._set_map_hash()
+        count = (
+            base_filter
+            .count()
+            .run(conn)
+        )
 
-        try:
-            count = (
-                base_filter
-                .count()
-                .run(conn)
-            )
-
-            data = list(
-                base_filter
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .map(map_hash)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .map(map_hash)
+            .run(conn)
+        )
 
         return(count, data)
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_name(self, name, conn=None):
         """Retrieve groups by regex and all of its properties
@@ -236,32 +232,28 @@ class FetchGroups(object):
         data = []
         base_filter = self._set_base_query()
         map_hash = self._set_map_hash()
+        count = (
+            base_filter
+            .filter({GroupKeys.GroupName: name})
+            .count()
+            .run(conn)
+        )
 
-        try:
-            count = (
-                base_filter
-                .filter({GroupKeys.GroupName: name})
-                .count()
-                .run(conn)
-            )
-
-            data = list(
-                base_filter
-                .filter({GroupKeys.GroupName: name})
-                .coerce_to('array')
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .map(map_hash)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .filter({GroupKeys.GroupName: name})
+            .coerce_to('array')
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .map(map_hash)
+            .run(conn)
+        )
 
         return(count, data)
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_regex(self, name, conn=None):
         """Retrieve groups by regex and all of its properties
@@ -305,37 +297,31 @@ class FetchGroups(object):
         data = []
         base_filter = self._set_base_query()
         map_hash = self._set_map_hash()
-
-        try:
-            count = (
-                base_filter
-                .filter(
-                    lambda x:
-                    x[GroupKeys.GroupName].match("(?i)^"+name)
-                )
-                .count()
-                .run(conn)
+        count = (
+            base_filter
+            .filter(
+                lambda x:
+                x[GroupKeys.GroupName].match("(?i)^"+name)
             )
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter(
-                    lambda x:
-                    x[GroupKeys.GroupName].match("(?i)^"+name)
-                )
-                .coerce_to('array')
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .map(map_hash)
-                .run(conn)
+        data = list(
+            base_filter
+            .filter(
+                lambda x:
+                x[GroupKeys.GroupName].match("(?i)^"+name)
             )
-
-        except Exception as e:
-            logger.exception(e)
+            .coerce_to('array')
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .map(map_hash)
+            .run(conn)
+        )
 
         return(count, data)
-
 
     def _set_base_query(self):
         if self.view_name:
