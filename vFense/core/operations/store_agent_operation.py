@@ -1,15 +1,9 @@
 import logging
 import logging.config
-from copy import deepcopy
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core.operations import (
-    AgentOperation, OperPerAgent, OperPerApp
-)
+from vFense.core.operations import AgentOperation
 from vFense.core.operations._constants import vFenseObjects
 from vFense.core.operations.agent_operations import AgentOperationManager
-from vFense.core.operations._db_model import (
-    OperationPerAgentKey, AgentOperationKey
-)
 from vFense.core.queue import AgentQueueOperation
 from vFense.core.queue.manager import AgentQueueManager
 from vFense.core.tag._db import fetch_agent_ids_in_tag

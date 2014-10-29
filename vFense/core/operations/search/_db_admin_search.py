@@ -2,9 +2,8 @@ import logging, logging.config
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.core._db import insert_data_in_table
-from vFense.core.operations.search._constants import OperationSearchValues
 from vFense.core._constants import SortValues, DefaultQueryValues
+from vFense.core.decorators import catch_it, time_it
 
 from vFense.core.operations._db_model import (
     OperationCollections, AdminOperationKey, AdminOperationIndexes
@@ -53,6 +52,8 @@ class FetchAdminOperations(object):
         else:
             self.sort = r.desc
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def fetch_all(self, conn=None):
         """Fetch all operations
@@ -68,24 +69,20 @@ class FetchAdminOperations(object):
         data = []
         base_filter = self._set_admin_operation_base_query()
         base_time_merge = self._set_base_time_merge()
-        try:
-            count = (
-                base_filter
-                .count()
-                .run(conn)
-            )
+        count = (
+            base_filter
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .merge(base_time_merge)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .merge(base_time_merge)
+            .run(conn)
+        )
 
         return(count, data)
 

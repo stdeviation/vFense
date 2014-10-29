@@ -4,6 +4,7 @@ import logging
 import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
+from vFense.core.decorators import catch_it, time_it
 from vFense.core.operations.search._constants import OperationSearchValues
 from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent._db_model import AgentKeys, AgentCollections
@@ -59,6 +60,8 @@ class FetchAgentOperations(object):
         else:
             self.sort = r.desc
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def all(self, conn=None):
         """Fetch all operations
@@ -95,27 +98,25 @@ class FetchAgentOperations(object):
         data = []
         base_filter = self._set_agent_operation_base_query()
         base_time_merge = self._set_base_time_merge()
-        try:
-            count = (
-                base_filter
-                .count()
-                .run(conn)
-            )
+        count = (
+            base_filter
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .merge(base_time_merge)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .merge(base_time_merge)
+            .run(conn)
+        )
 
         return(count, data)
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_agentid(self, agent_id, conn=None):
         """Fetch all operations by agent id
@@ -152,38 +153,35 @@ class FetchAgentOperations(object):
         count = 0
         data = []
         base_time_merge = self._set_base_time_merge()
-        try:
-            count = (
-                r
-                .table(OperationCollections.Agent)
-                .get_all(
-                    agent_id,
-                    index=AgentOperationIndexes.AgentIds
-                )
-                .count()
-                .run(conn)
+        count = (
+            r
+            .table(OperationCollections.Agent)
+            .get_all(
+                agent_id,
+                index=AgentOperationIndexes.AgentIds
             )
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                r
-                .table(OperationCollections.Agent)
-                .get_all(
-                    agent_id,
-                    index=AgentOperationIndexes.AgentIds
-                )
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .merge(base_time_merge)
-                .run(conn)
+        data = list(
+            r
+            .table(OperationCollections.Agent)
+            .get_all(
+                agent_id,
+                index=AgentOperationIndexes.AgentIds
             )
-
-        except Exception as e:
-            logger.exception(e)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .merge(base_time_merge)
+            .run(conn)
+        )
 
         return(count, data)
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_tagid(self, tag_id, conn=None):
         """Fetch all operations by tag id
@@ -225,36 +223,32 @@ class FetchAgentOperations(object):
                 ]
             ]
         """
-
         count = 0
         data = []
         base_time_merge = self._set_base_time_merge()
-        try:
-            count = (
-                r
-                .table(OperationCollections.Agent)
-                .get_all(tag_id, index=AgentOperationKey.TagId)
-                .count()
-                .run(conn)
-            )
+        count = (
+            r
+            .table(OperationCollections.Agent)
+            .get_all(tag_id, index=AgentOperationKey.TagId)
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                r
-                .table(OperationCollections.Agent)
-                .get_all(tag_id, index=AgentOperationKey.TagId)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .merge(base_time_merge)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            r
+            .table(OperationCollections.Agent)
+            .get_all(tag_id, index=AgentOperationKey.TagId)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .merge(base_time_merge)
+            .run(conn)
+        )
 
         return(count, data)
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_operation(self, action, conn=None):
         """Fetch all operations by action
@@ -299,42 +293,38 @@ class FetchAgentOperations(object):
                 }
             ]
         """
-
         count = 0
         data = []
         base_time_merge = self._set_base_time_merge()
-        try:
-            count = (
-                r
-                .table(OperationCollections.Agent)
-                .get_all(
-                    [action, self.view_name],
-                    index=AgentOperationIndexes.OperationAndView
-                )
-                .count()
-                .run(conn)
+        count = (
+            r
+            .table(OperationCollections.Agent)
+            .get_all(
+                [action, self.view_name],
+                index=AgentOperationIndexes.OperationAndView
             )
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                r
-                .table(OperationCollections.Agent)
-                .get_all(
-                    [action, self.view_name],
-                    index=AgentOperationIndexes.OperationAndView
-                )
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .merge(base_time_merge)
-                .run(conn)
-                )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            r
+            .table(OperationCollections.Agent)
+            .get_all(
+                [action, self.view_name],
+                index=AgentOperationIndexes.OperationAndView
+            )
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .merge(base_time_merge)
+            .run(conn)
+        )
 
         return(count, data)
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def install_operation_by_id(self, operation_id, conn=None):
         """Fetch install operation by operation id
@@ -413,23 +403,20 @@ class FetchAgentOperations(object):
         count = 0
         data = []
         merge = self._set_install_operation_merge()
-        try:
-            data = (
-                r
-                .table(OperationCollections.Agent)
-                .get(operation_id)
-                .merge(merge)
-                .run(conn)
-            )
-            if data:
-                count = 1
-
-        except Exception as e:
-            logger.exception(e)
+        data = (
+            r
+            .table(OperationCollections.Agent)
+            .get(operation_id)
+            .merge(merge)
+            .run(conn)
+        )
+        if data:
+            count = 1
 
         return(count, data)
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_id(self, operation_id, conn=None):
         """Fetch operation by operation id
@@ -484,74 +471,65 @@ class FetchAgentOperations(object):
         count = 0
         data = []
         merge = self._set_operation_per_agent_merge()
-        try:
-            data = list(
-                r
-                .table(OperationCollections.Agent)
-                .get_all(
-                    operation_id,
-                    index=AgentOperationIndexes.OperationId
-                )
-                .merge(merge)
-                .run(conn)
+        data = list(
+            r
+            .table(OperationCollections.Agent)
+            .get_all(
+                operation_id,
+                index=AgentOperationIndexes.OperationId
             )
-            if data:
-                data = data[0]
-                count = 1
-
-        except Exception as e:
-            logger.exception(e)
+            .merge(merge)
+            .run(conn)
+        )
+        if data:
+            data = data[0]
+            count = 1
 
         return(count, data)
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def install_operation_for_email_alert(self, operation_id, conn=None):
         count = 0
         data = []
         merge = self._set_install_operation_email_alert_merge()
-        try:
-            data = list(
-                r
-                .table(OperationCollections.Agent)
-                .get_all(
-                    operation_id,
-                    index=AgentOperationIndexes.OperationId
-                )
-                .merge(merge)
-                .run(conn)
+        data = list(
+            r
+            .table(OperationCollections.Agent)
+            .get_all(
+                operation_id,
+                index=AgentOperationIndexes.OperationId
             )
-            if data:
-                data = data[0]
-                count = 1
-
-        except Exception as e:
-            logger.exception(e)
+            .merge(merge)
+            .run(conn)
+        )
+        if data:
+            data = data[0]
+            count = 1
 
         return(count, data)
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def operation_for_email_alert(self, operation_id, conn=None):
         count = 0
         data = []
         merge = self._set_operation_for_email_alert_merge()
-        try:
-            data = list(
-                r
-                .table(OperationCollections.Agent)
-                .get_all(
-                    operation_id,
-                    index=AgentOperationIndexes.OperationId
-                )
-                .merge(merge)
-                .run(conn)
+        data = list(
+            r
+            .table(OperationCollections.Agent)
+            .get_all(
+                operation_id,
+                index=AgentOperationIndexes.OperationId
             )
-            if data:
-                data = data[0]
-                count = 1
-
-        except Exception as e:
-            logger.exception(e)
+            .merge(merge)
+            .run(conn)
+        )
+        if data:
+            data = data[0]
+            count = 1
 
         return(count, data)
 
@@ -727,8 +705,7 @@ class FetchAgentOperations(object):
                 )
             }
         )
-        return(merge)
-
+        return merge
 
     def _set_operation_per_agent_merge(self):
         agent_pluck = self._set_agent_collection_pluck()
@@ -759,7 +736,7 @@ class FetchAgentOperations(object):
             }
         )
 
-        return(merge)
+        return merge
 
     def _set_install_operation_merge(self):
         agent_pluck = self._set_agent_collection_pluck()
@@ -810,8 +787,7 @@ class FetchAgentOperations(object):
             }
         )
 
-        return(merge)
-
+        return merge
 
     def _set_agent_operation_base_query(self):
         base_filter = (
@@ -828,7 +804,7 @@ class FetchAgentOperations(object):
                 )
             )
 
-        return(base_filter)
+        return base_filter
 
     def _set_operation_per_agent_base_query(self):
         base_filter = (
@@ -845,7 +821,7 @@ class FetchAgentOperations(object):
                 )
             )
 
-        return(base_filter)
+        return base_filter
 
     def _set_agent_collection_pluck(self):
         pluck = (
@@ -874,7 +850,7 @@ class FetchAgentOperations(object):
                 AgentKeys.DisplayName,
             ]
         )
-        return(pluck)
+        return pluck
 
     def _set_app_collection_without(self):
         without = (
@@ -885,4 +861,4 @@ class FetchAgentOperations(object):
                 OperationPerAppKey.OperationId,
             ]
         )
-        return(without)
+        return without

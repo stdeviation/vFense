@@ -8,7 +8,7 @@ from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations.search._db_agent_search import FetchAgentOperations
 from vFense.core.status_codes import GenericCodes, GenericFailureCodes
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -542,15 +542,15 @@ class AgentOperationRetriever(object):
 
         return data
 
-    def _set_results(self, gen_status_code, vfense_status_code,
+    def _set_results(self, generic_status_code, vfense_status_code,
                      msg, count, data):
 
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: msg,
-            ApiResultKeys.COUNT: count,
-            ApiResultKeys.DATA: data,
-        }
+        results = ApiResults()
+        results.fill_in_defaults()
+        results.generic_status_code = generic_status_code
+        results.vfense_status_code = vfense_status_code
+        results.message = msg
+        results.count = count
+        results.data = data
 
         return results
