@@ -1,8 +1,6 @@
-import logging
-import logging.config
-
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import r, db_create_close
+from vFense.core.decorators import catch_it, time_it
 from vFense.core.scheduler._db_model import (
     JobCollections, JobKeys, JobIndexes
 )
@@ -10,9 +8,9 @@ from vFense.core.scheduler._db_sub_queries import (
     job_get_merge
 )
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
 
+@time_it
+@catch_it({})
 @db_create_close
 def fetch_job(job_id, conn=None):
     """Fetch all information about a job
@@ -46,20 +44,18 @@ def fetch_job(job_id, conn=None):
     """
     job = None
     job_merge = job_get_merge()
-    try:
-        job = (
-            r
-            .table(JobCollections.Jobs)
-            .get(job_id)
-            .merge(job_merge)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    job = (
+        r
+        .table(JobCollections.Jobs)
+        .get(job_id)
+        .merge(job_merge)
+        .run(conn)
+    )
 
     return job
 
+@time_it
+@catch_it([])
 @db_create_close
 def fetch_jobs_by_view(view_name, conn=None):
     """Fetch all jobs by view.
@@ -71,6 +67,7 @@ def fetch_jobs_by_view(view_name, conn=None):
         >>> job_info = fetch_jobs_by_view('global')
 
     Returns:
+        list
     >>>
         {
             "next_run_time": 1404262689.472,
@@ -93,20 +90,18 @@ def fetch_jobs_by_view(view_name, conn=None):
     """
     job = None
     job_merge = job_get_merge()
-    try:
-        job = list(
-            r
-            .table(JobCollections.Jobs)
-            .get_all(view_name, index=JobIndexes.ViewName)
-            .merge(job_merge)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    job = list(
+        r
+        .table(JobCollections.Jobs)
+        .get_all(view_name, index=JobIndexes.ViewName)
+        .merge(job_merge)
+        .run(conn)
+    )
 
     return job
 
+@time_it
+@catch_it({})
 @db_create_close
 def fetch_job_by_name_and_view(name, view_name, conn=None):
     """Fetch all information about a job
@@ -141,26 +136,26 @@ def fetch_job_by_name_and_view(name, view_name, conn=None):
     """
     job = None
     job_merge = job_get_merge()
-    try:
-        job = list(
-            r
-            .table(JobCollections.Jobs)
-            .get_all(view_name, index=JobIndexes.ViewName)
-            .filter(
-                {
-                    JobKeys.Name: name
-                }
-            )
-            .merge(job_merge)
-            .run(conn)
+    job = list(
+        r
+        .table(JobCollections.Jobs)
+        .get_all(view_name, index=JobIndexes.ViewName)
+        .filter(
+            {
+                JobKeys.Name: name
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .merge(job_merge)
+        .run(conn)
+    )
+    if job:
+        job = job[0]
 
     return job
 
 
+@time_it
+@catch_it([])
 @db_create_close
 def fetch_admin_jobs_by_view(view_name, conn=None):
     """Fetch all admin jobs by view.
@@ -194,20 +189,18 @@ def fetch_admin_jobs_by_view(view_name, conn=None):
     """
     job = None
     job_merge = job_get_merge()
-    try:
-        job = list(
-            r
-            .table(JobCollections.AdministrativeJobs)
-            .get_all(view_name, index=JobIndexes.ViewName)
-            .merge(job_merge)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    job = list(
+        r
+        .table(JobCollections.AdministrativeJobs)
+        .get_all(view_name, index=JobIndexes.ViewName)
+        .merge(job_merge)
+        .run(conn)
+    )
 
     return job
 
+@time_it
+@catch_it({})
 @db_create_close
 def fetch_admin_job_by_name_and_view(name, view_name, conn=None):
     """Fetch all information about a job
@@ -242,21 +235,19 @@ def fetch_admin_job_by_name_and_view(name, view_name, conn=None):
     """
     job = None
     job_merge = job_get_merge()
-    try:
-        job = list(
-            r
-            .table(JobCollections.AdministrativeJobs)
-            .get_all(view_name, index=JobIndexes.ViewName)
-            .filter(
-                {
-                    JobKeys.Name: name
-                }
-            )
-            .merge(job_merge)
-            .run(conn)
+    job = list(
+        r
+        .table(JobCollections.AdministrativeJobs)
+        .get_all(view_name, index=JobIndexes.ViewName)
+        .filter(
+            {
+                JobKeys.Name: name
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .merge(job_merge)
+        .run(conn)
+    )
+    if job:
+        job =- job[0]
 
     return job
