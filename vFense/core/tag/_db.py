@@ -403,7 +403,7 @@ def delete_tag_ids_from_view(view_name=None, conn=None):
         data = (
             r
             .table(TagCollections.Tags)
-            .get_all(view_name, index=TagsIndexes.Views)
+            .get_all(view_name, index=TagsIndexes.ViewName)
             .delete()
             .run(conn, no_reply=True)
         )

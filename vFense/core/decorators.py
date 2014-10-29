@@ -202,24 +202,6 @@ def results_message(fn):
 
     return wraps(fn)(db_wrapper)
 
-
-def time_it(fn):
-    """Return the status of the db_call, plus the number of documents"""
-    def db_wrapper(*args, **kwargs):
-        start_time = datetime.now()
-        output = fn(*args, **kwargs)
-        end_time = datetime.now()
-        total_time_to_complete = end_time - start_time
-        message = (
-            ':%s: took %s seconds to run' %
-            (fn.func_name, total_time_to_complete.total_seconds())
-        )
-        logger.debug(message)
-
-        return(output)
-
-    return wraps(fn)(db_wrapper)
-
 def catch_it(return_value):
     """wrap non external calls in a try catch exception
     Args:
@@ -308,6 +290,25 @@ def receiver_catch_it(fn):
         return results
 
     return wraps(fn)(wrapper)
+
+def time_it(fn):
+    """Return the status of the db_call, plus the number of documents"""
+    def db_wrapper(*args, **kwargs):
+        start_time = datetime.now()
+        output = fn(*args, **kwargs)
+        end_time = datetime.now()
+        total_time_to_complete = end_time - start_time
+        message = (
+            ':%s: took %s seconds to run' %
+            (fn.func_name, total_time_to_complete.total_seconds())
+        )
+        logger.debug(message)
+
+        return(output)
+
+    return wraps(fn)(db_wrapper)
+
+
 
 def authenticated_request(method):
     """ Decorator that handles authenticating the request. Uses secure cookies.

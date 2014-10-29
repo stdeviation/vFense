@@ -1,17 +1,16 @@
 import logging
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
-from vFense.core._constants import
 from vFense.core.user._db_model import (
     UserKeys, UserCollections, UserMappedKeys, UserIndexes
 )
-from vFense.core.user._constants import
 from vFense.core.group._db_model import (
     GroupCollections, GroupKeys, GroupIndexes
 )
-from vFense.core.view._db_model import ViewMappedKeys
-from vFense.core.view._constants import
-from vFense.core.permissions._constants import
+from vFense.core.view._db_model import (
+    ViewMappedKeys, ViewCollections, ViewKeys, ViewIndexes
+)
+from vFense.core.permissions._constants import Permissions
 from vFense.core.decorators import return_status_tuple, time_it, catch_it
 from vFense.db.client import db_create_close, r
 

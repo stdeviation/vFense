@@ -28,7 +28,7 @@ from vFense.core.status_codes import (
 from vFense.core.agent.status_codes import (
     AgentFailureCodes, AgentCodes
 )
-from vFense.receiver.status_codes import (
+from vFense.core.receiver.status_codes import (
     AgentFailureResultCodes, AgentResultCodes
 )
 
@@ -358,7 +358,7 @@ class AgentManager(object):
             elif views_exist_in_agent:
                 msg = (
                     'Some of the views already exist for agent {0}:{1}'
-                    .format(self.agent_id. self.properties.computer_name)
+                    .format(self.agent_id, self.properties.computer_name)
                 )
                 results.generic_status_code = GenericFailureCodes.InvalidId
                 results.vfense_status_code = GenericFailureCodes.InvalidId

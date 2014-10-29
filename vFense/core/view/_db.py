@@ -384,7 +384,7 @@ def insert_view(view_data, conn=None):
     return data
 
 @time_it
-@catch_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_view(view_name, view_data, conn=None):

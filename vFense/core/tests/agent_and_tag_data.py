@@ -1,6 +1,6 @@
 AGENT_DATA = {
   "operation": "new_agent",
-  "views": ["global"],
+  "views": ['Test View 1'],
   "rebooted": "no",
   "system_info": {
     "os_code": "windows",
