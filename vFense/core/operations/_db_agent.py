@@ -2,25 +2,25 @@
 
 import logging
 import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.db.client import db_create_close, r
 
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
+from vFense.core.decorators import return_status_tuple, time_it, catch_it
+from vFense.core.operations._db_sub_queries import OperationPerAgentMerge
+from vFense.core.operations.status_codes import AgentOperationCodes
 from vFense.core.operations._db_model import (
     OperationCollections,
     OperationPerAgentIndexes, OperationPerAppIndexes,
     AgentOperationKey, OperationPerAppKey
 )
+from vFense.db.client import db_create_close, r
 
-from vFense.core.operations._db_sub_queries import OperationPerAgentMerge
-
-from vFense.core.decorators import return_status_tuple, time_it
-from vFense.core.operations.status_codes import AgentOperationCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 @time_it
+@catch_it({})
 @db_create_close
 def fetch_agent_operation(operation_id, conn=None):
     """Fetch an operation by id and all of it's information
@@ -57,22 +57,18 @@ def fetch_agent_operation(operation_id, conn=None):
             "view_name": "default"
         }
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.Agent)
-            .get(operation_id)
-            .merge(OperationPerAgentMerge.TIMES)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(OperationCollections.Agent)
+        .get(operation_id)
+        .merge(OperationPerAgentMerge.TIMES)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it(False)
 @db_create_close
 def operation_exist(operation_id, conn=None):
     """Verify if the operation exists by operation id.
@@ -88,23 +84,20 @@ def operation_exist(operation_id, conn=None):
         Boolean True or False
     """
     exists = False
-    try:
-        is_empty = (
-            r
-            .table(OperationCollections.Agent)
-            .get_all(operation_id)
-            .is_empty()
-            .run(conn)
-        )
-        if not is_empty:
-            exists = True
-
-    except Exception as e:
-        logger.exception(e)
+    is_empty = (
+        r
+        .table(OperationCollections.Agent)
+        .get_all(operation_id)
+        .is_empty()
+        .run(conn)
+    )
+    if not is_empty:
+        exists = True
 
     return exists
 
 @time_it
+@catch_it(False)
 @db_create_close
 def operation_with_agentid_exists(operation_id, agent_id, conn=None):
     """Verify if the operation exists by operation id and agent id.
@@ -122,26 +115,23 @@ def operation_with_agentid_exists(operation_id, agent_id, conn=None):
         Boolean True or False
     """
     exists = False
-    try:
-        is_empty = (
-            r
-            .table(OperationCollections.OperationPerAgent)
-            .get_all(
-                [operation_id, agent_id],
-                index=OperationPerAgentIndexes.OperationIdAndAgentId
-            )
-            .is_empty()
-            .run(conn)
+    is_empty = (
+        r
+        .table(OperationCollections.OperationPerAgent)
+        .get_all(
+            [operation_id, agent_id],
+            index=OperationPerAgentIndexes.OperationIdAndAgentId
         )
-        if not is_empty:
-            exists = True
-
-    except Exception as e:
-        logger.exception(e)
+        .is_empty()
+        .run(conn)
+    )
+    if not is_empty:
+        exists = True
 
     return exists
 
 @time_it
+@catch_it({})
 @db_create_close
 def fetch_operation_with_agentid(operation_id, agent_id, conn=None):
     """Fetch the operation by operation id and agent id.
@@ -173,27 +163,23 @@ def fetch_operation_with_agentid(operation_id, agent_id, conn=None):
             "view_name": "default"
         }
     """
-    data = {}
-    try:
-        data = list(
-            r
-            .table(OperationCollections.OperationPerAgent)
-            .get_all(
-                [operation_id, agent_id],
-                index=OperationPerAgentIndexes.OperationIdAndAgentId
-            )
-            .merge(OperationPerAgentMerge.TIMES)
-            .run(conn)
+    data = list(
+        r
+        .table(OperationCollections.OperationPerAgent)
+        .get_all(
+            [operation_id, agent_id],
+            index=OperationPerAgentIndexes.OperationIdAndAgentId
         )
-        if data:
-            data = data[0]
-
-    except Exception as e:
-        logger.exception(e)
+        .merge(OperationPerAgentMerge.TIMES)
+        .run(conn)
+    )
+    if data:
+        data = data[0]
 
     return data
 
 @time_it
+@catch_it(False)
 @db_create_close
 def operation_with_agentid_and_appid_exists(
         operation_id, agent_id,
@@ -216,26 +202,23 @@ def operation_with_agentid_and_appid_exists(
         Boolean True or False
     """
     exists = False
-    try:
-        is_empty = (
-            r
-            .table(OperationCollections.OperationPerApp)
-            .get_all(
-                [operation_id, agent_id, app_id],
-                index=OperationPerAppIndexes.OperationIdAndAgentIdAndAppId
-            )
-            .is_empty()
-            .run(conn)
+    is_empty = (
+        r
+        .table(OperationCollections.OperationPerApp)
+        .get_all(
+            [operation_id, agent_id, app_id],
+            index=OperationPerAppIndexes.OperationIdAndAgentIdAndAppId
         )
-        if not is_empty:
-            exists = True
-
-    except Exception as e:
-        logger.exception(e)
+        .is_empty()
+        .run(conn)
+    )
+    if not is_empty:
+        exists = True
 
     return exists
 
 @time_it
+@catch_it((0, 0, 0))
 @db_create_close
 def group_operations_per_app_by_results(
         operation_id, agent_id, conn=None
@@ -258,40 +241,35 @@ def group_operations_per_app_by_results(
     completed_count = 0
     failed_count = 0
     data = (pending_count, completed_count, failed_count)
-    try:
-        app_stats_count = (
-            r
-            .table(OperationCollections.OperationPerApp)
-            .get_all(
-                [operation_id, agent_id],
-                index=OperationPerAppIndexes.OperationIdAndAgentId
-            )
-            .group(OperationPerAppKey.Results)
-            .count()
-            .ungroup()
-            .run(conn)
+    app_stats_count = (
+        r
+        .table(OperationCollections.OperationPerApp)
+        .get_all(
+            [operation_id, agent_id],
+            index=OperationPerAppIndexes.OperationIdAndAgentId
         )
-        for i in app_stats_count:
-            if i[CommonKeys.GROUP] == AgentOperationCodes.ResultsPending:
-                pending_count = i[CommonKeys.REDUCTION]
+        .group(OperationPerAppKey.Results)
+        .count()
+        .ungroup()
+        .run(conn)
+    )
+    for i in app_stats_count:
+        if i[CommonKeys.GROUP] == AgentOperationCodes.ResultsPending:
+            pending_count = i[CommonKeys.REDUCTION]
 
-            elif i[CommonKeys.GROUP] == AgentOperationCodes.ResultsReceived:
-                completed_count = i[CommonKeys.REDUCTION]
+        elif i[CommonKeys.GROUP] == AgentOperationCodes.ResultsReceived:
+            completed_count = i[CommonKeys.REDUCTION]
 
-            elif (
-                    i[CommonKeys.GROUP] ==
-                    AgentOperationCodes.ResultsReceivedWithErrors
-                ):
-                failed_count = i[CommonKeys.REDUCTION]
+        elif (i[CommonKeys.GROUP] ==
+              AgentOperationCodes.ResultsReceivedWithErrors):
+            failed_count = i[CommonKeys.REDUCTION]
 
-        data = (pending_count, completed_count, failed_count)
-
-    except Exception as e:
-        logger.exception(e)
+    data = (pending_count, completed_count, failed_count)
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def insert_into_agent_operations(operation_data, conn=None):
@@ -309,21 +287,17 @@ def insert_into_agent_operations(operation_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.Agent)
-            .insert(operation_data)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(OperationCollections.Agent)
+        .insert(operation_data)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def insert_agent_into_agent_operations(operation_data, conn=None):
@@ -341,21 +315,17 @@ def insert_agent_into_agent_operations(operation_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.OperationPerAgent)
-            .insert(operation_data)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(OperationCollections.OperationPerAgent)
+        .insert(operation_data)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def insert_app_into_agent_operations(operation_data, conn=None):
@@ -373,21 +343,17 @@ def insert_app_into_agent_operations(operation_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.OperationPerApp)
-            .insert(operation_data)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(OperationCollections.OperationPerApp)
+        .insert(operation_data)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_agent_operation(operation_id, operation_data, conn=None):
@@ -407,22 +373,18 @@ def update_agent_operation(operation_id, operation_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.Agent)
-            .get(operation_id)
-            .update(operation_data)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(OperationCollections.Agent)
+        .get(operation_id)
+        .update(operation_data)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_operation_per_agent(
@@ -447,25 +409,21 @@ def update_operation_per_agent(
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.OperationPerAgent)
-            .get_all(
-                [operation_id, agent_id],
-                index=OperationPerAgentIndexes.OperationIdAndAgentId
-            )
-            .update(operation_data)
-            .run(conn)
+    data = (
+        r
+        .table(OperationCollections.OperationPerAgent)
+        .get_all(
+            [operation_id, agent_id],
+            index=OperationPerAgentIndexes.OperationIdAndAgentId
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .update(operation_data)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_operation_per_app(
@@ -492,25 +450,21 @@ def update_operation_per_app(
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.OperationPerApp)
-            .get_all(
-                [operation_id, agent_id, app_id],
-                index=OperationPerAppIndexes.OperationIdAndAgentIdAndAppId
-            )
-            .update(operation_data)
-            .run(conn)
+    data = (
+        r
+        .table(OperationCollections.OperationPerApp)
+        .get_all(
+            [operation_id, agent_id, app_id],
+            index=OperationPerAppIndexes.OperationIdAndAgentIdAndAppId
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .update(operation_data)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_agent_operation_expire_time(
@@ -532,40 +486,36 @@ def update_agent_operation_expire_time(
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.Agent)
-            .get(operation_id)
-            .update(
-                {
-                    AgentOperationKey.AgentsPendingPickUpCount: (
-                        r.branch(
-                            r.row[AgentOperationKey.AgentsPendingPickUpCount] > 0,
-                            r.row[AgentOperationKey.AgentsPendingPickUpCount] - 1,
-                            r.row[AgentOperationKey.AgentsPendingPickUpCount],
-                        )
-                    ),
-                    AgentOperationKey.AgentsExpiredCount: (
-                        r.branch(
-                            r.row[AgentOperationKey.AgentsExpiredCount] < r.row[AgentOperationKey.AgentsTotalCount],
-                            r.row[AgentOperationKey.AgentsExpiredCount] + 1,
-                            r.row[AgentOperationKey.AgentsExpiredCount]
-                        )
-                    ),
-                    AgentOperationKey.UpdatedTime: db_time
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(OperationCollections.Agent)
+        .get(operation_id)
+        .update(
+            {
+                AgentOperationKey.AgentsPendingPickUpCount: (
+                    r.branch(
+                        r.row[AgentOperationKey.AgentsPendingPickUpCount] > 0,
+                        r.row[AgentOperationKey.AgentsPendingPickUpCount] - 1,
+                        r.row[AgentOperationKey.AgentsPendingPickUpCount],
+                    )
+                ),
+                AgentOperationKey.AgentsExpiredCount: (
+                    r.branch(
+                        r.row[AgentOperationKey.AgentsExpiredCount] < r.row[AgentOperationKey.AgentsTotalCount],
+                        r.row[AgentOperationKey.AgentsExpiredCount] + 1,
+                        r.row[AgentOperationKey.AgentsExpiredCount]
+                    )
+                ),
+                AgentOperationKey.UpdatedTime: db_time
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_agent_operation_pickup_time(
@@ -587,42 +537,36 @@ def update_agent_operation_pickup_time(
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.Agent)
-            .get(operation_id)
-            .update(
-                {
-                    AgentOperationKey.AgentsPendingPickUpCount: (
-                        r.branch(
-                            r.row[AgentOperationKey.AgentsPendingPickUpCount] > 0,
-                            r.row[AgentOperationKey.AgentsPendingPickUpCount] - 1,
-                            r.row[AgentOperationKey.AgentsPendingPickUpCount],
-                        )
-                    ),
-                    AgentOperationKey.AgentsPendingResultsCount: (
-                        r.branch(
-                            r.row[AgentOperationKey.AgentsPendingResultsCount] < (
-                                r.row[AgentOperationKey.AgentsTotalCount]
-                            ),
-                            r.row[AgentOperationKey.AgentsPendingResultsCount] + 1,
-                            r.row[AgentOperationKey.AgentsPendingResultsCount]
-                        )
-                    ),
-                    AgentOperationKey.UpdatedTime: db_time
-                }
-            )
-            .run(conn)
+    data = (
+         r
+         .table(OperationCollections.Agent)
+         .get(operation_id)
+         .update(
+             {
+                 AgentOperationKey.AgentsPendingPickUpCount: (
+                    r.branch(
+                        r.row[AgentOperationKey.AgentsPendingPickUpCount] > 0,
+                        r.row[AgentOperationKey.AgentsPendingPickUpCount] - 1,
+                        r.row[AgentOperationKey.AgentsPendingPickUpCount],
+                    )
+                 ),
+                 AgentOperationKey.AgentsPendingResultsCount: (
+                     r.branch(
+                         r.row[AgentOperationKey.AgentsPendingResultsCount] < r.row[AgentOperationKey.AgentsTotalCount],
+                         r.row[AgentOperationKey.AgentsPendingResultsCount] + 1,
+                         r.row[AgentOperationKey.AgentsPendingResultsCount]
+                    )
+                 ),
+                 AgentOperationKey.UpdatedTime: db_time
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_completed_and_pending_count(
@@ -644,39 +588,33 @@ def update_completed_and_pending_count(
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.Agent)
-            .get(operation_id)
-            .update(
-                {
-                    AgentOperationKey.AgentsCompletedCount: r.branch(
-                        r.row[AgentOperationKey.AgentsCompletedCount] < (
-                            r.row[AgentOperationKey.AgentsTotalCount]
-                        ),
-                        r.row[AgentOperationKey.AgentsCompletedCount] + 1,
-                        r.row[AgentOperationKey.AgentsCompletedCount]
-                    ),
-                    AgentOperationKey.AgentsPendingResultsCount: r.branch(
-                        r.row[AgentOperationKey.AgentsPendingResultsCount] > 0,
-                        r.row[AgentOperationKey.AgentsPendingResultsCount] - 1,
-                        r.row[AgentOperationKey.AgentsPendingResultsCount]
-                    ),
-                    AgentOperationKey.UpdatedTime: db_time,
-                    AgentOperationKey.CompletedTime: db_time
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(OperationCollections.Agent)
+        .get(operation_id)
+        .update(
+            {
+                AgentOperationKey.AgentsCompletedCount: r.branch(
+                    r.row[AgentOperationKey.AgentsCompletedCount] < r.row[AgentOperationKey.AgentsTotalCount],
+                    r.row[AgentOperationKey.AgentsCompletedCount] + 1,
+                    r.row[AgentOperationKey.AgentsCompletedCount]
+                ),
+                AgentOperationKey.AgentsPendingResultsCount: r.branch(
+                    r.row[AgentOperationKey.AgentsPendingResultsCount] > 0,
+                    r.row[AgentOperationKey.AgentsPendingResultsCount] - 1,
+                    r.row[AgentOperationKey.AgentsPendingResultsCount]
+                ),
+                AgentOperationKey.UpdatedTime: db_time,
+                AgentOperationKey.CompletedTime: db_time
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_failed_and_pending_count(
@@ -698,39 +636,33 @@ def update_failed_and_pending_count(
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.Agent)
-            .get(operation_id)
-            .update(
-                {
-                    AgentOperationKey.AgentsFailedCount: r.branch(
-                        r.row[AgentOperationKey.AgentsFailedCount] < (
-                            r.row[AgentOperationKey.AgentsTotalCount]
-                        ),
-                        r.row[AgentOperationKey.AgentsFailedCount] + 1,
-                        r.row[AgentOperationKey.AgentsFailedCount]
-                    ),
-                    AgentOperationKey.AgentsPendingResultsCount: r.branch(
-                        r.row[AgentOperationKey.AgentsPendingResultsCount] > 0,
-                        r.row[AgentOperationKey.AgentsPendingResultsCount] - 1,
-                        r.row[AgentOperationKey.AgentsPendingResultsCount]
-                    ),
-                    AgentOperationKey.UpdatedTime: db_time,
-                    AgentOperationKey.CompletedTime: db_time
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(OperationCollections.Agent)
+        .get(operation_id)
+        .update(
+            {
+                AgentOperationKey.AgentsFailedCount: r.branch(
+                    r.row[AgentOperationKey.AgentsFailedCount] < r.row[AgentOperationKey.AgentsTotalCount],
+                    r.row[AgentOperationKey.AgentsFailedCount] + 1,
+                    r.row[AgentOperationKey.AgentsFailedCount]
+                ),
+                AgentOperationKey.AgentsPendingResultsCount: r.branch(
+                    r.row[AgentOperationKey.AgentsPendingResultsCount] > 0,
+                    r.row[AgentOperationKey.AgentsPendingResultsCount] - 1,
+                    r.row[AgentOperationKey.AgentsPendingResultsCount]
+                ),
+                AgentOperationKey.UpdatedTime: db_time,
+                AgentOperationKey.CompletedTime: db_time
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_errors_and_pending_count(
@@ -752,34 +684,27 @@ def update_errors_and_pending_count(
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.Agent)
-            .get(operation_id)
-            .update(
-                {
-                    AgentOperationKey.AgentsCompletedWithErrorsCount: r.branch(
-                        r.row[AgentOperationKey.AgentsCompletedWithErrorsCount] < (
-                            r.row[AgentOperationKey.AgentsTotalCount]
-                        ),
-                        r.row[AgentOperationKey.AgentsCompletedWithErrorsCount] + 1,
-                        r.row[AgentOperationKey.AgentsCompletedWithErrorsCount]
-                    ),
-                    AgentOperationKey.AgentsPendingResultsCount: r.branch(
-                        r.row[AgentOperationKey.AgentsPendingResultsCount] > 0,
-                        r.row[AgentOperationKey.AgentsPendingResultsCount] - 1,
-                        r.row[AgentOperationKey.AgentsPendingResultsCount]
-                    ),
-                    AgentOperationKey.UpdatedTime: db_time,
-                    AgentOperationKey.CompletedTime: db_time
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(OperationCollections.Agent)
+        .get(operation_id)
+        .update(
+            {
+                AgentOperationKey.AgentsCompletedWithErrorsCount: r.branch(
+                    r.row[AgentOperationKey.AgentsCompletedWithErrorsCount] < r.row[AgentOperationKey.AgentsTotalCount],
+                    r.row[AgentOperationKey.AgentsCompletedWithErrorsCount] + 1,
+                    r.row[AgentOperationKey.AgentsCompletedWithErrorsCount]
+                ),
+                AgentOperationKey.AgentsPendingResultsCount: r.branch(
+                    r.row[AgentOperationKey.AgentsPendingResultsCount] > 0,
+                    r.row[AgentOperationKey.AgentsPendingResultsCount] - 1,
+                    r.row[AgentOperationKey.AgentsPendingResultsCount]
+                ),
+                AgentOperationKey.UpdatedTime: db_time,
+                AgentOperationKey.CompletedTime: db_time
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data

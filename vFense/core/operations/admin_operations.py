@@ -58,22 +58,17 @@ class AdminOperationManager(object):
             String The 36 character UUID of the operation that was created.
             6c0209d5-b350-48b7-808a-158ddacb6940
         """
-        operation_id = None
         operation.fill_in_defaults()
-        data = operation.to_dict()
-        data[AdminOperationKey.CreatedTime] = self.db_time
-        data[AdminOperationKey.CompletedTime] = (
-            DbTime.begining_of_time()
-        )
-
+        operation.created_time = self.now
+        operation.comepleted_time = 0
         status_code, _, _, generated_ids = (
-            insert_admin_operation(data)
+            insert_admin_operation(operation.to_dict_db())
         )
         if status_code == DbCodes.Inserted:
-            operation_id = generated_ids[0]
+            operation.operation_id = generated_ids[0]
 
 
-        return operation_id
+        return operation.operation_id
 
 
     def update(self, operation_id, operation):
@@ -103,9 +98,8 @@ class AdminOperationManager(object):
             6c0209d5-b350-48b7-808a-158ddacb6940
         """
         completed = False
-        data = operation.to_dict_non_null()
         status_code, _, _, generated_ids = (
-            update_admin_operation(operation_id, data)
+            update_admin_operation(operation_id, operation.to_dict_db())
         )
         if status_code == DbCodes.Replaced:
             completed = True

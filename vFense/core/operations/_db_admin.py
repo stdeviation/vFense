@@ -1,18 +1,21 @@
 import logging, logging.config
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
+from vFense.core.decorators import time_it, catch_it
 from vFense.db.client import db_create_close, r
 from vFense.core._db import (
     insert_data_in_table, update_data_in_table
 )
 
 from vFense.core.operations._db_model import (
-    OperationCollections, AdminOperationKey, AdminOperationIndexes
+    OperationCollections
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
+@time_it
+@catch_it({})
 @db_create_close
 def fetch_admin_operation(operation_id, conn=None):
     """Fetch an operation by id and all of it's information
@@ -27,20 +30,14 @@ def fetch_admin_operation(operation_id, conn=None):
     Returns:
         Dictionary
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(OperationCollections.Admin)
-            .get(operation_id)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(OperationCollections.Admin)
+        .get(operation_id)
+        .run(conn)
+    )
 
     return data
-
 
 def insert_admin_operation(data):
     results = (

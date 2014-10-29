@@ -195,6 +195,7 @@ class AdminOperation(Base):
         """
 
         return {
+            AdminOperationKey.OperationId: self.operation_id,
             AdminOperationKey.CreatedBy: self.created_by,
             AdminOperationKey.Action: self.action,
             AdminOperationKey.PerformedOn: self.performed_on,
@@ -211,6 +212,26 @@ class AdminOperation(Base):
             AdminOperationKey.IdsRemoved: self.ids_removed,
         }
 
+    def to_dict_db(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+        data = self.to_dict_non_null()
+        if self.created_time:
+            data[AdminOperationKey.CreatedTime] = (
+                DbTime.epoch_time_to_db_time(self.created_time)
+            )
+
+        if self.completed_time:
+            data[AdminOperationKey.CompletedTime] = (
+                DbTime.epoch_time_to_db_time(self.completed_time)
+            )
+
+        data.pop(AdminOperationKey.OperationId, None)
+        return data
 
 
 class AgentOperation(Base):
