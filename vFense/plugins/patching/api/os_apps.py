@@ -18,7 +18,6 @@ from vFense.core.decorators import (
 )
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
-from vFense.core.operations._constants import AgentOperations
 from vFense.core.api._constants import ApiArguments
 
 from vFense.plugins.patching import Apps, Files
@@ -36,7 +35,6 @@ from vFense.plugins.patching._db_model import AppsKey
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
 )
-from vFense.plugins.patching.patching import toggle_hidden_status
 from vFense.plugins.patching.api._constants import (
     AppApiArguments, AppFilterValues
 )

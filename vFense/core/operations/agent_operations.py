@@ -1,27 +1,28 @@
 #!/usr/bin/env python
+import logging
+import logging.config
 
-from vFense._constants import logging
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.operations import (
     AgentOperation, OperPerAgent
 )
 from vFense.core.operations._constants import OperationErrors
 from vFense.core._constants import Time
-from vFense.core.operations._db_agent import fetch_agent_operation, \
-    operation_with_agentid_exists, operation_with_agentid_and_appid_exists, \
-    insert_into_agent_operations, update_agent_operation_expire_time, \
-    update_operation_per_agent, update_agent_operation, \
-    fetch_operation_with_agentid, update_failed_and_pending_count, \
-    update_completed_and_pending_count, update_agent_operation_pickup_time, \
-    insert_agent_into_agent_operations
+from vFense.core.operations._db_agent import (
+    fetch_agent_operation, operation_with_agentid_exists,
+    operation_with_agentid_and_appid_exists, insert_into_agent_operations,
+    update_agent_operation_expire_time, update_operation_per_agent,
+    update_agent_operation, fetch_operation_with_agentid,
+    update_failed_and_pending_count, update_completed_and_pending_count,
+    update_agent_operation_pickup_time, insert_agent_into_agent_operations
+)
 
 from vFense.core.operations.status_codes import (
     AgentOperationCodes, OperationPerAgentCodes
 )
-from vFense.core.status_codes import (
-    DbCodes
-)
+from vFense.core.status_codes import DbCodes
 
-
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 

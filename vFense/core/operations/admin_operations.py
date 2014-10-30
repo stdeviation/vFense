@@ -1,22 +1,21 @@
-#!/usr/bin/env python
-
-from vFense._constants import logging
+import logging
+import logging.config
 from time import time
-from vFense.core.operations import AdminOperation
+
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.operations._db_model import (
     AdminOperationKey
 )
-from vFense.core.operations._constants import vFenseObjects, OperationErrors
 from vFense.core._db_constants import DbTime
 
 from vFense.core.operations._db_admin import (
-    fetch_admin_operation, insert_admin_operation,
-    update_admin_operation
+    fetch_admin_operation, insert_admin_operation, update_admin_operation
 )
 
-from vFense.core.status_codes import (
-    DbCodes
-)
+from vFense.core.status_codes import DbCodes
+
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
+logger = logging.getLogger('rvapi')
 
 class AdminOperationManager(object):
     """This is what creates operations for an agent or multiple agents.

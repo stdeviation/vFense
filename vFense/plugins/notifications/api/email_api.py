@@ -10,6 +10,7 @@ from vFense.utils.common import *
 from vFense.core.decorators import authenticated_request
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
+from vFense.plugins.notifications.mailer.client import MailClient
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
