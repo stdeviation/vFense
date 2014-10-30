@@ -1,18 +1,16 @@
 import os
 import sys
-import re
 import pwd
 import argparse
 import shutil
-import signal
 import subprocess
 from time import sleep
 from _magic import *
-from vFense import (
-    VFENSE_BASE_SRC_PATH, VFENSE_BASE_PATH,
+from vFense._constants import (
+    VFENSE_BASE_SRC_PATH, VFENSE_BASE_PATH, VFENSE_APP_PATH,
     VFENSE_LOG_PATH, VFENSE_LOGGING_CONFIG, VFENSE_VULN_PATH,
-    VFENSE_APP_TMP_PATH, VFENSE_SCHEDULER_PATH,
-    VFENSE_TMP_PATH, VFENSED_SYMLINK, VFENSED,
+    VFENSE_APP_TMP_PATH, VFENSE_SCHEDULER_PATH, RETHINK_CONF,
+    VFENSE_TMP_PATH, VFENSED_SYMLINK, VFENSED, VFENSE_BASE_PATH,
     VFENSE_INIT_D_SCRIPT, VFENSE_INIT_D_SYMLINK,
     VFENSE_SSL_PATH, RETHINK_VFENSE_PATH, RETHINK_PATH
 )
@@ -22,10 +20,11 @@ vfense_logger.create_config()
 
 import logging, logging.config
 
-from vFense import import_modules_by_regex
+from vFense.utils.common import import_modules_by_regex
 import nginx_config_creator as ncc
-from vFense import *
-from vFense.supported_platforms import *
+from vFense.utils.supported_platforms import (
+    REDHAT_DISTROS, DEBIAN_DISTROS, get_distro, SITE_PACKAGES
+)
 from vFense.utils.security import generate_pass, check_password
 from vFense.utils.ssl_initialize import generate_generic_certs
 from vFense.utils.common import pick_valid_ip_address

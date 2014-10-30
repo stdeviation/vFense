@@ -1,6 +1,6 @@
 import os
 from OpenSSL.crypto import TYPE_RSA, TYPE_DSA, FILETYPE_PEM
-from vFense import VFENSE_SSL_PATH
+from vFense._constants import VFENSE_SSL_PATH
 
 class SSLConstants():
     RSA = TYPE_RSA

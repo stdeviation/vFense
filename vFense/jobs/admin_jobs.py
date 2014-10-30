@@ -1,7 +1,7 @@
 from time import sleep
 import logging
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.view._constants import DefaultViews
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._db_model import JobCollections

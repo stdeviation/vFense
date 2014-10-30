@@ -2,7 +2,7 @@ import re
 import logging
 from time import time
 from vFense import Base
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._db_constants import DbTime
 
 from vFense.core._constants import (

@@ -5,7 +5,7 @@ from functools import wraps
 
 from tornado.web import HTTPError
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.results import ApiResults, ExternalApiResults
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes

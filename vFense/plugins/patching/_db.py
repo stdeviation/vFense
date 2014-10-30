@@ -1,6 +1,6 @@
 import logging
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
 from vFense.core._db import insert_data_in_table, \
     update_data_in_table

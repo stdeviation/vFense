@@ -3,8 +3,8 @@ import re
 import logging
 import urllib
 
-from vFense import VFENSE_LOGGING_CONFIG
-from vFense.supported_platforms import REDHAT_DISTROS
+from vFense._constants import VFENSE_LOGGING_CONFIG
+from vFense.utils.supported_platforms import REDHAT_DISTROS
 from vFense.core._constants import CommonKeys
 from vFense.core.agent._db import total_agents_in_view
 from vFense.core._db_constants import DbTime

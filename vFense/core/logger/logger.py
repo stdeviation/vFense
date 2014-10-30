@@ -2,7 +2,7 @@ import sys
 import os
 import struct
 import re
-from vFense import (
+from vFense._constants import (
     VFENSE_CONF_PATH, VFENSE_LOGGING_CONFIG,
     VFENSE_BASE_PATH, VFENSE_LOG_PATH
 )
@@ -10,7 +10,7 @@ from socket import socket, SOCK_DGRAM, SOCK_STREAM, AF_INET, SHUT_RDWR
 from datetime import datetime
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 import ConfigParser
 from time import sleep
 

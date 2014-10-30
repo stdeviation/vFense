@@ -2,7 +2,7 @@ import logging
 import logging.config
 from time import time
 from copy import deepcopy
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.agent import Agent
 from vFense.core.agent._db import (

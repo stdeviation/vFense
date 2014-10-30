@@ -1,7 +1,7 @@
 import re
 from vFense.core.results import ApiResults
 from vFense.core.status_codes import GenericCodes, GenericFailureCodes
-from vFense.supported_platforms import REDHAT_DISTROS
+from vFense.utils.supported_platforms import REDHAT_DISTROS
 from vFense.plugins.vuln import Vulnerability
 from vFense.plugins.vuln.ubuntu import Ubuntu
 from vFense.plugins.vuln.ubuntu.search._db import FetchUbuntuVulns

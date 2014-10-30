@@ -6,7 +6,7 @@ import uuid
 import os
 import logging
 import logging.config
-from vFense import (
+from vFense._constants import (
     VFENSE_LOGGING_CONFIG, VFENSE_TEMPLATE_PATH, VFENSE_SSL_PATH,
     VFENSE_APP_PATH, VFENSE_WWW_PATH
 )

@@ -1,7 +1,7 @@
 import json
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CPUThrottleValues
 from vFense.core.api._constants import (

@@ -2,7 +2,7 @@
 from time import time
 import logging
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.results import ApiResultKeys
 from vFense.core.agent._db import agent_exist
 from vFense.core.tag._db import tag_exist

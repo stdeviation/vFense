@@ -2,7 +2,7 @@ import logging
 
 from time import mktime
 from datetime import datetime
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.agent._db_model import *
 from vFense.db.client import r, db_connect
 

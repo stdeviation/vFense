@@ -1,7 +1,7 @@
 import os
 import socket
 import logging, logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from OpenSSL import crypto
 from vFense.utils._constants import SSLConstants
 

@@ -1,7 +1,7 @@
 import logging
 import logging.config
 from copy import deepcopy
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.operations import (
     AgentOperation, OperPerAgent, OperPerApp
 )

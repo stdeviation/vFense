@@ -2,11 +2,10 @@ import simplejson as json
 
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
 from vFense.utils.common import *
-from emailer.mailer import *
 
 from vFense.core.decorators import authenticated_request
 from vFense.core.user import UserKeys
@@ -33,7 +32,7 @@ class GetEmailConfigHandler(BaseHandler):
             'is_tls': mail.is_tls,
             'is_ssl': mail.is_ssl
             }
-     
+
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(result, indent=4))
 

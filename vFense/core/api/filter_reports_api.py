@@ -3,8 +3,11 @@ import simplejson as json
 
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
+from vFense.core.decorators import (
+    authenticated_request
+)
 from utils.common import *
 from datetime import datetime
 

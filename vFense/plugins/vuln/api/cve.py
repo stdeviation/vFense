@@ -3,7 +3,7 @@ import simplejson as json
 from vFense.core.api.base import BaseHandler
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.plugins.vuln.cve.search.search import RetrieveCVEs
 

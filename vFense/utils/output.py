@@ -3,7 +3,7 @@ import logging.config
 import re
 
 from prettytable import PrettyTable
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

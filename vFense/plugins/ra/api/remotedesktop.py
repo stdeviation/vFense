@@ -2,7 +2,10 @@ import json
 
 from vFense.core.api.base import BaseHandler
 from vFense.core.permissions._constants import *
-from vFense.core.permissions.decorators import check_permissions, authenticated_request
+from vFense.core.permissions.decorators import check_permissions
+from vFense.core.decorators import (
+    authenticated_request
+)
 
 from vFense.plugins import ra
 from vFense.plugins.ra import creator

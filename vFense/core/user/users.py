@@ -1,5 +1,5 @@
 import logging
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.user._db_model import UserKeys
 
 from vFense.core.user._db import fetch_user

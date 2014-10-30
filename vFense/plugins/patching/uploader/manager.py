@@ -2,7 +2,7 @@ from uuid import uuid4
 import logging
 import os
 import shutil
-from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
+from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.core.view.manager import ViewManager
 from vFense.core.view import ViewKeys
 from vFense.core._db_constants import DbTime

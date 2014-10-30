@@ -1,35 +1,20 @@
 import os
 import sys
 import importlib
-import inspect
 import traceback
 from vFense.receiver.api.core.newagent import NewAgentV1, NewAgentV2
 from vFense.receiver.api.core.checkin import CheckInV1, CheckInV2
 from vFense.receiver.api.core.startup import StartUpV1, StartUpV2
 from vFense.receiver.api.core.generics import ValidateToken
 from vFense.receiver.api.core.result_uris import (
-    ResultURIs, AgentResultURIs, ResultURIsV2, AgentResultURIsV2
+    ResultURIs, ResultURIsV2
 )
 from vFense.receiver.api.core.results import (
     RebootResultsV1, ShutdownResultsV1, RebootResultsV2, ShutdownResultsV2
 )
 
 from vFense.core.api.base import (
-    RootHandler, RvlLoginHandler, RvlLogoutHandler, Authentication
-)
-from vFense.core.api.user import UserHandler, UsersHandler
-from vFense.core.api.group import GroupHandler, GroupsHandler
-from vFense.core.api.view import ViewHandler, ViewsHandler
-from vFense.core.api.tag import TagHandler, TagsHandler
-from vFense.core.api.scheduler import (
-    JobHandler, JobsHandler, TimeZonesHandler
-)
-from vFense.core.api.agent import (
-    AgentHandler, AgentsHandler, AgentTagHandler,
-    FetchSupportedOperatingSystems, FetchValidEnvironments
-)
-from vFense.core.api.base import (
-    RootHandler, LoginHandler, LogoutHandler, WebSocketHandler, AdminHandler
+    RootHandler, RvlLoginHandler, RvlLogoutHandler
 )
 
 
@@ -49,28 +34,11 @@ from vFense.receiver.api.rv.refresh_apps import RefreshAppsV2
 from vFense.receiver.api.rv.agent_update import (
     AgentUpdateHandler, AgentUpdateHandlerV2
 )
-
-from vFense.core.api.email_api import CreateEmailConfigHandler, \
-    GetEmailConfigHandler
-from vFense.core.api.log_api import LoggingModifyerHandler, \
-    LoggingListerHandler
-from vFense.core.api.reports_api import (AgentsOsDetailsHandler,
-    AgentsHardwareDetailsHandler, AgentsCPUDetailsHandler,
-    AgentsMemoryDetailsHandler, AgentsDiskDetailsHandler,
-    AgentsNetworkDetailsHandler)
-
-from vFense.plugins.patching.api.os_apps import (
-    AgentIdAppsHandler, TagIdAppsHandler, AppIdAppsHandler,
-    GetAgentsByAppIdHandler, AppsHandler, UploadHandler
+from vFense.core.api.reports_api import (
+    AgentsOsDetailsHandler, AgentsHardwareDetailsHandler,
+    AgentsCPUDetailsHandler, AgentsMemoryDetailsHandler,
+    AgentsDiskDetailsHandler,AgentsNetworkDetailsHandler
 )
-from vFense.plugins.patching.api.stats_api import (AgentSeverityHandler,
-    AgentOsAppsOverTimeHandler, TagSeverityHandler, TagOsAppsOverTimeHandler,
-    TagStatsByOsHandler)
-
-from vFense.core.api.agent_operations import (
-    AgentOperationsHandler, TagOperationsHandler
-)
-
 
 class CoreLoader():
 
@@ -138,33 +106,6 @@ class CoreLoader():
     def get_core_web_api_handlers(self):
         handlers = [
 
-            (r"/?", RootHandler),
-            (r"/login/?", LoginHandler),
-            (r"/logout/?", LogoutHandler),
-            #(r"/ws/?", WebSocketHandler),
-            (r"/adminForm", AdminHandler),
-            (r"/api/v1/authenticated?", Authentication),
-
-            ##### New User API
-            (r"/api/v1/user/([a-zA-Z0-9_ ]+)?", UserHandler),
-            (r"/api/v1/users?", UsersHandler),
-
-            ##### New Group API
-            (r"/api/v1/group/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", GroupHandler),
-            (r"/api/v1/groups?", GroupsHandler),
-
-            ##### New View API
-            (r'/api/v1/view/((?:\w(?!%20+")|%20(?!%20*")){1,36})?', ViewHandler),
-            (r"/api/v1/views?", ViewsHandler),
-
-            ##### Email API Handlers
-            (r"/api/email/config/create?", CreateEmailConfigHandler),
-            (r"/api/email/config/list?", GetEmailConfigHandler),
-
-            ##### Logger API Handlers
-            (r"/api/logger/modifyLogging?", LoggingModifyerHandler),
-            (r"/api/logger/getParams?", LoggingListerHandler),
-
             ##### Reports Api
             (r"/api/v1/reports/osdetails?", AgentsOsDetailsHandler),
             (r"/api/v1/reports/hardwaredetails?",AgentsHardwareDetailsHandler),
@@ -172,52 +113,6 @@ class CoreLoader():
             (r"/api/v1/reports/memorydetails?",AgentsMemoryDetailsHandler),
             (r"/api/v1/reports/diskdetails?",AgentsDiskDetailsHandler),
             (r"/api/v1/reports/networkdetails?",AgentsNetworkDetailsHandler),
-
-            ##### Scheduler API Handlers
-            (r"/api/v1/schedules?", JobsHandler),
-            (r"/api/v1/schedule/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", JobHandler),
-            #(r"/api/v1/schedules/recurrent/none?", SchedulerDateBasedJobHandler),
-            #(r"/api/v1/schedules/recurrent/daily?", SchedulerDailyRecurrentJobHandler),
-            #(r"/api/v1/schedules/recurrent/monthly?", SchedulerMonthlyRecurrentJobHandler),
-            #(r"/api/v1/schedules/recurrent/yearly?", SchedulerYearlyRecurrentJobHandler),
-            #(r"/api/v1/schedules/recurrent/weekly?", SchedulerWeeklyRecurrentJobHandler),
-            #(r"/api/v1/schedules/recurrent/custom?", SchedulerCustomRecurrentJobHandler),
-
-            ##### Agent API Handlers
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", AgentHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/bar/severity?",AgentSeverityHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/column/range/apps/os?", AgentOsAppsOverTimeHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/tag?", AgentTagHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/(os|agentupdates|custom|supported)?", AgentIdAppsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/operations?", AgentOperationsHandler),
-            (r"/api/v1/agent/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/uris/response?", AgentResultURIs),
-
-            ##### Agents API Handlers
-            (r"/api/v1/agents", AgentsHandler),
-
-            ##### Tag API Handlers
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", TagHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/bar/severity?",TagSeverityHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/column/range/apps/os?", TagOsAppsOverTimeHandler),
-            #(r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/graphs/linear/severity?",TagPackageSeverityOverTimeHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/apps/(os|agentupdates|supported|custom)?", TagIdAppsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/operations?", TagOperationsHandler),
-            (r"/api/v1/tag/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/stats_by_os?", TagStatsByOsHandler),
-
-            ##### Tags API Handlers
-            (r"/api/v1/tags", TagsHandler),
-
-            ##### Generic API Handlers
-            (r"/api/v1/supported/operating_systems?", FetchSupportedOperatingSystems),
-            (r"/api/v1/supported/environments?", FetchValidEnvironments),
-            (r"/api/v1/supported/timezones?", TimeZonesHandler),
-            #(r"/api/package/getDependecies?", GetDependenciesHandler),
-
-            ##### Apps API Handlers
-            (r"/api/v1/app/(os|supported|agentupdates|)/([0-9A-Za-z]{64})?", AppIdAppsHandler),
-            (r"/api/v1/app/(os|supported|agentupdates)/([0-9A-Za-z]{64})/agents?", GetAgentsByAppIdHandler),
-            (r"/api/v1/apps/(os|supported|agentupdates)", AppsHandler),
-            (r"/api/v1/apps/upload?", UploadHandler),
 
         ]
 

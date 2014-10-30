@@ -3,7 +3,7 @@ import logging
 import redis
 from rq import Connection, Queue
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.agent._db import fetch_agent
 from vFense.plugins.patching.apps.manager import (
    incoming_applications_from_agent

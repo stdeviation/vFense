@@ -1,7 +1,7 @@
 import logging
 from json import dumps
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.agent.manager import AgentManager
 from vFense.core.results import ApiResultKeys, Results
 from vFense.core.api.base import BaseHandler

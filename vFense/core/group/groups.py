@@ -1,5 +1,5 @@
 import logging, logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.group._db_model import GroupKeys
 from vFense.core.group._db import fetch_group
 

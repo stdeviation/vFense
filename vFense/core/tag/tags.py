@@ -1,5 +1,5 @@
 import logging
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.tag._db import fetch_tag
 from vFense.core.tag._db_model import TagKeys
 

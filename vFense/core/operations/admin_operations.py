@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from vFense import logging
+from vFense._constants import logging
 from time import time
 from vFense.core.operations import AdminOperation
 from vFense.core.operations._db_model import (

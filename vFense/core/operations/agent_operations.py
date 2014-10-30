@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from vFense import logging
+from vFense._constants import logging
 from vFense.core.operations import (
     AgentOperation, OperPerAgent
 )

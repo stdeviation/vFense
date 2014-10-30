@@ -1,7 +1,7 @@
 import logging
 from json import dumps
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.receiver.api.decorators import (
     authenticate_agent, agent_results_message
 )

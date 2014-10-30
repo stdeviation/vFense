@@ -1,12 +1,12 @@
 import os
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from  functools import wraps
 import ConfigParser
 import types
 
-from vFense import VFENSE_LOGGING_CONFIG, VFENSE_DB_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_DB_CONFIG
 
 import rethinkdb as r
 import redis

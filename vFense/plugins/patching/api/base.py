@@ -2,7 +2,7 @@ import logging
 import logging.config
 import simplejson as json
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import results_message, catch_it
 from vFense.core.api._constants import (

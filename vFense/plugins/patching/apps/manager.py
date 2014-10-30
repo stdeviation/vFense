@@ -2,7 +2,7 @@ import os
 import logging
 from time import time
 
-from vFense import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
+from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.core.agent._db import(
     fetch_agent_ids_in_views
 )

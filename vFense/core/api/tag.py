@@ -2,7 +2,7 @@ import simplejson as json
 
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.view._constants import DefaultViews
 from vFense.core.permissions._constants import Permissions
@@ -327,7 +327,7 @@ class TagHandler(BaseHandler):
         results = operation.new_token(agents, token=token)
         return results
 
-    @check_it
+    @catch_it
     @convert_json_to_arguments
     @authenticated_request
     def put(self, tag_id):

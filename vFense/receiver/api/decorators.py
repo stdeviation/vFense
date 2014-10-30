@@ -4,7 +4,7 @@ import json
 from functools import wraps
 
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.results import ApiResultKeys
 from vFense.receiver.results import (
     AgentResults

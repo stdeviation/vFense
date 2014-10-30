@@ -1,6 +1,6 @@
 import logging, logging.config
 import smtplib
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.plugins.notifications.emailer.manager import (
     MailManager
 )
