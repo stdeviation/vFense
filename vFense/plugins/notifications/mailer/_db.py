@@ -3,10 +3,10 @@ import logging
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.plugins.notifications._db_model import (
-    NotificationPluginKeys, NotificationPluginIndexes,
-    NotificationCollections
+from vFense.plugins.notifications.mailer._db_model import (
+    NotificationPluginKeys, NotificationPluginIndexes
 )
+from vFense.plugins.notifications._db_model import NotificationCollections
 from vFense.core.decorators import return_status_tuple, time_it
 
 from vFense.core._db import (

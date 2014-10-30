@@ -1,9 +1,7 @@
 import logging, logging.config
 import smtplib
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.plugins.notifications.emailer.manager import (
-    MailManager
-)
+from vFense.plugins.notifications.mailer.manager import MailManager
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
