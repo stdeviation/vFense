@@ -6,6 +6,8 @@ class AgentQueueKey():
     Id = 'id'
     AgentId = 'agent_id'
     OrderId = 'order_id'
+    OperationId = 'operation_id'
+    Plugin = 'plugin'
     CreatedTime = 'created_time'
     ServerQueueTTL = 'server_queue_ttl'
     AgentQueueTTL = 'agent_queue_ttl'

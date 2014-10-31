@@ -18,9 +18,9 @@ from vFense.core.operations._db_model import (
 class AgentQueue(Base):
     """Used to represent an instance of an AgentQueue."""
 
-    def __init__(self, id=None, agent_id=None, view_name=None,
+    def __init__(self, id=None, agent_id=None, view_name=None, plugin=None,
                  request_method=None, response_uri=None, order_id=None,
-                 created_time=None, expire_minutes=None,
+                 created_time=None, expire_minutes=None, operation_id=None,
                  server_queue_ttl=None, agent_queue_ttl=None, operation=None,
                  **kwargs
                  ):
@@ -40,7 +40,9 @@ class AgentQueue(Base):
                 is considered expired on the server.
             agent_queue_ttl (float): The time in epoch, when this operation
                 is considered expired on the agent.
-            operation (dict): The dictionary version of the operation.
+            operation (str): The operation type
+            operation_id  (str): The 36 Character UUID of the operation.
+            plugin (str): The name of the plugin this operation belongs too.
         """
         super(AgentQueue, self).__init__(**kwargs)
         self.id = id
@@ -54,6 +56,8 @@ class AgentQueue(Base):
         self.server_queue_ttl = server_queue_ttl
         self.agent_queue_ttl = agent_queue_ttl
         self.operation = operation
+        self.operation_id = operation_id
+        self.plugin = plugin
 
 
     def get_invalid_fields(self):
@@ -174,6 +178,7 @@ class AgentQueue(Base):
         return {
             AgentQueueKey.AgentId: self.agent_id,
             AgentQueueKey.OrderId: self.order_id,
+            AgentQueueKey.OperationId: self.operation_id,
             AgentQueueKey.CreatedTime: self.created_time,
             AgentQueueKey.ServerQueueTTL: self.server_queue_ttl,
             AgentQueueKey.AgentQueueTTL: self.agent_queue_ttl,
@@ -181,6 +186,7 @@ class AgentQueue(Base):
             AgentQueueKey.Expired: self.expired,
             AgentQueueKey.ViewName: self.view_name,
             AgentQueueKey.Operation: self.operation,
+            AgentQueueKey.Plugin: self.plugin,
             AgentQueueKey.RequestMethod: self.request_method,
             AgentQueueKey.ResponseURI: self.response_uri,
         }

@@ -96,7 +96,7 @@ class AgentQueueManager(object):
                 operation.operation
             )
         )
-        agent_queue = AgentQueue()
+        agent_queue = AgentQueue(**operation.to_dict_non_null())
         agent_queue.agent_id = self.agent_id
         agent_queue.view_name = view_name
         agent_queue.request_method = request_method
@@ -106,7 +106,6 @@ class AgentQueueManager(object):
         agent_queue.expire_minutes = expire_mins
         agent_queue.server_queue_ttl = server_queue_ttl
         agent_queue.agent_queue_ttl = agent_process_time
-        agent_queue.operation = operation.to_dict()
         status_code, count, error, generated_ids = (
             insert_into_agent_queue(agent_queue.to_dict_db())
         )
@@ -264,10 +263,10 @@ class AgentQueueManager(object):
 
         job_ids = []
         agent_queue = fetch_agent_queue(self.agent_id)
-
         if agent_queue:
-            for job_id in agent_queue:
-                job_ids.append(job_id[AgentQueueKey.Id])
+            for operation in agent_queue:
+                operation = AgentQueue(**operation)
+                job_ids.append(operation.id)
 
             delete_multiple_jobs(job_ids)
 

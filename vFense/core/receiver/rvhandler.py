@@ -1,7 +1,7 @@
 import logging
 
 import redis
-from rq import Connection, Queue
+from rq import Queue
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.agent._db import fetch_agent
@@ -25,7 +25,7 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-class RvHandOff():
+class ListenerHandOff():
 
     def __init__(self, delete_afterwards=True):
 
