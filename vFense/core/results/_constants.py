@@ -23,6 +23,7 @@ class ApiResultKeys():
     INVALID_DATA = 'invalid_data'
     USERNAME_IDS = 'user_name'
     NEW_TOKEN_ID = 'new_token_id'
+    TOKEN = 'token'
     AGENT_ID = 'agent_id'
 
 
