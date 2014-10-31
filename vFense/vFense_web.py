@@ -1,25 +1,25 @@
 """
-Main launching point of the Top Patch Server
+Main launching point of the vFense Server
 """
+import os
 import base64
 import uuid
-import os
 import logging
 import logging.config
+
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.options
+from tornado.options import define, options
 
 from vFense.core.scheduler.manager import start_scheduler
-from vFense.utils.common import import_modules_by_regex
+from vFense.utils.common import import_modules_by_regex, get_api_uris
 from vFense._constants import (
     VFENSE_LOGGING_CONFIG, VFENSE_TEMPLATE_PATH, VFENSE_SSL_PATH,
     VFENSE_APP_PATH, VFENSE_WWW_PATH
 )
-from vFense.utils.common import get_api_uris
 
-from tornado.options import define, options
 
 define("port", default=9000, help="run on port", type=int)
 define("debug", default=True, help="enable debugging features", type=bool)
