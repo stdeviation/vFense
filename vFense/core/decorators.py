@@ -220,32 +220,38 @@ def time_it(fn):
 
     return wraps(fn)(db_wrapper)
 
-def db_update_catch_it(fn):
-    """wrap non external calls in a try catch exception"""
-    def db_wrapper(*args, **kwargs):
-        try:
-            data = fn(*args, **kwargs)
-        except Exception as e:
-            data = {}
-            results = ApiResults()
-            results.fill_in_defaults()
-            results.generic_status_code = GenericCodes.SomethingBroke
-            results.vfense_status_code = GenericCodes.SomethingBroke
-            results.http_status_code = 500
-            results.errors.append(e)
-            results.message = (
-                'Something broke while calling {0}: {1}'
-                .format(fn.__name__, e)
-            )
-            logger.exception(results.to_dict_non_null())
+def catch_it(return_value):
+    """wrap non external calls in a try catch exception
+    Args:
+        return_value (ANYTHING): This is the value you want to return,
+            if an exception is caught by this decorator.
+    """
+    def wrapper(fn):
+        def wrapped(*args, **kwargs):
+            try:
+                data = fn(*args, **kwargs)
+            except Exception as e:
+                data = return_value
+                results = ApiResults()
+                results.fill_in_defaults()
+                results.generic_status_code = GenericCodes.SomethingBroke
+                results.vfense_status_code = GenericCodes.SomethingBroke
+                results.http_status_code = 500
+                results.errors.append(e)
+                results.message = (
+                    'Something broke while calling {0}: {1}'
+                    .format(fn.__name__, e)
+                )
+                logger.exception(results.to_dict_non_null())
 
-        return data
+            return data
+        return wraps(fn)(wrapped)
 
-    return wraps(fn)(db_wrapper)
+    return wrapper
 
 def api_catch_it(fn):
     """wrap all external api calls in a try catch exception"""
-    def db_wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs):
         tornado_handler = args[0]
         try:
             results = fn(*args, **kwargs)
@@ -270,11 +276,11 @@ def api_catch_it(fn):
 
         return results
 
-    return wraps(fn)(db_wrapper)
+    return wraps(fn)(wrapper)
 
 def receiver_catch_it(fn):
     """wrap all receiver calls in a try catch exception"""
-    def db_wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs):
         tornado_handler = args[0]
         try:
             results = fn(*args, **kwargs)
@@ -301,7 +307,7 @@ def receiver_catch_it(fn):
 
         return results
 
-    return wraps(fn)(db_wrapper)
+    return wraps(fn)(wrapper)
 
 def authenticated_request(method):
     """ Decorator that handles authenticating the request. Uses secure cookies.
