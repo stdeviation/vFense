@@ -10,9 +10,9 @@ from vFense.plugins.patching.apps.supported_apps.syncer import (
     get_all_supported_apps_for_agent
 )
 
-class ApplicationHandoff(Handoff):
+class PatcherHandoff(Handoff):
     def __init__(self, apps_data=None, **kwargs):
-        super(ApplicationHandoff, self).__init__(**kwargs)
+        super(PatcherHandoff, self).__init__(**kwargs)
         self.rv_q = rq_queue('incoming_updates')
         self.apps_data = apps_data
 

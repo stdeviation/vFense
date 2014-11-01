@@ -20,7 +20,7 @@ from vFense.core.operations._constants import vFenseObjects
 
 from vFense.core.decorators import (
     convert_json_to_arguments, authenticated_request, results_message,
-    catch_it
+    api_catch_it
 )
 
 from vFense.core.user.manager import UserManager
@@ -40,7 +40,7 @@ logger = logging.getLogger('rvapi')
 
 
 class GroupHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self, group_id):
         active_user = self.get_current_user()
@@ -60,7 +60,7 @@ class GroupHandler(BaseHandler):
             results.data = results.data[0]
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def post(self, group_id):
@@ -159,7 +159,7 @@ class GroupHandler(BaseHandler):
         results = group.remove_permissions(permissions)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def delete(self, group_id):
@@ -180,7 +180,7 @@ class GroupHandler(BaseHandler):
 
 
 class GroupsHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user()
@@ -275,7 +275,7 @@ class GroupsHandler(BaseHandler):
         results = fetch_groups.by_id(group_id)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def post(self):
@@ -323,7 +323,7 @@ class GroupsHandler(BaseHandler):
         results = manager.create(group)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def delete(self):

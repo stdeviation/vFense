@@ -28,7 +28,7 @@ from vFense.core.api._constants  import (
 )
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message,
-    catch_it
+    api_catch_it
 )
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
@@ -45,7 +45,7 @@ logger = logging.getLogger('rvapi')
 
 
 class TagsHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user()
@@ -116,7 +116,7 @@ class TagsHandler(BaseHandler):
         )
         return results
 
-    @catch_it
+    @api_catch_it
     @convert_json_to_arguments
     @authenticated_request
     def post(self):
@@ -150,7 +150,7 @@ class TagsHandler(BaseHandler):
         results = manager.create(tag)
         return results
 
-    @catch_it
+    @api_catch_it
     @convert_json_to_arguments
     @authenticated_request
     def delete(self):
@@ -226,7 +226,7 @@ class TagsHandler(BaseHandler):
         return end_results
 
 class TagHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self, tag_id):
         active_user = self.get_current_user()
@@ -246,7 +246,7 @@ class TagHandler(BaseHandler):
         return results
 
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def post(self, tag_id):
@@ -327,7 +327,7 @@ class TagHandler(BaseHandler):
         results = operation.new_token(agents, token=token)
         return results
 
-    @catch_it
+    @api_catch_it
     @convert_json_to_arguments
     @authenticated_request
     def put(self, tag_id):
@@ -385,7 +385,7 @@ class TagHandler(BaseHandler):
         results = manager.edit_environment(environment)
         return results
 
-    @catch_it
+    @api_catch_it
     @convert_json_to_arguments
     @authenticated_request
     def delete(self, tag_id):

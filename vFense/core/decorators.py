@@ -6,7 +6,9 @@ from functools import wraps
 from tornado.web import HTTPError
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core.results import ApiResults, ExternalApiResults
+from vFense.core.results import (
+    ApiResults, ExternalApiResults, AgentApiResults
+)
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes
 )
@@ -218,7 +220,30 @@ def time_it(fn):
 
     return wraps(fn)(db_wrapper)
 
-def catch_it(fn):
+def db_update_catch_it(fn):
+    """wrap non external calls in a try catch exception"""
+    def db_wrapper(*args, **kwargs):
+        try:
+            data = fn(*args, **kwargs)
+        except Exception as e:
+            data = {}
+            results = ApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GenericCodes.SomethingBroke
+            results.vfense_status_code = GenericCodes.SomethingBroke
+            results.http_status_code = 500
+            results.errors.append(e)
+            results.message = (
+                'Something broke while calling {0}: {1}'
+                .format(fn.__name__, e)
+            )
+            logger.exception(results.to_dict_non_null())
+
+        return data
+
+    return wraps(fn)(db_wrapper)
+
+def api_catch_it(fn):
     """wrap all external api calls in a try catch exception"""
     def db_wrapper(*args, **kwargs):
         tornado_handler = args[0]
@@ -229,12 +254,15 @@ def catch_it(fn):
             results.fill_in_defaults()
             results.generic_status_code = GenericCodes.SomethingBroke
             results.vfense_status_code = GenericCodes.SomethingBroke
-            results.message = 'Something broke: {0}'.format(e)
             results.uri = tornado_handler.request.uri
             results.http_method = tornado_handler.request.method
             results.username = tornado_handler.get_current_user()
             results.http_status_code = 500
             results.errors.append(e)
+            results.message = (
+                'Something broke while calling {0}: {1}'
+                .format(fn.__name__, e)
+            )
             logger.exception(results.to_dict_non_null())
             tornado_handler.set_status(results.http_status_code)
             tornado_handler.set_header('Content-Type', 'application/json')
@@ -244,9 +272,36 @@ def catch_it(fn):
 
     return wraps(fn)(db_wrapper)
 
+def receiver_catch_it(fn):
+    """wrap all receiver calls in a try catch exception"""
+    def db_wrapper(*args, **kwargs):
+        tornado_handler = args[0]
+        try:
+            results = fn(*args, **kwargs)
+        except Exception as e:
+            results = AgentApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GenericCodes.SomethingBroke
+            results.vfense_status_code = GenericCodes.SomethingBroke
+            results.message = (
+                'Something broke while calling {0}: {1}'
+                .format(fn.__name__, e)
+            )
+            results.uri = tornado_handler.request.uri
+            results.http_method = tornado_handler.request.method
+            results.username = tornado_handler.get_current_user()
+            results.http_status_code = 500
+            results.agent_id = tornado_handler.get_agent_id()
+            results.token = tornado_handler.get_token()
+            results.errors.append(e)
+            logger.exception(results.to_dict_non_null())
+            tornado_handler.set_status(results.http_status_code)
+            tornado_handler.set_header('Content-Type', 'application/json')
+            tornado_handler.write(json.dumps(results.to_dict_non_null(), indent=4))
 
+        return results
 
-
+    return wraps(fn)(db_wrapper)
 
 def authenticated_request(method):
     """ Decorator that handles authenticating the request. Uses secure cookies.

@@ -6,7 +6,7 @@ from vFense.core.api.base import BaseHandler
 from vFense.core.api._constants import ApiArguments
 from vFense.core.status_codes import GenericCodes
 from vFense.core.decorators import (
-    authenticated_request, catch_it, results_message
+    authenticated_request, api_catch_it, results_message
 )
 
 from vFense.core.permissions._constants import Permissions
@@ -18,7 +18,7 @@ logger = logging.getLogger('rvapi')
 
 
 class RetrieveValidPermissionsHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')

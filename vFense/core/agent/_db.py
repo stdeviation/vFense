@@ -492,10 +492,8 @@ def agent_exist(agent_id, conn=None):
 
     return exist
 
-
 @time_it
 @db_create_close
-@return_status_tuple
 def fetch_all_agents_for_view(view_name, conn=None):
     """Retrieve all agents for a view.
     Args:
@@ -545,7 +543,6 @@ def update_agent(agent_id, agent_data):
             agent_id, agent_data, AgentCollections.Agents
         )
     )
-
     return data
 
 @time_it
@@ -572,7 +569,6 @@ def insert_agent(agent_data):
 
     return data
 
-
 @time_it
 def delete_agent(agent_id):
     """ Delete an agent and its properties from the database
@@ -595,7 +591,6 @@ def delete_agent(agent_id):
         )
     )
     return data
-
 
 @time_it
 @db_create_close
@@ -707,7 +702,6 @@ def remove_all_agents_from_view(view_name, agent_ids=None, conn=None):
 
     return data
 
-
 @time_it
 @db_create_close
 @return_status_tuple
@@ -796,6 +790,7 @@ def delete_hardware_for_agent(agent_id, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
+    data = {}
     try:
         data = (
             r
@@ -807,7 +802,6 @@ def delete_hardware_for_agent(agent_id, conn=None):
 
     except Exception as e:
         logger.exception(e)
-
 
     return data
 
@@ -829,6 +823,7 @@ def delete_hardware_for_agents(agent_ids, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
+    data = {}
     try:
         data = (
             r
@@ -845,7 +840,6 @@ def delete_hardware_for_agents(agent_ids, conn=None):
 
     except Exception as e:
         logger.exception(e)
-
 
     return data
 

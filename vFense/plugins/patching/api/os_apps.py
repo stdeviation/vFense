@@ -14,7 +14,7 @@ from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message,
-    catch_it
+    api_catch_it
 )
 from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
@@ -49,7 +49,7 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class UploadHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
@@ -66,7 +66,7 @@ class UploadHandler(BaseHandler):
         results = move_app_from_tmp(file_name, tmp_path, uuid)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -118,7 +118,7 @@ class UploadHandler(BaseHandler):
 
 
 class AgentIdAppsHandler(AppsBaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self, agent_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
@@ -162,7 +162,7 @@ class AgentIdAppsHandler(AppsBaseHandler):
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.UNINSTALL)
@@ -197,7 +197,7 @@ class AgentIdAppsHandler(AppsBaseHandler):
 
 
 class TagIdAppsHandler(AppsBaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self, tag_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
@@ -208,7 +208,7 @@ class TagIdAppsHandler(AppsBaseHandler):
         self.set_status(results.http_status_code)
         self.modified_output(results, self.output, 'apps')
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def put(self, tag_id, oper_type):
@@ -242,7 +242,7 @@ class TagIdAppsHandler(AppsBaseHandler):
         self.write(json.dumps(results.to_dict_non_null(), indent=4))
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def delete(self, tag_id, oper_type):
@@ -276,7 +276,7 @@ class TagIdAppsHandler(AppsBaseHandler):
 
 
 class AppIdAppsHandler(AppsBaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
@@ -294,7 +294,7 @@ class AppIdAppsHandler(AppsBaseHandler):
         results = search.by_id(app_id)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)

@@ -8,16 +8,12 @@ from vFense.core.decorators import (
     agent_authenticated_request, convert_json_to_arguments
 )
 
-from vFense.core.results import Results, ApiResultKeys
+from vFense.core.results import ApiResults, ExternalApiResults
 
-from vFense.receiver.rvhandler import RvHandOff
-from vFense.receiver.api.base import AgentBaseHandler
-from vFense.receiver.results import AgentResults, AgentApiResultKeys
-from vFense.receiver.api.decorators import (
-    authenticate_agent
-)
-
-from vFense.core.operations._constants import AgentOperations
+from vFense.plugins.patching.receiver.handler import PatcherHandOff
+from vFense.core.receiver.api.base import AgentBaseHandler
+from vFense.core.receiver.results import AgentResults, AgentApiResultKeys
+from vFense.core.receiver.decorators import authenticate_agent
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
@@ -28,12 +24,11 @@ class AgentUpdateHandler(BaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id):
         active_user = self.get_current_user()
-
         try:
             app_data = self.arguments.get('data')
-
-            RvHandOff(
-            ).available_agent_update_operation(agent_id, app_data)
+            PatcherHandOff(
+                agent_id, app_data
+            ).available_agent_update_operation()
             data = {
                 ApiResultKeys.MESSAGE: (
                     'Received application updates for agent {0}'
@@ -75,8 +70,9 @@ class AgentUpdateHandlerV2(AgentBaseHandler):
 
         try:
             app_data = self.arguments.get('data')
-            RvHandOff(
-            ).available_agent_update_operation(agent_id, app_data)
+            PatcherHandOff(
+                agent_id=agent_id, app_data=app_data
+            ).available_agent_update_operation()
 
             data = {
                 AgentApiResultKeys.MESSAGE: (

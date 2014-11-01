@@ -39,7 +39,7 @@ from vFense.core.agent.agents import (
 
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message,
-    catch_it
+    api_catch_it
 )
 from vFense.core.agent.status_codes import AgentCodes, AgentFailureCodes
 from vFense.core.view.status_codes import ViewCodes
@@ -49,7 +49,7 @@ logger = logging.getLogger('rvapi')
 
 
 class AgentResultURIs(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self, agent_id):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
@@ -66,7 +66,7 @@ class AgentResultURIs(BaseHandler):
 
 
 class FetchValidEnvironments(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user().encode('utf-8')
@@ -93,7 +93,7 @@ class FetchValidEnvironments(BaseHandler):
 
 
 class FetchSupportedOperatingSystems(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user().encode('utf-8')
@@ -140,7 +140,7 @@ class FetchSupportedOperatingSystems(BaseHandler):
 
 
 class AgentsHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user()
@@ -249,7 +249,7 @@ class AgentsHandler(BaseHandler):
         results = search.by_mac_and_filter(mac, key, val)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def put(self):
@@ -432,7 +432,7 @@ class AgentsHandler(BaseHandler):
 
         return end_results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def delete(self):
@@ -516,7 +516,7 @@ class AgentsHandler(BaseHandler):
 
 
 class AgentHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @check_permissions(Permissions.READ)
     def get(self, agent_id):
@@ -539,7 +539,7 @@ class AgentHandler(BaseHandler):
             results.data = results.data.pop()
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def put(self, agent_id):
@@ -606,7 +606,7 @@ class AgentHandler(BaseHandler):
         results = manager.remove_from_views(views)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def delete(self, agent_id):
         active_user = self.get_current_user()
@@ -629,7 +629,7 @@ class AgentHandler(BaseHandler):
         results = manager.remove()
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     def post(self, agent_id):
@@ -713,7 +713,7 @@ class AgentHandler(BaseHandler):
 
 
 class AgentTagHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @check_permissions(Permissions.READ)
     def get(self, agent_id):
@@ -741,7 +741,7 @@ class AgentTagHandler(BaseHandler):
         results = search.by_name(name)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def put(self, agent_id):
         active_user = self.get_current_user()

@@ -14,7 +14,7 @@ from vFense.core.operations._db_model import (
 from vFense.core.operations.agent_operations import get_agent_operation
 from vFense.core.operations.search.agent_search import AgentOperationRetriever
 from vFense.core.decorators import (
-    authenticated_request, results_message, catch_it
+    authenticated_request, results_message, api_catch_it
 )
 from vFense.core.results import (
     ExternalApiResults
@@ -28,7 +28,7 @@ logger = logging.getLogger('rvapi')
 
 
 class GetTransactionsHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self):
         active_user = self.get_current_user()
@@ -84,7 +84,7 @@ class GetTransactionsHandler(BaseHandler):
         return results
 
 class AgentOperationsHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self, agent_id):
         active_user = self.get_current_user()
@@ -129,7 +129,7 @@ class AgentOperationsHandler(BaseHandler):
 
 
 class TagOperationsHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self, tag_id):
         active_user = self.get_current_user()
@@ -172,7 +172,7 @@ class TagOperationsHandler(BaseHandler):
         return results
 
 class OperationHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     def get(self, operation_id):
         active_user = self.get_current_user()

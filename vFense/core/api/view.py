@@ -10,7 +10,7 @@ from vFense.core.api._constants import (
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message,
-    catch_it
+    api_catch_it
 )
 
 from vFense.core.permissions._constants import Permissions
@@ -40,7 +40,7 @@ logger = logging.getLogger('rvapi')
 
 
 class ViewHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
     def get(self, view_name):
@@ -65,7 +65,7 @@ class ViewHandler(BaseHandler):
             results.data = results.data[0]
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -124,7 +124,7 @@ class ViewHandler(BaseHandler):
         results = view.remove_groups(group_ids)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -223,7 +223,7 @@ class ViewHandler(BaseHandler):
         results = view.update_token()
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -252,7 +252,7 @@ class ViewHandler(BaseHandler):
 
 
 class ViewsHandler(BaseHandler):
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
     def get(self):
@@ -332,7 +332,7 @@ class ViewsHandler(BaseHandler):
         results = fetch_views.by_name(view_name)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
@@ -379,7 +379,7 @@ class ViewsHandler(BaseHandler):
         results = manager.create(view)
         return results
 
-    @catch_it
+    @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
