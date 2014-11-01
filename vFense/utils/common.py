@@ -471,6 +471,25 @@ def get_api_uris(receiver=False):
                         handlers = handlers + mod.api_handlers()
     return handlers
 
+def get_rqworkers():
+    """Return a list of workers.
+    Returns:
+        list of tuples [(directory, settings_file)]
+    """
+    workers = []
+    for root, dirs, files in os.walk(VFENSE_BASE_PATH):
+        for dirname in fnmatch.filter(dirs, 'rqworkers'):
+            dir_path = os.path.join(root, dirname)
+            for settings_file in os.listdir(dir_path):
+                if (
+                    settings_file.endswith('.py')
+                    and settings_file != '__init__.py'
+                    and not settings_file.startswith('_')
+                ):
+                    workers.append((dir_path, settings_file))
+
+    return workers
+
 def get_all_classes_in_dirs_by_regex(regex, receiver=False):
     """Return all vFense classes in a directory by the name of the directory.
     Args:

@@ -11,6 +11,7 @@ from vFense._constants import (
     VFENSE_LOGGING_CONFIG, VFENSE_TMP_PATH, VFENSE_BASE_PATH,
     VFENSE_LOG_PATH, VFENSE_BASE_SRC_PATH
 )
+from vFense.utils.common import get_rqworkers
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -19,52 +20,45 @@ PID_DIR = VFENSE_TMP_PATH
 PIDS = []
 SERVICES = []
 ALLSERVICES = []
-RVLSERVICES = []
-RVWSERVICES = []
+LISTENERSERVICES = []
+APISERVICES = []
 
 #################################################################
 RQWORKER = '/usr/local/bin/rqworker'
-RQ_WORKER_QUEUES = (
-    [
-        'incoming_updates', 'downloader', 'stats', 'updater',
-        'post_store_operation', 'agent_status',
-        'create_secondary_indexes', 'delete_agent', 'move_agent'
-    ]
-)
+RQ_WORKER_QUEUES = get_rqworkers()
 RQ_PID_FILES = []
 
 for queue in RQ_WORKER_QUEUES:
-    pid_file = os.path.join(PID_DIR, 'RQW_PID_%s.pid' % (queue))
+    queue_name = re.sub(r'_settings.py', '', queue[1])
+    pid_file = os.path.join(PID_DIR, 'rqw_pid_%s.pid' % (queue_name))
     PIDS.append((pid_file, queue))
     RQ_PID_FILES.append(pid_file)
 
 #################################################################
-RVL_PORTS = range(9020, 9030)
-RVLISTENER = 'vFense_listener.py'
-for port in RVL_PORTS:
-    pid_file = os.path.join(PID_DIR, 'RVL_PID_%s.pid' % (str(port)))
-    rvl = 'RvListener port %s' % (str(port))
-    PIDS.append((pid_file, rvl))
-    RVLSERVICES.append((RVLISTENER, pid_file, rvl, port))
-    ALLSERVICES.append((RVLISTENER, pid_file, rvl, port))
+LISTENER_PORTS = range(9020, 9030)
+LISTENER = 'vFense_listener.py'
+for port in LISTENER_PORTS:
+    pid_file = os.path.join(PID_DIR, 'listener_pid_%s.pid' % (str(port)))
+    msg = 'Listener port %s' % (str(port))
+    PIDS.append((pid_file, msg))
+    LISTENERSERVICES.append((LISTENER, pid_file, msg, port))
+    ALLSERVICES.append((LISTENER, pid_file, msg, port))
 
 ##################################################################
-RVW_PORTS = range(9060, 9061)
-RVWEB = 'vFense_web.py'
-for port in RVW_PORTS:
-    pid_file = os.path.join(PID_DIR, 'RVW_PID_%s.pid' % (str(port)))
-    rvw = 'RvWeb port %s' % (str(port))
-    PIDS.append((pid_file, rvw))
-    RVWSERVICES.append((RVWEB, pid_file, rvw, port))
-    ALLSERVICES.append((RVWEB, pid_file, rvw, port))
+API_PORTS = range(9060, 9061)
+API = 'vFense_web.py'
+for port in API_PORTS:
+    pid_file = os.path.join(PID_DIR, 'api_pid_%s.pid' % (str(port)))
+    msg = 'api port %s' % (str(port))
+    PIDS.append((pid_file, msg))
+    APISERVICES.append((API, pid_file, msg, port))
+    ALLSERVICES.append((API, pid_file, msg, port))
 
 ##################################################################
 VFENSE_HOME = VFENSE_BASE_PATH
 PROGRAM = 'python'
 PIDFILE = os.path.join(VFENSE_TMP_PATH, 'process.pid')
 ADMIN_JOBS_PIDFILE= os.path.join(VFENSE_TMP_PATH, 'admin_jobs-9002.pid')
-
-WORKERS_DIR = os.path.join(VFENSE_BASE_SRC_PATH, 'receiver', 'rqworkers')
 PATH = VFENSE_BASE_SRC_PATH
 ADMIN_JOBS='jobs/admin_jobs.py'
 
@@ -95,14 +89,16 @@ def run(program, *args):
 def rqworker_starter():
     completed = True
     for queue in RQ_WORKER_QUEUES:
-        os.chdir(WORKERS_DIR)
-        pid_file = os.path.join(PID_DIR, 'RQW_PID_%s.pid' % (queue))
-        rqw_settings = 'rqworker_%s_settings' % (queue)
-        rqw = 'RqWorker Queue %s' % (queue)
+        queue_name = re.sub(r'_settings.py', '', queue[1])
+        queue_dir = queue[0]
+        queue_settings = queue[1]
+        os.chdir(queue_dir)
+        pid_file = os.path.join(PID_DIR, 'rqw_pid_%s.pid' % (queue_name))
+        rqw = 'RqWorker Queue %s' % (queue_name)
         rqworker_start = (
             subprocess.Popen(
                 [
-                    RQWORKER, '-c', rqw_settings
+                    RQWORKER, '-c', queue_settings
                 ]
             )
         )
@@ -125,13 +121,13 @@ def rqworker_starter():
 
     return(completed)
 
-
 def rqworker_stop():
     completed = True
 
     for queue in RQ_WORKER_QUEUES:
-        pid_file = os.path.join(PID_DIR, 'RQW_PID_%s.pid' % (queue))
-        rqw = 'RqWorker Queue %s' % (queue)
+        queue_name = re.sub(r'_settings.py', '', queue[1])
+        pid_file = os.path.join(PID_DIR, 'RQW_PID_%s.pid' % (queue_name))
+        rqw = 'RqWorker Queue %s' % (queue_name)
         if os.path.exists(pid_file):
             pid_exists = open(pid_file, 'r').read()
             if re.search(r'[0-9]+', pid_exists):
@@ -164,7 +160,7 @@ def handler(signum, frame):
     print "returning back to terminal"
 
 
-def TopPatch_start():
+def vfense_start():
     process_exists = 0
     for pidfile in PIDS:
         if os.path.exists(pidfile[0]):
@@ -174,24 +170,24 @@ def TopPatch_start():
                 if re.search(r'[0-9]+', i.split()[1]):
                     if int(pid) == int(i.split()[1]):
                         process_exists = process_exists + 1
-                        message = 'patching service %s is already running.' \
+                        message = 'vFense service %s is already running.' \
                             % (pidfile[1])
                         sys.stderr.write(message+'\n')
                         logger.error(message)
                         sys.exit(1)
     if process_exists == 0:
         os.chdir(PATH)
-        print 'patching Server is starting. Please wait....'
-        logger.info('patching Server is starting. Please wait....')
+        print 'vFense Server is starting. Please wait....'
+        logger.info('vFense Server is starting. Please wait....')
         rqworker = rqworker_starter()
         if rqworker:
-            for service in RVLSERVICES:
+            for service in LISTENERSERVICES:
                 pid = run(PROGRAM, service[0], '--port=%s' % (service[3]))
                 pidfile = open(service[1], 'w')
                 pidfile.write(pid)
                 pidfile.close()
                 logger.info("%s Server Started" % (service[2]))
-            for service in RVWSERVICES:
+            for service in APISERVICES:
                 pid = run(PROGRAM, service[0], '--port=%s' % (service[3]))
                 pidfile = open(service[1], 'w')
                 pidfile.write(pid)
@@ -205,12 +201,12 @@ def TopPatch_start():
                 logger.info("%s Server Started" % (service[2]))
         sleep(1)
         signal.signal(signal.SIGINT, handler)
-        print 'patching Server has been started. Enjoy !!!'
-        logger.info('patching Server has been started. Enjoy !!!')
+        print 'vFense Server has been started. Enjoy !!!'
+        logger.info('vFense Server has been started. Enjoy !!!')
 
 
-def TopPatch_stop():
-    logger.info('patching Services are going to shutdown now...')
+def vfense_stop():
+    logger.info('vFense Services are going to shutdown now...')
     for service in ALLSERVICES:
         if os.path.exists(service[1]):
             pid = open(service[1], 'r').read()
@@ -230,17 +226,16 @@ def TopPatch_stop():
 
     rqworker_stop()
 
-    print 'patching Server has been stopped now !!!'
-    logger.info('patching Server has been stopped now !!!')
+    print 'vFense Server has been stopped now !!!'
+    logger.info('vFense Server has been stopped now !!!')
 
 
-def TopPatch_restart():
+def vfense_restart():
     TopPatch_stop()
     print "\n"
-    TopPatch_start()
+    vfense_start()
 
-
-def TopPatch_status():
+def vfense_status():
     process_exists = 0
     for pidfile in PIDS:
         if os.path.exists(pidfile[0]):
@@ -250,31 +245,29 @@ def TopPatch_status():
                 if re.search(r'[0-9]+', i.split()[1]):
                     if int(pid) == int(i.split()[1]):
                         process_exists = process_exists + 1
-                        message = 'RV service %s is running.' \
+                        message = 'vFense service %s is running.' \
                             % (pidfile[1])
                         sys.stderr.write(message+'\n')
                         logger.info(message)
         else:
-            message = 'RV service %s is not running.' \
-                      % (pidfile[1])
+            message = 'vFense service %s is not running.' % (pidfile[1])
             sys.stderr.write(message+'\n')
             logger.error(message)
     sys.exit(0)
-
 
 ACTIONS = sys.argv[1]
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         if ACTIONS == 'start':
-            TopPatch_start()
+            vfense_start()
         elif ACTIONS == 'stop':
-            TopPatch_stop()
+            vfense_stop()
         elif ACTIONS == 'restart':
-            TopPatch_restart()
+            vfense_restart()
             logger.info("vFense server restarting..")
         elif ACTIONS == 'status':
-            TopPatch_status()
+            vfense_status()
         else:
             print "Unknown command"
             sys.exit(2)

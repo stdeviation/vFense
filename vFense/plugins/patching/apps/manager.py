@@ -13,6 +13,7 @@ from vFense.core.status_codes import DbCodes
 from vFense.core.results import ApiResults
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.manager import ViewManager
+from vFense.db.client import rq_queue
 from vFense.plugins.patching import Apps, Files
 from vFense.plugins.patching._constants import AppStatuses, CommonAppKeys
 from vFense.plugins.patching._db_model import (
@@ -35,14 +36,6 @@ from vFense.plugins.patching.downloader.downloader import (
 import vFense.plugins.vuln.cve.cve as cve
 from vFense.plugins.vuln.search.vuln_search import FetchVulns
 
-
-import redis
-from rq import Queue
-
-RQ_HOST = 'localhost'
-RQ_PORT = 6379
-RQ_DB = 0
-RQ_PKG_POOL = redis.StrictRedis(host=RQ_HOST, port=RQ_PORT, db=RQ_DB)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -299,7 +292,7 @@ class AppsManager(object):
 
     def download_app_files(self, app, file_data):
 
-        rv_q = Queue('downloader', connection=RQ_PKG_POOL)
+        rv_q = rq_queue('downloader')
         rv_q.enqueue_call(
             func=download_all_files_in_app,
             args=(app, file_data, 0, self.apps_collection),

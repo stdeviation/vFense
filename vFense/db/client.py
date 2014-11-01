@@ -96,7 +96,26 @@ def db_create_close(fn):
 
     return wraps(fn) (db_wrapper)
 
+def rq_settings():
+    """Retrieve the database settings for rq
+    Returns:
+        Tuple (host, port, db)
+    """
+    try:
+        host = Config.get('Queue', 'host')
+        port = int(Config.get('Queue', 'dport'))
+        db = Config.get('Queue', 'db')
+
+    except Exception as e:
+        logger.error(e)
+
+    return(host, port, db)
+
 def rq_queue(queue_name):
+    """Return an instance of Queue of the python-rq module.
+    Args:
+        queue_name (str): The name of the queue you want to return
+    """
     try:
         host = Config.get('Queue', 'host')
         port = int(Config.get('Queue', 'dport'))

@@ -9,6 +9,7 @@ from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._db import delete_all_in_table
 from vFense.core.agent._db_model import *
 from vFense.core.agent.agents import get_agents_info, get_agent_info
+from vFense.db.client import rq_queue
 
 from vFense.plugins.patching.status_codes import PackageCodes
 
@@ -281,7 +282,7 @@ class IncomingSupportedApps(object):
 def update_supported_apps(json_data):
 
     try:
-        rv_q = Queue('downloader', connection=RQ_PKG_POOL)
+        rv_q = rq_queue('downloader')
         conn = db_connect()
 
         inserted_count = 0

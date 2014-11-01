@@ -13,6 +13,7 @@ from vFense.plugins.patching.apps.supported_apps.syncer import (
 class ApplicationHandoff(Handoff):
     def __init__(self, apps_data=None, **kwargs):
         super(ApplicationHandoff, self).__init__(**kwargs)
+        self.rv_q = rq_queue('incoming_updates')
         self.apps_data = apps_data
 
     def new_agent_operation(self):
@@ -31,7 +32,6 @@ class ApplicationHandoff(Handoff):
         self.add_applications_from_agent()
 
     def add_custom_apps(self):
-        rv_q = rq_queue('incoming_updates')
         rv_q.enqueue_call(
             func=add_custom_app_to_agents,
             args=(None, self.agent_id),
