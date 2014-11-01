@@ -1,22 +1,21 @@
 import os
 import logging
 import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
-from  functools import wraps
 import ConfigParser
 import types
-
-from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_DB_CONFIG
+from  functools import wraps
 
 import rethinkdb as r
 import redis
+from rq import Queue
+
+from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_CONFIG
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
-pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
 Config = ConfigParser.ConfigParser()
-Config.read(VFENSE_DB_CONFIG)
+Config.read(VFENSE_CONFIG)
 
 def db_connect(new_db_config=None):
     conn = None
@@ -96,3 +95,16 @@ def db_create_close(fn):
         return(output)
 
     return wraps(fn) (db_wrapper)
+
+def rq_queue(queue_name):
+    try:
+        host = Config.get('Queue', 'host')
+        port = int(Config.get('Queue', 'dport'))
+        db = Config.get('Queue', 'db')
+        pool = redis.StrictRedis(host=host, port=port, db=db)
+        rv_q = Queue(queue_name, connection=pool)
+
+    except Exception as e:
+        logger.error(e)
+
+    return rv_q

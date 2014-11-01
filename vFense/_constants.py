@@ -29,7 +29,7 @@ VFENSE_APP_TMP_PATH = os.path.join(VFENSE_APP_PATH, 'tmp')
 VFENSE_APP_DEP_PATH = os.path.join(VFENSE_APP_PATH, 'dependencies')
 VFENSE_CONF_PATH = os.path.join(VFENSE_BASE_PATH, 'conf')
 VFENSE_LOGGING_CONFIG = os.path.join(VFENSE_CONF_PATH, 'logging.config')
-VFENSE_DB_CONFIG = os.path.join(VFENSE_CONF_PATH, 'database.conf')
+VFENSE_CONFIG = os.path.join(VFENSE_CONF_PATH, 'vFense.conf')
 ###RETHINKDB SPECIFIC CONFIG
 RETHINK_SOURCE_CONF = os.path.join(VFENSE_CONF_PATH ,'rethinkdb_vFense.conf')
 RETHINK_PATH = '/usr/share/rethinkdb'
