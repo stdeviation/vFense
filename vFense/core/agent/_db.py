@@ -11,13 +11,14 @@ from vFense.core.agent._db_model import (
     HardwarePerAgentIndexes
 )
 from vFense.core.agent._db_sub_queries import Merge
-from vFense.core.decorators import return_status_tuple, time_it
+from vFense.core.decorators import return_status_tuple, time_it, catch_it
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_environments_from_agent(view_name, conn=None):
     """Retrieve all the environments that is in the database
@@ -36,24 +37,20 @@ def fetch_environments_from_agent(view_name, conn=None):
             u'Production'
         ]
     """
-    data = []
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .get_all(view_name, index=AgentIndexes.ViewName)
-            .pluck(AgentKeys.Environment)
-            .distinct()
-            .map(lambda x: x[AgentKeys.Environment])
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(AgentCollections.Agents)
+        .get_all(view_name, index=AgentIndexes.ViewName)
+        .pluck(AgentKeys.Environment)
+        .distinct()
+        .map(lambda x: x[AgentKeys.Environment])
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it(0)
 @db_create_close
 def total_agents_in_view(view_name, conn=None):
     """Retrieve the total number of agents in view.
@@ -68,22 +65,18 @@ def total_agents_in_view(view_name, conn=None):
     Returns:
         Integer
     """
-    count = 0
-    try:
-        count = (
-            r
-            .table(AgentCollections.Agents)
-            .get_all(view_name, index=AgentIndexes.ViewName)
-            .count()
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    count = (
+        r
+        .table(AgentCollections.Agents)
+        .get_all(view_name, index=AgentIndexes.ViewName)
+        .count()
+        .run(conn)
+    )
 
     return count
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_supported_os_strings(view_name, conn=None):
     """Retrieve all the operating systems that is in the database
@@ -104,24 +97,20 @@ def fetch_supported_os_strings(view_name, conn=None):
             u'Windows 8.1 '
         ]
     """
-    data = []
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .get_all(view_name, index=AgentIndexes.ViewName)
-            .pluck(AgentKeys.OsString)
-            .distinct()
-            .map(lambda x: x[AgentKeys.OsString])
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(AgentCollections.Agents)
+        .get_all(view_name, index=AgentIndexes.ViewName)
+        .pluck(AgentKeys.OsString)
+        .distinct()
+        .map(lambda x: x[AgentKeys.OsString])
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
     """Retrieve a list of agent ids
@@ -141,62 +130,58 @@ def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
             u'3ea8fd7a-8aad-40da-aff0-8da6fa5f8766'
         ]
     """
-    data = []
-    try:
-        if views and not os_string:
-            data = list(
-                r.expr(views)
-                .concat_map(
-                    lambda view:
-                    r
-                    .table(AgentCollections.Agents)
-                    .get_all(view, index=AgentIndexes.Views)
-                    .map(lambda x: x[AgentKeys.AgentId])
-                )
-                .run(conn)
-            )
-
-        elif views and os_string:
-            data = list(
-                r.expr(views)
-                .concat_map(
-                    lambda view:
-                    r
-                    .table(AgentCollections.Agents)
-                    .get_all(view, index=AgentIndexes.Views)
-                    .filter({AgentKeys.OsString: os_string})
-                    .map(lambda x: x[AgentKeys.AgentId])
-                )
-                .run(conn)
-            )
-
-        elif not views and os_string:
-            data = list(
-                r.expr(views)
-                .concat_map(
-                    lambda view:
-                    r
-                    .table(AgentCollections.Agents)
-                    .filter({AgentKeys.OsString: os_string})
-                    .map(lambda x: x[AgentKeys.AgentId])
-                )
-                .run(conn)
-            )
-        else:
-            data = list(
+    if views and not os_string:
+        data = list(
+            r.expr(views)
+            .concat_map(
+                lambda view:
                 r
                 .table(AgentCollections.Agents)
+                .get_all(view, index=AgentIndexes.Views)
                 .map(lambda x: x[AgentKeys.AgentId])
-                .run(conn)
             )
+            .run(conn)
+        )
 
-    except Exception as e:
-        logger.exception(e)
+    elif views and os_string:
+        data = list(
+            r.expr(views)
+            .concat_map(
+                lambda view:
+                r
+                .table(AgentCollections.Agents)
+                .get_all(view, index=AgentIndexes.Views)
+                .filter({AgentKeys.OsString: os_string})
+                .map(lambda x: x[AgentKeys.AgentId])
+            )
+            .run(conn)
+        )
+
+    elif not views and os_string:
+        data = list(
+            r.expr(views)
+            .concat_map(
+                lambda view:
+                r
+                .table(AgentCollections.Agents)
+                .filter({AgentKeys.OsString: os_string})
+                .map(lambda x: x[AgentKeys.AgentId])
+            )
+            .run(conn)
+        )
+
+    else:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .map(lambda x: x[AgentKeys.AgentId])
+            .run(conn)
+        )
 
     return data
 
-
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_agent_ids(view_name=None, agent_os=None, conn=None):
     """Retrieve a list of agent ids
@@ -218,50 +203,46 @@ def fetch_agent_ids(view_name=None, agent_os=None, conn=None):
             u'3ea8fd7a-8aad-40da-aff0-8da6fa5f8766'
         ]
     """
-    data = []
-    try:
-        if view_name and agent_os:
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.Views)
-                .filter({AgentKeys.OsCode: agent_os})
-                .map(lambda x: x[AgentKeys.AgentId])
-                .run(conn)
-            )
+    if view_name and agent_os:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .filter({AgentKeys.OsCode: agent_os})
+            .map(lambda x: x[AgentKeys.AgentId])
+            .run(conn)
+        )
 
-        elif view_name and not agent_os:
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.Views)
-                .map(lambda x: x[AgentKeys.AgentId])
-                .run(conn)
-            )
+    elif view_name and not agent_os:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .map(lambda x: x[AgentKeys.AgentId])
+            .run(conn)
+        )
 
-        elif agent_os and not view_name:
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .filter({AgentKeys.OsCode: agent_os})
-                .map(lambda x: x[AgentKeys.AgentId])
-                .run(conn)
-            )
+    elif agent_os and not view_name:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .filter({AgentKeys.OsCode: agent_os})
+            .map(lambda x: x[AgentKeys.AgentId])
+            .run(conn)
+        )
 
-        elif not agent_os and not view_name:
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .map(lambda x: x[AgentKeys.AgentId])
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
+    elif not agent_os and not view_name:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .map(lambda x: x[AgentKeys.AgentId])
+            .run(conn)
+        )
 
     return data
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_agents(
         view_name=None, filter_key=None,
@@ -295,113 +276,90 @@ def fetch_agents(
             }
         ]
     """
-    data = []
-    try:
-        if (
-                filter_key and filter_val and not view_name
-                and not keys_to_pluck
-            ):
+    if filter_key and filter_val and not view_name and not keys_to_pluck:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .filter({filter_key: filter_val})
+            .merge(Merge.TAGS)
+            .run(conn)
+        )
 
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .filter({filter_key: filter_val})
-                .merge(Merge.TAGS)
-                .run(conn)
-            )
+    elif filter_key and filter_val and view_name and not keys_to_pluck:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .get_all(view_name, index=AgentIndexes.ViewName)
+            .filter({filter_key: filter_val})
+            .merge(Merge.TAGS)
+            .run(conn)
+        )
 
-        elif filter_key and filter_val and view_name and not keys_to_pluck:
+    elif filter_key and filter_val and keys_to_pluck and not view_name:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .filter({filter_key: filter_val})
+            .merge(Merge.TAGS)
+            .pluck(keys_to_pluck)
+            .run(conn)
+        )
 
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.ViewName)
-                .filter({filter_key: filter_val})
-                .merge(Merge.TAGS)
-                .run(conn)
-            )
+    elif filter_key and filter_val and keys_to_pluck and view_name:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .get_all(view_name, index=AgentIndexes.ViewName)
+            .filter({filter_key: filter_val})
+            .merge(Merge.TAGS)
+            .pluck(keys_to_pluck)
+            .run(conn)
+        )
 
-        elif filter_key and filter_val and keys_to_pluck and not view_name:
+    elif not filter_key and not filter_val and not view_name and keys_to_pluck:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .merge(Merge.TAGS)
+            .pluck(keys_to_pluck)
+            .run(conn)
+        )
 
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .filter({filter_key: filter_val})
-                .merge(Merge.TAGS)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
+    elif not filter_key and not filter_val and view_name and keys_to_pluck:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .get_all(view_name, index=AgentIndexes.ViewName)
+            .merge(Merge.TAGS)
+            .pluck(keys_to_pluck)
+            .run(conn)
+        )
 
-        elif filter_key and filter_val and keys_to_pluck and view_name:
+    elif (not filter_key and not filter_val and not view_name and
+          not keys_to_pluck):
 
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.ViewName)
-                .filter({filter_key: filter_val})
-                .merge(Merge.TAGS)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .merge(Merge.TAGS)
+            .run(conn)
+        )
 
-        elif (
-                not filter_key and not filter_val
-                and not view_name and keys_to_pluck
-            ):
+    elif (not filter_key and not filter_val and view_name and
+          not keys_to_pluck):
 
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .merge(Merge.TAGS)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
-
-        elif (
-                not filter_key and not filter_val
-                and view_name and keys_to_pluck
-            ):
-
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.ViewName)
-                .merge(Merge.TAGS)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
-
-        elif (
-                not filter_key and not filter_val
-                and not view_name and not keys_to_pluck
-            ):
-
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .merge(Merge.TAGS)
-                .run(conn)
-            )
-
-        elif (
-                not filter_key and not filter_val
-                and view_name and not keys_to_pluck
-            ):
-
-            data = list(
-                r
-                .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.ViewName)
-                .merge(Merge.TAGS)
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .get_all(view_name, index=AgentIndexes.ViewName)
+            .merge(Merge.TAGS)
+            .run(conn)
+        )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 def fetch_agent(agent_id, keys_to_pluck=None, conn=None):
     """Retrieve information of an agent
@@ -425,39 +383,35 @@ def fetch_agent(agent_id, keys_to_pluck=None, conn=None):
             u'environment': u'Development'
         }
     """
-    data = {}
-    try:
-        if agent_id and keys_to_pluck:
-            data = (
-                r
-                .table(AgentCollections.Agents)
-                .get_all(agent_id)
-                .merge(Merge.AGENTS)
-                .merge(Merge.TAGS)
-                .pluck(keys_to_pluck)
-                .run(conn)
-            )
-            if data:
-                data = data[0]
+    if agent_id and keys_to_pluck:
+        data = (
+            r
+            .table(AgentCollections.Agents)
+            .get_all(agent_id)
+            .merge(Merge.AGENTS)
+            .merge(Merge.TAGS)
+            .pluck(keys_to_pluck)
+            .run(conn)
+        )
+        if data:
+            data = data[0]
 
-        elif agent_id and not keys_to_pluck:
-            data = (
-                r
-                .table(AgentCollections.Agents)
-                .get_all(agent_id)
-                .merge(Merge.AGENTS)
-                .merge(Merge.TAGS)
-                .run(conn)
-            )
-            if data:
-                data = data[0]
-
-    except Exception as e:
-        logger.exception(e)
+    elif agent_id and not keys_to_pluck:
+        data = (
+            r
+            .table(AgentCollections.Agents)
+            .get_all(agent_id)
+            .merge(Merge.AGENTS)
+            .merge(Merge.TAGS)
+            .run(conn)
+        )
+        if data:
+            data = data[0]
 
     return data
 
 @time_it
+@catch_it(False)
 @db_create_close
 def agent_exist(agent_id, conn=None):
     """Return True, if the agent exist.
@@ -473,26 +427,22 @@ def agent_exist(agent_id, conn=None):
         Bool
         >>> True
     """
-    exist = False
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .get_all(agent_id)
-            .is_empty()
-            .run(conn)
-        )
-        if data:
-           exist = False
-        else:
-            exist = True
-
-    except Exception as e:
-        logger.exception(e)
+    is_empty = (
+        r
+        .table(AgentCollections.Agents)
+        .get_all(agent_id)
+        .is_empty()
+        .run(conn)
+    )
+    if is_empty:
+        exist = False
+    else:
+        exist = True
 
     return exist
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_all_agents_for_view(view_name, conn=None):
     """Retrieve all agents for a view.
@@ -507,17 +457,12 @@ def fetch_all_agents_for_view(view_name, conn=None):
     Return:
         List of dictionaries.
     """
-    data = []
-    try:
-        data = list(
-            r
-            .table(AgentCollections.Agents)
-            .get_all(view_name, index=AgentIndexes.ViewName)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = list(
+        r
+        .table(AgentCollections.Agents)
+        .get_all(view_name, index=AgentIndexes.ViewName)
+        .run(conn)
+    )
 
     return data
 
@@ -593,6 +538,7 @@ def delete_agent(agent_id):
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_all_agents_from_view(view_name, agent_ids=None, conn=None):
@@ -609,38 +555,33 @@ def delete_all_agents_from_view(view_name, agent_ids=None, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        if agent_ids:
-            data = (
-                r
-                .expr(agent_ids)
-                .for_each(
-                    lambda agent_id:
-                    r
-                    .table(AgentCollections.Agents)
-                    .get(agent_id)
-                    .delete()
-                )
-                .run(conn, no_reply=True)
-            )
-
-        else:
-            data = (
+    if agent_ids:
+        data = (
+            r
+            .expr(agent_ids)
+            .for_each(
+                lambda agent_id:
                 r
                 .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.Views)
+                .get(agent_id)
                 .delete()
-                .run(conn, no_reply=True)
             )
+            .run(conn, no_reply=True)
+        )
 
-    except Exception as e:
-        logger.exception(e)
+    else:
+        data = (
+            r
+            .table(AgentCollections.Agents)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .delete()
+            .run(conn, no_reply=True)
+        )
 
     return data
 
-
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def remove_all_agents_from_view(view_name, agent_ids=None, conn=None):
@@ -657,34 +598,15 @@ def remove_all_agents_from_view(view_name, agent_ids=None, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        if agent_ids:
-            data = (
-                r
-                .expr(agent_ids)
-                .for_each(
-                    lambda agent_id:
-                    r
-                    .table(AgentCollections.Agents)
-                    .get_all(agent_id)
-                    .update(
-                        lambda x:
-                        {
-                            AgentKeys.Views: (
-                                x[AgentKeys.Views].set_difference([view_name])
-                            )
-                        }
-                    )
-                )
-                .run(conn, no_reply=True)
-            )
-
-        else:
-            data = (
+    if agent_ids:
+        data = (
+            r
+            .expr(agent_ids)
+            .for_each(
+                lambda agent_id:
                 r
                 .table(AgentCollections.Agents)
-                .get_all(view_name, index=AgentIndexes.Views)
+                .get_all(agent_id)
                 .update(
                     lambda x:
                     {
@@ -693,16 +615,31 @@ def remove_all_agents_from_view(view_name, agent_ids=None, conn=None):
                         )
                     }
                 )
-                .delete()
-                .run(conn, no_reply=True)
             )
+            .run(conn, no_reply=True)
+        )
 
-    except Exception as e:
-        logger.exception(e)
+    else:
+        data = (
+            r
+            .table(AgentCollections.Agents)
+            .get_all(view_name, index=AgentIndexes.Views)
+            .update(
+                lambda x:
+                {
+                    AgentKeys.Views: (
+                        x[AgentKeys.Views].set_difference([view_name])
+                    )
+                }
+            )
+            .delete()
+            .run(conn, no_reply=True)
+        )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def add_agents_to_views(agent_ids, views, conn=None):
@@ -721,30 +658,23 @@ def add_agents_to_views(agent_ids, views, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(agent_ids)
+        .for_each(
+            lambda agent_id:
             r
-            .expr(agent_ids)
-            .for_each(
-                lambda agent_id:
-                r
-                .table(AgentCollections.Agents)
-                .get_all(agent_id)
-                .update(
-                    lambda x:
-                    {
-                        AgentKeys.Views: (
-                            x[AgentKeys.Views].set_union(views)
-                        )
-                    }
-                )
+            .table(AgentCollections.Agents)
+            .get_all(agent_id)
+            .update(
+                lambda x:
+                {
+                    AgentKeys.Views: x[AgentKeys.Views].set_union(views)
+                }
             )
-            .run(conn)
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
@@ -773,6 +703,7 @@ def insert_hardware(hw_data):
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_hardware_for_agent(agent_id, conn=None):
@@ -790,22 +721,18 @@ def delete_hardware_for_agent(agent_id, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(AgentCollections.Hardware)
-            .get_all(agent_id, index=HardwarePerAgentIndexes.AgentId)
-            .delete()
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(AgentCollections.Hardware)
+        .get_all(agent_id, index=HardwarePerAgentIndexes.AgentId)
+        .delete()
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_hardware_for_agents(agent_ids, conn=None):
@@ -823,28 +750,23 @@ def delete_hardware_for_agents(agent_ids, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(agent_ids)
+        .for_each(
+            lambda agent_id:
             r
-            .expr(agent_ids)
-            .for_each(
-                lambda agent_id:
-                r
-                .table(AgentCollections.Hardware)
-                .get_all(agent_id, index=HardwarePerAgentIndexes.AgentId)
-                .delete()
-            )
-            .run(conn, no_reply=True)
+            .table(AgentCollections.Hardware)
+            .get_all(agent_id, index=HardwarePerAgentIndexes.AgentId)
+            .delete()
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn, no_reply=True)
+    )
 
     return data
 
-
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_views_for_agent(views, agent_id, conn=None):
@@ -863,29 +785,23 @@ def update_views_for_agent(views, agent_id, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .get(agent_id)
-            .update(
-                lambda y:
-                {
-                    AgentKeys.Views: (
-                        y[AgentKeys.Views].set_union(views)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(AgentCollections.Agents)
+        .get(agent_id)
+        .update(
+            lambda y:
+            {
+                AgentKeys.Views: y[AgentKeys.Views].set_union(views)
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_views_from_agent(views, agent_id, conn=None):
@@ -904,25 +820,17 @@ def delete_views_from_agent(views, agent_id, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(AgentCollections.Agents)
-            .get(agent_id)
-            .update(
-                lambda y:
-                {
-                    AgentKeys.Views: (
-                        y[AgentKeys.Views].set_difference(views)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(AgentCollections.Agents)
+        .get(agent_id)
+        .update(
+            lambda y:
+            {
+                AgentKeys.Views: y[AgentKeys.Views].set_difference(views)
+            }
         )
-
-    except Exception as e:
-        logger.exception(e)
+        .run(conn)
+    )
 
     return data
-

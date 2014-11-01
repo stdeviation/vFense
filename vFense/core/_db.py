@@ -1,13 +1,14 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._db_constants import DbInfoKeys
-from vFense.core.decorators import time_it, return_status_tuple
+from vFense.core.decorators import time_it, return_status_tuple, catch_it
 from vFense.db.client import db_create_close, r
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
+@catch_it({})
 @db_create_close
 def retrieve_collections(conn=None):
     """Retrieve a list of collections
@@ -18,20 +19,14 @@ def retrieve_collections(conn=None):
     Returns:
         List
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table_list()
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
-
+    data = (
+        r
+        .table_list()
+        .run(conn)
+    )
     return data
 
-
+@catch_it({})
 @db_create_close
 def retrieve_primary_key(collection, conn=None):
     """Retrieve the primary key for a collection.
@@ -46,23 +41,19 @@ def retrieve_primary_key(collection, conn=None):
     Returns:
         String
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(collection)
-            .info()
-            .pluck(DbInfoKeys.PRIMARY_KEY)
-            .run(conn)
-        )
-        if data:
-            data = data[DbInfoKeys.PRIMARY_KEY]
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(collection)
+        .info()
+        .pluck(DbInfoKeys.PRIMARY_KEY)
+        .run(conn)
+    )
+    if data:
+        data = data[DbInfoKeys.PRIMARY_KEY]
 
     return data
 
+@catch_it({})
 @db_create_close
 def retrieve_indexes(collection, conn=None):
     """Retrieve the list of indexes for a collection.
@@ -77,24 +68,19 @@ def retrieve_indexes(collection, conn=None):
     Returns:
         List
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(collection)
-            .info()
-            .pluck(DbInfoKeys.INDEXES)
-            .run(conn)
-        )
-        if data:
-            data = data[DbInfoKeys.INDEXES]
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(collection)
+        .info()
+        .pluck(DbInfoKeys.INDEXES)
+        .run(conn)
+    )
+    if data:
+        data = data[DbInfoKeys.INDEXES]
 
     return data
 
-
+@catch_it({})
 @db_create_close
 def retrieve_object(primary_key, collection, conn=None):
     """Retrieve object by primary key and collection.
@@ -111,22 +97,17 @@ def retrieve_object(primary_key, collection, conn=None):
     Returns:
         Dictionary
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(collection)
-            .get(primary_key)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(collection)
+        .get(primary_key)
+        .run(conn)
+    )
 
     return data
 
-
 @time_it
+@catch_it(False)
 @db_create_close
 def object_exist(primary_key, collection, conn=None):
     """Verify if an object exist in the database, by primary key.
@@ -144,22 +125,19 @@ def object_exist(primary_key, collection, conn=None):
         Boolean
     """
     exist = False
-    try:
-        is_empty = (
-            r
-            .table(collection)
-            .get_all(primary_key)
-            .is_empty()
-            .run(conn)
-        )
-        if not is_empty:
-            exist = True
-
-    except Exception as e:
-        logger.exception(e)
+    is_empty = (
+        r
+        .table(collection)
+        .get_all(primary_key)
+        .is_empty()
+        .run(conn)
+    )
+    if not is_empty:
+        exist = True
 
     return exist
 
+@catch_it({})
 @db_create_close
 def create_collection(name, primary_key, conn=None):
     """Create a new collection
@@ -176,21 +154,16 @@ def create_collection(name, primary_key, conn=None):
     Returns:
         Dictionary
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table_create(name, primary_key=primary_key)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table_create(name, primary_key=primary_key)
+        .run(conn)
+    )
 
     return data
 
-
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def insert_data_in_table(data, collection, conn=None):
@@ -210,22 +183,17 @@ def insert_data_in_table(data, collection, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-
-    results = {}
-    try:
-        results = (
-            r
-            .table(collection)
-            .insert(data, conflict="replace")
-            .run(conn, no_reply=True, durability='soft')
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    results = (
+        r
+        .table(collection)
+        .insert(data, conflict="replace")
+        .run(conn, no_reply=True, durability='soft')
+    )
 
     return results
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_data_in_table(primary_key, collection, conn=None):
@@ -245,23 +213,18 @@ def delete_data_in_table(primary_key, collection, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-
-    results = {}
-    try:
-        results = (
-            r
-            .table(collection)
-            .get(primary_key)
-            .delete()
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    results = (
+        r
+        .table(collection)
+        .get(primary_key)
+        .delete()
+        .run(conn)
+    )
 
     return results
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_data_in_table(primary_key, data, collection, conn=None):
@@ -283,24 +246,18 @@ def update_data_in_table(primary_key, data, collection, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-
-    results = {}
-    try:
-        results = (
-            r
-            .table(collection)
-            .get(primary_key)
-            .update(data)
-            .run(conn, no_reply=True, durability='soft')
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    results = (
+        r
+        .table(collection)
+        .get(primary_key)
+        .update(data)
+        .run(conn, no_reply=True, durability='soft')
+    )
 
     return results
 
-
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_all_in_table(collection, conn=None):
@@ -318,16 +275,11 @@ def delete_all_in_table(collection, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-
-    data = {}
-    try:
-        data = (
-            r
-            .table(collection)
-            .delete()
-            .run(conn, no_reply=True, durability='soft')
-        )
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(collection)
+        .delete()
+        .run(conn, no_reply=True, durability='soft')
+    )
 
     return data
