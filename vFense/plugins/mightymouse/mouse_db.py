@@ -1,11 +1,8 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import r, db_connect
-from vFense.core.results import Results, MightyMouseResults
-
-from vFense.plugins.mightymouse import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

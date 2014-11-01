@@ -1,7 +1,5 @@
-from vFense.core.operations._db_model import OperationPerAgentKey, \
-    OperationPerAppKey
-from vFense.core.operations.agent_operations import AgentOperation
-from vFense.core._db_constants import DbTime
+from vFense.core.operations import OperPerAgent, OperPerApp
+from vFense.core.operations.agent_operations import AgentOperationManager
 from vFense.core.operations._db_agent import update_operation_per_agent, \
     group_operations_per_app_by_results, update_operation_per_app, \
     update_errors_and_pending_count, update_failed_and_pending_count, \
@@ -14,7 +12,7 @@ from vFense.core.operations.status_codes import (
 )
 
 
-class PatchingOperation(AgentOperation):
+class PatchingOperation(AgentOperationManager):
     """Creates the operations for the patching plugin."""
 
     def add_agent_to_install_operation(
@@ -47,49 +45,30 @@ class PatchingOperation(AgentOperation):
             Boolean
         """
         completed = False
-        operation_data = {
-            OperationPerAgentKey.AgentId: agent_id,
-            OperationPerAgentKey.OperationId: operation_id,
-            OperationPerAgentKey.ViewName: self.view_name,
-            OperationPerAgentKey.Status: OperationPerAgentCodes.PendingPickUp,
-            OperationPerAgentKey.PickedUpTime: DbTime.begining_of_time(),
-            OperationPerAgentKey.ExpiredTime: DbTime.begining_of_time(),
-            OperationPerAgentKey.CompletedTime: DbTime.begining_of_time(),
-            OperationPerAgentKey.AppsTotalCount: len(applications),
-            OperationPerAgentKey.AppsPendingCount: len(applications),
-            OperationPerAgentKey.AppsFailedCount: self.INIT_COUNT,
-            OperationPerAgentKey.AppsCompletedCount: self.INIT_COUNT,
-            OperationPerAgentKey.Errors: None
-        }
+        operation = OperPerAgent()
+        operation.fill_in_defaults()
+        operation.agent_id = agent_id
+        operation.operation_id = operation_id
+        operation.apps_total_count = len(applications)
+        operation.apps_pending_count = len(applications)
+        operation.status = OperationPerAgentCodes.PendingPickUp
+        operation.view_name = self.view_name
 
         status_code, count, errors, generated_ids = (
-            insert_agent_into_agent_operations(operation_data)
+            insert_agent_into_agent_operations(operation.to_dict_db())
         )
         if status_code == DbCodes.Inserted:
             apps = []
             for app in applications:
-                apps.append(
-                    {
-                        OperationPerAppKey.AgentId: agent_id,
-                        OperationPerAppKey.OperationId: operation_id,
-                        OperationPerAppKey.ViewName: self.view_name,
-                        OperationPerAppKey.Results: (
-                            AgentOperationCodes.ResultsPending
-                        ),
-                        OperationPerAppKey.ResultsReceivedTime: (
-                            DbTime.begining_of_time()
-                        ),
-                        OperationPerAppKey.AppId: app[OperationPerAppKey.AppId],
-                        OperationPerAppKey.AppName: (
-                            app[OperationPerAppKey.AppName]
-                        ),
-                        OperationPerAppKey.AppVersion: (
-                            app[OperationPerAppKey.AppVersion]
-                        ),
-                        OperationPerAppKey.AppsRemoved: [],
-                        OperationPerAppKey.Errors: None
-                    }
-                )
+                app_operation = OperPerApp()
+                app_operation.fill_in_defaults()
+                app_operation.agent_id = agent_id
+                app_operation.app_id = app.app_id
+                app_operation.app_name = app.app_name
+                app_operation.app_version = app.app_version
+                app_operation.results = AgentOperationCodes.ResultsPending
+                app_operation.view_name = self.view_name
+                apps.append(app_operation.to_dict_db())
 
             status_code, count, errors, generated_ids = (
                 insert_app_into_agent_operations(apps)
@@ -138,18 +117,14 @@ class PatchingOperation(AgentOperation):
         completed = False
         if not apps_removed:
             apps_removed = []
-
-        operation_data = (
-            {
-                OperationPerAppKey.Results: status,
-                OperationPerAppKey.ResultsReceivedTime: self.db_time,
-                OperationPerAppKey.AppsRemoved: apps_removed,
-                OperationPerAppKey.Errors: errors
-            }
-        )
+        operation_data = OperPerApp()
+        operation_data.results_received_time = self.now
+        operation_data.apps_removed = apps_removed
+        operation_data.errors = errors
+        operation_data.results = status
         status_code, count, errors, generated_ids = (
             update_operation_per_app(
-                operation_id, agent_id, app_id, operation_data
+                operation_id, agent_id, app_id, operation_data.to_dict_db()
             )
         )
 
@@ -189,14 +164,16 @@ class PatchingOperation(AgentOperation):
                 operation_id, agent_id
             )
         )
-        operation_data = {
-            OperationPerAgentKey.AppsCompletedCount: completed_count,
-            OperationPerAgentKey.AppsFailedCount: failed_count,
-            OperationPerAgentKey.AppsPendingCount: pending_count,
-        }
+
+        operation_data = OperPerAgent()
+        operation_data.completed_count = completed_count
+        operation_data.failed_count = failed_count
+        operation_data.pending_count = pending_count
 
         status_code, count, errors, generated_ids = (
-            update_operation_per_agent(operation_id, agent_id, operation_data)
+            update_operation_per_agent(
+                operation_id, agent_id, operation_data.to_dict_db()
+            )
         )
 
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:

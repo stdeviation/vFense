@@ -1,7 +1,7 @@
 import logging
 import logging.config
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import r, db_create_close
 from vFense.core.scheduler._db_model import (
     JobCollections, JobKeys, JobIndexes

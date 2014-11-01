@@ -3,7 +3,7 @@ import gc
 import re
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from lxml import etree
 from re import sub

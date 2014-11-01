@@ -1,8 +1,9 @@
 from __future__ import with_statement
 import re
 import os
-import sys
 import hashlib
+import fnmatch
+import importlib
 from json import loads
 from datetime import datetime
 import time
@@ -11,7 +12,12 @@ from dateutil.tz import *
 from netifaces import ifaddresses, interfaces
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense.utils.supported_platforms import (
+    get_distro, DEBIAN_DISTROS, REDHAT_DISTROS, SITE_PACKAGES
+)
+from vFense._constants import (
+    VFENSE_LOGGING_CONFIG, SCHEDULER_PY, VFENSE_BASE_PATH
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -27,7 +33,6 @@ twentyfour_hour_reversed = {
     '17': 5, '18': 6, '19': 7, '20': 8,
     '21': 9, '22': 10, '23': 11
 }
-
 
 days_of_the_week = {
     '0': 'Sunday', '1': 'Monday',
@@ -92,7 +97,6 @@ def pick_valid_ip_address():
                 logger.exception(e)
     return(ip_address_to_use)
 
-
 def verify_json_is_valid(data):
     verified = True
     json_data = None
@@ -104,7 +108,6 @@ def verify_json_is_valid(data):
         verified = False
 
     return(verified, json_data)
-
 
 def timestamp_verifier(tstamp):
     try:
@@ -184,7 +187,6 @@ def date_parser(unformatted_date, convert_to_timestamp=True):
             formatted_date = datetime(1970, 1, 1)
 
     return formatted_date
-
 
 def date_time_parser(schedule):
     if type(schedule) == unicode:
@@ -283,7 +285,6 @@ def date_time_parser(schedule):
 
     return formatted_date
 
-
 def return_bool(fake_bool):
     fake_bool = fake_bool.lower()
     real_bool = None
@@ -296,7 +297,6 @@ def return_bool(fake_bool):
 
     return real_bool
 
-
 def get_expire_from_cert(cert):
     asn1_time = (
         re.search(
@@ -308,7 +308,6 @@ def get_expire_from_cert(cert):
 
     t = map(lambda x: int(x), asn1_time)
     return datetime(t[0], t[1], t[2], t[3], t[4], t[5])
-
 
 def return_datetime(timestamp):
     stamp_length = len(timestamp)
@@ -337,7 +336,6 @@ def return_datetime(timestamp):
     else:
         return ("Invalid TimeStamp")
 
-
 def return_days(days):
     if len(days) == 7:
         days_enabled = []
@@ -351,7 +349,6 @@ def return_days(days):
                 days_not_enabled.append(days_of_the_week[str(day)])
 
         return(days_enabled, days_not_enabled)
-
 
 def return_utc(non_utc_time):
     utc_time = (
@@ -367,14 +364,12 @@ def return_utc(non_utc_time):
     )
     return utc_time
 
-
 def return_modified_list(list_to_modify):
     for i in list_to_modify:
         i['date_modified'] = i['date_modified'].strftime('%m/%d/%Y %H:%M')
         i['date_created'] = i['date_created'].strftime('%m/%d/%Y %H:%M')
 
     return(list_to_modify)
-
 
 def hash_verify(orig_hash=None, file_path=None):
     verified = False
@@ -410,14 +405,12 @@ def hash_verify(orig_hash=None, file_path=None):
 
     return verified
 
-
 def md5sum(file_path, blocksize=65536):
     hasher = hashlib.md5()
     with open(file_path, "r+b") as f:
         for block in iter(lambda: f.read(blocksize), ""):
             hasher.update(block)
     return hasher.hexdigest()
-
 
 def decoder(string):
     try:
@@ -434,3 +427,121 @@ def decoder(string):
 
     return(string)
 
+def import_modules_by_regex(regex):
+    """Import vFense python modules by regex
+    Args:
+        regex (str): The file you want to import.
+            example.. _db_init.py
+    """
+    db_files = []
+    for root, dirs, files in os.walk(VFENSE_BASE_PATH):
+        for filename in fnmatch.filter(files, regex):
+            file_path = (
+                re.search(r'vFense/(vFense.*).py', os.path.join(root, filename))
+            )
+            if file_path:
+                module = file_path.group(1).replace('/', '.')
+                db_files.append(module)
+                importlib.import_module(module)
+    return db_files
+
+def get_api_uris(receiver=False):
+    """Return a list of all the api handlers
+    Args:
+        regex (str): The file you want to import.
+            example.. _db_init.py
+    """
+    receiver_api = re.compile(r'receiver')
+    handlers = []
+    for root, dirs, files in os.walk(VFENSE_BASE_PATH):
+        for filename in fnmatch.filter(files, '_api_uris.py'):
+            file_path = (
+                re.search(r'vFense/(vFense.*).py', os.path.join(root, filename))
+            )
+            if file_path:
+                if receiver:
+                    if receiver_api.search(root):
+                        module = file_path.group(1).replace('/', '.')
+                        mod = importlib.import_module(module)
+                        handlers = handlers + mod.api_handlers()
+                else:
+                    if not receiver_api.search(root):
+                        module = file_path.group(1).replace('/', '.')
+                        mod = importlib.import_module(module)
+                        handlers = handlers + mod.api_handlers()
+    return handlers
+
+def get_all_classes_in_dirs_by_regex(regex, receiver=False):
+    """Return all vFense classes in a directory by the name of the directory.
+    Args:
+        regex (str): The directory where you want to import all of the
+            classes from.
+            example.. api
+
+    Kwargs:
+        receiver (bool): Search the agent receiver folders or every other
+            directory.
+            default=False
+
+    Returns:
+        List of tuples.
+        [('vFense.core.api.agent', 'AgentManager')]
+    """
+    imported_classes = []
+    receiver_api = re.compile(r'receiver')
+    for root, dirs, files in os.walk(VFENSE_BASE_PATH):
+        for dirname in fnmatch.filter(dirs, regex):
+            dir_match = (
+                re.search(r'vFense/(vFense.*)', os.path.join(root, dirname))
+            )
+            if dir_match:
+                dir_path = os.path.join(root, dirname)
+                for py_file in os.listdir(dir_path):
+                    if (py_file.endswith('.py') and py_file != '__init__.py'
+                            and not py_file.startswith('_')):
+                        file_path = None
+                        if receiver:
+                            if receiver_api.search(root):
+                                file_path = (
+                                    os.path.join(dir_match.group(1), py_file)
+                                )
+                        else:
+                            if not receiver_api.search(root):
+                                file_path = (
+                                    os.path.join(dir_match.group(1), py_file)
+                                )
+                        if not file_path:
+                            break
+                        file_module = file_path.replace('/', '.')[:-3]
+                        mod = importlib.import_module(file_module)
+                        classes = []
+                        for x in dir(mod):
+                            if isinstance(getattr(mod, x), type):
+                                classes.append(getattr(mod, x))
+                        for cls in classes:
+                            imported_classes.append(
+                                (file_module, cls.__name__)
+                            )
+    return imported_classes
+
+def get_nginx_config_location():
+    config_dir = None
+    config = None
+    if get_distro() in DEBIAN_DISTROS:
+        config_dir = '/etc/nginx/sites-enabled/'
+    elif get_distro() in REDHAT_DISTROS:
+        config_dir = '/etc/nginx/conf.d/'
+
+    if config_dir:
+        config = os.path.join(config_dir, 'vFense.conf')
+
+    return config
+
+
+def get_sheduler_location():
+    sched_location = ''
+    for site in SITE_PACKAGES:
+        sched_location = site + '/' + SCHEDULER_PY
+        if os.path.exists(sched_location):
+            return(sched_location)
+    return(sched_location)

@@ -107,9 +107,29 @@ class SharedAppKeys():
     Update = 'update'
 
 class InstallDefaults():
-    REBOOT = 'none'
-    CPU_THROTTLE = 'normal'
-    NET_THROTTLE = 0
+    @staticmethod
+    def reboot():
+        return 'none'
+
+    @staticmethod
+    def cpu_throttle():
+        return 'normal'
+
+    @staticmethod
+    def net_throttle():
+        return 0
+
+    @staticmethod
+    def operation():
+        return 'install_os_apps'
+
+    @staticmethod
+    def agent_ids():
+        return list()
+
+    @staticmethod
+    def app_ids():
+        return list()
 
 class AppDefaults():
     @staticmethod

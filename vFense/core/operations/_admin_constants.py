@@ -1,12 +1,20 @@
 class AdminOperationDefaults():
-    ERRORS = []
-    IDS_REMOVED = []
-    IDS_UPDATED = []
-    IDS_CREATED = []
-    OBJECT_DATA = {}
-    STATUS_MESSAGE = ''
-    GENERIC_STATUS_CODE = None
-    VFENSE_STATUS_CODE = None
+    @staticmethod
+    def errors():
+        return list()
+
+    @staticmethod
+    def ids_removed():
+        return list()
+
+    @staticmethod
+    def ids_updated():
+        return list()
+
+    @staticmethod
+    def ids_created():
+        return list()
+
 
 class AdminActions():
     ADD_USERS_TO_VIEW = 'add users to view'
@@ -74,6 +82,7 @@ class AdminActions():
     EDIT_USER_EMAIL = 'edit user email'
     EDIT_USER_FULL_NAME = 'edit user full name'
     TOGGLE_USER_STATUS = 'toggle user status'
+    HIDE_UNDHIDE_APPLICATION = 'Hide/Unhide application'
     EDIT_CURRENT_VIEW = 'edit current user view'
     EDIT_DEFAULT_VIEW = 'edit default user view'
     EDIT_LOG_SETTINGS = 'edit log settings'

@@ -1,3 +1,4 @@
+from vFense import Base
 from vFense.plugins.vuln import Vulnerability
 from vFense.plugins.vuln._constants import VulnDefaults
 from vFense.plugins.vuln.ubuntu._constants import UbuntuVulnSubKeys
@@ -7,13 +8,19 @@ class Ubuntu(Vulnerability):
     pass
 
 
-class UbuntuVulnApp(object):
+class UbuntuVulnApp(Base):
     """Used to represent an instance of an app."""
 
-    def __init__(self, name=None, version=None, os_string=None, app_id=None):
+    def __init__(self, name=None, version=None, os_string=None, app_id=None,
+                 **kwargs):
         """
         Kwargs:
+            name (str): The name of the application.
+            version (str): The version of the application.
+            arch (str): The architecture this application was built for.
+            app_id (str): The primary key of the application.
         """
+        super(UbuntuVulnApp, self).__init__(**kwargs)
         self.name = name
         self.version = version
         self.os_string = os_string
@@ -49,16 +56,3 @@ class UbuntuVulnApp(object):
             UbuntuVulnSubKeys.OS_STRING: self.os_string,
             UbuntuVulnSubKeys.APP_ID: self.app_id,
         }
-
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}

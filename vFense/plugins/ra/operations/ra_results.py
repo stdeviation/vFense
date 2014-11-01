@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations.results import OperationResults

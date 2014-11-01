@@ -1,0 +1,214 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1626&#45;01] Critical: chromium&#45;browser security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 14 Oct 2014 03:56:09 &#45;0400 -->
+<!--X-Message-Id: 201410140756.s9E7u7pJ010178@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1626-01] Critical: chromium-browser security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1626-01] Critical: chromium-browser security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1626-01] Critical: chromium-browser security update</li>
+<li><em>Date</em>: Tue, 14 Oct 2014 08:04:41 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: chromium-browser security update
+Advisory ID:       RHSA-2014:1626-01
+Product:           Red Hat Enterprise Linux Supplementary
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1626.html">https://rhn.redhat.com/errata/RHSA-2014-1626.html</a>
+Issue date:        2014-10-14
+CVE Names:         CVE-2014-3188 CVE-2014-3189 CVE-2014-3190 
+                   CVE-2014-3191 CVE-2014-3192 CVE-2014-3193 
+                   CVE-2014-3194 CVE-2014-3195 CVE-2014-3197 
+                   CVE-2014-3198 CVE-2014-3199 CVE-2014-3200 
+=====================================================================
+
+1. Summary:
+
+Updated chromium-browser packages that fix multiple security issues are
+now available for Red Hat Enterprise Linux 6 Supplementary.
+
+Red Hat Product Security has rated this update as having Critical security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Supplementary (v. 6) - i386, x86_64
+
+3. Description:
+
+Chromium is an open-source web browser, powered by WebKit (Blink).
+
+Several flaws were found in the processing of malformed web content. A web
+page containing malicious content could cause Chromium to crash or,
+potentially, execute arbitrary code with the privileges of the user running
+Chromium. (CVE-2014-3188, CVE-2014-3189, CVE-2014-3190, CVE-2014-3191,
+CVE-2014-3192, CVE-2014-3193, CVE-2014-3194, CVE-2014-3199, CVE-2014-3200)
+
+Several information leak flaws were found in the processing of malformed
+web content. A web page containing malicious content could cause Chromium
+to disclose potentially sensitive information. (CVE-2014-3195,
+CVE-2014-3197, CVE-2014-3198)
+
+All Chromium users should upgrade to these updated packages, which contain
+Chromium version 38.0.2125.101, which corrects these issues. After
+installing the update, Chromium must be restarted for the changes to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1150848 - CVE-2014-3188 v8: IPC and v8 issue fixed in Google Chrome 38.0.2125.101
+1150849 - CVE-2014-3195 v8: information leak fixed in Google Chrome 38.0.2125.101
+1151368 - CVE-2014-3189 CVE-2014-3198 chromium: OOB reads in PDFium fixed in Chrome 38.0.2125.101
+1151381 - CVE-2014-3190 CVE-2014-3191 CVE-2014-3193 CVE-2014-3199 chromium: multiple security fixes in Chrome 38.0.2125.101
+1151383 - CVE-2014-3194 chromium: use-after-free issue in Web Workers fixed in Chrome 38.0.2125.101
+1151395 - CVE-2014-3192 chromium: use-after-free in DOM, fixed in Chrome 38.0.2125.101
+1151422 - CVE-2014-3197 chromium: information leak in XSS Auditor fixed in Chrome 38.0.2125.101
+1151425 - CVE-2014-3200 chromium: multiple unspecified issues fixed in Chrome 38.0.2125.101
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6):
+
+Source:
+chromium-browser-38.0.2125.101-2.el6_6.src.rpm
+
+i386:
+chromium-browser-38.0.2125.101-2.el6_6.i686.rpm
+chromium-browser-debuginfo-38.0.2125.101-2.el6_6.i686.rpm
+
+x86_64:
+chromium-browser-38.0.2125.101-2.el6_6.x86_64.rpm
+chromium-browser-debuginfo-38.0.2125.101-2.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Supplementary (v. 6):
+
+Source:
+chromium-browser-38.0.2125.101-2.el6_6.src.rpm
+
+i386:
+chromium-browser-38.0.2125.101-2.el6_6.i686.rpm
+chromium-browser-debuginfo-38.0.2125.101-2.el6_6.i686.rpm
+
+x86_64:
+chromium-browser-38.0.2125.101-2.el6_6.x86_64.rpm
+chromium-browser-debuginfo-38.0.2125.101-2.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Supplementary (v. 6):
+
+Source:
+chromium-browser-38.0.2125.101-2.el6_6.src.rpm
+
+i386:
+chromium-browser-38.0.2125.101-2.el6_6.i686.rpm
+chromium-browser-debuginfo-38.0.2125.101-2.el6_6.i686.rpm
+
+x86_64:
+chromium-browser-38.0.2125.101-2.el6_6.x86_64.rpm
+chromium-browser-debuginfo-38.0.2125.101-2.el6_6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3188.html">https://www.redhat.com/security/data/cve/CVE-2014-3188.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3189.html">https://www.redhat.com/security/data/cve/CVE-2014-3189.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3190.html">https://www.redhat.com/security/data/cve/CVE-2014-3190.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3191.html">https://www.redhat.com/security/data/cve/CVE-2014-3191.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3192.html">https://www.redhat.com/security/data/cve/CVE-2014-3192.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3193.html">https://www.redhat.com/security/data/cve/CVE-2014-3193.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3194.html">https://www.redhat.com/security/data/cve/CVE-2014-3194.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3195.html">https://www.redhat.com/security/data/cve/CVE-2014-3195.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3197.html">https://www.redhat.com/security/data/cve/CVE-2014-3197.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3198.html">https://www.redhat.com/security/data/cve/CVE-2014-3198.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3199.html">https://www.redhat.com/security/data/cve/CVE-2014-3199.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3200.html">https://www.redhat.com/security/data/cve/CVE-2014-3200.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="http://googlechromereleases.blogspot.com/2014/10/stable-channel-update.html">http://googlechromereleases.blogspot.com/2014/10/stable-channel-update.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUPNcTXlSAg2UNWIIRArpxAJ4j8S3Ge1+QwFdsFe7lFocX1SkT+ACdGjwr
+QV0KBxn2naFo+v/nKSm3rtA=
+=+e84
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

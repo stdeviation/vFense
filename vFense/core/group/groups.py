@@ -1,5 +1,5 @@
 import logging, logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.group._db_model import GroupKeys
 from vFense.core.group._db import fetch_group
 
@@ -36,7 +36,7 @@ def validate_group_ids(group_ids, view_name=None, is_global=False):
             if group:
                 if view_name:
                     if view_name in group.get(GroupKeys.Views):
-                        if group.get(GroupKeys.Global) == is_global:
+                        if group.get(GroupKeys.IsGlobal) == is_global:
                             valid_groups.append(group_id)
                         else:
                             invalid_groups.append(group_id)
@@ -45,7 +45,7 @@ def validate_group_ids(group_ids, view_name=None, is_global=False):
                         invalid_groups.append(group_id)
                         validated = False
                 else:
-                    if group.get(GroupKeys.Global) == is_global:
+                    if group.get(GroupKeys.IsGlobal) == is_global:
                         valid_groups.append(group_id)
                     else:
                         invalid_groups.append(group_id)
@@ -86,7 +86,7 @@ def validate_groups_in_views(group_ids, views):
         for group_id in group_ids:
             group_data = fetch_group(group_id)
             if group_data:
-                if group_data[GroupKeys.Global]:
+                if group_data[GroupKeys.IsGlobal]:
                     valid_global_groups.append(group_id)
                 else:
                     if set(group_data[GroupKeys.Views]).issubset(views):

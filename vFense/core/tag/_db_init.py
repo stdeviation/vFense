@@ -1,5 +1,5 @@
 import logging, logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.tag._db_model import (
     TagCollections, TagKeys, TagsIndexes, TagsPerAgentKeys, TagsPerAgentIndexes
@@ -110,6 +110,7 @@ try:
         initialize_collections(collection, current_collections)
         name, _ = collection
         indexes = retrieve_indexes(name)
+        initialize_tag_per_agent_indexes(name, indexes)
 
 except Exception as e:
     logger.exception(e)

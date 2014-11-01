@@ -1,55 +1,40 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
-from vFense.core.results import ApiResultKeys
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.operations._constants import AgentOperations, vFensePlugins
-from vFense.core.operations.store_agent_operation import StoreAgentOperation
+from vFense.core.operations.store_agent_operation import (
+    StoreAgentOperationManager
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
-class StoreAgentOperations(StoreAgentOperation):
+class StoreAgentOperations(StoreAgentOperationManager):
 
-    def uninstall_agent(self, agentids=None, tag_id=None):
-        results = (
-            self.generic_operation(
-                AgentOperations.UNINSTALL_AGENT,
-                vFensePlugins.CORE_PLUGIN,
-                agentids, tag_id
-            )
-        )
+    def uninstall_agent(self, agent_operation):
+        agent_operation.operation = AgentOperations.UNINSTALL_AGENT
+        agent_operation.plugin = vFensePlugins.CORE_PLUGIN
+        agent_operation.fill_in_defaults()
+        results = self.generic_operation(agent_operation)
         return results
 
-    def reboot(self, agentids=None, tag_id=None):
-        results = (
-            self.generic_operation(
-                AgentOperations.REBOOT,
-                vFensePlugins.CORE_PLUGIN,
-                agentids, tag_id
-            )
-        )
-
+    def reboot(self, agent_operation):
+        agent_operation.operation = AgentOperations.REBOOT
+        agent_operation.plugin = vFensePlugins.CORE_PLUGIN
+        agent_operation.fill_in_defaults()
+        results = self.generic_operation(agent_operation)
         return results
 
-    def shutdown(self, agentids=None, tag_id=None):
-        results = (
-            self.generic_operation(
-                AgentOperations.SHUTDOWN,
-                vFensePlugins.CORE_PLUGIN,
-                agentids, tag_id
-            )
-        )
-
+    def shutdown(self, agent_operation):
+        agent_operation.operation = AgentOperations.SHUTDOWN
+        agent_operation.plugin = vFensePlugins.CORE_PLUGIN
+        agent_operation.fill_in_defaults()
+        results = self.generic_operation(agent_operation)
         return results
 
-    def new_token(self, token, agentids=None, tag_id=None):
-        results = (
-            self.generic_operation(
-                AgentOperations.NEW_TOKEN,
-                vFensePlugins.CORE_PLUGIN,
-                agentids, tag_id, ApiResultKeys.NEW_TOKEN_ID,
-                token
-            )
-        )
-
+    def new_token(self, agent_operation):
+        agent_operation.operation = AgentOperations.NEW_TOKEN
+        agent_operation.plugin = vFensePlugins.CORE_PLUGIN
+        agent_operation.fill_in_defaults()
+        results = self.generic_operation(agent_operation)
         return results

@@ -1,16 +1,19 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
 from copy import deepcopy
+from vFense._constants import VFENSE_LOGGING_CONFIG
+from vFense.core.operations import (
+    AgentOperation, OperPerAgent, OperPerApp
+)
 from vFense.core.operations._constants import vFenseObjects
-from vFense.core.operations.agent_operations import AgentOperation
+from vFense.core.operations.agent_operations import AgentOperationManager
 from vFense.core.operations._db_model import (
     OperationPerAgentKey, AgentOperationKey
 )
-from vFense.core.decorators import results_message
-from vFense.core.queue.queue import AgentQueue
+from vFense.core.queue import AgentQueueOperation
+from vFense.core.queue.manager import AgentQueueManager
 from vFense.core.tag._db import fetch_agent_ids_in_tag
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core.status_codes import GenericCodes, GenericFailureCodes
 from vFense.core.operations.status_codes import (
     AgentOperationCodes, AgentOperationFailureCodes
@@ -20,7 +23,7 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-class StoreAgentOperation(object):
+class StoreAgentOperationManager(object):
     """This is the base class for storing operations in an agent"""
     def __init__(
             self, username, view_name, server_queue_ttl=None,
@@ -47,33 +50,47 @@ class StoreAgentOperation(object):
             >>> from vFense.core.operations.store_agent_operation import StoreAgentOperation
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> store = StoreAgentOperation(username, view_name)
+            >>> store = StoreAgentOperationManager(username, view_name)
         """
         self.view_name = view_name
         self.username = username
         self.server_queue_ttl = server_queue_ttl
         self.agent_queue_ttl = agent_queue_ttl
 
-    def _store_in_agent_queue(self, operation):
+    def _store_in_agent_queue(self, queue):
         """Add the operation inside of the agent queue collection
         Args:
-            operation (dict): The dictionary of the operation.
+            queue (AgentQueueOperation): An instance of AgentQueueOperation
+
+        Basic Usage:
+            >>> queue_data = AgentQueueOperation()
+            >>> queue_data.agent_id = '7eb61902-fb4d-4892-b4db-4913552ec92d'
+            >>> queue_data.operation =-'reboot'
+            >>> queue_data.operation_id = '6c24e95c-da37-4ba8-b207-cb8e39a5d30e'
+            >>> queue_data.plugin = 'core'
+            >>> username = 'admin'
+            >>> view = 'global'
+            >>> operation = StoreAgentOperationManager(username, view)
+            >>> operation._store_in_agent_queue(queue_data)
+
+        Returns:
+            Boolean (True|False)
         """
-        agent_queue = AgentQueue(operation[OperationPerAgentKey.AgentId])
-        agent_queue.add(
-            operation, self.view_name, self.server_queue_ttl,
+        agent_queue = AgentQueueManager(queue.agent_id)
+        added = agent_queue.add(
+            queue, self.view_name, self.server_queue_ttl,
             self.agent_queue_ttl
         )
 
-    def generic_operation(
-            self, action, plugin, agentids=None,
-            tag_id=None, custom_key=None, custom_value=None
-        ):
+        return added
+
+    def generic_operation(self, operation):
         """This will do all the necessary work, to add the operation
             into the agent_queue. This method is to be used for operations
             that do not need any extra manipulation, in order to be added into
             the queue.
         Args:
+            operation (Agentperation): An instance of AgentOperation
             action (str): This is the action that will be performed,
                 on the agent.
                 Examples.... reboot, shutdown, install_os_apps, etc..
@@ -91,17 +108,19 @@ class StoreAgentOperation(object):
                 default=None
 
         Basic Usage:
-            >>> from vFense.core.operations.store_agent_operation import StoreAgentOperation
+            >>> from vFense.core.operations.store_agent_operation import StoreAgentOperationManager
             >>> username = 'admin'
             >>> view_name = 'default'
-            >>> store = StoreAgentOperation(username, view_name)
-            >>> store.generic_operation(
-                    'reboot', 'core',
-                    agentids=['33ba8521-b2e5-47dc-9bdc-0f1e3384049d']
-                )
+            >>> store = StoreAgentOperationManager(username, view_name)
+            >>> operation = AgentOperation()
+            >>> operation.agent_ids = [ '6c24e95c-da37-4ba8-b207-cb8e39a5d30e']
+            >>> operation.operation = 'reboot'
+            >>> operation.plugin = 'core'
+            >>> operation.fill_in_defaults()
+            >>> results = store.generic_operation(operation)
 
         Returns:
-            Dictionary
+            Instance of ApiResults
             {
                 "rv_status_code": 6000,
                 "unchanged_ids": [],
@@ -121,56 +140,46 @@ class StoreAgentOperation(object):
             }
         """
         data = []
-        performed_on = vFenseObjects.AGENT
-        if tag_id:
-            performed_on = vFenseObjects.TAG
-            if not agentids:
-                agentids = fetch_agent_ids_in_tag(tag_id)
+        operation.action_performed_on= vFenseObjects.AGENT
+        if operation.tag_id:
+            operation.action_performed_on = vFenseObjects.TAG
+            if not operation.agent_ids:
+                agentids = fetch_agent_ids_in_tag(operation.tag_id)
 
             elif agentids:
-                agentids += fetch_agent_ids_in_tag(tag_id)
+                agentids += fetch_agent_ids_in_tag(operation.tag_id)
 
-        results = {
-            ApiResultKeys.DATA: [],
-        }
+        operation.agent_ids = agentids
+        results = ApiResults()
+        results.fill_in_defaults()
 
-        operation = (
-            AgentOperation(
+        manager = (
+            AgentOperationManager(
                 self.username, self.view_name,
             )
         )
 
-        operation_id = (
-            operation.create_operation(
-                action, plugin, agentids, tag_id,
-                performed_on=performed_on
-            )
-        )
+        operation_id = operation.create_operation(operation)
         if operation_id:
             msg = 'operation created'
             status_code = GenericCodes.ObjectCreated
             vfense_status_code = AgentOperationCodes.Created
-            results[ApiResultKeys.GENERATED_IDS] = [operation_id]
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = [operation_id]
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
             for agent_id in agentids:
-                operation_data = {
-                    AgentOperationKey.Operation: action,
-                    AgentOperationKey.OperationId: operation_id,
-                    AgentOperationKey.Plugin: plugin,
-                    OperationPerAgentKey.AgentId: agent_id,
-                }
-                if custom_key and custom_value:
-                    operation_data[custom_key] = custom_value
+                queue_data = AgentQueueOperation()
+                queue_data.operation =-operation.operation
+                queue_data.operation_id = operation_id
+                queue_data.plugin = operation.plugin
+                queue_data.agent_id = agent_id
+                data.append(queue_data.to_dict_non_null())
+                self._store_in_agent_queue(queue_data)
+                manager.add_agent_to_operation(agent_id, operation_id)
 
-                agent_data = deepcopy(operation_data)
-                data.append(agent_data)
-                self._store_in_agent_queue(operation_data)
-                operation.add_agent_to_operation(agent_id, operation_id)
-
-            results[ApiResultKeys.DATA] = data
+            results.data = data
 
         else:
             msg = 'operation failed to create'
@@ -178,10 +187,10 @@ class StoreAgentOperation(object):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = [operation_id]
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
-            results[ApiResultKeys.DATA] = data
+            results.generated_ids = [operation_id]
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
+            results.data = data
 
         return results

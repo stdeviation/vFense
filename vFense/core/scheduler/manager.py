@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from datetime import datetime
 from pytz import utc
@@ -16,7 +16,7 @@ from vFense.core.scheduler._db import (
     fetch_jobs_by_view, fetch_job_by_name_and_view,
     fetch_admin_jobs_by_view, fetch_admin_job_by_name_and_view
 )
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes,
 )
@@ -175,7 +175,8 @@ class JobManager(object):
         Returns:
             Dictionary of the results.
         """
-        results = {}
+        results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(job, Schedule):
             job.fill_in_defaults()
             if job.trigger == ScheduleTriggers.CRON:
@@ -193,26 +194,26 @@ class JobManager(object):
                     'Invalid {0} Trigger, Trigger must be cron.'
                     .format(job.trigger)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.FailedToCreateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     SchedulerFailureCodes.FailedToCreateSchedule
                 )
-                results[ApiResultKeys.MESSAGE] = msg
+                results.message = msg
 
         else:
             msg = (
                 'Invalid {0} Instance, must pass an instance of Schedule.'
                 .format(type(job))
             )
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericFailureCodes.FailedToCreateObject
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 SchedulerFailureCodes.FailedToCreateSchedule
             )
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
         return results
 
@@ -242,7 +243,8 @@ class JobManager(object):
         Returns:
             Dictionary of the results.
         """
-        results = {}
+        results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(job, Schedule):
             job.fill_in_defaults()
             if job.trigger == ScheduleTriggers.INTERVAL:
@@ -252,26 +254,26 @@ class JobManager(object):
                     'Invalid {0} Trigger, Trigger must be interval.'
                     .format(job.trigger)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.FailedToCreateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     SchedulerFailureCodes.FailedToCreateSchedule
                 )
-                results[ApiResultKeys.MESSAGE] = msg
+                results.message = msg
 
         else:
             msg = (
                 'Invalid {0} Instance, must pass an instance of Schedule.'
                 .format(type(job))
             )
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericFailureCodes.FailedToCreateObject
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 SchedulerFailureCodes.FailedToCreateSchedule
             )
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
         return results
 
@@ -302,7 +304,8 @@ class JobManager(object):
         Returns:
             Dictionary of the results.
         """
-        results = {}
+        results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(job, Schedule):
             job.fill_in_defaults()
             if job.run_date and job.trigger == ScheduleTriggers.DATE:
@@ -313,26 +316,26 @@ class JobManager(object):
                     'Invalid {0} Trigger, Trigger must be a date.'
                     .format(job.trigger)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.FailedToCreateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     SchedulerFailureCodes.FailedToCreateSchedule
                 )
-                results[ApiResultKeys.MESSAGE] = msg
+                results.message = msg
 
         else:
             msg = (
                 'Invalid {0} Instance, must pass an instance of Schedule.'
                 .format(type(job))
             )
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericFailureCodes.FailedToCreateObject
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 SchedulerFailureCodes.FailedToCreateSchedule
             )
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
         return results
 
@@ -364,7 +367,8 @@ class JobManager(object):
             Dictionary of the results.
         """
         job_status = None
-        results = {}
+        results = ApiResults()
+        results.fill_in_defaults()
         try:
             if isinstance(job, Schedule):
                 invalid_fields = job.get_invalid_fields()
@@ -395,55 +399,55 @@ class JobManager(object):
                         print job_status
 
                         msg = 'Job {0} added successfully'.format(job.name)
-                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        results.generic_status_code = (
                             GenericCodes.ObjectCreated
                         )
-                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        results.vfense_status_code = (
                             SchedulerCodes.ScheduleCreated
                         )
-                        results[ApiResultKeys.MESSAGE] = msg
-                        results[ApiResultKeys.GENERATED_IDS] = job_status.id
+                        results.message = msg
+                        results.generated_ids = job_status.id
 
                     else:
                         msg = (
                             'Job with name {0} already exist in this view.'
                             .format(job.name)
                         )
-                        results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                        results.generic_status_code = (
                             GenericCodes.InvalidId
                         )
-                        results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                        results.vfense_status_code = (
                             SchedulerFailureCodes.ScheduleExistsWithSameName
                         )
-                        results[ApiResultKeys.MESSAGE] = msg
-                        results[ApiResultKeys.ERRORS] = invalid_fields
+                        results.message = msg
+                        results.errors = invalid_fields
 
                 else:
                     msg = (
                         'Failed to create job {0}, invalid fields were passed'
                         .format(job.name)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericFailureCodes.FailedToCreateObject
                     )
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         SchedulerFailureCodes.FailedToCreateSchedule
                     )
-                    results[ApiResultKeys.MESSAGE] = msg
-                    results[ApiResultKeys.ERRORS] = invalid_fields
+                    results.message = msg
+                    results.errors = invalid_fields
 
             else:
                 msg = (
                     'Invalid {0} Instance, must pass an instance of Schedule.'
                     .format(type(job))
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.FailedToCreateObject
                 )
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     SchedulerFailureCodes.FailedToCreateSchedule
                 )
-                results[ApiResultKeys.MESSAGE] = msg
+                results.message = msg
 
 
         except Exception as e:
@@ -451,13 +455,13 @@ class JobManager(object):
             msg = (
                 'Something broke within apscheduler {0}.'.format(e)
             )
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericFailureCodes.FailedToCreateObject
             )
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 SchedulerFailureCodes.FailedToCreateSchedule
             )
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
         return results
 

@@ -1,8 +1,8 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
-from vFense.core.queue.queue import AgentQueue
+from vFense.core.queue.manager import AgentQueueManager
 from vFense.settings import Default
 from vFense.core.operations.agent_operations import AgentOperation
 
@@ -104,7 +104,7 @@ def save_result(
 def store_in_agent_queue(operation):
 
     operation = operation.to_dict()
-    agent_queue = AgentQueue(operation.agent_id)
+    agent_queue = AgentQueueManager(operation.agent_id)
     agent_queue.add(operation, operation.view_name)
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import results_message
@@ -9,7 +9,7 @@ from vFense.core.agent._db_model import AgentKeys
 from vFense.core.results import ApiResultKeys
 from vFense.core.agent.agents import get_agent_info
 from vFense.core._db_constants import DbTime
-from vFense.core.operations.agent_operations import AgentOperation, \
+from vFense.core.operations.agent_operations import AgentOperationManager, \
     operation_for_agent_exist, get_agent_operation
 
 from vFense.receiver.status_codes import (
@@ -58,12 +58,12 @@ class OperationResults(object):
         self.operation_id = operation_id
         self.agent_data = get_agent_info(self.agent_id)
         self.operation_data = get_agent_operation(self.operation_id)
-        self.date_now = DbTime.time_now()
+        self.date_now = DbTime.now()
         self.begining_of_time = DbTime.begining_of_time()
         self.error = error
         self.success = success
         self.status_code = status_code
-        self.operation = AgentOperation()
+        self.operation = AgentOperationManager()
 
     def update_operation(self, oper_type):
         """Update an agent operation
@@ -127,17 +127,17 @@ class OperationResults(object):
                         'Results updated for operation id %s' %
                         (self.operation_id)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericCodes.ObjectUpdated
                     )
 
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         AgentResultCodes.ResultsUpdated
                     )
 
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.message = msg
 
-                    results[ApiResultKeys.UPDATED_IDS] = (
+                    results.updated_ids = (
                         [self.operation_id]
                     )
 
@@ -146,17 +146,17 @@ class OperationResults(object):
                         'Results failed to update operation id %s' %
                         (self.operation_id)
                     )
-                    results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                    results.generic_status_code = (
                         GenericFailureCodes.FailedToUpdateObject
                     )
 
-                    results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                    results.vfense_status_code = (
                         AgentFailureResultCodes.ResultsFailedToUpdate
                     )
 
-                    results[ApiResultKeys.MESSAGE] = msg
+                    results.message = msg
 
-                    results[ApiResultKeys.UNCHANGED_IDS] = (
+                    results.unchanged_ids = (
                         [self.operation_id]
                     )
 
@@ -165,33 +165,33 @@ class OperationResults(object):
                     'Invalid operation id %s' %
                     (self.operation_id)
                 )
-                results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+                results.generic_status_code = (
                     GenericFailureCodes.FailedToUpdateObject
                 )
 
-                results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+                results.vfense_status_code = (
                     AgentFailureResultCodes.InvalidSuccessValue
                 )
 
-                results[ApiResultKeys.MESSAGE] = msg
+                results.message = msg
 
-                results[ApiResultKeys.UNCHANGED_IDS] = (
+                results.unchanged_ids = (
                     [self.operation_id]
                 )
 
         else:
             msg = 'Invalid operation id'
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = (
+            results.generic_status_code = (
                 GenericFailureCodes.InvalidId
             )
 
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = (
+            results.vfense_status_code = (
                 AgentFailureResultCodes.InvalidOperationId
             )
 
-            results[ApiResultKeys.MESSAGE] = msg
+            results.message = msg
 
-            results[ApiResultKeys.UNCHANGED_IDS] = (
+            results.unchanged_ids = (
                 [self.operation_id]
             )
 

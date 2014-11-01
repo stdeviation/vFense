@@ -1,0 +1,1363 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1436&#45;02] Moderate: X11 client libraries security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 14 Oct 2014 00:55:55 &#45;0400 -->
+<!--X-Message-Id: 201410140455.s9E4tpHm030490@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1436-02] Moderate: X11 client libraries security, bug fix,	an</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1436-02] Moderate: X11 client libraries security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1436-02] Moderate: X11 client libraries security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 14 Oct 2014 05:04:24 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: X11 client libraries security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1436-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1436.html">https://rhn.redhat.com/errata/RHSA-2014-1436.html</a>
+Issue date:        2014-10-14
+CVE Names:         CVE-2013-1981 CVE-2013-1982 CVE-2013-1983 
+                   CVE-2013-1984 CVE-2013-1985 CVE-2013-1986 
+                   CVE-2013-1987 CVE-2013-1988 CVE-2013-1989 
+                   CVE-2013-1990 CVE-2013-1991 CVE-2013-1995 
+                   CVE-2013-1997 CVE-2013-1998 CVE-2013-1999 
+                   CVE-2013-2000 CVE-2013-2001 CVE-2013-2002 
+                   CVE-2013-2003 CVE-2013-2004 CVE-2013-2005 
+                   CVE-2013-2062 CVE-2013-2064 CVE-2013-2066 
+=====================================================================
+
+1. Summary:
+
+Updated X11 client libraries packages that fix multiple security issues,
+several bugs, and add various enhancements are now available for Red Hat
+Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+The X11 (Xorg) libraries provide library routines that are used within all
+X Window applications.
+
+Multiple integer overflow flaws, leading to heap-based buffer overflows,
+were found in the way various X11 client libraries handled certain protocol
+data. An attacker able to submit invalid protocol data to an X11 server via
+a malicious X11 client could use either of these flaws to potentially
+escalate their privileges on the system. (CVE-2013-1981, CVE-2013-1982,
+CVE-2013-1983, CVE-2013-1984, CVE-2013-1985, CVE-2013-1986, CVE-2013-1987,
+CVE-2013-1988, CVE-2013-1989, CVE-2013-1990, CVE-2013-1991, CVE-2013-2003,
+CVE-2013-2062, CVE-2013-2064)
+
+Multiple array index errors, leading to heap-based buffer out-of-bounds
+write flaws, were found in the way various X11 client libraries handled
+data returned from an X11 server. A malicious X11 server could possibly use
+this flaw to execute arbitrary code with the privileges of the user running
+an X11 client. (CVE-2013-1997, CVE-2013-1998, CVE-2013-1999, CVE-2013-2000,
+CVE-2013-2001, CVE-2013-2002, CVE-2013-2066)
+
+A buffer overflow flaw was found in the way the XListInputDevices()
+function of X.Org X11's libXi runtime library handled signed numbers.
+A malicious X11 server could possibly use this flaw to execute arbitrary
+code with the privileges of the user running an X11 client. (CVE-2013-1995)
+
+A flaw was found in the way the X.Org X11 libXt runtime library used
+uninitialized pointers. A malicious X11 server could possibly use this flaw
+to execute arbitrary code with the privileges of the user running an X11
+client. (CVE-2013-2005)
+
+Two stack-based buffer overflow flaws were found in the way libX11, the
+Core X11 protocol client library, processed certain user-specified files.
+A malicious X11 server could possibly use this flaw to crash an X11 client
+via a specially crafted file. (CVE-2013-2004)
+
+The xkeyboard-config package has been upgraded to upstream version 2.11,
+which provides a number of bug fixes and enhancements over the previous
+version. (BZ#1077471)
+
+This update also fixes the following bugs:
+
+* Previously, updating the mesa-libGL package did not update the libX11
+package, although it was listed as a dependency of mesa-libGL. This bug has
+been fixed and updating mesa-libGL now updates all dependent packages as
+expected. (BZ#1054614)
+
+* Previously, closing a customer application could occasionally cause the X
+Server to terminate unexpectedly. After this update, the X Server no longer
+hangs when a user closes a customer application. (BZ#971626)
+
+All X11 client libraries users are advised to upgrade to these updated
+packages, which correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+959040 - CVE-2013-1981 libX11: Multiple integer overflows leading to heap-based buffer-overflows
+959046 - CVE-2013-1982 libXext: Multiple integer overflows leading to heap-based buffer-overflows
+959048 - CVE-2013-1983 libXfixes: Integer overflow leading to heap-based buffer overflow
+959049 - CVE-2013-1984 libXi: Multiple integer overflows leading to heap-based buffer-overflows
+959056 - CVE-2013-1985 libXinerama: Integer overflow leading to heap-based buffer overflow
+959059 - CVE-2013-1986 libXrandr: Multiple integer overflows leading to heap-based bufer overflows
+959061 - CVE-2013-1987 libXrender: Multiple integer overflows leading to heap-based bufer overflows
+959066 - CVE-2013-1988 libXRes: Multiple integer overflows leading to heap-based bufer overflows
+959068 - CVE-2013-1989 libXv: Multiple integer overflows leading to heap-based bufer overflows
+959070 - CVE-2013-1990 libXvMC: Multiple integer overflows leading to heap-based buffer overflows
+959072 - CVE-2013-1991 libXxf86dga: Multiple integer overflows leading to heap-based buffer overflows
+959077 - CVE-2013-2003 libXcursor: Integer overflow leading to heap-based buffer overflow
+959108 - CVE-2013-2005 libXt: Memory corruption due to unchecked use of unchecked function pointers
+959112 - CVE-2013-2004 libX11: unbounded recursion leading to stack-overflow
+960345 - CVE-2013-1997 libX11: Multiple Array Index error leading to heap-based OOB write
+960346 - CVE-2013-1998 libXi: Multiple Array Index error leading to heap-based OOB write
+960347 - CVE-2013-1999 libXvMC: Array Index error leading to heap-based OOB write
+960349 - CVE-2013-2000 libXxf86dga: Array Index error leading to heap-based OOB write
+960350 - CVE-2013-2001 libXxf86vm: Multiple Array Index error leading to heap-based OOB write
+960352 - CVE-2013-2002 libXt: Array Index error leading to heap-based OOB write
+960357 - CVE-2013-1995 libXi: Sign extension issues resulting in heap-based buffer overflow
+960362 - CVE-2013-2062 libXp: Integer overflow leading to heap-based buffer overflow
+960367 - CVE-2013-2064 libxcb: Integer overflow leading to heap-based buffer overflow
+960369 - CVE-2013-2066 libXv: Array Index error leading to heap-based OOB write
+971626 - Closing an in-house app can occasionally hang the X server
+1119322 - %{dist} found instead of %{?dist} in: libXi-1.7.2-2.1.el6.src.rpm.spec
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+libX11-1.6.0-2.2.el6.src.rpm
+libXcursor-1.1.14-2.1.el6.src.rpm
+libXext-1.3.2-2.1.el6.src.rpm
+libXfixes-5.0.1-2.1.el6.src.rpm
+libXi-1.7.2-2.2.el6.src.rpm
+libXinerama-1.1.3-2.1.el6.src.rpm
+libXp-1.0.2-2.1.el6.src.rpm
+libXrandr-1.4.1-2.1.el6.src.rpm
+libXrender-0.9.8-2.1.el6.src.rpm
+libXres-1.0.7-2.1.el6.src.rpm
+libXt-1.1.4-6.1.el6.src.rpm
+libXtst-1.2.2-2.1.el6.src.rpm
+libXv-1.0.9-2.1.el6.src.rpm
+libXvMC-1.0.8-2.1.el6.src.rpm
+libXxf86dga-1.1.4-2.1.el6.src.rpm
+libXxf86vm-1.1.3-2.1.el6.src.rpm
+libdmx-1.1.3-3.el6.src.rpm
+libxcb-1.9.1-2.el6.src.rpm
+xkeyboard-config-2.11-1.el6.src.rpm
+
+i386:
+libX11-1.6.0-2.2.el6.i686.rpm
+libX11-debuginfo-1.6.0-2.2.el6.i686.rpm
+libXcursor-1.1.14-2.1.el6.i686.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.i686.rpm
+libXext-1.3.2-2.1.el6.i686.rpm
+libXext-debuginfo-1.3.2-2.1.el6.i686.rpm
+libXfixes-5.0.1-2.1.el6.i686.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.i686.rpm
+libXi-1.7.2-2.2.el6.i686.rpm
+libXi-debuginfo-1.7.2-2.2.el6.i686.rpm
+libXinerama-1.1.3-2.1.el6.i686.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXp-1.0.2-2.1.el6.i686.rpm
+libXp-debuginfo-1.0.2-2.1.el6.i686.rpm
+libXrandr-1.4.1-2.1.el6.i686.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.i686.rpm
+libXrender-0.9.8-2.1.el6.i686.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.i686.rpm
+libXres-1.0.7-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXt-1.1.4-6.1.el6.i686.rpm
+libXt-debuginfo-1.1.4-6.1.el6.i686.rpm
+libXtst-1.2.2-2.1.el6.i686.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.i686.rpm
+libXv-1.0.9-2.1.el6.i686.rpm
+libXv-debuginfo-1.0.9-2.1.el6.i686.rpm
+libXvMC-1.0.8-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXxf86dga-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.i686.rpm
+libXxf86vm-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.i686.rpm
+libdmx-1.1.3-3.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.i686.rpm
+libxcb-1.9.1-2.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+
+noarch:
+libX11-common-1.6.0-2.2.el6.noarch.rpm
+xkeyboard-config-2.11-1.el6.noarch.rpm
+
+x86_64:
+libX11-1.6.0-2.2.el6.i686.rpm
+libX11-1.6.0-2.2.el6.x86_64.rpm
+libX11-debuginfo-1.6.0-2.2.el6.i686.rpm
+libX11-debuginfo-1.6.0-2.2.el6.x86_64.rpm
+libXcursor-1.1.14-2.1.el6.i686.rpm
+libXcursor-1.1.14-2.1.el6.x86_64.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.i686.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.x86_64.rpm
+libXext-1.3.2-2.1.el6.i686.rpm
+libXext-1.3.2-2.1.el6.x86_64.rpm
+libXext-debuginfo-1.3.2-2.1.el6.i686.rpm
+libXext-debuginfo-1.3.2-2.1.el6.x86_64.rpm
+libXfixes-5.0.1-2.1.el6.i686.rpm
+libXfixes-5.0.1-2.1.el6.x86_64.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.i686.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.x86_64.rpm
+libXi-1.7.2-2.2.el6.i686.rpm
+libXi-1.7.2-2.2.el6.x86_64.rpm
+libXi-debuginfo-1.7.2-2.2.el6.i686.rpm
+libXi-debuginfo-1.7.2-2.2.el6.x86_64.rpm
+libXinerama-1.1.3-2.1.el6.i686.rpm
+libXinerama-1.1.3-2.1.el6.x86_64.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libXp-1.0.2-2.1.el6.i686.rpm
+libXp-1.0.2-2.1.el6.x86_64.rpm
+libXp-debuginfo-1.0.2-2.1.el6.i686.rpm
+libXp-debuginfo-1.0.2-2.1.el6.x86_64.rpm
+libXrandr-1.4.1-2.1.el6.i686.rpm
+libXrandr-1.4.1-2.1.el6.x86_64.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.i686.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.x86_64.rpm
+libXrender-0.9.8-2.1.el6.i686.rpm
+libXrender-0.9.8-2.1.el6.x86_64.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.i686.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.x86_64.rpm
+libXres-1.0.7-2.1.el6.i686.rpm
+libXres-1.0.7-2.1.el6.x86_64.rpm
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.x86_64.rpm
+libXt-1.1.4-6.1.el6.i686.rpm
+libXt-1.1.4-6.1.el6.x86_64.rpm
+libXt-debuginfo-1.1.4-6.1.el6.i686.rpm
+libXt-debuginfo-1.1.4-6.1.el6.x86_64.rpm
+libXtst-1.2.2-2.1.el6.i686.rpm
+libXtst-1.2.2-2.1.el6.x86_64.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.i686.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.x86_64.rpm
+libXv-1.0.9-2.1.el6.i686.rpm
+libXv-1.0.9-2.1.el6.x86_64.rpm
+libXv-debuginfo-1.0.9-2.1.el6.i686.rpm
+libXv-debuginfo-1.0.9-2.1.el6.x86_64.rpm
+libXvMC-1.0.8-2.1.el6.i686.rpm
+libXvMC-1.0.8-2.1.el6.x86_64.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.x86_64.rpm
+libXxf86dga-1.1.4-2.1.el6.x86_64.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.x86_64.rpm
+libXxf86vm-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-1.1.3-2.1.el6.x86_64.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libdmx-1.1.3-3.el6.x86_64.rpm
+libdmx-debuginfo-1.1.3-3.el6.x86_64.rpm
+libxcb-1.9.1-2.el6.i686.rpm
+libxcb-1.9.1-2.el6.x86_64.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+xcb-proto-1.8-3.el6.src.rpm
+xorg-x11-proto-devel-7.7-9.el6.src.rpm
+xorg-x11-xtrans-devel-1.3.4-1.el6.src.rpm
+
+i386:
+libX11-debuginfo-1.6.0-2.2.el6.i686.rpm
+libX11-devel-1.6.0-2.2.el6.i686.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.i686.rpm
+libXcursor-devel-1.1.14-2.1.el6.i686.rpm
+libXext-debuginfo-1.3.2-2.1.el6.i686.rpm
+libXext-devel-1.3.2-2.1.el6.i686.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.i686.rpm
+libXfixes-devel-5.0.1-2.1.el6.i686.rpm
+libXi-debuginfo-1.7.2-2.2.el6.i686.rpm
+libXi-devel-1.7.2-2.2.el6.i686.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXinerama-devel-1.1.3-2.1.el6.i686.rpm
+libXp-debuginfo-1.0.2-2.1.el6.i686.rpm
+libXp-devel-1.0.2-2.1.el6.i686.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.i686.rpm
+libXrandr-devel-1.4.1-2.1.el6.i686.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.i686.rpm
+libXrender-devel-0.9.8-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXres-devel-1.0.7-2.1.el6.i686.rpm
+libXt-debuginfo-1.1.4-6.1.el6.i686.rpm
+libXt-devel-1.1.4-6.1.el6.i686.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.i686.rpm
+libXtst-devel-1.2.2-2.1.el6.i686.rpm
+libXv-debuginfo-1.0.9-2.1.el6.i686.rpm
+libXv-devel-1.0.9-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXvMC-devel-1.0.8-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.i686.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.i686.rpm
+libdmx-devel-1.1.3-3.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-devel-1.9.1-2.el6.i686.rpm
+libxcb-python-1.9.1-2.el6.i686.rpm
+
+noarch:
+libxcb-doc-1.9.1-2.el6.noarch.rpm
+xcb-proto-1.8-3.el6.noarch.rpm
+xkeyboard-config-devel-2.11-1.el6.noarch.rpm
+xorg-x11-proto-devel-7.7-9.el6.noarch.rpm
+xorg-x11-xtrans-devel-1.3.4-1.el6.noarch.rpm
+
+x86_64:
+libX11-debuginfo-1.6.0-2.2.el6.i686.rpm
+libX11-debuginfo-1.6.0-2.2.el6.x86_64.rpm
+libX11-devel-1.6.0-2.2.el6.i686.rpm
+libX11-devel-1.6.0-2.2.el6.x86_64.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.i686.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.x86_64.rpm
+libXcursor-devel-1.1.14-2.1.el6.i686.rpm
+libXcursor-devel-1.1.14-2.1.el6.x86_64.rpm
+libXext-debuginfo-1.3.2-2.1.el6.i686.rpm
+libXext-debuginfo-1.3.2-2.1.el6.x86_64.rpm
+libXext-devel-1.3.2-2.1.el6.i686.rpm
+libXext-devel-1.3.2-2.1.el6.x86_64.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.i686.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.x86_64.rpm
+libXfixes-devel-5.0.1-2.1.el6.i686.rpm
+libXfixes-devel-5.0.1-2.1.el6.x86_64.rpm
+libXi-debuginfo-1.7.2-2.2.el6.i686.rpm
+libXi-debuginfo-1.7.2-2.2.el6.x86_64.rpm
+libXi-devel-1.7.2-2.2.el6.i686.rpm
+libXi-devel-1.7.2-2.2.el6.x86_64.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libXinerama-devel-1.1.3-2.1.el6.i686.rpm
+libXinerama-devel-1.1.3-2.1.el6.x86_64.rpm
+libXp-debuginfo-1.0.2-2.1.el6.i686.rpm
+libXp-debuginfo-1.0.2-2.1.el6.x86_64.rpm
+libXp-devel-1.0.2-2.1.el6.i686.rpm
+libXp-devel-1.0.2-2.1.el6.x86_64.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.i686.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.x86_64.rpm
+libXrandr-devel-1.4.1-2.1.el6.i686.rpm
+libXrandr-devel-1.4.1-2.1.el6.x86_64.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.i686.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.x86_64.rpm
+libXrender-devel-0.9.8-2.1.el6.i686.rpm
+libXrender-devel-0.9.8-2.1.el6.x86_64.rpm
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.x86_64.rpm
+libXres-devel-1.0.7-2.1.el6.i686.rpm
+libXres-devel-1.0.7-2.1.el6.x86_64.rpm
+libXt-debuginfo-1.1.4-6.1.el6.i686.rpm
+libXt-debuginfo-1.1.4-6.1.el6.x86_64.rpm
+libXt-devel-1.1.4-6.1.el6.i686.rpm
+libXt-devel-1.1.4-6.1.el6.x86_64.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.i686.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.x86_64.rpm
+libXtst-devel-1.2.2-2.1.el6.i686.rpm
+libXtst-devel-1.2.2-2.1.el6.x86_64.rpm
+libXv-debuginfo-1.0.9-2.1.el6.i686.rpm
+libXv-debuginfo-1.0.9-2.1.el6.x86_64.rpm
+libXv-devel-1.0.9-2.1.el6.i686.rpm
+libXv-devel-1.0.9-2.1.el6.x86_64.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.x86_64.rpm
+libXvMC-devel-1.0.8-2.1.el6.i686.rpm
+libXvMC-devel-1.0.8-2.1.el6.x86_64.rpm
+libXxf86dga-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.x86_64.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.x86_64.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.x86_64.rpm
+libdmx-1.1.3-3.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.x86_64.rpm
+libdmx-devel-1.1.3-3.el6.i686.rpm
+libdmx-devel-1.1.3-3.el6.x86_64.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.x86_64.rpm
+libxcb-devel-1.9.1-2.el6.i686.rpm
+libxcb-devel-1.9.1-2.el6.x86_64.rpm
+libxcb-python-1.9.1-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+libX11-1.6.0-2.2.el6.src.rpm
+libXcursor-1.1.14-2.1.el6.src.rpm
+libXext-1.3.2-2.1.el6.src.rpm
+libXfixes-5.0.1-2.1.el6.src.rpm
+libXi-1.7.2-2.2.el6.src.rpm
+libXinerama-1.1.3-2.1.el6.src.rpm
+libXp-1.0.2-2.1.el6.src.rpm
+libXrandr-1.4.1-2.1.el6.src.rpm
+libXrender-0.9.8-2.1.el6.src.rpm
+libXt-1.1.4-6.1.el6.src.rpm
+libXtst-1.2.2-2.1.el6.src.rpm
+libXv-1.0.9-2.1.el6.src.rpm
+libXxf86vm-1.1.3-2.1.el6.src.rpm
+libxcb-1.9.1-2.el6.src.rpm
+
+noarch:
+libX11-common-1.6.0-2.2.el6.noarch.rpm
+
+x86_64:
+libX11-1.6.0-2.2.el6.i686.rpm
+libX11-1.6.0-2.2.el6.x86_64.rpm
+libX11-debuginfo-1.6.0-2.2.el6.i686.rpm
+libX11-debuginfo-1.6.0-2.2.el6.x86_64.rpm
+libXcursor-1.1.14-2.1.el6.i686.rpm
+libXcursor-1.1.14-2.1.el6.x86_64.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.i686.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.x86_64.rpm
+libXext-1.3.2-2.1.el6.i686.rpm
+libXext-1.3.2-2.1.el6.x86_64.rpm
+libXext-debuginfo-1.3.2-2.1.el6.i686.rpm
+libXext-debuginfo-1.3.2-2.1.el6.x86_64.rpm
+libXfixes-5.0.1-2.1.el6.i686.rpm
+libXfixes-5.0.1-2.1.el6.x86_64.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.i686.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.x86_64.rpm
+libXi-1.7.2-2.2.el6.i686.rpm
+libXi-1.7.2-2.2.el6.x86_64.rpm
+libXi-debuginfo-1.7.2-2.2.el6.i686.rpm
+libXi-debuginfo-1.7.2-2.2.el6.x86_64.rpm
+libXinerama-1.1.3-2.1.el6.i686.rpm
+libXinerama-1.1.3-2.1.el6.x86_64.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libXp-1.0.2-2.1.el6.i686.rpm
+libXp-1.0.2-2.1.el6.x86_64.rpm
+libXp-debuginfo-1.0.2-2.1.el6.i686.rpm
+libXp-debuginfo-1.0.2-2.1.el6.x86_64.rpm
+libXrandr-1.4.1-2.1.el6.i686.rpm
+libXrandr-1.4.1-2.1.el6.x86_64.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.i686.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.x86_64.rpm
+libXrender-0.9.8-2.1.el6.i686.rpm
+libXrender-0.9.8-2.1.el6.x86_64.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.i686.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.x86_64.rpm
+libXt-1.1.4-6.1.el6.i686.rpm
+libXt-1.1.4-6.1.el6.x86_64.rpm
+libXt-debuginfo-1.1.4-6.1.el6.i686.rpm
+libXt-debuginfo-1.1.4-6.1.el6.x86_64.rpm
+libXtst-1.2.2-2.1.el6.i686.rpm
+libXtst-1.2.2-2.1.el6.x86_64.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.i686.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.x86_64.rpm
+libXv-1.0.9-2.1.el6.i686.rpm
+libXv-1.0.9-2.1.el6.x86_64.rpm
+libXv-debuginfo-1.0.9-2.1.el6.i686.rpm
+libXv-debuginfo-1.0.9-2.1.el6.x86_64.rpm
+libXxf86vm-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-1.1.3-2.1.el6.x86_64.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libxcb-1.9.1-2.el6.i686.rpm
+libxcb-1.9.1-2.el6.x86_64.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+libXres-1.0.7-2.1.el6.src.rpm
+libXxf86dga-1.1.4-2.1.el6.src.rpm
+libdmx-1.1.3-3.el6.src.rpm
+xcb-proto-1.8-3.el6.src.rpm
+xkeyboard-config-2.11-1.el6.src.rpm
+xorg-x11-proto-devel-7.7-9.el6.src.rpm
+xorg-x11-xtrans-devel-1.3.4-1.el6.src.rpm
+
+noarch:
+libxcb-doc-1.9.1-2.el6.noarch.rpm
+xcb-proto-1.8-3.el6.noarch.rpm
+xkeyboard-config-2.11-1.el6.noarch.rpm
+xkeyboard-config-devel-2.11-1.el6.noarch.rpm
+xorg-x11-proto-devel-7.7-9.el6.noarch.rpm
+xorg-x11-xtrans-devel-1.3.4-1.el6.noarch.rpm
+
+x86_64:
+libX11-debuginfo-1.6.0-2.2.el6.i686.rpm
+libX11-debuginfo-1.6.0-2.2.el6.x86_64.rpm
+libX11-devel-1.6.0-2.2.el6.i686.rpm
+libX11-devel-1.6.0-2.2.el6.x86_64.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.i686.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.x86_64.rpm
+libXcursor-devel-1.1.14-2.1.el6.i686.rpm
+libXcursor-devel-1.1.14-2.1.el6.x86_64.rpm
+libXext-debuginfo-1.3.2-2.1.el6.i686.rpm
+libXext-debuginfo-1.3.2-2.1.el6.x86_64.rpm
+libXext-devel-1.3.2-2.1.el6.i686.rpm
+libXext-devel-1.3.2-2.1.el6.x86_64.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.i686.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.x86_64.rpm
+libXfixes-devel-5.0.1-2.1.el6.i686.rpm
+libXfixes-devel-5.0.1-2.1.el6.x86_64.rpm
+libXi-debuginfo-1.7.2-2.2.el6.i686.rpm
+libXi-debuginfo-1.7.2-2.2.el6.x86_64.rpm
+libXi-devel-1.7.2-2.2.el6.i686.rpm
+libXi-devel-1.7.2-2.2.el6.x86_64.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libXinerama-devel-1.1.3-2.1.el6.i686.rpm
+libXinerama-devel-1.1.3-2.1.el6.x86_64.rpm
+libXp-debuginfo-1.0.2-2.1.el6.i686.rpm
+libXp-debuginfo-1.0.2-2.1.el6.x86_64.rpm
+libXp-devel-1.0.2-2.1.el6.i686.rpm
+libXp-devel-1.0.2-2.1.el6.x86_64.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.i686.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.x86_64.rpm
+libXrandr-devel-1.4.1-2.1.el6.i686.rpm
+libXrandr-devel-1.4.1-2.1.el6.x86_64.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.i686.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.x86_64.rpm
+libXrender-devel-0.9.8-2.1.el6.i686.rpm
+libXrender-devel-0.9.8-2.1.el6.x86_64.rpm
+libXres-1.0.7-2.1.el6.i686.rpm
+libXres-1.0.7-2.1.el6.x86_64.rpm
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.x86_64.rpm
+libXres-devel-1.0.7-2.1.el6.i686.rpm
+libXres-devel-1.0.7-2.1.el6.x86_64.rpm
+libXt-debuginfo-1.1.4-6.1.el6.i686.rpm
+libXt-debuginfo-1.1.4-6.1.el6.x86_64.rpm
+libXt-devel-1.1.4-6.1.el6.i686.rpm
+libXt-devel-1.1.4-6.1.el6.x86_64.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.i686.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.x86_64.rpm
+libXtst-devel-1.2.2-2.1.el6.i686.rpm
+libXtst-devel-1.2.2-2.1.el6.x86_64.rpm
+libXv-debuginfo-1.0.9-2.1.el6.i686.rpm
+libXv-debuginfo-1.0.9-2.1.el6.x86_64.rpm
+libXv-devel-1.0.9-2.1.el6.i686.rpm
+libXv-devel-1.0.9-2.1.el6.x86_64.rpm
+libXxf86dga-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-1.1.4-2.1.el6.x86_64.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.x86_64.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.x86_64.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.x86_64.rpm
+libdmx-1.1.3-3.el6.i686.rpm
+libdmx-1.1.3-3.el6.x86_64.rpm
+libdmx-debuginfo-1.1.3-3.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.x86_64.rpm
+libdmx-devel-1.1.3-3.el6.i686.rpm
+libdmx-devel-1.1.3-3.el6.x86_64.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.x86_64.rpm
+libxcb-devel-1.9.1-2.el6.i686.rpm
+libxcb-devel-1.9.1-2.el6.x86_64.rpm
+libxcb-python-1.9.1-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+libX11-1.6.0-2.2.el6.src.rpm
+libXcursor-1.1.14-2.1.el6.src.rpm
+libXext-1.3.2-2.1.el6.src.rpm
+libXfixes-5.0.1-2.1.el6.src.rpm
+libXi-1.7.2-2.2.el6.src.rpm
+libXinerama-1.1.3-2.1.el6.src.rpm
+libXp-1.0.2-2.1.el6.src.rpm
+libXrandr-1.4.1-2.1.el6.src.rpm
+libXrender-0.9.8-2.1.el6.src.rpm
+libXres-1.0.7-2.1.el6.src.rpm
+libXt-1.1.4-6.1.el6.src.rpm
+libXtst-1.2.2-2.1.el6.src.rpm
+libXv-1.0.9-2.1.el6.src.rpm
+libXvMC-1.0.8-2.1.el6.src.rpm
+libXxf86dga-1.1.4-2.1.el6.src.rpm
+libXxf86vm-1.1.3-2.1.el6.src.rpm
+libdmx-1.1.3-3.el6.src.rpm
+libxcb-1.9.1-2.el6.src.rpm
+xkeyboard-config-2.11-1.el6.src.rpm
+xorg-x11-proto-devel-7.7-9.el6.src.rpm
+
+i386:
+libX11-1.6.0-2.2.el6.i686.rpm
+libX11-debuginfo-1.6.0-2.2.el6.i686.rpm
+libX11-devel-1.6.0-2.2.el6.i686.rpm
+libXcursor-1.1.14-2.1.el6.i686.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.i686.rpm
+libXcursor-devel-1.1.14-2.1.el6.i686.rpm
+libXext-1.3.2-2.1.el6.i686.rpm
+libXext-debuginfo-1.3.2-2.1.el6.i686.rpm
+libXext-devel-1.3.2-2.1.el6.i686.rpm
+libXfixes-5.0.1-2.1.el6.i686.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.i686.rpm
+libXfixes-devel-5.0.1-2.1.el6.i686.rpm
+libXi-1.7.2-2.2.el6.i686.rpm
+libXi-debuginfo-1.7.2-2.2.el6.i686.rpm
+libXi-devel-1.7.2-2.2.el6.i686.rpm
+libXinerama-1.1.3-2.1.el6.i686.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXinerama-devel-1.1.3-2.1.el6.i686.rpm
+libXp-1.0.2-2.1.el6.i686.rpm
+libXp-debuginfo-1.0.2-2.1.el6.i686.rpm
+libXp-devel-1.0.2-2.1.el6.i686.rpm
+libXrandr-1.4.1-2.1.el6.i686.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.i686.rpm
+libXrandr-devel-1.4.1-2.1.el6.i686.rpm
+libXrender-0.9.8-2.1.el6.i686.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.i686.rpm
+libXrender-devel-0.9.8-2.1.el6.i686.rpm
+libXres-1.0.7-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXt-1.1.4-6.1.el6.i686.rpm
+libXt-debuginfo-1.1.4-6.1.el6.i686.rpm
+libXt-devel-1.1.4-6.1.el6.i686.rpm
+libXtst-1.2.2-2.1.el6.i686.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.i686.rpm
+libXtst-devel-1.2.2-2.1.el6.i686.rpm
+libXv-1.0.9-2.1.el6.i686.rpm
+libXv-debuginfo-1.0.9-2.1.el6.i686.rpm
+libXv-devel-1.0.9-2.1.el6.i686.rpm
+libXvMC-1.0.8-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXxf86dga-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.i686.rpm
+libXxf86vm-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.i686.rpm
+libdmx-1.1.3-3.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.i686.rpm
+libxcb-1.9.1-2.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-devel-1.9.1-2.el6.i686.rpm
+
+noarch:
+libX11-common-1.6.0-2.2.el6.noarch.rpm
+xkeyboard-config-2.11-1.el6.noarch.rpm
+xorg-x11-proto-devel-7.7-9.el6.noarch.rpm
+
+ppc64:
+libX11-1.6.0-2.2.el6.ppc.rpm
+libX11-1.6.0-2.2.el6.ppc64.rpm
+libX11-debuginfo-1.6.0-2.2.el6.ppc.rpm
+libX11-debuginfo-1.6.0-2.2.el6.ppc64.rpm
+libX11-devel-1.6.0-2.2.el6.ppc.rpm
+libX11-devel-1.6.0-2.2.el6.ppc64.rpm
+libXcursor-1.1.14-2.1.el6.ppc.rpm
+libXcursor-1.1.14-2.1.el6.ppc64.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.ppc.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.ppc64.rpm
+libXcursor-devel-1.1.14-2.1.el6.ppc.rpm
+libXcursor-devel-1.1.14-2.1.el6.ppc64.rpm
+libXext-1.3.2-2.1.el6.ppc.rpm
+libXext-1.3.2-2.1.el6.ppc64.rpm
+libXext-debuginfo-1.3.2-2.1.el6.ppc.rpm
+libXext-debuginfo-1.3.2-2.1.el6.ppc64.rpm
+libXext-devel-1.3.2-2.1.el6.ppc.rpm
+libXext-devel-1.3.2-2.1.el6.ppc64.rpm
+libXfixes-5.0.1-2.1.el6.ppc.rpm
+libXfixes-5.0.1-2.1.el6.ppc64.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.ppc.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.ppc64.rpm
+libXfixes-devel-5.0.1-2.1.el6.ppc.rpm
+libXfixes-devel-5.0.1-2.1.el6.ppc64.rpm
+libXi-1.7.2-2.2.el6.ppc.rpm
+libXi-1.7.2-2.2.el6.ppc64.rpm
+libXi-debuginfo-1.7.2-2.2.el6.ppc.rpm
+libXi-debuginfo-1.7.2-2.2.el6.ppc64.rpm
+libXi-devel-1.7.2-2.2.el6.ppc.rpm
+libXi-devel-1.7.2-2.2.el6.ppc64.rpm
+libXinerama-1.1.3-2.1.el6.ppc.rpm
+libXinerama-1.1.3-2.1.el6.ppc64.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.ppc.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.ppc64.rpm
+libXinerama-devel-1.1.3-2.1.el6.ppc.rpm
+libXinerama-devel-1.1.3-2.1.el6.ppc64.rpm
+libXp-1.0.2-2.1.el6.ppc.rpm
+libXp-1.0.2-2.1.el6.ppc64.rpm
+libXp-debuginfo-1.0.2-2.1.el6.ppc.rpm
+libXp-debuginfo-1.0.2-2.1.el6.ppc64.rpm
+libXp-devel-1.0.2-2.1.el6.ppc.rpm
+libXp-devel-1.0.2-2.1.el6.ppc64.rpm
+libXrandr-1.4.1-2.1.el6.ppc.rpm
+libXrandr-1.4.1-2.1.el6.ppc64.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.ppc.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.ppc64.rpm
+libXrandr-devel-1.4.1-2.1.el6.ppc.rpm
+libXrandr-devel-1.4.1-2.1.el6.ppc64.rpm
+libXrender-0.9.8-2.1.el6.ppc.rpm
+libXrender-0.9.8-2.1.el6.ppc64.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.ppc.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.ppc64.rpm
+libXrender-devel-0.9.8-2.1.el6.ppc.rpm
+libXrender-devel-0.9.8-2.1.el6.ppc64.rpm
+libXres-1.0.7-2.1.el6.ppc.rpm
+libXres-1.0.7-2.1.el6.ppc64.rpm
+libXres-debuginfo-1.0.7-2.1.el6.ppc.rpm
+libXres-debuginfo-1.0.7-2.1.el6.ppc64.rpm
+libXt-1.1.4-6.1.el6.ppc.rpm
+libXt-1.1.4-6.1.el6.ppc64.rpm
+libXt-debuginfo-1.1.4-6.1.el6.ppc.rpm
+libXt-debuginfo-1.1.4-6.1.el6.ppc64.rpm
+libXt-devel-1.1.4-6.1.el6.ppc.rpm
+libXt-devel-1.1.4-6.1.el6.ppc64.rpm
+libXtst-1.2.2-2.1.el6.ppc.rpm
+libXtst-1.2.2-2.1.el6.ppc64.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.ppc.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.ppc64.rpm
+libXtst-devel-1.2.2-2.1.el6.ppc.rpm
+libXtst-devel-1.2.2-2.1.el6.ppc64.rpm
+libXv-1.0.9-2.1.el6.ppc.rpm
+libXv-1.0.9-2.1.el6.ppc64.rpm
+libXv-debuginfo-1.0.9-2.1.el6.ppc.rpm
+libXv-debuginfo-1.0.9-2.1.el6.ppc64.rpm
+libXv-devel-1.0.9-2.1.el6.ppc.rpm
+libXv-devel-1.0.9-2.1.el6.ppc64.rpm
+libXxf86dga-1.1.4-2.1.el6.ppc64.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.ppc64.rpm
+libXxf86vm-1.1.3-2.1.el6.ppc.rpm
+libXxf86vm-1.1.3-2.1.el6.ppc64.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.ppc.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.ppc64.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.ppc.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.ppc64.rpm
+libdmx-1.1.3-3.el6.ppc64.rpm
+libdmx-debuginfo-1.1.3-3.el6.ppc64.rpm
+libxcb-1.9.1-2.el6.ppc.rpm
+libxcb-1.9.1-2.el6.ppc64.rpm
+libxcb-debuginfo-1.9.1-2.el6.ppc.rpm
+libxcb-debuginfo-1.9.1-2.el6.ppc64.rpm
+libxcb-devel-1.9.1-2.el6.ppc.rpm
+libxcb-devel-1.9.1-2.el6.ppc64.rpm
+
+s390x:
+libX11-1.6.0-2.2.el6.s390.rpm
+libX11-1.6.0-2.2.el6.s390x.rpm
+libX11-debuginfo-1.6.0-2.2.el6.s390.rpm
+libX11-debuginfo-1.6.0-2.2.el6.s390x.rpm
+libX11-devel-1.6.0-2.2.el6.s390.rpm
+libX11-devel-1.6.0-2.2.el6.s390x.rpm
+libXcursor-1.1.14-2.1.el6.s390.rpm
+libXcursor-1.1.14-2.1.el6.s390x.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.s390.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.s390x.rpm
+libXcursor-devel-1.1.14-2.1.el6.s390.rpm
+libXcursor-devel-1.1.14-2.1.el6.s390x.rpm
+libXext-1.3.2-2.1.el6.s390.rpm
+libXext-1.3.2-2.1.el6.s390x.rpm
+libXext-debuginfo-1.3.2-2.1.el6.s390.rpm
+libXext-debuginfo-1.3.2-2.1.el6.s390x.rpm
+libXext-devel-1.3.2-2.1.el6.s390.rpm
+libXext-devel-1.3.2-2.1.el6.s390x.rpm
+libXfixes-5.0.1-2.1.el6.s390.rpm
+libXfixes-5.0.1-2.1.el6.s390x.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.s390.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.s390x.rpm
+libXfixes-devel-5.0.1-2.1.el6.s390.rpm
+libXfixes-devel-5.0.1-2.1.el6.s390x.rpm
+libXi-1.7.2-2.2.el6.s390.rpm
+libXi-1.7.2-2.2.el6.s390x.rpm
+libXi-debuginfo-1.7.2-2.2.el6.s390.rpm
+libXi-debuginfo-1.7.2-2.2.el6.s390x.rpm
+libXi-devel-1.7.2-2.2.el6.s390.rpm
+libXi-devel-1.7.2-2.2.el6.s390x.rpm
+libXinerama-1.1.3-2.1.el6.s390.rpm
+libXinerama-1.1.3-2.1.el6.s390x.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.s390.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.s390x.rpm
+libXinerama-devel-1.1.3-2.1.el6.s390.rpm
+libXinerama-devel-1.1.3-2.1.el6.s390x.rpm
+libXp-1.0.2-2.1.el6.s390.rpm
+libXp-1.0.2-2.1.el6.s390x.rpm
+libXp-debuginfo-1.0.2-2.1.el6.s390.rpm
+libXp-debuginfo-1.0.2-2.1.el6.s390x.rpm
+libXp-devel-1.0.2-2.1.el6.s390.rpm
+libXp-devel-1.0.2-2.1.el6.s390x.rpm
+libXrandr-1.4.1-2.1.el6.s390.rpm
+libXrandr-1.4.1-2.1.el6.s390x.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.s390.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.s390x.rpm
+libXrandr-devel-1.4.1-2.1.el6.s390.rpm
+libXrandr-devel-1.4.1-2.1.el6.s390x.rpm
+libXrender-0.9.8-2.1.el6.s390.rpm
+libXrender-0.9.8-2.1.el6.s390x.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.s390.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.s390x.rpm
+libXrender-devel-0.9.8-2.1.el6.s390.rpm
+libXrender-devel-0.9.8-2.1.el6.s390x.rpm
+libXres-1.0.7-2.1.el6.s390.rpm
+libXres-1.0.7-2.1.el6.s390x.rpm
+libXres-debuginfo-1.0.7-2.1.el6.s390.rpm
+libXres-debuginfo-1.0.7-2.1.el6.s390x.rpm
+libXt-1.1.4-6.1.el6.s390.rpm
+libXt-1.1.4-6.1.el6.s390x.rpm
+libXt-debuginfo-1.1.4-6.1.el6.s390.rpm
+libXt-debuginfo-1.1.4-6.1.el6.s390x.rpm
+libXt-devel-1.1.4-6.1.el6.s390.rpm
+libXt-devel-1.1.4-6.1.el6.s390x.rpm
+libXtst-1.2.2-2.1.el6.s390.rpm
+libXtst-1.2.2-2.1.el6.s390x.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.s390.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.s390x.rpm
+libXtst-devel-1.2.2-2.1.el6.s390.rpm
+libXtst-devel-1.2.2-2.1.el6.s390x.rpm
+libXv-1.0.9-2.1.el6.s390.rpm
+libXv-1.0.9-2.1.el6.s390x.rpm
+libXv-debuginfo-1.0.9-2.1.el6.s390.rpm
+libXv-debuginfo-1.0.9-2.1.el6.s390x.rpm
+libXv-devel-1.0.9-2.1.el6.s390.rpm
+libXv-devel-1.0.9-2.1.el6.s390x.rpm
+libXxf86dga-1.1.4-2.1.el6.s390x.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.s390x.rpm
+libXxf86vm-1.1.3-2.1.el6.s390.rpm
+libXxf86vm-1.1.3-2.1.el6.s390x.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.s390.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.s390x.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.s390.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.s390x.rpm
+libdmx-1.1.3-3.el6.s390x.rpm
+libdmx-debuginfo-1.1.3-3.el6.s390x.rpm
+libxcb-1.9.1-2.el6.s390.rpm
+libxcb-1.9.1-2.el6.s390x.rpm
+libxcb-debuginfo-1.9.1-2.el6.s390.rpm
+libxcb-debuginfo-1.9.1-2.el6.s390x.rpm
+libxcb-devel-1.9.1-2.el6.s390.rpm
+libxcb-devel-1.9.1-2.el6.s390x.rpm
+
+x86_64:
+libX11-1.6.0-2.2.el6.i686.rpm
+libX11-1.6.0-2.2.el6.x86_64.rpm
+libX11-debuginfo-1.6.0-2.2.el6.i686.rpm
+libX11-debuginfo-1.6.0-2.2.el6.x86_64.rpm
+libX11-devel-1.6.0-2.2.el6.i686.rpm
+libX11-devel-1.6.0-2.2.el6.x86_64.rpm
+libXcursor-1.1.14-2.1.el6.i686.rpm
+libXcursor-1.1.14-2.1.el6.x86_64.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.i686.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.x86_64.rpm
+libXcursor-devel-1.1.14-2.1.el6.i686.rpm
+libXcursor-devel-1.1.14-2.1.el6.x86_64.rpm
+libXext-1.3.2-2.1.el6.i686.rpm
+libXext-1.3.2-2.1.el6.x86_64.rpm
+libXext-debuginfo-1.3.2-2.1.el6.i686.rpm
+libXext-debuginfo-1.3.2-2.1.el6.x86_64.rpm
+libXext-devel-1.3.2-2.1.el6.i686.rpm
+libXext-devel-1.3.2-2.1.el6.x86_64.rpm
+libXfixes-5.0.1-2.1.el6.i686.rpm
+libXfixes-5.0.1-2.1.el6.x86_64.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.i686.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.x86_64.rpm
+libXfixes-devel-5.0.1-2.1.el6.i686.rpm
+libXfixes-devel-5.0.1-2.1.el6.x86_64.rpm
+libXi-1.7.2-2.2.el6.i686.rpm
+libXi-1.7.2-2.2.el6.x86_64.rpm
+libXi-debuginfo-1.7.2-2.2.el6.i686.rpm
+libXi-debuginfo-1.7.2-2.2.el6.x86_64.rpm
+libXi-devel-1.7.2-2.2.el6.i686.rpm
+libXi-devel-1.7.2-2.2.el6.x86_64.rpm
+libXinerama-1.1.3-2.1.el6.i686.rpm
+libXinerama-1.1.3-2.1.el6.x86_64.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libXinerama-devel-1.1.3-2.1.el6.i686.rpm
+libXinerama-devel-1.1.3-2.1.el6.x86_64.rpm
+libXp-1.0.2-2.1.el6.i686.rpm
+libXp-1.0.2-2.1.el6.x86_64.rpm
+libXp-debuginfo-1.0.2-2.1.el6.i686.rpm
+libXp-debuginfo-1.0.2-2.1.el6.x86_64.rpm
+libXp-devel-1.0.2-2.1.el6.i686.rpm
+libXp-devel-1.0.2-2.1.el6.x86_64.rpm
+libXrandr-1.4.1-2.1.el6.i686.rpm
+libXrandr-1.4.1-2.1.el6.x86_64.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.i686.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.x86_64.rpm
+libXrandr-devel-1.4.1-2.1.el6.i686.rpm
+libXrandr-devel-1.4.1-2.1.el6.x86_64.rpm
+libXrender-0.9.8-2.1.el6.i686.rpm
+libXrender-0.9.8-2.1.el6.x86_64.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.i686.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.x86_64.rpm
+libXrender-devel-0.9.8-2.1.el6.i686.rpm
+libXrender-devel-0.9.8-2.1.el6.x86_64.rpm
+libXres-1.0.7-2.1.el6.i686.rpm
+libXres-1.0.7-2.1.el6.x86_64.rpm
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.x86_64.rpm
+libXt-1.1.4-6.1.el6.i686.rpm
+libXt-1.1.4-6.1.el6.x86_64.rpm
+libXt-debuginfo-1.1.4-6.1.el6.i686.rpm
+libXt-debuginfo-1.1.4-6.1.el6.x86_64.rpm
+libXt-devel-1.1.4-6.1.el6.i686.rpm
+libXt-devel-1.1.4-6.1.el6.x86_64.rpm
+libXtst-1.2.2-2.1.el6.i686.rpm
+libXtst-1.2.2-2.1.el6.x86_64.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.i686.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.x86_64.rpm
+libXtst-devel-1.2.2-2.1.el6.i686.rpm
+libXtst-devel-1.2.2-2.1.el6.x86_64.rpm
+libXv-1.0.9-2.1.el6.i686.rpm
+libXv-1.0.9-2.1.el6.x86_64.rpm
+libXv-debuginfo-1.0.9-2.1.el6.i686.rpm
+libXv-debuginfo-1.0.9-2.1.el6.x86_64.rpm
+libXv-devel-1.0.9-2.1.el6.i686.rpm
+libXv-devel-1.0.9-2.1.el6.x86_64.rpm
+libXvMC-1.0.8-2.1.el6.i686.rpm
+libXvMC-1.0.8-2.1.el6.x86_64.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.x86_64.rpm
+libXxf86dga-1.1.4-2.1.el6.x86_64.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.x86_64.rpm
+libXxf86vm-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-1.1.3-2.1.el6.x86_64.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.x86_64.rpm
+libdmx-1.1.3-3.el6.x86_64.rpm
+libdmx-debuginfo-1.1.3-3.el6.x86_64.rpm
+libxcb-1.9.1-2.el6.i686.rpm
+libxcb-1.9.1-2.el6.x86_64.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.x86_64.rpm
+libxcb-devel-1.9.1-2.el6.i686.rpm
+libxcb-devel-1.9.1-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+xcb-proto-1.8-3.el6.src.rpm
+xorg-x11-xtrans-devel-1.3.4-1.el6.src.rpm
+
+i386:
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXres-devel-1.0.7-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXvMC-devel-1.0.8-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.i686.rpm
+libdmx-devel-1.1.3-3.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-python-1.9.1-2.el6.i686.rpm
+
+noarch:
+libxcb-doc-1.9.1-2.el6.noarch.rpm
+xcb-proto-1.8-3.el6.noarch.rpm
+xkeyboard-config-devel-2.11-1.el6.noarch.rpm
+xorg-x11-xtrans-devel-1.3.4-1.el6.noarch.rpm
+
+ppc64:
+libXres-debuginfo-1.0.7-2.1.el6.ppc.rpm
+libXres-debuginfo-1.0.7-2.1.el6.ppc64.rpm
+libXres-devel-1.0.7-2.1.el6.ppc.rpm
+libXres-devel-1.0.7-2.1.el6.ppc64.rpm
+libXxf86dga-1.1.4-2.1.el6.ppc.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.ppc.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.ppc64.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.ppc.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.ppc64.rpm
+libdmx-1.1.3-3.el6.ppc.rpm
+libdmx-debuginfo-1.1.3-3.el6.ppc.rpm
+libdmx-debuginfo-1.1.3-3.el6.ppc64.rpm
+libdmx-devel-1.1.3-3.el6.ppc.rpm
+libdmx-devel-1.1.3-3.el6.ppc64.rpm
+libxcb-debuginfo-1.9.1-2.el6.ppc64.rpm
+libxcb-python-1.9.1-2.el6.ppc64.rpm
+
+s390x:
+libXres-debuginfo-1.0.7-2.1.el6.s390.rpm
+libXres-debuginfo-1.0.7-2.1.el6.s390x.rpm
+libXres-devel-1.0.7-2.1.el6.s390.rpm
+libXres-devel-1.0.7-2.1.el6.s390x.rpm
+libXxf86dga-1.1.4-2.1.el6.s390.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.s390.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.s390x.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.s390.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.s390x.rpm
+libdmx-1.1.3-3.el6.s390.rpm
+libdmx-debuginfo-1.1.3-3.el6.s390.rpm
+libdmx-debuginfo-1.1.3-3.el6.s390x.rpm
+libdmx-devel-1.1.3-3.el6.s390.rpm
+libdmx-devel-1.1.3-3.el6.s390x.rpm
+libxcb-debuginfo-1.9.1-2.el6.s390x.rpm
+libxcb-python-1.9.1-2.el6.s390x.rpm
+
+x86_64:
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.x86_64.rpm
+libXres-devel-1.0.7-2.1.el6.i686.rpm
+libXres-devel-1.0.7-2.1.el6.x86_64.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.x86_64.rpm
+libXvMC-devel-1.0.8-2.1.el6.i686.rpm
+libXvMC-devel-1.0.8-2.1.el6.x86_64.rpm
+libXxf86dga-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.x86_64.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.x86_64.rpm
+libdmx-1.1.3-3.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.x86_64.rpm
+libdmx-devel-1.1.3-3.el6.i686.rpm
+libdmx-devel-1.1.3-3.el6.x86_64.rpm
+libxcb-debuginfo-1.9.1-2.el6.x86_64.rpm
+libxcb-python-1.9.1-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+libX11-1.6.0-2.2.el6.src.rpm
+libXcursor-1.1.14-2.1.el6.src.rpm
+libXext-1.3.2-2.1.el6.src.rpm
+libXfixes-5.0.1-2.1.el6.src.rpm
+libXi-1.7.2-2.2.el6.src.rpm
+libXinerama-1.1.3-2.1.el6.src.rpm
+libXp-1.0.2-2.1.el6.src.rpm
+libXrandr-1.4.1-2.1.el6.src.rpm
+libXrender-0.9.8-2.1.el6.src.rpm
+libXres-1.0.7-2.1.el6.src.rpm
+libXt-1.1.4-6.1.el6.src.rpm
+libXtst-1.2.2-2.1.el6.src.rpm
+libXv-1.0.9-2.1.el6.src.rpm
+libXvMC-1.0.8-2.1.el6.src.rpm
+libXxf86dga-1.1.4-2.1.el6.src.rpm
+libXxf86vm-1.1.3-2.1.el6.src.rpm
+libdmx-1.1.3-3.el6.src.rpm
+libxcb-1.9.1-2.el6.src.rpm
+xkeyboard-config-2.11-1.el6.src.rpm
+xorg-x11-proto-devel-7.7-9.el6.src.rpm
+
+i386:
+libX11-1.6.0-2.2.el6.i686.rpm
+libX11-debuginfo-1.6.0-2.2.el6.i686.rpm
+libX11-devel-1.6.0-2.2.el6.i686.rpm
+libXcursor-1.1.14-2.1.el6.i686.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.i686.rpm
+libXcursor-devel-1.1.14-2.1.el6.i686.rpm
+libXext-1.3.2-2.1.el6.i686.rpm
+libXext-debuginfo-1.3.2-2.1.el6.i686.rpm
+libXext-devel-1.3.2-2.1.el6.i686.rpm
+libXfixes-5.0.1-2.1.el6.i686.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.i686.rpm
+libXfixes-devel-5.0.1-2.1.el6.i686.rpm
+libXi-1.7.2-2.2.el6.i686.rpm
+libXi-debuginfo-1.7.2-2.2.el6.i686.rpm
+libXi-devel-1.7.2-2.2.el6.i686.rpm
+libXinerama-1.1.3-2.1.el6.i686.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXinerama-devel-1.1.3-2.1.el6.i686.rpm
+libXp-1.0.2-2.1.el6.i686.rpm
+libXp-debuginfo-1.0.2-2.1.el6.i686.rpm
+libXp-devel-1.0.2-2.1.el6.i686.rpm
+libXrandr-1.4.1-2.1.el6.i686.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.i686.rpm
+libXrandr-devel-1.4.1-2.1.el6.i686.rpm
+libXrender-0.9.8-2.1.el6.i686.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.i686.rpm
+libXrender-devel-0.9.8-2.1.el6.i686.rpm
+libXres-1.0.7-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXt-1.1.4-6.1.el6.i686.rpm
+libXt-debuginfo-1.1.4-6.1.el6.i686.rpm
+libXt-devel-1.1.4-6.1.el6.i686.rpm
+libXtst-1.2.2-2.1.el6.i686.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.i686.rpm
+libXtst-devel-1.2.2-2.1.el6.i686.rpm
+libXv-1.0.9-2.1.el6.i686.rpm
+libXv-debuginfo-1.0.9-2.1.el6.i686.rpm
+libXv-devel-1.0.9-2.1.el6.i686.rpm
+libXvMC-1.0.8-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXxf86dga-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.i686.rpm
+libXxf86vm-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.i686.rpm
+libdmx-1.1.3-3.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.i686.rpm
+libxcb-1.9.1-2.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-devel-1.9.1-2.el6.i686.rpm
+
+noarch:
+libX11-common-1.6.0-2.2.el6.noarch.rpm
+xkeyboard-config-2.11-1.el6.noarch.rpm
+xorg-x11-proto-devel-7.7-9.el6.noarch.rpm
+
+x86_64:
+libX11-1.6.0-2.2.el6.i686.rpm
+libX11-1.6.0-2.2.el6.x86_64.rpm
+libX11-debuginfo-1.6.0-2.2.el6.i686.rpm
+libX11-debuginfo-1.6.0-2.2.el6.x86_64.rpm
+libX11-devel-1.6.0-2.2.el6.i686.rpm
+libX11-devel-1.6.0-2.2.el6.x86_64.rpm
+libXcursor-1.1.14-2.1.el6.i686.rpm
+libXcursor-1.1.14-2.1.el6.x86_64.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.i686.rpm
+libXcursor-debuginfo-1.1.14-2.1.el6.x86_64.rpm
+libXcursor-devel-1.1.14-2.1.el6.i686.rpm
+libXcursor-devel-1.1.14-2.1.el6.x86_64.rpm
+libXext-1.3.2-2.1.el6.i686.rpm
+libXext-1.3.2-2.1.el6.x86_64.rpm
+libXext-debuginfo-1.3.2-2.1.el6.i686.rpm
+libXext-debuginfo-1.3.2-2.1.el6.x86_64.rpm
+libXext-devel-1.3.2-2.1.el6.i686.rpm
+libXext-devel-1.3.2-2.1.el6.x86_64.rpm
+libXfixes-5.0.1-2.1.el6.i686.rpm
+libXfixes-5.0.1-2.1.el6.x86_64.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.i686.rpm
+libXfixes-debuginfo-5.0.1-2.1.el6.x86_64.rpm
+libXfixes-devel-5.0.1-2.1.el6.i686.rpm
+libXfixes-devel-5.0.1-2.1.el6.x86_64.rpm
+libXi-1.7.2-2.2.el6.i686.rpm
+libXi-1.7.2-2.2.el6.x86_64.rpm
+libXi-debuginfo-1.7.2-2.2.el6.i686.rpm
+libXi-debuginfo-1.7.2-2.2.el6.x86_64.rpm
+libXi-devel-1.7.2-2.2.el6.i686.rpm
+libXi-devel-1.7.2-2.2.el6.x86_64.rpm
+libXinerama-1.1.3-2.1.el6.i686.rpm
+libXinerama-1.1.3-2.1.el6.x86_64.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXinerama-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libXinerama-devel-1.1.3-2.1.el6.i686.rpm
+libXinerama-devel-1.1.3-2.1.el6.x86_64.rpm
+libXp-1.0.2-2.1.el6.i686.rpm
+libXp-1.0.2-2.1.el6.x86_64.rpm
+libXp-debuginfo-1.0.2-2.1.el6.i686.rpm
+libXp-debuginfo-1.0.2-2.1.el6.x86_64.rpm
+libXp-devel-1.0.2-2.1.el6.i686.rpm
+libXp-devel-1.0.2-2.1.el6.x86_64.rpm
+libXrandr-1.4.1-2.1.el6.i686.rpm
+libXrandr-1.4.1-2.1.el6.x86_64.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.i686.rpm
+libXrandr-debuginfo-1.4.1-2.1.el6.x86_64.rpm
+libXrandr-devel-1.4.1-2.1.el6.i686.rpm
+libXrandr-devel-1.4.1-2.1.el6.x86_64.rpm
+libXrender-0.9.8-2.1.el6.i686.rpm
+libXrender-0.9.8-2.1.el6.x86_64.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.i686.rpm
+libXrender-debuginfo-0.9.8-2.1.el6.x86_64.rpm
+libXrender-devel-0.9.8-2.1.el6.i686.rpm
+libXrender-devel-0.9.8-2.1.el6.x86_64.rpm
+libXres-1.0.7-2.1.el6.i686.rpm
+libXres-1.0.7-2.1.el6.x86_64.rpm
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.x86_64.rpm
+libXt-1.1.4-6.1.el6.i686.rpm
+libXt-1.1.4-6.1.el6.x86_64.rpm
+libXt-debuginfo-1.1.4-6.1.el6.i686.rpm
+libXt-debuginfo-1.1.4-6.1.el6.x86_64.rpm
+libXt-devel-1.1.4-6.1.el6.i686.rpm
+libXt-devel-1.1.4-6.1.el6.x86_64.rpm
+libXtst-1.2.2-2.1.el6.i686.rpm
+libXtst-1.2.2-2.1.el6.x86_64.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.i686.rpm
+libXtst-debuginfo-1.2.2-2.1.el6.x86_64.rpm
+libXtst-devel-1.2.2-2.1.el6.i686.rpm
+libXtst-devel-1.2.2-2.1.el6.x86_64.rpm
+libXv-1.0.9-2.1.el6.i686.rpm
+libXv-1.0.9-2.1.el6.x86_64.rpm
+libXv-debuginfo-1.0.9-2.1.el6.i686.rpm
+libXv-debuginfo-1.0.9-2.1.el6.x86_64.rpm
+libXv-devel-1.0.9-2.1.el6.i686.rpm
+libXv-devel-1.0.9-2.1.el6.x86_64.rpm
+libXvMC-1.0.8-2.1.el6.i686.rpm
+libXvMC-1.0.8-2.1.el6.x86_64.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.x86_64.rpm
+libXxf86dga-1.1.4-2.1.el6.x86_64.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.x86_64.rpm
+libXxf86vm-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-1.1.3-2.1.el6.x86_64.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-debuginfo-1.1.3-2.1.el6.x86_64.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.i686.rpm
+libXxf86vm-devel-1.1.3-2.1.el6.x86_64.rpm
+libdmx-1.1.3-3.el6.x86_64.rpm
+libdmx-debuginfo-1.1.3-3.el6.x86_64.rpm
+libxcb-1.9.1-2.el6.i686.rpm
+libxcb-1.9.1-2.el6.x86_64.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.x86_64.rpm
+libxcb-devel-1.9.1-2.el6.i686.rpm
+libxcb-devel-1.9.1-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+xcb-proto-1.8-3.el6.src.rpm
+xorg-x11-xtrans-devel-1.3.4-1.el6.src.rpm
+
+i386:
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXres-devel-1.0.7-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXvMC-devel-1.0.8-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.i686.rpm
+libdmx-devel-1.1.3-3.el6.i686.rpm
+libxcb-debuginfo-1.9.1-2.el6.i686.rpm
+libxcb-python-1.9.1-2.el6.i686.rpm
+
+noarch:
+libxcb-doc-1.9.1-2.el6.noarch.rpm
+xcb-proto-1.8-3.el6.noarch.rpm
+xkeyboard-config-devel-2.11-1.el6.noarch.rpm
+xorg-x11-xtrans-devel-1.3.4-1.el6.noarch.rpm
+
+x86_64:
+libXres-debuginfo-1.0.7-2.1.el6.i686.rpm
+libXres-debuginfo-1.0.7-2.1.el6.x86_64.rpm
+libXres-devel-1.0.7-2.1.el6.i686.rpm
+libXres-devel-1.0.7-2.1.el6.x86_64.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.i686.rpm
+libXvMC-debuginfo-1.0.8-2.1.el6.x86_64.rpm
+libXvMC-devel-1.0.8-2.1.el6.i686.rpm
+libXvMC-devel-1.0.8-2.1.el6.x86_64.rpm
+libXxf86dga-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-debuginfo-1.1.4-2.1.el6.x86_64.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.i686.rpm
+libXxf86dga-devel-1.1.4-2.1.el6.x86_64.rpm
+libdmx-1.1.3-3.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.i686.rpm
+libdmx-debuginfo-1.1.3-3.el6.x86_64.rpm
+libdmx-devel-1.1.3-3.el6.i686.rpm
+libdmx-devel-1.1.3-3.el6.x86_64.rpm
+libxcb-debuginfo-1.9.1-2.el6.x86_64.rpm
+libxcb-python-1.9.1-2.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1981.html">https://www.redhat.com/security/data/cve/CVE-2013-1981.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1982.html">https://www.redhat.com/security/data/cve/CVE-2013-1982.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1983.html">https://www.redhat.com/security/data/cve/CVE-2013-1983.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1984.html">https://www.redhat.com/security/data/cve/CVE-2013-1984.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1985.html">https://www.redhat.com/security/data/cve/CVE-2013-1985.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1986.html">https://www.redhat.com/security/data/cve/CVE-2013-1986.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1987.html">https://www.redhat.com/security/data/cve/CVE-2013-1987.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1988.html">https://www.redhat.com/security/data/cve/CVE-2013-1988.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1989.html">https://www.redhat.com/security/data/cve/CVE-2013-1989.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1990.html">https://www.redhat.com/security/data/cve/CVE-2013-1990.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1991.html">https://www.redhat.com/security/data/cve/CVE-2013-1991.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1995.html">https://www.redhat.com/security/data/cve/CVE-2013-1995.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1997.html">https://www.redhat.com/security/data/cve/CVE-2013-1997.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1998.html">https://www.redhat.com/security/data/cve/CVE-2013-1998.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-1999.html">https://www.redhat.com/security/data/cve/CVE-2013-1999.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2000.html">https://www.redhat.com/security/data/cve/CVE-2013-2000.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2001.html">https://www.redhat.com/security/data/cve/CVE-2013-2001.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2002.html">https://www.redhat.com/security/data/cve/CVE-2013-2002.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2003.html">https://www.redhat.com/security/data/cve/CVE-2013-2003.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2004.html">https://www.redhat.com/security/data/cve/CVE-2013-2004.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2005.html">https://www.redhat.com/security/data/cve/CVE-2013-2005.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2062.html">https://www.redhat.com/security/data/cve/CVE-2013-2062.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2064.html">https://www.redhat.com/security/data/cve/CVE-2013-2064.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-2066.html">https://www.redhat.com/security/data/cve/CVE-2013-2066.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="http://www.x.org/wiki/Development/Security/Advisory-2013-05-23/">http://www.x.org/wiki/Development/Security/Advisory-2013-05-23/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUPKypXlSAg2UNWIIRAiMsAJ9cF7DHUmCdqHAl62G9t3/qs6bhgwCdFNLk
+V+3Ge4QauIYyGA6Nzza2FKk=
+=lVo6
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

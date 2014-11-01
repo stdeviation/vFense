@@ -1,6 +1,6 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import time_it
 from vFense.plugins.patching._db_files import file_data_exists, \

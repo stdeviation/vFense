@@ -2,7 +2,7 @@
 
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._constants import SortValues, DefaultQueryValues
 
@@ -350,7 +350,7 @@ class FetchGroups(object):
                     r
                     .table(GroupCollections.Groups)
                     .get_all(self.view_name, index=GroupIndexes.Views)
-                    .filter({GroupKeys.Global: False})
+                    .filter({GroupKeys.IsGlobal: False})
                 )
         else:
             if self.is_global:
@@ -362,7 +362,7 @@ class FetchGroups(object):
                 base = (
                     r
                     .table(GroupCollections.Groups)
-                    .filter({GroupKeys.Global: False})
+                    .filter({GroupKeys.IsGlobal: False})
                 )
 
         return base
@@ -374,7 +374,7 @@ class FetchGroups(object):
                 GroupKeys.GroupId: x[GroupKeys.GroupId],
                 GroupKeys.GroupName: x[GroupKeys.GroupName],
                 GroupKeys.Email: x[GroupKeys.Email],
-                GroupKeys.Global: x[GroupKeys.Global],
+                GroupKeys.IsGlobal: x[GroupKeys.IsGlobal],
                 GroupKeys.Permissions: x[GroupKeys.Permissions],
                 GroupKeys.Users: (
                     r

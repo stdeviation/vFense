@@ -1,5 +1,7 @@
 import re
-from vFense.supported_platforms import REDHAT_DISTROS
+from vFense.core.results import ApiResults
+from vFense.core.status_codes import GenericCodes, GenericFailureCodes
+from vFense.utils.supported_platforms import REDHAT_DISTROS
 from vFense.plugins.vuln import Vulnerability
 from vFense.plugins.vuln.ubuntu import Ubuntu
 from vFense.plugins.vuln.ubuntu.search._db import FetchUbuntuVulns
@@ -7,9 +9,6 @@ from vFense.plugins.vuln.redhat import Redhat
 from vFense.plugins.vuln.redhat.search._db import FetchRedhatVulns
 from vFense.plugins.vuln.windows import Windows
 from vFense.plugins.vuln.windows.search._db import FetchWindowsVulns
-from vFense.core.results import (
-    ApiResultKeys
-)
 
 
 class FetchVulns(object):
@@ -96,7 +95,8 @@ class FetchVulns(object):
                 else:
                     data = Windows(**data)
 
-        return data
+        results = self._set_results(count, data)
+        return results
 
 
     def by_app_info(self, name=None, version=None, kb=None):
@@ -116,7 +116,8 @@ class FetchVulns(object):
         """
         data = Vulnerability()
 
-        if name and version:
+        if (name and version and self.redhat or
+                name and version and self.ubuntu):
             count, data = self.search.by_app_name_and_version(name, version)
             if count > 0 :
                 data = data[0]
@@ -124,23 +125,29 @@ class FetchVulns(object):
                     data = Redhat(**data)
                 else:
                     data = Ubuntu(**data)
-        elif kb:
+
+        elif kb and self.windows:
             count, data = self.search.by_component_kb(kb)
             if count > 0 :
                 data = data[0]
                 data = Windows(**data)
 
-        return data
+        results = self._set_results(count, data)
+        return results
 
-    def _set_results(self, gen_status_code, vfense_status_code,
-                     msg, count, data):
+    def _set_results(self, count, data):
 
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: msg,
-            ApiResultKeys.COUNT: count,
-            ApiResultKeys.DATA: data,
-        }
+        results = ApiResults()
+        results.fill_in_defaults()
+        results.generic_status_code = GenericCodes.InformationRetrieved
+        if count > 0:
+            results.message = 'dataset retrieved'
+            results.vfense_status_code  = GenericFailureCodes.DataIsEmpty
+        else:
+            results.message = 'dataset is empty'
+            results.vfense_status_code  = GenericCodes.InformationRetrieved
+
+        results.count = count
+        results.data = data
 
         return results

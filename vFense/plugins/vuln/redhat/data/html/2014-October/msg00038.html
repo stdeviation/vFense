@@ -1,0 +1,389 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1671&#45;01] Moderate: rsyslog5 and rsyslog security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Oct 2014 14:54:58 &#45;0400 -->
+<!--X-Message-Id: 201410201854.s9KIsv9P015608@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1671-01] Moderate: rsyslog5 and rsyslog security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1671-01] Moderate: rsyslog5 and rsyslog security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1671-01] Moderate: rsyslog5 and rsyslog security update</li>
+<li><em>Date</em>: Mon, 20 Oct 2014 18:54:57 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rsyslog5 and rsyslog security update
+Advisory ID:       RHSA-2014:1671-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1671.html">https://rhn.redhat.com/errata/RHSA-2014-1671.html</a>
+Issue date:        2014-10-20
+CVE Names:         CVE-2014-3634 
+=====================================================================
+
+1. Summary:
+
+Updated rsyslog5 and rsyslog packages that fix one security issue are now
+available for Red Hat Enterprise Linux 5 and 6 respectively.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The rsyslog packages provide an enhanced, multi-threaded syslog daemon
+that supports writing to relational databases, syslog/TCP, RFC 3195,
+permitted sender lists, filtering on any message part, and fine grained
+output format control.
+
+A flaw was found in the way rsyslog handled invalid log message priority
+values. In certain configurations, a local attacker, or a remote attacker
+able to connect to the rsyslog port, could use this flaw to crash the
+rsyslog daemon. (CVE-2014-3634)
+
+Red Hat would like to thank Rainer Gerhards of rsyslog upstream for
+reporting this issue.
+
+All rsyslog5 and rsyslog users are advised to upgrade to these updated
+packages, which contain a backported patch to correct this issue. After
+installing the update, the rsyslog service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1142373 - CVE-2014-3634 rsyslog: remote syslog PRI vulnerability
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+rsyslog5-5.8.12-5.el5_11.src.rpm
+
+i386:
+rsyslog5-5.8.12-5.el5_11.i386.rpm
+rsyslog5-debuginfo-5.8.12-5.el5_11.i386.rpm
+rsyslog5-gnutls-5.8.12-5.el5_11.i386.rpm
+rsyslog5-gssapi-5.8.12-5.el5_11.i386.rpm
+rsyslog5-mysql-5.8.12-5.el5_11.i386.rpm
+rsyslog5-pgsql-5.8.12-5.el5_11.i386.rpm
+rsyslog5-snmp-5.8.12-5.el5_11.i386.rpm
+
+x86_64:
+rsyslog5-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-debuginfo-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-gnutls-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-gssapi-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-mysql-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-pgsql-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-snmp-5.8.12-5.el5_11.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+rsyslog5-5.8.12-5.el5_11.src.rpm
+
+i386:
+rsyslog5-5.8.12-5.el5_11.i386.rpm
+rsyslog5-debuginfo-5.8.12-5.el5_11.i386.rpm
+rsyslog5-gnutls-5.8.12-5.el5_11.i386.rpm
+rsyslog5-gssapi-5.8.12-5.el5_11.i386.rpm
+rsyslog5-mysql-5.8.12-5.el5_11.i386.rpm
+rsyslog5-pgsql-5.8.12-5.el5_11.i386.rpm
+rsyslog5-snmp-5.8.12-5.el5_11.i386.rpm
+
+ia64:
+rsyslog5-5.8.12-5.el5_11.ia64.rpm
+rsyslog5-debuginfo-5.8.12-5.el5_11.ia64.rpm
+rsyslog5-gnutls-5.8.12-5.el5_11.ia64.rpm
+rsyslog5-gssapi-5.8.12-5.el5_11.ia64.rpm
+rsyslog5-mysql-5.8.12-5.el5_11.ia64.rpm
+rsyslog5-pgsql-5.8.12-5.el5_11.ia64.rpm
+rsyslog5-snmp-5.8.12-5.el5_11.ia64.rpm
+
+ppc:
+rsyslog5-5.8.12-5.el5_11.ppc.rpm
+rsyslog5-debuginfo-5.8.12-5.el5_11.ppc.rpm
+rsyslog5-gnutls-5.8.12-5.el5_11.ppc.rpm
+rsyslog5-gssapi-5.8.12-5.el5_11.ppc.rpm
+rsyslog5-mysql-5.8.12-5.el5_11.ppc.rpm
+rsyslog5-pgsql-5.8.12-5.el5_11.ppc.rpm
+rsyslog5-snmp-5.8.12-5.el5_11.ppc.rpm
+
+s390x:
+rsyslog5-5.8.12-5.el5_11.s390x.rpm
+rsyslog5-debuginfo-5.8.12-5.el5_11.s390x.rpm
+rsyslog5-gnutls-5.8.12-5.el5_11.s390x.rpm
+rsyslog5-gssapi-5.8.12-5.el5_11.s390x.rpm
+rsyslog5-mysql-5.8.12-5.el5_11.s390x.rpm
+rsyslog5-pgsql-5.8.12-5.el5_11.s390x.rpm
+rsyslog5-snmp-5.8.12-5.el5_11.s390x.rpm
+
+x86_64:
+rsyslog5-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-debuginfo-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-gnutls-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-gssapi-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-mysql-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-pgsql-5.8.12-5.el5_11.x86_64.rpm
+rsyslog5-snmp-5.8.12-5.el5_11.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+rsyslog-5.8.10-9.el6_6.src.rpm
+
+i386:
+rsyslog-5.8.10-9.el6_6.i686.rpm
+rsyslog-debuginfo-5.8.10-9.el6_6.i686.rpm
+rsyslog-gnutls-5.8.10-9.el6_6.i686.rpm
+rsyslog-gssapi-5.8.10-9.el6_6.i686.rpm
+rsyslog-relp-5.8.10-9.el6_6.i686.rpm
+
+x86_64:
+rsyslog-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-debuginfo-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-gnutls-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-gssapi-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-relp-5.8.10-9.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+Source:
+rsyslog-5.8.10-9.el6_6.src.rpm
+
+i386:
+rsyslog-debuginfo-5.8.10-9.el6_6.i686.rpm
+rsyslog-mysql-5.8.10-9.el6_6.i686.rpm
+rsyslog-pgsql-5.8.10-9.el6_6.i686.rpm
+rsyslog-snmp-5.8.10-9.el6_6.i686.rpm
+
+x86_64:
+rsyslog-debuginfo-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-mysql-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-pgsql-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-snmp-5.8.10-9.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+rsyslog-5.8.10-9.el6_6.src.rpm
+
+x86_64:
+rsyslog-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-debuginfo-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-gnutls-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-gssapi-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-relp-5.8.10-9.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+Source:
+rsyslog-5.8.10-9.el6_6.src.rpm
+
+x86_64:
+rsyslog-debuginfo-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-mysql-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-pgsql-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-snmp-5.8.10-9.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+rsyslog-5.8.10-9.el6_6.src.rpm
+
+i386:
+rsyslog-5.8.10-9.el6_6.i686.rpm
+rsyslog-debuginfo-5.8.10-9.el6_6.i686.rpm
+rsyslog-gnutls-5.8.10-9.el6_6.i686.rpm
+rsyslog-gssapi-5.8.10-9.el6_6.i686.rpm
+rsyslog-mysql-5.8.10-9.el6_6.i686.rpm
+rsyslog-pgsql-5.8.10-9.el6_6.i686.rpm
+rsyslog-relp-5.8.10-9.el6_6.i686.rpm
+
+ppc64:
+rsyslog-5.8.10-9.el6_6.ppc64.rpm
+rsyslog-debuginfo-5.8.10-9.el6_6.ppc64.rpm
+rsyslog-gnutls-5.8.10-9.el6_6.ppc64.rpm
+rsyslog-gssapi-5.8.10-9.el6_6.ppc64.rpm
+rsyslog-mysql-5.8.10-9.el6_6.ppc64.rpm
+rsyslog-pgsql-5.8.10-9.el6_6.ppc64.rpm
+rsyslog-relp-5.8.10-9.el6_6.ppc64.rpm
+
+s390x:
+rsyslog-5.8.10-9.el6_6.s390x.rpm
+rsyslog-debuginfo-5.8.10-9.el6_6.s390x.rpm
+rsyslog-gnutls-5.8.10-9.el6_6.s390x.rpm
+rsyslog-gssapi-5.8.10-9.el6_6.s390x.rpm
+rsyslog-mysql-5.8.10-9.el6_6.s390x.rpm
+rsyslog-pgsql-5.8.10-9.el6_6.s390x.rpm
+rsyslog-relp-5.8.10-9.el6_6.s390x.rpm
+
+x86_64:
+rsyslog-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-debuginfo-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-gnutls-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-gssapi-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-mysql-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-pgsql-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-relp-5.8.10-9.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+Source:
+rsyslog-5.8.10-9.el6_6.src.rpm
+
+i386:
+rsyslog-debuginfo-5.8.10-9.el6_6.i686.rpm
+rsyslog-snmp-5.8.10-9.el6_6.i686.rpm
+
+ppc64:
+rsyslog-debuginfo-5.8.10-9.el6_6.ppc64.rpm
+rsyslog-snmp-5.8.10-9.el6_6.ppc64.rpm
+
+s390x:
+rsyslog-debuginfo-5.8.10-9.el6_6.s390x.rpm
+rsyslog-snmp-5.8.10-9.el6_6.s390x.rpm
+
+x86_64:
+rsyslog-debuginfo-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-snmp-5.8.10-9.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+rsyslog-5.8.10-9.el6_6.src.rpm
+
+i386:
+rsyslog-5.8.10-9.el6_6.i686.rpm
+rsyslog-debuginfo-5.8.10-9.el6_6.i686.rpm
+rsyslog-gnutls-5.8.10-9.el6_6.i686.rpm
+rsyslog-gssapi-5.8.10-9.el6_6.i686.rpm
+rsyslog-mysql-5.8.10-9.el6_6.i686.rpm
+rsyslog-pgsql-5.8.10-9.el6_6.i686.rpm
+rsyslog-relp-5.8.10-9.el6_6.i686.rpm
+
+x86_64:
+rsyslog-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-debuginfo-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-gnutls-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-gssapi-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-mysql-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-pgsql-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-relp-5.8.10-9.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+Source:
+rsyslog-5.8.10-9.el6_6.src.rpm
+
+i386:
+rsyslog-debuginfo-5.8.10-9.el6_6.i686.rpm
+rsyslog-snmp-5.8.10-9.el6_6.i686.rpm
+
+x86_64:
+rsyslog-debuginfo-5.8.10-9.el6_6.x86_64.rpm
+rsyslog-snmp-5.8.10-9.el6_6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-3634.html">https://www.redhat.com/security/data/cve/CVE-2014-3634.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFURVn4XlSAg2UNWIIRAuaWAJ91j9A3POMj8lpZorMqOCJtqkgPXwCfZ0Wg
+jJx6ffqrPFX7f0MzTeM52cY=
+=7irN
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00039.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00039.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

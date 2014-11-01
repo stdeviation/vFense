@@ -1,6 +1,6 @@
 import logging
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.view._db_model import (
     ViewCollections, ViewKeys, ViewIndexes
 )

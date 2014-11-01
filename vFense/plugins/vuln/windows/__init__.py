@@ -18,11 +18,10 @@ class Windows(Vulnerability):
 
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the fields into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                install operation.
+            (dict): A dictionary with the fields.
 
         """
         vuln_data = super(Windows, self).to_dict()

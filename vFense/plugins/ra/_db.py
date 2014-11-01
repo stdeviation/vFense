@@ -1,7 +1,7 @@
 import time
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 import vFense.settings as settings
 from vFense.db.client import *

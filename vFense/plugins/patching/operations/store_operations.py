@@ -1,15 +1,24 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
-from vFense.plugins.patching.operations.patching_operations import (
-    PatchingOperation
-)
+from vFense._constants import VFENSE_LOGGING_CONFIG
+from vFense.core.operations import AgentOperation
 from vFense.core.operations._constants import (
     AgentOperations, vFensePlugins, vFenseObjects
 )
-from vFense.core.operations.store_agent_operation import StoreAgentOperation
-from vFense.core.operations._db_model import AgentOperationKey, OperationPerAgentKey
-from vFense.core._constants import CPUThrottleValues, RebootValues
+from vFense.core.operations.store_agent_operation import (
+    StoreAgentOperationManager
+)
+from vFense.core.tag._db import fetch_agent_ids_in_tag
+from vFense.core.results import ApiResults
+from vFense.core.operations.status_codes import (
+    AgentOperationCodes, AgentOperationFailureCodes
+)
+from vFense.plugins.patching import AgentAppData
+from vFense.plugins.patching.queue import InstallQueueOperation
+from vFense.plugins.patching._constants import CommonAppKeys
+from vFense.plugins.patching.operations.patching_operations import (
+    PatchingOperation
+)
 from vFense.plugins.patching.operations import Install
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys, DbCommonAppPerAgentKeys
@@ -17,25 +26,17 @@ from vFense.plugins.patching._db_model import (
 from vFense.plugins.patching._db import (
     fetch_app_data_to_send_to_agent, return_valid_appids_for_agent
 )
-
-from vFense.plugins.patching._constants import CommonAppKeys, CommonFileKeys
 from vFense.plugins.patching.patching import (
     get_download_urls, update_app_status_by_agentid_and_appid
-)
-
-from vFense.core.tag._db import fetch_agent_ids_in_tag
-from vFense.core.results import ApiResultKeys
-from vFense.core.operations.status_codes import (
-    AgentOperationCodes, AgentOperationFailureCodes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-class StorePatchingOperation(StoreAgentOperation):
+class StorePatchingOperation(StoreAgentOperationManager):
     """Create operations for the patching plugin"""
-    def refresh_apps(self, agent_ids=None, tag_id=None):
+    def refresh_apps(self, agent_operation):
         """Send the refresh_apps operation to the agent,
             Send all installed applications and updates needed
             to the server.
@@ -57,14 +58,10 @@ class StorePatchingOperation(StoreAgentOperation):
 
         Returns:
         """
-        results = (
-            self.generic_operation(
-                AgentOperations.REFRESH_APPS,
-                vFensePlugins.RV_PLUGIN,
-                agent_ids, tag_id
-            )
-        )
-
+        agent_operation.operation = AgentOperations.REFRESH_APPS
+        agent_operation.plugin = vFensePlugins.RV_PLUGIN
+        agent_operation.fill_in_defaults()
+        results = self.generic_operation(agent_operation)
         return results
 
 
@@ -102,7 +99,8 @@ class StorePatchingOperation(StoreAgentOperation):
             results = self.install_apps(install, oper_type)
 
         else:
-            results = {}
+            results = ApiResults()
+            results.fill_in_defaults()
             msg = (
                 'Invalid instance {0}, please pass an instance of Install'
                 .format(type(install))
@@ -111,10 +109,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = []
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
         return results
 
@@ -154,7 +152,8 @@ class StorePatchingOperation(StoreAgentOperation):
             results = self.install_apps(install, oper_type)
 
         else:
-            results = {}
+            results = ApiResults()
+            results.fill_in_defaults()
             msg = (
                 'Invalid instance {0}, please pass an instance of Install'
                 .format(type(install))
@@ -163,10 +162,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = []
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
 
     def install_supported_apps(self, install):
@@ -206,7 +205,8 @@ class StorePatchingOperation(StoreAgentOperation):
             results = self.install_apps(install, oper_type)
 
         else:
-            results = {}
+            results = ApiResults()
+            results.fill_in_defaults()
             msg = (
                 'Invalid instance {0}, please pass an instance of Install'
                 .format(type(install))
@@ -215,10 +215,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = []
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
 
     def install_agent_update(self, install):
@@ -258,7 +258,8 @@ class StorePatchingOperation(StoreAgentOperation):
             results = self.install_apps(install, oper_type)
 
         else:
-            results = {}
+            results = ApiResults()
+            results.fill_in_defaults()
             msg = (
                 'Invalid instance {0}, please pass an instance of Install'
                 .format(type(install))
@@ -267,10 +268,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = []
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
 
     def uninstall_apps(self, install):
@@ -293,9 +294,16 @@ class StorePatchingOperation(StoreAgentOperation):
             >>> agent_ids = ['e9a8871a-5ae8-40fb-9316-b0918947f736']
             >>> install = Install(app_ids, agent_ids, username, view_name, reboot, net, cpu)
             >>> operation = StorePatchingOperation(username, view_name)
-            >>> operation.uninstall_apps(install)
+            >>> results = operation.uninstall_apps(install)
 
         Returns:
+            >>> results.message
+            u'install_os_apps operation created: 3b6150ae-a143-4134-8338-a5aa65fa9e47'
+
+        Returns:
+            ApiResults instance
+            Check vFense.core.results for all the attributes and methods
+            for the instance.
 
         """
 
@@ -310,7 +318,8 @@ class StorePatchingOperation(StoreAgentOperation):
             results = self.install_apps(install, oper_type)
 
         else:
-            results = {}
+            results = ApiResults()
+            results.fill_in_defaults()
             msg = (
                 'Invalid instance {0}, please pass an instance of Install'
                 .format(type(install))
@@ -319,10 +328,10 @@ class StorePatchingOperation(StoreAgentOperation):
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = []
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids = []
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
 
     def install_apps(self, install, oper_type):
@@ -334,10 +343,8 @@ class StorePatchingOperation(StoreAgentOperation):
         """
 
         oper_plugin = vFensePlugins.RV_PLUGIN
-        results = {
-            ApiResultKeys.DATA: [],
-            ApiResultKeys.USERNAME: self.username,
-        }
+        results = ApiResults()
+        results.fill_in_defaults()
 
         performed_on = vFenseObjects.AGENT
         if install.tag_id:
@@ -347,28 +354,32 @@ class StorePatchingOperation(StoreAgentOperation):
             else:
                 install.agent_ids += fetch_agent_ids_in_tag(install.tag_id)
 
-        operation = (
+        operation_manager = (
             PatchingOperation(
                 self.username, self.view_name,
             )
         )
-
-        operation_id = (
-            operation.create_operation(
-                oper_type, oper_plugin, install.agent_ids,
-                install.tag_id, install.cpu_throttle,
-                install.net_throttle, install.restart,
-                performed_on=performed_on
-            )
-        )
+        operation = AgentOperation()
+        operation.fill_in_defaults()
+        operation.tag_id = install.tag_id
+        operation.operation = oper_type
+        operation.agent_ids = install.agent_ids
+        operation.cpu_throttle = install.cpu_throttle
+        operation.net_throttle = install.net_throttle
+        operation.plugin = oper_plugin
+        operation.performed_on = performed_on
+        operation_id = operation_manager.create_operation(operation)
         if operation_id:
-            msg = 'operation created'
+            msg = (
+                '{0} operation created, operation_id: {1}'
+                .format(oper_type, operation_id)
+            )
             status_code = AgentOperationCodes.ObjectCreated
             vfense_status_code = AgentOperationCodes.Created
-            results[ApiResultKeys.GENERATED_IDS] = [operation_id]
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids.append(operation_id)
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
             for agent_id in install.agent_ids:
                 valid_app_ids = (
@@ -381,63 +392,58 @@ class StorePatchingOperation(StoreAgentOperation):
                 pkg_data = []
                 for app_id in valid_app_ids:
                     update_app_status_by_agentid_and_appid(
-                        agent_id, app_id,
-                        CommonAppKeys.PENDING,
+                        agent_id, app_id, CommonAppKeys.PENDING,
                         self.CurrentAppsPerAgentCollection
                     )
 
-                    pkg_data.append(
-                        self._get_apps_data(app_id, agent_id)
-                    )
+                    pkg_data.append(self._get_apps_data(app_id, agent_id))
 
-                operation_data = {
-                    AgentOperationKey.Operation: oper_type,
-                    AgentOperationKey.OperationId: operation_id,
-                    AgentOperationKey.Plugin: oper_plugin,
-                    AgentOperationKey.Restart: install.restart,
-                    CommonFileKeys.PKG_FILEDATA: pkg_data,
-                    OperationPerAgentKey.AgentId: agent_id,
-                    AgentOperationKey.CpuThrottle: install.cpu_throttle,
-                    AgentOperationKey.NetThrottle: install.net_throttle,
-                }
-                self._store_in_agent_queue(operation_data)
+                agent_queue = InstallQueueOperation()
+                agent_queue.operation = oper_type
+                agent_queue.operation_id = operation_id
+                agent_queue.plugin = oper_plugin
+                agent_queue.agent_id = agent_id
+                agent_queue.restart = install.restart
+                agent_queue.file_data = pkg_data
+                agent_queue.cpu_throttle = install.cpu_throttle
+                agent_queue.net_throttle = install.net_throttle
+
+                self._store_in_agent_queue(agent_queue.to_dict())
                 operation.add_agent_to_install_operation(
                     agent_id, operation_id, pkg_data
                 )
 
         else:
-            msg = 'operation failed to create'
+            msg = '{0} operation failed to create'.format(oper_type)
             status_code = AgentOperationFailureCodes.FailedToCreateObject
             vfense_status_code = (
                 AgentOperationFailureCodes.FailedToCreateOperation
             )
-            results[ApiResultKeys.GENERATED_IDS] = [operation_id],
-            results[ApiResultKeys.GENERIC_STATUS_CODE] = status_code
-            results[ApiResultKeys.VFENSE_STATUS_CODE] = vfense_status_code
-            results[ApiResultKeys.MESSAGE] = msg
+            results.generated_ids.append(operation_id)
+            results.generic_status_code = status_code
+            results.vfense_status_code = vfense_status_code
+            results.message = msg
 
         return results
 
     def _get_apps_data(self, app_id, agent_id):
 
         collection = self.CurrentAppsCollection
-        pkg = (
+        data = (
             fetch_app_data_to_send_to_agent(
                 app_id, agent_id, collection,
             )
         )
         uris = (
             get_download_urls(
-                self.view_name, app_id, pkg[CommonFileKeys.PKG_FILEDATA]
+                self.view_name, app_id, data.file_data
             )
         )
+        app_data = AgentAppData()
+        app_data.app_id = app_id
+        app_data.app_name = data.name
+        app_data.app_version = data.version
+        app_data.app_uris = uris
+        app_data.cli_options = data.cli_options
 
-        pkg_data = {
-            CommonAppKeys.APP_NAME: pkg[DbCommonAppKeys.Name],
-            CommonAppKeys.APP_VERSION: pkg[DbCommonAppKeys.Version],
-            CommonAppKeys.APP_URIS: uris,
-            CommonAppKeys.APP_ID: app_id,
-            CommonFileKeys.PKG_CLI_OPTIONS: pkg[CommonFileKeys.PKG_CLI_OPTIONS]
-        }
-
-        return pkg_data
+        return app_data.to_dict()

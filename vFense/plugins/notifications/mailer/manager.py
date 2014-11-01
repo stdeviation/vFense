@@ -2,18 +2,16 @@
 from time import time
 import logging
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.results import ApiResults
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes,
 )
-from vFense.plugins.status_codes import (
+from vFense.plugins.notifications.mailer.status_codes import (
     EmailCodes, EmailFailureCodes
 )
-from vFense.plugins.notifications import (
-    NotificationPlugins
-)
-from vFense.plugins.notifications._db import (
+from vFense.plugins.notifications.mailer import NotificationPlugin
+from vFense.plugins.notifications.mailer._db import (
     fetch_email_config, insert_email, update_email, delete_email
 )
 
@@ -29,14 +27,14 @@ class MailManager(object):
     def get_config(self):
         config = fetch_email_config(self.view_name)
         if config:
-            config = NotificationPlugins(**config)
+            config = NotificationPlugin(**config)
         else:
-            config = NotificationPlugins()
+            config = NotificationPlugin()
 
         return config
 
     def create(self, config):
-        if isinstance(config, NotificationPlugins):
+        if isinstance(config, NotificationPlugin):
             results = ApiResults()
             results.fill_in_defaults()
             if (config.username and config.password and config.server and
@@ -119,7 +117,7 @@ class MailManager(object):
         return results
 
     def update(self, config):
-        if isinstance(config, NotificationPlugins):
+        if isinstance(config, NotificationPlugin):
             results = ApiResults()
             results.fill_in_defaults()
             invalid_fields = config.get_invalid_fields()

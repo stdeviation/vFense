@@ -1,0 +1,363 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1552&#45;02] Moderate: openssh security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 14 Oct 2014 00:58:37 &#45;0400 -->
+<!--X-Message-Id: 201410140458.s9E4wXnS005927@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1552-02] Moderate: openssh security, bug fix,	and enhancement</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1552-02] Moderate: openssh security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1552-02] Moderate: openssh security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 14 Oct 2014 05:07:07 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openssh security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1552-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1552.html">https://rhn.redhat.com/errata/RHSA-2014-1552.html</a>
+Issue date:        2014-10-14
+CVE Names:         CVE-2014-2532 CVE-2014-2653 
+=====================================================================
+
+1. Summary:
+
+Updated openssh packages that fix two security issues, several bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+OpenSSH is OpenBSD's SSH (Secure Shell) protocol implementation.
+These packages include the core files necessary for both the OpenSSH client
+and server.
+
+It was discovered that OpenSSH clients did not correctly verify DNS SSHFP
+records. A malicious server could use this flaw to force a connecting
+client to skip the DNS SSHFP record check and require the user to perform
+manual host verification of the DNS SSHFP record. (CVE-2014-2653)
+
+It was found that OpenSSH did not properly handle certain AcceptEnv
+parameter values with wildcard characters. A remote attacker could use this
+flaw to bypass intended environment variable restrictions. (CVE-2014-2532)
+
+This update also fixes the following bugs:
+
+* Based on the SP800-131A information security standard, the generation of
+a digital signature using the Digital Signature Algorithm (DSA) with the
+key size of 1024 bits and RSA with the key size of less than 2048 bits is
+disallowed after the year 2013. After this update, ssh-keygen no longer
+generates keys with less than 2048 bits in FIPS mode. However, the sshd
+service accepts keys of size 1024 bits as well as larger keys for
+compatibility reasons. (BZ#993580)
+
+* Previously, the openssh utility incorrectly set the oom_adj value to -17
+for all of its children processes. This behavior was incorrect because the
+children processes were supposed to have this value set to 0. This update
+applies a patch to fix this bug and oom_adj is now properly set to 0 for
+all children processes as expected. (BZ#1010429)
+
+* Previously, if the sshd service failed to verify the checksum of an
+installed FIPS module using the fipscheck library, the information about
+this failure was only provided at the standard error output of sshd. As a
+consequence, the user could not notice this message and be uninformed when
+a system had not been properly configured for FIPS mode. To fix this bug,
+this behavior has been changed and sshd now sends such messages via the
+syslog service. (BZ#1020803)
+
+* When keys provided by the pkcs11 library were removed from the ssh agent
+using the &quot;ssh-add -e&quot; command, the user was prompted to enter a PIN.
+With this update, a patch has been applied to allow the user to remove the
+keys provided by pkcs11 without the PIN. (BZ#1042519)
+
+In addition, this update adds the following enhancements:
+
+* With this update, ControlPersist has been added to OpenSSH. The option in
+conjunction with the ControlMaster configuration directive specifies that
+the master connection remains open in the background after the initial
+client connection has been closed. (BZ#953088)
+
+* When the sshd daemon is configured to force the internal SFTP session,
+and the user attempts to use a connection other than SFTP, the appropriate
+message is logged to the /var/log/secure file. (BZ#997377)
+
+* Support for Elliptic Curve Cryptography modes for key exchange (ECDH) and
+host user keys (ECDSA) as specified by RFC5656 has been added to the
+openssh packages. However, they are not enabled by default and the user has
+to enable them manually. For more information on how to configure ECDSA and
+ECDH with OpenSSH, see: <a  rel="nofollow" href="https://access.redhat.com/solutions/711953">https://access.redhat.com/solutions/711953</a>
+(BZ#1028335)
+
+All openssh users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+953088 - OpenSSH adding ControlPersist patch to enable full usage of SSH control options
+1010429 - Openssh Incorrectly sets oom_adj in all Children after Performing a Reload
+1023043 - ssh_config manual page lists incorrect default value of KexAlgorithms
+1023044 - Fix man page for ssh-keygen because of certificate support
+1027197 - X11 Forwarding does not work with default config - error: Failed to allocate internet-domain X11 display socket
+1028643 - Connection remains when fork() fails.
+1077843 - CVE-2014-2532 openssh: AcceptEnv environment restriction bypass flaw
+1081338 - CVE-2014-2653 openssh: failure to check DNS SSHFP records in certain scenarios
+1108836 - ssh-keyscan should ignore SIGPIPE
+1111568 - AUTOCREATE_SERVER_KEYS=RSAONLY is not supported by init script
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+openssh-5.3p1-104.el6.src.rpm
+
+i386:
+openssh-5.3p1-104.el6.i686.rpm
+openssh-askpass-5.3p1-104.el6.i686.rpm
+openssh-clients-5.3p1-104.el6.i686.rpm
+openssh-debuginfo-5.3p1-104.el6.i686.rpm
+openssh-server-5.3p1-104.el6.i686.rpm
+
+x86_64:
+openssh-5.3p1-104.el6.x86_64.rpm
+openssh-askpass-5.3p1-104.el6.x86_64.rpm
+openssh-clients-5.3p1-104.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-104.el6.x86_64.rpm
+openssh-server-5.3p1-104.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+openssh-debuginfo-5.3p1-104.el6.i686.rpm
+openssh-ldap-5.3p1-104.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.i686.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-104.el6.i686.rpm
+openssh-debuginfo-5.3p1-104.el6.x86_64.rpm
+openssh-ldap-5.3p1-104.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+openssh-5.3p1-104.el6.src.rpm
+
+x86_64:
+openssh-5.3p1-104.el6.x86_64.rpm
+openssh-clients-5.3p1-104.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-104.el6.x86_64.rpm
+openssh-server-5.3p1-104.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+x86_64:
+openssh-askpass-5.3p1-104.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-104.el6.i686.rpm
+openssh-debuginfo-5.3p1-104.el6.x86_64.rpm
+openssh-ldap-5.3p1-104.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+openssh-5.3p1-104.el6.src.rpm
+
+i386:
+openssh-5.3p1-104.el6.i686.rpm
+openssh-askpass-5.3p1-104.el6.i686.rpm
+openssh-clients-5.3p1-104.el6.i686.rpm
+openssh-debuginfo-5.3p1-104.el6.i686.rpm
+openssh-server-5.3p1-104.el6.i686.rpm
+
+ppc64:
+openssh-5.3p1-104.el6.ppc64.rpm
+openssh-askpass-5.3p1-104.el6.ppc64.rpm
+openssh-clients-5.3p1-104.el6.ppc64.rpm
+openssh-debuginfo-5.3p1-104.el6.ppc64.rpm
+openssh-server-5.3p1-104.el6.ppc64.rpm
+
+s390x:
+openssh-5.3p1-104.el6.s390x.rpm
+openssh-askpass-5.3p1-104.el6.s390x.rpm
+openssh-clients-5.3p1-104.el6.s390x.rpm
+openssh-debuginfo-5.3p1-104.el6.s390x.rpm
+openssh-server-5.3p1-104.el6.s390x.rpm
+
+x86_64:
+openssh-5.3p1-104.el6.x86_64.rpm
+openssh-askpass-5.3p1-104.el6.x86_64.rpm
+openssh-clients-5.3p1-104.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-104.el6.x86_64.rpm
+openssh-server-5.3p1-104.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+openssh-debuginfo-5.3p1-104.el6.i686.rpm
+openssh-ldap-5.3p1-104.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.i686.rpm
+
+ppc64:
+openssh-debuginfo-5.3p1-104.el6.ppc.rpm
+openssh-debuginfo-5.3p1-104.el6.ppc64.rpm
+openssh-ldap-5.3p1-104.el6.ppc64.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.ppc.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.ppc64.rpm
+
+s390x:
+openssh-debuginfo-5.3p1-104.el6.s390.rpm
+openssh-debuginfo-5.3p1-104.el6.s390x.rpm
+openssh-ldap-5.3p1-104.el6.s390x.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.s390.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.s390x.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-104.el6.i686.rpm
+openssh-debuginfo-5.3p1-104.el6.x86_64.rpm
+openssh-ldap-5.3p1-104.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+openssh-5.3p1-104.el6.src.rpm
+
+i386:
+openssh-5.3p1-104.el6.i686.rpm
+openssh-askpass-5.3p1-104.el6.i686.rpm
+openssh-clients-5.3p1-104.el6.i686.rpm
+openssh-debuginfo-5.3p1-104.el6.i686.rpm
+openssh-server-5.3p1-104.el6.i686.rpm
+
+x86_64:
+openssh-5.3p1-104.el6.x86_64.rpm
+openssh-askpass-5.3p1-104.el6.x86_64.rpm
+openssh-clients-5.3p1-104.el6.x86_64.rpm
+openssh-debuginfo-5.3p1-104.el6.x86_64.rpm
+openssh-server-5.3p1-104.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+openssh-debuginfo-5.3p1-104.el6.i686.rpm
+openssh-ldap-5.3p1-104.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.i686.rpm
+
+x86_64:
+openssh-debuginfo-5.3p1-104.el6.i686.rpm
+openssh-debuginfo-5.3p1-104.el6.x86_64.rpm
+openssh-ldap-5.3p1-104.el6.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.i686.rpm
+pam_ssh_agent_auth-0.9.3-104.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2532.html">https://www.redhat.com/security/data/cve/CVE-2014-2532.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2014-2653.html">https://www.redhat.com/security/data/cve/CVE-2014-2653.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/solutions/711953">https://access.redhat.com/solutions/711953</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUPK1zXlSAg2UNWIIRAgLFAKCbc0zGun3IBr/70ChlueemUsEORgCfa8RL
+IT6RfneDJRTv3j8EqBZSrp0=
+=33Fn
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

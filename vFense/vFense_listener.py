@@ -6,7 +6,7 @@ import uuid
 import os
 import logging
 import logging.config
-from vFense import (
+from vFense._constants import (
     VFENSE_LOGGING_CONFIG, VFENSE_SSL_PATH, VFENSE_TEMPLATE_PATH
 )
 
@@ -15,8 +15,7 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 
-import vFense_module_loader
-
+from vFense.utils.common import import_modules_by_regex, get_api_uris
 from vFense.core.api.base import WebSocketHandler, AdminHandler
 from vFense.receiver.api.ra.results import RemoteDesktopResults
 
@@ -28,6 +27,7 @@ define("debug", default=True, help="enable debugging features", type=bool)
 
 class Application(tornado.web.Application):
     def __init__(self, debug):
+        handlers = get_api_uris(receiver=True)
         handlers = [
 
             #RA plugin
@@ -35,12 +35,6 @@ class Application(tornado.web.Application):
 
         ]
 
-        core_loader = vFense_module_loader.CoreLoader()
-        plugin_loader = vFense_module_loader.PluginsLoader()
-
-        # TODO: check for colliding regex's from plugins
-        handlers.extend(core_loader.get_core_listener_api_handlers())
-        handlers.extend(plugin_loader.get_plugins_listener_api_handlers())
 
         template_path = VFENSE_TEMPLATE_PATH
         settings = {

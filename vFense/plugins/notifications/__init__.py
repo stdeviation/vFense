@@ -1,8 +1,7 @@
 from vFense import Base
 from vFense.core._db_constants import DbTime
 from vFense.plugins.notifications._db_model import (
-    NotificationKeys, NotificationHistoryKeys,
-    NotificationPluginKeys
+    NotificationKeys, NotificationHistoryKeys
 )
 from vFense.plugins.notifications._constants import (
     NotifDefaults
@@ -221,16 +220,16 @@ class Notification(Base):
         """
 
         data = {
-            NotificationPluginKeys.CreatedTime: (
+            NotificationKeys.CreatedTime: (
                 DbTime.epoch_time_to_db_time(self.created_time)
             ),
-            NotificationPluginKeys.ModifiedTime: (
+            NotificationKeys.ModifiedTime: (
                 DbTime.epoch_time_to_db_time(self.modified_time)
             ),
         }
 
         combined_data = dict(self.to_dict().items() + data.items())
-        combined_data.pop(NotificationKeys.NotificationId)
+        combined_data.pop(NotificationKeys.NotificationId, None)
         return combined_data
 
     def to_dict_db_update(self):
@@ -242,13 +241,13 @@ class Notification(Base):
         """
 
         data = {
-            NotificationPluginKeys.ModifiedTime: (
+            NotificationKeys.ModifiedTime: (
                 DbTime.epoch_time_to_db_time(self.modified_time)
             ),
         }
 
         combined_data = dict(self.to_dict_non_null().items() + data.items())
-        combined_data.pop(NotificationKeys.NotificationId)
+        combined_data.pop(NotificationKeys.NotificationId, None)
         return combined_data
 
 
@@ -353,7 +352,7 @@ class NotificationHistory(Base):
         }
 
         combined_data = dict(self.to_dict_non_null().items() + data.items())
-        combined_data.pop(NotificationHistoryKeys.Id)
+        combined_data.pop(NotificationHistoryKeys.Id, None)
 
         return dict(self.to_dict().items() + data.items())
 

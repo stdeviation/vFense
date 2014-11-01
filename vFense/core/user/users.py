@@ -1,5 +1,5 @@
 import logging
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.user._db_model import UserKeys
 
 from vFense.core.user._db import fetch_user
@@ -26,7 +26,7 @@ def user_is_global(username):
     """
     data = fetch_user(username)
     if data:
-        if data[UserKeys.Global]:
+        if data[UserKeys.IsGlobal]:
             data = True
         else:
             data = False
@@ -54,7 +54,7 @@ def validate_user_names(user_names, is_global=False):
         for user_name in user_names:
             user = fetch_user(user_name)
             if user:
-                if user[UserKeys.Global] == is_global:
+                if user[UserKeys.IsGlobal] == is_global:
                     valid_user_names.append(user_name)
                 else:
                     invalid_user_names.append(user_name)
@@ -94,7 +94,7 @@ def validate_users_in_views(usernames, views):
         for user in usernames:
             user_data = fetch_user(user)
             if user_data:
-                if user_data[UserKeys.Global]:
+                if user_data[UserKeys.IsGlobal]:
                     valid_global_users.append(user)
                 else:
                     if set(views).issubset(user_data[UserKeys.Views]):

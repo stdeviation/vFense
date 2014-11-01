@@ -1,11 +1,11 @@
-import logging, logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense import Base
 from vFense.core._constants import CommonKeys
 from vFense.core._db_constants import DbTime
 from vFense.core.results import ApiResultKeys
 from vFense.plugins.patching._constants import (
     AppDefaults, RebootValues, HiddenValues, UninstallableValues,
-    CommonSeverityKeys, FileDefaults, AppStatuses
+    CommonSeverityKeys, FileDefaults, AppStatuses, CommonAppKeys,
+    CommonFileKeys
 )
 from vFense.plugins.patching._db_model import (
     DbCommonAppKeys, FilesKey, DbCommonAppPerAgentKeys
@@ -18,10 +18,8 @@ from vFense.plugins.patching.status_codes import (
 from vFense.plugins.patching.utils import (
     build_app_id, build_agent_app_id, get_proper_severity
 )
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
 
-class Apps(object):
+class Apps(Base):
     """Used to represent an instance of an app."""
 
     def __init__(self, name=None, version=None,
@@ -33,7 +31,8 @@ class Apps(object):
                  repo=None, files_download_status=None, vulnerability_id=None,
                  id=None, update=None,install_date=None, status=None,
                  agent_id=None, dependencies=None, last_modified_time=None,
-                 vulnerability_categories=None, cve_ids=None, views=None):
+                 vulnerability_categories=None, cve_ids=None, views=None,
+                 **kwargs):
         """
         Kwargs:
             name (str): Name of the application.
@@ -70,6 +69,7 @@ class Apps(object):
             views (list): List of views, this application is associated with.
 
         """
+        super(Apps, self).__init__(**kwargs)
         self.name = name
         self.version = version
         self.arch = arch
@@ -405,6 +405,18 @@ class Apps(object):
             DbCommonAppKeys.CveIds: self.cve_ids
         }
 
+    def to_dict_apps_non_null(self):
+        """ Turn the fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+        data = self.to_dict_apps()
+
+        return {k:data[k] for k in data
+                if data[k] != None}
+
     def to_dict_db_apps(self):
         """ Turn the view fields into a dictionary.
 
@@ -424,11 +436,10 @@ class Apps(object):
 
 
     def to_dict_apps_per_agent(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the fields into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                install operation.
+            (dict): A dictionary with the fields.
 
         """
 
@@ -451,6 +462,18 @@ class Apps(object):
             DbCommonAppPerAgentKeys.Status: self.status
         }
 
+    def to_dict_apps_per_agent_non_null(self):
+        """ Turn the fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+        data = self.to_dict_apps_per_agent()
+
+        return {k:data[k] for k in data
+                if data[k] != None}
+
     def to_dict_db_apps_per_agent(self):
         """ Turn the view fields into a dictionary.
 
@@ -472,24 +495,11 @@ class Apps(object):
         return dict(self.to_dict_apps_per_agent().items() + data.items())
 
 
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}
-
-
-class Files(object):
+class Files(Base):
     """Used to represent an instance of an app."""
 
     def __init__(self, file_name=None, file_hash=None, file_size=None,
-                 file_uri=None, app_ids=None, agent_ids=None):
+                 file_uri=None, app_ids=None, agent_ids=None, **kwargs):
         """
         Kwargs:
             file_name (str): Name of the file.
@@ -499,6 +509,7 @@ class Files(object):
             app_ids (list): The application ids, this file is associated with.
             agent_ids (list): The agent ids this file is associated with.
         """
+        super(Files, self).__init__(**kwargs)
         self.file_name = file_name
         self.file_hash = file_hash
         self.file_size = file_size
@@ -630,11 +641,10 @@ class Files(object):
         return invalid_fields
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the fields into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                install operation.
+            (dict): A dictionary with the fields.
 
         """
 
@@ -647,14 +657,91 @@ class Files(object):
             FilesKey.FileSize: self.file_size,
         }
 
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
+
+class AgentAppData(Base):
+    def __init__(self, app_id=None, app_name=None, app_version=None,
+                 app_uris=None, cli_options=None, **kwargs
+                 ):
+        super(AgentAppData, self).__init__(**kwargs)
+        self.app_id = app_id
+        self.app_name = app_name
+        self.app_version = app_version
+        self.app_uris = app_uris
+        self.cli_options = cli_options
+
+
+    def to_dict(self):
+        """ Turn the fields into a dictionary.
 
         Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
+            (dict): A dictionary with the fields.
 
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}
+        """
+
+        return {
+            CommonAppKeys.APP_ID: self.app_id,
+            CommonAppKeys.APP_NAME: self.app_name,
+            CommonAppKeys.APP_VERSION: self.app_version,
+            CommonAppKeys.APP_URIS: self.app_uris,
+            CommonFileKeys.PKG_CLI_OPTIONS: self.cli_options
+        }
+
+
+class AgentAppFileData(Apps):
+    def __init__(self, file_data=None, **kwargs):
+        super(AgentAppData, self).__init__(**kwargs)
+        self.file_data = file_data
+
+
+    def to_dict(self):
+        """ Turn the fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        return {
+            DbCommonAppKeys.AppId: self.app_id,
+            DbCommonAppKeys.Name: self.app_name,
+            DbCommonAppKeys.Version: self.app_version,
+            DbCommonAppKeys.FileData: self.file_data,
+            DbCommonAppKeys.CliOptions: self.cli_options
+        }
+
+
+class FileUploadData(Base):
+    """Used to represent an instance."""
+
+    def __init__(self, file_name=None, file_hash=None, file_size=None,
+                 file_path=None, file_uuid=None, **kwargs):
+        """
+        Kwargs:
+            file_name (str): Name of the file.
+            file_hash (str): The md5 hash of the file.
+            file_size (int): Size of the file in kb.
+            file_path (str): The path where this file can be downloaded from.
+            file_uuid (str): The primary key of this file.
+        """
+        super(FileUploadData, self).__init__(**kwargs)
+        self.file_name = file_name
+        self.file_hash = file_hash
+        self.file_size = file_size
+        self.file_path = file_path
+        self.file_uuid = file_uuid
+
+    def to_dict(self):
+        """ Turn the fields into a dictionary.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        return {
+            'file_uuid': self.file_uuid,
+            'file_name': self.file_name,
+            'file_path': self.file_path,
+            'file_size': self.file_size,
+            'file_hash': self.file_hash
+        }

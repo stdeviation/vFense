@@ -1,0 +1,296 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1507&#45;02] Low: trousers security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 14 Oct 2014 00:57:09 &#45;0400 -->
+<!--X-Message-Id: 201410140457.s9E4v5p9031562@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1507-02] Low: trousers security, bug fix,	and enhancement upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1507-02] Low: trousers security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1507-02] Low: trousers security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 14 Oct 2014 05:05:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: trousers security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1507-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1507.html">https://rhn.redhat.com/errata/RHSA-2014-1507.html</a>
+Issue date:        2014-10-14
+CVE Names:         CVE-2012-0698 
+=====================================================================
+
+1. Summary:
+
+Updated trousers packages that fix one security issue, several bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Low security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+TrouSerS is an implementation of the Trusted Computing Group's Software
+Stack (TSS) specification. You can use TrouSerS to write applications that
+make use of your TPM hardware. TPM hardware can create, store and use RSA
+keys securely (without ever being exposed in memory), verify a platform's
+software state using cryptographic hashes and more.
+
+A flaw was found in the way tcsd, the daemon that manages Trusted Computing
+resources, processed incoming TCP packets. A remote attacker could send a
+specially crafted TCP packet that, when processed by tcsd, could cause the
+daemon to crash. Note that by default tcsd accepts requests on localhost
+only. (CVE-2012-0698)
+
+Red Hat would like to thank Andrew Lutomirski for reporting this issue.
+
+The trousers package has been upgraded to upstream version 0.3.13, which
+provides a number of bug fixes and enhancements over the previous version,
+including corrected internal symbol names to avoid collisions with other
+applications, fixed memory leaks, added IPv6 support, fixed buffer handling
+in tcsd, as well as changed the license to BSD. (BZ#633584, BZ#1074634)
+
+All trousers users are advised to upgrade to these updated packages, which
+correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+781648 - CVE-2012-0698 trousers: DoS vulnerability in tcsd
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+trousers-0.3.13-2.el6.src.rpm
+
+i386:
+trousers-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+
+x86_64:
+trousers-0.3.13-2.el6.i686.rpm
+trousers-0.3.13-2.el6.x86_64.rpm
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-devel-0.3.13-2.el6.i686.rpm
+trousers-static-0.3.13-2.el6.i686.rpm
+
+x86_64:
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.x86_64.rpm
+trousers-devel-0.3.13-2.el6.i686.rpm
+trousers-devel-0.3.13-2.el6.x86_64.rpm
+trousers-static-0.3.13-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+trousers-0.3.13-2.el6.src.rpm
+
+x86_64:
+trousers-0.3.13-2.el6.i686.rpm
+trousers-0.3.13-2.el6.x86_64.rpm
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+x86_64:
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.x86_64.rpm
+trousers-devel-0.3.13-2.el6.i686.rpm
+trousers-devel-0.3.13-2.el6.x86_64.rpm
+trousers-static-0.3.13-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+trousers-0.3.13-2.el6.src.rpm
+
+i386:
+trousers-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+
+ppc64:
+trousers-0.3.13-2.el6.ppc.rpm
+trousers-0.3.13-2.el6.ppc64.rpm
+trousers-debuginfo-0.3.13-2.el6.ppc.rpm
+trousers-debuginfo-0.3.13-2.el6.ppc64.rpm
+
+s390x:
+trousers-0.3.13-2.el6.s390.rpm
+trousers-0.3.13-2.el6.s390x.rpm
+trousers-debuginfo-0.3.13-2.el6.s390.rpm
+trousers-debuginfo-0.3.13-2.el6.s390x.rpm
+
+x86_64:
+trousers-0.3.13-2.el6.i686.rpm
+trousers-0.3.13-2.el6.x86_64.rpm
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-devel-0.3.13-2.el6.i686.rpm
+trousers-static-0.3.13-2.el6.i686.rpm
+
+ppc64:
+trousers-debuginfo-0.3.13-2.el6.ppc.rpm
+trousers-debuginfo-0.3.13-2.el6.ppc64.rpm
+trousers-devel-0.3.13-2.el6.ppc.rpm
+trousers-devel-0.3.13-2.el6.ppc64.rpm
+trousers-static-0.3.13-2.el6.ppc64.rpm
+
+s390x:
+trousers-debuginfo-0.3.13-2.el6.s390.rpm
+trousers-debuginfo-0.3.13-2.el6.s390x.rpm
+trousers-devel-0.3.13-2.el6.s390.rpm
+trousers-devel-0.3.13-2.el6.s390x.rpm
+trousers-static-0.3.13-2.el6.s390x.rpm
+
+x86_64:
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.x86_64.rpm
+trousers-devel-0.3.13-2.el6.i686.rpm
+trousers-devel-0.3.13-2.el6.x86_64.rpm
+trousers-static-0.3.13-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+trousers-0.3.13-2.el6.src.rpm
+
+i386:
+trousers-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+
+x86_64:
+trousers-0.3.13-2.el6.i686.rpm
+trousers-0.3.13-2.el6.x86_64.rpm
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-devel-0.3.13-2.el6.i686.rpm
+trousers-static-0.3.13-2.el6.i686.rpm
+
+x86_64:
+trousers-debuginfo-0.3.13-2.el6.i686.rpm
+trousers-debuginfo-0.3.13-2.el6.x86_64.rpm
+trousers-devel-0.3.13-2.el6.i686.rpm
+trousers-devel-0.3.13-2.el6.x86_64.rpm
+trousers-static-0.3.13-2.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2012-0698.html">https://www.redhat.com/security/data/cve/CVE-2012-0698.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUPK0dXlSAg2UNWIIRAhfsAJ0REbQbcZsTqT4UFT7W1Nlb/wJeDgCgqVau
+kettvfkRnErKoqEXKaKpmnk=
+=Oeip
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

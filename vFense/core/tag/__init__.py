@@ -1,4 +1,9 @@
-from vFense.core.tag._db_model import TagKeys, TagMappedKeys
+from time import time
+from vFense import Base
+from vFense.core._db_constants import DbTime
+from vFense.core.tag._db_model import (
+    TagKeys, TagMappedKeys, TagsPerAgentKeys
+)
 from vFense.core.tag._constants import (
     TagDefaults
 )
@@ -9,11 +14,12 @@ from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 
 
-class Tag(object):
+class Tag(Base):
     """Used to represent an instance of a tag."""
 
     def __init__(self, tag_id=None, tag_name=None, environment=None,
-                 view_name=None, is_global=None, agents=None
+                 view_name=None, is_global=None, agents=None, date_added=None,
+                 date_modified=None, agent_id=None, **kwargs
                  ):
         """
         Kwargs:
@@ -24,24 +30,26 @@ class Tag(object):
             is_global (bool): If this tag is a global tag. A global tag,
                 is a tag that allows agents from any view to be a
                 part of this tag.
+            date_added (epoch_time): time in epoch.
+            date_modified (epoch_time): time in epoch.
         """
+        super(Tag, self).__init__(**kwargs)
         self.tag_id = tag_id
         self.tag_name = tag_name
         self.environment = environment
         self.view_name = view_name
         self.is_global = is_global
         self.agents = agents
+        self.date_added = date_added
+        self.date_modified = date_modified
+        self.agent_id = agent_id
 
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
         the hardcoded default values.
-
-        Use case(s):
-            Useful when adding a new tag instance and only want to fill
-            in a few fields, then allow the add tag functions to call this
-            method to fill in the rest.
         """
+        now = time()
 
         if not self.environment:
             self.environment = TagDefaults.ENVIRONMENT
@@ -55,18 +63,16 @@ class Tag(object):
         if not self.agents:
             self.agents = TagDefaults.AGENTS
 
+        if not self.date_added:
+            self.date_added = now
+
+        if not self.date_modified:
+            self.date_modified = now
+
     def get_invalid_fields(self):
-        """Check the agent for any invalid fields.
-
+        """Check for invalid fields.
         Returns:
-            (list): List of key/value pair dictionaries corresponding
-                to the invalid fields.
-
-                Ex:
-                    [
-                        {'view_name': 'the invalid name in question'},
-                        {'net_throttle': -10}
-                    ]
+            List
         """
         invalid_fields = []
 
@@ -74,7 +80,7 @@ class Tag(object):
             if not isinstance(self.is_global, bool):
                 invalid_fields.append(
                     {
-                        TagKeys.Global: self.is_global,
+                        TagKeys.IsGlobal: self.is_global,
                         CommonKeys.REASON: 'Must be a boolean value',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             GenericCodes.InvalidValue
@@ -134,40 +140,72 @@ class Tag(object):
         return invalid_fields
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the fields into a dictionary.
 
         Returns:
-            (dict): A dictionary with the fields corresponding to the
-                view.
-
-                Ex:
-                {
-                    "agent_queue_ttl": 100 ,
-                    "cpu_throttle":  "high" ,
-                    "view_name":  "default" ,
-                    "net_throttle": 100 ,
-                    "package_download_url_base": https://192.168.8.14/packages/,
-                    "server_queue_ttl": 100
-                }
-
+            Dictionary
         """
 
         return {
             TagKeys.Environment: self.environment,
             TagKeys.TagName: self.tag_name,
             TagKeys.ViewName: self.view_name,
-            TagKeys.Global: self.is_global,
+            TagKeys.IsGlobal: self.is_global,
+            TagKeys.DateAdded: self.date_added,
+            TagKeys.DateModified: self.date_modified,
+            TagKeys.TagId: self.tag_id,
             TagMappedKeys.Agents: self.agents,
         }
 
-    def to_dict_non_null(self):
-        """ Use to get non None fields of a tag. Useful when
-        filling out just a few fields to update the tag in the db.
+    def to_dict_per_agent(self):
+        """ Turn the fields into a dictionary.
 
         Returns:
-            (dict): a dictionary with the non None fields of this view.
+            Dictionary
         """
-        tag_dict = self.to_dict()
 
-        return {k:tag_dict[k] for k in tag_dict
-                if tag_dict[k] != None}
+        return {
+            TagsPerAgentKeys.TagId: self.tag_id,
+            TagsPerAgentKeys.TagName: self.tag_name,
+            TagsPerAgentKeys.ViewName: self.view_name,
+            TagsPerAgentKeys.AgentId: self.agent_id,
+        }
+
+    def to_dict_db(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        data = {
+            TagKeys.DateAdded: (
+                DbTime.epoch_time_to_db_time(self.date_added)
+            ),
+            TagKeys.DateModified: (
+                DbTime.epoch_time_to_db_time(self.date_modified)
+            ),
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        combined_data.pop(TagKeys.TagId, None)
+        return combined_data
+
+    def to_dict_db_update(self):
+        """ Turn the fields into a dictionary, with db related fields.
+
+        Returns:
+            (dict): A dictionary with the fields.
+
+        """
+
+        data = {
+            TagKeys.DateModified: (
+                DbTime.epoch_time_to_db_time(self.date_modified)
+            ),
+        }
+
+        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        combined_data.pop(TagKeys.TagId, None)
+        return combined_data

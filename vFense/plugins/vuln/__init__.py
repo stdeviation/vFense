@@ -1,3 +1,4 @@
+from vFense import Base
 from vFense.core._constants import CommonKeys
 from vFense.core._db_constants import DbTime
 from vFense.core.results import ApiResultKeys
@@ -6,25 +7,10 @@ from vFense.plugins.vuln._constants import VulnDefaults
 from vFense.plugins.vuln._db_model import VulnerabilityKeys
 
 
-class Vulnerability(object):
+class Vulnerability(Base):
     """Used to represent an instance of a vulnerability.
         This is the base class, that all other vulnerabilities, will
         inherit from.
-
-    Kwargs:
-        vulnerability_id (str): The vendor assigned vulnerability id.
-        date_posted (int|float): The epcoh time, of when this vulnerability
-            was posted.
-        details (str): The complete description of this vulnerability.
-        cve_ids (list): List of cve ids, that were assigned to this
-            vulnerability.
-        support_url (str): The vendor supplied url, that describes this
-            vulnerability.
-        os_strings (list): List of operating systems, this vulnerability
-            affects.
-        apps (list of dictionaries): List of affected applications, and the
-            specific details about the vulnerability and the application
-            that is effected.
 
     Attributes:
         self.vulnerability_id
@@ -38,10 +24,24 @@ class Vulnerability(object):
 
     def __init__(self, vulnerability_id=None, date_posted=None,
                  details=None, cve_ids=None, support_url=None,
-                 os_strings=None, apps=None):
+                 os_strings=None, apps=None, **kwargs):
         """
         Kwargs:
+            vulnerability_id (str): The vendor assigned vulnerability id.
+            date_posted (int|float): The epcoh time, of when this
+                vulnerability was posted.
+            details (str): The complete description of this vulnerability.
+            cve_ids (list): List of cve ids, that were assigned to this
+                vulnerability.
+            support_url (str): The vendor supplied url, that describes this
+                vulnerability.
+            os_strings (list): List of operating systems, this vulnerability
+                affects.
+            apps (list of dictionaries): List of affected applications, and
+                the specific details about the vulnerability and the
+                application that is effected.
         """
+        super(Vulnerability, self).__init__(**kwargs)
         self.vulnerability_id = vulnerability_id
         self.date_posted = date_posted
         self.details = details
@@ -190,16 +190,3 @@ class Vulnerability(object):
             ),
         }
         return dict(self.to_dict().items() + data.items())
-
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields of this instance. Useful when
-        filling out just a few fields.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this instance.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}

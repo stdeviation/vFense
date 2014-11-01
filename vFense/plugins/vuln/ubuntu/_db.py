@@ -1,6 +1,6 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
 from vFense.plugins.vuln import *
@@ -87,12 +87,11 @@ def fetch_vuln_data(vuln_id, conn=None):
     """
 
     data = []
-    map_hash = (
+    merge_hash = (
         {
-            UbuntuVulnerabilityKeys.VulnerabilityId: r.row[UbuntuVulnerabilityKeys.VulnerabilityId],
-            UbuntuVulnerabilityKeys.DatePosted: r.row[UbuntuVulnerabilityKeys.DatePosted].to_epoch_time(),
-            UbuntuVulnerabilityKeys.Details: r.row[UbuntuVulnerabilityKeys.Details],
-            UbuntuVulnerabilityKeys.CveIds: r.row[UbuntuVulnerabilityKeys.CveIds],
+            UbuntuVulnerabilityKeys.DatePosted: (
+                r.row[UbuntuVulnerabilityKeys.DatePosted].to_epoch_time()
+            ),
         }
     )
     try:
@@ -100,7 +99,7 @@ def fetch_vuln_data(vuln_id, conn=None):
             r
             .table(UbuntuVulnerabilityCollections.Vulnerabilities)
             .get_all(vuln_id)
-            .map(map_hash)
+            .merge(merge_hash)
             .run(conn)
         )
 

@@ -1,7 +1,7 @@
-from vFense import (
-    get_nginx_config_location, VFENSE_TEMPLATE_PATH,
-    VFENSE_WWW_PATH, VFENSE_APP_PATH, VFENSE_APP_TMP_PATH,
-    VFENSE_SSL_PATH
+from vFense.utils.common import get_nginx_config_location
+from vFense._constants import (
+    VFENSE_WWW_PATH, VFENSE_APP_PATH,
+    VFENSE_APP_TMP_PATH, VFENSE_SSL_PATH
 )
 
 NGINX_CONFIG_FILE = get_nginx_config_location()

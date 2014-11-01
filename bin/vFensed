@@ -7,7 +7,7 @@ from time import sleep
 import signal
 import subprocess
 import logging, logging.config
-from vFense import (
+from vFense._constants import (
     VFENSE_LOGGING_CONFIG, VFENSE_TMP_PATH, VFENSE_BASE_PATH,
     VFENSE_LOG_PATH, VFENSE_BASE_SRC_PATH
 )

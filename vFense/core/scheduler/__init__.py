@@ -2,6 +2,7 @@ from datetime import datetime
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.date import DateTrigger
 from apscheduler.triggers.interval import IntervalTrigger
+from vFense import Base
 from vFense.core.scheduler._db_model import JobKeys
 from vFense.core.scheduler._constants import (
     ScheduleDefaults, ScheduleTriggers, ScheduleKeys,
@@ -15,7 +16,7 @@ from vFense.core.status_codes import GenericCodes
 from pytz import all_timezones
 
 
-class Schedule(object):
+class Schedule(Base):
     """Used to represent an instance of an agent.
     Basic Usage:
         To schedule a one time date job.
@@ -38,7 +39,7 @@ class Schedule(object):
                  time_zone=None, trigger=None, year=None, month=None,
                  day=None, day_of_week=None, hour=None, minute=None,
                  second=None, years=None, months=None, days=None,
-                 hours=None, minutes=None, seconds=None
+                 hours=None, minutes=None, seconds=None, **kwargs
                  ):
         """
         Kwargs:
@@ -70,6 +71,7 @@ class Schedule(object):
             minutes int: The minutes.
             seconds int: The seconds.
         """
+        super(Schedule, self).__init__(**kwargs)
         self.name = name
         self.fn = fn
         self.job_kwargs = job_kwargs

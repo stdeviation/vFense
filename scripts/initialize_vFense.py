@@ -1,18 +1,16 @@
 import os
 import sys
-import re
 import pwd
 import argparse
 import shutil
-import signal
 import subprocess
 from time import sleep
 from _magic import *
-from vFense import (
-    VFENSE_BASE_SRC_PATH, VFENSE_BASE_PATH,
+from vFense._constants import (
+    VFENSE_BASE_SRC_PATH, VFENSE_BASE_PATH, VFENSE_APP_PATH,
     VFENSE_LOG_PATH, VFENSE_LOGGING_CONFIG, VFENSE_VULN_PATH,
-    VFENSE_APP_TMP_PATH, VFENSE_SCHEDULER_PATH,
-    VFENSE_TMP_PATH, VFENSED_SYMLINK, VFENSED,
+    VFENSE_APP_TMP_PATH, VFENSE_SCHEDULER_PATH, RETHINK_CONF,
+    VFENSE_TMP_PATH, VFENSED_SYMLINK, VFENSED, VFENSE_BASE_PATH,
     VFENSE_INIT_D_SCRIPT, VFENSE_INIT_D_SYMLINK,
     VFENSE_SSL_PATH, RETHINK_VFENSE_PATH, RETHINK_PATH
 )
@@ -22,10 +20,11 @@ vfense_logger.create_config()
 
 import logging, logging.config
 
-from vFense import import_modules_by_regex
+from vFense.utils.common import import_modules_by_regex
 import nginx_config_creator as ncc
-from vFense import *
-from vFense.supported_platforms import *
+from vFense.utils.supported_platforms import (
+    REDHAT_DISTROS, DEBIAN_DISTROS, get_distro, SITE_PACKAGES
+)
 from vFense.utils.security import generate_pass, check_password
 from vFense.utils.ssl_initialize import generate_generic_certs
 from vFense.utils.common import pick_valid_ip_address
@@ -249,11 +248,11 @@ def add_local_user():
 @db_create_close
 def create_views(conn=None):
     view = View(
-        DefaultViews.GLOBAL,
+        view_name=DefaultViews.GLOBAL,
         server_queue_ttl=args.queue_ttl,
-        package_download_url=url
+        package_download_url_base=url
     )
-    view_manager = ViewManager(view.name)
+    view_manager = ViewManager(view.view_name)
     view_manager.create(view)
     print 'Global Token: {0}'.format(view_manager.get_token())
     print 'Place this token in the agent.config file'
@@ -266,7 +265,7 @@ def create_groups(conn=None):
     )
     group_manager = GroupManager()
     group_results = group_manager.create(group)
-    admin_group_id = group_results['generated_ids'][0]
+    admin_group_id = group_results.generated_ids[0]
 
     agent_group = Group(
         DefaultGroups.GLOBAL_READ_ONLY, [Permissions.READ],
@@ -274,7 +273,7 @@ def create_groups(conn=None):
     )
     agent_group_manager = GroupManager()
     agent_group_results = agent_group_manager.create(agent_group)
-    agent_group_id = agent_group_results['generated_ids'][0]
+    agent_group_id = agent_group_results.generated_ids[0]
 
     return(admin_group_id, agent_group_id)
 
@@ -282,13 +281,13 @@ def create_groups(conn=None):
 @db_create_close
 def create_users(admin_group_id, agent_group_id, conn=None):
     admin_user = User(
-        DefaultUsers.GLOBAL_ADMIN,
-        args.admin_password, DefaultGroups.GLOBAL_ADMIN,
+        user_name=DefaultUsers.GLOBAL_ADMIN,
+        password=args.admin_password, groups=DefaultGroups.GLOBAL_ADMIN,
         current_view=DefaultViews.GLOBAL,
         default_view=DefaultViews.GLOBAL,
         enabled=True, is_global=True
      )
-    user_manager = UserManager(admin_user.name)
+    user_manager = UserManager(admin_user.user_name)
     user_manager.create(admin_user, [admin_group_id])
     print 'Admin username = %s' % (DefaultUsers.GLOBAL_ADMIN)
     print 'Admin password = %s' % (args.admin_password)

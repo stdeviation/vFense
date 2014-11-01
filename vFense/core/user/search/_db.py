@@ -2,7 +2,7 @@
 
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._constants import SortValues, DefaultQueryValues
 
@@ -218,7 +218,7 @@ class FetchUsers(object):
                     r
                     .table(UserCollections.Users)
                     .get_all(self.view_name, index=UserIndexes.Views)
-                    .filter({UserKeys.Global: False})
+                    .filter({UserKeys.IsGlobal: False})
                 )
         else:
             if self.is_global:
@@ -230,7 +230,7 @@ class FetchUsers(object):
                 base = (
                     r
                     .table(UserCollections.Users)
-                    .filter({UserKeys.Global: False})
+                    .filter({UserKeys.IsGlobal: False})
                 )
 
         return base

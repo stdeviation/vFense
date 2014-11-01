@@ -1,6 +1,6 @@
 import logging
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.group._db_model import (
     GroupCollections, GroupKeys, GroupIndexes
 )

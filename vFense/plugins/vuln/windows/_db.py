@@ -1,7 +1,7 @@
 import sys
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r

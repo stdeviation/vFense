@@ -5,7 +5,7 @@ import signal
 
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG, VFENSE_WWW_PATH
+from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_WWW_PATH
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

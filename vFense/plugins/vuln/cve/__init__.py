@@ -1,3 +1,4 @@
+from vFense import Base
 from vFense.core._constants import CommonKeys
 from vFense.core._db_constants import DbTime
 from vFense.core.results import ApiResultKeys
@@ -16,54 +17,51 @@ from vFense.plugins.vuln.cve._constants import (
 )
 from vFense.plugins.vuln.cve._db_model import CveKeys
 
-
-class Cve(object):
-    """Used to represent an instance of a cve.
-    Kwargs:
-    cve_id (str): The Common Vulnerability and Exposure ID
-        Example.. CVE-2014-2363
-    descriptions (list of dictionaries):
-        Example.. [
-            {
-                u'source': u'cve',
-                u'description': u'Morpho Itemiser 3 8.17 has hardcoded administrative credentials, which makes it easier for remote attackers to obtain access via a login request.'
-            }
-        ]
-    severity (str): The vendor supplied severity.
-        Example... Important, Critical, Security, etc..
-    date_posted (int|float): The date this vulnerability was posted in
-        epoch time.
-        Example... 1408226168.046107 or 1408226180
-    references (list): list of the vendor supplied url, id, and source.
-        Example.. [
-        {
-            u'url': u'http://ics-cert.us-cert.gov/advisories/ICSA-14-205-01',
-            u'source': u'MISC',
-            u'id': u'http://ics-cert.us-cert.gov/advisories/ICSA-14-205-01'
-         }
-    ]
-    reject (str):
-    vulns_soft (list of dictionaries):
-    vulnerability_categories (list): List of categories, this cve belongs too.
-        Example [DDOS, Exploit, Cross Site Scripting]
-    score (int): The CVSS base score. 0 - 10 ( backward compatibility )
-    base_score (int): The CVSS base score. 0 - 10 ( backward compatibility )
-    impact_score (int): The CVSS impact score. 0 - 10
-    exploit_score (int): The CVSS exploit score. 0 - 10
-    vector (list of dictionaries):
-    version (str):
-    cvss_type (str)
-
-    """
-
+class Cve(Base):
 
     def __init__(self, cve_id=None, descriptions=None, severity=None,
                  date_posted=None, date_modified=None, references=None,
                  reject=None, vulns_soft=None, vulnerability_categories=None,
                  score=None, base_score=None, impact_score=None,
                  exploit_score=None, vector=None, version=None,
-                 cvss_type=None):
-
+                 cvss_type=None, **kwargs):
+        """Used to represent an instance of a cve.
+        Kwargs:
+            cve_id (str): The Common Vulnerability and Exposure ID
+                Example.. CVE-2014-2363
+            descriptions (list of dictionaries):
+                Example.. [
+                    {
+                        u'source': u'cve',
+                        u'description': u'Morpho Itemiser 3 8.17 has hardcoded administrative credentials, which makes it easier for remote attackers to obtain access via a login request.'
+                    }
+                ]
+            severity (str): The vendor supplied severity.
+                Example... Important, Critical, Security, etc..
+            date_posted (int|float): The date this vulnerability was posted in
+                epoch time. Example... 1408226168.046107 or 1408226180
+            references (list): list of the vendor supplied url, id, and source.
+                Example..
+                [
+                    {
+                        u'url': u'http://ics-cert.us-cert.gov/advisories/ICSA-14-205-01',
+                        u'source': u'MISC',
+                        u'id': u'http://ics-cert.us-cert.gov/advisories/ICSA-14-205-01'
+                    }
+                ]
+            reject (str):
+            vulns_soft (list of dictionaries):
+            vulnerability_categories (list): List of categories, this cve belongs too.
+                Example [DDOS, Exploit, Cross Site Scripting]
+            score (int): The CVSS base score. 0 - 10 ( backward compatibility )
+            base_score (int): The CVSS base score. 0 - 10 ( backward compatibility )
+            impact_score (int): The CVSS impact score. 0 - 10
+            exploit_score (int): The CVSS exploit score. 0 - 10
+            vector (list of dictionaries):
+            version (str):
+            cvss_type (str)
+        """
+        super(Cve, self).__init__(**kwargs)
         self.cve_id = cve_id
         self.descriptions = descriptions
         self.date_posted = date_posted
@@ -252,24 +250,12 @@ class Cve(object):
         return dict(self.to_dict().items() + data.items())
 
 
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}
-
-
-class CvssVector(object):
+class CvssVector(Base):
     """Used to represent an instance of a vulnerability."""
 
     def __init__(self, metric=None, value=None, untranslated_metric=None,
-                 untranslated_value=None):
+                 untranslated_value=None, **kwargs):
+        super(CvssVector, self).__init__(**kwargs)
         self.metric = metric
         self.value = value
         self.untranslated_metric = untranslated_metric
@@ -432,37 +418,14 @@ class CvssVector(object):
                 if install_dict[k] != None}
 
 
-class CveDescriptions(object):
+class CveDescriptions(Base):
     """Used to represent an instance of a vulnerability."""
 
-    def __init__(self, description=None, source=None):
+    def __init__(self, description=None, source=None, **kwargs):
+        super(CveDescriptions, self).__init__(**kwargs)
         self.description = description
         self.source = source
 
-
-    def fill_in_defaults(self):
-        """Replace all the fields that have None as their value with
-        the hardcoded default values.
-
-        Use case(s):
-            Useful when you want to fill in a few fields.
-        """
-        pass
-
-    def get_invalid_fields(self):
-        """Check for any invalid fields.
-
-        Returns:
-            (list): List of key/value pair dictionaries corresponding
-                to the invalid fields.
-
-                Ex:
-                    [
-                        {'view_name': 'the invalid name in question'},
-                        {'net_throttle': -10}
-                    ]
-        """
-        return []
 
     def to_dict(self):
         """ Turn the attributes into a dictionary.
@@ -478,20 +441,7 @@ class CveDescriptions(object):
         }
 
 
-    def to_dict_non_null(self):
-        """ Use to get non None fields. Useful when filling out
-            just a few fields.
-
-        Returns:
-            (dict): a dictionary with the non None fields.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}
-
-
-class CveReferences(object):
+class CveReferences(Base):
     """Used to represent an instance of a cve reference.
     Kwargs:
         url (str): hyperlink to the reference.
@@ -504,7 +454,8 @@ class CveReferences(object):
     """
 
     def __init__(self, url=None, source=None, id=None, patch=None,
-                 advisory=None, signature=None):
+                 advisory=None, signature=None, **kwargs):
+        super(CveReferences, self).__init__(**kwargs)
         self.id = id
         self.url = url
         self.source = source
@@ -531,21 +482,6 @@ class CveReferences(object):
         if not self.patch:
             self.patch = False
 
-    def get_invalid_fields(self):
-        """Check for any invalid fields.
-
-        Returns:
-            (list): List of key/value pair dictionaries corresponding
-                to the invalid fields.
-
-                Ex:
-                    [
-                        {'view_name': 'the invalid name in question'},
-                        {'net_throttle': -10}
-                    ]
-        """
-        return []
-
     def to_dict(self):
         """ Turn the view fields into a dictionary.
 
@@ -565,31 +501,19 @@ class CveReferences(object):
         }
 
 
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
+class CveVulnSoft(Base):
 
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
+    def __init__(self, name=None, vendor=None, versions=None, **kwargs):
+        """Used to represent an instance of a CveVulnSoft. This includes
+            the name, of the software and vendor and the affected versions
+
+        Kwargs:
+            name (str): The name of the affected product.
+            vendor (str): The owner of the affected product.
+            versions (list of strings): The versions that are affected by this
+                vulnerability
         """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}
-
-
-class CveVulnSoft(object):
-    """Used to represent an instance of a CveVulnSoft. This includes
-        the name, of the software and vendor and the affected versions
-
-    Kwargs:
-        name (str): The name of the affected product.
-        vendor (str): The owner of the affected product.
-        versions (list of strings): The versions that are affected by this
-            vulnerability
-    """
-
-    def __init__(self, name=None, vendor=None, versions=None):
+        super(CveVulnSoft, self).__init__(**kwargs)
         self.name = name
         self.vendor = vendor
         self.versions = versions
@@ -610,27 +534,12 @@ class CveVulnSoft(object):
                 CveDefaults.versions()
             )
 
-    def get_invalid_fields(self):
-        """Check for any invalid fields.
-
-        Returns:
-            (list): List of key/value pair dictionaries corresponding
-                to the invalid fields.
-
-                Ex:
-                    [
-                        {'view_name': 'the invalid name in question'},
-                        {'net_throttle': -10}
-                    ]
-        """
-        return []
-
     def to_dict(self):
         """ Turn the view fields into a dictionary.
 
         Returns:
             (dict): A dictionary with the fields corresponding to the
-                install operation.
+                operation.
 
         """
 
@@ -641,62 +550,24 @@ class CveVulnSoft(object):
         }
 
 
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
+class CveVulnSoftVers(Base):
 
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
+    def __init__(self, number=None, previous=None, edition=None, **kwargs):
+        """Used to represent an instance of a CveVulnSoft. This includes
+            the name, of the software and vendor and the affected versions
+
+        Kwargs:
+            number (str): The version number.
+            previous (str): Indicates that versions previous to this version
+                number are also affected by this vulnerability
+            edition (str): Indicates the edition associated with the version
+                number
         """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}
-
-
-class CveVulnSoftVers(object):
-    """Used to represent an instance of a CveVulnSoft. This includes
-        the name, of the software and vendor and the affected versions
-
-    Kwargs:
-        number (str): The version number.
-        previous (str): Indicates that versions previous to this version
-            number are also affected by this vulnerability
-        edition (str): Indicates the edition associated with the version
-            number
-    """
-
-    def __init__(self, number=None, previous=None, edition=None):
+        super(CveVulnSoftVers, self).__init__(**kwargs)
         self.number = number
         self.previous = previous
         self.edition = edition
 
-
-    def fill_in_defaults(self):
-        """Replace all the fields that have None as their value with
-        the hardcoded default values.
-
-        Use case(s):
-            Useful when you want to create an install instance and only
-            want to fill in a few fields, then allow the install
-            functions to call this method to fill in the rest.
-        """
-        pass
-
-    def get_invalid_fields(self):
-        """Check for any invalid fields.
-
-        Returns:
-            (list): List of key/value pair dictionaries corresponding
-                to the invalid fields.
-
-                Ex:
-                    [
-                        {'view_name': 'the invalid name in question'},
-                        {'net_throttle': -10}
-                    ]
-        """
-        return []
 
     def to_dict(self):
         """ Turn the view fields into a dictionary.
@@ -712,16 +583,3 @@ class CveVulnSoftVers(object):
             VulnSoftKeys.Previous: self.previous,
             VulnSoftKeys.Edition: self.edition,
         }
-
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}

@@ -1,6 +1,6 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.results import ApiResultKeys
 from vFense.core.decorators import time_it

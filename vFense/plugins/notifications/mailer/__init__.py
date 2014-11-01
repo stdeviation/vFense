@@ -1,7 +1,7 @@
 from time import time
 from vFense import Base
 from vFense.core._db_constants import DbTime
-from vFense.plugins.notifications._db_model import (
+from vFense.plugins.notifications.mailer._db_model import (
     NotificationPluginKeys
 )
 from vFense.core._constants import (

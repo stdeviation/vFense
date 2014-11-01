@@ -2,7 +2,7 @@ import threading
 import time
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.settings import Default
 from vFense.core.tunnels import TunnelKey, reverse_tunnel_params

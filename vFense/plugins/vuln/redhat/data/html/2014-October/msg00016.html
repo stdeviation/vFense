@@ -1,0 +1,383 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1391&#45;02] Moderate: glibc security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 14 Oct 2014 00:51:34 &#45;0400 -->
+<!--X-Message-Id: 201410140451.s9E4pVAD027537@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1391-02] Moderate: glibc security, bug fix,	and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1391-02] Moderate: glibc security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1391-02] Moderate: glibc security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 14 Oct 2014 05:00:04 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: glibc security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1391-02
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1391.html">https://rhn.redhat.com/errata/RHSA-2014-1391.html</a>
+Issue date:        2014-10-14
+CVE Names:         CVE-2013-4237 CVE-2013-4458 
+=====================================================================
+
+1. Summary:
+
+Updated glibc packages that fix two security issues, several bugs, and add
+two enhancements are now available for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The glibc packages provide the standard C libraries (libc), POSIX thread
+libraries (libpthread), standard math libraries (libm), and the Name
+Server Caching Daemon (nscd) used by multiple programs on the system.
+Without these libraries, the Linux system cannot function correctly.
+
+An out-of-bounds write flaw was found in the way the glibc's readdir_r()
+function handled file system entries longer than the NAME_MAX character
+constant. A remote attacker could provide a specially crafted NTFS or CIFS
+file system that, when processed by an application using readdir_r(), would
+cause that application to crash or, potentially, allow the attacker to
+execute arbitrary code with the privileges of the user running the
+application. (CVE-2013-4237)
+
+It was found that getaddrinfo() did not limit the amount of stack memory
+used during name resolution. An attacker able to make an application
+resolve an attacker-controlled hostname or IP address could possibly cause
+the application to exhaust all stack memory and crash. (CVE-2013-4458)
+
+These updated glibc packages also include several bug fixes and two
+enhancements. Space precludes documenting all of these changes in this
+advisory. Users are directed to the Red Hat Enterprise Linux 6.6 Technical
+Notes, linked to in the References section, for information on the most
+significant of these changes.
+
+All glibc users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+905941 - Fix memory fencing error in unwind-forcedunwind.c
+981942 - ping6 with idn causes crash
+995839 - CVE-2013-4237 glibc: Buffer overwrite when using readdir_r on file systems returning file names longer than NAME_MAX characters
+1022280 - CVE-2013-4458 glibc: Stack (frame) overflow in getaddrinfo() when called with AF_INET6
+1032628 - Symbol lookup in elf/dl-lookup.c results in returning wrong values
+1043557 - nscd segfaults when running sudo with netgroup caching enabled.
+1044628 - getaddrinfo return EAI_NONAME instead of EAI_AGAIN in case the DNS query times out
+1087833 - nscd-2.12-1.132.el6 enters busy loop on long netgroup entry via nss_ldap of nslcd
+1099025 - ftime() possibly broken on ppc
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+glibc-2.12-1.149.el6.src.rpm
+
+i386:
+glibc-2.12-1.149.el6.i686.rpm
+glibc-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-devel-2.12-1.149.el6.i686.rpm
+glibc-headers-2.12-1.149.el6.i686.rpm
+glibc-utils-2.12-1.149.el6.i686.rpm
+nscd-2.12-1.149.el6.i686.rpm
+
+x86_64:
+glibc-2.12-1.149.el6.i686.rpm
+glibc-2.12-1.149.el6.x86_64.rpm
+glibc-common-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.x86_64.rpm
+glibc-devel-2.12-1.149.el6.i686.rpm
+glibc-devel-2.12-1.149.el6.x86_64.rpm
+glibc-headers-2.12-1.149.el6.x86_64.rpm
+glibc-utils-2.12-1.149.el6.x86_64.rpm
+nscd-2.12-1.149.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-static-2.12-1.149.el6.i686.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.x86_64.rpm
+glibc-static-2.12-1.149.el6.i686.rpm
+glibc-static-2.12-1.149.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+glibc-2.12-1.149.el6.src.rpm
+
+x86_64:
+glibc-2.12-1.149.el6.i686.rpm
+glibc-2.12-1.149.el6.x86_64.rpm
+glibc-common-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.x86_64.rpm
+glibc-devel-2.12-1.149.el6.i686.rpm
+glibc-devel-2.12-1.149.el6.x86_64.rpm
+glibc-headers-2.12-1.149.el6.x86_64.rpm
+glibc-utils-2.12-1.149.el6.x86_64.rpm
+nscd-2.12-1.149.el6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+x86_64:
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.x86_64.rpm
+glibc-static-2.12-1.149.el6.i686.rpm
+glibc-static-2.12-1.149.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+glibc-2.12-1.149.el6.src.rpm
+
+i386:
+glibc-2.12-1.149.el6.i686.rpm
+glibc-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-devel-2.12-1.149.el6.i686.rpm
+glibc-headers-2.12-1.149.el6.i686.rpm
+glibc-utils-2.12-1.149.el6.i686.rpm
+nscd-2.12-1.149.el6.i686.rpm
+
+ppc64:
+glibc-2.12-1.149.el6.ppc.rpm
+glibc-2.12-1.149.el6.ppc64.rpm
+glibc-common-2.12-1.149.el6.ppc64.rpm
+glibc-debuginfo-2.12-1.149.el6.ppc.rpm
+glibc-debuginfo-2.12-1.149.el6.ppc64.rpm
+glibc-debuginfo-common-2.12-1.149.el6.ppc.rpm
+glibc-debuginfo-common-2.12-1.149.el6.ppc64.rpm
+glibc-devel-2.12-1.149.el6.ppc.rpm
+glibc-devel-2.12-1.149.el6.ppc64.rpm
+glibc-headers-2.12-1.149.el6.ppc64.rpm
+glibc-utils-2.12-1.149.el6.ppc64.rpm
+nscd-2.12-1.149.el6.ppc64.rpm
+
+s390x:
+glibc-2.12-1.149.el6.s390.rpm
+glibc-2.12-1.149.el6.s390x.rpm
+glibc-common-2.12-1.149.el6.s390x.rpm
+glibc-debuginfo-2.12-1.149.el6.s390.rpm
+glibc-debuginfo-2.12-1.149.el6.s390x.rpm
+glibc-debuginfo-common-2.12-1.149.el6.s390.rpm
+glibc-debuginfo-common-2.12-1.149.el6.s390x.rpm
+glibc-devel-2.12-1.149.el6.s390.rpm
+glibc-devel-2.12-1.149.el6.s390x.rpm
+glibc-headers-2.12-1.149.el6.s390x.rpm
+glibc-utils-2.12-1.149.el6.s390x.rpm
+nscd-2.12-1.149.el6.s390x.rpm
+
+x86_64:
+glibc-2.12-1.149.el6.i686.rpm
+glibc-2.12-1.149.el6.x86_64.rpm
+glibc-common-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.x86_64.rpm
+glibc-devel-2.12-1.149.el6.i686.rpm
+glibc-devel-2.12-1.149.el6.x86_64.rpm
+glibc-headers-2.12-1.149.el6.x86_64.rpm
+glibc-utils-2.12-1.149.el6.x86_64.rpm
+nscd-2.12-1.149.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-static-2.12-1.149.el6.i686.rpm
+
+ppc64:
+glibc-debuginfo-2.12-1.149.el6.ppc.rpm
+glibc-debuginfo-2.12-1.149.el6.ppc64.rpm
+glibc-debuginfo-common-2.12-1.149.el6.ppc.rpm
+glibc-debuginfo-common-2.12-1.149.el6.ppc64.rpm
+glibc-static-2.12-1.149.el6.ppc.rpm
+glibc-static-2.12-1.149.el6.ppc64.rpm
+
+s390x:
+glibc-debuginfo-2.12-1.149.el6.s390.rpm
+glibc-debuginfo-2.12-1.149.el6.s390x.rpm
+glibc-debuginfo-common-2.12-1.149.el6.s390.rpm
+glibc-debuginfo-common-2.12-1.149.el6.s390x.rpm
+glibc-static-2.12-1.149.el6.s390.rpm
+glibc-static-2.12-1.149.el6.s390x.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.x86_64.rpm
+glibc-static-2.12-1.149.el6.i686.rpm
+glibc-static-2.12-1.149.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+glibc-2.12-1.149.el6.src.rpm
+
+i386:
+glibc-2.12-1.149.el6.i686.rpm
+glibc-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-devel-2.12-1.149.el6.i686.rpm
+glibc-headers-2.12-1.149.el6.i686.rpm
+glibc-utils-2.12-1.149.el6.i686.rpm
+nscd-2.12-1.149.el6.i686.rpm
+
+x86_64:
+glibc-2.12-1.149.el6.i686.rpm
+glibc-2.12-1.149.el6.x86_64.rpm
+glibc-common-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.x86_64.rpm
+glibc-devel-2.12-1.149.el6.i686.rpm
+glibc-devel-2.12-1.149.el6.x86_64.rpm
+glibc-headers-2.12-1.149.el6.x86_64.rpm
+glibc-utils-2.12-1.149.el6.x86_64.rpm
+nscd-2.12-1.149.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-static-2.12-1.149.el6.i686.rpm
+
+x86_64:
+glibc-debuginfo-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-2.12-1.149.el6.x86_64.rpm
+glibc-debuginfo-common-2.12-1.149.el6.i686.rpm
+glibc-debuginfo-common-2.12-1.149.el6.x86_64.rpm
+glibc-static-2.12-1.149.el6.i686.rpm
+glibc-static-2.12-1.149.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/#package">https://access.redhat.com/security/team/key/#package</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4237.html">https://www.redhat.com/security/data/cve/CVE-2013-4237.html</a>
+<a  rel="nofollow" href="https://www.redhat.com/security/data/cve/CVE-2013-4458.html">https://www.redhat.com/security/data/cve/CVE-2013-4458.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.6_Technical_Notes/glibc.html#RHSA-2014-1391">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.6_Technical_Notes/glibc.html#RHSA-2014-1391</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;.  More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUPKvOXlSAg2UNWIIRAjr3AJ9YaCgw4xG5+kbb4lkT/sBqaNTQ3wCfYPUP
+etQwr5zR/MUtSI4S8YnS9RM=
+=ILB0
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00015.html">Date Prev</a>][<a href="msg00017.html">Date Next</a>] &nbsp; [<a href="msg00015.html">Thread Prev</a>][<a href="msg00017.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00016">Thread Index</A>]
+[<A HREF="date.html#00016">Date Index</A>]
+[<A HREF="author.html#00016">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

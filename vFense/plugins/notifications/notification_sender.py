@@ -1,7 +1,7 @@
 import os
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG, VFENSE_BASE_SRC_PATH
+from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_BASE_SRC_PATH
 from vFense.db.notificationhandler import RvNotificationHandler, \
     notification_rule_exists, translate_opercodes_to_notif_threshold
 from vFense.core.operations._db_model import *

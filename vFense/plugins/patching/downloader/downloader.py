@@ -1,6 +1,6 @@
 import logging
 import logging.config
-from vFense import (
+from vFense._constants import (
     VFENSE_LOGGING_CONFIG, VFENSE_APP_PATH,
     VFENSE_APP_DEP_PATH
 )

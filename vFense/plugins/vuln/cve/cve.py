@@ -1,6 +1,6 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import time_it
 from vFense.plugins.vuln.cve._db_model import CveKeys
@@ -93,6 +93,6 @@ def get_vulnerability_categories(cve_id):
 
     data = fetch_vulnerability_categories(cve_id)
     if data:
-        info = data[CveKeys.CveCategories]
+        info = data[CveKeys.Categories]
 
     return(info)

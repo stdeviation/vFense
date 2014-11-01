@@ -2,7 +2,7 @@ import Queue
 from time import sleep
 from random import randint
 import logging, logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.threading import Thread
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

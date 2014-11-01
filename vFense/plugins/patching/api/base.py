@@ -2,9 +2,9 @@ import logging
 import logging.config
 import simplejson as json
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import results_message
+from vFense.core.decorators import results_message, catch_it
 from vFense.core.api._constants import (
     ApiArguments
 )
@@ -12,18 +12,19 @@ from vFense.plugins.patching.api._constants import (
     AppApiArguments, AppFilterValues
 )
 from vFense.core._constants import DefaultQueryValues, SortValues
-from vFense.plugins.patching._constants import (
-    AppStatuses, CommonSeverityKeys
-)
 from vFense.core.operations._constants import AgentOperations
-from vFense.core.results import Results, ApiResultKeys
-from vFense.plugins.patching._db_model import AppsKey, AppCollections
-from vFense.plugins.patching.api._constants import vFenseAppTypes
+from vFense.core.results import ApiResults, ExternalApiResults
+from vFense.core.status_codes import GenericCodes
 from vFense.core._constants import CommonKeys
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
+from vFense.plugins.patching._db_model import AppsKey, AppCollections
+from vFense.plugins.patching.api._constants import vFenseAppTypes
 from vFense.plugins.patching.scheduler.manager import (
     AgentAppsJobManager, TagAppsJobManager
+)
+from vFense.plugins.patching._constants import (
+    AppStatuses, CommonSeverityKeys
 )
 from vFense.plugins.patching.search.search_by_agentid import (
     RetrieveAppsByAgentId, RetrieveCustomAppsByAgentId,
@@ -106,9 +107,7 @@ class AppsBaseHandler(BaseHandler):
 
         elif self.vuln and self.severity and self.status and self.query:
             results = (
-                self.by_status_and_name_and_self.sev_and_self.vuln(
-                    search
-                )
+                self.by_status_and_name_and_self.sev_and_self.vuln(search)
             )
 
         elif (not self.vuln and not self.severity and self.status
@@ -127,19 +126,19 @@ class AppsBaseHandler(BaseHandler):
             results = self.by_name(search)
 
         else:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Incorrect arguments while searching for applications'
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).incorrect_arguments(**data)
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.message = (
+                'Incorrect arguments while searching for applications'
             )
+            results.username = active_user
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.http_status_code = 400
+            results.generic_status_code = GenericCodes.IncorrectArguments
+            results.vfense_status_code = GenericCodes.IncorrectArguments
 
         return results
-
 
     @results_message
     def by_name(self, search):
@@ -225,7 +224,7 @@ class AppsBaseHandler(BaseHandler):
     def install_or_uninstall(self, operation, install,
                              oper=AgentOperations.INSTALL_OS_APPS):
 
-        results = {}
+        results = ApiResults()
 
         if oper == AgentOperations.INSTALL_OS_APPS:
             results = operation.install_os_apps(install)
@@ -272,14 +271,17 @@ class AppsBaseHandler(BaseHandler):
             )
 
         else:
-            data = {
-                ApiResultKeys.MESSAGE: 'Invalid arguments passed'
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).incorrect_arguments(**data)
+            results = ExternalApiResults()
+            results.fill_in_defaults()
+            results.message = (
+                'Incorrect arguments while searching for applications'
             )
+            results.username = active_user
+            results.uri = self.request.uri
+            results.http_method = self.request.method
+            results.http_status_code = 400
+            results.generic_status_code = GenericCodes.IncorrectArguments
+            results.vfense_status_code = GenericCodes.IncorrectArguments
 
         return results
 
@@ -388,18 +390,13 @@ class AppsBaseHandler(BaseHandler):
 
         return search
 
-
     def return_operation_type(self, oper):
         return vFenseAppTypes.return_app_operation(oper)
 
     @results_message
     def set_toggle_status(self, oper):
         if oper == AgentOperations.INSTALL_OS_APPS:
-            results = (
-                toggle_hidden_status(
-                    self.app_ids, self.toggle
-                )
-            )
+            results = toggle_hidden_status(self.app_ids, self.toggle)
 
         elif oper == AgentOperations.INSTALL_CUSTOM_APPS:
             results = (

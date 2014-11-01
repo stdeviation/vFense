@@ -1,6 +1,6 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.db.client import r
 from vFense.plugins.patching.status_codes import PackageCodes
@@ -38,7 +38,7 @@ class IncomingApplications():
         self.os_string = os_string
         self.inserted_count = 0
         self.updated_count = 0
-        self.modified_time = DbTime.time_now()
+        self.modified_time = DbTime.now()
 
     def _set_app_per_node_parameters(self, app):
         app[AppsPerAgentKey.AgentId] = self.agent_id

@@ -1,22 +1,21 @@
-#!/usr/bin/env python
-
-from vFense import logging
+import logging
+import logging.config
 from time import time
-from vFense.core.operations import AdminOperation
+
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.operations._db_model import (
     AdminOperationKey
 )
-from vFense.core.operations._constants import vFenseObjects, OperationErrors
 from vFense.core._db_constants import DbTime
 
 from vFense.core.operations._db_admin import (
-    fetch_admin_operation, insert_admin_operation,
-    update_admin_operation
+    fetch_admin_operation, insert_admin_operation, update_admin_operation
 )
 
-from vFense.core.status_codes import (
-    DbCodes
-)
+from vFense.core.status_codes import DbCodes
+
+logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
+logger = logging.getLogger('rvapi')
 
 class AdminOperationManager(object):
     """This is what creates operations for an agent or multiple agents.
@@ -29,11 +28,11 @@ class AdminOperationManager(object):
             view_name (str): the name of the view this user is part of.
 
         Basic Usage:
-            >>> from vFense.core.operations.admin_operations import AdminOperation
-            >>> oper = AdminOperation()
+            >>> from vFense.core.operations.admin_operations import AdminOperationManager
+            >>> oper = AdminOperationManager()
         """
         self.now = time()
-        self.db_time = DbTime.time_now()
+        self.db_time = DbTime.now()
         self.INIT_COUNT = 0
 
 
@@ -43,7 +42,7 @@ class AdminOperationManager(object):
             operation (AdminOperation): AdminOperation instance.
 
         Basic Usage:
-            >>> from vFense.core.operations.admin_operations import AdminOperation
+            >>> from vFense.core.operations.admin_operations import AdminOperationManager
             >>> username = 'global_admin'
             >>> view_name = 'global'
             >>> action = 'create user'
@@ -84,15 +83,15 @@ class AdminOperationManager(object):
             operation (AdminOperation): AdminOperation instance.
 
         Basic Usage:
-            >>> from vFense.core.operations import AdminOperation
-            >>> from vFense.core.operations.admin_operations import AdminOperationManager
+            >>> from vFense.core.operations import AdminOperationManager
+            >>> from vFense.core.operations.admin_operations import AdminOperationManagerManager
             >>> username = 'global_admin'
             >>> view_name = 'global'
-            >>> oper = AdminOperation(username, view_name)
+            >>> oper = AdminOperationManager(username, view_name)
             >>> action = 'create user'
             >>> performed_on = 'user'
             >>> operation_id = oper.create(action, performed_on)
-            >>> oper = AdminOperation(
+            >>> oper = AdminOperationManager(
                 status_message="user foo created successfully',
                 generic_status_code=1008, vfense_status_code=12008,
                 ids_created=['foo']

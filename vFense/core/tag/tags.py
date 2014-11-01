@@ -1,5 +1,5 @@
 import logging
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.tag._db import fetch_tag
 from vFense.core.tag._db_model import TagKeys
 
@@ -62,7 +62,7 @@ def validate_tag_ids_in_views(tag_ids, views):
             if tag:
                 if tag[TagKeys.ViewName] in views:
                     valid_ids.append(tag_id)
-                elif tag[TagKeys.Global]:
+                elif tag[TagKeys.IsGlobal]:
                     valid_ids.append(tag_id)
                 else:
                     invalid_ids.append(tag_id)

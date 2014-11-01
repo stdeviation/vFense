@@ -7,9 +7,11 @@ class GroupKeys():
     Views = 'views'
     Permissions = 'permissions'
     GroupId = 'group_id'
-    Global = 'global'
+    IsGlobal = 'is_global'
     Users = 'users'
     Email = 'email'
+    DateAdded = 'date_added'
+    DateModified = 'date_modified'
 
 
 class GroupMappedKeys():

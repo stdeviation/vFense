@@ -1,4 +1,6 @@
+from vFense import Base
 from vFense.plugins.vuln import Vulnerability
+from vFense.plugins.vuln._constants import VulnDefaults
 from vFense.plugins.vuln.redhat._constants import RedhatVulnSubKeys
 
 class Redhat(Vulnerability):
@@ -6,18 +8,23 @@ class Redhat(Vulnerability):
     pass
 
 
-class RedhatVulnApp(object):
+class RedhatVulnApp(Base):
     """Used to represent an instance of an app."""
 
-    def __init__(self, name=None, version=None, arch=None, app_id=None):
+    def __init__(self, name=None, version=None, arch=None, app_id=None,
+                 **kwargs):
         """
         Kwargs:
+            name (str): The name of the application.
+            version (str): The version of the application.
+            arch (str): The architecture this application was built for.
+            app_id (str): The primary key of the application.
         """
+        super(RedhatVulnApp, self).__init__(**kwargs)
         self.name = name
         self.version = version
         self.arch = arch
         self.app_id = app_id
-
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -28,7 +35,11 @@ class RedhatVulnApp(object):
             want to fill in a few fields, then allow the install
             functions to call this method to fill in the rest.
         """
-        pass
+        if not self.version:
+            self.version = VulnDefaults.version()
+
+        if not self.os_string:
+            self.os_string = VulnDefaults.os_string()
 
     def to_dict(self):
         """ Turn the view fields into a dictionary.
@@ -44,16 +55,3 @@ class RedhatVulnApp(object):
             RedhatVulnSubKeys.ARCH: self.arch,
             RedhatVulnSubKeys.APP_ID: self.app_id,
         }
-
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}

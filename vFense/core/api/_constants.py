@@ -45,6 +45,8 @@ class ApiArguments():
 class AgentApiArguments(ApiArguments):
     AGENT_IDS = 'agent_ids'
     AGENT_ID = 'agent_id'
+    OS_CODE = 'os_code'
+    OS_STRING = 'os_string'
     DISPLAY_NAME = 'display_name'
     ENVIRONMENT = 'environment'
     VIEWS = 'views'

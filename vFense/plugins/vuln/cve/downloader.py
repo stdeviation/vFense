@@ -4,7 +4,7 @@ import logging
 import logging.config
 import requests
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.plugins.patching.patching import get_remote_file_size
 from vFense.plugins.vuln.cve._constants import CVEDataDir, CVEStrings
 from vFense.plugins.vuln._constants import DateValues

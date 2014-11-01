@@ -7,8 +7,10 @@ class TagKeys():
     TagId = 'tag_id'
     TagName = 'tag_name'
     ViewName = 'view_name'
-    Global = 'global'
+    IsGlobal = 'is_global'
     Environment = 'environment'
+    DateAdded = 'date_added'
+    DateModified = 'date_modified'
 
 
 class TagMappedKeys():

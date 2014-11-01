@@ -1,6 +1,6 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.plugins.vuln.search._db_vuln_base import FetchVulnBase
 from vFense.plugins.vuln.ubuntu._db_model import (

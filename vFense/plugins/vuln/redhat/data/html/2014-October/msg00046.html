@@ -1,0 +1,157 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1690&#45;01] Low: python&#45;backports&#45;ssl_match_hostname security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 22 Oct 2014 14:10:26 &#45;0400 -->
+<!--X-Message-Id: 201410221810.s9MIAQJ1008004@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1690-01] Low: python-backports-ssl_match_hostname security	up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1690-01] Low: python-backports-ssl_match_hostname security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1690-01] Low: python-backports-ssl_match_hostname security	update</li>
+<li><em>Date</em>: Wed, 22 Oct 2014 18:10:25 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: python-backports-ssl_match_hostname security update
+Advisory ID:       RHSA-2014:1690-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1690.html">https://rhn.redhat.com/errata/RHSA-2014-1690.html</a>
+Issue date:        2014-10-22
+CVE Names:         CVE-2013-2099 
+=====================================================================
+
+1. Summary:
+
+An updated python-backports-ssl_match_hostname package that fixes one
+security issue is now available for Red Hat Enterprise Linux OpenStack
+Platform 4.0.
+
+Red Hat Product Security has rated this update as having Low security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0 - noarch
+
+3. Description:
+
+The python-backports-ssl_match_hostname package provides RFC 6125 compliant
+wildcard matching.
+
+A denial of service flaw was found in the way Python's SSL module
+implementation performed matching of certain certificate names. A remote
+attacker able to obtain a valid certificate that contained multiple
+wildcard characters could use this flaw to issue a request to validate such
+a certificate, resulting in excessive consumption of CPU. (CVE-2013-2099)
+
+This issue was discovered by Florian Weimer of Red Hat Product Security.
+
+All python-backports-ssl_match_hostname users are advised to upgrade to
+this updated package, which contains a backported patch to correct this
+issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+963260 - CVE-2013-2099 python: ssl.match_hostname() DoS via certificates with specially crafted hostname wildcard patterns
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0:
+
+Source:
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.src.rpm
+
+noarch:
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-2099">https://access.redhat.com/security/cve/CVE-2013-2099</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUR/LsXlSAg2UNWIIRArGlAJ9u33gOJeoZnQQx6fC9wjjUDvBLjQCbBnZs
+A0PBkQuAQwaa7nEsY/rV0Pk=
+=Ny+h
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

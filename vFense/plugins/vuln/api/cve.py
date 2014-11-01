@@ -3,7 +3,7 @@ import simplejson as json
 from vFense.core.api.base import BaseHandler
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.plugins.vuln.cve.search.search import RetrieveCVEs
 
@@ -26,6 +26,6 @@ class CveIdHandler(BaseHandler):
     def get_cve_id(self, cve_id):
         vuln = RetrieveCVEs()
         results = vuln.by_id(cve_id)
-        if len(results[ApiResultKeys.DATA]) > 0:
-            results[ApiResultKeys.DATA] = results[ApiResultKeys.DATA][0]
+        if len(results.data) > 0:
+            results.data = results.data[0]
         return results

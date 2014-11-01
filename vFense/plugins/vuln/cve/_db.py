@@ -1,6 +1,6 @@
 import logging
 import logging.config
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.decorators import return_status_tuple, time_it
 from vFense.db.client import db_create_close, r
@@ -30,7 +30,7 @@ def fetch_vulnerability_categories(cve_id, conn=None):
             r
             .table(CVECollections.CVE)
             .get_all(cve_id)
-            .pluck(CveKeys.CveCategories)
+            .pluck(CveKeys.Categories)
             .run(conn)
         )
         if info:

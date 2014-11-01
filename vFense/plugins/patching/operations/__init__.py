@@ -1,24 +1,18 @@
-from vFense.plugins.patching._constants import (
-    InstallDefaults
-)
-
-from vFense.plugins.patching.operations._constants import (
-    InstallKeys
-)
+from vFense import Base
+from vFense.plugins.patching._constants import InstallDefaults
+from vFense.plugins.patching.operations._constants import InstallKeys
 from vFense.core.operations._db_model import AgentOperationKey
-from vFense.core._constants import (
-    CommonKeys, RebootValues, CPUThrottleValues
-)
-
+from vFense.core._constants import CommonKeys, RebootValues, CPUThrottleValues
 from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 
-class Install(object):
+class Install(Base):
     """Used to represent an instance of an agent."""
 
     def __init__(self, app_ids=None, agent_ids=None, tag_id=None,
                  user_name=None, view_name=None, restart=None,
-                 net_throttle=None, cpu_throttle=None):
+                 net_throttle=None, cpu_throttle=None, operation=None,
+                 **kwargs):
         """
         Kwargs:
             app_ids (list): List of application ids.
@@ -36,7 +30,10 @@ class Install(object):
                 default=normal
             net_throttle (str): The amount of traffic in KB to use.
                 default=0 (unlimitted)
+            operation (str): The operation type. Example...
+                install_os_apps, install_custom_apps, install_agent_apps
         """
+        super(Install, self).__init__(**kwargs)
         self.app_ids = app_ids
         self.agent_ids = agent_ids
         self.tag_id = tag_id
@@ -45,6 +42,7 @@ class Install(object):
         self.restart = restart
         self.net_throttle = net_throttle
         self.cpu_throttle = cpu_throttle
+        self.operation = operation
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -57,13 +55,22 @@ class Install(object):
         """
 
         if not self.restart:
-            self.restart = InstallDefaults.REBOOT
+            self.restart = InstallDefaults.reboot()
 
         if not self.cpu_throttle:
-            self.cpu_throttle= InstallDefaults.CPU_THROTTLE
+            self.cpu_throttle= InstallDefaults.cpu_throttle()
 
         if not self.net_throttle:
-            self.net_throttle = InstallDefaults.NET_THROTTLE
+            self.net_throttle = InstallDefaults.net_throttle()
+
+        if not self.operation:
+            self.operation = InstallDefaults.operation()
+
+        if not self.agent_ids:
+            self.agent_ids = InstallDefaults.agent_ids()
+
+        if not self.app_ids:
+            self.app_ids = InstallDefaults.app_ids()
 
 
     def get_invalid_fields(self):
@@ -169,7 +176,7 @@ class Install(object):
         return invalid_fields
 
     def args_to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the fields into a dictionary.
 
         Returns:
             (dict): A dictionary with the fields corresponding to the
@@ -187,7 +194,7 @@ class Install(object):
 
 
     def to_dict(self):
-        """ Turn the view fields into a dictionary.
+        """ Turn the fields into a dictionary.
 
         Returns:
             (dict): A dictionary with the fields corresponding to the
@@ -204,15 +211,3 @@ class Install(object):
             InstallKeys.USER_NAME: self.user_name,
             InstallKeys.VIEW_NAME: self.view_name
         }
-
-    def to_dict_non_null(self):
-        """ Use to get non None fields of an install. Useful when
-        filling out just a few fields to perform an install.
-
-        Returns:
-            (dict): a dictionary with the non None fields of this install.
-        """
-        install_dict = self.to_dict()
-
-        return {k:install_dict[k] for k in install_dict
-                if install_dict[k] != None}

@@ -1,10 +1,13 @@
 import logging
 
-from vFense import VFENSE_LOGGING_CONFIG
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
 from vFense.core._db import insert_data_in_table, \
     update_data_in_table
 from vFense.core.decorators import return_status_tuple, time_it
+from vFense.plugins.patching import (
+    Apps, AgentAppFileData
+)
 from vFense.plugins.patching._db_sub_queries import AppsMerge
 from vFense.plugins.patching._constants import CommonFileKeys
 from vFense.plugins.patching._db_model import (
@@ -73,7 +76,7 @@ def fetch_app_data(
     Returns:
         Dictionary
     """
-    data = {}
+    app = Apps()
     merge = AppsMerge.release_date()
     try:
         if fields_to_pluck:
@@ -95,10 +98,13 @@ def fetch_app_data(
                 .run(conn)
             )
 
+        if data:
+            app = Apps(**data)
+
     except Exception as e:
         logger.exception(e)
 
-    return data
+    return app
 
 @db_create_close
 def fetch_app_data_by_appids(
@@ -401,11 +407,12 @@ def fetch_app_data_to_send_to_agent(
             ],
             "cli_options": "",
             "version": "1.4.11-3ubuntu2.5",
+            "app_id": 'c726edf62d1d17ca8b420f24bbdc9c8fa58d',
             "name": "gpgv"
         }
     """
 
-    data = {}
+    app = AgentAppFileData()
     try:
         data = list(
             r
@@ -414,6 +421,7 @@ def fetch_app_data_to_send_to_agent(
             .map(
                 lambda app:
                 {
+                    DbCommonAppKeys.AppId: app[DbCommonAppKeys.AppId],
                     DbCommonAppKeys.Name: app[DbCommonAppKeys.Name],
                     DbCommonAppKeys.Version: app[DbCommonAppKeys.Version],
                     DbCommonAppKeys.CliOptions: (
@@ -441,12 +449,12 @@ def fetch_app_data_to_send_to_agent(
             .run(conn)
         )
         if data:
-            data = data[0]
+            app = AgentAppFileData(**data[0])
 
     except Exception as e:
         logger.exception(e)
 
-    return data
+    return app
 
 @db_create_close
 def fetch_appids_by_agentid_and_status(agent_id, status, sev=None,
@@ -1102,7 +1110,7 @@ def delete_apps_per_agent_older_than(
     Basic Usage:
         >>> from vFense.plugins.patching._db import delete_apps_per_agent_older_than
         >>> from vFense.core._db_constants import DbTime
-        >>> now = DbTime.time_now()
+        >>> now = DbTime.now()
         >>> collection = 'apps_per_agent'
         >>> agent_id = '7f242ab8-a9d7-418f-9ce2-7bcba6c2d9dc'
         >>> delete_apps_per_agent_older_than(now, collection)

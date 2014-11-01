@@ -5,7 +5,7 @@ from time import time
 class DbTime(object):
 
     @staticmethod
-    def time_now():
+    def now():
         return(r.epoch_time(int(time())))
 
     @staticmethod
