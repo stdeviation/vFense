@@ -1,12 +1,16 @@
 from time import time
 import logging
 import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
 
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import time_it
 from vFense.core.agent.agents import validate_agent_ids
 from vFense.core.agent.status_codes import (
     AgentFailureCodes
+)
+from vFense.core.results import ApiResults
+from vFense.core.status_codes import (
+    DbCodes, GenericCodes, GenericFailureCodes,
 )
 from vFense.core.tag import Tag
 from vFense.core.tag._db import (
@@ -14,14 +18,8 @@ from vFense.core.tag._db import (
     delete_tag, fetch_agent_ids_in_tag, fetch_tag_by_name_and_view,
     update_tag
 )
+from vFense.core.tag.status_codes import TagFailureCodes, TagCodes
 from vFense.core.view.views import validate_view_names
-from vFense.core.results import ApiResults
-from vFense.core.status_codes import (
-    DbCodes, GenericCodes, GenericFailureCodes,
-)
-from vFense.core.tag.status_codes import (
-    TagFailureCodes, TagCodes
-)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')

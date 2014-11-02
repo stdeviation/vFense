@@ -16,7 +16,7 @@ from vFense.plugins.patching._db_model import (
 )
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.core.decorators import time_it
+from vFense.core.decorators import time_it, catch_it
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -56,6 +56,8 @@ class FetchTags(object):
         else:
             self.sort = r.desc
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_id(self, tag_id, conn=None):
         """Retrieve a tag by its id and all of its properties.
@@ -79,27 +81,25 @@ class FetchTags(object):
         agent_merge_query = self._set_agent_merge_query(tag_id)
         tag_merge_query = self._set_tag_merge_query(tag_id)
 
-        try:
-            count = (
-                base_filter
-                .get_all(tag_id)
-                .count()
-                .run(conn)
-            )
+        count = (
+            base_filter
+            .get_all(tag_id)
+            .count()
+            .run(conn)
+        )
 
-            data = (
-                base_filter
-                .get(tag_id)
-                .merge(agent_merge_query)
-                .merge(tag_merge_query)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = (
+            base_filter
+            .get(tag_id)
+            .merge(agent_merge_query)
+            .merge(tag_merge_query)
+            .run(conn)
+        )
 
         return(count, data)
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_agent_id(self, agent_id, conn=None):
         """Retrieve a tags by agent id and all of its properties.
@@ -121,35 +121,31 @@ class FetchTags(object):
             .table(TagCollections.TagsPerAgent)
             .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
         )
-        try:
-            count = (
+        count = (
                 base_filter
                 .count()
                 .run(conn)
-            )
+        )
 
-            data = list(
-                base_filter
-                .eq_join(
-                    lambda x:
-                    x[TagsPerAgentKeys.TagId],
-                    r.table(TagCollections.Tags)
-                )
-                .zip()
-                .pluck(
-                    TagKeys.TagName, TagKeys.TagId,
-                    TagKeys.ViewName, TagKeys.Environment
-                )
-                .run(conn)
+        data = list(
+            base_filter
+            .eq_join(
+                lambda x:
+                x[TagsPerAgentKeys.TagId],
+                r.table(TagCollections.Tags)
             )
-
-        except Exception as e:
-            logger.exception(e)
+            .zip()
+            .pluck(
+                TagKeys.TagName, TagKeys.TagId,
+                TagKeys.ViewName, TagKeys.Environment
+            )
+            .run(conn)
+        )
 
         return(count, data)
 
-
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_name(self, name, conn=None):
         """Query tags by the tag name.
@@ -168,37 +164,30 @@ class FetchTags(object):
         data = []
         merge_query = self._set_merge_query()
         agent_merge_count = self._set_agent_merge_count()
-        try:
-            base_filter = self._set_base_query()
-            count = (
-                base_filter
-                .filter(
-                    r.row[TagKeys.TagName].match("(?i)^"+name)
-                )
-                .count()
-                .run(conn)
-            )
+        base_filter = self._set_base_query()
+        count = (
+            base_filter
+            .filter(r.row[TagKeys.TagName].match("(?i)^"+name))
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter(
-                    r.row[TagKeys.TagName].match("(?i)^"+name)
-                )
-                .merge(merge_query)
-                .merge(agent_merge_count)
-                .pluck(self.keys_to_pluck)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .filter(r.row[TagKeys.TagName].match("(?i)^"+name))
+            .merge(merge_query)
+            .merge(agent_merge_count)
+            .pluck(self.keys_to_pluck)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def all(self, conn=None):
         """Retrieve all tags.
@@ -215,30 +204,27 @@ class FetchTags(object):
         base_filter = self._set_base_query()
         query_merge = self._set_merge_query()
         agent_merge_count = self._set_agent_merge_count()
-        try:
-            count = (
-                base_filter
-                .count()
-                .run(conn)
-            )
+        count = (
+            base_filter
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .merge(query_merge)
-                .merge(agent_merge_count)
-                .pluck(self.keys_to_pluck)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .merge(query_merge)
+            .merge(agent_merge_count)
+            .pluck(self.keys_to_pluck)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_key_val(self, key, val, conn=None):
         """Retrieve all tags by filtering by key and value.
@@ -255,40 +241,37 @@ class FetchTags(object):
         base_filter = self._set_base_query()
         query_merge = self._set_merge_query()
         agent_merge_count = self._set_agent_merge_count()
-        try:
-            count = (
-                base_filter
-                .filter(
-                    {
-                        key: val
-                    }
-                )
-                .count()
-                .run(conn)
+        count = (
+            base_filter
+            .filter(
+                {
+                    key: val
+                }
             )
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter(
-                    {
-                        key: val
-                    }
-                )
-                .merge(query_merge)
-                .merge(agent_merge_count)
-                .pluck(self.keys_to_pluck)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
+        data = list(
+            base_filter
+            .filter(
+                {
+                    key: val
+                }
             )
-
-        except Exception as e:
-            logger.exception(e)
+            .merge(query_merge)
+            .merge(agent_merge_count)
+            .pluck(self.keys_to_pluck)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_key_val_and_query(self, key, val, query, conn=None):
         """Retrieve all tags by filtering by key and value while
@@ -308,42 +291,34 @@ class FetchTags(object):
         agent_merge_count = self._set_agent_merge_count()
         base_filter = self._set_base_query()
         query_merge = self._set_merge_query()
-        try:
-            count = (
-                base_filter
-                .filter(
-                    {
-                        key: val
-                    }
-                )
-                .filter(
-                    r.row[TagKeys.TagName].match("(?i)^"+query)
-                )
-                .count()
-                .run(conn)
+        count = (
+            base_filter
+            .filter(
+                {
+                    key: val
+                }
             )
+            .filter(r.row[TagKeys.TagName].match("(?i)^"+query))
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter(
-                    {
-                        key: val
-                    }
-                )
-                .filter(
-                    r.row[TagKeys.TagName].match("(?i)^"+query)
-                )
-                .merge(query_merge)
-                .merge(agent_merge_count)
-                .pluck(self.keys_to_pluck)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
+        data = list(
+            base_filter
+            .filter(
+                {
+                    key: val
+                }
             )
-
-        except Exception as e:
-            logger.exception(e)
+            .filter(r.row[TagKeys.TagName].match("(?i)^"+query))
+            .merge(query_merge)
+            .merge(agent_merge_count)
+            .pluck(self.keys_to_pluck)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
