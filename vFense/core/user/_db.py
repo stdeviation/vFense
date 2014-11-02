@@ -12,7 +12,7 @@ from vFense.core.group._db_model import (
 from vFense.core.view._db_model import ViewMappedKeys
 from vFense.core.view._constants import *
 from vFense.core.permissions._constants import *
-from vFense.core.decorators import return_status_tuple, time_it
+from vFense.core.decorators import return_status_tuple, time_it, catch_it
 from vFense.db.client import db_create_close, r
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -20,6 +20,7 @@ logger = logging.getLogger('rvapi')
 
 
 @time_it
+@catch_it({})
 @db_create_close
 def fetch_user(username, without_fields=None, conn=None):
     """Retrieve a user from the database
@@ -46,8 +47,7 @@ def fetch_user(username, without_fields=None, conn=None):
         }
     """
     data = {}
-    try:
-        if not without_fields:
+    if not without_fields:
             data = (
                 r
                 .table(UserCollections.Users)
@@ -67,9 +67,6 @@ def fetch_user(username, without_fields=None, conn=None):
                 data = data[0]
             else:
                 data = {}
-
-    except Exception as e:
-        logger.exception(e)
 
     return(data)
 
