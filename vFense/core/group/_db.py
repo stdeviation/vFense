@@ -1191,6 +1191,7 @@ def add_view_to_groups(group_ids, view, conn=None):
     return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def add_views_to_groups(group_ids, views, conn=None):
@@ -1209,34 +1210,28 @@ def add_views_to_groups(group_ids, views, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(group_ids)
+        .for_each(
+            lambda group_id:
             r
-            .expr(group_ids)
-            .for_each(
-                lambda group_id:
-                r
-                .table(GroupCollections.Groups)
-                .get(group_id)
-                .update(
-                    lambda x:
-                    {
-                        GroupKeys.Views: (
-                            x[GroupKeys.Views].set_union(views)
-                        )
-                    }
-                )
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Views: x[GroupKeys.Views].set_union(views)
+                }
             )
-            .run(conn)
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_views_from_groups(group_ids, views, conn=None):
@@ -1255,35 +1250,28 @@ def delete_views_from_groups(group_ids, views, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(group_ids)
+        .for_each(
+            lambda group_id:
             r
-            .expr(group_ids)
-            .for_each(
-                lambda group_id:
-                r
-                .table(GroupCollections.Groups)
-                .get(group_id)
-                .update(
-                    lambda x:
-                    {
-                        GroupKeys.Views: (
-                            x[GroupKeys.Views].set_difference(views)
-                        )
-                    }
-                )
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Views: x[GroupKeys.Views].set_difference(views)
+                }
             )
-            .run(conn)
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def add_permissions_to_group(group_id, permissions, conn=None):
@@ -1303,30 +1291,25 @@ def add_permissions_to_group(group_id, permissions, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get(group_id)
-            .update(
-                lambda x:
-                {
-                    GroupKeys.Permissions: (
-                        x[GroupKeys.Permissions].set_union(permissions)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get(group_id)
+        .update(
+            lambda x:
+            {
+                GroupKeys.Permissions: (
+                    x[GroupKeys.Permissions].set_union(permissions)
+                )
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_permissions_in_group(group_id, permissions, conn=None):
@@ -1345,29 +1328,22 @@ def delete_permissions_in_group(group_id, permissions, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get(group_id)
-            .update(
-                lambda x:
-                {
-                    GroupKeys.Permissions: (
-                        x[GroupKeys.Permissions].set_difference(permissions)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get(group_id)
+        .update(
+            lambda x:
+            {
+                GroupKeys.Permissions: (
+                    x[GroupKeys.Permissions].set_difference(permissions)
+                )
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
-
+    return data
 
 @time_it
 @db_create_close
@@ -1386,24 +1362,18 @@ def delete_group(group_id, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get(group_id)
+        .delete()
+        .run(conn)
+    )
 
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get(group_id)
-            .delete()
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_groups(group_ids, conn=None):
@@ -1420,23 +1390,17 @@ def delete_groups(group_ids, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-
-        data = (
+    data = (
+        r
+        .expr(group_ids)
+        .for_each(
+            lambda group_id:
             r
-            .expr(group_ids)
-            .for_each(
-                lambda group_id:
-                r
-                .table(GroupCollections.Groups)
-                .get(group_id)
-                .delete()
-            )
-            .run(conn)
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .delete()
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
