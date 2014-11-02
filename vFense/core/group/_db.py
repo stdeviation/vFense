@@ -1,15 +1,19 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
-from vFense.core.group._db_model import *
-from vFense.core.group._constants import *
-from vFense.core.decorators import return_status_tuple, time_it
+from vFense.core.group._db_model import (
+    GroupCollections, GroupKeys, GroupsPerUserKeys, GroupsPerUserIndexes,
+    GroupIndexes
+)
+from vFense.core.decorators import return_status_tuple, time_it, catch_it
 from vFense.db.client import db_create_close, r
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
+@time_it
+@catch_it({})
 @db_create_close
 def fetch_group(group_id, conn=None):
     """Retrieve a group from the database
@@ -32,21 +36,17 @@ def fetch_group(group_id, conn=None):
             ]
         }
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get(group_id)
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get(group_id)
+        .run(conn)
+    )
 
     return(data)
 
-
+@time_it
+@catch_it({})
 @db_create_close
 def fetch_group_properties(group_id, conn=None):
     """Retrieve a group and all of its properties.
@@ -92,23 +92,20 @@ def fetch_group_properties(group_id, conn=None):
             )
         }
     )
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get_all(group_id)
-            .map(map_hash)
-            .run(conn)
-        )
-        if data:
-            data = data[0]
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get_all(group_id)
+        .map(map_hash)
+        .run(conn)
+    )
+    if data:
+        data = data[0]
 
-    except Exception as e:
-        logger.exception(e)
+    return data
 
-    return(data)
-
+@time_it
+@catch_it([])
 @db_create_close
 def fetch_properties_for_all_groups(view_name=None, conn=None):
     """Retrieve properties for all groupcs.
@@ -160,32 +157,27 @@ def fetch_properties_for_all_groups(view_name=None, conn=None):
             )
         }
     )
-    data = {}
-    try:
-        if view_name:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .get_all(view_name, index=GroupsPerUserIndexes.ViewName)
-                .map(map_hash)
-                .run(conn)
-            )
+    if view_name:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .get_all(view_name, index=GroupsPerUserIndexes.ViewName)
+            .map(map_hash)
+            .run(conn)
+        )
 
-        else:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .map(map_hash)
-                .run(conn)
-            )
+    else:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .map(map_hash)
+            .run(conn)
+        )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 def fetch_group_by_name(
     group_name, view_name,
@@ -215,40 +207,32 @@ def fetch_group_by_name(
             ]
         }
     """
-    try:
-        if fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .get_all(group_name, index=GroupIndexes.GroupName)
-                .filter(
-                    lambda x: x[GroupKeys.Views].contains(view_name)
-                )
-                .pluck(fields_to_pluck)
-                .run(conn)
-            )
-        else:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .get_all(group_name, index=GroupIndexes.GroupName)
-                .filter(
-                    lambda x: x[GroupKeys.Views].contains(view_name)
-                )
-                .run(conn)
-            )
+    if fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .get_all(group_name, index=GroupIndexes.GroupName)
+            .filter(lambda x: x[GroupKeys.Views].contains(view_name))
+            .pluck(fields_to_pluck)
+            .run(conn)
+        )
+    else:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .get_all(group_name, index=GroupIndexes.GroupName)
+            .filter(lambda x: x[GroupKeys.Views].contains(view_name))
+            .run(conn)
+        )
 
-        if len(data) == 1:
-            data = data[0]
+    if data:
+        data = data[0]
 
-    except Exception as e:
-        logger.exception(e)
-        data = {}
-
-    return(data)
+    return data
 
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_group_ids_for_view(view_name, conn=None):
     """Retrieve all the users for a view
@@ -263,26 +247,18 @@ def fetch_group_ids_for_view(view_name, conn=None):
     Returns:
         Returns a List of group_ids for a view
     """
-    data = []
-    try:
-        data = list(
-            r
-            .table(GroupCollections.Groups)
-            .get_all(
-                view_name,
-                index=GroupIndexes.Views
-            )
-            .map(lambda x: x[GroupKeys.GroupId])
-            .run(conn)
-        )
+    data = list(
+        r
+        .table(GroupCollections.Groups)
+        .get_all(view_name, index=GroupIndexes.Views)
+        .map(lambda x: x[GroupKeys.GroupId])
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_users_in_group(group_id, fields_to_pluck=None, conn=None):
     """Fetch all users for group_id
@@ -312,32 +288,26 @@ def fetch_users_in_group(group_id, fields_to_pluck=None, conn=None):
             }
         ]
     """
-    data = []
-    try:
-        if fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
-                .pluck(fields_to_pluck)
-                .run(conn)
-            )
-        else:
-            data = list(
-                r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
-                .run(conn)
-            )
+    if fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.GroupsPerUser)
+            .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
+            .pluck(fields_to_pluck)
+            .run(conn)
+        )
+    else:
+        data = list(
+            r
+            .table(GroupCollections.GroupsPerUser)
+            .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
+            .run(conn)
+        )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
-
+    return data
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_usernames_in_group(group_id, conn=None):
     """Fetch all users for group_id
@@ -361,24 +331,19 @@ def fetch_usernames_in_group(group_id, conn=None):
             'testing'
         ]
     """
-    data = []
-    try:
-        data = list(
-            r
-            .table(GroupCollections.Groups)
-            .get(group_id)
-            .run(conn)
-        )
-        if data:
-            data = data[GroupKeys.Users]
-
-    except Exception as e:
-        logger.exception(e)
+    data = list(
+        r
+        .table(GroupCollections.Groups)
+        .get(group_id)
+        .run(conn)
+    )
+    if data:
+        data = data[GroupKeys.Users]
 
     return data
 
-
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_groups_for_user(username, fields_to_pluck=None, conn=None):
     """Retrieve all groups for a user by username
@@ -413,31 +378,27 @@ def fetch_groups_for_user(username, fields_to_pluck=None, conn=None):
             }
         ]
     """
-    data = []
-    try:
-        if username and not fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(username, index=GroupsPerUserIndexes.UserName)
-                .run(conn)
-            )
+    if username and not fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.GroupsPerUser)
+            .get_all(username, index=GroupsPerUserIndexes.UserName)
+            .run(conn)
+        )
 
-        elif username and fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(username, index=GroupsPerUserIndexes.UserName)
-                .pluck(fields_to_pluck)
-                .run(conn)
-            )
+    elif username and fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.GroupsPerUser)
+            .get_all(username, index=GroupsPerUserIndexes.UserName)
+            .pluck(fields_to_pluck)
+            .run(conn)
+        )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_groupids_for_user(username, conn=None):
     """Retrieve a list of group ids that the user belongs to.
@@ -453,23 +414,18 @@ def fetch_groupids_for_user(username, conn=None):
         Returns a list of group ids that the user belongs to.
         ['']
     """
-    data = []
-    try:
-        data = list(
-            r
-            .table(GroupCollections.Groups)
-            .get_all(username, index=GroupIndexes.Users)
-            .map(lambda group_id: group_id[GroupKeys.GroupId])
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data = list(
+        r
+        .table(GroupCollections.Groups)
+        .get_all(username, index=GroupIndexes.Users)
+        .map(lambda group_id: group_id[GroupKeys.GroupId])
+        .run(conn)
+    )
 
     return data
 
-
 @time_it
+@catch_it(False)
 @db_create_close
 def user_exist_in_group(username, group_id, conn=None):
     """Return True if and user is part of group_id
@@ -486,29 +442,22 @@ def user_exist_in_group(username, group_id, conn=None):
     Returns:
         Returns a boolean True or False
     """
-    exist = False
-    try:
-        is_empty = (
-            r
-            .table(GroupCollections.Groups)
-            .get_all(group_id)
-            .filter(
-                lambda x: x[GroupKeys.Users].contains(username)
-            )
-            .is_empty()
-            .run(conn)
-        )
+    is_empty = (
+        r
+        .table(GroupCollections.Groups)
+        .get_all(group_id)
+        .filter(lambda x: x[GroupKeys.Users].contains(username))
+        .is_empty()
+        .run(conn)
+    )
 
-        if not is_empty:
-            exist = True
+    if not is_empty:
+       exist = True
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(exist)
-
+    return exist
 
 @time_it
+@catch_it(False)
 @db_create_close
 def usernames_exist_in_group_id(usernames, group_id, conn=None):
     """Return True if and user is part of group_id
@@ -526,26 +475,22 @@ def usernames_exist_in_group_id(usernames, group_id, conn=None):
         Returns a boolean True or False
     """
     exist = False
-    try:
-        for username in usernames:
-            is_empty = (
-                r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(username, index=GroupsPerUserIndexes.UserName)
-                .filter({GroupsPerUserKeys.GroupId: group_id})
-                .is_empty()
-                .run(conn)
-            )
-            if not is_empty:
-                exist = True
+    for username in usernames:
+        is_empty = (
+            r
+            .table(GroupCollections.GroupsPerUser)
+            .get_all(username, index=GroupsPerUserIndexes.UserName)
+            .filter({GroupsPerUserKeys.GroupId: group_id})
+            .is_empty()
+            .run(conn)
+        )
+        if not is_empty:
+            exist = True
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(exist)
-
+    return exist
 
 @time_it
+@catch_it(False)
 @db_create_close
 def users_exist_in_group_ids(group_ids, conn=None):
     """Return True if and user is part of group_id
@@ -555,35 +500,30 @@ def users_exist_in_group_ids(group_ids, conn=None):
     Basic Usage:
         >>> from vFense.group._db import users_exist_in_group_ids
         >>> group_ids = ['0834e656-27a5-4b13-ba56-635797d0d1fc']
-        >>> users_exist_in_group(group_ids)
+        >>> users_exist_in_group_ids(group_ids)
 
     Returns:
         Returns a boolean True or False
     """
     exist = False
-    try:
-        for group_id in group_ids:
-            is_empty = (
-                r
-                .table(GroupCollections.GroupsPerUser)
-                .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
-                .is_empty()
-                .run(conn)
-            )
-            if not is_empty:
-                exist = True
+    for group_id in group_ids:
+        is_empty = (
+            r
+            .table(GroupCollections.GroupsPerUser)
+            .get_all(group_id, index=GroupsPerUserIndexes.GroupId)
+            .is_empty()
+            .run(conn)
+        )
+        if not is_empty:
+            exist = True
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(exist)
-
+    return exist
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_groups(
-    view_name=None, groupname=None,
-    fields_to_pluck=None, conn=None
+    view_name=None, groupname=None, fields_to_pluck=None, conn=None
     ):
     """Retrieve all groups that is in the database by view_name or
         all of the groups or by regex.
@@ -626,102 +566,90 @@ def fetch_groups(
         ]
     """
     data = []
-    try:
-        if not view_name and not groupname and not fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .run(conn)
+    if not view_name and not groupname and not fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .run(conn)
+        )
+
+    elif not view_name and not groupname and fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .pluck(fields_to_pluck)
+            .run(conn)
+        )
+
+    elif not view_name and groupname and not fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .filter(
+                lambda x:
+                x[GroupKeys.GroupName].match("(?i)" + groupname)
             )
+            .run(conn)
+        )
 
-        elif not view_name and not groupname and fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .pluck(fields_to_pluck)
-                .run(conn)
+    elif not view_name and groupname and fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .filter(
+                lambda x:
+                x[GroupKeys.GroupName].match("(?i)" + groupname)
             )
+            .pluck(fields_to_pluck)
+            .run(conn)
+        )
 
-        elif not view_name and groupname and not fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .filter(
-                    lambda x:
-                    x[GroupKeys.GroupName].match("(?i)" + groupname)
-                )
-                .run(conn)
+    elif view_name and not groupname and not fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .get_all(view_name, index=GroupIndexes.ViewName)
+            .run(conn)
+        )
+
+    elif view_name and not groupname and fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .get_all(view_name, index=GroupIndexes.ViewName)
+            .pluck(fields_to_pluck)
+            .run(conn)
+        )
+
+    elif view_name and groupname and not fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .get_all(view_name, index=GroupIndexes.ViewName)
+            .filter(
+                lambda x:
+                x[GroupKeys.GroupName].match("(?i)" + groupname)
             )
+            .run(conn)
+        )
 
-        elif not view_name and groupname and fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .filter(
-                    lambda x:
-                    x[GroupKeys.GroupName].match("(?i)" + groupname)
-                )
-                .pluck(fields_to_pluck)
-                .run(conn)
+    elif view_name and groupname and fields_to_pluck:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .get_all(view_name, index=GroupIndexes.ViewName)
+            .filter(
+                lambda x:
+                x[GroupKeys.GroupName].match("(?i)" + groupname)
             )
+            .pluck(fields_to_pluck)
+            .run(conn)
+        )
 
-        elif view_name and not groupname and not fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .get_all(
-                    view_name, index=GroupIndexes.ViewName
-                )
-                .run(conn)
-            )
-
-        elif view_name and not groupname and fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .get_all(
-                    view_name, index=GroupIndexes.ViewName
-                )
-                .pluck(fields_to_pluck)
-                .run(conn)
-            )
-
-        elif view_name and groupname and not fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .get_all(
-                    view_name, index=GroupIndexes.ViewName
-                )
-                .filter(
-                    lambda x:
-                    x[GroupKeys.GroupName].match("(?i)" + groupname)
-                )
-                .run(conn)
-            )
-
-        elif view_name and groupname and fields_to_pluck:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .get_all(
-                    view_name, index=GroupIndexes.ViewName
-                )
-                .filter(
-                    lambda x:
-                    x[GroupKeys.GroupName].match("(?i)" + groupname)
-                )
-                .pluck(fields_to_pluck)
-                .run(conn)
-            )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it([])
 @db_create_close
 def fetch_groupids(is_global=False, conn=None):
     """Retrieve a list of group_ids from the database
@@ -737,32 +665,29 @@ def fetch_groupids(is_global=False, conn=None):
         List of usernames
     """
     data = []
-    try:
-        if is_global:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .filter(lambda x: x[GroupKeys.IsGlobal] == True)
-                .map(lambda x: x[GroupKeys.GroupId])
-                .run(conn)
-            )
+    if is_global:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .filter(lambda x: x[GroupKeys.IsGlobal] == True)
+            .map(lambda x: x[GroupKeys.GroupId])
+            .run(conn)
+        )
 
-        else:
-            data = list(
-                r
-                .table(GroupCollections.Groups)
-                .filter(lambda x: x[GroupKeys.IsGlobal] == False)
-                .map(lambda x: x[GroupKeys.GroupId])
-                .run(conn)
-            )
+    else:
+        data = list(
+            r
+            .table(GroupCollections.Groups)
+            .filter(lambda x: x[GroupKeys.IsGlobal] == False)
+            .map(lambda x: x[GroupKeys.GroupId])
+            .run(conn)
+        )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def insert_group(group_data, conn=None):
@@ -780,22 +705,18 @@ def insert_group(group_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .insert(group_data)
-            .run(conn)
-        )
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .insert(group_data)
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def insert_group_per_user(group_data, conn=None):
@@ -813,22 +734,18 @@ def insert_group_per_user(group_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.GroupsPerUser)
-            .insert(group_data)
-            .run(conn)
-        )
+    data = (
+        r
+        .table(GroupCollections.GroupsPerUser)
+        .insert(group_data)
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def update_group(group_id, group_data, conn=None):
@@ -846,23 +763,18 @@ def update_group(group_id, group_data, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get(group_id)
-            .update(group_data)
-            .run(conn)
-        )
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get(group_id)
+        .update(group_data)
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_user_in_groups(username, group_ids, conn=None):
@@ -884,29 +796,25 @@ def delete_user_in_groups(username, group_ids, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get_all(username, index=GroupIndexes.Users)
-            .update(
-                {
-                    GroupKeys.Users: (
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get_all(username, index=GroupIndexes.Users)
+        .update(
+            {
+                GroupKeys.Users: (
                         r.row[GroupKeys.Users].set_difference([username])
-                    )
-                }
-            )
-            .run(conn)
+                )
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_users_in_group(group_id, usernames, conn=None):
@@ -916,39 +824,33 @@ def delete_users_in_group(group_id, usernames, conn=None):
         usernames (list): List of the usernames.
 
     Basic Usage::
-        >>> from vFense.group._db delete_users_from_group
+        >>> from vFense.group._db delete_users_in_group
         >>> usernames = ['user names goes here']
         >>> group_id = 'fc88f36c-d911-4a8b-aad3-3728b3d1a607'
-        >>> delete_users_from_group(group_id, usernames)
+        >>> delete_users_in_group(group_id, usernames)
 
     Return:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get(group_id)
-            .update(
-                lambda x:
-                {
-                    GroupKeys.Users: (
-                        x[GroupKeys.Users].set_difference(usernames)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get(group_id)
+        .update(
+            lambda x:
+            {
+                GroupKeys.Users: x[GroupKeys.Users].set_difference(usernames)
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_users_in_group_containing_view(usernames, view_name, conn=None):
@@ -967,39 +869,32 @@ def delete_users_in_group_containing_view(usernames, view_name, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(usernames)
+        .for_each(
+            lambda user:
             r
-            .expr(usernames)
-            .for_each(
-                lambda user:
-                r
-                .table(GroupCollections.Groups)
-                .get_all(user, index=GroupIndexes.Users)
-                .filter(
-                    lambda x:
-                    x[GroupKeys.Views].contains(view_name)
-                )
-                .update(
-                    lambda x:
-                    {
-                        GroupKeys.Users: (
-                            x[GroupKeys.Users].set_difference([user])
-                        )
-                    }
-                )
+            .table(GroupCollections.Groups)
+            .get_all(user, index=GroupIndexes.Users)
+            .filter(
+                lambda x:
+                x[GroupKeys.Views].contains(view_name)
             )
-            .run(conn)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Users: x[GroupKeys.Users].set_difference([user])
+                }
+            )
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_views_in_group(group_id, views, conn=None):
@@ -1017,29 +912,23 @@ def delete_views_in_group(group_id, views, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get(group_id)
-            .update(
-                lambda x:
-                {
-                    GroupKeys.Views: (
-                        x[GroupKeys.Views].set_difference(views)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get(group_id)
+        .update(
+            lambda x:
+            {
+                GroupKeys.Views: x[GroupKeys.Views].set_difference(views)
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_all_groups_from_view(view, conn=None):
@@ -1056,30 +945,23 @@ def delete_all_groups_from_view(view, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get_all(view, index=GroupIndexes.Views)
-            .update(
-                lambda x:
-                {
-                    GroupKeys.Views: (
-                        x[GroupKeys.Views].set_difference([view])
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get_all(view, index=GroupIndexes.Views)
+        .update(
+            lambda x:
+            {
+                GroupKeys.Views: x[GroupKeys.Views].set_difference([view])
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def delete_groups_from_view(group_ids, view, conn=None):
@@ -1098,34 +980,28 @@ def delete_groups_from_view(group_ids, view, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(group_ids)
+        .for_each(
+            lambda group_id:
             r
-            .expr(group_ids)
-            .for_each(
-                lambda group_id:
-                r
-                .table(GroupCollections.Groups)
-                .get_all(group_id)
-                .update(
-                    lambda x:
-                    {
-                        GroupKeys.Views: (
-                            x[GroupKeys.Views].set_difference([view])
-                        )
-                    }
-                )
+            .table(GroupCollections.Groups)
+            .get_all(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Views: x[GroupKeys.Views].set_difference([view])
+                }
             )
-            .run(conn)
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def add_users_to_group(group_id, usernames, conn=None):
@@ -1144,29 +1020,23 @@ def add_users_to_group(group_id, usernames, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get(group_id)
-            .update(
-                lambda x:
-                {
-                    GroupKeys.Users: (
-                        x[GroupKeys.Users].set_union(usernames)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get(group_id)
+        .update(
+            lambda x:
+            {
+                GroupKeys.Users: x[GroupKeys.Users].set_union(usernames)
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def add_user_to_groups(group_ids, user, conn=None):
@@ -1185,35 +1055,28 @@ def add_user_to_groups(group_ids, user, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(group_ids)
+        .for_each(
+            lambda group_id:
             r
-            .expr(group_ids)
-            .for_each(
-                lambda group_id:
-                r
-                .table(GroupCollections.Groups)
-                .get(group_id)
-                .update(
-                    lambda x:
-                    {
-                        GroupKeys.Users: (
-                            x[GroupKeys.Users].set_insert(user)
-                        )
-                    }
-                )
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Users: x[GroupKeys.Users].set_insert(user)
+                }
             )
-            .run(conn)
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def add_users_to_groups(group_ids, users, conn=None):
@@ -1232,35 +1095,28 @@ def add_users_to_groups(group_ids, users, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(group_ids)
+        .for_each(
+            lambda group_id:
             r
-            .expr(group_ids)
-            .for_each(
-                lambda group_id:
-                r
-                .table(GroupCollections.Groups)
-                .get(group_id)
-                .update(
-                    lambda x:
-                    {
-                        GroupKeys.Users: (
-                            x[GroupKeys.Users].set_union(users)
-                        )
-                    }
-                )
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Users: x[GroupKeys.Users].set_union(users)
+                }
             )
-            .run(conn)
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def add_views_to_group(group_id, views, conn=None):
@@ -1279,30 +1135,23 @@ def add_views_to_group(group_id, views, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
-            r
-            .table(GroupCollections.Groups)
-            .get(group_id)
-            .update(
-                lambda x:
-                {
-                    GroupKeys.Views: (
-                        x[GroupKeys.Views].set_union(views)
-                    )
-                }
-            )
-            .run(conn)
+    data = (
+        r
+        .table(GroupCollections.Groups)
+        .get(group_id)
+        .update(
+            lambda x:
+            {
+                GroupKeys.Views: x[GroupKeys.Views].set_union(views)
+            }
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
+@catch_it({})
 @db_create_close
 @return_status_tuple
 def add_view_to_groups(group_ids, view, conn=None):
@@ -1321,33 +1170,25 @@ def add_view_to_groups(group_ids, view, conn=None):
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = {}
-    try:
-        data = (
+    data = (
+        r
+        .expr(group_ids)
+        .for_each(
+            lambda group_id:
             r
-            .expr(group_ids)
-            .for_each(
-                lambda group_id:
-                r
-                .table(GroupCollections.Groups)
-                .get(group_id)
-                .update(
-                    lambda x:
-                    {
-                        GroupKeys.Views: (
-                            x[GroupKeys.Views].set_insert(view)
-                        )
-                    }
-                )
+            .table(GroupCollections.Groups)
+            .get(group_id)
+            .update(
+                lambda x:
+                {
+                    GroupKeys.Views: x[GroupKeys.Views].set_insert(view)
+                }
             )
-            .run(conn)
         )
+        .run(conn)
+    )
 
-    except Exception as e:
-        logger.exception(e)
-
-    return(data)
-
+    return data
 
 @time_it
 @db_create_close
