@@ -2,7 +2,7 @@ import logging
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 
 from vFense.core.view._constants import DefaultViews
 from vFense.core.agent._constants import AgentCommonKeys
@@ -141,7 +141,6 @@ class RetrieveAgents(object):
         )
         return results
 
-
     @time_it
     def by_name(self, query):
         """Query agents by computer and display name.
@@ -204,8 +203,7 @@ class RetrieveAgents(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @time_it
     def all(self):
@@ -258,8 +256,7 @@ class RetrieveAgents(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @time_it
     def by_key_and_val(self, fkey, fval):
@@ -327,8 +324,7 @@ class RetrieveAgents(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @time_it
     def by_key_and_val_and_query(self, fkey, fval, query):
@@ -402,8 +398,7 @@ class RetrieveAgents(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @time_it
     def by_ip(self, ip):
@@ -460,8 +455,7 @@ class RetrieveAgents(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @time_it
     def by_ip_and_filter(self, ip, fkey, fval):
@@ -531,8 +525,7 @@ class RetrieveAgents(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @time_it
     def by_mac(self, mac):
@@ -571,7 +564,6 @@ class RetrieveAgents(object):
                 }
             ]
         """
-
         count, data = self.fetch_agents.by_mac(mac)
         generic_status_code = GenericCodes.InformationRetrieved
 
@@ -590,8 +582,7 @@ class RetrieveAgents(object):
             )
         )
 
-        return(results)
-
+        return results
 
     @time_it
     def by_mac_and_filter(self, mac, fkey, fval):
@@ -661,18 +652,16 @@ class RetrieveAgents(object):
             )
         )
 
-        return(results)
-
+        return results
 
     def _set_results(self, gen_status_code, vfense_status_code,
                      msg, count, data):
+        results = ApiResults()
+        results.fill_in_defaults()
+        results.generic_status_code = gen_status_code
+        results.vfense_status_code = vfense_status_code
+        results.message = msg
+        results.count = count
+        results.data = data
 
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: msg,
-            ApiResultKeys.COUNT: count,
-            ApiResultKeys.DATA: data,
-        }
-
-        return(results)
+        return results

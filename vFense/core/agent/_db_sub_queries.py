@@ -1,12 +1,9 @@
 from vFense.db.client import r
 from vFense.core.tag._db_model import (
-    TagCollections, TagsPerAgentKeys,
-    TagsPerAgentIndexes, TagKeys
+    TagCollections, TagsPerAgentKeys, TagsPerAgentIndexes, TagKeys
 )
 
-from vFense.core.agent._db_model import (
-    AgentKeys
-)
+from vFense.core.agent._db_model import AgentKeys
 
 class Merge():
     TAGS = (

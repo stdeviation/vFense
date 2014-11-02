@@ -16,7 +16,7 @@ from vFense.plugins.patching._db_model import (
 )
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
-from vFense.core.decorators import time_it
+from vFense.core.decorators import time_it, catch_it
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -59,6 +59,8 @@ class FetchAgents(object):
         else:
             self.sort = r.desc
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_id(self, agent_id, conn=None):
         """Retrieve an agent by its id and all of its properties.
@@ -73,8 +75,6 @@ class FetchAgents(object):
             (count, group_data)
         >>>
         """
-        count = 0
-        data = []
         base_filter = (
             r
             .table(AgentCollections.Agents)
@@ -82,29 +82,25 @@ class FetchAgents(object):
         merge_query = self._set_merge_query()
         agent_merge_query = self._set_agent_merge_query()
 
-        try:
-            count = (
-                base_filter
-                .get_all(agent_id)
-                .count()
-                .run(conn)
-            )
+        count = (
+            base_filter
+            .get_all(agent_id)
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .get_all(agent_id)
-                .merge(merge_query)
-                .merge(agent_merge_query)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .get_all(agent_id)
+            .merge(merge_query)
+            .merge(agent_merge_query)
+            .run(conn)
+        )
 
         return(count, data)
 
-
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_name(self, name, conn=None):
         """Query agents by computer or display name.
@@ -141,43 +137,38 @@ class FetchAgents(object):
                 }
             ]
         """
-        count = 0
-        data = []
         merge_query = self._set_merge_query()
-        try:
-            base_filter = self._set_agent_base_query()
-            count = (
-                base_filter
-                .filter(
-                    (r.row[AgentKeys.ComputerName].match("(?i)^"+name))
-                    |
-                    (r.row[AgentKeys.DisplayName].match("(?i)^"+name))
-                )
-                .count()
-                .run(conn)
+        base_filter = self._set_agent_base_query()
+        count = (
+            base_filter
+            .filter(
+                (r.row[AgentKeys.ComputerName].match("(?i)^"+name))
+                |
+                (r.row[AgentKeys.DisplayName].match("(?i)^"+name))
             )
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter(
-                    (r.row[AgentKeys.ComputerName].match("(?i)^"+name))
-                    |
-                    (r.row[AgentKeys.DisplayName].match("(?i)^"+name))
-                )
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .merge(merge_query)
-                .pluck(self.keys_to_pluck)
-                .run(conn)
+        data = list(
+            base_filter
+            .filter(
+                (r.row[AgentKeys.ComputerName].match("(?i)^"+name))
+                |
+                (r.row[AgentKeys.DisplayName].match("(?i)^"+name))
             )
-
-        except Exception as e:
-            logger.exception(e)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .merge(merge_query)
+            .pluck(self.keys_to_pluck)
+            .run(conn)
+        )
 
         return(count, data)
 
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def all(self, conn=None):
         """Retrieve all agents.
@@ -212,34 +203,29 @@ class FetchAgents(object):
             ]
 
         """
-        count = 0
-        data = []
-        try:
-            base_filter = self._set_agent_base_query()
-            query_merge = self._set_merge_query()
-            count = (
-                base_filter
-                .count()
-                .run(conn)
-            )
+        base_filter = self._set_agent_base_query()
+        query_merge = self._set_merge_query()
+        count = (
+            base_filter
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .merge(query_merge)
-                .order_by(AgentKeys.ComputerName)
-                .pluck(self.keys_to_pluck)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .merge(query_merge)
+            .order_by(AgentKeys.ComputerName)
+            .pluck(self.keys_to_pluck)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_key_and_val(self, fkey, fval, conn=None):
         """Filter agents by a key and value.
@@ -279,36 +265,30 @@ class FetchAgents(object):
                 }
             ]
         """
-        count = 0
-        data = []
-        try:
-            base_filter = self._set_agent_base_query()
-            query_merge = self._set_merge_query()
-            count = (
-                base_filter
-                .filter({fkey: fval})
-                .count()
-                .run(conn)
-            )
+        base_filter = self._set_agent_base_query()
+        query_merge = self._set_merge_query()
+        count = (
+            base_filter
+            .filter({fkey: fval})
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter({fkey: fval})
-                .merge(query_merge)
-                .pluck(self.keys_to_pluck)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .filter({fkey: fval})
+            .merge(query_merge)
+            .pluck(self.keys_to_pluck)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_key_and_value_and_query(self, fkey, fval, query, conn=None):
         """Filter agents based on a key and value, while
@@ -350,45 +330,40 @@ class FetchAgents(object):
                 }
             ]
         """
-        count = 0
-        data = []
-        try:
-            base_filter = self._set_agent_base_query()
-            query_merge = self._set_merge_query()
-            count = (
-                base_filter
-                .filter({fkey: fval})
-                .filter(
-                    (r.row[AgentKeys.ComputerName].match("(?i)^"+query))
-                    |
-                    (r.row[AgentKeys.DisplayName].match("(?i)^"+query))
-                )
-                .count()
-                .run(conn)
+        base_filter = self._set_agent_base_query()
+        query_merge = self._set_merge_query()
+        count = (
+            base_filter
+            .filter({fkey: fval})
+            .filter(
+                (r.row[AgentKeys.ComputerName].match("(?i)^"+query))
+                |
+                (r.row[AgentKeys.DisplayName].match("(?i)^"+query))
             )
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter({fkey: fval})
-                .filter(
-                    (r.row[AgentKeys.ComputerName].match("(?i)^"+query))
-                    |
-                    (r.row[AgentKeys.DisplayName].match("(?i)^"+query))
-                )
-                .merge(query_merge)
-                .pluck(self.keys_to_pluck)
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
+        data = list(
+            base_filter
+            .filter({fkey: fval})
+            .filter(
+                (r.row[AgentKeys.ComputerName].match("(?i)^"+query))
+                |
+                (r.row[AgentKeys.DisplayName].match("(?i)^"+query))
             )
-
-        except Exception as e:
-            logger.exception(e)
+            .merge(query_merge)
+            .pluck(self.keys_to_pluck)
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_ip(self, ip, conn=None):
         """Search agents based on an ip address.
@@ -426,42 +401,33 @@ class FetchAgents(object):
                 }
             ]
         """
-        count = 0
-        data = []
-        try:
-            base_count, base_filter = self._set_hw_base_query_by_nic()
-            query_merge = self._set_merge_query()
-            count = (
-                base_count
-                .filter(
-                    r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip)
-                )
-                .pluck(self.keys_to_pluck)
-                .distinct()
-                .count()
-                .run(conn)
-            )
+        base_count, base_filter = self._set_hw_base_query_by_nic()
+        query_merge = self._set_merge_query()
+        count = (
+            base_count
+            .filter(r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip))
+            .pluck(self.keys_to_pluck)
+            .distinct()
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter(
-                    r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip)
-                )
-                .merge(query_merge)
-                .pluck(self.keys_to_pluck)
-                .distinct()
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .filter(r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip))
+            .merge(query_merge)
+            .pluck(self.keys_to_pluck)
+            .distinct()
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_ip_and_filter(self, ip, fkey, fval, conn=None):
         """Search agents by ip address while filtering
@@ -504,40 +470,35 @@ class FetchAgents(object):
                 }
             ]
         """
-        count = 0
-        data = []
-        try:
-            base_count, base_filter = self._set_hw_base_query_by_nic()
-            query_merge = self._set_merge_query()
-            count = (
-                base_count
-                .filter({fkey: fval})
-                .filter(r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip))
-                .pluck(self.keys_to_pluck)
-                .distinct()
-                .count()
-                .run(conn)
-            )
+        base_count, base_filter = self._set_hw_base_query_by_nic()
+        query_merge = self._set_merge_query()
+        count = (
+            base_count
+            .filter({fkey: fval})
+            .filter(r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip))
+            .pluck(self.keys_to_pluck)
+            .distinct()
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter({fkey: fval})
-                .filter(r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip))
-                .merge(query_merge)
-                .pluck(self.keys_to_pluck)
-                .distinct()
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .filter({fkey: fval})
+            .filter(r.row[HardwarePerAgentKeys.IpAddress].match("(?i)^"+ip))
+            .merge(query_merge)
+            .pluck(self.keys_to_pluck)
+            .distinct()
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_mac(self, mac, conn=None):
         """Search agents based on an mac address.
@@ -575,38 +536,33 @@ class FetchAgents(object):
                 }
             ]
         """
-        count = 0
-        data = []
-        try:
-            base_count, base_filter = self._set_hw_base_query_by_nic()
-            query_merge = self._set_merge_query()
-            count = (
-                base_count
-                .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
-                .pluck(self.keys_to_pluck)
-                .distinct()
-                .count()
-                .run(conn)
-            )
+        base_count, base_filter = self._set_hw_base_query_by_nic()
+        query_merge = self._set_merge_query()
+        count = (
+            base_count
+            .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
+            .pluck(self.keys_to_pluck)
+            .distinct()
+            .count()
+            .run(conn)
+        )
 
-            data = list(
-                base_filter
-                .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
-                .merge(query_merge)
-                .pluck(self.keys_to_pluck)
-                .distinct()
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
+            .merge(query_merge)
+            .pluck(self.keys_to_pluck)
+            .distinct()
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
     @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_mac_and_filter(self, mac, fkey, fval, conn=None):
         """Search agents by mac address while filtering
@@ -649,38 +605,30 @@ class FetchAgents(object):
                 }
             ]
         """
+        base_count, base_filter = self._set_hw_base_query_by_nic()
+        query_merge = self._set_merge_query()
+        count = (
+            base_count
+            .filter({fkey: fval})
+            .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
+            .pluck(self.keys_to_pluck)
+            .distinct()
+            .count()
+            .run(conn)
+        )
 
-
-        count = 0
-        data = []
-        try:
-            base_count, base_filter = self._set_hw_base_query_by_nic()
-            query_merge = self._set_merge_query()
-            count = (
-                base_count
-                .filter({fkey: fval})
-                .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
-                .pluck(self.keys_to_pluck)
-                .distinct()
-                .count()
-                .run(conn)
-            )
-
-            data = list(
-                base_filter
-                .filter({fkey: fval})
-                .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
-                .merge(query_merge)
-                .pluck(self.keys_to_pluck)
-                .distinct()
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base_filter
+            .filter({fkey: fval})
+            .filter(r.row[HardwarePerAgentKeys.Mac].match("(?i)^"+mac))
+            .merge(query_merge)
+            .pluck(self.keys_to_pluck)
+            .distinct()
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
@@ -760,7 +708,6 @@ class FetchAgents(object):
         )
 
         return(merge_query)
-
 
     def _set_merge_query(self):
         merge_query = (

@@ -2,7 +2,7 @@ import logging
 from time import time
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core._db_constants import DbTime
+from vFense.core.agent import Agent
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent._db import (
     fetch_environments_from_agent,
@@ -11,8 +11,7 @@ from vFense.core.agent._db import (
 )
 from vFense.core.decorators import time_it
 
-#from vFense.core.results import Results
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes
 )
@@ -209,7 +208,6 @@ def get_agents_info(view_name=None, agent_os=None, keys_to_pluck=None):
 
     return agents
 
-
 @time_it
 def get_agent_info(agent_id, keys_to_pluck=None):
     """Retrieve agent information.
@@ -232,7 +230,6 @@ def get_agent_info(agent_id, keys_to_pluck=None):
     """
 
     return fetch_agent(agent_id, keys_to_pluck)
-
 
 @time_it
 def update_agent_status(agent_id, username=None, uri=None, method=None):
@@ -258,42 +255,30 @@ def update_agent_status(agent_id, username=None, uri=None, method=None):
             'data': {'needs_reboot': 'no'}
         }
     """
-    status = update_agent_status.func_name + ' - '
+    results = ApiResults()
+    results.fill_in_defaults()
     now = time()
-    agent_data = {
-        AgentKeys.LastAgentUpdate: DbTime.epoch_time_to_db_time(now),
-        AgentKeys.AgentStatus: 'up'
-    }
+    agent = Agent()
+    agent.last_agent_update = now
+    agent.agent_status = 'up'
     status_code, count, error, generated_ids = (
-        update_agent(agent_id, agent_data)
+        update_agent(agent_id, agent.to_dict_db_update())
     )
+    results.data = agent.to_dict_non_null()
     if status_code == DbCodes.Replaced:
-        msg = 'agent_id %s updated'
-        generic_status_code = GenericCodes.ObjectUpdated
-        vfense_status_code = AgentCodes.AgentsUpdated
+        results.message = 'agent_id %s updated'
+        results.generic_status_code = GenericCodes.ObjectUpdated
+        results.vfense_status_code = AgentCodes.AgentsUpdated
 
     elif status_code == DbCodes.Skipped:
-        msg = 'agent_id %s does not exist'
-        generic_status_code = GenericFailureCodes.FailedToUpdateObject
-        vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
+        results.message = 'agent_id %s does not exist'
+        results.generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        results.vfense_status_code = AgentFailureCodes.AgentsDoesNotExist
 
     elif status_code == DbCodes.Errors:
-        msg = 'agent_id %s could not be updated'
-        generic_status_code = GenericFailureCodes.FailedToUpdateObject
-        vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
-
-    agent_data[AgentKeys.LastAgentUpdate] = now
-
-    results = {
-        ApiResultKeys.DB_STATUS_CODE: status_code,
-        ApiResultKeys.GENERIC_STATUS_CODE: generic_status_code,
-        ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-        ApiResultKeys.MESSAGE: status + msg,
-        ApiResultKeys.DATA: [],
-        ApiResultKeys.USERNAME: username,
-        ApiResultKeys.URI: uri,
-        ApiResultKeys.HTTP_METHOD: method
-    }
+        results.message = 'agent_id %s could not be updated'
+        results.generic_status_code = GenericFailureCodes.FailedToUpdateObject
+        results.vfense_status_code = AgentFailureCodes.AgentsFailedToUpdate
 
     return results
 
