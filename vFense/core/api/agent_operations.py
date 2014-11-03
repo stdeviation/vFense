@@ -1,8 +1,4 @@
-import simplejson as json
 import re
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.api._constants import (
     ApiArguments, AgentOperationsApiArguments
@@ -16,15 +12,8 @@ from vFense.core.operations.search.agent_search import AgentOperationRetriever
 from vFense.core.decorators import (
     authenticated_request, results_message, api_catch_it
 )
-from vFense.core.results import (
-    ExternalApiResults
-)
 from vFense.core.user.manager import UserManager
 from vFense.core.user import UserKeys
-from vFense.core.status_codes import GenericCodes
-
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
 
 
 class GetTransactionsHandler(BaseHandler):

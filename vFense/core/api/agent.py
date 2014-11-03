@@ -78,7 +78,6 @@ class FetchValidEnvironments(BaseHandler):
         self.set_status(results.http_status_code)
         self.modified_output(results, output, 'environments')
 
-
     @results_message
     @check_permissions(Permissions.READ)
     def get_environments(self, active_view):
@@ -112,7 +111,6 @@ class FetchSupportedOperatingSystems(BaseHandler):
 
         self.set_status(results.http_status_code)
         self.modified_output(results, output, 'platforms')
-
 
     @results_message
     @check_permissions(Permissions.READ)
