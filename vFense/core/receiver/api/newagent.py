@@ -4,31 +4,27 @@ from json import dumps
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
-from vFense.receiver.api.base import AgentBaseHandler
-from vFense.core.decorators import (
-    convert_json_to_arguments, agent_authenticated_request,
-    results_message
-)
-from vFense.core.agent._db_model import (
-    AgentKeys
-)
+from vFense.core.decorators import convert_json_to_arguments
+from vFense.core.agent._db_model import AgentKeys
 from vFense.core.operations._db_model import (
     AgentOperationKey, OperationPerAgentKey
 )
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.agent import Agent
 from vFense.core.agent.manager import AgentManager
+from vFense.core.queue import AgentQueueOperation
 from vFense.core.queue.uris import get_result_uris
-from vFense.core.results import ApiResultKeys, Results
-from vFense.receiver.status_codes import AgentResultCodes
-from vFense.receiver.results import AgentResults
-from vFense.receiver.rvhandler import RvHandOff
+from vFense.core.results import AgentApiResults
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
 from vFense.receiver.api.decorators import (
-    authenticate_token, agent_results_message
+    authenticate_token, agent_results_message, agent_authenticated_request,
+    receiver_catch_it
 )
+from vFense.receiver.api.base import AgentBaseHandler
+from vFense.receiver.status_codes import AgentResultCodes
+from vFense.receiver.rvhandler import RvHandOff
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvlistener')
@@ -39,77 +35,61 @@ class NewAgentV1(BaseHandler):
     @convert_json_to_arguments
     def post(self):
         active_user = self.get_current_user()
+        view_name = self.arguments.get('customer_name')
+        plugins = self.arguments.get(AgentKeys.Plugins)
+        system_info = self.arguments.get(AgentKeys.SystemInfo)
+        hardware = self.arguments.get(AgentKeys.Hardware)
+        results = self.add_agent(system_info, hardware, view_name, plugins)
+        status_code = results.vfense_status_code
+        if status_code == AgentResultCodes.NewAgentSucceeded:
+            results.data.pop(0)
+            agent_id = results.generated_ids
+            try:
+                if 'rv' in plugins:
+                    RvHandOff().new_agent_operation(
+                        agent_id, plugins['rv']['data']
+                    )
 
-        try:
-            view_name = self.arguments.get('customer_name')
-            plugins = self.arguments.get(AgentKeys.Plugins)
-            system_info = self.arguments.get(AgentKeys.SystemInfo)
-            hardware = self.arguments.get(AgentKeys.Hardware)
-            results = (
-                self.add_agent(
-                    system_info, hardware, view_name
-                )
-            )
-            status_code = results.vfense_status_code
-            if status_code == AgentResultCodes.NewAgentSucceeded:
-                results.data.pop(0)
-                agent_id = results.generated_ids
-                try:
-                    if 'rv' in plugins:
-                        RvHandOff().new_agent_operation(
-                            agent_id,
-                            plugins['rv']['data'],
-                        )
+            except Exception as e:
+                logger.exception(e)
 
-                except Exception as e:
-                    logger.exception(e)
+        self.set_header('Content-Type', 'application/json')
+        self.set_status(results.http_status_code)
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
-            self.set_header('Content-Type', 'application/json')
-            self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
-            self.write(dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'New agent operation broke: {0}'
-                    .format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_header('Content-Type', 'application/json')
-            self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
-            self.write(dumps(results, indent=4))
-
-    @results_message
+    @receiver_catch_it
+    @agent_results_message
     @log_operation(AdminActions.NEW_AGENT, vFenseObjects.AGENT)
-    def add_agent(self, system_info, hardware, view):
+    def add_agent(self, system_info, hardware, view, plugins):
         system_info[AgentKeys.Hardware] = hardware
         system_info[AgentKeys.Views] = [view]
         system_info.pop(AgentKeys.HostName, None)
         system_info.pop('customer_name', None)
         agent = Agent(**system_info)
         manager = AgentManager()
-        results = manager.create(agent)
+        results = AgentApiResults(**manager.create(agent))
         status_code = results.vfense_status_code
         if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results.generated_ids
-            uris = get_result_uris(agent_id, version='v1')
-            uris[AgentOperationKey.Operation] = (
-                AgentOperations.REFRESH_RESPONSE_URIS
-            )
-            json_msg = {
-                AgentOperationKey.Operation: "new_agent_id",
-                AgentOperationKey.OperationId: "",
-                OperationPerAgentKey.AgentId: agent_id
-            }
-            results.data = [results.data]
-            results.data.append(json_msg)
-            results.data.append(uris)
+            uri_results = get_result_uris(agent_id, version='v1')
+            uri_operation = AgentQueueOperation()
+            uri_operation.fill_in_defaults()
+            uri_operation.plugin = 'core'
+            uri_operation.agent_id = agent_id
+            uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
+            uri_operation.data = uri_results.data
+            newagent_operation = AgentQueueOperation()
+            newagent_operation.fill_in_defaults()
+            newagent_operation.operation = 'new_agent_id'
+            newagent_operation.plugin = 'core'
+            newagent_operation.agent_id = agent_id
+            results.operations.append(newagent_operation.to_dict_non_null())
+            results.operations.append(uri_operation.to_dict_non_null())
+            if 'rv' in plugins:
+                RvHandOff().new_agent_operation(
+                    agent_id, plugins['rv']['data']
+                )
+
         return results
 
 
@@ -117,71 +97,45 @@ class NewAgentV2(AgentBaseHandler):
     @authenticate_token
     @convert_json_to_arguments
     def post(self):
-        try:
-            views = self.arguments.get(AgentKeys.Views)
-            system_info = self.arguments.get(AgentKeys.SystemInfo)
-            hardware = self.arguments.get(AgentKeys.Hardware)
-            tags = self.arguments.get(AgentKeys.Tags)
-            plugins = self.arguments.get(AgentKeys.Plugins)
-            results = (
-                self.add_agent(system_info, hardware, views, tags)
-            )
-            status_code = results.vfense_status_code
-            if status_code == AgentResultCodes.NewAgentSucceeded:
-                results.data.pop(0)
-                agent_id = results.generated_ids
-                try:
-                    if 'rv' in plugins:
-                        RvHandOff(
-                        ).new_agent_operation(
-                            agent_id, plugins['rv']['data']
-                        )
+        views = self.arguments.get(AgentKeys.Views)
+        system_info = self.arguments.get(AgentKeys.SystemInfo)
+        hardware = self.arguments.get(AgentKeys.Hardware)
+        tags = self.arguments.get(AgentKeys.Tags)
+        plugins = self.arguments.get(AgentKeys.Plugins)
+        results = self.add_agent(system_info, hardware, views, tags, plugins)
+        self.set_header('Content-Type', 'application/json')
+        self.set_status(results.http_status_code)
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
-                except Exception as e:
-                    logger.exception(e)
-
-            self.set_header('Content-Type', 'application/json')
-            self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
-            self.write(dumps(results, indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'New agent operation broke: {0}'
-                    .format(e)
-                )
-            }
-            results = (
-                AgentResults(
-                    self.request.uri, self.request.method, self.get_token()
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.set_header('Content-Type', 'application/json')
-            self.set_status(results[ApiResultKeys.HTTP_STATUS_CODE])
-            self.write(dumps(results, indent=4))
-
+    @receiver_catch_it
     @agent_results_message
-    def add_agent(self, system_info, hardware, views, tags):
+    def add_agent(self, system_info, hardware, views, tags, plugins):
         system_info[AgentKeys.Hardware] = hardware
         system_info[AgentKeys.Views] = views
         agent = Agent(**system_info)
         manager = AgentManager()
-        results = manager.create(agent, tags)
-        results[ApiResultKeys.OPERATIONS] = []
+        results = AgentApiResults(**manager.create(agent, tags))
+        results.fill_in_defaults()
         results.data = [results.data]
         status_code = results.vfense_status_code
         if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results.generated_ids
-            uris = get_result_uris(agent_id, version='v2')
-            uris[AgentOperationKey.Operation] = (
-                AgentOperations.REFRESH_RESPONSE_URIS
-            )
-            new_agent_id = {
-                AgentOperationKey.Operation: "new_agent_id",
-                AgentOperationKey.OperationId: "",
-                OperationPerAgentKey.AgentId: agent_id
-            }
-            results[ApiResultKeys.OPERATIONS].append(new_agent_id)
-            results[ApiResultKeys.OPERATIONS].append(uris)
+            uri_results = get_result_uris(agent_id, version='v2')
+            uri_operation = AgentQueueOperation()
+            uri_operation.fill_in_defaults()
+            uri_operation.plugin = 'core'
+            uri_operation.agent_id = agent_id
+            uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
+            uri_operation.data = uri_results.data
+            newagent_operation = AgentQueueOperation()
+            newagent_operation.fill_in_defaults()
+            newagent_operation.operation = 'new_agent_id'
+            newagent_operation.plugin = 'core'
+            newagent_operation.agent_id = agent_id
+            results.operations.append(newagent_operation.to_dict_non_null())
+            results.operations.append(uri_operation.to_dict_non_null())
+            if 'rv' in plugins:
+                RvHandOff().new_agent_operation(
+                    agent_id, plugins['rv']['data']
+                )
         return results

@@ -1,18 +1,13 @@
 import re
 from vFense import Base
 from vFense.core._db_constants import DbTime
-from vFense.core.agent._constants import (
-    agent_regex
-)
-from vFense.core._constants import (
-    CommonKeys
-)
+from vFense.core.agent._constants import agent_regex
+from vFense.core._constants import CommonKeys
 from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 from vFense.core.queue._db_model import AgentQueueKey
-from vFense.core.operations._db_model import (
-    AgentOperationKey
-)
+from vFense.core.queue._constants import AgentQueueOperationDefaults
+from vFense.core.operations._db_model import AgentOperationKey
 
 
 class AgentQueue(Base):
@@ -219,7 +214,7 @@ class AgentQueueOperation(Base):
     """Used to represent an instance of an admin operation."""
 
     def __init__(self, agent_id=None, operation=None, operation_id=None,
-                 plugin=None, **kwargs
+                 plugin=None, data=None, **kwargs
                  ):
         """
         Kwargs:
@@ -233,8 +228,15 @@ class AgentQueueOperation(Base):
         self.agent_id = agent_id
         self.operation = operation
         self.operation_id = operation_id
+        self.data = data
         self.plugin = plugin
 
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+        """
+        if not self.data:
+            self.data = AgentQueueOperationDefaults.data()
 
     def to_dict(self):
         """ Turn the fields into a dictionary.
@@ -249,4 +251,5 @@ class AgentQueueOperation(Base):
             AgentOperationKey.OperationId: self.operation_id,
             AgentOperationKey.AgentId: self.agent_id,
             AgentOperationKey.Plugin: self.plugin,
+            AgentOperationKey.Data: self.data,
         }

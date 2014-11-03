@@ -1,8 +1,5 @@
-import logging
-
 from json import dumps
 
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.results import ApiResults
 from vFense.receiver.tokens import validate_token
 from vFense.receiver.api.base import AgentBaseHandler
@@ -10,12 +7,8 @@ from vFense.receiver.status_codes import (
     AgentResultCodes, AgentFailureResultCodes
 )
 from vFense.receiver.api.decorators import (
-    authenticate_token, agent_results_message
+    authenticate_token, agent_results_message, receiver_catch_it
 )
-
-
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvlistener')
 
 class ValidateToken(AgentBaseHandler):
     @authenticate_token
@@ -25,6 +18,7 @@ class ValidateToken(AgentBaseHandler):
         self.set_status(results.http_status_code)
         self.write(dumps(results.to_dict_non_null(), indent=4))
 
+    @receiver_catch_it
     @agent_results_message
     def validate_token(self, token):
         validated = validate_token(token)

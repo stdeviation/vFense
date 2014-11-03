@@ -3,6 +3,8 @@ from ast import literal_eval
 import json
 from functools import wraps
 
+from tornado.web import HTTPError
+
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.agent.status_codes import AgentCodes
 from vFense.core.agent.manager import AgentManager
@@ -18,7 +20,7 @@ from vFense.receiver.status_codes import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('vFense_stats')
+logger = logging.getLogger('vFense_listener')
 
 
 def authenticate_agent(fn):
@@ -283,3 +285,47 @@ def agent_results_message(fn):
         return results
 
     return wraps(fn)(db_wrapper)
+
+def agent_authenticated_request(method):
+    """ Decorator that handles authenticating the request. Uses secure cookies.
+    In the spirit of the tornado.web.authenticated decorator.
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        if not self.current_user:
+            raise HTTPError(403)
+
+        return method(self, *args, **kwargs)
+
+    return wrapper
+
+def receiver_catch_it(fn):
+    """wrap all receiver calls in a try catch exception"""
+    def wrapper(*args, **kwargs):
+        tornado_handler = args[0]
+        try:
+            results = fn(*args, **kwargs)
+        except Exception as e:
+            results = AgentApiResults()
+            results.fill_in_defaults()
+            results.generic_status_code = GenericCodes.SomethingBroke
+            results.vfense_status_code = GenericCodes.SomethingBroke
+            results.message = (
+                'Something broke while calling {0}: {1}'
+                .format(fn.__name__, e)
+            )
+            results.uri = tornado_handler.request.uri
+            results.http_method = tornado_handler.request.method
+            results.username = tornado_handler.get_current_user()
+            results.http_status_code = 500
+            results.agent_id = tornado_handler.get_agent_id()
+            results.token = tornado_handler.get_token()
+            results.errors.append(e)
+            logger.exception(results.to_dict_non_null())
+            tornado_handler.set_status(results.http_status_code)
+            tornado_handler.set_header('Content-Type', 'application/json')
+            tornado_handler.write(json.dumps(results.to_dict_non_null(), indent=4))
+
+        return results
+
+    return wraps(fn)(wrapper)
