@@ -2,7 +2,7 @@ import logging
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.core.decorators import time_it
+from vFense.core.decorators import time_it, catch_it
 from vFense.core._constants import CommonKeys
 from vFense.core.agent._db_model import (
     AgentKeys, AgentCollections, AgentIndexes
@@ -20,6 +20,7 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 @time_it
+@catch_it([])
 @db_create_close
 def get_all_app_stats_by_agentid(agent_id, conn=None):
     """Retrieve the application statistics for an agent.
@@ -64,102 +65,99 @@ def get_all_app_stats_by_agentid(agent_id, conn=None):
         ]
     """
     data = []
-    try:
-        inventory = (
-            r
-            .table(AppCollections.AppsPerAgent)
-            .get_all(
-                [CommonAppKeys.INSTALLED, agent_id],
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
+    inventory = (
+        r
+        .table(AppCollections.AppsPerAgent)
+        .get_all(
+            [CommonAppKeys.INSTALLED, agent_id],
+            index=DbCommonAppPerAgentIndexes.StatusAndAgentId
         )
-        data.append(
-            {
-                CommonAppKeys.COUNT: inventory,
-                CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
-                CommonAppKeys.NAME: CommonAppKeys.SOFTWAREINVENTORY
-            }
+        .count()
+        .run(conn)
+    )
+    data.append(
+        {
+            CommonAppKeys.COUNT: inventory,
+            CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
+            CommonAppKeys.NAME: CommonAppKeys.SOFTWAREINVENTORY
+        }
+    )
+    os_apps_avail = (
+        r
+        .table(AppCollections.AppsPerAgent)
+        .get_all(
+            [CommonAppKeys.AVAILABLE, agent_id],
+            index=DbCommonAppPerAgentIndexes.StatusAndAgentId
         )
-        os_apps_avail = (
-            r
-            .table(AppCollections.AppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, agent_id],
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
+        .count()
+        .run(conn)
+    )
+    data.append(
+        {
+            CommonAppKeys.COUNT: os_apps_avail,
+            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+            CommonAppKeys.NAME: CommonAppKeys.OS
+        }
+    )
+    custom_apps_avail = (
+        r
+        .table(AppCollections.CustomAppsPerAgent)
+        .get_all(
+            [CommonAppKeys.AVAILABLE, agent_id],
+            index=DbCommonAppPerAgentIndexes.StatusAndAgentId
         )
-        data.append(
-            {
-                CommonAppKeys.COUNT: os_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.OS
-            }
+        .count()
+        .run(conn)
+    )
+    data.append(
+        {
+            CommonAppKeys.COUNT: custom_apps_avail,
+            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+            CommonAppKeys.NAME: CommonAppKeys.CUSTOM
+        }
+    )
+    supported_apps_avail = (
+        r
+        .table(AppCollections.SupportedAppsPerAgent)
+        .get_all(
+            [CommonAppKeys.AVAILABLE, agent_id],
+            index=DbCommonAppPerAgentIndexes.StatusAndAgentId
         )
-        custom_apps_avail = (
-            r
-            .table(AppCollections.CustomAppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, agent_id],
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
-        )
-        data.append(
-            {
-                CommonAppKeys.COUNT: custom_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.CUSTOM
-            }
-        )
-        supported_apps_avail = (
-            r
-            .table(AppCollections.SupportedAppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, agent_id],
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
-        )
+        .count()
+        .run(conn)
+    )
 
-        data.append(
-            {
-                CommonAppKeys.COUNT: supported_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
-            }
-        )
+    data.append(
+        {
+            CommonAppKeys.COUNT: supported_apps_avail,
+            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+            CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
+        }
+    )
 
-        agent_apps_avail = (
-            r
-            .table(AppCollections.vFenseAppsPerAgent)
-            .get_all(
-                [CommonAppKeys.AVAILABLE, agent_id],
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .count()
-            .run(conn)
+    agent_apps_avail = (
+        r
+        .table(AppCollections.vFenseAppsPerAgent)
+        .get_all(
+            [CommonAppKeys.AVAILABLE, agent_id],
+            index=DbCommonAppPerAgentIndexes.StatusAndAgentId
         )
+        .count()
+        .run(conn)
+    )
 
-        data.append(
-            {
-                CommonAppKeys.COUNT: agent_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
-            }
-        )
-
-    except Exception as e:
-        logger.exception(e)
+    data.append(
+        {
+            CommonAppKeys.COUNT: agent_apps_avail,
+            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+            CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
+        }
+    )
 
     return data
 
-
+@time_it
+@catch_it([])
 @db_create_close
 def get_all_app_stats_by_tagid(tag_id, conn=None):
     """Retrieve the application statistics for a tag.
@@ -204,151 +202,146 @@ def get_all_app_stats_by_tagid(tag_id, conn=None):
         ]
     """
     data = []
-    try:
-        inventory = (
-            r
-            .table(TagCollections.TagsPerAgent, use_outdated=True)
-            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKeys.AgentId)
-            .eq_join(
-                lambda x: [
-                    CommonAppKeys.INSTALLED,
-                    x[DbCommonAppPerAgentKeys.AgentId]
-                ],
-                r.table(AppCollections.AppsPerAgent),
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .eq_join(
-                lambda x: x['right'][DbCommonAppPerAgentKeys.AppId],
-                r.table(AppCollections.UniqueApplications))
-            .filter(
-                lambda y: y['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
-            )
-            .map(
-                {
-                    DbCommonAppPerAgentKeys.AppId: (
-                        r.row['right'][DbCommonAppPerAgentKeys.AppId]
-                    ),
-                }
-            )
-            .pluck(DbCommonAppPerAgentKeys.AppId)
-            .distinct()
-            .count()
-            .run(conn)
+    inventory = (
+        r
+        .table(TagCollections.TagsPerAgent, use_outdated=True)
+        .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+        .pluck(TagsPerAgentKeys.AgentId)
+        .eq_join(
+            lambda x: [
+                CommonAppKeys.INSTALLED,
+                x[DbCommonAppPerAgentKeys.AgentId]
+            ],
+            r.table(AppCollections.AppsPerAgent),
+            index=DbCommonAppPerAgentIndexes.StatusAndAgentId
         )
-        data.append(
+        .eq_join(
+            lambda x: x['right'][DbCommonAppPerAgentKeys.AppId],
+            r.table(AppCollections.UniqueApplications))
+        .filter(
+            lambda y: y['right'][DbCommonAppKeys.Hidden] == CommonKeys.NO
+        )
+        .map(
             {
-                CommonAppKeys.COUNT: inventory,
-                CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
-                CommonAppKeys.NAME: CommonAppKeys.SOFTWAREINVENTORY
+                DbCommonAppPerAgentKeys.AppId: (
+                    r.row['right'][DbCommonAppPerAgentKeys.AppId]
+                ),
             }
         )
-        os_apps_avail = (
-            r
-            .table(TagCollections.TagsPerAgent, use_outdated=True)
-            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKeys.AgentId)
-            .eq_join(
-                lambda x: [
-                    CommonAppKeys.AVAILABLE,
-                    x[DbCommonAppPerAgentKeys.AgentId]
-                ],
-                r.table(AppCollections.AppsPerAgent),
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .pluck({'right': DbCommonAppPerAgentKeys.AppId})
-            .distinct()
-            .count()
-            .run(conn)
+        .pluck(DbCommonAppPerAgentKeys.AppId)
+        .distinct()
+        .count()
+        .run(conn)
+    )
+    data.append(
+        {
+            CommonAppKeys.COUNT: inventory,
+            CommonAppKeys.STATUS: CommonAppKeys.INSTALLED,
+            CommonAppKeys.NAME: CommonAppKeys.SOFTWAREINVENTORY
+        }
+    )
+    os_apps_avail = (
+        r
+        .table(TagCollections.TagsPerAgent, use_outdated=True)
+        .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+        .pluck(TagsPerAgentKeys.AgentId)
+        .eq_join(
+            lambda x: [
+                CommonAppKeys.AVAILABLE,
+                x[DbCommonAppPerAgentKeys.AgentId]
+            ],
+            r.table(AppCollections.AppsPerAgent),
+            index=DbCommonAppPerAgentIndexes.StatusAndAgentId
         )
-        data.append(
-            {
-                CommonAppKeys.COUNT: os_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.OS
-            }
+        .pluck({'right': DbCommonAppPerAgentKeys.AppId})
+        .distinct()
+        .count()
+        .run(conn)
+    )
+    data.append(
+        {
+            CommonAppKeys.COUNT: os_apps_avail,
+            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+            CommonAppKeys.NAME: CommonAppKeys.OS
+        }
+    )
+    custom_apps_avail = (
+        r
+        .table(TagCollections.TagsPerAgent, use_outdated=True)
+        .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+        .pluck(TagsPerAgentKeys.AgentId)
+        .eq_join(
+            lambda x: [
+                CommonAppKeys.AVAILABLE,
+                x[DbCommonAppPerAgentKeys.AgentId]
+            ],
+            r.table(AppCollections.CustomAppsPerAgent),
+            index=DbCommonAppPerAgentIndexes.StatusAndAgentId
         )
-        custom_apps_avail = (
-            r
-            .table(TagCollections.TagsPerAgent, use_outdated=True)
-            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKeys.AgentId)
-            .eq_join(
-                lambda x: [
-                    CommonAppKeys.AVAILABLE,
-                    x[DbCommonAppPerAgentKeys.AgentId]
-                ],
-                r.table(AppCollections.CustomAppsPerAgent),
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .pluck({'right': DbCommonAppPerAgentKeys.AppId})
-            .distinct()
-            .count()
-            .run(conn)
+        .pluck({'right': DbCommonAppPerAgentKeys.AppId})
+        .distinct()
+        .count()
+        .run(conn)
+    )
+    data.append(
+        {
+            CommonAppKeys.COUNT: custom_apps_avail,
+            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+            CommonAppKeys.NAME: CommonAppKeys.CUSTOM
+        }
+    )
+    supported_apps_avail = (
+        r
+        .table(TagCollections.TagsPerAgent, use_outdated=True)
+        .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+        .pluck(TagsPerAgentKeys.AgentId)
+        .eq_join(
+            lambda x: [
+                CommonAppKeys.AVAILABLE,
+                x[DbCommonAppPerAgentKeys.AgentId]
+            ],
+            r.table(AppCollections.SupportedAppsPerAgent),
+            index=DbCommonAppPerAgentIndexes.StatusAndAgentId
         )
-        data.append(
-            {
-                CommonAppKeys.COUNT: custom_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.CUSTOM
-            }
+        .pluck({'right': DbCommonAppPerAgentKeys.AppId})
+        .distinct()
+        .count()
+        .run(conn)
+    )
+    data.append(
+        {
+            CommonAppKeys.COUNT: supported_apps_avail,
+            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+            CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
+        }
+    )
+    agent_apps_avail = (
+        r
+        .table(TagCollections.TagsPerAgent, use_outdated=True)
+        .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
+        .pluck(TagsPerAgentKeys.AgentId)
+        .eq_join(
+            lambda x: [
+                CommonAppKeys.AVAILABLE,
+                x[DbCommonAppPerAgentKeys.AgentId]
+            ],
+            r.table(AppCollections.vFenseAppsPerAgent),
+            index=DbCommonAppPerAgentIndexes.StatusAndAgentId
         )
-        supported_apps_avail = (
-            r
-            .table(TagCollections.TagsPerAgent, use_outdated=True)
-            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKeys.AgentId)
-            .eq_join(
-                lambda x: [
-                    CommonAppKeys.AVAILABLE,
-                    x[DbCommonAppPerAgentKeys.AgentId]
-                ],
-                r.table(AppCollections.SupportedAppsPerAgent),
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .pluck({'right': DbCommonAppPerAgentKeys.AppId})
-            .distinct()
-            .count()
-            .run(conn)
-        )
-        data.append(
-            {
-                CommonAppKeys.COUNT: supported_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.SUPPORTED
-            }
-        )
-        agent_apps_avail = (
-            r
-            .table(TagCollections.TagsPerAgent, use_outdated=True)
-            .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
-            .pluck(TagsPerAgentKeys.AgentId)
-            .eq_join(
-                lambda x: [
-                    CommonAppKeys.AVAILABLE,
-                    x[DbCommonAppPerAgentKeys.AgentId]
-                ],
-                r.table(AppCollections.vFenseAppsPerAgent),
-                index=DbCommonAppPerAgentIndexes.StatusAndAgentId
-            )
-            .pluck({'right': DbCommonAppPerAgentKeys.AppId})
-            .distinct()
-            .count()
-            .run(conn)
-        )
-        data.append(
-            {
-                CommonAppKeys.COUNT: agent_apps_avail,
-                CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
-                CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
-            }
-        )
-
-    except Exception as e:
-        logger.exception(e)
+        .pluck({'right': DbCommonAppPerAgentKeys.AppId})
+        .distinct()
+        .count()
+        .run(conn)
+    )
+    data.append(
+        {
+            CommonAppKeys.COUNT: agent_apps_avail,
+            CommonAppKeys.STATUS: CommonAppKeys.AVAILABLE,
+            CommonAppKeys.NAME: CommonAppKeys.AGENT_UPDATES
+        }
+    )
 
     return data
-
 
 @db_create_close
 def get_all_avail_stats_by_tagid(tag_id, conn=None):
