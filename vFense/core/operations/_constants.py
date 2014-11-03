@@ -221,3 +221,9 @@ class V2ListenerURIs():
             )
         )
         return valid_uris
+
+def operation_id():
+    return '[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}'
+
+def operation_regex():
+    return '({0})'.format(operation_id())

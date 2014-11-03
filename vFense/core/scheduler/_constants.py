@@ -48,3 +48,9 @@ class IntervalKeys(object):
 class DateKeys(object):
     TimeZone = 'timezone'
     RunDate = 'run_date'
+
+def job_id():
+    return '[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}'
+
+def job_regex():
+    return '({0})'.format(job_id())

@@ -4,9 +4,7 @@ from json import dumps
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.receiver.api.base import AgentBaseHandler
-from vFense.core.decorators import (
-    results_message
-)
+from vFense.core.decorators import results_message
 from vFense.core.queue.uris import get_result_uris
 from vFense.core.results import Results
 from vFense.core.operations._constants import AgentOperations
