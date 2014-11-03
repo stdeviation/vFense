@@ -1,14 +1,8 @@
-import logging
-
 from json import dumps
 
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import convert_json_to_arguments
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core.operations._db_model import (
-    AgentOperationKey, OperationPerAgentKey
-)
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.agent import Agent
 from vFense.core.agent.manager import AgentManager
@@ -26,32 +20,16 @@ from vFense.receiver.api.base import AgentBaseHandler
 from vFense.receiver.status_codes import AgentResultCodes
 from vFense.receiver.rvhandler import RvHandOff
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvlistener')
-
 
 class NewAgentV1(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def post(self):
-        active_user = self.get_current_user()
         view_name = self.arguments.get('customer_name')
         plugins = self.arguments.get(AgentKeys.Plugins)
         system_info = self.arguments.get(AgentKeys.SystemInfo)
         hardware = self.arguments.get(AgentKeys.Hardware)
         results = self.add_agent(system_info, hardware, view_name, plugins)
-        status_code = results.vfense_status_code
-        if status_code == AgentResultCodes.NewAgentSucceeded:
-            results.data.pop(0)
-            agent_id = results.generated_ids
-            try:
-                if 'rv' in plugins:
-                    RvHandOff().new_agent_operation(
-                        agent_id, plugins['rv']['data']
-                    )
-
-            except Exception as e:
-                logger.exception(e)
 
         self.set_header('Content-Type', 'application/json')
         self.set_status(results.http_status_code)
