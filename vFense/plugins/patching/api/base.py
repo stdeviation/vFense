@@ -1,6 +1,5 @@
 import logging
 import logging.config
-import simplejson as json
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
