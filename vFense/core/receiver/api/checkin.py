@@ -2,6 +2,7 @@ from json import dumps
 
 from vFense.core.agent.manager import AgentManager
 from vFense.core.api.base import BaseHandler
+from vFense.core.decorators import api_catch_it, results_message
 from vFense.core.receiver.decorators import (
     agent_results_message, receiver_catch_it, agent_authenticated_request
 )
@@ -20,8 +21,8 @@ class CheckInV1(BaseHandler):
         self.set_header('Content-Type', 'application/json')
         self.write(dumps(results.to_dict_non_null()))
 
-    @receiver_catch_it
-    @agent_results_message
+    @api_catch_it
+    @results_message
     def update_agent_status(self, agent_id):
         manager = AgentManager(agent_id)
         results = manager.update_last_checkin_time()

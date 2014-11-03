@@ -1,86 +1,52 @@
-import logging
 from json import dumps
 
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
-from vFense.receiver.api.base import AgentBaseHandler
-from vFense.core.decorators import results_message
+from vFense.core.decorators import results_message, api_catch_it
+from vFense.core.queue import AgentQueueOperation
 from vFense.core.queue.uris import get_result_uris
-from vFense.core.results import Results
 from vFense.core.operations._constants import AgentOperations
-from vFense.receiver.results import AgentApiResultKeys
-from vFense.receiver.api.decorators import (
-    authenticate_token, agent_results_message
+from vFense.core.receiver.api.base import AgentBaseHandler
+from vFense.core.receiver.api.decorators import (
+    agent_results_message, receiver_catch_it, authenticate_token
 )
-
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvlistener')
 
 class AgentResultURIs(BaseHandler):
     @authenticate_token
     def get(self, agent_id):
-        active_user = self.get_current_user()
-        try:
-            results = self.get_uris(agent_id)
-            self.set_header('Content-Type', 'application/json')
-            self.write(dumps(results, indent=4))
+        results = self.get_uris(agent_id)
+        self.set_header('Content-Type', 'application/json')
+        self.write(dumps(results, indent=4))
 
-        except Exception as e:
-            data = {
-                AgentApiResultKeys.MESSAGE: (
-                    'Response URIs for agent {0} broke: {1}'
-                    .format(agent_id, e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.write(dumps(results, indent=4))
-
+    @api_catch_it
     @results_message
     def get_uris(self, agent_id):
-        results = get_result_uris(agent_id, 'v1')
-        results[AgentApiResultKeys.OPERATION] = (
-            AgentOperations.REFRESH_RESPONSE_URIS
-        )
-        results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
-        results[AgentApiResultKeys.DATA] = []
+        results = get_result_uris(agent_id, version='v1')
+        uri_operation = AgentQueueOperation()
+        uri_operation.fill_in_defaults()
+        uri_operation.plugin = 'core'
+        uri_operation.agent_id = agent_id
+        uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
+        uri_operation.data = results.data
+        results.operations.append(uri_operation.to_dict_non_null())
         return results
 
 class ResultURIs(BaseHandler):
     @authenticate_token
     def get(self):
-        active_user = self.get_current_user()
-        try:
-            results = self.get_uris()
-            self.set_header('Content-Type', 'application/json')
-            self.write(dumps(results, indent=4))
+        results = self.get_uris()
+        self.set_header('Content-Type', 'application/json')
+        self.write(dumps(results, indent=4))
 
-        except Exception as e:
-            data = {
-                AgentApiResultKeys.MESSAGE: (
-                    'Response URIs broke: {0}'.format(e)
-                )
-            }
-            results = (
-                Results(
-                    active_user, self.request.uri, self.request.method
-                ).something_broke(**data)
-            )
-            logger.exception(e)
-            self.write(dumps(results, indent=4))
-
+    @api_catch_it
     @results_message
     def get_uris(self):
         results = get_result_uris(version='v1')
-        results[AgentApiResultKeys.OPERATION] = (
-            AgentOperations.REFRESH_RESPONSE_URIS
-        )
-        results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
-        results[AgentApiResultKeys.DATA] = []
+        uri_operation = AgentQueueOperation()
+        uri_operation.fill_in_defaults()
+        uri_operation.plugin = 'core'
+        uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
+        uri_operation.data = results.data
+        results.operations.append(uri_operation.to_dict_non_null())
         return results
 
 class AgentResultURIsV2(AgentBaseHandler):
@@ -90,14 +56,17 @@ class AgentResultURIsV2(AgentBaseHandler):
         self.set_header('Content-Type', 'application/json')
         self.write(dumps(results, indent=4))
 
+    @receiver_catch_it
     @agent_results_message
     def get_uris(self, agent_id):
-        results = get_result_uris(agent_id, 'v2')
-        results[AgentApiResultKeys.OPERATION] = (
-            AgentOperations.REFRESH_RESPONSE_URIS
-        )
-        results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
-        results[AgentApiResultKeys.DATA] = []
+        results = get_result_uris(agent_id, version='v2')
+        uri_operation = AgentQueueOperation()
+        uri_operation.fill_in_defaults()
+        uri_operation.plugin = 'core'
+        uri_operation.agent_id = agent_id
+        uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
+        uri_operation.data = results.data
+        results.operations.append(uri_operation.to_dict_non_null())
         return results
 
 class ResultURIsV2(AgentBaseHandler):
@@ -107,12 +76,14 @@ class ResultURIsV2(AgentBaseHandler):
         self.set_header('Content-Type', 'application/json')
         self.write(dumps(results, indent=4))
 
+    @receiver_catch_it
     @agent_results_message
     def get_uris(self):
-        results = get_result_uris(version='v2')
-        results[AgentApiResultKeys.OPERATION] = (
-            AgentOperations.REFRESH_RESPONSE_URIS
-        )
-        results[AgentApiResultKeys.OPERATIONS] = [results.copy()]
-        results[AgentApiResultKeys.DATA] = []
+        results = get_result_uris(version='v1')
+        uri_operation = AgentQueueOperation()
+        uri_operation.fill_in_defaults()
+        uri_operation.plugin = 'core'
+        uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
+        uri_operation.data = results.data
+        results.operations.append(uri_operation.to_dict_non_null())
         return results

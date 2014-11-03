@@ -1,7 +1,9 @@
 from json import dumps
 
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import convert_json_to_arguments
+from vFense.core.decorators import (
+    convert_json_to_arguments, results_message, api_catch_it
+)
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.agent import Agent
@@ -12,13 +14,13 @@ from vFense.core.results import AgentApiResults
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
-from vFense.receiver.api.decorators import (
+from vFense.core.receiver.api.decorators import (
     authenticate_token, agent_results_message, agent_authenticated_request,
     receiver_catch_it
 )
-from vFense.receiver.api.base import AgentBaseHandler
-from vFense.receiver.status_codes import AgentResultCodes
-from vFense.receiver.rvhandler import RvHandOff
+from vFense.core.receiver.api.base import AgentBaseHandler
+from vFense.core.receiver.status_codes import AgentResultCodes
+from vFense.core.receiver.handler import HandOff
 
 
 class NewAgentV1(BaseHandler):
@@ -35,8 +37,8 @@ class NewAgentV1(BaseHandler):
         self.set_status(results.http_status_code)
         self.write(dumps(results.to_dict_non_null(), indent=4))
 
-    @receiver_catch_it
-    @agent_results_message
+    @api_catch_it
+    @results_message
     @log_operation(AdminActions.NEW_AGENT, vFenseObjects.AGENT)
     def add_agent(self, system_info, hardware, view, plugins):
         system_info[AgentKeys.Hardware] = hardware
@@ -64,7 +66,7 @@ class NewAgentV1(BaseHandler):
             results.operations.append(newagent_operation.to_dict_non_null())
             results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
-                RvHandOff().new_agent_operation(
+                HandOff().new_agent_operation(
                     agent_id, plugins['rv']['data']
                 )
 
@@ -113,7 +115,7 @@ class NewAgentV2(AgentBaseHandler):
             results.operations.append(newagent_operation.to_dict_non_null())
             results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
-                RvHandOff().new_agent_operation(
+                HandOff().new_agent_operation(
                     agent_id, plugins['rv']['data']
                 )
         return results

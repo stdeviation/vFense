@@ -1,14 +1,16 @@
 from json import dumps
 
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import convert_json_to_arguments
-from vFense.receiver.api.decorators import (
+from vFense.core.decorators import (
+    convert_json_to_arguments, api_catch_it, results_message
+)
+from vFense.core.receiver.api.decorators import (
     agent_results_message, agent_authenticated_request,
     receiver_catch_it, authenticate_agent
 )
 
 from vFense.core.agent.operations.agent_results import AgentOperationResults
-from vFense.receiver.api.base import AgentBaseHandler
+from vFense.core.receiver.api.base import AgentBaseHandler
 
 
 class RebootResultsV1(BaseHandler):
@@ -25,8 +27,8 @@ class RebootResultsV1(BaseHandler):
         self.set_header('Content-Type', 'application/json')
         self.write(dumps(results.to_dict_non_null(), indent=4))
 
-    @receiver_catch_it
-    @agent_results_message
+    @api_catch_it
+    @results_message
     def reboot_results(self, agent_id, operation_id, success, error):
         operation_results = (
             AgentOperationResults(agent_id, operation_id, success, error)
@@ -73,8 +75,8 @@ class ShutdownResultsV1(BaseHandler):
         self.set_header('Content-Type', 'application/json')
         self.write(dumps(results.to_dict_non_null(), indent=4))
 
-    @receiver_catch_it
-    @agent_results_message
+    @api_catch_it
+    @results_message
     def shutdown_results(self, agent_id, operation_id, success, error):
         operation_results = (
             AgentOperationResults(agent_id, operation_id, success, error)

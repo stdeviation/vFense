@@ -1,12 +1,12 @@
 from json import dumps
 
 from vFense.core.results import ApiResults
-from vFense.receiver.tokens import validate_token
-from vFense.receiver.api.base import AgentBaseHandler
-from vFense.receiver.status_codes import (
+from vFense.core.receiver.tokens import validate_token
+from vFense.core.receiver.api.base import AgentBaseHandler
+from vFense.core.receiver.status_codes import (
     AgentResultCodes, AgentFailureResultCodes
 )
-from vFense.receiver.api.decorators import (
+from vFense.core.receiver.api.decorators import (
     authenticate_token, agent_results_message, receiver_catch_it
 )
 
