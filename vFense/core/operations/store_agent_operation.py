@@ -134,16 +134,17 @@ class StoreAgentOperationManager(object):
             }
         """
         data = []
-        operation.action_performed_on= vFenseObjects.AGENT
+        operation.action_performed_on = vFenseObjects.AGENT
         if operation.tag_id:
             operation.action_performed_on = vFenseObjects.TAG
             if not operation.agent_ids:
                 agentids = fetch_agent_ids_in_tag(operation.tag_id)
 
-            elif agentids:
+            else:
                 agentids += fetch_agent_ids_in_tag(operation.tag_id)
 
-        operation.agent_ids = agentids
+            operation.agent_ids = agentids
+
         results = ApiResults()
         results.fill_in_defaults()
 
@@ -153,7 +154,7 @@ class StoreAgentOperationManager(object):
             )
         )
 
-        operation_id = operation.create_operation(operation)
+        operation_id = manager.create_operation(operation)
         if operation_id:
             msg = 'operation created'
             status_code = GenericCodes.ObjectCreated
@@ -163,9 +164,9 @@ class StoreAgentOperationManager(object):
             results.vfense_status_code = vfense_status_code
             results.message = msg
 
-            for agent_id in agentids:
+            for agent_id in operation.agent_ids:
                 queue_data = AgentQueueOperation()
-                queue_data.operation =-operation.operation
+                queue_data.operation = operation.operation
                 queue_data.operation_id = operation_id
                 queue_data.plugin = operation.plugin
                 queue_data.agent_id = agent_id

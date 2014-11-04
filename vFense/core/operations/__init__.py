@@ -475,10 +475,6 @@ class AgentOperation(Base):
         """
         data = self.to_dict_non_null()
         data.pop(AgentOperationKey.OperationId, None)
-        if self.picked_up_time:
-            data[AgentOperationKey.CreatedTime] = (
-                DbTime.epoch_time_to_db_time(self.created_time)
-            )
         if self.updated_time:
             data[AgentOperationKey.UpdatedTime] = (
                 DbTime.epoch_time_to_db_time(self.updated_time)

@@ -1,9 +1,7 @@
 import unittest
 from json import dumps
 
-from vFense.core.agent._db_model import (
-    AgentKeys
-)
+from vFense.core.agent._db_model import AgentKeys
 from vFense.core.tag import Tag
 from vFense.core.tag._db_model import TagKeys
 from vFense.core.tag._db import fetch_tag_by_name_and_view
@@ -16,7 +14,6 @@ from vFense.core.receiver.status_codes import AgentResultCodes
 from vFense.core.tag.status_codes import TagCodes
 from vFense.core.view.status_codes import ViewCodes
 from vFense.core.tests.agent_and_tag_data import AGENT_DATA
-from vFense.core.view._constants import DefaultViews
 from vFense.core.view import View
 from vFense.core.view.manager import ViewManager
 
