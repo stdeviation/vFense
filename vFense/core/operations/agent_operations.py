@@ -178,7 +178,6 @@ class AgentOperationManager(object):
 
         return operation_id
 
-
     def add_agent_to_operation(self, agent_id, operation_id):
         """Add an operation for an agent
         Args:
@@ -213,7 +212,6 @@ class AgentOperationManager(object):
             agent_operation_id = generated_ids[0]
 
         return agent_operation_id
-
 
     def update_operation_expire_time(self, operation_id, agent_id):
         """Expire the operation for agent id

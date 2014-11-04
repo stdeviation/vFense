@@ -178,7 +178,6 @@ class AgentQueue(Base):
             AgentQueueKey.ServerQueueTTL: self.server_queue_ttl,
             AgentQueueKey.AgentQueueTTL: self.agent_queue_ttl,
             AgentQueueKey.ExpireMinutes: self.expire_minutes,
-            AgentQueueKey.Expired: self.expired,
             AgentQueueKey.ViewName: self.view_name,
             AgentQueueKey.Operation: self.operation,
             AgentQueueKey.Plugin: self.plugin,
