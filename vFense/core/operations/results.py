@@ -10,7 +10,7 @@ from vFense.core._db_constants import DbTime
 from vFense.core.operations.agent_operations import (
     AgentOperationManager, operation_for_agent_exist, get_agent_operation
 )
-from vFense.receiver.status_codes import (
+from vFense.core.receiver.status_codes import (
     AgentFailureResultCodes, AgentResultCodes
 )
 from vFense.core.status_codes import GenericCodes, GenericFailureCodes

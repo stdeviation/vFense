@@ -12,6 +12,9 @@ from vFense.core.agent.status_codes import AgentCodes
 from vFense.core.agent.operations.store_agent_operations import (
     StoreAgentOperations
 )
+from vFense.core.agent.operations.agent_results import (
+    AgentOperationResults
+)
 from vFense.core.operations import AgentOperation
 from vFense.core.operations.status_codes import AgentOperationCodes
 from vFense.core.queue import AgentQueue
@@ -76,13 +79,22 @@ class OperationsQueueAndJobTests(unittest.TestCase):
         status_code = results.vfense_status_code
         self.failUnless(status_code == AgentOperationCodes.Created)
 
-    def test_d_get_agent_queue(self):
+    def test_d_get_agent_queue1_and_update_results(self):
         agent_id = fetch_agent_ids('Test View 1')[0]
-        queue = AgentQueueManager(agent_id).get_agent_queue()
-        print dumps(queue, indent=4)
-        self.failUnless(len(queue) == 1)
+        manager = AgentQueueManager(agent_id)
+        job = AgentQueue(**manager.get_agent_queue()[0])
+        results = (
+            AgentOperationResults(
+                agent_id, job.operation_id, success='true'
+            )
+        )
+        updated = results.reboot()
+        print dumps(updated.to_dict_non_null(), indent=4)
+        self.failUnless(
+            updated.vfense_status_code == AgentResultCodes.ResultsUpdated
+        )
 
-    def test_d_get_agent_queue_and_delete(self):
+    def test_d_get_agent_queue2_and_delete(self):
         agent_id = fetch_agent_ids('Test View 1')[0]
         manager = AgentQueueManager(agent_id)
         jobs = manager.get_agent_queue()

@@ -20,6 +20,9 @@ class OperationMerge():
         ),
         AgentOperationKey.CreatedTime: (
             r.row[AgentOperationKey.CreatedTime].to_epoch_time()
+        ),
+        AgentOperationKey.UpdatedTime: (
+            r.row[AgentOperationKey.UpdatedTime].to_epoch_time()
         )
     }
 

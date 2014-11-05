@@ -6,7 +6,9 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import CommonKeys
 from vFense.core.decorators import return_status_tuple, time_it, catch_it
-from vFense.core.operations._db_sub_queries import OperationPerAgentMerge
+from vFense.core.operations._db_sub_queries import (
+    OperationMerge, OperationPerAgentMerge
+)
 from vFense.core.operations.status_codes import AgentOperationCodes
 from vFense.core.operations._db_model import (
     OperationCollections,
@@ -61,7 +63,7 @@ def fetch_agent_operation(operation_id, conn=None):
         r
         .table(OperationCollections.Agent)
         .get(operation_id)
-        .merge(OperationPerAgentMerge.TIMES)
+        .merge(OperationMerge.TIMES)
         .run(conn)
     )
 

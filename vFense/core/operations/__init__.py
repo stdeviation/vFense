@@ -220,12 +220,14 @@ class AdminOperation(Base):
 
         """
         data = self.to_dict_non_null()
-        if self.created_time:
+        if (isinstance(self.created_time, int) or
+                isinstance(self.created_time, float)):
             data[AdminOperationKey.CreatedTime] = (
                 DbTime.epoch_time_to_db_time(self.created_time)
             )
 
-        if self.completed_time:
+        if (isinstance(self.completed_time, int) or
+                isinstance(self.completed_time, float)):
             data[AdminOperationKey.CompletedTime] = (
                 DbTime.epoch_time_to_db_time(self.completed_time)
             )
@@ -293,10 +295,10 @@ class AgentOperation(Base):
         self.agents = agents
         self.completed_time = completed_time
         self.created_time = created_time
+        self.updated_time = updated_time
         self.operation = operation
         self.operation_status = operation_status
         self.action_performed_on = action_performed_on
-        self.updated_time = updated_time
         self.view_name = view_name
         self.restart = restart
         self.tag_id = tag_id
@@ -439,10 +441,10 @@ class AgentOperation(Base):
             AgentOperationKey.PerformedOn: self.action_performed_on,
             AgentOperationKey.CompletedTime: self.completed_time,
             AgentOperationKey.CreatedTime: self.created_time,
+            AgentOperationKey.UpdatedTime: self.updated_time,
             AgentOperationKey.Operation: self.operation,
             AgentOperationKey.OperationStatus: self.operation_status,
             AgentOperationKey.ActionPerformedOn: self.action_performed_on,
-            AgentOperationKey.UpdatedTime: self.updated_time,
             AgentOperationKey.ViewName: self.view_name,
             AgentOperationKey.Restart: self.restart,
             AgentOperationKey.TagId: self.tag_id,
@@ -475,13 +477,20 @@ class AgentOperation(Base):
         """
         data = self.to_dict_non_null()
         data.pop(AgentOperationKey.OperationId, None)
-        if self.updated_time:
+        if (isinstance(self.updated_time, int) or
+                isinstance(self.updated_time, float)):
             data[AgentOperationKey.UpdatedTime] = (
                 DbTime.epoch_time_to_db_time(self.updated_time)
             )
-        if self.completed_time:
+        if (isinstance(self.completed_time, int) or
+                isinstance(self.completed_time, float)):
             data[AgentOperationKey.CompletedTime] = (
                 DbTime.epoch_time_to_db_time(self.completed_time)
+            )
+        if (isinstance(self.created_time, int) or
+                isinstance(self.created_time, float)):
+            data[AgentOperationKey.CreatedTime] = (
+                DbTime.epoch_time_to_db_time(self.created_time)
             )
 
         return data
@@ -624,15 +633,18 @@ class OperPerAgent(Base):
         """
         data = self.to_dict_non_null()
         data.pop(OperationPerAgentKey.Id, None)
-        if self.picked_up_time:
+        if (isinstance(self.picked_up_time, int) or
+                isinstance(self.picked_up_time, float)):
             data[OperationPerAgentKey.PickedUpTime] = (
                 DbTime.epoch_time_to_db_time(self.picked_up_time)
             )
-        if self.expired_time:
+        if (isinstance(self.expired_time, int) or
+                isinstance(self.expired_time, float)):
             data[OperationPerAgentKey.ExpiredTime] = (
                 DbTime.epoch_time_to_db_time(self.expired_time)
             )
-        if self.completed_time:
+        if (isinstance(self.completed_time, int) or
+                isinstance(self.completed_time, float)):
             data[OperationPerAgentKey.CompletedTime] = (
                 DbTime.epoch_time_to_db_time(self.completed_time)
             )
@@ -729,7 +741,8 @@ class OperPerApp(Base):
         """
         data = self.to_dict_non_null()
         data.pop(OperationPerAppKey.Id, None)
-        if self.results_received_time:
+        if (isinstance(self.results_received_time, int) or
+                isinstance(self.results_received_time, float)):
             data[OperationPerAppKey.ResultsReceivedTime] = (
                 DbTime.epoch_time_to_db_time(self.results_received_time)
             )

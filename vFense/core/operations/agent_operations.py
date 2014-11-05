@@ -450,13 +450,13 @@ class AgentOperationManager(object):
         updated_oper = AgentOperation()
         completed = False
 
-        if operation.agents_total_count == operation.agents.completed_count:
+        if operation.agents_total_count == operation.agents_completed_count:
             updated_oper.operation_status = (
                 AgentOperationCodes.ResultsCompleted
             )
             updated_oper.completed_time = self.now
 
-        elif operation.agents_total_count == operation.agents.failed_count:
+        elif operation.agents_total_count == operation.agents_failed_count:
             updated_oper.operation_status = (
                 AgentOperationCodes.ResultsCompletedFailed
             )

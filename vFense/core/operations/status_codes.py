@@ -31,5 +31,3 @@ class OperationPerAgentCodes(GenericCodes):
     OperationFailed = 6504
     OperationCompleted = 6505
     OperationCompletedWithErrors = 6506
-
-
