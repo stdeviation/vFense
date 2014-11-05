@@ -141,7 +141,7 @@ def store_package_info_in_db(
             updated = (
                 r
                 .table(AppCollections.CustomApps)
-                .insert(data_to_store, upsert=True)
+                .insert(data_to_store, conflict="replace")
                 .run(conn)
             )
 
