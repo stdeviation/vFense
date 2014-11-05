@@ -112,7 +112,7 @@ class AgentQueueManager(object):
         if status_code == DbCodes.Inserted:
             success = True
 
-        return(success)
+        return success
 
     def _get_next_avail_order(self):
         """return the next available order_id from the database
@@ -128,8 +128,9 @@ class AgentQueueManager(object):
         """
 
         last_id = get_next_avail_order_id_in_agent_queue(self.agent_id)
+        next_id = last_id + 1
 
-        return(last_id + 1)
+        return next_id
 
     def get_global_server_queue_ttl(self, view_name):
         """Return the global server ttl property for a view.
@@ -152,7 +153,7 @@ class AgentQueueManager(object):
         else:
             ttl = ViewManager(DefaultViews.GLOBAL).properties.server_queue_ttl
 
-        return(ttl)
+        return ttl
 
     def get_global_agent_queue_ttl(self, view_name):
         """Return the global agent ttl property for a view.
@@ -175,7 +176,7 @@ class AgentQueueManager(object):
         else:
             ttl = ViewManager(DefaultViews.GLOBAL).properties.agent_queue_ttl
 
-        return(ttl)
+        return ttl
 
     def get_queue_expire_time(self, expire_mins):
         """return the expire_time, which is the current time + minutes
@@ -199,7 +200,7 @@ class AgentQueueManager(object):
             )
         )
 
-        return(expire_time)
+        return expire_time
 
     def get_agent_queue(self):
         """Return a list of jobs for an agent
@@ -229,7 +230,7 @@ class AgentQueueManager(object):
             ]
         """
 
-        return(fetch_agent_queue(self.agent_id))
+        return fetch_agent_queue(self.agent_id)
 
     def pop_agent_queue(self):
         """Return a list of jobs for an agent and then
@@ -269,7 +270,7 @@ class AgentQueueManager(object):
 
             delete_multiple_jobs(job_ids)
 
-        return(agent_queue)
+        return agent_queue
 
     def remove_job(self, job_id):
         """Delete a job in the queue
@@ -291,4 +292,4 @@ class AgentQueueManager(object):
         if status_code == DbCodes.Deleted:
             success = True
 
-        return(success)
+        return success

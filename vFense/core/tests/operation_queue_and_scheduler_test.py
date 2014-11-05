@@ -14,6 +14,7 @@ from vFense.core.agent.operations.store_agent_operations import (
 )
 from vFense.core.operations import AgentOperation
 from vFense.core.operations.status_codes import AgentOperationCodes
+from vFense.core.queue import AgentQueue
 from vFense.core.queue.manager import AgentQueueManager
 from vFense.core.receiver.status_codes import AgentResultCodes
 from vFense.core.tag.status_codes import TagCodes
@@ -75,13 +76,42 @@ class OperationsQueueAndJobTests(unittest.TestCase):
         status_code = results.vfense_status_code
         self.failUnless(status_code == AgentOperationCodes.Created)
 
-
     def test_d_get_agent_queue(self):
         agent_id = fetch_agent_ids('Test View 1')[0]
         queue = AgentQueueManager(agent_id).get_agent_queue()
         print dumps(queue, indent=4)
         self.failUnless(len(queue) == 1)
 
+    def test_d_get_agent_queue_and_delete(self):
+        agent_id = fetch_agent_ids('Test View 1')[0]
+        manager = AgentQueueManager(agent_id)
+        jobs = manager.get_agent_queue()
+        deleted_ids = []
+        for job in jobs:
+            job = AgentQueue(**job)
+            status = manager.remove_job(job.id)
+            if status:
+                deleted_ids.append(job.id)
+        print dumps(deleted_ids, indent=4)
+        self.failUnless(len(jobs) == len(deleted_ids))
+
+    def test_e_create_operation_shutdown(self):
+        agent_ids = fetch_agent_ids('Test View 1')
+        username = 'global_admin'
+        viewname = 'Test View 1'
+        operation = AgentOperation()
+        operation.agent_ids = agent_ids
+        manager = StoreAgentOperations(username, viewname)
+        results = manager.shutdown(operation)
+        print dumps(results.to_dict(), indent=4)
+        status_code = results.vfense_status_code
+        self.failUnless(status_code == AgentOperationCodes.Created)
+
+    def test_e_pop_agent_queue(self):
+        agent_id = fetch_agent_ids('Test View 1')[0]
+        queue = AgentQueueManager(agent_id).pop_agent_queue()
+        print dumps(queue, indent=4)
+        self.failUnless(len(queue) == 1)
 
     def test_x_view_delete_agents(self):
         manager = ViewManager('Test View 1')
