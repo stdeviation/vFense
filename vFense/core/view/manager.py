@@ -1036,7 +1036,7 @@ class ViewManager(object):
                             delete_tag_ids_per_agent(self.tags)
                             delete_tag_ids_from_view(self.view_name)
                         text = (
-                            'View {view_name} deleted' +
+                            'View {view_name} deleted ' +
                             'and all users: {users} and groups: {groups}' +
                             'were deleted'
                         )
