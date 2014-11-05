@@ -380,7 +380,7 @@ def _db_save(data=None, collection_name=None, conn=None):
 
     result = (
         r.table(collection_name)
-        .insert(data, upsert=True)
+        .insert(data, conflict="replace")
         .run(conn)
     )
 

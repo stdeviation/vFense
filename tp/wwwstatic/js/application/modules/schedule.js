@@ -86,10 +86,15 @@ define(
                 renderApplications: function (agentID) {
                     var agent = _.findWhere(this.model.get('agents'), {agent_id: agentID}),
                         fragment = crel('div', {class: 'list'}),
-                        items = crel('div', {class: 'items row-fluid'});
+                        items = crel('div', {class: 'items row-fluid'}),
+                        pkg_type = this.model.get('pkg_type').split('_')[0];
+
+                        if (pkg_type === 'system') {
+                            pkg_type = 'os';
+                        }
                     _.each(agent.apps, function (app) {
                         $(items).append(crel('div', {class: 'item'},
-                            crel('a', {href: '#patches/os/' + app.app_id},
+                            crel('a', {href: '#patches/' + pkg_type + '/' + app.app_id},
                                 crel('span', {class: 'span8'}, app.name),
                                 crel('span', {class: 'span4 alignRight'}, app.rv_severity)
                             )

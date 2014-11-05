@@ -139,7 +139,7 @@ def insert_bulletin_data(bulletin_data, conn=None):
         data = (
             r
             .table(WindowsSecurityCollection.Bulletin)
-            .insert(bulletin_data, upsert=True)
+            .insert(bulletin_data, conflict="replace")
             .run(conn)
         )
 

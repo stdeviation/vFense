@@ -329,7 +329,7 @@ def add_or_update_applications(collection=AppCollections.AppsPerAgent,
                 updated = (
                     r
                     .table(collection)
-                    .insert(pkg, upsert=True)
+                    .insert(pkg, conflict="replace")
                     .run(conn)
                 )
                 logger.info(updated)

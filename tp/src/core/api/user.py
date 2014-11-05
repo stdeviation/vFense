@@ -40,7 +40,7 @@ logger = logging.getLogger('rvapi')
 class UserHandler(BaseHandler):
 
     @authenticated_request
-    @check_permissions(Permissions.ADMINISTRATOR)
+    # @check_permissions(Permissions.ADMINISTRATOR)
     def get(self, username):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -90,7 +90,7 @@ class UserHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
+    # @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, username):
         active_user = self.get_current_user()
         active_customer = (
@@ -171,7 +171,7 @@ class UserHandler(BaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.ADMINISTRATOR)
+    # @check_permissions(Permissions.ADMINISTRATOR)
     def put(self, username):
         active_user = self.get_current_user()
         uri = self.request.uri
@@ -216,7 +216,7 @@ class UserHandler(BaseHandler):
                     edit_user_properties(username, **data_dict)
                 )
 
-            default_customer = self.arguments.get('default_customer', None)
+            default_customer = self.arguments.get('default_customer_id', None)
             if default_customer:
                 data_dict[UserKeys.DefaultCustomer] = default_customer
                 results = (

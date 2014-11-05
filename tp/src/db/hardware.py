@@ -100,7 +100,7 @@ class Hardware():
                     (
                         r
                         .table(collection)
-                        .insert(hw, upsert=True)
+                        .insert(hw, conflict="replace")
                         .run(conn)
                     )
                 msg = 'hardware added: %s' % (hwinfo)

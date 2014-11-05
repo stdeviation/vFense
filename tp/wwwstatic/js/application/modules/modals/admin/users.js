@@ -177,7 +177,7 @@ define(
                         customers = this.$el.find('select[name=customers]').select2('data'),
                         $alert = this.$('#newUserDiv').find('.help-online'),
                         params = {
-                            fullname: fullName,
+                            full_name: fullName,
                             email: email,
                             username: username,
                             password: password,
@@ -188,7 +188,7 @@ define(
                     params.group_ids = this.groupsArray;
                     params.customer_names = this.customersArray;
 
-                    var fullNameRegExp = /^[A-Za-z0-9 -_]+$/,
+                    var fullNameRegExp = /^[A-Za-z0-9- _]+$/,
                         userNameRegExp = /^[A-Za-z0-9-_]+$/,
                         passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*[+=\\\/<>,:;\{\}'"])(?!.*\s).{8,}$/,
                         emailRegExp = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -283,20 +283,28 @@ define(
                             } else {
                                 $alert.removeClass('alert-success').addClass('alert-error').html(response.message).show();
                             }
+                        },
+                        error: function(response) {
+                            $alert.removeClass('alert-success').addClass('alert-error').html(JSON.parse(response.responseText).message).show();
                         }
-                    }).error(function (e) { window.console.log(e.statusText); });
+                    });
+                    // .error(function (e) { window.console.log(e.statusText); });
                     return this;
                 },
                 toggle: function (event) {
                     var $input = $(event.currentTarget),
                         username = $input.data('user'),
                         currentCustomer = $input.data('customer'),
-                        groupId = $input.data('id'),
                         url =  'api/v1/user/' + username,
                         $alert = this.$el.find('div.alert'),
                         params,
                         users = [],
                         groups = [];
+                    if (event.added) {
+                        var groupId = event.added.id;
+                    } else {
+                        var groupId = event.removed.id;
+                    };
                     users.push(username);
                     groups.push(groupId);
                     params = {
