@@ -101,18 +101,10 @@ def register_authorized_key(
 
     try:
 
-        upsert = False
-
-        if force:
-            upsert = True
-
         current_key = get_existing_key(agent_id=agent_id)
         logger.error(current_key)
         if current_key == key:
             return False
-
-        elif current_key:
-            upsert = True
 
         data = {
             CollectionKeys.AgentId: agent_id,
@@ -121,7 +113,7 @@ def register_authorized_key(
 
         result = r.table(
             Collection.AuthorizedKeys
-        ).insert(data, upsert=upsert).run(conn)
+        ).insert(data, conflict="replace").run(conn)
 
         if(
             result.get('inserted', 0) > 0
