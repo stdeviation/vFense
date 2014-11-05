@@ -4,24 +4,17 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core._constants import CommonKeys
-from vFense.core.decorators import results_message
-from vFense.core.agent._db_model import AgentKeys
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core.agent.agents import get_agent_info
 from vFense.core._db_constants import DbTime
-from vFense.core.operations.agent_operations import AgentOperationManager, \
-    operation_for_agent_exist, get_agent_operation
-
+from vFense.core.operations.agent_operations import (
+    AgentOperationManager, operation_for_agent_exist, get_agent_operation
+)
 from vFense.receiver.status_codes import (
     AgentFailureResultCodes, AgentResultCodes
 )
-
-from vFense.core.status_codes import (
-    GenericCodes, GenericFailureCodes
-)
-from vFense.core.operations.status_codes import (
-    AgentOperationCodes
-)
+from vFense.core.status_codes import GenericCodes, GenericFailureCodes
+from vFense.core.operations.status_codes import AgentOperationCodes
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -93,22 +86,16 @@ class OperationResults(object):
                 "data": [],
             }
         """
-
-        results = {
-            ApiResultKeys.DATA: [],
-        }
+        results = ApiResults()
+        results.fill_in_defaults()
 
         oper_exists = (
-            operation_for_agent_exist(
-                self.operation_id, self.agent_id
-            )
+            operation_for_agent_exist(self.operation_id, self.agent_id)
         )
 
         if oper_exists:
-            if (
-                    self.success == CommonKeys.TRUE or
-                    self.success == CommonKeys.FALSE
-                ):
+            if (self.success == CommonKeys.TRUE or
+                    self.success == CommonKeys.FALSE):
 
                 if self.success == CommonKeys.TRUE:
                     status_code = AgentOperationCodes.ResultsReceived
@@ -127,19 +114,13 @@ class OperationResults(object):
                         'Results updated for operation id %s' %
                         (self.operation_id)
                     )
-                    results.generic_status_code = (
-                        GenericCodes.ObjectUpdated
-                    )
+                    results.generic_status_code = GenericCodes.ObjectUpdated
 
                     results.vfense_status_code = (
                         AgentResultCodes.ResultsUpdated
                     )
-
                     results.message = msg
-
-                    results.updated_ids = (
-                        [self.operation_id]
-                    )
+                    results.updated_ids = [self.operation_id]
 
                 else:
                     msg = (
@@ -149,16 +130,11 @@ class OperationResults(object):
                     results.generic_status_code = (
                         GenericFailureCodes.FailedToUpdateObject
                     )
-
                     results.vfense_status_code = (
                         AgentFailureResultCodes.ResultsFailedToUpdate
                     )
-
                     results.message = msg
-
-                    results.unchanged_ids = (
-                        [self.operation_id]
-                    )
+                    results.unchanged_ids = [self.operation_id]
 
             else:
                 msg = (
@@ -168,31 +144,19 @@ class OperationResults(object):
                 results.generic_status_code = (
                     GenericFailureCodes.FailedToUpdateObject
                 )
-
                 results.vfense_status_code = (
                     AgentFailureResultCodes.InvalidSuccessValue
                 )
-
                 results.message = msg
-
-                results.unchanged_ids = (
-                    [self.operation_id]
-                )
+                results.unchanged_ids = [self.operation_id]
 
         else:
             msg = 'Invalid operation id'
-            results.generic_status_code = (
-                GenericFailureCodes.InvalidId
-            )
-
+            results.generic_status_code = GenericFailureCodes.InvalidId
             results.vfense_status_code = (
                 AgentFailureResultCodes.InvalidOperationId
             )
-
             results.message = msg
-
-            results.unchanged_ids = (
-                [self.operation_id]
-            )
+            results.unchanged_ids = [self.operation_id]
 
         return results
