@@ -1,4 +1,4 @@
-from vFense.core.views._db import (
+from vFense.core.view._db import (
     token_exist_in_current, token_exist_in_previous
 )
 

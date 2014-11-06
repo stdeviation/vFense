@@ -1,6 +1,6 @@
 from vFense.core.results import ApiResultKeys
 from vFense.core.agent.status_codes import AgentCodes
-from vFense.receiver.status_codes import (
+from vFense.core.receiver.status_codes import (
     AgentResultCodes, AgentFailureResultCodes
 )
 

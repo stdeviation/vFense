@@ -12,7 +12,7 @@ from vFense.core.decorators import (
 from vFense.plugins.patching.operations.patching_results import (
     PatchingOperationResults
 )
-from vFense.receiver.rvhandler import RvHandOff
+from vFense.core.receiver.rvhandler import RvHandOff
 
 
 #from server.handlers import *

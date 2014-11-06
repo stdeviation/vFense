@@ -15,7 +15,7 @@ from vFense.core.view._db import (
     token_exist_in_current, token_exist_in_previous
 )
 from vFense.core.view.status_codes import ViewCodes, ViewFailureCodes
-from vFense.receiver.status_codes import (
+from vFense.core.receiver.status_codes import (
     AgentResultCodes, AgentFailureResultCodes
 )
 

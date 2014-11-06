@@ -103,11 +103,11 @@ def rq_settings():
     """
     try:
         host = Config.get('Queue', 'host')
-        port = int(Config.get('Queue', 'dport'))
+        port = int(Config.get('Queue', 'port'))
         db = Config.get('Queue', 'db')
 
     except Exception as e:
-        logger.error(e)
+        logger.exception(e)
 
     return(host, port, db)
 
@@ -118,7 +118,7 @@ def rq_queue(queue_name):
     """
     try:
         host = Config.get('Queue', 'host')
-        port = int(Config.get('Queue', 'dport'))
+        port = int(Config.get('Queue', 'port'))
         db = Config.get('Queue', 'db')
         pool = redis.StrictRedis(host=host, port=port, db=db)
         rv_q = Queue(queue_name, connection=pool)

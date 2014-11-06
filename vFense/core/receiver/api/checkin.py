@@ -6,9 +6,9 @@ from vFense.core.decorators import api_catch_it, results_message
 from vFense.core.receiver.decorators import (
     agent_results_message, receiver_catch_it, agent_authenticated_request
 )
-from vFense.receiver.api.base import AgentBaseHandler
-from vFense.receiver.api.decorators import authenticate_agent
-from vFense.receiver.corehandler import process_queue_data
+from vFense.core.receiver.api.base import AgentBaseHandler
+from vFense.core.receiver.decorators import authenticate_agent
+from vFense.core.receiver.corehandler import process_queue_data
 
 class CheckInV1(BaseHandler):
     @agent_authenticated_request

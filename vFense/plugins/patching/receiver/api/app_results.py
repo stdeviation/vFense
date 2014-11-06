@@ -2,11 +2,11 @@ import logging
 from json import dumps
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.receiver.api.decorators import (
+from vFense.core.receiver.decorators import (
     authenticate_agent, agent_results_message
 )
-from vFense.receiver.api.base import AgentBaseHandler
-from vFense.receiver.results import AgentResults, AgentApiResultKeys
+from vFense.core.receiver.api.base import AgentBaseHandler
+from vFense.core.receiver.results import AgentResults, AgentApiResultKeys
 from vFense.core.decorators import convert_json_to_arguments
 from vFense.core._constants import CommonKeys
 

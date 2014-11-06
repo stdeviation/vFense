@@ -12,7 +12,7 @@ import tornado.web
 import tornado.websocket
 import tornadoredis
 from vFense.core._constants import CommonKeys
-from vFense.core.results import ApiResultKeys, Results
+from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 from vFense.core.api._constants import (
     ContentTypes, Outputs

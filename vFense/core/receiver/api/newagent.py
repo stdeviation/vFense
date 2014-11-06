@@ -14,13 +14,13 @@ from vFense.core.results import AgentApiResults
 from vFense.core.operations.decorators import log_operation
 from vFense.core.operations._admin_constants import AdminActions
 from vFense.core.operations._constants import vFenseObjects
-from vFense.core.receiver.api.decorators import (
+from vFense.core.receiver.decorators import (
     authenticate_token, agent_results_message, agent_authenticated_request,
     receiver_catch_it
 )
 from vFense.core.receiver.api.base import AgentBaseHandler
 from vFense.core.receiver.status_codes import AgentResultCodes
-from vFense.core.receiver.handler import HandOff
+from vFense.core.receiver.handoff import HandOff
 
 
 class NewAgentV1(BaseHandler):

@@ -12,12 +12,12 @@ from vFense.core.queue import AgentQueueOperation
 from vFense.core.queue.uris import get_result_uris
 from vFense.core.results import AgentApiResults
 from vFense.core.receiver.api.base import AgentBaseHandler
-from vFense.core.receiver.api.decorators import (
+from vFense.core.receiver.decorators import (
     agent_results_message, agent_authenticated_request, receiver_catch_it,
     authenticate_agent
 )
 from vFense.core.receiver.status_codes import AgentResultCodes
-from vFense.core.receiver.handler import HandOff
+from vFense.core.receiver.handoff import HandOff
 
 
 class StartUpV1(BaseHandler):

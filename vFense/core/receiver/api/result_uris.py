@@ -6,7 +6,7 @@ from vFense.core.queue import AgentQueueOperation
 from vFense.core.queue.uris import get_result_uris
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.receiver.api.base import AgentBaseHandler
-from vFense.core.receiver.api.decorators import (
+from vFense.core.receiver.decorators import (
     agent_results_message, receiver_catch_it, authenticate_token
 )
 

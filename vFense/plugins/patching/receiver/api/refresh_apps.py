@@ -10,10 +10,10 @@ from vFense.core.decorators import (
 from vFense.plugins.patching.operations.patching_results import (
     PatchingOperationResults
 )
-from vFense.receiver.rvhandler import RvHandOff
-from vFense.receiver.api.base import AgentBaseHandler
-from vFense.receiver.results import AgentResults, AgentApiResultKeys
-from vFense.receiver.api.decorators import (
+from vFense.core.receiver.rvhandler import RvHandOff
+from vFense.core.receiver.api.base import AgentBaseHandler
+from vFense.core.receiver.results import AgentResults, AgentApiResultKeys
+from vFense.core.receiver.decorators import (
     authenticate_agent, agent_results_message
 )
 

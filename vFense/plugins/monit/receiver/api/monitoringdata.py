@@ -3,7 +3,7 @@ from json import dumps
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
-from vFense.receiver.api.decorators import authenticate_agent
+from vFense.core.receiver.decorators import authenticate_agent
 from vFense.core.results import Results
 from vFense.core.decorators import (
     agent_authenticated_request, convert_json_to_arguments

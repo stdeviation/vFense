@@ -20,7 +20,7 @@ from vFense.core.status_codes import GenericCodes, GenericFailureCodes
 
 from vFense.core.operations.status_codes import AgentOperationCodes
 
-from vFense.receiver.status_codes import (
+from vFense.core.receiver.status_codes import (
     AgentFailureResultCodes, AgentResultCodes
 )
 

@@ -4,7 +4,7 @@ from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import (
     convert_json_to_arguments, api_catch_it, results_message
 )
-from vFense.core.receiver.api.decorators import (
+from vFense.core.receiver.decorators import (
     agent_results_message, agent_authenticated_request,
     receiver_catch_it, authenticate_agent
 )

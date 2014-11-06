@@ -1,6 +1,6 @@
 from vFense.core.agent._constants import agent_id
 from vFense.core.api.agent import AgentHandler, AgentsHandler, AgentTagHandler
-from vFense.receiver.api.core.result_uris import AgentResultURIs
+from vFense.core.receiver.api.core.result_uris import AgentResultURIs
 from vFense.plugins.patching.api.os_apps import AgentIdAppsHandler
 from vFense.core.api.agent_operations import AgentOperationsHandler
 from vFense.plugins.patching.api.stats_api import (

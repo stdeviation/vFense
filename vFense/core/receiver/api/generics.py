@@ -6,7 +6,7 @@ from vFense.core.receiver.api.base import AgentBaseHandler
 from vFense.core.receiver.status_codes import (
     AgentResultCodes, AgentFailureResultCodes
 )
-from vFense.core.receiver.api.decorators import (
+from vFense.core.receiver.decorators import (
     authenticate_token, agent_results_message, receiver_catch_it
 )
 

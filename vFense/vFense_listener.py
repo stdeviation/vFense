@@ -14,12 +14,10 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.options
+from tornado.options import define, options
 
 from vFense.utils.common import import_modules_by_regex, get_api_uris
-from vFense.core.api.base import WebSocketHandler, AdminHandler
-from vFense.receiver.api.ra.results import RemoteDesktopResults
 
-from tornado.options import define, options
 
 define("port", default=9001, help="run on port", type=int)
 define("debug", default=True, help="enable debugging features", type=bool)
@@ -27,15 +25,8 @@ define("debug", default=True, help="enable debugging features", type=bool)
 
 class Application(tornado.web.Application):
     def __init__(self, debug):
+        import_modules_by_regex('_db_init.py')
         handlers = get_api_uris(receiver=True)
-        handlers = [
-
-            #RA plugin
-            (r"/rvl/ra/rd/results/?", RemoteDesktopResults),
-
-        ]
-
-
         template_path = VFENSE_TEMPLATE_PATH
         settings = {
             "cookie_secret": "patching-0.7",

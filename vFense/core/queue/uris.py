@@ -85,7 +85,7 @@ def get_agent_results_uri(agent_id, operation):
         operation (str): valid vFense operation.
 
     Basic Usage:
-        >>> from vFense.receiver.agent_uris import get_agent_results_uri
+        >>> from vFense.core.receiver.agent_uris import get_agent_results_uri
         >>> agent_id = 'd4119b36-fe3c-4973-84c7-e8e3d72a3e02'
         >>> operation = 'install_os_apps'
         >>> get_agent_results_uri(agent_id, operation)
@@ -118,7 +118,7 @@ def get_result_uris(agent_id=None, version='v2'):
             default=v1
 
     Basic Usage:
-        >>> from vFense.receiver.agent_uris import get_result_uris
+        >>> from vFense.core.receiver.agent_uris import get_result_uris
         >>> agent_id = 'd4119b36-fe3c-4973-84c7-e8e3d72a3e02'
         >>> get_result_uris(agent_id)
 

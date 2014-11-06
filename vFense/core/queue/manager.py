@@ -47,7 +47,7 @@ class AgentQueueManager(object):
                 is considered expired before processing in the agent_queue
 
         Basic Usage:
-            >>> from vFense.receiver.agent_queue import AgentQueue
+            >>> from vFense.core.receiver.agent_queue import AgentQueue
             >>> agent_id = '70f3ca5f-09aa-4233-80ad-8fa5da6695fe'
             >>> view_name = 'global'
             >>> operation = {'valid_operation': 'data'}
