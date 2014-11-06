@@ -16,6 +16,7 @@ from vFense.core.agent.operations.agent_results import (
     AgentOperationResults
 )
 from vFense.core.operations import AgentOperation
+from vFense.core.operations.agent_operations import AgentOperationManager
 from vFense.core.operations.status_codes import AgentOperationCodes
 from vFense.core.queue import AgentQueue
 from vFense.core.queue.manager import AgentQueueManager
@@ -83,6 +84,10 @@ class OperationsQueueAndJobTests(unittest.TestCase):
         agent_id = fetch_agent_ids('Test View 1')[0]
         manager = AgentQueueManager(agent_id)
         job = AgentQueue(**manager.get_agent_queue()[0])
+        oper_manager = AgentOperationManager()
+        oper_manager.update_operation_pickup_time(
+            job.operation_id, agent_id
+        )
         results = (
             AgentOperationResults(
                 agent_id, job.operation_id, success='true'

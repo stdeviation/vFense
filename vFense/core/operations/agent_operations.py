@@ -455,12 +455,14 @@ class AgentOperationManager(object):
                 AgentOperationCodes.ResultsCompleted
             )
             updated_oper.completed_time = self.now
+            updated_oper.updated_time = self.now
 
         elif operation.agents_total_count == operation.agents_failed_count:
             updated_oper.operation_status = (
                 AgentOperationCodes.ResultsCompletedFailed
             )
             updated_oper.completed_time = self.now
+            updated_oper.updated_time = self.now
 
         elif operation.agents_total_count == operation.agents_expired_count:
             updated_oper.operation_status = (
@@ -479,6 +481,7 @@ class AgentOperationManager(object):
                 AgentOperationCodes.ResultsCompletedFailed
             )
             updated_oper.completed_time = self.now
+            updated_oper.updated_time = self.now
 
         elif (
                 operation.agents_total_count ==
@@ -491,6 +494,7 @@ class AgentOperationManager(object):
                 AgentOperationCodes.ResultsCompletedWithErrors
             )
             updated_oper.completed_time = self.now
+            updated_oper.updated_time = self.now
 
         elif (
                 operation.agents_total_count ==
@@ -503,6 +507,7 @@ class AgentOperationManager(object):
                 AgentOperationCodes.ResultsCompletedWithErrors
             )
             updated_oper.completed_time = self.now
+            updated_oper.updated_time = self.now
 
         elif (
                 operation.agents_total_count ==
@@ -516,11 +521,13 @@ class AgentOperationManager(object):
                 AgentOperationCodes.ResultsCompletedWithErrors
             )
             updated_oper.completed_time = self.now
+            updated_oper.updated_time = self.now
 
         else:
             updated_oper.operation_status = (
                 AgentOperationCodes.ResultsIncomplete
             )
+            updated_oper.updated_time = self.now
 
         if updated_oper.operation_status:
             status_code, count, errors, generated_ids = (
