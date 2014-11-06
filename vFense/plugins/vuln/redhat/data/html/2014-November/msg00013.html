@@ -1,0 +1,189 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1803&#45;01] Important: mod_auth_mellon security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 5 Nov 2014 04:56:19 &#45;0500 -->
+<!--X-Message-Id: 201411050956.sA59uHnJ014085@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1803-01] Important: mod_auth_mellon security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00012.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1803-01] Important: mod_auth_mellon security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1803-01] Important: mod_auth_mellon security update</li>
+<li><em>Date</em>: Wed, 5 Nov 2014 10:05:11 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: mod_auth_mellon security update
+Advisory ID:       RHSA-2014:1803-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1803.html">https://rhn.redhat.com/errata/RHSA-2014-1803.html</a>
+Issue date:        2014-11-05
+CVE Names:         CVE-2014-8566 CVE-2014-8567 
+=====================================================================
+
+1. Summary:
+
+An updated mod_auth_mellon package that fixes two security issues is now
+available for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+mod_auth_mellon provides a SAML 2.0 authentication module for the Apache
+HTTP Server.
+
+An information disclosure flaw was found in mod_auth_mellon's session
+handling that could lead to sessions overlapping in memory. A remote
+attacker could potentially use this flaw to obtain data from another user's
+session. (CVE-2014-8566)
+
+It was found that uninitialized data could be read when processing a user's
+logout request. By attempting to log out, a user could possibly cause the
+Apache HTTP Server to crash. (CVE-2014-8567)
+
+Red Hat would like to thank the mod_auth_mellon team for reporting these
+issues. Upstream acknowledges Matthew Slowe as the original reporter of
+CVE-2014-8566.
+
+All users of mod_auth_mellon are advised to upgrade to this updated
+package, which contains a backported patch to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1157281 - CVE-2014-8566 mod_auth_mellon: remote memory disclosure flaw
+1157954 - CVE-2014-8567 mod_auth_mellon: logout processing leads to denial of service
+
+6. Package List:
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+mod_auth_mellon-0.8.0-3.el6_6.src.rpm
+
+i386:
+mod_auth_mellon-0.8.0-3.el6_6.i686.rpm
+mod_auth_mellon-debuginfo-0.8.0-3.el6_6.i686.rpm
+
+ppc64:
+mod_auth_mellon-0.8.0-3.el6_6.ppc64.rpm
+mod_auth_mellon-debuginfo-0.8.0-3.el6_6.ppc64.rpm
+
+s390x:
+mod_auth_mellon-0.8.0-3.el6_6.s390x.rpm
+mod_auth_mellon-debuginfo-0.8.0-3.el6_6.s390x.rpm
+
+x86_64:
+mod_auth_mellon-0.8.0-3.el6_6.x86_64.rpm
+mod_auth_mellon-debuginfo-0.8.0-3.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+mod_auth_mellon-0.8.0-3.el6_6.src.rpm
+
+i386:
+mod_auth_mellon-0.8.0-3.el6_6.i686.rpm
+mod_auth_mellon-debuginfo-0.8.0-3.el6_6.i686.rpm
+
+x86_64:
+mod_auth_mellon-0.8.0-3.el6_6.x86_64.rpm
+mod_auth_mellon-debuginfo-0.8.0-3.el6_6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8566">https://access.redhat.com/security/cve/CVE-2014-8566</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8567">https://access.redhat.com/security/cve/CVE-2014-8567</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUWfPLXlSAg2UNWIIRAuL8AJ9LXkqDLyLX2irBCnYKQR77lJLeiACguom7
+KA6rCJiU8E+DiAz2ROKVbNU=
+=WDV4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00012.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

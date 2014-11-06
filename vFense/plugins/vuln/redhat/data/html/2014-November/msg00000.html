@@ -1,0 +1,193 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1781&#45;01] Important: openstack&#45;nova security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 3 Nov 2014 04:02:01 &#45;0500 -->
+<!--X-Message-Id: 201411030902.sA391wZU006154@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1781-01] Important: openstack-nova security, bug fix,	and enh</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1781-01] Important: openstack-nova security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1781-01] Important: openstack-nova security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Mon, 3 Nov 2014 09:02:08 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openstack-nova security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1781-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1781.html">https://rhn.redhat.com/errata/RHSA-2014-1781.html</a>
+Issue date:        2014-11-03
+CVE Names:         CVE-2014-3608 CVE-2014-8750 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-nova packages that fix two security issues, multiple
+bugs, and add enhancements are now available for Red Hat Enterprise Linux
+OpenStack Platform 5.0 for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 6 - noarch
+
+3. Description:
+
+OpenStack Compute (nova) launches and schedules large networks of virtual
+machines, creating a redundant and scalable cloud computing platform.
+Compute provides the software, control panels, and APIs required to
+orchestrate a cloud, including running virtual machine instances, managing
+networks, and controlling access through users and projects.
+
+A race condition flaw was found in the way the nova VMware driver handled
+VNC port allocation. An authenticated user could use this flaw to gain
+unauthorized console access to instances belonging to other tenants by
+repeatedly spawning new instances. Note that only nova setups using the
+VMware driver and the VNC proxy service were affected. (CVE-2014-8750)
+
+CVE-2014-2573, the fix for which was provided with the initial release of
+Red Hat Enterprise Linux OpenStack Platform 5.0 for Red Hat Enterprise
+Linux 6, describes a flaw in the nova VMware driver. An authenticated user
+could exceed their quota by placing an image into rescue and then deleting
+it, causing the rescue image to be left behind.
+
+It was found that the fix for CVE-2014-2573 was incomplete. A virtual
+machine could be forced into the ERROR state from rescue by issuing a
+suspend command. Virtual machines deleted from the ERROR state would still
+leave the rescue image behind, allowing a user to exceed their quota. Note
+that only setups using the nova VMware driver were affected.
+(CVE-2014-3608)
+
+The CVE-2014-3608 issue was discovered by Garth Mollett of Red Hat Product
+Security.
+
+The openstack-nova packages have been upgraded to upstream version
+2014.1.3, which provides a number of bug fixes and enhancements over the
+previous version. (BZ#1149749)
+
+All openstack-nova users are advised to upgrade to these updated packages,
+which correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1148253 - CVE-2014-3608 openstack-nova: incomplete fix for CVE-2014-2573, Nova VMware driver still leaks rescued images
+1149749 - Rebase openstack-nova to 2014.1.3
+1152346 - CVE-2014-8750 openstack-nova: Nova VMware driver may connect VNC to another tenant's console
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 6:
+
+Source:
+openstack-nova-2014.1.3-4.el6ost.src.rpm
+
+noarch:
+openstack-nova-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-api-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-cells-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-cert-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-common-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-compute-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-conductor-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-console-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-doc-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-network-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-novncproxy-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-objectstore-2014.1.3-4.el6ost.noarch.rpm
+openstack-nova-scheduler-2014.1.3-4.el6ost.noarch.rpm
+python-nova-2014.1.3-4.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3608">https://access.redhat.com/security/cve/CVE-2014-3608</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8750">https://access.redhat.com/security/cve/CVE-2014-8750</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUV0N0XlSAg2UNWIIRAgOwAJwMgAqIYPjYPe7XLeFlBnuqIWF5rgCgnHn8
+72l8zlIautcPUYV0Bf/c4DE=
+=Ylai
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[Date Prev][<a href="msg00001.html">Date Next</a>] &nbsp; [Thread Prev][<a href="msg00001.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00000">Thread Index</A>]
+[<A HREF="date.html#00000">Date Index</A>]
+[<A HREF="author.html#00000">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

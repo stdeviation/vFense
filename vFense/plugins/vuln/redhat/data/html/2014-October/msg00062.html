@@ -1,0 +1,348 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1768&#45;01] Important: php53 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 30 Oct 2014 16:58:17 &#45;0400 -->
+<!--X-Message-Id: 201410302058.s9UKwH8u001700@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1768-01] Important: php53 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00061.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00061.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00062">Thread Index</A>]
+[<A HREF="date.html#00062">Date Index</A>]
+[<A HREF="author.html#00062">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1768-01] Important: php53 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1768-01] Important: php53 security update</li>
+<li><em>Date</em>: Thu, 30 Oct 2014 20:58:16 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: php53 security update
+Advisory ID:       RHSA-2014:1768-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1768.html">https://rhn.redhat.com/errata/RHSA-2014-1768.html</a>
+Issue date:        2014-10-30
+CVE Names:         CVE-2014-3668 CVE-2014-3669 CVE-2014-3670 
+                   CVE-2014-3710 
+=====================================================================
+
+1. Summary:
+
+Updated php53 packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 5.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+
+3. Description:
+
+PHP is an HTML-embedded scripting language commonly used with the Apache
+HTTP Server.
+
+A buffer overflow flaw was found in the Exif extension. A specially crafted
+JPEG or TIFF file could cause a PHP application using the exif_thumbnail()
+function to crash or, possibly, execute arbitrary code with the privileges
+of the user running that PHP application. (CVE-2014-3670)
+
+An integer overflow flaw was found in the way custom objects were
+unserialized. Specially crafted input processed by the unserialize()
+function could cause a PHP application to crash. (CVE-2014-3669)
+
+An out-of-bounds read flaw was found in the way the File Information
+(fileinfo) extension parsed Executable and Linkable Format (ELF) files.
+A remote attacker could use this flaw to crash a PHP application using
+fileinfo via a specially crafted ELF file. (CVE-2014-3710)
+
+An out of bounds read flaw was found in the way the xmlrpc extension parsed
+dates in the ISO 8601 format. A specially crafted XML-RPC request or
+response could possibly cause a PHP application to crash. (CVE-2014-3668)
+
+The CVE-2014-3710 issue was discovered by Francisco Alonso of Red Hat
+Product Security.
+
+All php53 users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, the httpd daemon must be restarted for the update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1154500 - CVE-2014-3669 php: integer overflow in unserialize()
+1154502 - CVE-2014-3670 php: heap corruption issue in exif_thumbnail()
+1154503 - CVE-2014-3668 php: xmlrpc ISO8601 date format parsing out-of-bounds read in mkgmtime()
+1155071 - CVE-2014-3710 file: out-of-bounds read in elf note headers
+
+6. Package List:
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+php53-5.3.3-26.el5_11.src.rpm
+
+i386:
+php53-5.3.3-26.el5_11.i386.rpm
+php53-bcmath-5.3.3-26.el5_11.i386.rpm
+php53-cli-5.3.3-26.el5_11.i386.rpm
+php53-common-5.3.3-26.el5_11.i386.rpm
+php53-dba-5.3.3-26.el5_11.i386.rpm
+php53-debuginfo-5.3.3-26.el5_11.i386.rpm
+php53-devel-5.3.3-26.el5_11.i386.rpm
+php53-gd-5.3.3-26.el5_11.i386.rpm
+php53-imap-5.3.3-26.el5_11.i386.rpm
+php53-intl-5.3.3-26.el5_11.i386.rpm
+php53-ldap-5.3.3-26.el5_11.i386.rpm
+php53-mbstring-5.3.3-26.el5_11.i386.rpm
+php53-mysql-5.3.3-26.el5_11.i386.rpm
+php53-odbc-5.3.3-26.el5_11.i386.rpm
+php53-pdo-5.3.3-26.el5_11.i386.rpm
+php53-pgsql-5.3.3-26.el5_11.i386.rpm
+php53-process-5.3.3-26.el5_11.i386.rpm
+php53-pspell-5.3.3-26.el5_11.i386.rpm
+php53-snmp-5.3.3-26.el5_11.i386.rpm
+php53-soap-5.3.3-26.el5_11.i386.rpm
+php53-xml-5.3.3-26.el5_11.i386.rpm
+php53-xmlrpc-5.3.3-26.el5_11.i386.rpm
+
+x86_64:
+php53-5.3.3-26.el5_11.x86_64.rpm
+php53-bcmath-5.3.3-26.el5_11.x86_64.rpm
+php53-cli-5.3.3-26.el5_11.x86_64.rpm
+php53-common-5.3.3-26.el5_11.x86_64.rpm
+php53-dba-5.3.3-26.el5_11.x86_64.rpm
+php53-debuginfo-5.3.3-26.el5_11.x86_64.rpm
+php53-devel-5.3.3-26.el5_11.x86_64.rpm
+php53-gd-5.3.3-26.el5_11.x86_64.rpm
+php53-imap-5.3.3-26.el5_11.x86_64.rpm
+php53-intl-5.3.3-26.el5_11.x86_64.rpm
+php53-ldap-5.3.3-26.el5_11.x86_64.rpm
+php53-mbstring-5.3.3-26.el5_11.x86_64.rpm
+php53-mysql-5.3.3-26.el5_11.x86_64.rpm
+php53-odbc-5.3.3-26.el5_11.x86_64.rpm
+php53-pdo-5.3.3-26.el5_11.x86_64.rpm
+php53-pgsql-5.3.3-26.el5_11.x86_64.rpm
+php53-process-5.3.3-26.el5_11.x86_64.rpm
+php53-pspell-5.3.3-26.el5_11.x86_64.rpm
+php53-snmp-5.3.3-26.el5_11.x86_64.rpm
+php53-soap-5.3.3-26.el5_11.x86_64.rpm
+php53-xml-5.3.3-26.el5_11.x86_64.rpm
+php53-xmlrpc-5.3.3-26.el5_11.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+php53-5.3.3-26.el5_11.src.rpm
+
+i386:
+php53-5.3.3-26.el5_11.i386.rpm
+php53-bcmath-5.3.3-26.el5_11.i386.rpm
+php53-cli-5.3.3-26.el5_11.i386.rpm
+php53-common-5.3.3-26.el5_11.i386.rpm
+php53-dba-5.3.3-26.el5_11.i386.rpm
+php53-debuginfo-5.3.3-26.el5_11.i386.rpm
+php53-devel-5.3.3-26.el5_11.i386.rpm
+php53-gd-5.3.3-26.el5_11.i386.rpm
+php53-imap-5.3.3-26.el5_11.i386.rpm
+php53-intl-5.3.3-26.el5_11.i386.rpm
+php53-ldap-5.3.3-26.el5_11.i386.rpm
+php53-mbstring-5.3.3-26.el5_11.i386.rpm
+php53-mysql-5.3.3-26.el5_11.i386.rpm
+php53-odbc-5.3.3-26.el5_11.i386.rpm
+php53-pdo-5.3.3-26.el5_11.i386.rpm
+php53-pgsql-5.3.3-26.el5_11.i386.rpm
+php53-process-5.3.3-26.el5_11.i386.rpm
+php53-pspell-5.3.3-26.el5_11.i386.rpm
+php53-snmp-5.3.3-26.el5_11.i386.rpm
+php53-soap-5.3.3-26.el5_11.i386.rpm
+php53-xml-5.3.3-26.el5_11.i386.rpm
+php53-xmlrpc-5.3.3-26.el5_11.i386.rpm
+
+ia64:
+php53-5.3.3-26.el5_11.ia64.rpm
+php53-bcmath-5.3.3-26.el5_11.ia64.rpm
+php53-cli-5.3.3-26.el5_11.ia64.rpm
+php53-common-5.3.3-26.el5_11.ia64.rpm
+php53-dba-5.3.3-26.el5_11.ia64.rpm
+php53-debuginfo-5.3.3-26.el5_11.ia64.rpm
+php53-devel-5.3.3-26.el5_11.ia64.rpm
+php53-gd-5.3.3-26.el5_11.ia64.rpm
+php53-imap-5.3.3-26.el5_11.ia64.rpm
+php53-intl-5.3.3-26.el5_11.ia64.rpm
+php53-ldap-5.3.3-26.el5_11.ia64.rpm
+php53-mbstring-5.3.3-26.el5_11.ia64.rpm
+php53-mysql-5.3.3-26.el5_11.ia64.rpm
+php53-odbc-5.3.3-26.el5_11.ia64.rpm
+php53-pdo-5.3.3-26.el5_11.ia64.rpm
+php53-pgsql-5.3.3-26.el5_11.ia64.rpm
+php53-process-5.3.3-26.el5_11.ia64.rpm
+php53-pspell-5.3.3-26.el5_11.ia64.rpm
+php53-snmp-5.3.3-26.el5_11.ia64.rpm
+php53-soap-5.3.3-26.el5_11.ia64.rpm
+php53-xml-5.3.3-26.el5_11.ia64.rpm
+php53-xmlrpc-5.3.3-26.el5_11.ia64.rpm
+
+ppc:
+php53-5.3.3-26.el5_11.ppc.rpm
+php53-bcmath-5.3.3-26.el5_11.ppc.rpm
+php53-cli-5.3.3-26.el5_11.ppc.rpm
+php53-common-5.3.3-26.el5_11.ppc.rpm
+php53-dba-5.3.3-26.el5_11.ppc.rpm
+php53-debuginfo-5.3.3-26.el5_11.ppc.rpm
+php53-devel-5.3.3-26.el5_11.ppc.rpm
+php53-gd-5.3.3-26.el5_11.ppc.rpm
+php53-imap-5.3.3-26.el5_11.ppc.rpm
+php53-intl-5.3.3-26.el5_11.ppc.rpm
+php53-ldap-5.3.3-26.el5_11.ppc.rpm
+php53-mbstring-5.3.3-26.el5_11.ppc.rpm
+php53-mysql-5.3.3-26.el5_11.ppc.rpm
+php53-odbc-5.3.3-26.el5_11.ppc.rpm
+php53-pdo-5.3.3-26.el5_11.ppc.rpm
+php53-pgsql-5.3.3-26.el5_11.ppc.rpm
+php53-process-5.3.3-26.el5_11.ppc.rpm
+php53-pspell-5.3.3-26.el5_11.ppc.rpm
+php53-snmp-5.3.3-26.el5_11.ppc.rpm
+php53-soap-5.3.3-26.el5_11.ppc.rpm
+php53-xml-5.3.3-26.el5_11.ppc.rpm
+php53-xmlrpc-5.3.3-26.el5_11.ppc.rpm
+
+s390x:
+php53-5.3.3-26.el5_11.s390x.rpm
+php53-bcmath-5.3.3-26.el5_11.s390x.rpm
+php53-cli-5.3.3-26.el5_11.s390x.rpm
+php53-common-5.3.3-26.el5_11.s390x.rpm
+php53-dba-5.3.3-26.el5_11.s390x.rpm
+php53-debuginfo-5.3.3-26.el5_11.s390x.rpm
+php53-devel-5.3.3-26.el5_11.s390x.rpm
+php53-gd-5.3.3-26.el5_11.s390x.rpm
+php53-imap-5.3.3-26.el5_11.s390x.rpm
+php53-intl-5.3.3-26.el5_11.s390x.rpm
+php53-ldap-5.3.3-26.el5_11.s390x.rpm
+php53-mbstring-5.3.3-26.el5_11.s390x.rpm
+php53-mysql-5.3.3-26.el5_11.s390x.rpm
+php53-odbc-5.3.3-26.el5_11.s390x.rpm
+php53-pdo-5.3.3-26.el5_11.s390x.rpm
+php53-pgsql-5.3.3-26.el5_11.s390x.rpm
+php53-process-5.3.3-26.el5_11.s390x.rpm
+php53-pspell-5.3.3-26.el5_11.s390x.rpm
+php53-snmp-5.3.3-26.el5_11.s390x.rpm
+php53-soap-5.3.3-26.el5_11.s390x.rpm
+php53-xml-5.3.3-26.el5_11.s390x.rpm
+php53-xmlrpc-5.3.3-26.el5_11.s390x.rpm
+
+x86_64:
+php53-5.3.3-26.el5_11.x86_64.rpm
+php53-bcmath-5.3.3-26.el5_11.x86_64.rpm
+php53-cli-5.3.3-26.el5_11.x86_64.rpm
+php53-common-5.3.3-26.el5_11.x86_64.rpm
+php53-dba-5.3.3-26.el5_11.x86_64.rpm
+php53-debuginfo-5.3.3-26.el5_11.x86_64.rpm
+php53-devel-5.3.3-26.el5_11.x86_64.rpm
+php53-gd-5.3.3-26.el5_11.x86_64.rpm
+php53-imap-5.3.3-26.el5_11.x86_64.rpm
+php53-intl-5.3.3-26.el5_11.x86_64.rpm
+php53-ldap-5.3.3-26.el5_11.x86_64.rpm
+php53-mbstring-5.3.3-26.el5_11.x86_64.rpm
+php53-mysql-5.3.3-26.el5_11.x86_64.rpm
+php53-odbc-5.3.3-26.el5_11.x86_64.rpm
+php53-pdo-5.3.3-26.el5_11.x86_64.rpm
+php53-pgsql-5.3.3-26.el5_11.x86_64.rpm
+php53-process-5.3.3-26.el5_11.x86_64.rpm
+php53-pspell-5.3.3-26.el5_11.x86_64.rpm
+php53-snmp-5.3.3-26.el5_11.x86_64.rpm
+php53-soap-5.3.3-26.el5_11.x86_64.rpm
+php53-xml-5.3.3-26.el5_11.x86_64.rpm
+php53-xmlrpc-5.3.3-26.el5_11.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3668">https://access.redhat.com/security/cve/CVE-2014-3668</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3669">https://access.redhat.com/security/cve/CVE-2014-3669</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3670">https://access.redhat.com/security/cve/CVE-2014-3670</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3710">https://access.redhat.com/security/cve/CVE-2014-3710</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUUqYaXlSAg2UNWIIRAnVAAJ9GafX1l1QFapjmQLLSXyv6X+PmsACeLg4g
+1aZFgm4lzqWVmymw19Ix7M0=
+=zAxB
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00061.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00061.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00062">Thread Index</A>]
+[<A HREF="date.html#00062">Date Index</A>]
+[<A HREF="author.html#00062">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

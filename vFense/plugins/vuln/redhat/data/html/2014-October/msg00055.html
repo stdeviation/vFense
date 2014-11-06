@@ -1,0 +1,226 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1744&#45;01] Moderate: v8314&#45;v8 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 30 Oct 2014 08:50:44 &#45;0400 -->
+<!--X-Message-Id: 201410301250.s9UCogrr001528@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1744-01] Moderate: v8314-v8 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00054.html">Date Prev</a>][<a href="msg00056.html">Date Next</a>] &nbsp; [<a href="msg00054.html">Thread Prev</a>][<a href="msg00056.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00055">Thread Index</A>]
+[<A HREF="date.html#00055">Date Index</A>]
+[<A HREF="author.html#00055">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1744-01] Moderate: v8314-v8 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1744-01] Moderate: v8314-v8 security update</li>
+<li><em>Date</em>: Thu, 30 Oct 2014 12:50:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: v8314-v8 security update
+Advisory ID:       RHSA-2014:1744-01
+Product:           Red Hat Software Collections
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1744.html">https://rhn.redhat.com/errata/RHSA-2014-1744.html</a>
+Issue date:        2014-10-30
+CVE Names:         CVE-2013-6639 CVE-2013-6640 CVE-2013-6650 
+                   CVE-2013-6668 CVE-2014-1704 CVE-2014-5256 
+=====================================================================
+
+1. Summary:
+
+Updated v8314-v8 packages that fix multiple security issues are now
+available for Red Hat Software Collections 1.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 6) - x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 7) - x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.4) - x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.5) - x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 6) - x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+
+3. Description:
+
+V8 is Google's open source JavaScript engine.
+
+It was discovered that V8 did not properly check the stack size limit in
+certain cases. A remote attacker able to send a request that caused a
+script executed by V8 to use deep recursion could trigger a stack overflow,
+leading to a crash of an application using V8. (CVE-2014-5256)
+
+Multiple flaws were discovered in V8. Untrusted JavaScript code executed by
+V8 could use either of these flaws to crash V8 or, possibly, execute
+arbitrary code with the privileges of the user running V8. (CVE-2013-6639,
+CVE-2013-6640, CVE-2013-6650, CVE-2013-6668, CVE-2014-1704)
+
+All v8314-v8 users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. All applications using
+V8 must be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1039888 - CVE-2013-6639 v8: DoS (out-of-bounds write) in DehoistArrayIndex function in hydrogen.cc
+1039889 - CVE-2013-6640 v8: DoS (out-of-bounds read) in DehoistArrayIndex function in hydrogen.cc
+1059070 - CVE-2013-6650 v8: incorrect handling of popular pages
+1074737 - CVE-2013-6668 v8: multiple vulnerabilities fixed in Google Chrome version 33.0.1750.146
+1077136 - CVE-2014-1704 v8: multiple vulnerabilities fixed in Google Chrome version 33.0.1750.149
+1125464 - CVE-2014-5256 V8 Memory Corruption and Stack Overflow
+1149781 - Several performance and security bug fixes from Fedora
+
+6. Package List:
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+v8314-v8-3.14.5.10-6.el6.src.rpm
+
+x86_64:
+v8314-v8-3.14.5.10-6.el6.x86_64.rpm
+v8314-v8-debuginfo-3.14.5.10-6.el6.x86_64.rpm
+v8314-v8-devel-3.14.5.10-6.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.4):
+
+Source:
+v8314-v8-3.14.5.10-6.el6.src.rpm
+
+x86_64:
+v8314-v8-3.14.5.10-6.el6.x86_64.rpm
+v8314-v8-debuginfo-3.14.5.10-6.el6.x86_64.rpm
+v8314-v8-devel-3.14.5.10-6.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.5):
+
+Source:
+v8314-v8-3.14.5.10-6.el6.src.rpm
+
+x86_64:
+v8314-v8-3.14.5.10-6.el6.x86_64.rpm
+v8314-v8-debuginfo-3.14.5.10-6.el6.x86_64.rpm
+v8314-v8-devel-3.14.5.10-6.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+v8314-v8-3.14.5.10-6.el6.src.rpm
+
+x86_64:
+v8314-v8-3.14.5.10-6.el6.x86_64.rpm
+v8314-v8-debuginfo-3.14.5.10-6.el6.x86_64.rpm
+v8314-v8-devel-3.14.5.10-6.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+v8314-v8-3.14.5.10-6.el7.src.rpm
+
+x86_64:
+v8314-v8-3.14.5.10-6.el7.x86_64.rpm
+v8314-v8-debuginfo-3.14.5.10-6.el7.x86_64.rpm
+v8314-v8-devel-3.14.5.10-6.el7.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+v8314-v8-3.14.5.10-6.el7.src.rpm
+
+x86_64:
+v8314-v8-3.14.5.10-6.el7.x86_64.rpm
+v8314-v8-debuginfo-3.14.5.10-6.el7.x86_64.rpm
+v8314-v8-devel-3.14.5.10-6.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-6639">https://access.redhat.com/security/cve/CVE-2013-6639</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-6640">https://access.redhat.com/security/cve/CVE-2013-6640</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-6650">https://access.redhat.com/security/cve/CVE-2013-6650</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-6668">https://access.redhat.com/security/cve/CVE-2013-6668</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-1704">https://access.redhat.com/security/cve/CVE-2014-1704</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-5256">https://access.redhat.com/security/cve/CVE-2014-5256</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUUjMtXlSAg2UNWIIRAoeGAJ0fP251E692cpwvk3D3KlOzu9Wk7QCcDWY7
+WKdpvCmPusTh1N++FryNcSU=
+=W37D
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00054.html">Date Prev</a>][<a href="msg00056.html">Date Next</a>] &nbsp; [<a href="msg00054.html">Thread Prev</a>][<a href="msg00056.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00055">Thread Index</A>]
+[<A HREF="date.html#00055">Date Index</A>]
+[<A HREF="author.html#00055">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1801&#45;01] Moderate: shim security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 4 Nov 2014 13:26:39 &#45;0500 -->
+<!--X-Message-Id: 201411041826.sA4IQcpX002724@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1801-01] Moderate: shim security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1801-01] Moderate: shim security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1801-01] Moderate: shim security update</li>
+<li><em>Date</em>: Tue, 4 Nov 2014 18:26:38 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: shim security update
+Advisory ID:       RHSA-2014:1801-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1801.html">https://rhn.redhat.com/errata/RHSA-2014-1801.html</a>
+Issue date:        2014-11-04
+CVE Names:         CVE-2014-3675 CVE-2014-3676 CVE-2014-3677 
+=====================================================================
+
+1. Summary:
+
+Updated shim packages that fix three security issues are now available for
+Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+
+3. Description:
+
+Shim is the initial UEFI bootloader that handles chaining to a trusted full
+bootloader under secure boot environments.
+
+A heap-based buffer overflow flaw was found the way shim parsed certain
+IPv6 addresses. If IPv6 network booting was enabled, a malicious server
+could supply a crafted IPv6 address that would cause shim to crash or,
+potentially, execute arbitrary code. (CVE-2014-3676)
+
+An out-of-bounds memory write flaw was found in the way shim processed
+certain Machine Owner Keys (MOKs). A local attacker could potentially use
+this flaw to execute arbitrary code on the system. (CVE-2014-3677)
+
+An out-of-bounds memory read flaw was found in the way shim parsed certain
+IPv6 packets. A specially crafted DHCPv6 packet could possibly cause shim
+to crash, preventing the system from booting if IPv6 booting was enabled.
+(CVE-2014-3675)
+
+Red Hat would like to thank the SUSE Security Team for reporting these
+issues.
+
+All shim users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1148230 - CVE-2014-3675 shim: out-of-bounds memory read flaw in DHCPv6 packet processing
+1148231 - CVE-2014-3676 shim: heap-based buffer overflow flaw in IPv6 address parsing
+1148232 - CVE-2014-3677 shim: memory corruption flaw when processing Machine Owner Keys (MOKs)
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+shim-0.7-8.el7_0.src.rpm
+shim-signed-0.7-8.el7_0.src.rpm
+
+x86_64:
+mokutil-0.7-8.el7_0.x86_64.rpm
+shim-0.7-8.el7_0.x86_64.rpm
+shim-debuginfo-0.7-8.el7_0.x86_64.rpm
+shim-unsigned-0.7-8.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+shim-0.7-8.el7_0.src.rpm
+shim-signed-0.7-8.el7_0.src.rpm
+
+x86_64:
+mokutil-0.7-8.el7_0.x86_64.rpm
+shim-0.7-8.el7_0.x86_64.rpm
+shim-debuginfo-0.7-8.el7_0.x86_64.rpm
+shim-unsigned-0.7-8.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+shim-0.7-8.el7_0.src.rpm
+shim-signed-0.7-8.el7_0.src.rpm
+
+x86_64:
+mokutil-0.7-8.el7_0.x86_64.rpm
+shim-0.7-8.el7_0.x86_64.rpm
+shim-debuginfo-0.7-8.el7_0.x86_64.rpm
+shim-unsigned-0.7-8.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+shim-0.7-8.el7_0.src.rpm
+shim-signed-0.7-8.el7_0.src.rpm
+
+x86_64:
+mokutil-0.7-8.el7_0.x86_64.rpm
+shim-0.7-8.el7_0.x86_64.rpm
+shim-debuginfo-0.7-8.el7_0.x86_64.rpm
+shim-unsigned-0.7-8.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3675">https://access.redhat.com/security/cve/CVE-2014-3675</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3676">https://access.redhat.com/security/cve/CVE-2014-3676</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3677">https://access.redhat.com/security/cve/CVE-2014-3677</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUWRlcXlSAg2UNWIIRAm6GAJ4zpWjcPiY4/+gVv5/Dfn2YW7zGIACfZyRT
+XKlQtiQps+wiFJrLkaURsEY=
+=XEoP
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

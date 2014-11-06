@@ -1,0 +1,170 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1787&#45;01] Moderate: openstack&#45;cinder security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 3 Nov 2014 04:16:23 &#45;0500 -->
+<!--X-Message-Id: 201411030916.sA39GKoO013220@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1787-01] Moderate: openstack-cinder security and bug fix	upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1787-01] Moderate: openstack-cinder security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1787-01] Moderate: openstack-cinder security and bug fix	update</li>
+<li><em>Date</em>: Mon, 3 Nov 2014 09:16:30 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openstack-cinder security and bug fix update
+Advisory ID:       RHSA-2014:1787-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1787.html">https://rhn.redhat.com/errata/RHSA-2014-1787.html</a>
+Issue date:        2014-11-03
+CVE Names:         CVE-2014-3641 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-cinder packages that fix one security issue and multiple
+bugs are now available for Red Hat Enterprise Linux OpenStack Platform 5.0
+for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 6 - noarch
+
+3. Description:
+
+OpenStack Block Storage (cinder) manages block storage mounting and the
+presentation of such mounted block storage to instances. The backend
+physical storage can consist of local disks, or Fiber Channel, iSCSI, and
+NFS mounts attached to Compute nodes. In addition, Block Storage supports
+volume backups, and snapshots for temporary save and restore operations.
+Programatic management is available via Block Storage’s API.
+
+A flaw was found in the GlusterFS and Linux smbfs drivers for OpenStack
+Block Storage. A remote attacker could use this flaw to disclose an
+arbitrary file from the cinder-volume host to a virtual instance by cloning
+and attaching a volume with a malicious qcow2 header. (CVE-2014-3641)
+
+Red Hat would like to thank the OpenStack project for reporting this issue.
+Upstream acknowledges Duncan Thomas from Hewlett Packard as the original
+reporter.
+
+The openstack-cinder packages have been upgraded to upstream version
+2014.1.3, which provides a number of bug fixes over the previous version.
+(BZ#1149750)
+
+All users of openstack-cinder are advised to upgrade to these updated
+packages, which correct these issues. After installing the updated
+packages, the cinder running services will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1141996 - CVE-2014-3641 openstack-cinder: Cinder-volume host data leak to virtual machine instance
+1149750 - Rebase openstack-cinder to 2014.1.3
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 6:
+
+Source:
+openstack-cinder-2014.1.3-1.el6ost.src.rpm
+
+noarch:
+openstack-cinder-2014.1.3-1.el6ost.noarch.rpm
+openstack-cinder-doc-2014.1.3-1.el6ost.noarch.rpm
+python-cinder-2014.1.3-1.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3641">https://access.redhat.com/security/cve/CVE-2014-3641</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://wiki.openstack.org/wiki/ReleaseNotes/2014.1.3">https://wiki.openstack.org/wiki/ReleaseNotes/2014.1.3</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUV0bKXlSAg2UNWIIRAvfJAJ0R1svkHqaHTxpsRN2flkwIEl8F/ACdFzd8
+s16+YRk51FyiKFeVYUE99qg=
+=4h2U
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00005.html">Date Prev</a>][<a href="msg00007.html">Date Next</a>] &nbsp; [<a href="msg00005.html">Thread Prev</a>][<a href="msg00007.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00006">Thread Index</A>]
+[<A HREF="date.html#00006">Date Index</A>]
+[<A HREF="author.html#00006">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

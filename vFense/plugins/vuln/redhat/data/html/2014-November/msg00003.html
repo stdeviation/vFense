@@ -1,0 +1,172 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1784&#45;01] Moderate: python&#45;keystoneclient security and bug	fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 3 Nov 2014 04:08:11 &#45;0500 -->
+<!--X-Message-Id: 201411030908.sA398892022504@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1784-01] Moderate: python-keystoneclient security and bug	fix</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1784-01] Moderate: python-keystoneclient security and bug	fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1784-01] Moderate: python-keystoneclient security and bug	fix update</li>
+<li><em>Date</em>: Mon, 3 Nov 2014 09:08:18 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: python-keystoneclient security and bug fix update
+Advisory ID:       RHSA-2014:1784-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1784.html">https://rhn.redhat.com/errata/RHSA-2014-1784.html</a>
+Issue date:        2014-11-03
+CVE Names:         CVE-2014-7144 
+=====================================================================
+
+1. Summary:
+
+Updated python-keystoneclient packages that fix one security issue and two
+bugs are now available for Red Hat Enterprise Linux OpenStack Platform 5.0
+for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7 - noarch
+
+3. Description:
+
+Python-keystoneclient is a client library and a command line utility for
+interacting with the OpenStack Identity API.
+
+It was found that Python-keystoneclient treated all settings in paste.ini
+files as string types. If the &quot;insecure&quot; option were set to any value in a
+paste.ini configuration file, it would be evaluated as true, resulting in
+TLS connections being vulnerable to man-in-the-middle attacks.
+(CVE-2014-7144)
+
+Note that when the &quot;insecure&quot; option was not set in paste.ini, it evaluated
+to false, and verification was performed.
+
+This update also fixes the following bugs:
+
+* Previously, when running Python-keystoneclient in the DEBUG log level,
+sensitive data may have been logged in plain text. Refer to the OSSN-0024
+document, linked to in the References, for further information.
+(BZ#1106328)
+
+* Previously, when attempting to enable the use of the s3_token middleware,
+for use with the Amazon Simple Storage Service (Amazon S3) APIs, a &quot;No
+module named webob&quot; error was returned. (BZ#1133431)
+
+All python-keystoneclient users are advised to upgrade to these updated
+packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1106328 - clear text passwords shown in horizon.log (DEBUG level)
+1133431 - Module webob not found when enabling s3token in Swift
+1143808 - CVE-2014-7144 python-keystoneclient: TLS certificate verification disabled
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7:
+
+Source:
+python-keystoneclient-0.9.0-5.el7ost.src.rpm
+
+noarch:
+python-keystoneclient-0.9.0-5.el7ost.noarch.rpm
+python-keystoneclient-doc-0.9.0-5.el7ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7144">https://access.redhat.com/security/cve/CVE-2014-7144</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://wiki.openstack.org/wiki/OSSN/OSSN-0024">https://wiki.openstack.org/wiki/OSSN/OSSN-0024</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUV0VoXlSAg2UNWIIRAuGfAJ9bLvDIVoIdGEC+n4j6TLx2gyJnEgCfZUQV
+Boa/vRtsHkkeSnIbDTJ0Sio=
+=+ptp
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
