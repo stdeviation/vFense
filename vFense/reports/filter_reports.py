@@ -5,7 +5,7 @@ from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.agent._db_model import *
 from vFense.utils.common import *
 from vFense.core.agent.agents import *
-from vFense.plugins.patching._db_model import * 
+from vFense.plugins.patching._db_model import *
 from time import ctime
 from vFense.core.tag.tagManager import get_agent_ids_from_tag
 
@@ -18,7 +18,7 @@ logger = logging.getLogger('rvapi')
 
 
 @db_create_close
-def get_all_agentids(username, view_name, count=30, offset=0, 
+def get_all_agentids(username, view_name, count=30, offset=0,
         uri=None, method=None, conn=None):
 
     try:
@@ -52,7 +52,7 @@ def get_all_agentids(username, view_name, count=30, offset=0,
                     ).information_retrieved(data, count)
                 )
         logger.info(status['message'])
-    
+
     except Exception as e:
         status = (
                 Results(
@@ -65,7 +65,7 @@ def get_all_agentids(username, view_name, count=30, offset=0,
 @db_create_close
 def filter_by_and_query(username, view_name, keys_to_pluck, key = AgentKeys.ComputerName,
         count=30, offset=0, query=None, uri=None, method=None, conn=None):
-    
+
     if query:
         count = (
                 r
@@ -91,7 +91,7 @@ def filter_by_and_query(username, view_name, keys_to_pluck, key = AgentKeys.Comp
                 .run(conn)
                 )
     else:
-        
+
         count = (
                 r
                 .table(AgentsCollection)
@@ -99,7 +99,7 @@ def filter_by_and_query(username, view_name, keys_to_pluck, key = AgentKeys.Comp
                 .count()
                 .run(conn)
                 )
-        
+
         data = list(
                 r
                 .table(AgentsCollection)
@@ -114,10 +114,10 @@ def filter_by_and_query(username, view_name, keys_to_pluck, key = AgentKeys.Comp
 
 
 def systems_os_details(username, view_name, key, query, uri=None, method=None):
-   
-    keys_to_pluck = [AgentKeys.ComputerName, AgentKeys.OsCode, 
+
+    keys_to_pluck = [AgentKeys.ComputerName, AgentKeys.OsCode,
             AgentKeys.OsString, AgentKeys.MachineType, AgentKeys.SysArch]
-    
+
     data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query,keys_to_pluck=keys_to_pluck)
 
@@ -128,7 +128,7 @@ def systems_os_details(username, view_name, key, query, uri=None, method=None):
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
-    
+
     except Exception as e:
         logger.exception(e)
         results = (
@@ -142,18 +142,18 @@ def system_hardware_details(agent_info):
     if agent_info:
         hardware_info=agent_info.get(AgentKeys.Hardware)
         data={
-                "computer-name":agent_info.get(AgentKeys.ComputerName),  
-                "cpu":hardware_info.get('cpu'), 
-                "disk":hardware_info.get('storage'), 
-                "display":hardware_info.get('display'), 
-                "ram":hardware_info.get('memory'), 
-                } 
+                "computer-name":agent_info.get(AgentKeys.ComputerName),
+                "cpu":hardware_info.get('cpu'),
+                "disk":hardware_info.get('storage'),
+                "display":hardware_info.get('display'),
+                "ram":hardware_info.get('memory'),
+                }
         return(data)
 
 def systems_hardware_details (username, view_name, key, query,  uri=None, method=None):
 
     keys_to_pluck = [AgentKeys.ComputerName, AgentKeys.Hardware]
-    
+
     data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query,keys_to_pluck=keys_to_pluck)
 
@@ -164,7 +164,7 @@ def systems_hardware_details (username, view_name, key, query,  uri=None, method
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
-    
+
     except Exception as e:
         logger.exception(e)
         results = (
@@ -172,7 +172,7 @@ def systems_hardware_details (username, view_name, key, query,  uri=None, method
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
-    return(results) 
+    return(results)
 
 
 def systems_network_details(username, view_name, key, query,
@@ -180,7 +180,7 @@ def systems_network_details(username, view_name, key, query,
 
     network_stats=[]
     keys_to_pluck = [AgentKeys.ComputerName, AgentKeys.Hardware]
-    
+
     data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query,keys_to_pluck=keys_to_pluck)
 
@@ -190,7 +190,7 @@ def systems_network_details(username, view_name, key, query,
                 "network" : d['hardware']['nic']
                 }
         network_stats.append(network_data)
-    
+
     try:
         data = network_stats
         results = (
@@ -198,7 +198,7 @@ def systems_network_details(username, view_name, key, query,
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
-    
+
     except Exception as e:
 
 
@@ -208,16 +208,16 @@ def systems_network_details(username, view_name, key, query,
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
-    return(results) 
+    return(results)
 
 
-def systems_cpu_details (username, view_name, key, query, 
+def systems_cpu_details (username, view_name, key, query,
         uri=None, method=None):
-    
+
     cpu_stats=[]
 
     keys_to_pluck = [AgentKeys.ComputerName, AgentKeys.MonitStats,]
-    
+
     data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query,keys_to_pluck=keys_to_pluck)
     for d in data:
@@ -237,7 +237,7 @@ def systems_cpu_details (username, view_name, key, query,
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
-    
+
     except Exception as e:
         logger.exception(e)
         results = (
@@ -245,16 +245,16 @@ def systems_cpu_details (username, view_name, key, query,
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
-    return(results) 
-            
+    return(results)
 
-def systems_memory_stats(username, view_name, key, query, 
+
+def systems_memory_stats(username, view_name, key, query,
         uri=None, method=None):
 
     memory_stats = []
 
     keys_to_pluck = [AgentKeys.ComputerName, AgentKeys.MonitStats,]
-    
+
     data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query, keys_to_pluck=keys_to_pluck)
     for d in data:
@@ -276,7 +276,7 @@ def systems_memory_stats(username, view_name, key, query,
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
-    
+
     except Exception as e:
         logger.exception(e)
         results = (
@@ -284,7 +284,7 @@ def systems_memory_stats(username, view_name, key, query,
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
-    return(results) 
+    return(results)
 
 
 def system_disk_stats(agent_info):
@@ -300,12 +300,12 @@ def system_disk_stats(agent_info):
                 return(data)
 
 
-def systems_disk_stats(username, view_name, key, query, 
+def systems_disk_stats(username, view_name, key, query,
         uri=None, method=None):
     fs_stats =[]
 
     keys_to_pluck = [AgentKeys.ComputerName, AgentKeys.MonitStats,]
-    
+
     data = filter_by_and_query(username=username, view_name=view_name,
             key=key, query=query,keys_to_pluck=keys_to_pluck)
 
@@ -315,7 +315,7 @@ def systems_disk_stats(username, view_name, key, query,
                 "disk-usage": d[AgentKeys.MonitStats]['file_system'],
                 }
         fs_stats.append(fs_data)
-    
+
     try:
         data = fs_stats
         results = (
@@ -323,7 +323,7 @@ def systems_disk_stats(username, view_name, key, query,
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
-    
+
     except Exception as e:
         logger.exception(e)
         results = (
@@ -331,7 +331,7 @@ def systems_disk_stats(username, view_name, key, query,
                     username, uri, method
                     ).something_broke('Systems_os_details', 'failed to retrieve data', e)
                 )
-    return(results) 
+    return(results)
 
 
 def agent_last_updated(agent_info):
@@ -348,7 +348,7 @@ def agent_status(agent_info):
         agent_status = agent_info.get('agent_status')
         return(agent_status)
 
-def agents_last_updated(username, view_name, os_code=None, 
+def agents_last_updated(username, view_name, os_code=None,
         tag_id=None, uri=None, method=None):
 
     agents_uptime_info=[]
@@ -358,7 +358,7 @@ def agents_last_updated(username, view_name, os_code=None,
         last_updated=agent_last_updated(agent_info)
         if last_updated:
             agents_uptime_info.append(last_updated)
-    
+
     try:
         data = agents_uptime_info
         results = (
@@ -366,7 +366,7 @@ def agents_last_updated(username, view_name, os_code=None,
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
-    
+
     except Exception as e:
         logger.exception(e)
         results = (
@@ -376,7 +376,7 @@ def agents_last_updated(username, view_name, os_code=None,
                 )
     return(results)
 
-def agents_reboot_pending(username, view_name, os_code=None, 
+def agents_reboot_pending(username, view_name, os_code=None,
         tag_id=None, uri=None, method=None):
     agents_need_reboot = []
     agents_not_need_reboot =[]
@@ -394,7 +394,7 @@ def agents_reboot_pending(username, view_name, os_code=None,
             'reboot_required': agents_need_reboot,
             'reboot_not_required': agents_not_need_reboot,
             }
-    
+
     try:
         data = data
         results = (
@@ -402,7 +402,7 @@ def agents_reboot_pending(username, view_name, os_code=None,
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
-    
+
     except Exception as e:
         logger.exception(e)
         results = (
@@ -412,11 +412,11 @@ def agents_reboot_pending(username, view_name, os_code=None,
                 )
     return(results)
 
-def agents_status(username, view_name, os_code=None, 
+def agents_status(username, view_name, os_code=None,
         tag_id=None, uri=None, method=None):
     nodes_status=[]
     agents_up = []
-    agents_down = [] 
+    agents_down = []
     agentids=get_agentids(os_code=os_code, view_name=view_name, tag_id=tag_id)
     for agentid in agentids:
         agent_info=get_agent_info(agentid=agentid)
@@ -430,7 +430,7 @@ def agents_status(username, view_name, os_code=None,
             'agents_up':agents_up,
             'agents_down':agents_down,
             }
-    
+
     try:
         data = data
         results = (
@@ -438,7 +438,7 @@ def agents_status(username, view_name, os_code=None,
                     username, uri, method,
                     ).information_retrieved(data, len(data))
                 )
-    
+
     except Exception as e:
         logger.exception(e)
         results = (
