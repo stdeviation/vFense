@@ -5,7 +5,7 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.db.client import *
-from vFense.core.results import Results
+from vFense.core.results import ApiResults, ExternalApiResults
 from reports.stats import *
 from vFense.core.decorators import authenticated_request
 from vFense.utils.common import *
