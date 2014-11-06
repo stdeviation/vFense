@@ -3,24 +3,25 @@ import logging
 import logging.config
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
+from vFense.core._constants import Time
 from vFense.core.operations import (
     AgentOperation, OperPerAgent
 )
 from vFense.core.operations._constants import OperationErrors
-from vFense.core._constants import Time
 from vFense.core.operations._db_agent import (
     fetch_agent_operation, operation_with_agentid_exists,
     operation_with_agentid_and_appid_exists, insert_into_agent_operations,
     update_agent_operation_expire_time, update_operation_per_agent,
     update_agent_operation, fetch_operation_with_agentid,
     update_failed_and_pending_count, update_completed_and_pending_count,
-    update_agent_operation_pickup_time, insert_agent_into_agent_operations
+    update_agent_operation_pickup_time, insert_agent_into_agent_operations,
+    delete_operation
 )
-
 from vFense.core.operations.status_codes import (
     AgentOperationCodes, OperationPerAgentCodes
 )
 from vFense.core.status_codes import DbCodes
+from vFense.core.results import ApiResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -177,6 +178,28 @@ class AgentOperationManager(object):
                 operation_id = generated_ids[0]
 
         return operation_id
+
+    def remove_operation(self, operation_id):
+        """Remove an operation .
+        Args:
+            operation_id (str): the operation id.
+
+        Basic Usage:
+            >>> from vFense.core.operations.agent_operations import AgentOperationManager
+            >>> username = 'admin'
+            >>> view_name = 'default'
+            >>> oper = AgentOperationManager(username, view_name)
+            >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
+            >>> count, errors = oper.remove_operation(operation_id)
+
+        Returns:
+            Tuple (int, list)
+        """
+        status_code, count, errors, generated_ids = (
+            delete_operation(operation_id)
+        )
+
+        return (count, errors)
 
     def add_agent_to_operation(self, agent_id, operation_id):
         """Add an operation for an agent

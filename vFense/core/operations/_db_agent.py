@@ -389,6 +389,121 @@ def update_agent_operation(operation_id, operation_data, conn=None):
 @catch_it({})
 @db_create_close
 @return_status_tuple
+def delete_operation(operation_id, conn=None):
+    """remove all references to operation_id.
+        DO NOT CALL DIRECTLY
+    Args:
+        operation_id (str): the id of the operation.
+
+    Basic Usage:
+        >>> from vFense.core.operations._db import delete_operation
+        >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
+        >>> delete_operation(operation_id)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    operation = {}
+    data = (
+        r
+        .table(OperationCollections.Agent)
+        .get(operation_id)
+        .delete()
+        .run(conn)
+    )
+
+    agent = (
+        r
+        .table(OperationCollections.OperationPerAgent)
+        .get_all(operation_id, index=OperationPerAgentIndexes.OperationId)
+        .delete()
+        .run(conn)
+    )
+
+    app = (
+        r
+        .table(OperationCollections.OperationPerApp)
+        .get_all(operation_id, index=OperationPerAppIndexes.OperationId)
+        .delete()
+        .run(conn)
+    )
+
+    for key in data.keys():
+        operation[key] = data[key] + agent[key] + app[key]
+
+    return operation
+
+@time_it
+@catch_it({})
+@db_create_close
+@return_status_tuple
+def delete_operation_by_agent_id(operation_id, agent_id, conn=None):
+    """Update an agent_operation.
+        DO NOT CALL DIRECTLY
+    Args:
+        operation_id (str): the id of the operation.
+
+    Basic Usage:
+        >>> from vFense.core.operations._db import delete_operation_by_agent_id
+        >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
+        >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
+        >>> delete_operation_by_agent_id(operation_id, agent_id)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = (
+        r
+        .table(OperationCollections.OperationPerAgent)
+        .get_all(
+            [operation_id, agent_id],
+            index=OperationPerAgentIndexes.OperationIdAndAgentId
+        )
+        .delete()
+        .run(conn)
+    )
+
+    return data
+
+@time_it
+@catch_it({})
+@db_create_close
+@return_status_tuple
+def delete_app_operation_by_agent_id(operation_id, agent_id, conn=None):
+    """Update an agent_operation.
+        DO NOT CALL DIRECTLY
+    Args:
+        operation_id (str): the id of the operation.
+
+    Basic Usage:
+        >>> from vFense.core.operations._db import delete_app_operation_by_agent_id
+        >>> operation_id = '5dc03727-de89-460d-b2a7-7f766c83d2f1'
+        >>> agent_id = '38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'
+        >>> delete_app_operation_by_agent_id(operation_id, agent_id)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    data = (
+        r
+        .table(OperationCollections.OperationPerApp)
+        .get_all(
+            [operation_id, agent_id],
+            index=OperationPerAppIndexes.OperationIdAndAgentId
+        )
+        .delete()
+        .run(conn)
+    )
+
+    return data
+
+@time_it
+@catch_it({})
+@db_create_close
+@return_status_tuple
 def update_operation_per_agent(
         operation_id, agent_id,
         operation_data, conn=None

@@ -102,6 +102,7 @@ class OperationsQueueAndJobTests(unittest.TestCase):
     def test_d_get_agent_queue2_and_delete(self):
         agent_id = fetch_agent_ids('Test View 1')[0]
         manager = AgentQueueManager(agent_id)
+        operation_manager = AgentOperationManager()
         jobs = manager.get_agent_queue()
         deleted_ids = []
         for job in jobs:
@@ -109,6 +110,7 @@ class OperationsQueueAndJobTests(unittest.TestCase):
             status = manager.remove_job(job.id)
             if status:
                 deleted_ids.append(job.id)
+                operation_manager.remove_operation(job.operation_id)
         print dumps(deleted_ids, indent=4)
         self.failUnless(len(jobs) == len(deleted_ids))
 
@@ -126,9 +128,13 @@ class OperationsQueueAndJobTests(unittest.TestCase):
 
     def test_e_pop_agent_queue(self):
         agent_id = fetch_agent_ids('Test View 1')[0]
-        queue = AgentQueueManager(agent_id).pop_agent_queue()
-        print dumps(queue, indent=4)
-        self.failUnless(len(queue) == 1)
+        jobs = AgentQueueManager(agent_id).pop_agent_queue()
+        operation_manager = AgentOperationManager()
+        for job in jobs:
+            job = AgentQueue(**job)
+            count, errors = operation_manager.remove_operation(job.operation_id)
+        print count, errors
+        self.failUnless(count == 2)
 
     def test_x_view_delete_agents(self):
         manager = ViewManager('Test View 1')
