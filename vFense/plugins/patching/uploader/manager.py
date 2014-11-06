@@ -18,9 +18,7 @@ from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys
 )
 from vFense.plugins.patching.apps.custom_apps.custom_apps import add_custom_app_to_agents
-from vFense.plugins.patching._db_files import fetch_file_data
 from vFense.plugins.patching.file_data import add_file_data
-from vFense.core.results import Results, ApiResultKeys
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

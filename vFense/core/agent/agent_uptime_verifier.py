@@ -3,7 +3,7 @@ import logging
 from time import mktime
 from datetime import datetime
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core.agent._db_model import AgentKeys, AgentsCollection
+from vFense.core.agent._db_model import AgentKeys, AgentCollections
 from vFense.db.client import r, db_connect
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -15,7 +15,7 @@ def all_agent_status():
         conn = db_connect()
         (
             r
-            .table(AgentsCollection)
+            .table(AgentCollections.Agent)
             .filter(
                 lambda x:
                 x[AgentKeys.LastAgentUpdate].to_epoch_time() < seconds

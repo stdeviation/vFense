@@ -4,11 +4,8 @@ from time import mktime
 from datetime import datetime, timedelta
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.db.client import db_create_close, r
-from vFense.core._constants import CommonKeys
 from vFense.core.decorators import time_it
 from vFense.plugins.patching._db_model import *
-from vFense.plugins.patching._constants import CommonAppKeys, CommonSeverityKeys
 from vFense.plugins.patching._db_stats import (
     group_avail_app_stats_by_os_for_view,
     group_avail_app_stats_by_os_for_tag, fetch_bar_chart_for_appid_by_status,
@@ -18,7 +15,6 @@ from vFense.plugins.patching._db_stats import (
     fetch_recently_released_apps, fetch_severity_bar_chart_stats_for_view,
     fetch_os_apps_history_for_agent, fetch_os_apps_history_for_tag
 )
-from vFense.core.results import Results
 from vFense.core.status_codes import GenericCodes
 from vFense.core.results import ApiResultKeys
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)

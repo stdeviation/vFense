@@ -248,6 +248,6 @@ def fetch_admin_job_by_name_and_view(name, view_name, conn=None):
         .run(conn)
     )
     if job:
-        job =- job[0]
+        job = job[0]
 
     return job

@@ -1,4 +1,4 @@
-from vFense.core.operation._constants import operation_id
+from vFense.core.operations._constants import operation_id
 from vFense.core.api.agent_operations import (
     GetTransactionsHandler, OperationHandler
 )
