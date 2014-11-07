@@ -39,7 +39,6 @@ class FetchAgents(object):
             sort (str): asc or desc.
             sort_key (str): The key you are going to sort the results by.
         """
-
         self.view_name = view_name
         self.count = count
         self.offset = offset
@@ -774,7 +773,7 @@ class FetchAgents(object):
             }
         )
 
-        return(merge_query)
+        return merge_query
 
     def _set_agent_base_query(self):
         base_filter = (
@@ -791,7 +790,7 @@ class FetchAgents(object):
                 )
             )
 
-        return(base_filter)
+        return base_filter
 
     def _set_hw_base_query_by_nic(self):
         base_filter = (
