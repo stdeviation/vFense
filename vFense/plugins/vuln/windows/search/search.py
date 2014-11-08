@@ -48,7 +48,7 @@ class RetrieveWindowVulns(object):
             self.sort_key = WindowsVulnerabilityKeys.VulnerabilityId
 
         self.fetch_vulns = (
-            FetchWindowVulns(
+            FetchWindowsVulns(
                 self.count, self.offset, self.sort, self.sort_key
             )
         )
