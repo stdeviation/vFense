@@ -7,11 +7,10 @@ from vFense.utils.common import *
 from vFense.core.agent.agents import *
 from vFense.plugins.patching._db_model import *
 from time import ctime
-from vFense.core.tag.tagManager import get_agent_ids_from_tag
+from vFense.core.tag.manager import TagManager
 
 from vFense.db.client import db_create_close, r
 from vFense.plugins.patching._db_stats import get_all_app_stats_by_agentid
-from vFense.core.results import Results
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -46,19 +45,11 @@ def get_all_agentids(username, view_name, count=30, offset=0,
                 agent[BASIC_RV_STATS] = (
                     get_all_app_stats_by_agentid(agent[AgentKeys.AgentId])
                 )
-        status = (
-                Results(
-                    username,  uri, method
-                    ).information_retrieved(data, count)
-                )
+        status = data
         logger.info(status['message'])
 
     except Exception as e:
-        status = (
-                Results(
-                    username,  uri, method
-                    ).something_broke('get_all_agents', 'agent', e)
-                )
+        status = e
         return(status)
 
 
@@ -123,19 +114,11 @@ def systems_os_details(username, view_name, key, query, uri=None, method=None):
 
     try:
         data = data
-        results = (
-                Results(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
+        results = data
 
     except Exception as e:
         logger.exception(e)
-        results = (
-                Results(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
+        results = e
     return(results)
 
 def system_hardware_details(agent_info):
@@ -159,19 +142,11 @@ def systems_hardware_details (username, view_name, key, query,  uri=None, method
 
     try:
         data = data
-        results = (
-                Results(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
+        results = data
 
     except Exception as e:
         logger.exception(e)
-        results = (
-                Results(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
+        results = e
     return(results)
 
 
@@ -193,21 +168,13 @@ def systems_network_details(username, view_name, key, query,
 
     try:
         data = network_stats
-        results = (
-                Results(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
+        results = data
 
     except Exception as e:
 
 
         logger.exception(e)
-        results = (
-                Results(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
+        results = e
     return(results)
 
 
@@ -232,19 +199,11 @@ def systems_cpu_details (username, view_name, key, query,
 
     try:
         data = cpu_stats
-        results = (
-                Results(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
+        results = data
 
     except Exception as e:
         logger.exception(e)
-        results = (
-                Results(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
+        results = e
     return(results)
 
 
@@ -271,19 +230,11 @@ def systems_memory_stats(username, view_name, key, query,
 
     try:
         data = memory_stats
-        results = (
-                Results(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
+        results = data
 
     except Exception as e:
         logger.exception(e)
-        results = (
-                Results(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
+        results = e
     return(results)
 
 
@@ -318,19 +269,11 @@ def systems_disk_stats(username, view_name, key, query,
 
     try:
         data = fs_stats
-        results = (
-                Results(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
+        results = data
 
     except Exception as e:
         logger.exception(e)
-        results = (
-                Results(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
+        results = e
     return(results)
 
 
@@ -361,19 +304,11 @@ def agents_last_updated(username, view_name, os_code=None,
 
     try:
         data = agents_uptime_info
-        results = (
-                Results(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
+        results = data
 
     except Exception as e:
         logger.exception(e)
-        results = (
-                Results(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
+        results = e
     return(results)
 
 def agents_reboot_pending(username, view_name, os_code=None,
@@ -397,19 +332,11 @@ def agents_reboot_pending(username, view_name, os_code=None,
 
     try:
         data = data
-        results = (
-                Results(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
+        results = data
 
     except Exception as e:
         logger.exception(e)
-        results = (
-                Results(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
+        results = e
     return(results)
 
 def agents_status(username, view_name, os_code=None,
@@ -433,18 +360,9 @@ def agents_status(username, view_name, os_code=None,
 
     try:
         data = data
-        results = (
-                Results(
-                    username, uri, method,
-                    ).information_retrieved(data, len(data))
-                )
+        results = data
 
     except Exception as e:
         logger.exception(e)
-        results = (
-                Results(
-                    username, uri, method
-                    ).something_broke('Systems_os_details', 'failed to retrieve data', e)
-                )
+        results = e
     return(results)
-

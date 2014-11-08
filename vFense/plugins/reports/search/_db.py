@@ -122,7 +122,7 @@ class FetchHardware(object):
     @time_it
     @catch_it((0, []))
     @db_create_close
-    def _by_type_and_query(self, key, query, htype=None, conn=None):
+    def _by_type_and_query(self, htype, key, query, conn=None):
         base_count, base_filter = self._set_base_query_by_type(htype)
         count = (
             base_count
