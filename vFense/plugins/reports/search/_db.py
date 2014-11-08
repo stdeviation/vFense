@@ -83,6 +83,21 @@ class FetchHardware(object):
     def storage(self):
         return self._by_type('storage')
 
+    def memory_by_regex(self, query_key, regex):
+        return self._by_type('memory', query_key, regex)
+
+    def nic_by_regex(self, query_key, regex):
+        return self._by_type('nic', query_key, regex)
+
+    def cpu_by_regex(self, query_key, regex):
+        return self._by_type('cpu', query_key, regex)
+
+    def display_by_regex(self, query_key, regex):
+        return self._by_type('display', query_key, regex)
+
+    def storage_by_regex(self, query_key, regex):
+        return self._by_type_and_query('storage', query_key, regex)
+
     @time_it
     @catch_it((0, []))
     @db_create_close
@@ -111,12 +126,14 @@ class FetchHardware(object):
         base_count, base_filter = self._set_base_query_by_type(htype)
         count = (
             base_count
+            .filter(lambda x: x[key].match(query))
             .count()
             .run(conn)
         )
 
         data = (
             base_filter
+            .filter(lambda x: x[key].match(query))
             .distinct()
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
@@ -240,3 +257,19 @@ class FetchHardware(object):
             .run(conn)
         )
         return types
+
+    @catch_it([])
+    @db_create_close
+    def get_valid_keys_for_type(self, htype, conn=None):
+        hrow = list(
+            r
+            .table(AgentCollections.Hardware)
+            .get_all(htype, index=HardwarePerAgentIndexes.Type)
+            .limit(1)
+            .run(conn)
+        )
+        if hrow:
+            keys = hrow[0].keys()
+        else:
+            keys = []
+        return keys
