@@ -104,6 +104,27 @@ class FetchHardware(object):
         )
         return(count, data)
 
+    @time_it
+    @catch_it((0, []))
+    @db_create_close
+    def _by_type_and_query(self, key, query, htype=None, conn=None):
+        base_count, base_filter = self._set_base_query_by_type(htype)
+        count = (
+            base_count
+            .count()
+            .run(conn)
+        )
+
+        data = (
+            base_filter
+            .distinct()
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
+        return(count, data)
+
     def _set_agent_base_query(self):
         if self.view_name:
             base_filter = (
