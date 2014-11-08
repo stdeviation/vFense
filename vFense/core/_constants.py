@@ -89,7 +89,6 @@ class DefaultQueryValues():
 
 
 class Time(object):
-
     @staticmethod
     def now():
         return(int(time()))

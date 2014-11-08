@@ -102,6 +102,11 @@ class FetchHardware(object):
             'nic', 'os_code', os_code, query_key, regex
         )
 
+    def nic_by_arch_and_by_regex(self, bit_type, query_key, regex):
+        return self._by_type_and_filter_by_key_and_by_query(
+            'nic', 'bit_type', bit_type, query_key, regex
+        )
+
     def cpu_by_os_string_and_by_regex(self, os_string, query_key, regex):
         return self._by_type_and_filter_by_key_and_by_query(
             'cpu', 'os_string', os_string, query_key, regex
@@ -110,6 +115,11 @@ class FetchHardware(object):
     def cpu_by_os_code_and_by_regex(self, os_code, query_key, regex):
         return self._by_type_and_filter_by_key_and_by_query(
             'cpu', 'os_code', os_code, query_key, regex
+        )
+
+    def cpu_by_arch_and_by_regex(self, bit_type, query_key, regex):
+        return self._by_type_and_filter_by_key_and_by_query(
+            'cpu', 'bit_type', bit_type, query_key, regex
         )
 
     def display_by_os_string_and_by_regex(self, os_string, query_key, regex):
@@ -122,6 +132,11 @@ class FetchHardware(object):
             'display', 'os_code', os_code, query_key, regex
         )
 
+    def display_by_arch_and_by_regex(self, bit_type, query_key, regex):
+        return self._by_type_and_filter_by_key_and_by_query(
+            'display', 'bit_type', bit_type, query_key, regex
+        )
+
     def storage_by_os_string_and_by_regex(self, os_string, query_key, regex):
         return self._by_type_and_filter_by_key_and_by_query(
             'storage', 'os_string', os_string, query_key, regex
@@ -132,6 +147,11 @@ class FetchHardware(object):
             'storage', 'os_code', os_code, query_key, regex
         )
 
+    def storage_by_arch_and_by_regex(self, bit_type, query_key, regex):
+        return self._by_type_and_filter_by_key_and_by_query(
+            'storage', 'bit_type', bit_type, query_key, regex
+        )
+
     def memory_by_os_string_and_by_regex(self, os_string, query_key, regex):
         return self._by_type_and_filter_by_key_and_by_query(
             'memory', 'os_string', os_string, query_key, regex
@@ -140,6 +160,11 @@ class FetchHardware(object):
     def memory_by_os_code_and_by_regex(self, os_code, query_key, regex):
         return self._by_type_and_filter_by_key_and_by_query(
             'memory', 'os_code', os_code, query_key, regex
+        )
+
+    def memory_by_arch_and_by_regex(self, bit_type, query_key, regex):
+        return self._by_type_and_filter_by_key_and_by_query(
+            'storage', 'bit_type', bit_type, query_key, regex
         )
 
     @time_it
@@ -340,7 +365,7 @@ class FetchHardware(object):
             .run(conn)
         )
         if hrow:
-            keys = hrow[0].keys()
+            keys = list(set(hrow[0].keys()).union(self.keys_to_pluck))
         else:
             keys = []
         return keys

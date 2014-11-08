@@ -1,5 +1,4 @@
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core.results import ApiResults
 from vFense.core.status_codes import GenericCodes, GenericFailureCodes
 from vFense.core.view._constants import DefaultViews
 from vFense.core.agent._constants import AgentCommonKeys
@@ -34,10 +33,7 @@ class RetrieveHardware(RetrieveBase):
                 AgentKeys.DisplayName,
                 AgentKeys.OsCode,
                 AgentKeys.OsString,
-                AgentKeys.AgentStatus,
                 AgentKeys.Environment,
-                AgentCommonKeys.AVAIL_VULN,
-                AgentCommonKeys.AVAIL_UPDATES,
                 AgentKeys.LastAgentUpdate,
             ]
         )
@@ -139,6 +135,727 @@ class RetrieveHardware(RetrieveBase):
         count, data = self.fetch.nic()
         return self._base(count, data)
 
+    def memory_by_regex(self, key, regex):
+        """Return all memory by searching on a key and regex that maches
+            the value.
+        Args:
+            key (str): The key you want to perform the search on.
+                examples... computer_name, os_string, os_code
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.memory_by_regex('os_code', 'linux')
+            >>> search.memory_by_regex('os_string', 'Red*')
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('memory')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.memory_by_regex(key, regex)
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def cpu_by_regex(self, key, regex):
+        """Return all cpus by searching on a key and regex that maches
+            the value.
+        Args:
+            key (str): The key you want to perform the search on.
+                examples... computer_name, os_string, os_code
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.cpu_by_regex('os_code', 'linux')
+            >>> search.cpu_by_regex('os_string', 'Red*')
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('cpu')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.memory_by_regex(key, regex)
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def nic_by_regex(self, key, regex):
+        """Return all nics by searching on a key and regex that maches
+            the value.
+        Args:
+            key (str): The key you want to perform the search on.
+                examples... computer_name, os_string, os_code
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.nic_by_regex('os_code', 'linux')
+            >>> search.nic_by_regex('os_string', 'Red*')
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('nic')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.nic_by_regex(key, regex)
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def storage_by_regex(self, key, regex):
+        """Return all filesystems by searching on a key and regex that maches
+            the value.
+        Args:
+            key (str): The key you want to perform the search on.
+                examples... computer_name, os_string, os_code
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.storage_by_regex('os_code', 'linux')
+            >>> search.storage_by_regex('os_string', 'Red*')
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('storage')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.nic_by_regex(key, regex)
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def display_by_regex(self, key, regex):
+        """Return all displays by searching on a key and regex that maches
+            the value.
+        Args:
+            key (str): The key you want to perform the search on.
+                examples... computer_name, os_string, os_code
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.display_by_regex('os_code', 'linux')
+            >>> search.display_by_regex('os_string', 'Red*')
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('display')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.nic_by_regex(key, regex)
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def cpu_by_os_code_and_by_regex(self, os_code, key, regex):
+        """Return all cpus by filtering on the os_code and by searching
+            on a key and regex that maches the value.
+        Args:
+            os_code (str): The operating system you want to filter on.
+                examples... windows, darwin, linux
+            key (str): The key you want to perform the search on.
+                examples... computer_name, os_string, os_code
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.cpu_by_os_code_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.cpu_by_os_code_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('cpu')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.cpu_by_os_code_and_by_regex(
+                os_code, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def memory_by_os_code_and_by_regex(self, os_code, key, regex):
+        """Return all memory by filtering on the os_code and by searching
+            on a key and regex that maches the value.
+        Args:
+            os_code (str): The operating system you want to filter on.
+                examples... windows, darwin, linux
+            key (str): The key you want to perform the search on.
+                examples... computer_name, os_string, os_code
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.memory_by_os_code_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.memory_by_os_code_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('memory')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.memory_by_os_code_and_by_regex(
+                os_code, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def display_by_os_code_and_by_regex(self, os_code, key, regex):
+        """Return all displays by filtering on the os_code and by searching
+            on a key and regex that maches the value.
+        Args:
+            os_code (str): The operating system you want to filter on.
+                examples... windows, darwin, linux
+            key (str): The key you want to perform the search on.
+                examples... computer_name, os_string, os_code
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.display_by_os_code_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.display_by_os_code_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('display')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.display_by_os_code_and_by_regex(
+                os_code, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def storage_by_os_code_and_by_regex(self, os_code, key, regex):
+        """Return all filesystems by filtering on the os_code and by searching
+            on a key and regex that maches the value.
+        Args:
+            os_code (str): The operating system you want to filter on.
+                examples... windows, darwin, linux
+            key (str): The key you want to perform the search on.
+                examples... computer_name, os_string, os_code
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.storage_by_os_code_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.storage_by_os_code_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('storage')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.storage_by_os_code_and_by_regex(
+                os_code, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def nic_by_os_code_and_by_regex(self, os_code, key, regex):
+        """Return all nics by filtering on the os_code and by searching
+            on a key and regex that maches the value.
+        Args:
+            os_code (str): The operating system you want to filter on.
+                examples... windows, darwin, linux
+            key (str): The key you want to perform the search on.
+                examples... computer_name, os_string, os_code
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.nic_by_os_code_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.nic_by_os_code_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('nic')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.nic_by_os_code_and_by_regex(
+                os_code, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def cpu_by_os_string_and_by_regex(self, os_string, key, regex):
+        """Return all cpus by filtering on the os_code and by searching
+            on a key and regex that maches the value.
+        Args:
+            os_string (str): The operating system you want to filter on.
+                examples... Windows 7 Professional N, Ubuntu 13.0.4
+            key (str): The key you want to perform the search on.
+                examples... computer_name, cores, cache_kb
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.cpu_by_os_code_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.cpu_by_os_code_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('cpu')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.cpu_by_os_string_and_by_regex(
+                os_string, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def memory_by_os_string_and_by_regex(self, os_string, key, regex):
+        """Return memory by filtering on the os_string and by searching
+            on a key and regex that maches the value.
+        Args:
+            os_string (str): The operating system you want to filter on.
+                examples... Windows 7 Professional N, Ubuntu 13.0.4
+            key (str): The key you want to perform the search on.
+                examples... computer_name, name, total_memory
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.cpu_by_os_string_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.cpu_by_os_string_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('memory')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.memory_by_os_string_and_by_regex(
+                os_string, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def nic_by_os_string_and_by_regex(self, os_string, key, regex):
+        """Return nics by filtering on the os_string and by searching
+            on a key and regex that maches the value.
+        Args:
+            os_string (str): The operating system you want to filter on.
+                examples... Windows 7 Professional N, Ubuntu 13.0.4
+            key (str): The key you want to perform the search on.
+                examples... computer_name, display_name, mac, ip_address
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.cpu_by_os_string_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.cpu_by_os_string_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('nic')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.nic_by_os_string_and_by_regex(
+                os_string, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def display_by_os_string_and_by_regex(self, os_string, key, regex):
+        """Return displays by filtering on the os_string and by searching
+            on a key and regex that maches the value.
+        Args:
+            os_string (str): The operating system you want to filter on.
+                examples... Windows 7 Professional N, Ubuntu 13.0.4
+            key (str): The key you want to perform the search on.
+                examples... computer_name, display_name, mac, ip_address
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.display_by_os_string_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.display_by_os_string_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('display')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.display_by_os_string_and_by_regex(
+                os_string, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def storage_by_os_string_and_by_regex(self, os_string, key, regex):
+        """Return filesystems by filtering on the os_string and by searching
+            on a key and regex that maches the value.
+        Args:
+            os_string (str): The operating system you want to filter on.
+                examples... Windows 7 Professional N, Ubuntu 13.0.4
+            key (str): The key you want to perform the search on.
+                examples... computer_name, display_name, mac, ip_address
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.display_by_os_string_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.display_by_os_string_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('storage')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.storage_by_os_string_and_by_regex(
+                os_string, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def cpu_by_arch_and_by_regex(self, arch, key, regex):
+        """Return filesystems by filtering on the os_string and by searching
+            on a key and regex that maches the value.
+        Args:
+            arch (str): The operating system you want to filter on.
+                examples... 32, 64
+            key (str): The key you want to perform the search on.
+                examples... computer_name, display_name, mac, ip_address
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.cpu_by_arch_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.cpu_by_arch_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('cpu')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.cpu_by_arch_and_by_regex(
+                arch, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def memory_by_arch_and_by_regex(self, arch, key, regex):
+        """Return memory by filtering on the os_string and by searching
+            on a key and regex that maches the value.
+        Args:
+            arch (str): The operating system you want to filter on.
+                examples... 32, 64
+            key (str): The key you want to perform the search on.
+                examples... computer_name, display_name, mac, ip_address
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.memory_by_arch_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.memory_by_arch_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('memory')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.memory_by_arch_and_by_regex(
+                arch, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def nic_by_arch_and_by_regex(self, arch, key, regex):
+        """Return nic by filtering on the os_string and by searching
+            on a key and regex that maches the value.
+        Args:
+            arch (str): The operating system you want to filter on.
+                examples... 32, 64
+            key (str): The key you want to perform the search on.
+                examples... computer_name, display_name, mac, ip_address
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.nic_by_arch_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.nic_by_arch_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('nic')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.nic_by_arch_and_by_regex(
+                arch, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def display_by_arch_and_by_regex(self, arch, key, regex):
+        """Return display by filtering on the os_string and by searching
+            on a key and regex that maches the value.
+        Args:
+            arch (str): The operating system you want to filter on.
+                examples... 32, 64
+            key (str): The key you want to perform the search on.
+                examples... computer_name, display_name, mac, ip_address
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.display_by_arch_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.display_by_arch_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('display')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.display_by_arch_and_by_regex(
+                arch, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def storage_by_arch_and_by_regex(self, arch, key, regex):
+        """Return filesystems by filtering on the os_string and by searching
+            on a key and regex that maches the value.
+        Args:
+            arch (str): The operating system you want to filter on.
+                examples... 32, 64
+            key (str): The key you want to perform the search on.
+                examples... computer_name, display_name, mac, ip_address
+            regex (str): A valid PCRE aka regular expression
+
+        Basic Usage:
+            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
+            >>> view_name = 'global'
+            >>> search = RetrieveHardware(view_name='default')
+            >>> search.display_by_arch_and_by_regex(
+                'linux', 'os_string', 'ubu'
+            )
+            >>> search.display_by_arch_and_by_regex(
+                'linux', 'computer_name', '^ns*'
+            )
+
+        Returns:
+            An instance of ApiResults
+        """
+        valid_keys = self.fetch.get_valid_keys_for_type('storage')
+        if key in valid_keys and self.sort_key in valid_keys:
+            count, data = self.fetch.storage_by_arch_and_by_regex(
+                arch, key, regex
+            )
+            return self._base(count, data)
+
+        elif key not in valid_keys:
+            return self._set_results_invalid_filter_key(key)
+
+        else:
+            return self._set_results_invalid_sort_key(key)
+
+    def _set_results_invalid_sort_key(self, key):
+        vfense_status_code = GenericFailureCodes.InvalidSortKey
+        generic_status_code = GenericCodes.InformationRetrieved
+        msg = 'Invalid sort key {0}'.format(key)
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code, msg, 0, []
+            )
+        )
+        return results
+
+    def _set_results_invalid_filter_key(self, key):
+        vfense_status_code = GenericFailureCodes.InvalidFilterKey
+        generic_status_code = GenericCodes.InformationRetrieved
+        msg = 'Invalid filter key {0}'.format(key)
+        results = (
+            self._set_results(
+                generic_status_code, vfense_status_code, msg, 0, []
+            )
+        )
+        return results
 
     def _base(self, count, data):
         """Return all hardware
