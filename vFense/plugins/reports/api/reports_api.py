@@ -1,206 +1,90 @@
 import simplejson as json
 
-import logging
-import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
-from vFense.db.client import *
+from vFense.core._constants import DefaultQueryValues, SortValues
+from vFense.core.api._constants import (
+    ApiArguments, AgentApiArguments
+)
 from vFense.core.results import ApiResults, ExternalApiResults
-from reports.stats import *
-from vFense.core.decorators import authenticated_request
-from vFense.utils.common import *
-from vFense.core.user._db_model import UserKeys
+from vFense.core.decorators import (
+    authenticated_request, results_message, api_catch_it
+)
+from vFense.core.permissions._constants import Permissions
+from vFense.core.permissions.decorators import check_permissions
+from vFense.core.agent._db_model import AgentKeys, HardwarePerAgentKeys
+from vFense.core.user._db_model import AgentKeys, HardwarePerAgentKeys
 from vFense.core.user.manager import UserManager
+from vFense.plugins.reports.search.hardware import RetrieveHardware
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
-
-class AgentsOsDetailsHandler(BaseHandler):
+class HardwareReportsHandler(BaseHandler):
+    @api_catch_it
     @authenticated_request
     def get(self):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
-        uri=self.request.uri
-        method=self.request.method
-        try:
-            os_code=self.get_argument('os_code', None)
-            tag_id=self.get_argument('tag_id', None)
-            results = systems_os_details(username=username, view_name=view_name,
-                    os_code=None,tag_id=None, uri=uri, method=method)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            results = (
-                    Results(
-                        username, uri, method
-                        ).something_broke('no stats', '', e)
-                    )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-class AgentsHardwareDetailsHandler(BaseHandler):
-    @authenticated_request
-    def get(self):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
-        uri=self.request.uri
-        method=self.request.method
-        try:
-            results= None
-            os_code=self.get_argument('os_code', None)
-            tag_id=self.get_argument('tag_id', None)
-            results = systems_hardware_details(username=username, view_name=view_name,
-                    os_code=os_code, tag_id=tag_id,
-                    uri=uri, method=method)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            results = (
-                    Results(
-                        username, uri, method
-                        ).something_broke('no stats', '', e)
-                    )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-class AgentsCPUDetailsHandler(BaseHandler):
-    @authenticated_request
-    def get(self):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
-        uri=self.request.uri
-        method=self.request.method
-        try:
-            results= None
-            os_code=self.get_argument('os_code', None)
-            tag_id=self.get_argument('tag_id', None)
-            results = systems_cpu_details(username=username, view_name=view_name,
-                    tag_id=tag_id, os_code=os_code,
-                    uri=uri, method=method
-                    )
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            results = (
-                    Results(
-                        username, uri, method
-                        ).something_broke('no stats', '', e)
-                    )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-class AgentsMemoryDetailsHandler(BaseHandler):
-    @authenticated_request
-    def get(self):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
-        uri=self.request.uri
-        method=self.request.method
-        try:
-            results= None
-            os_code=self.get_argument('os_code', None)
-            tag_id=self.get_argument('tag_id', None)
-            results = systems_memory_stats(
-                username=username,
-                view_name=view_name,
-                tag_id=tag_id, os_code=os_code,
-                uri=uri, method=method,
+        active_user = self.get_current_user()
+        active_view = UserManager(active_user).properties.current_view
+        query = self.get_argument(ApiArguments.QUERY, None)
+        count = (
+            int(
+                self.get_argument(ApiArguments.COUNT, DefaultQueryValues.COUNT)
             )
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            results = (
-                    Results(
-                        username, uri, method
-                        ).something_broke('no stats', '', e)
-                    )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-class AgentsDiskDetailsHandler(BaseHandler):
-    @authenticated_request
-    def get(self):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
         )
-        uri=self.request.uri
-        method=self.request.method
-        try:
-            results= None
-            os_code=self.get_argument('os_code', None)
-            tag_id=self.get_argument('tag_id', None)
-            results = systems_disk_stats(username=username, view_name=view_name,
-                    tag_id=tag_id, os_code=os_code,
-                    uri=uri, method=method
-                    )
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            results = (
-                    Results(
-                        username, uri, method
-                        ).something_broke('no stats', '', e)
-                    )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-class AgentsNetworkDetailsHandler(BaseHandler):
-    @authenticated_request
-    def get(self):
-        username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
+        offset = (
+            int(
+                self.get_argument(
+                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
+                )
+            )
         )
-        uri=self.request.uri
-        method=self.request.method
-        try:
-            results= None
-            os_code=self.get_argument('os_code', None)
-            tag_id=self.get_argument('tag_id', None)
-            results = systems_network_details(username=username, view_name=view_name,
-                    tag_id=tag_id, os_code=os_code,
-                    uri=uri, method=method
-                    )
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        sort = self.get_argument(ApiArguments.SORT, SortValues.ASC)
+        sort_by = (
+            self.get_argument(ApiArguments.SORT_BY, AgentKeys.ComputerName)
+        )
 
-        except Exception as e:
-            results = (
-                    Results(
-                        username, uri, method
-                        ).something_broke('no stats', '', e)
-                    )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        os_code = self.get_argument(AgentApiArguments.OS_CODE, None)
+        os_string = self.get_argument(AgentApiArguments.OS_STRING, None)
+        bit_type = self.get_argument(AgentApiArguments.BIT_TYPE, None)
+        hw_type = self.get_argument(HardwarePerAgentKeys.Type, 'nic')
+        fkey = self.get_argument(ApiArguments.FILTER_KEY, None)
+        fval = self.get_argument(ApiArguments.FILTER_VAL, None)
+        search = (
+            RetrieveHardware(
+                view_name=active_view, count=count, offset=offset,
+                sort=sort, sort_key=sort_by
+            )
+        )
+        if hw_type == 'memory':
+            if not os_code and not os_string and not bit_type:
+                results = self.by_memory(search)
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
+
+    @results_message
+    def by_memory(self, search):
+        results = search.memory()
+        return results
+
+    @results_message
+    def by_cpu(self):
+        search = RetrieveHardware()
+        results = search.cpu()
+        return results
+
+    @results_message
+    def by_nic(self):
+        search = RetrieveHardware()
+        results = search.nic()
+        return results
+
+    @results_message
+    def by_display(self):
+        search = RetrieveHardware()
+        results = search.display()
+        return results
+
+    @results_message
+    def by_storage(self):
+        search = RetrieveHardware()
+        results = search.storage()
+        return results

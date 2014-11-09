@@ -56,6 +56,7 @@ class AgentApiArguments(ApiArguments):
     SHUTDOWN = 'shutdown'
     REFRESH_APPS = 'refresh_apps'
     TOKEN = 'token'
+    BIT_TYPE = 'bit_type'
 
 
 class TagApiArguments(ApiArguments):
