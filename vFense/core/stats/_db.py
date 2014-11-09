@@ -102,33 +102,52 @@ def insert_stat(stat):
             stat, StatsCollections.AgentStats
         )
     )
-
     return data
 
 
 @time_it
-def update_stat(agent_id, stat):
+@catch_it({})
+def update_stat(agent_id, hw_type, stat, file_system=None, conn=None):
     """ Insert stats for an agent and its properties into the database
         This function should not be called directly.
     Args:
         agent_id (str): The 36 character UUID of the agent.
+        hw_type (str): cpu, memory, nic, storage, or display
         stat (list|dict): Dictionary of the data you are inserting.
+        file_system (str): The name of the files system.
 
     Basic Usage:
         >>> from vFense.core.stat._db import update_stat
         >>> agent_id = '38226b0e-a482-4cb8-b135-0a0057b913f2'
         >>> stat = {'view_name': 'vFense', 'needs_reboot': 'no'}
-        >>> update_stat(agent_id, stat)
+        >>> update_stat(agent_id, 'cpu', stat)
 
     Return:
         Tuple (status_code, count, error, generated ids)
         >>> (2001, 1, None, [])
     """
-    data = (
-        update_data_in_table(
-            agent_id, stat, StatsCollections.AgentStats
+    if file_system:
+        data = (
+            r
+            .table(StatsCollections)
+            .get_all(
+                [agent_id, hw_type],
+                index=StatsPerAgentIndexes.AgentIdAndStatType
+            )
+            .filter({FileSystemStatKeys.Name: file_system})
+            .run(conn)
         )
-    )
+
+    else:
+        data = (
+            r
+            .table(StatsCollections)
+            .get_all(
+                [agent_id, hw_type],
+                index=StatsPerAgentIndexes.AgentIdAndStatType
+            )
+            .run(conn)
+        )
 
     return data
 

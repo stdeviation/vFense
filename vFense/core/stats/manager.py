@@ -52,8 +52,8 @@ class StatManager(object):
         """
         results = ApiResults()
         results.fill_in_defaults()
-        invalid_fields = stat.get_invalid_fields()
         stat.fill_in_defaults()
+        invalid_fields = stat.get_invalid_fields()
         if not invalid_fields:
             status_code, _, _, generated_ids = (
                 insert_stat(stat.to_dict_db())
@@ -115,10 +115,10 @@ class StatManager(object):
         invalid_fields = stat.get_invalid_fields()
         stat.fill_in_defaults()
         if not invalid_fields and stat.id:
-            status_code, _, _, generated_ids = (
-                update_stat(stat.id, stat.to_dict_db())
-            )
-            if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
+            status_code, _, _, generated_ids = self._update_stat(stat)
+
+            if (status_code == DbCodes.Replaced or
+                    status_code == DbCodes.Unchanged):
                 msg = (
                     'Stat {0} updated successfully'
                     .format(stat.to_dict_non_null())
@@ -170,6 +170,12 @@ class StatManager(object):
 
         return results
 
+    def _update_stat(self, stat):
+        results = update_stat(
+            stat.id, stat.stat_type, stat.to_dict_db()
+        )
+        return results
+
 
 class CPUStatManager(StatManager):
     def __init__(self, **kwargs):
@@ -202,6 +208,19 @@ class FileSystemStatManager(StatManager):
         super(FileSystemStatManager, self).__init__(**kwargs)
         self.file_systems = self.stats()
 
+    def update(self, stats):
+        for stat in stats:
+            file_systems = self.stats()
+            if file_systems:
+                if stat.file_system in map(lambda x: x.file_system, file_systems):
+                    results = super(FileSystemStatManager, self).update(stat)
+                else:
+                    results = super(FileSystemStatManager, self).create(stat)
+            else:
+                results = super(FileSystemStatManager, self).create(stat)
+
+        return results
+
     def stats(self):
         filesystems = (
             super(FileSystemStatManager, self).stats(StatsType.FILE_SYSTEM)
@@ -212,3 +231,9 @@ class FileSystemStatManager(StatManager):
                 fs_objects.append(FileSystemStats(**fs))
 
         return fs_objects
+
+    def _update_stat(self, stat):
+        results = update_stat(
+            stat.id, stat.stat_type, stat.file_system, stat.to_dict_db()
+        )
+        return results

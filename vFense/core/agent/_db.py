@@ -1,6 +1,3 @@
-import logging
-
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._db import (
     insert_data_in_table, delete_data_in_table,
@@ -12,9 +9,6 @@ from vFense.core.agent._db_model import (
 )
 from vFense.core.agent._db_sub_queries import Merge
 from vFense.core.decorators import return_status_tuple, time_it, catch_it
-
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
 
 
 @time_it

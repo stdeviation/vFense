@@ -129,20 +129,31 @@ class CPUStats(Stats):
         self.iowait = iowait
         self.stat_type = StatsType.CPU
 
-
     def fill_in_defaults(self):
         super(CPUStats, self).fill_in_defaults()
         if not self.idle:
             self.idle = 0.0
+        else:
+            if not isinstance(self.idle, float):
+                self.idle = float(self.idle)
 
         if not self.system:
             self.system = 0.0
+        else:
+            if not isinstance(self.system, float):
+                self.system = float(self.system)
 
         if not self.user:
             self.user = 0.0
+        else:
+            if not isinstance(self.user, float):
+                self.user = float(self.user)
 
         if not self.iowait:
             self.iowait = 0.0
+        else:
+            if not isinstance(self.iowait, float):
+                self.iowait = float(self.iowait)
 
     def get_invalid_fields(self):
         """Check the agent for any invalid fields.
@@ -234,15 +245,27 @@ class MemoryStats(Stats):
         super(MemoryStats, self).fill_in_defaults()
         if not self.used_percent:
             self.used_percent = 0.0
+        else:
+            if not isinstance(self.used_percent, float):
+                self.used_percent = float(self.used_percent)
 
         if not self.free_percent:
             self.free_percent = 0.0
+        else:
+            if not isinstance(self.free_percent, float):
+                self.free_percent = float(self.free_percent)
 
         if not self.used:
             self.used = 0.0
+        else:
+            if not isinstance(self.used, float):
+                self.used = float(self.used)
 
         if not self.free:
             self.free = 0.0
+        else:
+            if not isinstance(self.free, float):
+                self.free = float(self.free)
 
 
     def get_invalid_fields(self):
@@ -331,21 +354,6 @@ class FileSystemStats(MemoryStats):
         self.mount = mount
         self.stat_type = StatsType.FILE_SYSTEM
 
-    def fill_in_defaults(self):
-        super(FileSystemStats, self).fill_in_defaults()
-        if not self.used_percent:
-            self.used_percent = 0.0
-
-        if not self.free_percent:
-            self.free_percent = 0.0
-
-        if not self.used:
-            self.used = 0.0
-
-        if not self.free:
-            self.free = 0.0
-
-
     def get_invalid_fields(self):
         """Check the agent for any invalid fields.
 
@@ -380,7 +388,7 @@ class FileSystemStats(MemoryStats):
         return invalid_fields
 
     def to_dict(self):
-        inherited_data = super(FileSystemStatKeys, self).to_dict()
+        inherited_data = super(FileSystemStats, self).to_dict()
         data = {
             FileSystemStatKeys.Name: self.name,
             FileSystemStatKeys.Mount: self.mount,
