@@ -13,7 +13,8 @@ from vFense.core.agent.status_codes import AgentCodes
 from vFense.core.receiver.status_codes import AgentResultCodes
 from vFense.core.tag.status_codes import TagCodes
 from vFense.core.view.status_codes import ViewCodes
-from vFense.core.tests.agent_and_tag_data import AGENT_DATA
+from vFense.core.tests.app_data import app_data
+from vFense.core.tests.agent_and_tag_data import agent_data
 from vFense.core.view import View
 from vFense.core.view.manager import ViewManager
 
@@ -61,9 +62,9 @@ class AgentsAndTagsTests(unittest.TestCase):
         self.failUnless(status_code == TagCodes.TagCreated)
 
     def test_c_create_agent1(self):
-        system_info = AGENT_DATA["system_info"]
-        system_info[AgentKeys.Views] = AGENT_DATA[AgentKeys.Views]
-        system_info[AgentKeys.Hardware] = AGENT_DATA[AgentKeys.Hardware]
+        system_info = agent_data["system_info"]
+        system_info[AgentKeys.Views] = agent_data[AgentKeys.Views]
+        system_info[AgentKeys.Hardware] = agent_data[AgentKeys.Hardware]
         agent = Agent(**system_info)
         tag = (
             fetch_tag_by_name_and_view(

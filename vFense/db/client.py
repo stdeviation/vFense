@@ -111,16 +111,27 @@ def rq_settings():
 
     return(host, port, db)
 
-def rq_queue(queue_name):
-    """Return an instance of Queue of the python-rq module.
-    Args:
-        queue_name (str): The name of the queue you want to return
+def redis_pool():
+    """Return a Redis Connection Pool
     """
     try:
         host = Config.get('Queue', 'host')
         port = int(Config.get('Queue', 'port'))
         db = Config.get('Queue', 'db')
         pool = redis.StrictRedis(host=host, port=port, db=db)
+
+    except Exception as e:
+        logger.error(e)
+
+    return pool
+
+def rq_queue(queue_name):
+    """Return an instance of Queue of the python-rq module.
+    Args:
+        queue_name (str): The name of the queue you want to return
+    """
+    try:
+        pool = redis_pool()
         rv_q = Queue(queue_name, connection=pool)
 
     except Exception as e:

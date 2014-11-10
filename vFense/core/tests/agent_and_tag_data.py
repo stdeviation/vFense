@@ -1,4 +1,4 @@
-AGENT_DATA = {
+agent_data = {
   "operation": "new_agent",
   "views": ['Test View 1'],
   "rebooted": "no",

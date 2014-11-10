@@ -2,7 +2,7 @@ import logging
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.agent._db_model import *
-from vFense.db.client import r
+from vFense.db.client import r, redis_pool
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.agent._db import(
@@ -12,14 +12,16 @@ from vFense.core.tag._db_model import *
 from vFense.plugins.patching._db_files import fetch_file_data
 from vFense.plugins.patching.file_data import add_file_data
 
-from vFense.plugins.patching._db import fetch_app_data, \
-    fetch_apps_data_by_os_code, insert_app_data
-
+from vFense.plugins.patching._db import (
+    fetch_app_data, fetch_apps_data_by_os_code, insert_app_data
+)
+from rq.decorators import job
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
+@job('incoming_updates', connection=redis_pool(), timeout=3600)
 def add_custom_app_to_agents(file_data, views=None,
                              agent_id=None, app_id=None):
 

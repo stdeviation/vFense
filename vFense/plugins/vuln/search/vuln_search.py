@@ -67,7 +67,6 @@ class FetchVulns(object):
             self.search = FetchRedhatVulns(**kwargs)
             self.redhat = True
 
-
     def by_vuln_id(self, vuln_id):
         """Search by name and version or by kb
         Kwargs:
@@ -97,7 +96,6 @@ class FetchVulns(object):
 
         results = self._set_results(count, data)
         return results
-
 
     def by_app_info(self, name=None, version=None, kb=None):
         """Search by name and version or by kb

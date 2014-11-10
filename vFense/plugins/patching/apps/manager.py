@@ -6,35 +6,32 @@ from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.core.agent._db import(
     fetch_agent_ids_in_views
 )
-from vFense.core.agent import Agent
 from vFense.core.agent.manager import AgentManager
 from vFense.core._db import insert_data_in_table
 from vFense.core.status_codes import DbCodes
 from vFense.core.results import ApiResults
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.manager import ViewManager
-from vFense.db.client import rq_queue
+from vFense.db.client import redis_pool
 from vFense.plugins.patching import Apps, Files
 from vFense.plugins.patching._constants import AppStatuses, CommonAppKeys
-from vFense.plugins.patching._db_model import (
-    AppCollections, DbCommonAppKeys
-)
+from vFense.plugins.patching._db_model import AppCollections, DbCommonAppKeys
 from vFense.plugins.patching.status_codes import (
     PackageCodes, PackageFailureCodes
 )
 from vFense.plugins.patching.file_data import add_file_data
-
 from vFense.plugins.patching._db import (
     fetch_app_data, fetch_apps_data_by_os_code, insert_app_data,
     delete_apps_per_agent_older_than
 )
-
 from vFense.plugins.patching.downloader.downloader import (
     download_all_files_in_app
 )
 
 import vFense.plugins.vuln.cve.cve as cve
 from vFense.plugins.vuln.search.vuln_search import FetchVulns
+
+from rq.decorators import job
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -115,7 +112,8 @@ class AppsManager(object):
         """
 
         search = FetchVulns(app.os_string)
-        vuln_info = search.by_app_info(app.name, app.version, app.kb)
+        results = search.by_app_info(app.name, app.version, app.kb)
+        vuln_info = results.data
 
         if vuln_info:
             app.cve_ids = vuln_info.cve_ids
@@ -291,20 +289,16 @@ class AppsManager(object):
         return data_stored
 
     def download_app_files(self, app, file_data):
-
-        rv_q = rq_queue('downloader')
-        rv_q.enqueue_call(
-            func=download_all_files_in_app,
-            args=(app, file_data, 0, self.apps_collection),
-            timeout=86400
+        download_all_files_in_app.delay(
+            app, file_data, 0, self.apps_collection
         )
 
-
+@job('incoming_updates', connection=redis_pool(), timeout=3600)
 def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
     manager = AppsManager()
     apps_data = []
     now = time()
-    agent = Agent(**AgentManager(agent_id).properties)
+    agent = AgentManager(agent_id).properties
     if isinstance(apps, list):
         for app in apps:
             files_data = []

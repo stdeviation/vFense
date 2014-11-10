@@ -1,19 +1,19 @@
-import logging
-import logging.config
-from vFense._constants import (
-    VFENSE_LOGGING_CONFIG, VFENSE_APP_PATH,
-    VFENSE_APP_DEP_PATH
-)
 import os
 import re
+import logging
+import logging.config
 
-from urlgrabber import urlgrab
-
+from vFense._constants import (
+    VFENSE_LOGGING_CONFIG, VFENSE_APP_PATH, VFENSE_APP_DEP_PATH
+)
+from vFense.db.client import redis_pool
 from vFense.plugins.patching.status_codes import PackageCodes
-from vFense.utils.common import hash_verify
-
 from vFense.plugins.patching._db_model import AppsKey, AppCollections
 from vFense.plugins.patching._db import update_app_data_by_app_id
+from vFense.utils.common import hash_verify
+
+from urlgrabber import urlgrab
+from rq.decorators import job
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
@@ -44,6 +44,7 @@ def download_file(uri, dl_path, throttle):
         urlgrab(uri, filename=dl_path, throttle=throttle)
 
 
+@job('downloader', connection=redis_pool(), timeout=86400)
 def download_all_files_in_app(app, file_data=None,
         throttle=0, collection=AppCollections.UniqueApplications):
 
