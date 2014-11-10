@@ -82,7 +82,6 @@ class FetchVulns(object):
         """
 
         data = Vulnerability()
-
         count, data = self.search.by_id(vuln_id)
         if count > 0 :
             data = data[0]
@@ -113,7 +112,6 @@ class FetchVulns(object):
             Tuple (count, list of dictionaries)
         """
         data = Vulnerability()
-
         if (name and version and self.redhat or
                 name and version and self.ubuntu):
             count, data = self.search.by_app_name_and_version(name, version)
@@ -134,7 +132,6 @@ class FetchVulns(object):
         return results
 
     def _set_results(self, count, data):
-
         results = ApiResults()
         results.fill_in_defaults()
         results.generic_status_code = GenericCodes.InformationRetrieved

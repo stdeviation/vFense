@@ -62,10 +62,12 @@ def fetch_agent_operation(operation_id, conn=None):
     data = (
         r
         .table(OperationCollections.Agent)
-        .get(operation_id)
+        .get_all(operation_id)
         .merge(OperationMerge.TIMES)
         .run(conn)
     )
+    if data:
+        data = data[0]
 
     return data
 
