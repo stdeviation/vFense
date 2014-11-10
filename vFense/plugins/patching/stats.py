@@ -16,7 +16,7 @@ from vFense.plugins.patching._db_stats import (
     fetch_os_apps_history_for_agent, fetch_os_apps_history_for_tag
 )
 from vFense.core.status_codes import GenericCodes
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResultKeys, ApiResults
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
@@ -53,15 +53,13 @@ def view_stats_by_os(view_name, count=3):
             ]
         }
     """
-    data = group_avail_app_stats_by_os_for_view(view_name, count)
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.data = group_avail_app_stats_by_os_for_view(view_name, count)
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
     return results
-
 
 @time_it
 def tag_stats_by_os(tag_id, count=3):

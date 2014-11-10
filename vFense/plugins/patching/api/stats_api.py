@@ -24,6 +24,7 @@ logger = logging.getLogger('rvapi')
 
 
 class ViewStatsByOsHandler(BaseHandler):
+    @api_catch_it
     @authenticated_request
     def get(self):
         username = self.get_current_user().encode('utf-8')
@@ -32,26 +33,14 @@ class ViewStatsByOsHandler(BaseHandler):
         )
         uri = self.request.uri
         method = self.request.method
-        try:
-            count = self.get_argument('limit', 3)
-            results =  (
-                self.get_view_stats_by_os(view_name, count)
-            )
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-        except Exception as e:
-            results = (
-                Results(
-                    username, uri, method
-                ).something_broke('view os stats', 'os stats', e)
-            )
-            logger.exception(results)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        count = self.get_argument('limit', 3)
+        results =  self.get_view_stats_by_os(view_name, count)
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
+    @check_permissions(Permissions.READ)
     def get_view_stats_by_os(self, view_name, count):
         results = view_stats_by_os(view_name, count)
         return results
