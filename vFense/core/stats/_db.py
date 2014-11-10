@@ -3,8 +3,7 @@ import logging
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core._db import (
-    insert_data_in_table, delete_data_in_table,
-    update_data_in_table
+    insert_data_in_table
 )
 from vFense.core.stats._db_model import (
     StatsCollections, AgentStatKeys, StatsPerAgentIndexes,
@@ -107,7 +106,9 @@ def insert_stat(stat):
 
 @time_it
 @catch_it({})
-def update_stat(agent_id, hw_type, stat, file_system=None, conn=None):
+@db_create_close
+@return_status_tuple
+def update_stat(agent_id, hw_type, stat, file_system, conn=None):
     """ Insert stats for an agent and its properties into the database
         This function should not be called directly.
     Args:
@@ -129,23 +130,25 @@ def update_stat(agent_id, hw_type, stat, file_system=None, conn=None):
     if file_system:
         data = (
             r
-            .table(StatsCollections)
+            .table(StatsCollections.AgentStats)
             .get_all(
                 [agent_id, hw_type],
                 index=StatsPerAgentIndexes.AgentIdAndStatType
             )
             .filter({FileSystemStatKeys.Name: file_system})
+            .update(stat)
             .run(conn)
         )
 
     else:
         data = (
             r
-            .table(StatsCollections)
+            .table(StatsCollections.AgentStats)
             .get_all(
                 [agent_id, hw_type],
                 index=StatsPerAgentIndexes.AgentIdAndStatType
             )
+            .update(stat)
             .run(conn)
         )
 

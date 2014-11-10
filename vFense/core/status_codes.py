@@ -46,6 +46,7 @@ class GenericFailureCodes(object):
     FailedToUpdateAllObjects = 1512
     InvalidHeaders = 1513
 
+
 class DbCodes(object):
     Down = 2000
     Updated = 2001

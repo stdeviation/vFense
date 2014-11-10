@@ -5,15 +5,9 @@ from vFense.core._db_constants import DbTime
 from vFense.core.stats._db_model import (
     CpuStatKeys, AgentStatKeys, MemoryStatKeys, FileSystemStatKeys
 )
-from vFense.core.agent._constants import (
-    agent_regex
-)
-from vFense.core._constants import (
-    CommonKeys
-)
-from vFense.core.stats._constants import (
-    StatsType
-)
+from vFense.core.agent._constants import agent_regex
+from vFense.core._constants import CommonKeys
+from vFense.core.stats._constants import StatsType
 from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 
@@ -240,7 +234,6 @@ class MemoryStats(Stats):
         self.free = free
         self.stat_type = StatsType.MEM
 
-
     def fill_in_defaults(self):
         super(MemoryStats, self).fill_in_defaults()
         if not self.used_percent:
@@ -266,7 +259,6 @@ class MemoryStats(Stats):
         else:
             if not isinstance(self.free, float):
                 self.free = float(self.free)
-
 
     def get_invalid_fields(self):
         """Check the agent for any invalid fields.
@@ -321,7 +313,6 @@ class MemoryStats(Stats):
                         )
                     }
                 )
-
 
         return invalid_fields
 
