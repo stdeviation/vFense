@@ -90,8 +90,10 @@ class NewAgentV2(AgentBaseHandler):
     @receiver_catch_it
     @agent_results_message
     def add_agent(self, system_info, hardware, views, tags, plugins):
+        dfile = open('/home/linuxdynasty/vFense/vFense/core/tests/newagent_data.py', 'w')
         system_info[AgentKeys.Hardware] = hardware
         system_info[AgentKeys.Views] = views
+        dfile.write(dumps(system_info))
         agent = Agent(**system_info)
         manager = AgentManager()
         results = AgentApiResults(**manager.create(agent, tags))
@@ -115,7 +117,9 @@ class NewAgentV2(AgentBaseHandler):
             results.operations.append(newagent_operation.to_dict_non_null())
             results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
+                dfile.write(dumps(plugins['rv']['data']))
                 HandOff().new_agent_operation(
                     agent_id, plugins['rv']['data']
                 )
+            dfile.close()
         return results
