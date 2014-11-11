@@ -21,6 +21,9 @@ class Permissions():
     REMOTE_ASSISTANCE = 'remote assistance'
     EDIT_TIME_ZONE = 'edit time zone'
     HIDE_UNHIDE_APPLICATIONS = 'hide_apps'
+    CREATE_NOTIFICATION = 'create notification'
+    REMOVE_NOTIFICATION = 'remove notification'
+    EDIT_NOTIFICATION = 'edit notification'
 
     @staticmethod
     def get_valid_permissions():

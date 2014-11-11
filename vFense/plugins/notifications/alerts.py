@@ -3,10 +3,10 @@ from time import time
 import logging
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core.agent._db import agent_exist
 from vFense.core.tag._db import tag_exist
-from vFense.plugins.notifications import Notification
+from vFense.plugins.notifications import Notification, NotificationFields
 from vFense.plugins.notifications._constants import (
     VALID_NOTIFICATION_PLUGINS, VALID_APP_NOTIFICATIONS,
     VALID_STATUSES_TO_ALERT_ON, VALID_MONITORING_NOTIFICATIONS
@@ -24,14 +24,15 @@ from vFense.plugins._db import (
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
-
-
 def get_valid_fields(view_name):
-    fields = fetch_valid_fields(view_name)
-    fields['plugins'] = VALID_NOTIFICATION_PLUGINS
-    fields['app_operation_types'] = VALID_APP_NOTIFICATIONS
-    fields['app_thresholds'] = VALID_STATUSES_TO_ALERT_ON
-    fields['monitoring_operation_types'] = VALID_MONITORING_NOTIFICATIONS
+    results = ApiResults()
+    results.fill_in_defaults()
+    fields = NotificationFields(**fetch_valid_fields(view_name))
+    fields.plugins = VALID_NOTIFICATION_PLUGINS
+    fields.app_operation_types = VALID_APP_NOTIFICATIONS
+    fields.app_thresholds = VALID_STATUSES_TO_ALERT_ON
+    fields.monitoring_operation_types = VALID_MONITORING_NOTIFICATIONS
+    return results
 
 
 class NotificationManager(object):
@@ -70,7 +71,8 @@ class NotificationManager(object):
         return results
 
     def create(self, rule):
-        results = {}
+        results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(rule, Notification):
             rule.fill_in_defaults()
             data_validated = self.__validate_data(rule)
@@ -146,10 +148,11 @@ class NotificationManager(object):
             results.message = msg
             results.data = rule.agents + rule.tags
 
-        return(results)
+        return results
 
     def update(self, rule):
-        results = {}
+        results = ApiResults()
+        results.fill_in_defaults()
         if isinstance(rule, Notification):
             data_validated = self.__validate_data(rule)
             invalid_fields = rule.get_invalid_fields()
@@ -241,8 +244,7 @@ class NotificationManager(object):
             results.message = msg
             results.data = rule.agents + rule.tags
 
-        return(results)
-
+        return results
 
     def validate_data(self, rule):
         if isinstance(rule, Notification):

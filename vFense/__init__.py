@@ -10,7 +10,6 @@ class Base(object):
         the hardcoded default values."""
         pass
 
-
     def get_invalid_fields(self):
         """Check for any invalid fields.
 
@@ -24,13 +23,11 @@ class Base(object):
 
     def to_dict(self):
         """ Turn the fields into a dictionary."""
-
-        return {}
+        return self.__dict__
 
     def to_dict_all(self):
         """ Turn all the fields into a dictionary."""
         return self.__dict__
-
 
     def to_dict_non_null(self):
         """ Use to get non None fields. Useful when

@@ -356,3 +356,33 @@ class NotificationHistory(Base):
 
         return dict(self.to_dict().items() + data.items())
 
+
+class NotificationFields(Base):
+    """Used to represent an instance of an agent."""
+
+    def __init__(self, agents=None, tags=None, users=None,
+                 groups=None, views=None, plugins=None,
+                 app_operation_types=None, app_thresholds=None,
+                 monitoring_operation_types=None
+                 ):
+        """
+        Kwargs:
+        agents (list of dictionaries): example..
+            [{"computer_name": "test1", "agent_id":  "cca3ecf3-3ef8-4bd7-89cd-ca371374bd56"}]
+        tags (list of dictionaries): example..
+            [{"tag_name": "web", "tag_id":  "cca3ecf3-3ef8-4bd7-89cd-ca371374bd56"}]
+        users (list of dictionaries): example..
+            [{"user_name": "admin"}]
+        groups (list of dictionaries): example..
+            [{"group_name": "Global Admin Group"}]
+        views (list of dictionaries): example..
+            [{"view_name": "global"}]
+        """
+        self.agents = agents
+        self.tags = tags
+        self.users = users
+        self.groups = groups
+        self.views = views
+        self.plugins = plugins
+        self.app_operation_types = app_operation_types
+        self.monitoring_operation_types = monitoring_operation_types

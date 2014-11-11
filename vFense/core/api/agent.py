@@ -1,9 +1,5 @@
 import simplejson as json
 
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
-
 from vFense.core.api.base import BaseHandler
 from vFense.core._constants import DefaultQueryValues
 from vFense.core.api._constants import (
@@ -43,9 +39,6 @@ from vFense.core.decorators import (
 )
 from vFense.core.agent.status_codes import AgentCodes, AgentFailureCodes
 from vFense.core.view.status_codes import ViewCodes
-
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
 
 
 class AgentResultURIs(BaseHandler):
