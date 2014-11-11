@@ -29,7 +29,7 @@ RQ_WORKER_QUEUES = get_rqworkers()
 RQ_PID_FILES = []
 
 for queue in RQ_WORKER_QUEUES:
-    queue_name = re.sub(r'_settings', '', queue[1])
+    queue_name = re.sub(r'_settings.py', '', queue[1])
     pid_file = os.path.join(PID_DIR, 'rqw_pid_%s.pid' % (queue_name))
     PIDS.append((pid_file, queue))
     RQ_PID_FILES.append(pid_file)
@@ -91,7 +91,7 @@ def rqworker_starter():
     for queue in RQ_WORKER_QUEUES:
         queue_name = re.sub(r'_settings', '', queue[1])
         queue_dir = queue[0]
-        queue_settings = queue[1]
+        queue_settings = queue[1].rstrip('.py')
         os.chdir(queue_dir)
         pid_file = os.path.join(PID_DIR, 'rqw_pid_%s.pid' % (queue_name))
         rqw = 'RqWorker Queue %s' % (queue_name)
