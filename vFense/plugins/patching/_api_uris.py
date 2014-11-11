@@ -4,7 +4,7 @@ from vFense.plugins.patching.api.os_apps import (
 from vFense.plugins.patching.api.custom_apps import (
     AppIdCustomAppsHandler, GetAgentsByCustomAppIdHandler, CustomAppsHandler
 )
-from vFense.plugins.patching.api.stats_api import (
+from vFense.plugins.patching.api.stats import (
     ViewStatsByOsHandler, WidgetHandler, OsAppsOverTimeHandler,
     TopAppsNeededHandler, RecentlyReleasedHandler, ViewSeverityHandler
 )

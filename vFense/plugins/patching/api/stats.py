@@ -4,6 +4,8 @@ from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import (
     authenticated_request, results_message, api_catch_it
 )
+from vFense.core.permissions._constants import Permissions
+from vFense.core.permissions.decorators import check_permissions
 from vFense.core.user.manager import UserManager
 from vFense.plugins.patching._db_stats import get_all_app_stats_by_view
 from vFense.plugins.patching.stats import *
