@@ -7,7 +7,7 @@ lxml
 netifaces
 prettytable
 pycurl
-pytz==2012c
+pytz==2014.9
 redis
 requests
 rethinkdb
@@ -19,3 +19,5 @@ tornado
 tornado-redis
 urlgrabber
 xlrd
+python-dateutil
+py-bcrypt
