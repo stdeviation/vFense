@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.decorators import time_it
-from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._db_stats import (
     group_avail_app_stats_by_os_for_view,
     group_avail_app_stats_by_os_for_tag, fetch_bar_chart_for_appid_by_status,
@@ -16,7 +15,7 @@ from vFense.plugins.patching._db_stats import (
     fetch_os_apps_history_for_agent, fetch_os_apps_history_for_tag
 )
 from vFense.core.status_codes import GenericCodes
-from vFense.core.results import ApiResultKeys, ApiResults
+from vFense.core.results import ApiResults
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
@@ -94,14 +93,12 @@ def tag_stats_by_os(tag_id, count=3):
             ]
         }
     """
-    data = group_avail_app_stats_by_os_for_tag(tag_id, count)
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
-
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
+    results.data = group_avail_app_stats_by_os_for_tag(tag_id, count)
     return results
 
 
@@ -139,13 +136,12 @@ def bar_chart_for_appid_by_status(app_id, view_name):
         if status not in data.keys():
             data[status] = 0
 
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
-
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
+    results.data = data
     return results
 
 
@@ -186,16 +182,13 @@ def get_severity_bar_chart_stats_for_view(view_name, username=None):
             ]
         }
     """
-
     data = fetch_severity_bar_chart_stats_for_view(view_name)
-
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
-
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
+    results.data = data
     return results
 
 
@@ -237,14 +230,12 @@ def get_severity_bar_chart_stats_for_agent(agent_id):
         }
     """
     data = fetch_severity_bar_chart_stats_for_agent(agent_id)
-
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
-
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
+    results.data = data
     return results
 
 
@@ -285,16 +276,13 @@ def get_severity_bar_chart_stats_for_tag(tag_id):
             ]
         }
     """
-
     data = fetch_severity_bar_chart_stats_for_tag(tag_id)
-
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
-
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
+    results.data = data
     return results
 
 
@@ -350,16 +338,13 @@ def top_packages_needed(view_name, count=5):
             ]
         }
     """
-
     data = fetch_top_apps_needed_for_view(view_name, count)
-
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
-
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
+    results.data = data
     return results
 
 
@@ -415,14 +400,12 @@ def recently_released_packages(view_name, count=5):
         }
     """
     data = fetch_recently_released_apps(view_name, count)
-
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
-
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
+    results.data = data
     return results
 
 
@@ -493,14 +476,12 @@ def get_os_apps_history(view_name, status, start_date=None, end_date=None):
         start_date = 0.0
 
     data = fetch_os_apps_history(view_name, status, start_date, end_date)
-
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
-
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
+    results.data = data
     return results
 
 @time_it
@@ -576,14 +557,12 @@ def get_os_apps_history_for_agent(agent_id, status, start_date=None,
             agent_id, status, start_date, end_date
         )
     )
-
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
-
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
+    results.data = data
     return results
 
 @time_it
@@ -659,12 +638,10 @@ def get_os_apps_history_for_tag(tag_id, status, start_date=None,
             tag_id, status, start_date, end_date
         )
     )
-
-    results = {
-        ApiResultKeys.GENERIC_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.VFENSE_STATUS_CODE: GenericCodes.InformationRetrieved,
-        ApiResultKeys.DATA: data,
-        ApiResultKeys.COUNT: len(data),
-    }
-
+    results = ApiResults()
+    results.fill_in_defaults()
+    results.generic_status_code = GenericCodes.InformationRetrieved
+    results.vfense_status_code= GenericCodes.InformationRetrieved
+    results.count = len(results.data)
+    results.data = data
     return results
