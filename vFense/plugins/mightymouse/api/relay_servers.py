@@ -6,8 +6,14 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.agent._db_model import *
-from vFense.core.results import Results
+from vFense.core.decorators import (
+    authenticated_request, convert_json_to_arguments, results_message,
+    api_catch_it
+)
+from vFense.core.results import ApiResults
 
+from vFense.core.permissions.decorators import check_permissions
+from vFense.core.permissions._constants import Permissions
 from vFense.plugins.mightymouse.mousey import MightyMouse
 from vFense.plugins.mightymouse.mouse_db import get_all_mouseys, mouse_exists
 from vFense.core.operations._db_model import *
@@ -24,33 +30,21 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 class RelayServersHandler(BaseHandler):
+    @api_catch_it
     @authenticated_request
     def get(self):
         username = self.get_current_user()
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
+        view_name = UserManager(username).properties.current_view
         uri = self.request.uri
         method = self.request.method
-        try:
-            results = (
-                get_all_mouseys(
-                    username, uri, method
-                )
-            )
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        results = get_all_mouseys(username, uri, method)
+        self.set_status(results.http_status_code)
+        self.modified_output(results, output, 'agents')
 
-        except Exception as e:
-            results = (
-                Results(
-                    username, uri, method
-                ).something_broke(agent_id, 'get agent_info', e)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+    @results_message
+    @check_permissions(Permissions.READ)
+    def get_relays(self):
+
 
     @authenticated_request
     def delete(self):
