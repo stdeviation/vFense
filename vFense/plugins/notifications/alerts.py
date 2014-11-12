@@ -14,10 +14,10 @@ from vFense.plugins.notifications._constants import (
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes,
 )
-from vFense.plugins.status_codes import (
+from vFense.plugins.notifications.status_codes import (
     NotificationCodes, NotificationFailureCodes
 )
-from vFense.plugins._db import (
+from vFense.plugins.notifications._db import (
     insert_rule, delete_rule, update_rule, fetch_valid_fields
 )
 

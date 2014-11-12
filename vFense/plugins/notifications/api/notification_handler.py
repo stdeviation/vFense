@@ -6,7 +6,7 @@ from vFense.core.decorators import (
     api_catch_it
 )
 #from vFense.notifications.search_alerts import AlertSearcher
-from vFense.notifications.alerts import (
+from vFense.plugins.notifications.alerts import (
     NotificationManager, get_valid_fields
 )
 from vFense.core.api._constants import ApiArguments

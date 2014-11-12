@@ -12,10 +12,10 @@ from vFense.core.view._db_model import (
     ViewCollections, ViewKeys
 )
 from vFense.core.agent._db_model import (
-    AgentsCollection, AgentKeys, AgentIndexes
+    AgentCollections, AgentKeys, AgentIndexes
 )
 from vFense.core.tag._db_model import (
-    TagsCollection, TagKeys, TagsIndexes
+    TagCollections, TagKeys, TagsIndexes
 )
 from vFense.db.client import db_create_close, r
 from vFense.plugins.notifications._db_model import (
@@ -66,14 +66,14 @@ def fetch_all_notifications(view_name, conn=None):
 def fetch_valid_fields(view_name, conn=None):
     agents = list(
         r
-        .table(AgentsCollection)
+        .table(AgentCollections.Agents)
         .get_all(view_name, index=AgentIndexes.ViewName)
         .pluck(AgentKeys.AgentId, AgentKeys.ComputerName)
         .run(conn)
     )
     tags = list(
         r
-        .table(TagsCollection)
+        .table(TagCollections.Tags)
         .get_all(view_name, index=TagsIndexes.ViewName)
         .pluck(TagKeys.TagId, TagKeys.TagName)
         .run(conn)
