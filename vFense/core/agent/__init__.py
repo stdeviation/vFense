@@ -2,12 +2,8 @@ from time import time
 from vFense import Base
 from vFense.core._db_constants import DbTime
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core.agent._constants import (
-    AgentDefaults
-)
-from vFense.core._constants import (
-    CommonKeys
-)
+from vFense.core.agent._constants import AgentDefaults
+from vFense.core._constants import CommonKeys
 from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 

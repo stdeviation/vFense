@@ -64,12 +64,3 @@ class UpdatesApplications(object):
     UpdatesApplications = 7000
     UpdatesApplicationsFailed = 7001
 
-
-class MightyMouseCodes(object):
-    MouseCreated = 10000
-    MouseUpdated = 10001
-    MouseRemoved = 10002
-    FailedToAddMouse = 10003
-    FailedToUpdateMouse = 10004
-    FailedToRemoveMouse = 10005
-    MouseExist = 10006
