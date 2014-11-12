@@ -201,7 +201,7 @@ class GroupManager(object):
                     results.generic_status_code = GenericCodes.ObjectCreated
                     results.vfense_status_code = GroupCodes.GroupCreated
                     results.message = msg
-                    results.generated_ids.append(generated_ids)
+                    results.generated_ids = generated_ids
                     results.data = group_data
 
             elif group_exist:
