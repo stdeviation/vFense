@@ -128,15 +128,15 @@ class RelayServerHandler(BaseHandler):
         relay = RelayServer()
         relay.address = self.arguments.get('address', None)
         relay.views = self.arguments.get('views', None)
-        results = self.update_relay(relay)
+        results = self.update_relay(relay_name, relay)
         output = self.arguments.get('output', 'json')
         self.set_status(results.http_status_code)
         self.modified_output(results, output, 'relay_servers')
 
     @results_message
     @check_permissions(Permissions.READ)
-    def update_relay(self, relay):
-        manager = RelayServerManager(relay_name=relay.relay_name)
+    def update_relay(self, relay_name, relay):
+        manager = RelayServerManager(relay_name=relay_name)
         results = manager.update(relay)
         return results
 
