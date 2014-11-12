@@ -1,0 +1,343 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1826&#45;01] Moderate: libvncserver security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 11 Nov 2014 16:51:22 &#45;0500 -->
+<!--X-Message-Id: 201411112151.sABLpKth018560@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1826-01] Moderate: libvncserver security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1826-01] Moderate: libvncserver security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1826-01] Moderate: libvncserver security update</li>
+<li><em>Date</em>: Tue, 11 Nov 2014 21:51:19 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libvncserver security update
+Advisory ID:       RHSA-2014:1826-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1826.html">https://rhn.redhat.com/errata/RHSA-2014-1826.html</a>
+Issue date:        2014-11-11
+CVE Names:         CVE-2014-6051 CVE-2014-6052 CVE-2014-6053 
+                   CVE-2014-6054 CVE-2014-6055 
+=====================================================================
+
+1. Summary:
+
+Updated libvncserver packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 6 and 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 7) - x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+LibVNCServer is a library that allows for easy creation of VNC server or
+client functionality.
+
+An integer overflow flaw, leading to a heap-based buffer overflow, was
+found in the way screen sizes were handled by LibVNCServer. A malicious VNC
+server could use this flaw to cause a client to crash or, potentially,
+execute arbitrary code in the client. (CVE-2014-6051)
+
+A NULL pointer dereference flaw was found in LibVNCServer's framebuffer
+setup. A malicious VNC server could use this flaw to cause a VNC client to
+crash. (CVE-2014-6052)
+
+A NULL pointer dereference flaw was found in the way LibVNCServer handled
+certain ClientCutText message. A remote attacker could use this flaw to
+crash the VNC server by sending a specially crafted ClientCutText message
+from a VNC client. (CVE-2014-6053)
+
+A divide-by-zero flaw was found in the way LibVNCServer handled the scaling
+factor when it was set to &quot;0&quot;. A remote attacker could use this flaw to
+crash the VNC server using a malicious VNC client. (CVE-2014-6054)
+
+Two stack-based buffer overflow flaws were found in the way LibVNCServer
+handled file transfers. A remote attacker could use this flaw to crash the
+VNC server using a malicious VNC client. (CVE-2014-6055)
+
+Red Hat would like to thank oCERT for reporting these issues. oCERT
+acknowledges Nicolas Ruff as the original reporter.
+
+All libvncserver users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. All running
+applications linked against libvncserver must be restarted for this update
+to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1144287 - CVE-2014-6051 libvncserver: integer overflow flaw, leading to a heap-based buffer overflow in screen size handling
+1144288 - CVE-2014-6052 libvncserver: NULL pointer dereference flaw in framebuffer setup
+1144289 - CVE-2014-6053 libvncserver: server NULL pointer dereference flaw in ClientCutText message handling
+1144291 - CVE-2014-6054 libvncserver: server divide-by-zero flaw in scaling factor handling
+1144293 - CVE-2014-6055 libvncserver: server stacked-based buffer overflow flaws in file transfer handling
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+libvncserver-0.9.7-7.el6_6.1.src.rpm
+
+i386:
+libvncserver-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.i686.rpm
+
+x86_64:
+libvncserver-0.9.7-7.el6_6.1.x86_64.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+libvncserver-debuginfo-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.i686.rpm
+
+x86_64:
+libvncserver-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.x86_64.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+libvncserver-0.9.7-7.el6_6.1.src.rpm
+
+i386:
+libvncserver-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.i686.rpm
+
+ppc64:
+libvncserver-0.9.7-7.el6_6.1.ppc64.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.ppc64.rpm
+
+s390x:
+libvncserver-0.9.7-7.el6_6.1.s390x.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.s390x.rpm
+
+x86_64:
+libvncserver-0.9.7-7.el6_6.1.x86_64.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+libvncserver-debuginfo-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.i686.rpm
+
+ppc64:
+libvncserver-0.9.7-7.el6_6.1.ppc.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.ppc.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.ppc64.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.ppc.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.ppc64.rpm
+
+s390x:
+libvncserver-0.9.7-7.el6_6.1.s390.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.s390.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.s390x.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.s390.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.s390x.rpm
+
+x86_64:
+libvncserver-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.x86_64.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+libvncserver-0.9.7-7.el6_6.1.src.rpm
+
+i386:
+libvncserver-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.i686.rpm
+
+x86_64:
+libvncserver-0.9.7-7.el6_6.1.x86_64.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+libvncserver-debuginfo-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.i686.rpm
+
+x86_64:
+libvncserver-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-debuginfo-0.9.7-7.el6_6.1.x86_64.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.i686.rpm
+libvncserver-devel-0.9.7-7.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+libvncserver-0.9.9-9.el7_0.1.src.rpm
+
+x86_64:
+libvncserver-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-0.9.9-9.el7_0.1.x86_64.rpm
+libvncserver-debuginfo-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-debuginfo-0.9.9-9.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+libvncserver-debuginfo-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-debuginfo-0.9.9-9.el7_0.1.x86_64.rpm
+libvncserver-devel-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-devel-0.9.9-9.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+libvncserver-0.9.9-9.el7_0.1.src.rpm
+
+x86_64:
+libvncserver-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-0.9.9-9.el7_0.1.x86_64.rpm
+libvncserver-debuginfo-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-debuginfo-0.9.9-9.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+x86_64:
+libvncserver-debuginfo-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-debuginfo-0.9.9-9.el7_0.1.x86_64.rpm
+libvncserver-devel-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-devel-0.9.9-9.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+libvncserver-0.9.9-9.el7_0.1.src.rpm
+
+x86_64:
+libvncserver-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-0.9.9-9.el7_0.1.x86_64.rpm
+libvncserver-debuginfo-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-debuginfo-0.9.9-9.el7_0.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+libvncserver-debuginfo-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-debuginfo-0.9.9-9.el7_0.1.x86_64.rpm
+libvncserver-devel-0.9.9-9.el7_0.1.i686.rpm
+libvncserver-devel-0.9.9-9.el7_0.1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6051">https://access.redhat.com/security/cve/CVE-2014-6051</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6052">https://access.redhat.com/security/cve/CVE-2014-6052</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6053">https://access.redhat.com/security/cve/CVE-2014-6053</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6054">https://access.redhat.com/security/cve/CVE-2014-6054</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6055">https://access.redhat.com/security/cve/CVE-2014-6055</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUYoQeXlSAg2UNWIIRAtoBAJ9oayoOvDSkqllckZMjamQQ4BHWYwCePAL9
+1ceSRC7U70bU4Zc3860Ktic=
+=p1ik
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

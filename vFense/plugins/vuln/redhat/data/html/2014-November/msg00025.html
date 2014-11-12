@@ -1,0 +1,289 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1827&#45;01] Moderate: kdenetwork security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 11 Nov 2014 16:57:56 &#45;0500 -->
+<!--X-Message-Id: 201411112157.sABLvtvB023450@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1827-01] Moderate: kdenetwork security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1827-01] Moderate: kdenetwork security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1827-01] Moderate: kdenetwork security update</li>
+<li><em>Date</em>: Tue, 11 Nov 2014 21:57:55 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kdenetwork security update
+Advisory ID:       RHSA-2014:1827-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1827.html">https://rhn.redhat.com/errata/RHSA-2014-1827.html</a>
+Issue date:        2014-11-11
+CVE Names:         CVE-2014-6053 CVE-2014-6054 CVE-2014-6055 
+=====================================================================
+
+1. Summary:
+
+Updated kdenetwork packages that fix three security issues are now
+available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The kdenetwork packages contain networking applications for the K Desktop
+Environment (KDE). Krfb Desktop Sharing, which is a part of the kdenetwork
+package, is a server application that allows session sharing between users.
+Krfb uses the LibVNCServer library.
+
+A NULL pointer dereference flaw was found in the way LibVNCServer handled
+certain ClientCutText message. A remote attacker could use this flaw to
+crash the VNC server by sending a specially crafted ClientCutText message
+from a VNC client. (CVE-2014-6053)
+
+A divide-by-zero flaw was found in the way LibVNCServer handled the scaling
+factor when it was set to &quot;0&quot;. A remote attacker could use this flaw to
+crash the VNC server using a malicious VNC client. (CVE-2014-6054)
+
+Two stack-based buffer overflow flaws were found in the way LibVNCServer
+handled file transfers. A remote attacker could use this flaw to crash the
+VNC server using a malicious VNC client. (CVE-2014-6055)
+
+Red Hat would like to thank oCERT for reporting these issues. oCERT
+acknowledges Nicolas Ruff as the original reporter.
+
+Note: Prior to this update, the kdenetwork packages used an embedded copy
+of the LibVNCServer library. With this update, the kdenetwork packages have
+been modified to use the system LibVNCServer packages. Therefore, the
+update provided by RHSA-2014:1826 must be installed to fully address the
+issues in krfb described above.
+
+All kdenetwork users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. All running
+instances of the krfb server must be restarted for this update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1144289 - CVE-2014-6053 libvncserver: server NULL pointer dereference flaw in ClientCutText message handling
+1144291 - CVE-2014-6054 libvncserver: server divide-by-zero flaw in scaling factor handling
+1144293 - CVE-2014-6055 libvncserver: server stacked-based buffer overflow flaws in file transfer handling
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+kdenetwork-4.10.5-8.el7_0.src.rpm
+
+noarch:
+kdenetwork-common-4.10.5-8.el7_0.noarch.rpm
+
+x86_64:
+kdenetwork-debuginfo-4.10.5-8.el7_0.i686.rpm
+kdenetwork-debuginfo-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kdnssd-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kget-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kget-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-kget-libs-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krdc-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krdc-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-krdc-libs-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krfb-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krfb-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-krfb-libs-4.10.5-8.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+noarch:
+kdenetwork-devel-4.10.5-8.el7_0.noarch.rpm
+
+x86_64:
+kdenetwork-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-debuginfo-4.10.5-8.el7_0.i686.rpm
+kdenetwork-debuginfo-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-fileshare-samba-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kopete-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kopete-devel-4.10.5-8.el7_0.i686.rpm
+kdenetwork-kopete-devel-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kopete-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-kopete-libs-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krdc-devel-4.10.5-8.el7_0.i686.rpm
+kdenetwork-krdc-devel-4.10.5-8.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+kdenetwork-4.10.5-8.el7_0.src.rpm
+
+noarch:
+kdenetwork-common-4.10.5-8.el7_0.noarch.rpm
+kdenetwork-devel-4.10.5-8.el7_0.noarch.rpm
+
+x86_64:
+kdenetwork-debuginfo-4.10.5-8.el7_0.i686.rpm
+kdenetwork-debuginfo-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kdnssd-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kget-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kget-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-kget-libs-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kopete-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kopete-devel-4.10.5-8.el7_0.i686.rpm
+kdenetwork-kopete-devel-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kopete-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-kopete-libs-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krdc-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krdc-devel-4.10.5-8.el7_0.i686.rpm
+kdenetwork-krdc-devel-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krdc-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-krdc-libs-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krfb-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krfb-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-krfb-libs-4.10.5-8.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+x86_64:
+kdenetwork-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-debuginfo-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-fileshare-samba-4.10.5-8.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+kdenetwork-4.10.5-8.el7_0.src.rpm
+
+noarch:
+kdenetwork-common-4.10.5-8.el7_0.noarch.rpm
+kdenetwork-devel-4.10.5-8.el7_0.noarch.rpm
+
+x86_64:
+kdenetwork-debuginfo-4.10.5-8.el7_0.i686.rpm
+kdenetwork-debuginfo-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kdnssd-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kget-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kget-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-kget-libs-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kopete-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kopete-devel-4.10.5-8.el7_0.i686.rpm
+kdenetwork-kopete-devel-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-kopete-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-kopete-libs-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krdc-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krdc-devel-4.10.5-8.el7_0.i686.rpm
+kdenetwork-krdc-devel-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krdc-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-krdc-libs-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krfb-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-krfb-libs-4.10.5-8.el7_0.i686.rpm
+kdenetwork-krfb-libs-4.10.5-8.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+kdenetwork-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-debuginfo-4.10.5-8.el7_0.x86_64.rpm
+kdenetwork-fileshare-samba-4.10.5-8.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6053">https://access.redhat.com/security/cve/CVE-2014-6053</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6054">https://access.redhat.com/security/cve/CVE-2014-6054</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6055">https://access.redhat.com/security/cve/CVE-2014-6055</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1826.html">https://rhn.redhat.com/errata/RHSA-2014-1826.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUYoTzXlSAg2UNWIIRAjnqAKCqHsimfVovF6mK/2r+Lr/Rpoa5YACgvYLy
+7LazKa5gL7gCyG5bdU0G1fg=
+=2wvT
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
