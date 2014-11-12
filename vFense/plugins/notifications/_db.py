@@ -35,17 +35,34 @@ logger = logging.getLogger('rvapi')
 
 
 @time_it
-@catch_it(None)
+@catch_it({})
 @db_create_close
-def notification_rule_exists(rule_id, conn=None):
-    rule_exists = (
+def fetch_notification_rule(rule_id, conn=None):
+    data = (
         r
         .table(NotificationCollections.Notifications)
         .get(rule_id)
         .run(conn)
     )
 
-    return rule_exists
+    return data
+
+@time_it
+@catch_it(False)
+@db_create_close
+def notification_rule_exists(rule_id, conn=None):
+    is_empty = (
+        r
+        .table(NotificationCollections.Notifications)
+        .get_all(rule_id)
+        .run(conn)
+    )
+    if not is_empty:
+        exist = True
+    else:
+        exist = False
+
+    return exist
 
 @time_it
 @catch_it([])

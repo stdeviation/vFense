@@ -5,7 +5,9 @@ from vFense.core.agent._db_model import *
 from vFense.core.tag._db_model import *
 from vFense.db.client import db_create_close, r
 from vFense.core.results import Results
+from vFense.search.base import RetrieveBase
 from vFense.core.operations._db_model import *
+from vFense.core.results import ApiResults
 from vFense.notifications import *
 from vFense.rv_exceptions.broken import *
 
@@ -14,36 +16,16 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('rvapi')
 
 
-class AlertSearcher(object):
+class FetchAlerts(RetrieveBase):
     def __init__(self, username, view_name, uri, method):
         self.username = username
         self.view_name = view_name
         self.uri = uri
         self.method = method
-        self.map_list = (
+        self.base_merge = (
             {
-                NotificationKeys.NotificationId: r.row[NotificationKeys.NotificationId],
-                NotificationKeys.NotificationType: r.row[NotificationKeys.NotificationType],
-                NotificationKeys.RuleName: r.row[NotificationKeys.RuleName],
-                NotificationKeys.RuleDescription: r.row[NotificationKeys.RuleDescription],
-                NotificationKeys.CreatedBy: r.row[NotificationKeys.CreatedBy],
                 NotificationKeys.CreatedTime: r.row[NotificationKeys.CreatedTime].to_epoch_time(),
-                NotificationKeys.ModifiedBy: r.row[NotificationKeys.ModifiedBy],
                 NotificationKeys.ModifiedTime: r.row[NotificationKeys.ModifiedTime].to_epoch_time(),
-                NotificationKeys.Plugin: r.row[NotificationKeys.Plugin],
-                NotificationKeys.User: r.row[NotificationKeys.User],
-                NotificationKeys.Group: r.row[NotificationKeys.Group],
-                NotificationKeys.AllAgents: r.row[NotificationKeys.AllAgents],
-                NotificationKeys.Agents: r.row[NotificationKeys.Agents],
-                NotificationKeys.Tags: r.row[NotificationKeys.Tags],
-                NotificationKeys.ViewName: r.row[NotificationKeys.ViewName],
-                NotificationKeys.AppThreshold: r.row[NotificationKeys.AppThreshold],
-                NotificationKeys.RebootThreshold: r.row[NotificationKeys.RebootThreshold],
-                NotificationKeys.ShutdownThreshold: r.row[NotificationKeys.ShutdownThreshold],
-                NotificationKeys.CpuThreshold: r.row[NotificationKeys.CpuThreshold],
-                NotificationKeys.MemThreshold: r.row[NotificationKeys.MemThreshold],
-                NotificationKeys.FileSystemThreshold: r.row[NotificationKeys.FileSystemThreshold],
-                NotificationKeys.FileSystem: r.row[NotificationKeys.FileSystem],
             }
         )
 

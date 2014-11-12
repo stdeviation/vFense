@@ -18,7 +18,8 @@ from vFense.plugins.notifications.status_codes import (
     NotificationCodes, NotificationFailureCodes
 )
 from vFense.plugins.notifications._db import (
-    insert_rule, delete_rule, update_rule, fetch_valid_fields
+    insert_rule, delete_rule, update_rule, fetch_valid_fields,
+    fetch_notification_rule
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -36,23 +37,31 @@ def get_valid_fields(view_name):
 
 
 class NotificationManager(object):
-    def __init__(self, view_name):
+    def __init__(self, notification_id=None, view_name=None):
 
         self.view_name = view_name
         self.now = time()
+        self.properties = self._attributes()
+
+    def _attributes(self):
+        rule = Notification()
+        if self.notification_id:
+            notif_data = fetch_notification_rule(self.notification_id)
+            if notif_data:
+                rule = Notification(**notif_data)
+
+        return rule
 
     def delete(self, rule_id):
-        results = {}
-        status_code, _, _, generated_ids = (
-            delete_rule(rule_id)
-        )
+        results = ApiResults()
+        results.fill_in_defaults()
+        status_code, _, _, generated_ids = delete_rule(rule_id)
         if status_code == DbCodes.Deleted:
             msg = (
-                'Notification rule id {0} successfully deleted'.format(rule_id)
-                )
-            results.generic_status_code = (
-                GenericCodes.ObjectDeleted
+                'Notification rule id {0}:{1} successfully deleted'
+                .format(rule_id)
             )
+            results.generic_status_code = GenericCodes.ObjectDeleted
             results.vfense_status_code = (
                 NotificationFailureCodes.NotificationDeleted
             )
@@ -61,12 +70,8 @@ class NotificationManager(object):
         else:
             msg = 'Invalid notification id {0}'.format(rule_id)
             results.message = msg
-            results.generic_status_code = (
-                GenericCodes.InvalidId
-            )
-            results.vfense_status_code = (
-                GenericCodes.InvalidId
-            )
+            results.generic_status_code = GenericCodes.InvalidId
+            results.vfense_status_code = GenericCodes.InvalidId
 
         return results
 

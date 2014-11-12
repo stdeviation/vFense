@@ -107,23 +107,11 @@ class NotificationHandler(BaseHandler):
         )
         uri = self.request.uri
         method = self.request.method
-        try:
-            alert = AlertSearcher(username, view_name, uri, method)
-            results = alert.get_notification(notification_id)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
-
-        except Exception as e:
-            results = (
-                Results(
-                    username, uri, method
-                ).something_broke(notification_id, 'notifications', e)
-            )
-            logger.exception(e)
-            self.set_status(results['http_status'])
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results, indent=4))
+        alert = AlertSearcher(username, view_name, uri, method)
+        results = alert.get_notification(notification_id)
+        self.set_status(results['http_status'])
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results, indent=4))
 
 
     @authenticated_request
