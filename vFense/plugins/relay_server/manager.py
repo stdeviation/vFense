@@ -129,6 +129,21 @@ class RelayServerManager(object):
 
         return results
 
+    def update_address(self, address):
+        """Update the address of the relay server
+
+        Basic Usage:
+            >>> from vFense.plugins.relay_server.manager import RelayServerManager
+            >>> manager = RelayServerManager(relay_name='nyc_vfense.local')
+            >>> manager.update_address('10.0.0.1')
+
+        Returns:
+            ApiResults instance
+        """
+        relay = RelayServer(address=address)
+        results = self.__edit_properties(relay)
+        return results
+
     def __edit_properties(self, relay):
         """ Edit the properties of this relay.
         Args:

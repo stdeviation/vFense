@@ -137,7 +137,7 @@ class RelayServerHandler(BaseHandler):
     @check_permissions(Permissions.READ)
     def update_relay(self, relay_name, relay):
         manager = RelayServerManager(relay_name=relay_name)
-        results = manager.update(relay)
+        results = manager.__edit_properties(relay)
         return results
 
     @api_catch_it

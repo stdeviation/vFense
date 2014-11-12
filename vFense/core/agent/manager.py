@@ -745,7 +745,7 @@ class AgentManager(object):
                 agent.
 
         Basic Usage:
-            >>> from vFense.agent.manager import AgentManager
+            >>> from vFense.core.agent.manager import AgentManager
             >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
             >>> manager = AgentManager(agent_id)
             >>> manager.edit_environment('Development')
@@ -764,7 +764,7 @@ class AgentManager(object):
             display_name (str): The vFense display name of this agent.
 
         Basic Usage:
-            >>> from vFense.agent.manager import AgentManager
+            >>> from vFense.core.agent.manager import AgentManager
             >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
             >>> manager = AgentManager(agent_id)
             >>> manager.edit_display_name('Test agent 3')
@@ -784,7 +784,7 @@ class AgentManager(object):
             needs_reboot (bool): This agent require a reboot or not.
 
         Basic Usage:
-            >>> from vFense.agent.manager import AgentManager
+            >>> from vFense.core.agent.manager import AgentManager
             >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
             >>> manager = AgentManager(agent_id)
             >>> manager.edit_needs_reboot(True)
@@ -806,7 +806,7 @@ class AgentManager(object):
                 default=False
 
         Basic Usage:
-            >>> from vFense.agent.manager import AgentManager
+            >>> from vFense.core.agent.manager import AgentManager
             >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
             >>> manager = AgentManager(agent_id)
             >>> manager.assign_new_token(True)
@@ -822,7 +822,7 @@ class AgentManager(object):
     def update_last_checkin_time(self):
         """Update the timestamp for the last time the agent communicated.
         Basic Usage:
-            >>> from vFense.agent.manager import AgentManager
+            >>> from vFense.core.agent.manager import AgentManager
             >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
             >>> manager = AgentManager(agent_id)
             >>> manager.update_checkin_time()
@@ -840,7 +840,7 @@ class AgentManager(object):
         """Update the token that the agent is using.
 
         Basic Usage:
-            >>> from vFense.agent.manager import AgentManager
+            >>> from vFense.core.agent.manager import AgentManager
             >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
             >>> manager = AgentManager(agent_id)
             >>> manager.update_checkin_time()
@@ -859,8 +859,8 @@ class AgentManager(object):
             agent (Agent): The Agent instance with all of its properties.
 
         Basic Usage:
-            >>> from vFense.agent import Agent
-            >>> from vFense.agent.manager import AgentManager
+            >>> from vFense.core.agent import Agent
+            >>> from vFense.core.agent.manager import AgentManager
             >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
             >>> agent = (
                     Agent(display_name='Web Server 1')
@@ -949,8 +949,8 @@ class AgentManager(object):
         """Remove this agent from the system.
 
         Basic Usage:
-            >>> from vFense.agent import Agent
-            >>> from vFense.agent.manager import AgentManager
+            >>> from vFense.core.agent import Agent
+            >>> from vFense.core.agent.manager import AgentManager
             >>> agent_id = 'cac3f82c-d320-4e6f-9ee7-e28b1f527d76'
             >>> manager = AgentManager(agent_id)
             >>> manager.remove()
