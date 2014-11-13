@@ -41,9 +41,6 @@ class RetrieveHardware(RetrieveBase):
         if self.sort_key not in valid_keys_to_sort_by:
             self.sort_key = AgentKeys.ComputerName
 
-        if self.view_name == DefaultViews.GLOBAL:
-            self.view_name = None
-
         self.fetch = (
             FetchHardware(
                 self.view_name, self.count, self.offset,
@@ -834,54 +831,3 @@ class RetrieveHardware(RetrieveBase):
 
         else:
             return self._set_results_invalid_sort_key(key)
-
-    def _set_results_invalid_sort_key(self, key):
-        vfense_status_code = GenericFailureCodes.InvalidSortKey
-        generic_status_code = GenericCodes.InformationRetrieved
-        msg = 'Invalid sort key {0}'.format(key)
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code, msg, 0, []
-            )
-        )
-        return results
-
-    def _set_results_invalid_filter_key(self, key):
-        vfense_status_code = GenericFailureCodes.InvalidFilterKey
-        generic_status_code = GenericCodes.InformationRetrieved
-        msg = 'Invalid filter key {0}'.format(key)
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code, msg, 0, []
-            )
-        )
-        return results
-
-    def _base(self, count, data):
-        """Return all hardware
-        Basic Usage:
-            >>> from vFense.plugins.reports.search.hardware import RetrieveHardware
-            >>> view_name = 'global'
-            >>> search = RetrieveHardware(view_name='default')
-            >>> search.all()
-
-        Returns:
-            An instance of ApiResults
-        """
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-        return results

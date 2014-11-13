@@ -1,35 +1,17 @@
-#!/usr/bin/env python
-
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core.results import ApiResults
-from vFense.core._constants import SortValues, DefaultQueryValues
-
 from vFense.core.view._db_model import ViewKeys
-
 from vFense.core.view.search._db import FetchViews
-from vFense.core.status_codes import (
-    GenericCodes, GenericFailureCodes
-)
-
 from vFense.core.decorators import time_it
+from vFense.search.base import RetrieveBase
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
-
-class RetrieveViews(object):
+class RetrieveViews(RetrieveBase):
     def __init__(
-        self, parent_view=None, count=DefaultQueryValues.COUNT,
-        offset=DefaultQueryValues.OFFSET, sort=SortValues.ASC,
-        sort_key=ViewKeys.ViewName, is_global=False
+        self, parent_view=None, is_global=False,
+        sort_key=ViewKeys.ViewName, **kwargs
         ):
-
+        super(RetrieveViews, self).__init__(**kwargs)
         self.parent_view = parent_view
-        self.count = count
-        self.offset = offset
-        self.sort = sort
         self.is_global = is_global
+        self.sort_key = sort_key
 
         self.valid_keys_to_filter_by = (
             [
@@ -42,18 +24,16 @@ class RetrieveViews(object):
                 ViewKeys.ViewName,
             ]
         )
-        if sort_key in valid_keys_to_sort_by:
-            self.sort_key = sort_key
-        else:
+        if self.sort_key not in valid_keys_to_sort_by:
             self.sort_key = ViewKeys.ViewName
 
         self.fetch_views = (
             FetchViews(
-                parent_view, self.count, self.offset,
-                self.sort, self.sort_key, is_global=is_global
+                parent_view=self.parent_view, count=self.count,
+                offset=self.offset, sort=self.sort, sort_key=self.sort_key,
+                is_global=self.is_global
             )
         )
-
 
     @time_it
     def by_regex(self, name):
@@ -70,25 +50,7 @@ class RetrieveViews(object):
             List of dictionairies.
         """
         count, data = self.fetch_views.by_regex(name)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
-
+        return self._base(count, data)
 
     @time_it
     def by_name(self, name):
@@ -105,25 +67,7 @@ class RetrieveViews(object):
             List of dictionairies.
         """
         count, data = self.fetch_views.by_name(name)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
-
+        return self._base(count, data)
 
     @time_it
     def all(self):
@@ -136,25 +80,7 @@ class RetrieveViews(object):
         Returns:
         """
         count, data = self.fetch_views.all()
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
-
+        return self._base(count, data)
 
     @time_it
     def for_user(self, name):
@@ -172,35 +98,4 @@ class RetrieveViews(object):
             List of dictionairies.
         """
         count, data = self.fetch_views.for_user(name)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
-
-
-    def _set_results(self, generic_status_code, vfense_status_code,
-                     msg, count, data):
-
-        results = ApiResults()
-        results.fill_in_defaults()
-        results.generic_status_code = generic_status_code
-        results.vfense_status_code = vfense_status_code
-        results.message = msg
-        results.count = count
-        results.data = data
-
-        return results
+        return self._base(count, data)

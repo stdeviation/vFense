@@ -102,17 +102,15 @@ class NotificationHandler(BaseHandler):
     @authenticated_request
     def get(self, notification_id):
         username = self.get_current_user().encode('utf-8')
-        view_name = (
-            UserManager(username).get_attribute(UserKeys.CurrentView)
-        )
-        uri = self.request.uri
-        method = self.request.method
-        alert = AlertSearcher(username, view_name, uri, method)
-        results = alert.get_notification(notification_id)
-        self.set_status(results['http_status'])
+        view_name = UserManager(username).properties.current_view
+        search = RetrieveAlerts(view_name=view_name)
+        results = self.get_notification(search, notification_id)
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(json.dumps(results, indent=4))
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
+    def get_notification(self, search, notification_id):
+        results = search.by_id(notification_id)
 
     @authenticated_request
     def delete(self, notification_id):
