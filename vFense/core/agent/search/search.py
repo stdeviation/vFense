@@ -2,8 +2,6 @@ from vFense.core.agent._constants import AgentCommonKeys
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent.search._db import FetchAgents
 from vFense.core.decorators import time_it
-from vFense.core.status_codes import GenericCodes, GenericFailureCodes
-from vFense.core.view._constants import DefaultViews
 from vFense.search.base import RetrieveBase
 
 class RetrieveAgents(RetrieveBase):
@@ -45,13 +43,10 @@ class RetrieveAgents(RetrieveBase):
         if self.sort_key not in valid_keys_to_sort_by:
             self.sort_key = AgentKeys.ComputerName
 
-        if self.view_name == DefaultViews.GLOBAL:
-            self.view_name = None
-
         self.fetch_agents = (
             FetchAgents(
-                self.view_name, self.count, self.offset,
-                self.sort, self.sort_key
+                view_name=self.view_name, count=self.count,
+                offset=self.offset, sort=self.sort, sort_key=self.sort_key
             )
         )
 
@@ -101,23 +96,7 @@ class RetrieveAgents(RetrieveBase):
             }
         """
         count, data = self.fetch_agents.by_id(agent_id)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-        return results
+        return self._base(count, data)
 
     @time_it
     def by_name(self, query):
@@ -164,24 +143,7 @@ class RetrieveAgents(RetrieveBase):
             }
         """
         count, data = self.fetch_agents.by_name(query)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     @time_it
     def all(self):
@@ -217,24 +179,7 @@ class RetrieveAgents(RetrieveBase):
             ]
         """
         count, data = self.fetch_agents.all()
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     @time_it
     def by_key_and_val(self, fkey, fval):
@@ -280,29 +225,10 @@ class RetrieveAgents(RetrieveBase):
 
         if fkey in self.valid_keys_to_filter_by:
             count, data = self.fetch_agents.by_key_and_val(fkey, fval)
-
-            if count == 0:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericFailureCodes.DataIsEmpty
-                msg = 'dataset is empty'
-
-            else:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericCodes.InformationRetrieved
-                msg = 'dataset retrieved'
+            return self._base(count, data)
 
         else:
-            generic_status_code = GenericFailureCodes.FailedToRetrieveObject
-            vfense_status_code = GenericFailureCodes.InvalidFilterKey
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+            return self._set_results_invalid_filter_key(fkey)
 
     @time_it
     def by_key_and_val_and_query(self, fkey, fval, query):
@@ -350,33 +276,12 @@ class RetrieveAgents(RetrieveBase):
 
         if fkey in self.valid_keys_to_filter_by:
             count, data = (
-                self.fetch_agents.by_key_and_val_and_query(
-                    fkey, fval, query
-                )
+                self.fetch_agents.by_key_and_val_and_query(fkey, fval, query)
             )
-
-            if count == 0:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericFailureCodes.DataIsEmpty
-                msg = 'dataset is empty'
-
-            else:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericCodes.InformationRetrieved
-                msg = 'dataset retrieved'
+            return self._base(count, data)
 
         else:
-            generic_status_code = GenericFailureCodes.FailedToRetrieveObject
-            vfense_status_code = GenericFailureCodes.InvalidFilterKey
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+            return self._set_results_invalid_filter_key(fkey)
 
     @time_it
     def by_ip(self, ip):
@@ -416,24 +321,7 @@ class RetrieveAgents(RetrieveBase):
             ]
         """
         count, data = self.fetch_agents.by_ip(ip)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     @time_it
     def by_ip_and_filter(self, ip, fkey, fval):
@@ -481,29 +369,10 @@ class RetrieveAgents(RetrieveBase):
         data = []
         if fkey in self.valid_keys_to_filter_by:
             count, data = self.fetch_agents.by_ip_and_filter(ip, fkey, fval)
-
-            if count == 0:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericFailureCodes.DataIsEmpty
-                msg = 'dataset is empty'
-
-            else:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericCodes.InformationRetrieved
-                msg = 'dataset retrieved'
+            return self._base(count, data)
 
         else:
-            generic_status_code = GenericFailureCodes.FailedToRetrieveObject
-            vfense_status_code = GenericFailureCodes.InvalidFilterKey
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+            return self._set_results_invalid_filter_key(fkey)
 
     @time_it
     def by_mac(self, mac):
@@ -543,24 +412,7 @@ class RetrieveAgents(RetrieveBase):
             ]
         """
         count, data = self.fetch_agents.by_mac(mac)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     @time_it
     def by_mac_and_filter(self, mac, fkey, fval):
@@ -608,26 +460,7 @@ class RetrieveAgents(RetrieveBase):
         data = []
         if fkey in self.valid_keys_to_filter_by:
             count, data = self.fetch_agents.by_mac_and_filter(mac, fkey, fval)
-
-            if count == 0:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericFailureCodes.DataIsEmpty
-                msg = 'dataset is empty'
-
-            else:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericCodes.InformationRetrieved
-                msg = 'dataset retrieved'
+            return self._base(count, data)
 
         else:
-            generic_status_code = GenericFailureCodes.FailedToRetrieveObject
-            vfense_status_code = GenericFailureCodes.InvalidFilterKey
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+            return self._set_results_invalid_filter_key(fkey)

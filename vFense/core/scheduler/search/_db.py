@@ -1,51 +1,23 @@
-import logging
-
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.decorators import catch_it, time_it
-from vFense.core._constants import SortValues, DefaultQueryValues
+from vFense.core._constants import SortValues
 from vFense.core.scheduler._db_model import (
     JobKeys, JobCollections, JobKwargKeys
 )
+from vFense.search._db_base import FetchBase
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
-
-
-class FetchJobs(object):
+class FetchJobs(FetchBase):
     """Job database queries."""
     def __init__(
-        self, view_name=None,
-        count=DefaultQueryValues.COUNT,
-        offset=DefaultQueryValues.OFFSET,
-        sort=SortValues.DESC,
-        sort_key=JobKeys.NextRunTime
+        self, sort=SortValues.DESC, sort_key=JobKeys.NextRunTime, **kwargs
         ):
-        """
-        Kwargs:
-            view_name (str): Fetch all agents in this view.
-            count (int): The number of results to return.
-            offset (int): The next set of results beginning at offset.
-            sort (str): asc or desc.
-            sort_key (str): The key you are going to sort the results by.
-        """
-
-        self.view_name = view_name
-        self.count = count
-        self.offset = offset
-        self.sort_key = sort_key
-
+        super(FetchJobs, self).__init__(**kwargs)
         self.keys_to_pluck = [
             JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
             JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
             JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
             JobKeys.Runs
         ]
-
-        if sort == SortValues.ASC:
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
 
     @time_it
     @catch_it((0, []))
@@ -560,7 +532,7 @@ class FetchJobs(object):
                 )
             )
 
-        return(base_filter)
+        return base_filter
 
     def _set_merge_query(self):
         merge = (
@@ -584,25 +556,11 @@ class FetchJobs(object):
 class FetchAgentJobs(FetchJobs):
     """Job database queries for an agent"""
     def __init__(
-        self, agent_id,
-        count=DefaultQueryValues.COUNT,
-        offset=DefaultQueryValues.OFFSET,
-        sort=SortValues.DESC,
-        sort_key=JobKeys.NextRunTime
+        self, agent_id=None, sort=SortValues.DESC,
+        sort_key=JobKeys.NextRunTime, **kwargs
         ):
-        """
-        Kwargs:
-            agent_id (str): The 36 character UUID of the agent.
-            count (int): The number of results to return.
-            offset (int): The next set of results beginning at offset.
-            sort (str): asc or desc.
-            sort_key (str): The key you are going to sort the results by.
-        """
-
+        super(FetchAgentJobs, self).__init__(**kwargs)
         self.agent_id = agent_id
-        self.count = count
-        self.offset = offset
-        self.sort_key = sort_key
 
         self.keys_to_pluck = [
             JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
@@ -610,11 +568,6 @@ class FetchAgentJobs(FetchJobs):
             JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
             JobKeys.Runs
         ]
-
-        if sort == SortValues.ASC:
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
 
     def _set_job_base_query(self):
         base_filter = (
@@ -625,30 +578,16 @@ class FetchAgentJobs(FetchJobs):
                 x[JobKeys.Kwargs][JobKwargKeys.Agents].contains(self.agent_id)
             )
         )
-        return(base_filter)
+        return base_filter
 
 class FetchTagJobs(FetchJobs):
     """Job database queries for a tag"""
     def __init__(
-        self, tag_id,
-        count=DefaultQueryValues.COUNT,
-        offset=DefaultQueryValues.OFFSET,
-        sort=SortValues.DESC,
-        sort_key=JobKeys.NextRunTime
+        self, tag_id=None, sort=SortValues.DESC,
+        sort_key=JobKeys.NextRunTime, **kwargs
         ):
-        """
-        Kwargs:
-            tag_id (str): The 36 character UUID of the tag.
-            count (int): The number of results to return.
-            offset (int): The next set of results beginning at offset.
-            sort (str): asc or desc.
-            sort_key (str): The key you are going to sort the results by.
-        """
-
+        super(FetchTagJobs, self).__init__(**kwargs)
         self.tag_id = tag_id
-        self.count = count
-        self.offset = offset
-        self.sort_key = sort_key
 
         self.keys_to_pluck = [
             JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
@@ -656,11 +595,6 @@ class FetchTagJobs(FetchJobs):
             JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
             JobKeys.Runs
         ]
-
-        if sort == SortValues.ASC:
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
 
     def _set_job_base_query(self):
         base_filter = (
@@ -671,4 +605,4 @@ class FetchTagJobs(FetchJobs):
                 x[JobKeys.Kwargs][JobKwargKeys.Tags].contains(self.tag_id)
             )
         )
-        return(base_filter)
+        return base_filter

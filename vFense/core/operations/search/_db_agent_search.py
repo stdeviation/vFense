@@ -1,12 +1,6 @@
-#!/usr/bin/env python
-
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.decorators import catch_it, time_it
 from vFense.core.operations.search._constants import OperationSearchValues
-from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent._db_model import AgentKeys, AgentCollections
 
 from vFense.core.operations._db_model import (
@@ -16,49 +10,11 @@ from vFense.core.operations._db_model import (
 )
 
 from vFense.core.operations.status_codes import AgentOperationCodes
+from vFense.search._db_base import FetchBase
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
-
-class FetchAgentOperations(object):
-    """Agent operation database queries"""
-    def __init__(
-            self, view_name=None,
-            count=DefaultQueryValues.COUNT,
-            offset=DefaultQueryValues.OFFSET,
-            sort=SortValues.ASC,
-            sort_key=AgentOperationKey.CreatedTime
-        ):
-        """
-        Kwargs:
-            view_name (str): Name of the current view.
-                default = None
-            count (int): Maximum number of results to return.
-                default = 30
-            offset (int): Retrieve operations after this number. Pagination.
-                default = 0
-            sort (str): Sort either by asc or desc.
-                default = desc
-            sort_key (str): Sort by a valid field.
-                examples... operation, status, created_time, updated_time,
-                completed_time, and created_by.
-                default = created_time
-
-        Basic Usage:
-            >>> from vFense.core.operations.search._db_agent_search import FetchAgentOperations
-            >>> view_name = 'default'
-            >>> operation = FetchAgentOperations(view_name)
-        """
-
-        self.view_name = view_name
-        self.count = count
-        self.offset = offset
-        self.sort_key = sort_key
-
-        if sort == SortValues.ASC:
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
+class FetchAgentOperations(FetchBase):
+    def __init__(self, sort_key=AgentOperationKey.CreatedTime, **kwargs):
+        super(FetchAgentOperations, self).__init__(**kwargs)
 
     @time_it
     @catch_it((0, []))

@@ -1,11 +1,5 @@
-#!/usr/bin/env python
-
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
 from vFense.core.decorators import catch_it, time_it
-from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.user._db_model import (
     UserCollections, UserKeys, UserMappedKeys, UserIndexes
 )
@@ -14,51 +8,13 @@ from vFense.core.group._db_model import (
 )
 from vFense.core.view._db_model import ViewKeys
 from vFense.core.permissions._constants import Permissions
+from vFense.search._db_base import FetchBase
 
-
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
-
-class FetchUsers(object):
+class FetchUsers(FetchBase):
     """Agent operation database queries"""
-    def __init__(
-            self, view_name=None,
-            count=DefaultQueryValues.COUNT,
-            offset=DefaultQueryValues.OFFSET,
-            sort=SortValues.ASC,
-            sort_key=UserKeys.UserName,
-            is_global=False
-        ):
-        """
-        Kwargs:
-            view_name (str): Name of the current view.
-                default = None
-            count (int): Maximum number of results to return.
-                default = 30
-            offset (int): Retrieve operations after this number. Pagination.
-                default = 0
-            sort (str): Sort either by asc or desc.
-                default = desc
-            sort_key (str): Sort by a valid field.
-                examples... full_name, email, username.
-                default = username
-
-        Basic Usage:
-            >>> from vFense.core.user.search._db import FetchUsers
-            >>> view_name = 'default'
-            >>> operation = FetchUsers(view_name)
-        """
-
-        self.view_name = view_name
-        self.count = count
-        self.offset = offset
-        self.sort_key = sort_key
+    def __init__(self, sort_key=UserKeys.UserName, is_global=False, **kwargs):
+        super(FetchUsers, self).__init__(**kwargs)
         self.is_global = is_global
-
-        if sort == SortValues.ASC:
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
 
     @time_it
     @catch_it((0, []))
