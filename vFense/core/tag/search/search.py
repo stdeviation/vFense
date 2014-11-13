@@ -1,34 +1,14 @@
-import logging
-
-from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent._constants import AgentCommonKeys
 from vFense.core.decorators import time_it
-from vFense.core.results import ApiResults
 from vFense.core.status_codes import GenericCodes, GenericFailureCodes
 from vFense.core.tag._db_model import TagKeys
 from vFense.core.tag.search._db import FetchTags
-from vFense.core.view._constants import DefaultViews
+from vFense.search.base import RetrieveBase
 
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
-
-
-class RetrieveTags(object):
-    def __init__(
-        self, view_name=None,
-        count=DefaultQueryValues.COUNT,
-        offset=DefaultQueryValues.OFFSET,
-        sort=SortValues.ASC,
-        sort_key=TagKeys.TagName
-        ):
-
-        self.view_name = view_name
-        self.count = count
-        self.offset = offset
-        self.sort = sort
-
+class RetrieveTags(RetrieveBase):
+    def __init__(self, sort_key=TagKeys.TagName, **kwargs):
+        super(RetrieveTags, self).__init__(**kwargs)
 
         self.list_of_valid_keys = [
             TagKeys.TagName, TagKeys.ViewName,
@@ -53,18 +33,13 @@ class RetrieveTags(object):
                 AgentCommonKeys.AVAIL_UPDATES,
             ]
         )
-        if sort_key in valid_keys_to_sort_by:
-            self.sort_key = sort_key
-        else:
+        if self.sort_key not in valid_keys_to_sort_by:
             self.sort_key = TagKeys.TagName
-
-        if self.view_name == DefaultViews.GLOBAL:
-            self.view_name = None
 
         self.fetch_tags = (
             FetchTags(
-                self.view_name, self.count, self.offset,
-                self.sort, self.sort_key
+                view_name=self.view_name, count=self.count,
+                offset=self.offset, sort=self.sort, sort_key=self.sort_key
             )
         )
 
@@ -119,24 +94,7 @@ class RetrieveTags(object):
             List of dictionairies.
         """
         count, data = self.fetch_tags.by_name(query)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     @time_it
     def by_agent_id(self, agent_id):
@@ -154,24 +112,7 @@ class RetrieveTags(object):
             List of dictionairies.
         """
         count, data = self.fetch_tags.by_agent_id(agent_id)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     @time_it
     def all(self):
@@ -186,25 +127,7 @@ class RetrieveTags(object):
             List of dictionairies.
         """
         count, data = self.fetch_tags.all()
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
-
+        return self._base(count, data)
 
     @time_it
     def by_key_val(self, key, val):
@@ -229,30 +152,10 @@ class RetrieveTags(object):
 
         if key in self.valid_keys_to_filter_by:
             count, data = self.fetch_tags.by_key_val(key, val)
-
-            if count == 0:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericFailureCodes.DataIsEmpty
-                msg = 'dataset is empty'
-
-            else:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericCodes.InformationRetrieved
-                msg = 'dataset retrieved'
+            return self._base(count, data)
 
         else:
-            generic_status_code = GenericFailureCodes.FailedToRetrieveObject
-            vfense_status_code = GenericFailureCodes.InvalidFilterKey
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
-
+            return self._set_results_invalid_filter_key(key)
 
     @time_it
     def by_key_val_and_query(self, key, val, query):
@@ -278,43 +181,9 @@ class RetrieveTags(object):
 
         if key in self.valid_keys_to_filter_by:
             count, data = (
-                self.fetch_tags.by_key_val_and_query(
-                    key, val, query
-                )
+                self.fetch_tags.by_key_val_and_query(key, val, query)
             )
-
-            if count == 0:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericFailureCodes.DataIsEmpty
-                msg = 'dataset is empty'
-
-            else:
-                generic_status_code = GenericCodes.InformationRetrieved
-                vfense_status_code = GenericCodes.InformationRetrieved
-                msg = 'dataset retrieved'
+            return self._base(count, data)
 
         else:
-            generic_status_code = GenericFailureCodes.FailedToRetrieveObject
-            vfense_status_code = GenericFailureCodes.InvalidFilterKey
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
-
-    def _set_results(self, generic_status_code, vfense_status_code,
-                     msg, count, data):
-
-        results = ApiResults()
-        results.fill_in_defaults()
-        results.generic_status_code = generic_status_code
-        results.vfense_status_code = vfense_status_code
-        results.message = msg
-        results.count = count
-        results.data = data
-
-        return results
+            return self._set_results_invalid_filter_key(key)

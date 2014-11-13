@@ -1,12 +1,7 @@
-import logging
-
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.core._constants import SortValues, DefaultQueryValues
 from vFense.core.agent._constants import AgentCommonKeys
 from vFense.core.agent._db_model import (
-    AgentKeys, AgentCollections,
-    HardwarePerAgentIndexes, HardwarePerAgentKeys
+    AgentKeys, AgentCollections
 )
 from vFense.core.tag._db_model import (
     TagCollections, TagKeys, TagsPerAgentKeys, TagsPerAgentIndexes
@@ -17,44 +12,19 @@ from vFense.plugins.patching._db_model import (
 from vFense.plugins.patching._db_model import *
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.decorators import time_it, catch_it
-
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+from vFense.search._db_base import FetchBase
 
 
-class FetchTags(object):
+class FetchTags(FetchBase):
     """Tag database queries"""
-    def __init__(
-        self, view_name=None,
-        count=DefaultQueryValues.COUNT,
-        offset=DefaultQueryValues.OFFSET,
-        sort=SortValues.ASC,
-        sort_key=TagKeys.TagName
-        ):
-        """
-        Kwargs:
-            view_name (str): Fetch all agents in this view.
-            count (int): The number of results to return.
-            offset (int): The next set of results beginning at offset.
-            sort (str): asc or desc.
-            sort_key (str): The key you are going to sort the results by.
-        """
-
-        self.view_name = view_name
-        self.count = count
-        self.offset = offset
-        self.sort_key = sort_key
+    def __init__(self, sort_key=TagKeys.TagName, **kwargs):
+        super(FetchTags, self).__init__(**kwargs)
 
         self.keys_to_pluck = [
             TagKeys.TagName, TagKeys.TagId, TagKeys.ViewName,
             TagKeys.Environment, AgentCommonKeys.AVAIL_UPDATES,
             AgentCommonKeys.AVAIL_VULN, AgentCollections.Agents
         ]
-
-        if sort == SortValues.ASC:
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
 
     @time_it
     @catch_it((0, []))
@@ -526,8 +496,7 @@ class FetchTags(object):
             }
         )
 
-        return(merge_query)
-
+        return merge_query
 
     def _set_merge_query(self):
         merge_query = (
@@ -581,7 +550,7 @@ class FetchTags(object):
             }
         )
 
-        return(merge_query)
+        return merge_query
 
     def _set_base_query(self):
         base_filter = (
@@ -598,5 +567,4 @@ class FetchTags(object):
                 )
             )
 
-        return(base_filter)
-
+        return base_filter
