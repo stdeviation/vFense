@@ -59,24 +59,7 @@ class RetrieveTags(RetrieveBase):
             List of dictionairies.
         """
         count, data = self.fetch_tags.by_id(tag_id)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     @time_it
     def by_name(self, query):
