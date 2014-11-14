@@ -8,7 +8,6 @@ from vFense.search._db_base import FetchBase
 class FetchAlerts(FetchBase):
     def __init__(self, sort_key=NotificationKeys.RuleName, **kwargs):
         super(FetchAlerts, self).__init__(**kwargs)
-        self.sort_key = sort_key
 
     @time_it
     @catch_it((0, []))

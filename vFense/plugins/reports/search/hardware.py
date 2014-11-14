@@ -1,7 +1,4 @@
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core.status_codes import GenericCodes, GenericFailureCodes
-from vFense.core.view._constants import DefaultViews
-from vFense.core.agent._constants import AgentCommonKeys
 from vFense.plugins.reports.search._db_hardware import FetchHardware
 from vFense.search.base import RetrieveBase
 
@@ -43,8 +40,8 @@ class RetrieveHardware(RetrieveBase):
 
         self.fetch = (
             FetchHardware(
-                self.view_name, self.count, self.offset,
-                self.sort, self.sort_key
+                view_name=self.view_name, count=self.count,
+                offset=self.offset, sort=self.sort, sort_key=self.sort_key
             )
         )
 

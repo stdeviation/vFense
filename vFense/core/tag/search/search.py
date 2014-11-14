@@ -1,6 +1,5 @@
 from vFense.core.agent._constants import AgentCommonKeys
 from vFense.core.decorators import time_it
-from vFense.core.status_codes import GenericCodes, GenericFailureCodes
 from vFense.core.tag._db_model import TagKeys
 from vFense.core.tag.search._db import FetchTags
 from vFense.search.base import RetrieveBase

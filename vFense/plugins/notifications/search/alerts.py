@@ -8,8 +8,8 @@ class RetrieveNotifications(RetrieveBase):
 
         self.fetch = (
             FetchAlerts(
-                self.view_name, self.count, self.offset,
-                self.sort, self.sort_key
+                view_name=self.view_name, count=self.count,
+                offset=self.offset, sort=self.sort, sort_key=self.sort_key
             )
         )
 
