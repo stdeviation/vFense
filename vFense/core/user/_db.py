@@ -4,6 +4,7 @@ from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.user._db_model import (
     UserKeys, UserCollections, UserMappedKeys, UserIndexes
 )
+from vFense.core.user._db_sub_queries import Merge
 from vFense.core.group._db_model import (
     GroupCollections, GroupKeys, GroupIndexes
 )
@@ -50,7 +51,8 @@ def fetch_user(username, without_fields=None, conn=None):
         data = (
             r
             .table(UserCollections.Users)
-            .get(username)
+            .get_all(username)
+            .merge(Merge.DATE)
             .run(conn)
         )
 
@@ -62,10 +64,9 @@ def fetch_user(username, without_fields=None, conn=None):
             .without(without_fields)
             .run(conn)
         )
-        if data:
-            data = data[0]
-        else:
-            data = {}
+
+    if data:
+        data = data[0]
 
     return data
 

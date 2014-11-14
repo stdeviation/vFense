@@ -173,6 +173,10 @@ class FetchUsers(FetchBase):
         merge_hash = (
             lambda x:
             {
+                UserKeys.DateAdded: x[UserKeys.DateAdded].to_epoch_time(),
+                UserKeys.DateModified: (
+                    x[UserKeys.DateModified].to_epoch_time()
+                ),
                 UserMappedKeys.Groups: (
                     r
                     .table(GroupCollections.Groups)

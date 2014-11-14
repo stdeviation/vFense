@@ -7,6 +7,7 @@ from vFense.core.decorators import (
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.user.manager import UserManager
+from vFense.core.results import ApiResults
 from vFense.plugins.patching._db_stats import get_all_app_stats_by_view
 from vFense.plugins.patching.stats import *
 
@@ -61,18 +62,12 @@ class WidgetHandler(BaseHandler):
     @results_message
     @check_permissions(Permissions.READ)
     def get_all_app_stats_for_view(self, view_name):
-        data = get_all_app_stats_by_view(view_name)
-
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: (
-                GenericCodes.InformationRetrieved
-            ),
-            ApiResultKeys.VFENSE_STATUS_CODE: (
-                GenericCodes.InformationRetrieved
-            ),
-            ApiResultKeys.DATA: data,
-            ApiResultKeys.COUNT: len(data),
-        }
+        results = ApiResults()
+        results.fill_in_defaults()
+        results.data = get_all_app_stats_by_view(view_name)
+        results.generic_status_code = GenericCodes.InformationRetrieved
+        results.vfense_status_code = GenericCodes.InformationRetrieved
+        results.count = len(results.data)
         return results
 
 

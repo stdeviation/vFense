@@ -50,7 +50,10 @@ class GetTransactionsHandler(BaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
-            AgentOperationRetriever(active_view, count, offset, sort, sort_by)
+            AgentOperationRetriever(
+                view_name=active_view, count=count,
+                offset=offset, sort=sort, sort_key=sort_by
+            )
         )
 
         if operation:

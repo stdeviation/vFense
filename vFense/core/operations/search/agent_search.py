@@ -1,36 +1,18 @@
-#!/usr/bin/env python
-
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.core._constants import SortValues, DefaultQueryValues
+from vFense.core._constants import SortValues
 from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations.search._db_agent_search import FetchAgentOperations
-from vFense.core.status_codes import GenericCodes, GenericFailureCodes
-from vFense.core.results import ApiResults
-
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+from vFense.search.base import RetrieveBase
 
 
-class AgentOperationRetriever(object):
+class AgentOperationRetriever(RetrieveBase):
     """Retrieve operations, by various filters."""
     def __init__(
-            self, view_name=None,
-            count=DefaultQueryValues.COUNT,
-            offset=DefaultQueryValues.OFFSET,
-            sort=SortValues.DESC,
-            sort_key=AgentOperationKey.CreatedTime,
+            self, sort=SortValues.DESC,
+            sort_key=AgentOperationKey.CreatedTime, **kwargs
         ):
         """
         Kwargs:
-            view_name (str): Name of the current view.
-                default = None
-            count (int): Maximum number of results to return.
-                default = 30
-            offset (int): Retrieve operations after this number. Pagination.
-                default = 0
             sort (str): Sort either by asc or desc.
                 default = desc
             sort_key (str): Sort by a valid field.
@@ -43,8 +25,7 @@ class AgentOperationRetriever(object):
             >>> view_name = 'default'
             >>> operation = AgentOperationRetriever(view_name)
         """
-
-        self.view_name = view_name
+        super(AgentOperationRetriever, self).__init__(**kwargs)
         sort_by_list = (
             [
                 AgentOperationKey.Operation,
@@ -56,15 +37,13 @@ class AgentOperationRetriever(object):
                 AgentOperationKey.ViewName,
             ]
         )
-        if sort_key in sort_by_list:
-            sort_key = sort_key
-        else:
+        if sort_key not in sort_by_list:
             sort_key = AgentOperationKey.CreatedTime
 
         self.agent_operations = (
             FetchAgentOperations(
-                view_name, count, offset,
-                sort, sort_key
+                view_name=self.view_name, count=self.count,
+                offset=self.offset, sort=self.sort, sort_key=self.sort_key
             )
         )
 
@@ -108,24 +87,7 @@ class AgentOperationRetriever(object):
             }
         """
         count, data = self.agent_operations.all()
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     def by_agentid(self, agent_id, conn=None):
         """ Get all operations by agent id
@@ -179,24 +141,7 @@ class AgentOperationRetriever(object):
             }
         """
         count, data = self.agent_operations.by_agentid(agent_id)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     def by_tagid(self, tag_id, conn=None):
         """Get all operations by tag id
@@ -241,24 +186,7 @@ class AgentOperationRetriever(object):
             }
         """
         count, data = self.agent_operations.by_tagid(tag_id)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     def by_operation(self, action):
         """Get all operations by operation
@@ -312,33 +240,13 @@ class AgentOperationRetriever(object):
             }
         """
         if action in AgentOperations.get_valid_operations():
-            generic_status_code = GenericCodes.InformationRetrieved
             count, data = (
                 self.agent_operations.by_operation(action)
             )
-            if count == 0:
-                vfense_status_code = GenericFailureCodes.DataIsEmpty
-                msg = 'dataset is empty'
-
-            else:
-                vfense_status_code = GenericCodes.InformationRetrieved
-                msg = 'dataset retrieved'
+            return self._base(count, data)
 
         else:
-            count = 0
-            data = []
-            generic_status_code = GenericFailureCodes.InvalidId
-            vfense_status_code = GenericFailureCodes.InvalidPlugin
-            msg = 'operation is not valid'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+            return self._set_results_invalid_filter_key(action)
 
     def install_operation_by_id(self, operation_id, conn=None):
         """Get install operation by operation id
@@ -422,27 +330,10 @@ class AgentOperationRetriever(object):
                 }
             }
         """
-        generic_status_code = GenericCodes.InformationRetrieved
         count, data = (
             self.agent_operations.install_operation_by_id(operation_id)
         )
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     def by_id(self, operation_id, conn=None):
         """Get operation by operation id
@@ -502,27 +393,10 @@ class AgentOperationRetriever(object):
                 }
             }
         """
-        generic_status_code = GenericCodes.InformationRetrieved
         count, data = (
             self.agent_operations.by_id(operation_id)
         )
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
+        return self._base(count, data)
 
     def get_install_operation_for_email_alert(self, operation_id):
         count, data = (
@@ -541,16 +415,3 @@ class AgentOperationRetriever(object):
         )
 
         return data
-
-    def _set_results(self, generic_status_code, vfense_status_code,
-                     msg, count, data):
-
-        results = ApiResults()
-        results.fill_in_defaults()
-        results.generic_status_code = generic_status_code
-        results.vfense_status_code = vfense_status_code
-        results.message = msg
-        results.count = count
-        results.data = data
-
-        return results

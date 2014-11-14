@@ -73,6 +73,8 @@ def results_message(fn):
     """Return the results in the vFense API standard"""
     def db_wrapper(*args, **kwargs):
         data = fn(*args, **kwargs)
+        print type(data)
+        print data
         tornado_handler = args[0]
 
         if isinstance(data, ApiResults):
@@ -250,6 +252,9 @@ def api_catch_it(fn):
                 'Something broke while calling {0}: {1}'
                 .format(fn.__name__, e)
             )
+            print type(results)
+            print results
+            print dir(results)
             logger.exception(results.to_dict_non_null())
             tornado_handler.set_status(results.http_status_code)
             tornado_handler.set_header('Content-Type', 'application/json')
