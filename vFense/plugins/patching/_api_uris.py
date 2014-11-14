@@ -1,8 +1,5 @@
-from vFense.plugins.patching.api.os_apps import (
+from vFense.plugins.patching.api.apps import (
     AppIdAppsHandler, GetAgentsByAppIdHandler, AppsHandler, UploadHandler
-)
-from vFense.plugins.patching.api.custom_apps import (
-    AppIdCustomAppsHandler, GetAgentsByCustomAppIdHandler, CustomAppsHandler
 )
 from vFense.plugins.patching.api.stats import (
     ViewStatsByOsHandler, WidgetHandler, OsAppsOverTimeHandler,
@@ -12,9 +9,9 @@ from vFense.plugins.patching.api.stats import (
 def api_handlers():
     handlers = [
         ##### Apps API Handlers
-        (r"/api/v1/app/(os|supported|agentupdates|)/([0-9A-Za-z]{64})?", AppIdAppsHandler),
-        (r"/api/v1/app/(os|supported|agentupdates)/([0-9A-Za-z]{64})/agents?", GetAgentsByAppIdHandler),
-        (r"/api/v1/apps/(os|supported|agentupdates)", AppsHandler),
+        (r"/api/v1/app/(os|supported|agentupdates|custom)/([0-9A-Za-z]{64})?", AppIdAppsHandler),
+        (r"/api/v1/app/(os|supported|agentupdates|custom)/([0-9A-Za-z]{64})/agents?", GetAgentsByAppIdHandler),
+        (r"/api/v1/apps/(os|supported|agentupdates|custom)", AppsHandler),
         ##### Upload API
         (r"/api/v1/apps/upload?", UploadHandler),
 
@@ -25,11 +22,5 @@ def api_handlers():
         (r"/api/v1/dashboard/widgets/unique_count?", WidgetHandler),
         (r"/api/v1/dashboard/widgets/top_needed?", TopAppsNeededHandler),
         (r"/api/v1/dashboard/widgets/recently_released?", RecentlyReleasedHandler),
-
-        ##### Custom Apps API Handlers
-        (r"/api/v1/app/custom/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})?", AppIdCustomAppsHandler),
-        (r"/api/v1/app/custom/([a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})/agents?", GetAgentsByCustomAppIdHandler),
-        (r"/api/v1/apps/custom?", CustomAppsHandler),
-
     ]
     return handlers
