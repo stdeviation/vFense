@@ -29,7 +29,7 @@ from vFense.plugins.patching.downloader.downloader import (
 )
 
 import vFense.plugins.vuln.cve.cve as cve
-from vFense.plugins.vuln.search.vuln_search import FetchVulns
+from vFense.plugins.vuln.search.vuln_search import RetrieveVulns
 
 from rq.decorators import job
 
@@ -111,7 +111,7 @@ class AppsManager(object):
             and version for Ubuntu.
         """
 
-        search = FetchVulns(app.os_string)
+        search = RetrieveVulns(app.os_string)
         results = search.by_app_info(app.name, app.version, app.kb)
         vuln_info = results.data
 

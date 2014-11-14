@@ -38,7 +38,7 @@ from vFense.plugins.patching._db import (
     update_app_data_by_app_id, delete_apps_by_view
 )
 from vFense.plugins.vuln import VulnerabilityKeys
-from vFense.plugins.vuln.search.vuln_search import FetchVulns
+from vFense.plugins.vuln.search.vuln_search import RetrieveVulns
 import vFense.plugins.vuln.windows.ms as ms
 import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.cve.cve as cve
@@ -701,7 +701,7 @@ def get_vulnerability_info_for_app(app):
 
     vuln_data = Apps()
     vuln_data.vulnerability_categories = []
-    search = FetchVulns(app.os_string)
+    search = RetrieveVulns(app.os_string)
     vuln_info = search.by_app_info(app.name, app.version, app.kb).data
 
     if vuln_info:

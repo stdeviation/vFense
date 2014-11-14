@@ -23,7 +23,7 @@ class RetrieveGroups(RetrieveBase):
         if sort_key not in valid_keys_to_sort_by:
             self.sort_key = GroupKeys.GroupName
 
-        self.fetch_groups = (
+        self.fetch = (
             FetchGroups(
                 view_name=self.view_name, count=self.count,
                 offset=self.offset, sort=self.sort, sort_key=self.sort_key,
@@ -45,7 +45,7 @@ class RetrieveGroups(RetrieveBase):
         Returns:
             List of dictionairies.
         """
-        count, data = self.fetch_groups.by_id(group_id)
+        count, data = self.fetch.by_id(group_id)
         return self._base(count, data)
 
     @time_it
@@ -62,7 +62,7 @@ class RetrieveGroups(RetrieveBase):
         Returns:
             List of dictionairies.
         """
-        count, data = self.fetch_groups.by_name(name)
+        count, data = self.fetch.by_name(name)
         return self._base(count, data)
 
     @time_it
@@ -79,7 +79,7 @@ class RetrieveGroups(RetrieveBase):
         Returns:
             List of dictionairies.
         """
-        count, data = self.fetch_groups.by_regex(name)
+        count, data = self.fetch.by_regex(name)
         return self._base(count, data)
 
     @time_it
@@ -96,5 +96,5 @@ class RetrieveGroups(RetrieveBase):
 
         Returns:
         """
-        count, data = self.fetch_groups.all()
+        count, data = self.fetch.all()
         return self._base(count, data)

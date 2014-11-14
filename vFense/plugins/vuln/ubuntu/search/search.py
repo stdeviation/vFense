@@ -1,32 +1,16 @@
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
-
-from vFense.core.results import ApiResultKeys
 from vFense.core.decorators import time_it
-from vFense.core._constants import (
-    SortValues, DefaultQueryValues
-)
+from vFense.core._constants import SortValues
 from vFense.plugins.vuln.ubuntu._db_model import UbuntuVulnerabilityKeys
 from vFense.plugins.vuln.ubuntu.search._db import FetchUbuntuVulns
+from vFense.search.base import RetrieveBase
 
-from vFense.core.status_codes import (
-    GenericCodes, GenericFailureCodes
-)
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('cve')
-
-class RetrieveUbuntuVulns(object):
+class RetrieveUbuntuVulns(RetrieveBase):
     def __init__(
-        self, count=DefaultQueryValues.COUNT,
-        offset=DefaultQueryValues.OFFSET, sort=SortValues.DESC,
-        sort_key=UbuntuVulnerabilityKeys.DatePosted
+        self, sort=SortValues.DESC,
+        sort_key=UbuntuVulnerabilityKeys.DatePosted, **kwargs
         ):
-
-        self.count = count
-        self.offset = offset
-        self.sort = sort
+        super(RetrieveUbuntuVulns, self).__init__(**kwargs)
 
         self.valid_keys_to_filter_by = (
             [
@@ -42,9 +26,7 @@ class RetrieveUbuntuVulns(object):
             ]
         )
 
-        if sort_key in valid_keys_to_sort_by:
-            self.sort_key = sort_key
-        else:
+        if sort_key not in valid_keys_to_sort_by:
             self.sort_key = UbuntuVulnerabilityKeys.VulnerabilityId
 
         self.fetch_vulns = (
@@ -70,34 +52,4 @@ class RetrieveUbuntuVulns(object):
             List of dictionairies.
         """
         count, data = self.fetch_vulns.by_id(bulletin_id)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-
-        return results
-
-    def _set_results(self, gen_status_code, vfense_status_code,
-                     msg, count, data):
-
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: msg,
-            ApiResultKeys.COUNT: count,
-            ApiResultKeys.DATA: data,
-        }
-
-        return results
+        return self._base(count, data)

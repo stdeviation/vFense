@@ -1,6 +1,4 @@
 import re
-from vFense.core.results import ApiResults
-from vFense.core.status_codes import GenericCodes, GenericFailureCodes
 from vFense.utils.supported_platforms import REDHAT_DISTROS
 from vFense.plugins.vuln import Vulnerability
 from vFense.plugins.vuln.ubuntu import Ubuntu
@@ -9,9 +7,10 @@ from vFense.plugins.vuln.redhat import Redhat
 from vFense.plugins.vuln.redhat.search._db import FetchRedhatVulns
 from vFense.plugins.vuln.windows import Windows
 from vFense.plugins.vuln.windows.search._db import FetchWindowsVulns
+from vFense.search.base import RetrieveBase
 
 
-class FetchVulns(object):
+class RetrieveVulns(RetrieveBase):
     """Search vulnerabilities by the os_string. This is mainly
         so you do not have to know the different collections to search by.
 
@@ -19,22 +18,19 @@ class FetchVulns(object):
         os_string (str): Example .. "Ubuntu 14.04 trusty"
 
     Kwargs:
-        count (int): The number of results to return.
-        offset (int): The next set of results to return,
-            starting from the offset.
-        sort (str): Sort ascending or descending.
-            valid values asc or desc
-            default=desc
         sort_key (str): Which key to sort by. default=date_posted
 
+        For the rest of the kwargs, please check vFense.search._db_base
+
+
     Basic Usage:
-        >>> from vFense.plugins.vuln.search.vuln_search import FetchVulns
+        >>> from vFense.plugins.vuln.search.vuln_search import RetrieveVulns
         >>> os_string = 'Ubuntu 14.04 trusty'
         >>> count = 30
         >>> offset = 0
         >>> sort = 'desc'
         >>> sort_key = 'date_posted'
-        >>> search = FetchVulns(os_string, count, offset, sort, sort_key)
+        >>> search = RetrieveVulns(os_string, count, offset, sort, sort_key)
 
     Attributes:
         self.os_string
@@ -49,7 +45,8 @@ class FetchVulns(object):
         self.windows
 
     """
-    def __init__(self, os_string, **kwargs):
+    def __init__(self, os_string=None, **kwargs):
+        super(RetrieveVulns, self).__init__(**kwargs)
         self.os_string = os_string
         self.windows = False
         self.ubuntu = False
@@ -73,8 +70,8 @@ class FetchVulns(object):
             name (str): The name of the application you are searching for.
 
         Basic Usage:
-            >>> from vFense.plugins.vuln.search.vuln_search import FetchVulns
-            >>> search = FetchVulns()
+            >>> from vFense.plugins.vuln.search.vuln_search import RetrieveVulns
+            >>> search = RetrieveVulns()
             >>> search.by_app_info(name="kernel-kdump-devel", version="2.6.32431.20.5.el6")
 
         Returns:
@@ -93,8 +90,7 @@ class FetchVulns(object):
                 else:
                     data = Windows(**data)
 
-        results = self._set_results(count, data)
-        return results
+        return self._base(count, data)
 
     def by_app_info(self, name=None, version=None, kb=None):
         """Search by name and version or by kb
@@ -104,8 +100,8 @@ class FetchVulns(object):
             kb (str): The knowledge base. Example.. KB246731
 
         Basic Usage:
-            >>> from vFense.plugins.vuln.search.vuln_search import FetchVulns
-            >>> search = FetchVulns()
+            >>> from vFense.plugins.vuln.search.vuln_search import RetrieveVulns
+            >>> search = RetrieveVulns()
             >>> search.by_app_info(name="kernel-kdump-devel", version="2.6.32431.20.5.el6")
 
         Returns:
@@ -128,21 +124,4 @@ class FetchVulns(object):
                 data = data[0]
                 data = Windows(**data)
 
-        results = self._set_results(count, data)
-        return results
-
-    def _set_results(self, count, data):
-        results = ApiResults()
-        results.fill_in_defaults()
-        results.generic_status_code = GenericCodes.InformationRetrieved
-        if count > 0:
-            results.message = 'dataset retrieved'
-            results.vfense_status_code  = GenericFailureCodes.DataIsEmpty
-        else:
-            results.message = 'dataset is empty'
-            results.vfense_status_code  = GenericCodes.InformationRetrieved
-
-        results.count = count
-        results.data = data
-
-        return results
+        return self._base(count, data)

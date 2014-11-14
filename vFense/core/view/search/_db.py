@@ -1,11 +1,8 @@
-#!/usr/bin/env python
 from vFense.db.client import db_create_close, r
 from vFense.core.decorators import catch_it, time_it
-
 from vFense.core.group._db_model import (
     GroupCollections, GroupKeys, GroupIndexes
 )
-
 from vFense.core.view._db_model import (
     ViewCollections, ViewKeys, ViewMappedKeys
 )
