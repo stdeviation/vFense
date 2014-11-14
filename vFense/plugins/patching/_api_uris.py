@@ -21,6 +21,6 @@ def api_handlers():
         (r"/api/v1/dashboard/graphs/column/range/apps/os?", OsAppsOverTimeHandler),
         (r"/api/v1/dashboard/widgets/unique_count?", WidgetHandler),
         (r"/api/v1/dashboard/widgets/top_needed?", TopAppsNeededHandler),
-        (r"/api/v1/dashboard/widgets/recently_released?", RecentlyReleasedHandler),
+        (r"/api/v1/dashboard/widgets/recently_released?", RecentlyReleasedHandler)
     ]
     return handlers

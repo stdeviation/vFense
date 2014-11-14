@@ -15,9 +15,6 @@ from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.decorators import time_it, catch_it
 from vFense.search._db_base import FetchBase
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
-
 
 class FetchAgents(FetchBase):
     """Agent database queries"""

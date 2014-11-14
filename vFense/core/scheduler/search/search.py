@@ -278,48 +278,31 @@ class RetrieveJobs(RetrieveBase):
         return self._base(count, data)
 
 
-class RetrieveAgentJobs(object):
+class RetrieveAgentJobs(RetrieveJobs):
     """Job queries for an agent."""
     def __init__(
-        self, agent_id,
-        count=DefaultQueryValues.COUNT,
-        offset=DefaultQueryValues.OFFSET,
-        sort=SortValues.ASC,
-        sort_key=JobKeys.NextRunTime
-        ):
-        """
-        Kwargs:
-            agent_id (str): Fetch all jobs in this agent.
-            count (int): The number of results to return.
-            offset (int): The next set of results beginning at offset.
-            sort (str): asc or desc.
-            sort_key (str): The key you are going to sort the results by.
-        """
-
+        self, agent_id=None, sort_key=JobKeys.NextRunTime, **kwargs
+    ):
+        super(RetrieveAgentJobs, self).__init__(**kwargs)
         self.agent_id = agent_id
-        self.count = count
-        self.offset = offset
-        self.sort = sort
-
         self._set_properties()
 
-        if sort_key in self.valid_keys_to_sort_by:
-            self.sort_key = sort_key
-        else:
+        if self.sort_key not in self.valid_keys_to_sort_by:
             self.sort_key = JobKeys.NextRunTime
 
         self.fetch_jobs = (
             FetchAgentJobs(
-                self.agent_id, self.count, self.offset,
-                self.sort, self.sort_key
+                agent_id=self.agent_id, count=self.count,
+                offset=self.offset, sort=self.sort, sort_key=self.sort_key
             )
         )
 
-class RetrieveTagJobs(object):
+
+class RetrieveTagJobs(RetrieveJobs):
     """Job queries for a tag."""
     def __init__(self, tag_id=None, sort_key=JobKeys.NextRunTime, **kwargs):
+        super(RetrieveTagJobs, self).__init__(**kwargs)
         self.tag_id = tag_id
-
         self._set_properties()
 
         if self.sort_key not in self.valid_keys_to_sort_by:

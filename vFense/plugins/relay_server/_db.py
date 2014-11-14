@@ -4,7 +4,7 @@ from vFense.core._db import (
     insert_data_in_table, delete_data_in_table,
     update_data_in_table
 )
-from vFense.plugins.mightymouse import (
+from vFense.plugins.relay_server._db_model import (
     RelayServerCollections, RelayServerKeys
 )
 

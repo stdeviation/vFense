@@ -1,6 +1,6 @@
 from vFense.core.tag._constants import tag_id
 from vFense.core.api.tag import TagHandler, TagsHandler
-from vFense.plugins.patching.api.os_apps import TagIdAppsHandler
+from vFense.plugins.patching.api.apps import TagIdAppsHandler
 from vFense.core.api.agent_operations import TagOperationsHandler
 from vFense.plugins.patching.api.stats import (
     TagSeverityHandler, TagOsAppsOverTimeHandler, TagStatsByOsHandler
