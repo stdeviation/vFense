@@ -1,55 +1,42 @@
-#!/usr/bin/env python
-
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.core._constants import (
-    SortValues, DefaultQueryValues, CommonKeys
-)
+from vFense.core._constants import CommonKeys
+from vFense.core.decorators import time_it, catch_it
 from vFense.plugins.patching._db_model import (
-    AppCollections, DbCommonAppKeys, DbCommonAppIndexes,
+    AppCollections, DbCommonAppKeys,
     DbCommonAppPerAgentKeys, DbCommonAppPerAgentIndexes
 )
-from vFense.plugins.patching._constants import (
-    CommonAppKeys
-)
+from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.agent._db_model import (
     AgentCollections, AgentKeys, AgentIndexes
 )
 from vFense.plugins.patching.search._db_base_search import FetchAppsBase
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
-
 class FetchApps(FetchAppsBase):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, view_name=None,
-                 count=DefaultQueryValues.COUNT,
-                 offset=DefaultQueryValues.OFFSET,
-                 sort=SortValues.ASC,
-                 sort_key=DbCommonAppKeys.Name,
-                 show_hidden=CommonKeys.NO,
-                 apps_collection=AppCollections.UniqueApplications,
-                 apps_per_agent_collection=AppCollections.AppsPerAgent):
+    def __init__(
+        self, sort_key=DbCommonAppKeys.Name, show_hidden=CommonKeys.NO,
+        apps_collection=AppCollections.UniqueApplications,
+        apps_per_agent_collection=AppCollections.AppsPerAgent, **kwargs
+    ):
         """
+        Kwargs:
+            show_hidden (str): Return applications that have been hidden.
+                default="no"
+            apps_collection (str): The name of the appliaction table,
+                that is going to be used to begin the search.
+                default='unique_applications'
+            apps_per_agent_collection (str): The name of the applications
+                per agent table, that is going to be used to begin the
+                search.
+                default='apps_per_agent'
+
+            For the rest of the kwargs, please check vFense.search._db_base
         """
-        self.count = count
-        self.offset = offset
-        self.view_name = view_name
+        super(FetchApps, self)._init__(**kwargs)
         self.show_hidden = show_hidden
-        self.sort_key = sort_key
-
-        if sort == SortValues.ASC:
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
-
-        if show_hidden in CommonAppKeys.ValidHiddenVals:
-            self.show_hidden = show_hidden
-        else:
+        if show_hidden not in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = CommonKeys.NO
 
         self.apps_collection = apps_collection
@@ -71,36 +58,35 @@ class FetchApps(FetchAppsBase):
         else:
             self.sort_key = DbCommonAppKeys.Name
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_id(self, app_id, conn=None):
-        count = 0
-        data = []
         agent_stats_merge = self._set_agent_stats_merge(app_id)
-        try:
-            base = (
-                r
-                .table(self.apps_collection)
-                .get(app_id)
-                .merge(
-                    {
-                        DbCommonAppKeys.ReleaseDate: (
-                            r.row[DbCommonAppKeys.ReleaseDate].to_epoch_time()
-                        )
-                    }
-                )
+        base = (
+            r
+            .table(self.apps_collection)
+            .get_all(app_id)
+            .merge(
+                {
+                    DbCommonAppKeys.ReleaseDate: (
+                        r.row[DbCommonAppKeys.ReleaseDate].to_epoch_time()
+                    )
+                }
             )
+        )
 
-            data = (
-                base
-                .merge(agent_stats_merge)
-                .run(conn)
-            )
+        data = (
+            base
+            .merge(agent_stats_merge)
+            .run(conn)
+        )
 
-            if data:
-                count = 1
-
-        except Exception as e:
-            logger.exception(e)
+        if data:
+            count = 1
+            data = data[0]
+        else:
+            count = 0
 
         return(count, data)
 

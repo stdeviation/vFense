@@ -1,4 +1,6 @@
-from vFense.plugins.patching._db_model import DbCommonAppKeys
+from vFense.plugins.patching._db_model import (
+    DbCommonAppKeys, AppCollections
+)
 from vFense.plugins.patching._constants import (
     CommonAppKeys, CommonSeverityKeys
 )
@@ -12,22 +14,32 @@ class RetrieveAppsBase(RetrieveBase):
         This class is used to query for applications.
     """
     def __init__(
-        self, sort_key=DbCommonAppKeys.Name,
-        show_hidden=CommonKeys.NO, **kwargs
+        self, sort_key=DbCommonAppKeys.Name, show_hidden=CommonKeys.NO,
+        apps_collection=AppCollections.UniqueApplications,
+        apps_per_agent_collection=AppCollections.AppsPerAgent, **kwargs
     ):
         """
         Kwargs:
             show_hidden (str): Return applications that have been hidden.
                 default="no"
+            apps_collection (str): The name of the appliaction table,
+                that is going to be used to begin the search.
+                default='unique_applications'
+            apps_per_agent_collection (str): The name of the applications
+                per agent table, that is going to be used to begin the
+                search.
+                default='apps_per_agent'
 
-            For the rest of the kwargs, please check vFense.search._db_base
+            For the rest of the kwargs, please check vFense.search.base
         """
         super(RetrieveAppsBase, self).__init__(**kwargs)
         self.fetch_apps = (
             FetchApps(
                 view_name=self.view_name, count=self.count,
                 offset=self.offset, sort=self.sort,
-                sort_key=self.sort_key, show_hidden=self.show_hidden
+                sort_key=self.sort_key, show_hidden=self.show_hidden,
+                apps_collection=self.apps_collection,
+                apps_per_agent_collection=self.apps_per_agent_collection
             )
         )
 

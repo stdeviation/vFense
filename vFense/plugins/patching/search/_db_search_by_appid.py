@@ -1,48 +1,23 @@
-#!/usr/bin/env python
-
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import db_create_close, r
-from vFense.core._constants import (
-    SortValues, DefaultQueryValues, CommonKeys
-)
+from vFense.core.decorators import time_it, catch_it
 from vFense.plugins.patching._db_model import (
-    AppCollections, DbCommonAppKeys, DbCommonAppIndexes,
-    DbCommonAppPerAgentKeys, DbCommonAppPerAgentIndexes
-)
-from vFense.plugins.patching._constants import (
-    CommonAppKeys, CommonSeverityKeys
+    AppCollections, DbCommonAppPerAgentKeys, DbCommonAppPerAgentIndexes
 )
 from vFense.core.agent._db_model import (
-    AgentCollections, AgentKeys, AgentIndexes
+    AgentCollections, AgentKeys
 )
+from vFense.plugins.patching.search._db_base_search import FetchAppsBase
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
-
-class FetchAgentsByAppId(object):
+class FetchAgentsByAppId(FetchAppsBase):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, app_id,
-                 count=DefaultQueryValues.COUNT,
-                 offset=DefaultQueryValues.OFFSET,
-                 sort=SortValues.ASC,
-                 sort_key=AgentKeys.ComputerName,
-                 apps_collection=AppCollections.UniqueApplications,
-                 apps_per_agent_collection=AppCollections.AppsPerAgent):
-        """
-        """
-        self.count = count
-        self.offset = offset
+    def __init__(
+        self, app_id=None, sort_key=AgentKeys.ComputerName,
+        apps_collection=AppCollections.UniqueApplications,
+        apps_per_agent_collection=AppCollections.AppsPerAgent, **kwargs
+    ):
         self.app_id = app_id
-        self.sort_key = sort_key
-
-        if sort == SortValues.ASC:
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
 
         self.apps_collection = apps_collection
         self.apps_per_agent_collection = apps_per_agent_collection
@@ -55,125 +30,91 @@ class FetchAgentsByAppId(object):
             ]
         )
 
-        if sort_key in self.pluck_list:
-            self.sort_key = sort_key
-        else:
+        if self.sort_key not in self.pluck_list:
             self.sort_key = AgentKeys.ComputerName
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_status(self, status, conn=None):
-        count = 0
-        data = []
-        base_filter = self._set_status_filter(status)
-        try:
-            base = (
-                base_filter
-            )
+        base = self._set_status_filter(status)
+        count = (
+            base
+            .count()
+            .run(conn)
+        )
 
-            count = (
-                base
-                .count()
-                .run(conn)
-            )
-
-            data = list(
-                base
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
+        data = list(
+            base
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
 
         return(count, data)
 
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_name(self, name, conn=None):
-        count = 0
-        data = []
-        base_filter = self._set_base_filter()
-        try:
-            base = (
-                base_filter
+        base = self._set_base_filter()
+        count = (
+            base
+            .filter(
+                lambda x:
+                (x[AgentKeys.ComputerName].match("(?i)"+name))
+                |
+                (x[AgentKeys.DisplayName].match("(?i)"+name))
             )
-
-            data = list(
-                base
-                .filter(
-                    lambda x:
-                    (x[AgentKeys.ComputerName].match("(?i)"+name))
-                    |
-                    (x[AgentKeys.DisplayName].match("(?i)"+name))
-                )
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
+            .count()
+            .run(conn)
+        )
+        data = list(
+            base
+            .filter(
+                lambda x:
+                (x[AgentKeys.ComputerName].match("(?i)"+name))
+                |
+                (x[AgentKeys.DisplayName].match("(?i)"+name))
             )
-
-            count = (
-                base
-                .filter(
-                    lambda x:
-                    (x[AgentKeys.ComputerName].match("(?i)"+name))
-                    |
-                    (x[AgentKeys.DisplayName].match("(?i)"+name))
-                )
-                .count()
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
-
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
         return(count, data)
 
-
+    @time_it
+    @catch_it((0, []))
     @db_create_close
     def by_status_and_name(self, status, name, conn=None):
-        count = 0
-        data = []
-        base_filter = self._set_status_filter(status)
-        try:
-            base = (
-                base_filter
+        base = self._set_status_filter(status)
+        count = (
+            base
+            .filter(
+                lambda x:
+                (x[AgentKeys.ComputerName].match("(?i)"+name))
+                |
+                (x[AgentKeys.DisplayName].match("(?i)"+name))
             )
-
-            data = list(
-                base
-                .filter(
-                    lambda x:
-                    (x[AgentKeys.ComputerName].match("(?i)"+name))
-                    |
-                    (x[AgentKeys.DisplayName].match("(?i)"+name))
-                )
-                .order_by(self.sort(self.sort_key))
-                .skip(self.offset)
-                .limit(self.count)
-                .run(conn)
+            .count()
+            .run(conn)
+        )
+        data = list(
+            base
+            .filter(
+                lambda x:
+                (x[AgentKeys.ComputerName].match("(?i)"+name))
+                |
+                (x[AgentKeys.DisplayName].match("(?i)"+name))
             )
-
-            count = (
-                base
-                .filter(
-                    lambda x:
-                    (x[AgentKeys.ComputerName].match("(?i)"+name))
-                    |
-                    (x[AgentKeys.DisplayName].match("(?i)"+name))
-                )
-                .count()
-                .run(conn)
-            )
-
-        except Exception as e:
-            logger.exception(e)
-
+            .order_by(self.sort(self.sort_key))
+            .skip(self.offset)
+            .limit(self.count)
+            .run(conn)
+        )
         return(count, data)
-
-
 
     def _set_map_hash(self):
         """ Set the global properties. """

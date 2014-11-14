@@ -1,7 +1,3 @@
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
-
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core._constants import (
     SortValues, DefaultQueryValues, CommonKeys
@@ -9,181 +5,89 @@ from vFense.core._constants import (
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys,
 )
-from vFense.plugins.patching._constants import (
-    CommonAppKeys
-)
-
-from vFense.core.status_codes import (
-    GenericCodes, GenericFailureCodes
-)
-from vFense.core.results import (
-    ApiResultKeys
-)
+from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching.search._db_search_by_appid import (
     FetchAgentsByAppId
 )
-
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+from vFense.plugins.patching.search.base_search import RetrieveAppsBase
 
 
-class RetrieveAgentsByAppId(object):
+class RetrieveAgentsByAppId(RetrieveAppsBase):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, app_id,
-                 count=DefaultQueryValues.COUNT,
-                 offset=DefaultQueryValues.OFFSET,
-                 sort=SortValues.ASC,
-                 sort_key=AgentKeys.ComputerName,
-                 apps_collection=AppCollections.UniqueApplications,
-                 apps_per_agent_collection=AppCollections.AppsPerAgent):
-        """
-        """
+    def __init__(
+        self, app_id=None, sort_key=AgentKeys.ComputerName,
+        apps_collection=AppCollections.UniqueApplications,
+        apps_per_agent_collection=AppCollections.AppsPerAgent, **kwargs
+    ):
+        super(RetrieveAgentsByAppId, self).__init__(**kwargs)
         self.app_id = app_id
-
-        self.fetch_agents = (
+        self.fetch_apps = (
             FetchAgentsByAppId(
-                self.app_id, count, offset,
-                sort, sort_key
+                app_id=self.app_id, count=self.count,
+                offset=self.offset, sort=self.sort,
+                sort_key=self.sort_key, show_hidden=self.show_hidden,
+                apps_collection=self.apps_collection,
+                apps_per_agent_collection=self.apps_per_agent_collection
             )
         )
 
     def by_status(self, status):
-        """
-        """
         if status in CommonAppKeys.ValidPackageStatuses:
             count, data = self.fetch_agents.by_status(status)
-            generic_status_code = GenericCodes.InformationRetrieved
+            return self._base(count, data)
 
-            if count == 0:
-                vfense_status_code = GenericFailureCodes.DataIsEmpty
-                msg = 'dataset is empty'
-
-            else:
-                vfense_status_code = GenericCodes.InformationRetrieved
-                msg = 'dataset retrieved'
         else:
-            count = 0
-            data = []
-            generic_status_code = GenericCodes.InvalidFilterKey
-            vfense_status_code = GenericCodes.InvalidFilterKey
-            msg = 'Invalid status {0}'.format(status)
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-        return results
+            return self._set_results_invalid_filter_key(status)
 
     def by_name(self, name):
         count, data = self.fetch_agents.by_name(name)
-        generic_status_code = GenericCodes.InformationRetrieved
-
-        if count == 0:
-            vfense_status_code = GenericFailureCodes.DataIsEmpty
-            msg = 'dataset is empty'
-
-        else:
-            vfense_status_code = GenericCodes.InformationRetrieved
-            msg = 'dataset retrieved'
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-        return results
-
+        return self._base(count, data)
 
     def by_status_and_name(self, status, name):
         if status in CommonAppKeys.ValidPackageStatuses:
             count, data = self.fetch_apps.by_status_and_name(status, name)
-            generic_status_code = GenericCodes.InformationRetrieved
+            return self._base(count, data)
 
-            if count == 0:
-                vfense_status_code = GenericFailureCodes.DataIsEmpty
-                msg = 'dataset is empty'
-
-            else:
-                vfense_status_code = GenericCodes.InformationRetrieved
-                msg = 'dataset retrieved'
         else:
-            count = 0
-            data = []
-            generic_status_code = GenericCodes.InvalidFilterKey
-            vfense_status_code = GenericCodes.InvalidFilterKey
-            msg = 'Invalid status {0}'.format(status)
-
-        results = (
-            self._set_results(
-                generic_status_code, vfense_status_code,
-                msg, count, data
-            )
-        )
-        return results
-
-
-    def _set_results(self, gen_status_code, vfense_status_code,
-                     msg, count, data):
-
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: gen_status_code,
-            ApiResultKeys.VFENSE_STATUS_CODE: vfense_status_code,
-            ApiResultKeys.MESSAGE: msg,
-            ApiResultKeys.COUNT: count,
-            ApiResultKeys.DATA: data,
-        }
-
-        return(results)
+            return self._set_results_invalid_filter_key(status)
 
 
 class RetrieveAgentsByCustomAppId(RetrieveAgentsByAppId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, app_id,
-                 count=DefaultQueryValues.COUNT,
-                 offset=DefaultQueryValues.OFFSET,
-                 sort=SortValues.ASC,
-                 sort_key=AgentKeys.ComputerName):
-        """
-        """
-        self.app_id = app_id
-        apps_collection = AppCollections.CustomApps
-        apps_per_agent_collection = AppCollections.CustomAppsPerAgent
+    def __init__(self, **kwargs):
+        super(RetrieveAgentsByCustomAppId, self).__init__(**kwargs)
+        self.apps_collection = AppCollections.CustomApps
+        self.apps_per_agent_collection = AppCollections.CustomAppsPerAgent
 
         self.fetch_agents = (
             FetchAgentsByAppId(
-                self.app_id, count, offset,
-                sort, sort_key, apps_collection,
-                apps_per_agent_collection
+                app_id=self.app_id, count=self.count, offset=self.offset,
+                sort=self.sort, sort_key=self.sort_key,
+                apps_collectioon=self.apps_collection,
+                apps_per_agent_collection=self.apps_per_agent_collection
             )
         )
+
 
 class RetrieveAgentsBySupportedAppId(RetrieveAgentsByAppId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, app_id,
-                 count=DefaultQueryValues.COUNT,
-                 offset=DefaultQueryValues.OFFSET,
-                 sort=SortValues.ASC,
-                 sort_key=AgentKeys.ComputerName):
-        """
-        """
-        self.app_id = app_id
-        apps_collection = AppCollections.SupportedApps
-        apps_per_agent_collection = AppCollections.SupportedAppsPerAgent
+    def __init__(self, **kwargs):
+        super(RetrieveAgentsBySupportedAppId, self).__init__(**kwargs)
+        self.apps_collection = AppCollections.SupportedApps
+        self.apps_per_agent_collection = AppCollections.SupportedAppsPerAgent
 
         self.fetch_agents = (
             FetchAgentsByAppId(
-                self.app_id, count, offset,
-                sort, sort_key, apps_collection,
-                apps_per_agent_collection
+                app_id=self.app_id, count=self.count, offset=self.offset,
+                sort=self.sort, sort_key=self.sort_key,
+                apps_collectioon=self.apps_collection,
+                apps_per_agent_collection=self.apps_per_agent_collection
             )
         )
 
@@ -191,21 +95,16 @@ class RetrieveAgentsByAgentAppId(RetrieveAgentsByAppId):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, app_id,
-                 count=DefaultQueryValues.COUNT,
-                 offset=DefaultQueryValues.OFFSET,
-                 sort=SortValues.ASC,
-                 sort_key=AgentKeys.ComputerName):
-        """
-        """
-        self.app_id = app_id
-        apps_collection = AppCollections.vFenseApps
-        apps_per_agent_collection = AppCollections.vFenseAppsPerAgent
+    def __init__(self, **kwargs):
+        super(RetrieveAgentsByAgentAppId, self).__init__(**kwargs)
+        self.apps_collection = AppCollections.vFenseApps
+        self.apps_per_agent_collection = AppCollections.vFenseAppsPerAgent
 
         self.fetch_agents = (
             FetchAgentsByAppId(
-                self.app_id, count, offset,
-                sort, sort_key, apps_collection,
-                apps_per_agent_collection
+                app_id=self.app_id, count=self.count, offset=self.offset,
+                sort=self.sort, sort_key=self.sort_key,
+                apps_collectioon=self.apps_collection,
+                apps_per_agent_collection=self.apps_per_agent_collection
             )
         )

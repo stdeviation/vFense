@@ -1,55 +1,29 @@
-#!/usr/bin/env python
-
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import r
-from vFense.core._constants import (
-    SortValues, DefaultQueryValues, CommonKeys
-)
+from vFense.core._constants import CommonKeys
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppKeys, DbCommonAppIndexes,
     DbCommonAppPerAgentKeys, DbCommonAppPerAgentIndexes
 )
-from vFense.plugins.patching._constants import (
-    CommonAppKeys
-)
+from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.core.tag._db_model import (
     TagCollections, TagsPerAgentKeys, TagsPerAgentIndexes
 )
 from vFense.plugins.patching.search._db_base_search import FetchAppsBase
 
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
-
 class FetchAppsByTagId(FetchAppsBase):
     """
         This class is used to get agent data from within the Packages Page
     """
-    def __init__(self, tag_id,
-                 count=DefaultQueryValues.COUNT,
-                 offset=DefaultQueryValues.OFFSET,
-                 sort=SortValues.ASC,
-                 sort_key=DbCommonAppKeys.Name,
-                 show_hidden=CommonKeys.NO,
-                 apps_collection=AppCollections.UniqueApplications,
-                 apps_per_agent_collection=AppCollections.AppsPerAgent):
-        """
-        """
-        self.count = count
-        self.offset = offset
+    def __init__(
+        self, tag_id=None, sort_key=DbCommonAppKeys.Name,
+        show_hidden=CommonKeys.NO,
+        apps_collection=AppCollections.UniqueApplications,
+        apps_per_agent_collection=AppCollections.AppsPerAgent, **kwargs
+    ):
+        super(FetchAppsByTagId, self).__init(**kwargs)
         self.tag_id = tag_id
         self.show_hidden = show_hidden
-        self.sort_key = sort_key
-
-        if sort == SortValues.ASC:
-            self.sort = r.asc
-        else:
-            self.sort = r.desc
-
-        if show_hidden in CommonAppKeys.ValidHiddenVals:
-            self.show_hidden = show_hidden
-        else:
+        if show_hidden not in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = CommonKeys.NO
 
         self.apps_collection = apps_collection
@@ -78,7 +52,6 @@ class FetchAppsByTagId(FetchAppsBase):
             self.sort_key = sort_key
         else:
             self.sort_key = DbCommonAppKeys.Name
-
 
     def _set_map_hash(self):
         """ Set the global properties. """
