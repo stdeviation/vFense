@@ -299,72 +299,31 @@ class AppIdAppsHandler(AppsBaseHandler):
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self, oper_type, app_id):
-        active_user = self.get_current_user().encode('utf-8')
-        uri = self.request.uri
-        method = self.request.method
-        try:
-            severity = self.arguments.get('severity').capitalize()
-            if severity in CommonSeverityKeys.ValidRvSeverities:
-                sev_data = (
-                    {
-                        AppsKey.vFenseSeverity: severity
-                    }
-                )
-                update_app_data_by_app_id(
-                    app_id, sev_data
-                )
-                data = {
-                    ApiResultKeys.MESSAGE: (
-                        'Severity updated for app id: {0}'.format(app_id)
-                    ),
-                    ApiResultKeys.DATA: [sev_data],
-                    ApiResultKeys.UPDATED_IDS: app_id
-                }
-                results = (
-                    Results(
-                        active_user, uri, method
-                    ).object_updated(**data)
-                )
-                self.set_status(results.http_status_code)
-                self.set_header('Content-Type', 'application/json')
-                self.write(json.dumps(results.to_dict_non_null(), indent=4))
+        severity = self.arguments.get('severity').capitalize()
+        results = self.update_severity(severity, app_id)
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
-            else:
-                data = {
-                    ApiResultKeys.MESSAGE: (
-                        'Severity failed to update for app id: {0}'
-                        .format(app_id)
-                    ),
-                    ApiResultKeys.DATA: [sev_data],
-                    ApiResultKeys.UNCHANGED_IDS: app_id
-                }
-                results = (
-                    Results(
-                        active_user, uri, method
-                    ).objects_failed_to_update(severity)
-                )
-                self.set_status(results.http_status_code)
-                self.set_header('Content-Type', 'application/json')
-                self.write(json.dumps(results.to_dict_non_null(), indent=4))
-
-        except Exception as e:
-            data = {
-                ApiResultKeys.MESSAGE: (
-                    'Severity failed to update for app id {0}, error: {1}'
-                    .format(app_id, e)
-                ),
-                ApiResultKeys.DATA: [sev_data],
-                ApiResultKeys.UNCHANGED_IDS: app_id
-            }
-            results = (
-                Results(
-                    active_user, uri, method
-                ).something_broke(**data)
+    @results_message
+    def update_severity(self, severity, app_id):
+        results = ApiResults()
+        results.fill_in_defaults()
+        results.data = {AppsKey.vFenseSeverity: severity}
+        if severity in CommonSeverityKeys.ValidRvSeverities:
+            update_app_data_by_app_id(app_id, results.data)
+            results.message = (
+                'Severity updated for app id: {0}'.format(app_id)
             )
-            logger.exception(e)
-            self.set_status(results.http_status_code)
-            self.set_header('Content-Type', 'application/json')
-            self.write(json.dumps(results.to_dict_non_null(), indent=4))
+            results.updated_ids.append(app_id)
+        else:
+            results.message = (
+                'Severity failed tp update for app id: {0}'.format(app_id)
+            )
+            results.unchanged_ids.append(app_id)
+
+        return results
+
 
     @authenticated_request
     @convert_json_to_arguments
