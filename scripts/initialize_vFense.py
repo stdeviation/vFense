@@ -287,10 +287,8 @@ def create_users(admin_group_id, conn=None):
         default_view=DefaultViews.GLOBAL,
         enabled=True, is_global=True
     )
-    print admin_group_id
     user_manager = UserManager(admin_user.user_name)
-    results = user_manager.create(admin_user, [admin_group_id])
-    print results
+    user_manager.create(admin_user, [admin_group_id])
     print 'Admin username = %s' % (DefaultUsers.GLOBAL_ADMIN)
     print 'Admin password = %s' % (args.admin_password)
 
