@@ -4,12 +4,8 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import results_message, api_catch_it
-from vFense.core.api._constants import (
-    ApiArguments
-)
-from vFense.plugins.patching.api._constants import (
-    AppApiArguments, AppFilterValues
-)
+from vFense.core.api._constants import ApiArguments
+from vFense.plugins.patching.api._constants import AppApiArguments
 from vFense.core._constants import DefaultQueryValues, SortValues
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.results import ApiResults, ExternalApiResults
@@ -22,9 +18,7 @@ from vFense.plugins.patching.api._constants import vFenseAppTypes
 from vFense.plugins.patching.scheduler.manager import (
     AgentAppsJobManager, TagAppsJobManager
 )
-from vFense.plugins.patching._constants import (
-    AppStatuses, CommonSeverityKeys
-)
+from vFense.plugins.patching._constants import AppStatuses
 from vFense.plugins.patching.search.search_by_agentid import (
     RetrieveAppsByAgentId, RetrieveCustomAppsByAgentId,
     RetrieveSupportedAppsByAgentId, RetrieveAgentAppsByAgentId
@@ -64,9 +58,7 @@ class AppsBaseHandler(BaseHandler):
             )
         )
         self.sort = (
-            self.get_argument(
-                ApiArguments.SORT, SortValues.ASC
-            )
+            self.get_argument(ApiArguments.SORT, SortValues.ASC)
         )
         self.sort_by = self.get_argument(ApiArguments.SORT_BY, AppsKey.Name)
         self.status = (
@@ -106,7 +98,7 @@ class AppsBaseHandler(BaseHandler):
 
         elif self.vuln and self.severity and self.status and self.query:
             results = (
-                self.by_status_and_name_and_self.sev_and_self.vuln(search)
+                self.by_status_and_name_and_sev_and_vuln(search)
             )
 
         elif (not self.vuln and not self.severity and self.status
@@ -141,36 +133,43 @@ class AppsBaseHandler(BaseHandler):
 
     @results_message
     def by_name(self, search):
+        print 'by_name'
         results = search.by_name(self.query)
         return results
 
     @results_message
     def by_status(self, search):
+        print 'by_status', search
         results = search.by_status(self.status)
         return results
 
     @results_message
     def by_status_and_sev(self, search):
+        print 'by_status_and_sev'
         results = search.by_status_and_sev(self.status, self.sev)
         return results
 
     @results_message
     def by_sev_and_name(self, search):
+        print 'by_status_and_name'
         results = search.by_sev_and_name(self.sev, self.query)
         return results
 
     @results_message
     def by_status_and_vuln(self, search):
+        print 'by_status_and_vuln'
         results = search.by_status_and_vuln(self.status)
         return results
 
     @results_message
     def by_severity(self, search):
+        print 'by_severity'
         results = search.by_severity(self.sev)
         return results
 
     @results_message
     def by_status_and_name_and_sev(self, search):
+        print 'by_status_and_name_and_sev'
         results = search.by_status_and_name_and_sev(
             self.status, self.query, self.sev
         )
@@ -178,6 +177,7 @@ class AppsBaseHandler(BaseHandler):
 
     @results_message
     def by_status_and_name_and_sev_and_vuln(self, search):
+        print 'by_status_and_name_and_sev_and_vuln'
         results = (
             search.by_status_and_name_and_sev_and_vuln(
                 self.status, self.query, self.sev
@@ -187,11 +187,13 @@ class AppsBaseHandler(BaseHandler):
 
     @results_message
     def by_status_and_name(self, search):
+        print 'by_status_and_name'
         results = search.by_status_and_name(self.status, self.query)
         return results
 
     @results_message
     def by_status_and_name_and_vuln(self, search):
+        print 'by_status_and_name_and_vuln'
         results = search.by_status_and_name_and_vuln(self.status, self.query)
         return results
 

@@ -25,6 +25,7 @@ class FetchAppsBase(FetchBase):
         """
         super(FetchAppsBase, self).__init__(**kwargs)
         self.show_hidden = show_hidden
+        self.sort_key = sort_key
 
         if self.show_hidden not in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = CommonKeys.NO
@@ -42,10 +43,7 @@ class FetchAppsBase(FetchBase):
                 DbCommonAppKeys.VulnerabilityId,
             ]
         )
-
-        if sort_key in self.pluck_list:
-            self.sort_key = sort_key
-        else:
+        if self.sort_key not in self.pluck_list:
             self.sort_key = DbCommonAppKeys.Name
 
     @time_it

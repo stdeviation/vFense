@@ -35,6 +35,8 @@ class RetrieveAppsByAgentId(RetrieveAppsBase):
         """
         super(RetrieveAppsByAgentId, self).__init__(**kwargs)
         self.agent_id = agent_id
+        self.sort_key = sort_key
+        self.show_hidden = show_hidden
         self.fetch_apps = (
             FetchAppsByAgentId(
                 agent_id=self.agent_id, count=self.count,

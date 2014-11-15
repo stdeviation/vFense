@@ -35,6 +35,8 @@ class RetrieveAppsByTagId(RetrieveAppsBase):
         """
         super(RetrieveAppsByTagId, self).__init__(**kwargs)
         self.tag_id = tag_id
+        self.sort_key = sort_key
+        self.show_hidden = show_hidden
         self.fetch_apps = (
             FetchAppsByTagId(
                 tag_id=self.tag_id, count=self.count,

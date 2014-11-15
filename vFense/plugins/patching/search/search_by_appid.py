@@ -23,6 +23,7 @@ class RetrieveAgentsByAppId(RetrieveAppsBase):
     ):
         super(RetrieveAgentsByAppId, self).__init__(**kwargs)
         self.app_id = app_id
+        self.sort_key = sort_key
         self.fetch = (
             FetchAgentsByAppId(
                 app_id=self.app_id, count=self.count,

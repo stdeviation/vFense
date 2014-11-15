@@ -33,6 +33,7 @@ class RetrieveAppsBase(RetrieveBase):
             For the rest of the kwargs, please check vFense.search.base
         """
         super(RetrieveAppsBase, self).__init__(**kwargs)
+        self.sort_key = sort_key
         self.show_hidden = show_hidden
         self.apps_collection = apps_collection
         self.apps_per_agent_collection = apps_per_agent_collection

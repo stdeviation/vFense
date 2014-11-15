@@ -72,9 +72,7 @@ class UploadHandler(BaseHandler):
     @check_permissions(Permissions.ADMINISTRATOR)
     def put(self):
         active_user = self.get_current_user()
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         name = self.arguments.get('name')
         version = self.arguments.get('version')
         md5 = self.arguments.get('md5')
@@ -134,9 +132,7 @@ class AgentIdAppsHandler(AppsBaseHandler):
     @convert_json_to_arguments
     def put(self, agent_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         self.get_and_set_install_arguments()
         self.app_ids = self.arguments.get('app_ids')
         install = (
@@ -365,9 +361,7 @@ class AppIdAppsHandler(AppsBaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         self.get_and_set_install_arguments()
         self.app_ids = [app_id]
         self.agent_ids = self.arguments.get('agent_ids')
@@ -399,78 +393,22 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
     @authenticated_request
     def get(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
-        uri = self.request.uri
-        http_method = self.request.method
-        query = (
-            self.get_argument(ApiArguments.QUERY, None)
-        )
-        count = (
-            int(
-                self.get_argument(
-                    ApiArguments.COUNT, DefaultQueryValues.COUNT
-                )
-            )
-        )
-        offset = (
-            int(
-                self.get_argument(
-                    ApiArguments.OFFSET, DefaultQueryValues.OFFSET
-                )
-            )
-        )
-        sort = (
-            self.get_argument(
-                ApiArguments.SORT, SortValues.ASC
-            )
-        )
-        sort_by = (
-            self.get_argument(ApiArguments.SORT_BY, AgentKeys.ComputerName)
-        )
-        status = (
-            self.get_argument(
-                AppApiArguments.STATUS, AppStatuses.AVAILABLE
-            )
-        )
-        search = (
-            RetrieveAgentsByAppId(
-                app_id=app_id, count=count, offset=offset,
-                sort=sort, sort_key=sort_by
-            )
-        )
-        output = self.get_argument(ApiArguments.OUTPUT, 'json')
-
-        if status and not query:
-            results = self.by_status(search, status)
-
-        elif status and query:
-            results = self.by_status_and_name(search, status, query)
-
-        elif query and not status:
-            results = self.by_name(search, query)
+        active_view = UserManager(active_user).properties.current_view
+        self.get_and_set_search_arguments()
+        oper = self.return_operation_type(oper_type)
+        search = self.set_base_search(oper, active_view)
+        if (not self.query and not self.severity and not self.vuln
+                and not self.status):
+            results = self.all(search)
 
         else:
-            results = (
-                Results(
-                    active_user, uri, http_method
-                ).incorrect_arguments()
-            )
-
+            results = self.app_search_results(search, active_user)
         self.set_status(results.http_status_code)
-        self.modified_output(results, output, 'apps')
+        self.modified_output(results, self.output, 'apps')
 
     @results_message
-    def by_status(self, search, status):
-        results = search.by_status(status)
-        return results
-
-    @results_message
-    def by_name(self, search, name):
-        results = search.by_name(name)
-        return results
-
-    @results_message
-    def by_status_and_name(self, search, status, name):
-        results = search.by_status_and_name(status, name)
+    def all(self, search):
+        results = search.all()
         return results
 
 
@@ -549,9 +487,7 @@ class AppsHandler(AppsBaseHandler):
     @authenticated_request
     def get(self, oper_type):
         active_user = self.get_current_user().encode('utf-8')
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         self.get_and_set_search_arguments()
         oper = self.return_operation_type(oper_type)
         search = self.set_base_search(oper, active_view)
@@ -569,7 +505,6 @@ class AppsHandler(AppsBaseHandler):
     def all(self, search):
         results = search.all()
         return results
-
 
     @authenticated_request
     @convert_json_to_arguments

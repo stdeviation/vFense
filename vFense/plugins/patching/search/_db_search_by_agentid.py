@@ -20,6 +20,7 @@ class FetchAppsByAgentId(FetchAppsBase):
         super(FetchAppsBase, self).__init__(**kwargs)
         self.agent_id = agent_id
         self.show_hidden = show_hidden
+        self.sort_key = sort_key
 
         if self.show_hidden not in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = CommonKeys.NO

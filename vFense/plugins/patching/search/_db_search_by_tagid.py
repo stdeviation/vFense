@@ -23,6 +23,7 @@ class FetchAppsByTagId(FetchAppsBase):
         super(FetchAppsByTagId, self).__init__(**kwargs)
         self.tag_id = tag_id
         self.show_hidden = show_hidden
+        self.sort_key = sort_key
         if show_hidden not in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = CommonKeys.NO
 

@@ -19,7 +19,7 @@ class FetchAgentsByAppId(FetchAppsBase):
     ):
         super(FetchAgentsByAppId, self).__init__(**kwargs)
         self.app_id = app_id
-
+        self.sort_key = sort_key
         self.apps_collection = apps_collection
         self.apps_per_agent_collection = apps_per_agent_collection
 
