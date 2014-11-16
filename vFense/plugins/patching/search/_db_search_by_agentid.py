@@ -51,7 +51,6 @@ class FetchAppsByAgentId(FetchAppsBase):
         else:
             self.sort_key = DbCommonAppKeys.Name
 
-
     def _set_map_hash(self):
         """ Set the global properties. """
 
