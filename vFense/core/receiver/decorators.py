@@ -267,6 +267,14 @@ def agent_results_message(fn):
                         .format(results.agent_id, results.token)
                     )
 
+            elif results.vfense_status_code == AgentCodes.AgentUpdated:
+                results.http_status_code = 200
+                if not results.message:
+                    results.message = (
+                        '{0} updated successfully with token {1}'
+                        .format(results.agent_id, results.token)
+                    )
+
             else:
                 results.http_status_code = 500
                 if not results.message:

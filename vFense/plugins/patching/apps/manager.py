@@ -65,7 +65,6 @@ class AppsManager(object):
     def local_file_path(self, uuid, app_name):
         return os.path.join(VFENSE_APP_TMP_PATH, uuid, app_name)
 
-
     def get_apps(self, app_id=None, os_code=None, views=None):
         if os_code and views and not app_id:
             apps_info = (
@@ -104,13 +103,11 @@ class AppsManager(object):
 
         return download_status
 
-
     def _set_vulnerability_info(self, app):
         """Retrieve the relevant vulnerability for an application if
             it exist. We search by using the kb for Windows and by using the name
             and version for Ubuntu.
         """
-        print app.os_string, app.name, app.version
         search = RetrieveVulns(app.os_string)
         results = search.by_app_info(app.name, app.version, app.kb)
         vuln_info = results.data
@@ -126,7 +123,6 @@ class AppsManager(object):
             app.vulnerability_categories = (
                 list(set(app.vulnerability_categories))
             )
-
 
     def store_app_in_db(self, app, file_data, views=None):
         """Store the application into the vFense database.
