@@ -17,7 +17,7 @@ from vFense.core.receiver.decorators import (
     authenticate_agent
 )
 from vFense.core.receiver.status_codes import AgentResultCodes
-from vFense.core.receiver.handoff import HandOff
+from vFense.plugins.patching.receiver.handoff import PatcherHandOff
 
 
 class StartUpV1(BaseHandler):
@@ -61,9 +61,12 @@ class StartUpV1(BaseHandler):
             uri_operation.data = uri_results.data
             agent_results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
-                HandOff().startup_operation(
-                    agent_id, plugins['rv']['data']
+                handoff = (
+                    PatcherHandOff(
+                        agent_id=agent_id, apps_data=plugins['rv']['data']
+                    )
                 )
+                handoff.new_agent_operation()
 
         return agent_results
 
@@ -98,7 +101,7 @@ class StartUpV2(AgentBaseHandler):
         agent_results = AgentApiResults(**results.to_dict_non_null())
         agent_results.fill_in_defaults()
         if results.vfense_status_code == AgentResultCodes.StartUpSucceeded:
-            uri_results = get_result_uris(agent_id, version='v1')
+            uri_results = get_result_uris(agent_id, version='v2')
             uri_operation = AgentQueueOperation()
             uri_operation.fill_in_defaults()
             uri_operation.plugin = 'core'
@@ -107,8 +110,11 @@ class StartUpV2(AgentBaseHandler):
             uri_operation.data = uri_results.data
             agent_results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
-                HandOff().startup_operation(
-                    agent_id, plugins['rv']['data']
+                handoff = (
+                    PatcherHandOff(
+                        agent_id=agent_id, apps_data=plugins['rv']['data']
+                    )
                 )
+                handoff.new_agent_operation()
 
         return agent_results

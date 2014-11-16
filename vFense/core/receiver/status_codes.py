@@ -1,6 +1,6 @@
-from vFense.core.status_codes import GenericCodes, GenericFailureCodes
+from vFense.core.agent.status_codes import AgentCodes, AgentFailureCodes
 
-class AgentResultCodes(GenericCodes):
+class AgentResultCodes(AgentCodes):
     NewAgentSucceeded = 3200
     CheckInSucceeded = 3201
     StartUpSucceeded = 3202
@@ -11,7 +11,7 @@ class AgentResultCodes(GenericCodes):
     DataReceivedSuccessfully = 3207
 
 
-class AgentFailureResultCodes(GenericFailureCodes):
+class AgentFailureResultCodes(AgentFailureCodes):
     NewAgentFailed = 3300
     CheckInFailed = 3301
     StartupFailed = 3302

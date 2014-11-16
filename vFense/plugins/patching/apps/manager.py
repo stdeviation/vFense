@@ -110,7 +110,7 @@ class AppsManager(object):
             it exist. We search by using the kb for Windows and by using the name
             and version for Ubuntu.
         """
-
+        print app.os_string, app.name, app.version
         search = RetrieveVulns(app.os_string)
         results = search.by_app_info(app.name, app.version, app.kb)
         vuln_info = results.data
