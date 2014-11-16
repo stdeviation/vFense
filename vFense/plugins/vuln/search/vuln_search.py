@@ -123,5 +123,8 @@ class RetrieveVulns(RetrieveBase):
             if count > 0 :
                 data = data[0]
                 data = Windows(**data)
+        else:
+            count = 0
+            data = []
 
         return self._base(count, data)
