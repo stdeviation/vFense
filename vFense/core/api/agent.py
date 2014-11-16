@@ -522,7 +522,7 @@ class AgentHandler(BaseHandler):
         )
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         search = (
-            RetrieveAgents(active_view)
+            RetrieveAgents(view_name=active_view)
         )
         results = self.get_agent_by_id(search, agent_id)
         self.modified_output(results, output, 'agent')
@@ -719,7 +719,7 @@ class AgentTagHandler(BaseHandler):
         )
         name = self.get_argument(ApiArguments.QUERY, None)
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
-        search = RetrieveAgents(active_view)
+        search = RetrieveAgents(view_name=active_view)
         if name:
             results = self.search_tags_by_name(search, name)
         else:

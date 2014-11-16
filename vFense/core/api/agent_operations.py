@@ -106,7 +106,10 @@ class AgentOperationsHandler(BaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
-            AgentOperationRetriever(active_view, count, offset, sort, sort_by)
+            AgentOperationRetriever(
+                view_name=active_view, count=count, offset=offset,
+                sort=sort, sort_key=sort_by
+            )
         )
 
         results = self.get_agent_operations(search, agent_id)
@@ -150,7 +153,10 @@ class TagOperationsHandler(BaseHandler):
         )
 
         search = (
-            AgentOperationRetriever(active_view, count, offset, sort, sort_by)
+            AgentOperationRetriever(
+                view_name=active_view, count=count, offset=offset,
+                sort=sort, sort_key=sort_by
+            )
         )
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         results = self.get_tag_operations(search, tag_id)
@@ -194,7 +200,10 @@ class OperationHandler(BaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
-            AgentOperationRetriever(active_view, count, offset, sort, sort_by)
+            AgentOperationRetriever(
+                view_name=active_view, count=count, offset=offset,
+                sort=sort, sort_key=sort_by
+            )
         )
 
         operation_data = get_agent_operation(operation_id)
