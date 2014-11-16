@@ -9,10 +9,10 @@ from vFense.core.receiver.decorators import (
     agent_results_message, agent_authenticated_request, receiver_catch_it,
     authenticate_agent
 )
-from vFense.core.stats import (
+from vFense.core.stats.manager import (
     FileSystemStatManager, MemoryStatManager, CPUStatManager
 )
-from vFense.core.stats.manager import (
+from vFense.core.stats import (
     CPUStats, MemoryStats, FileSystemStats
 )
 

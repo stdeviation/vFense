@@ -205,7 +205,7 @@ class V2ListenerURIs():
     START_UP = (AgentOperations.START_UP, 'core/startup', 'PUT', True)
     CHECK_IN = (AgentOperations.CHECK_IN, 'core/checkin', 'GET', True)
     MONITOR_DATA = (
-        AgentOperations.MONITOR_DATA, 'monitoring/monitordata', 'POST', True
+        AgentOperations.MONITOR_DATA, 'core/stats/monitordata', 'POST', True
     )
     REFRESH_RESPONSE_URIS = (
         AgentOperations.REFRESH_RESPONSE_URIS, 'core/uris/response',

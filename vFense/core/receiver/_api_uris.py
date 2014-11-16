@@ -6,6 +6,9 @@ from vFense.core.api.base import (
 from vFense.core.receiver.api.checkin import CheckInV1, CheckInV2
 from vFense.core.receiver.api.newagent import NewAgentV1, NewAgentV2
 from vFense.core.receiver.api.startup import StartUpV1, StartUpV2
+from vFense.core.receiver.api.stats import (
+    UpdateMonitoringStatsV1, UpdateMonitoringStatsV2
+)
 from vFense.core.receiver.api.result_uris import (
     ResultURIs, ResultURIsV2
 )
@@ -28,6 +31,7 @@ def api_handlers():
         (r"/rvl/v1/({0})/core/checkin/?".format(agent_id()), CheckInV1),
         (r"/rvl/v1/({0})/core/results/reboot/?".format(agent_id()), RebootResultsV1),
         (r"/rvl/v1/({0})/core/results/shutdown/?".format(agent_id()), ShutdownResultsV1),
+        (r"/rvl/v2/({0})/monitoring/monitordata/?".format(agent_id()), UpdateMonitoringStatsV1),
         #v2 APIS
         #Operations for the New Core Plugin
         (r"/rvl/v2/core/newagent/?", NewAgentV2),
@@ -37,6 +41,7 @@ def api_handlers():
         (r"/rvl/v2/({0})/core/uris/response/?".format(agent_id()), ResultURIsV2),
         (r"/rvl/v2/({0})/core/checkin/?".format(agent_id()), CheckInV2),
         (r"/rvl/v2/({0})/core/results/reboot/?".format(agent_id()), RebootResultsV2),
-        (r"/rvl/v2/({0})/core/results/shutdown/?".format(agent_id()), ShutdownResultsV2)
+        (r"/rvl/v2/({0})/core/results/shutdown/?".format(agent_id()), ShutdownResultsV2),
+        (r"/rvl/v2/({0})/core/stats/monitordata/?".format(agent_id()), UpdateMonitoringStatsV2)
     ]
     return handlers
