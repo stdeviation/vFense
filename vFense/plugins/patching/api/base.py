@@ -288,32 +288,36 @@ class AppsBaseHandler(BaseHandler):
         if oper == AgentOperations.INSTALL_OS_APPS:
             search = (
                 RetrieveAppsByAgentId(
-                    agent_id, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    agent_id=agent_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_key=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 
         elif oper == AgentOperations.INSTALL_CUSTOM_APPS:
             search = (
                 RetrieveCustomAppsByAgentId(
-                    agent_id, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    agent_id=agent_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_by=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 
         elif oper == AgentOperations.INSTALL_SUPPORTED_APPS:
             search = (
                 RetrieveSupportedAppsByAgentId(
-                    agent_id, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    agent_id=agent_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_by=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 
         elif oper == AgentOperations.INSTALL_AGENT_UPDATE:
             search = (
                 RetrieveAgentAppsByAgentId(
-                    agent_id, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    agent_id=agent_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_by=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 
@@ -323,32 +327,36 @@ class AppsBaseHandler(BaseHandler):
         if oper == AgentOperations.INSTALL_OS_APPS:
             search = (
                 RetrieveAppsByTagId(
-                    tag_id, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    tag_id=tag_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_by=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 
         elif oper == AgentOperations.INSTALL_CUSTOM_APPS:
             search = (
                 RetrieveCustomAppsByTagId(
-                    tag_id, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    tag_id=tag_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_by=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 
         elif oper == AgentOperations.INSTALL_SUPPORTED_APPS:
             search = (
                 RetrieveSupportedAppsByTagId(
-                    tag_id, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    tag_id=tag_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_by=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 
         elif oper == AgentOperations.INSTALL_AGENT_UPDATE:
             search = (
                 RetrieveAgentAppsByTagId(
-                    tag_id, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    tag_id=tag_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_by=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 

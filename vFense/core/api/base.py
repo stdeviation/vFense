@@ -48,7 +48,7 @@ class BaseHandler(tornado.web.RequestHandler):
         elif content_type == Outputs.TEXT:
             data = tableify(results.data)
             self.set_header('Content-Type', ContentTypes.TEXT)
-            self.write(results.to_dict_non_null())
+            self.write(data)
 
         else:
             self.set_header('Content-Type', ContentTypes.JSON)
