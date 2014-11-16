@@ -41,7 +41,7 @@ from vFense.plugins.patching.search.search import (
 from vFense.plugins.patching.patching import toggle_hidden_status
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class AppsBaseHandler(BaseHandler):
 
@@ -358,32 +358,36 @@ class AppsBaseHandler(BaseHandler):
         if oper == AgentOperations.INSTALL_OS_APPS:
             search = (
                 RetrieveApps(
-                    view_name, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    view_name=view_name, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_key=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 
         elif oper == AgentOperations.INSTALL_CUSTOM_APPS:
             search = (
                 RetrieveCustomApps(
-                    view_name, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    view_name=view_name, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_key=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 
         elif oper == AgentOperations.INSTALL_SUPPORTED_APPS:
             search = (
                 RetrieveSupportedApps(
-                    view_name, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    view_name=view_name, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_key=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 
         elif oper == AgentOperations.INSTALL_AGENT_UPDATE:
             search = (
                 RetrieveAgentApps(
-                    view_name, self.count, self.offset,
-                    self.sort, self.sort_by, show_hidden=self.hidden
+                    view_name=view_name, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_key=self.sort_by,
+                    show_hidden=self.hidden
                 )
             )
 

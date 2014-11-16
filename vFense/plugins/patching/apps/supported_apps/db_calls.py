@@ -14,7 +14,7 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 def add_supported_app_to_agents(username, view_name, uri, method, agent_id=None):

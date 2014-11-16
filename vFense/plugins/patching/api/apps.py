@@ -46,7 +46,7 @@ from vFense.plugins.patching.uploader.manager import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class UploadHandler(BaseHandler):
     @api_catch_it

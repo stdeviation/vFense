@@ -45,7 +45,7 @@ import vFense.plugins.vuln.cve.cve as cve
 import vFense.plugins.vuln.redhat.rh as rh
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 def get_remote_file_size(url):

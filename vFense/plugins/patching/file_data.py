@@ -7,7 +7,7 @@ from vFense.plugins.patching._db_files import file_data_exists, \
     update_file_data, insert_file_data
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 @time_it

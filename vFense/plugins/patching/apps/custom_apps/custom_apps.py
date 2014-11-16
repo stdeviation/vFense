@@ -18,7 +18,7 @@ from vFense.plugins.patching._db import (
 from rq.decorators import job
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 @job('incoming_updates', connection=redis_pool(), timeout=3600)

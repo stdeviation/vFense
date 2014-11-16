@@ -18,7 +18,7 @@ from vFense.core.operations.status_codes import AgentOperationCodes
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class OperationResults(object):
     """Update an operation for an agent, based on the results received.

@@ -39,7 +39,7 @@ from vFense.plugins.patching.apps.incoming_apps import \
     incoming_applications_from_agent
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class PatchingOperationResults(OperationResults):
     """This will update the results of an install, uninstall,

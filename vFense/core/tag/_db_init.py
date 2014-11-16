@@ -9,7 +9,7 @@ from vFense.core._db import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 def initialize_collections(collection, current_collections):
     name, key = collection

@@ -31,9 +31,9 @@ class FetchVulnBase(FetchBase):
         self.sort_key
     """
     def __init__(
-        self, collection=None, sort_key=VulnerabilityKeys.DatePosted,
-        **kwargs
+        self, collection=None, sort_key=VulnerabilityKeys.DatePosted, **kwargs
     ):
+        super(FetchVulnBase, self).__init__(**kwargs)
         self.collection = collection
 
     @time_it

@@ -5,7 +5,7 @@ from vFense.core.tag import Tag
 from vFense.core.tag._db import fetch_tag
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 @time_it
 def validate_tag_ids(tag_ids):

@@ -31,7 +31,7 @@ from vFense.plugins.patching.patching import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class StorePatchingOperation(StoreAgentOperationManager):

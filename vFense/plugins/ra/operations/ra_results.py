@@ -7,7 +7,7 @@ from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations.results import OperationResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class RaOperationResults(OperationResults):
     """Update an operation for an agent, based on the results received."""

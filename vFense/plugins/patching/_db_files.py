@@ -7,7 +7,7 @@ from vFense.core.decorators import time_it, return_status_tuple
 from vFense.plugins.patching._db_model import FileCollections, FilesKey
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 @time_it
 @db_create_close

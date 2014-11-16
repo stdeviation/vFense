@@ -19,7 +19,7 @@ from vFense.core._db import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 @time_it
 @catch_it({})
@@ -47,25 +47,27 @@ def fetch_tag(tag_id, keys_to_pluck=None, conn=None):
         }
     """
     if keys_to_pluck:
-        tag_info = (
+        data = (
             r
             .table(TagCollections.Tags)
-            .get(tag_id)
+            .get_all(tag_id)
             .merge(TagMerge.AGENTS)
             .pluck(keys_to_pluck)
             .run(conn)
         )
 
     else:
-        tag_info = (
+        data = (
             r
             .table(TagCollections.Tags)
-            .get(tag_id)
+            .get_all(tag_id)
             .merge(TagMerge.AGENTS)
             .run(conn)
         )
+    if data:
+        data = data[0]
 
-    return tag_info
+    return data
 
 @time_it
 @catch_it(False)

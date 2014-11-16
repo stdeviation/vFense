@@ -6,7 +6,7 @@ from vFense.core.queue import AgentQueue
 from vFense.core.queue.manager import AgentQueueManager
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 def process_queue_data(agent_id):

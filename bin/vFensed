@@ -14,7 +14,7 @@ from vFense._constants import (
 from vFense.utils.common import get_rqworkers
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 PID_DIR = VFENSE_TMP_PATH
 PIDS = []

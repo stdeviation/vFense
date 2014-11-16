@@ -60,3 +60,8 @@ class ApiResultDefaults():
     def errors():
         return list()
 
+
+class AgentApiResultDefaults():
+    @staticmethod
+    def operations():
+        return list()

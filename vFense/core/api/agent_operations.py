@@ -63,7 +63,7 @@ class GetTransactionsHandler(BaseHandler):
             results = self.get_all_operations(search)
 
         self.set_status(results.http_status_code)
-        self.modified_output(results.to_dict_non_null(), output, 'operations')
+        self.modified_output(results, output, 'operations')
 
     @results_message
     def get_operations_by_type(self, search, operation):
@@ -112,7 +112,7 @@ class AgentOperationsHandler(BaseHandler):
         results = self.get_agent_operations(search, agent_id)
 
         self.set_status(results.http_status_code)
-        self.modified_output(results.to_dict_non_null(), output, 'operations')
+        self.modified_output(results, output, 'operations')
 
     @results_message
     def get_agent_operations(self, search, agent_id):
@@ -156,7 +156,7 @@ class TagOperationsHandler(BaseHandler):
         results = self.get_tag_operations(search, tag_id)
 
         self.set_status(results.http_status_code)
-        self.modified_output(results.to_dict_non_null(), output, 'operations')
+        self.modified_output(results, output, 'operations')
 
     @results_message
     def get_tag_operations(self, search, tag_id):
@@ -205,7 +205,7 @@ class OperationHandler(BaseHandler):
                 results = self.get_operation_by_id(search, operation_id)
 
         self.set_status(results.http_status_code)
-        self.modified_output(results.to_dict_non_null(), output, 'operations')
+        self.modified_output(results, output, 'operations')
 
     @results_message
     def get_operation_by_id(self, search, operation_id):

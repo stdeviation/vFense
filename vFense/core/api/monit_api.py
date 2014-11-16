@@ -9,7 +9,7 @@ from vFense.core.decorators import authenticated_request
 #from vFense.plugins.monit import api
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 ROOT_USER = 'root'
 

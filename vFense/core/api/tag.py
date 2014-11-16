@@ -41,7 +41,7 @@ from vFense.core.agent.operations.store_agent_operations import (
 from vFense.core.results import ExternalApiResults, ApiResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class TagsHandler(BaseHandler):
@@ -49,9 +49,7 @@ class TagsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         active_user = self.get_current_user()
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         query = self.get_argument(ApiArguments.QUERY, None)
         count = int(
             self.get_argument(ApiArguments.COUNT, DefaultQueryValues.COUNT)
@@ -66,7 +64,12 @@ class TagsHandler(BaseHandler):
         environment = self.get_argument(TagApiArguments.ENVIRONMENT, None)
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
-        search = RetrieveTags(active_view, count, offset, sort, sort_by)
+        search = (
+            RetrieveTags(
+                view_name=active_view, count=count, offset=offset,
+                sort=sort, sort_key=sort_by
+            )
+        )
         if not query and not environment:
             results = self.get_all_tags(search)
 
@@ -121,9 +124,7 @@ class TagsHandler(BaseHandler):
     @authenticated_request
     def post(self):
         active_user = self.get_current_user()
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         tag_name = self.arguments.get(TagApiArguments.TAG_NAME)
         environment = (
             self.arguments.get(
@@ -230,9 +231,7 @@ class TagHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         active_user = self.get_current_user()
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         search = RetrieveTags(active_view)
         results = self.get_tag(search, tag_id)
@@ -251,9 +250,7 @@ class TagHandler(BaseHandler):
     @convert_json_to_arguments
     def post(self, tag_id):
         active_user = self.get_current_user()
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         reboot = self.arguments.get(TagApiArguments.REBOOT, None)
         shutdown = self.arguments.get(TagApiArguments.SHUTDOWN, None)
         token = self.arguments.get(TagApiArguments.TOKEN, None)

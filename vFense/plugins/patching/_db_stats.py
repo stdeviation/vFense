@@ -17,7 +17,7 @@ from vFense.plugins.patching._db_model import (
 from vFense.plugins.patching._constants import CommonAppKeys
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 @time_it
 @catch_it([])

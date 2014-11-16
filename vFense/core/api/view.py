@@ -36,7 +36,7 @@ from vFense.core.results import ApiResults, ExternalApiResults
 from vFense.core.view.status_codes import ViewFailureCodes, ViewCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class ViewHandler(BaseHandler):

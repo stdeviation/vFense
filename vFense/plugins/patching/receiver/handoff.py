@@ -1,4 +1,4 @@
-from vFense.core.receiver.handoff import Handoff
+from vFense.core.receiver.handoff import HandOff
 from vFense.plugins.patching.apps.manager import (
    incoming_applications_from_agent
 )
@@ -9,15 +9,15 @@ from vFense.plugins.patching.apps.supported_apps.syncer import (
     get_all_supported_apps_for_agent
 )
 
-class PatcherHandoff(Handoff):
+class PatcherHandOff(HandOff):
     def __init__(self, apps_data=None, **kwargs):
-        super(PatcherHandoff, self).__init__(**kwargs)
+        super(PatcherHandOff, self).__init__(**kwargs)
         self.apps_data = apps_data
 
     def new_agent_operation(self):
         self.add_applications_from_agent()
         self.add_custom_apps()
-        self.add_supported_apps()
+        #self.add_supported_apps()
 
     def startup_operation(self, apps_data):
         self.refresh_apps_operation()

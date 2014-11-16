@@ -1,5 +1,7 @@
 from vFense import Base
-from vFense.core.results._constants import ApiResultDefaults, ApiResultKeys
+from vFense.core.results._constants import (
+    ApiResultDefaults, ApiResultKeys, AgentApiResultDefaults
+)
 
 
 class ApiResults(Base):
@@ -33,8 +35,8 @@ class ApiResults(Base):
         the hardcoded default values.
 
         Use case(s):
-            Useful when you want to create an install instance and only
-            want to fill in a few fields, then allow the install
+            Useful when you want to create an instance and only
+            want to fill in a few fields, then allow the
             functions to call this method to fill in the rest.
         """
 
@@ -121,6 +123,19 @@ class AgentApiResults(ApiResults):
         self.operations = operations
         self.token = token
         self.username = username
+
+    def fill_in_defaults(self):
+        """Replace all the fields that have None as their value with
+        the hardcoded default values.
+
+        Use case(s):
+            Useful when you want to create an instance and only
+            want to fill in a few fields, then allow the
+            functions to call this method to fill in the rest.
+        """
+        super(AgentApiResults, self).fill_in_defaults()
+        if not self.operations:
+            self.operations = AgentApiResultDefaults.operations()
 
     def to_dict(self):
         data = {

@@ -18,7 +18,7 @@ from vFense.core.results import Results
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvlistener')
+logger = logging.getLogger('vfense_listenerener')
 
 
 class AppsResultsV2(AgentBaseHandler):

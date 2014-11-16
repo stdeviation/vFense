@@ -19,7 +19,7 @@ from vFense.core.receiver.decorators import (
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvlistener')
+logger = logging.getLogger('vfense_listenerener')
 
 class RefreshAppsV2(AgentBaseHandler):
     @authenticate_agent

@@ -14,7 +14,7 @@ from vFense.core.permissions.decorators import check_permissions
 from vFense.core.results import ApiResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class RetrieveValidPermissionsHandler(BaseHandler):

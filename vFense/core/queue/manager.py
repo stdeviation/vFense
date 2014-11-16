@@ -18,7 +18,7 @@ from vFense.core.queue.uris import get_agent_results_uri
 from vFense.core.status_codes import DbCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class AgentQueueManager(object):
     def __init__(self, agent_id, view_name=None):

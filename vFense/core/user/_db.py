@@ -16,7 +16,7 @@ from vFense.core.decorators import return_status_tuple, time_it, catch_it
 from vFense.db.client import db_create_close, r
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 @time_it

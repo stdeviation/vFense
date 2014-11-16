@@ -20,7 +20,7 @@ from vFense.core.receiver.status_codes import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('vFense_listener')
+logger = logging.getLogger('vfense_listener')
 
 
 def authenticate_agent(fn):
@@ -173,6 +173,8 @@ def authenticate_token(fn):
         except Exception as e:
             msg = e
             results.message = msg
+            print msg
+            logger.exception(msg)
             results.vfense_status_code = GenericCodes.SomethingBroke
             self.set_status(results.http_status_code)
             self.write(json.dumps(results.to_dict_non_null(), indent=4))
@@ -185,6 +187,7 @@ def agent_results_message(fn):
         data = fn(*args, **kwargs)
         tornado_handler = args[0]
         if isinstance(data, ApiResults):
+            print data
             results = AgentApiResults(**data.to_dict_non_null())
             results.uri = tornado_handler.request.uri
             results.http_method = tornado_handler.request.method
@@ -273,6 +276,7 @@ def agent_results_message(fn):
                     )
         else:
             results = AgentApiResults()
+            results.fill_in_defaults()
             results.username = tornado_handler.get_current_user()
             results.uri = tornado_handler.request.uri
             results.http_method = tornado_handler.request.method

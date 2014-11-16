@@ -9,7 +9,7 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 @db_create_close

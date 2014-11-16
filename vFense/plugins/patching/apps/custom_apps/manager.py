@@ -11,7 +11,7 @@ from vFense.plugins.patching.apps.manager import (
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class CustomAppsManager(AppsManager):
     def __init__(self):

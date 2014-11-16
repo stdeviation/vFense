@@ -16,7 +16,7 @@ from urlgrabber import urlgrab
 from rq.decorators import job
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 def create_necessary_dirs():

@@ -25,7 +25,7 @@ from vFense.core.scheduler.status_codes import (
     SchedulerCodes, SchedulerFailureCodes
 )
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 def start_scheduler(scheduler_type='background', db='vFense',

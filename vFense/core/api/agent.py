@@ -148,7 +148,7 @@ class AgentsHandler(BaseHandler):
         fval = self.get_argument(ApiArguments.FILTER_VAL, None)
         ip = self.get_argument(AgentApiArguments.IP, None)
         mac = self.get_argument(AgentApiArguments.MAC, None)
-        sort = int(
+        sort = (
             self.get_argument(ApiArguments.SORT, DefaultQueryValues.SORT)
         )
         sort_by = (
@@ -156,7 +156,12 @@ class AgentsHandler(BaseHandler):
         )
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
-        search = RetrieveAgents(active_view, count, offset, sort, sort_by)
+        search = (
+            RetrieveAgents(
+                view_name=active_view, count=count, offset=offset,
+                sort=sort, sort_key=sort_by
+            )
+        )
         if not ip and not mac and not query and not fkey and not fval:
             results = self.get_all_agents(search)
 

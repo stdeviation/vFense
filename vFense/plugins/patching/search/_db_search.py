@@ -34,7 +34,7 @@ class FetchApps(FetchAppsBase):
 
             For the rest of the kwargs, please check vFense.search._db_base
         """
-        super(FetchApps, self)._init__(**kwargs)
+        super(FetchApps, self).__init__(**kwargs)
         self.show_hidden = show_hidden
         if show_hidden not in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = CommonKeys.NO

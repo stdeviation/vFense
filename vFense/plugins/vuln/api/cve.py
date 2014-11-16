@@ -11,7 +11,7 @@ from vFense.core.decorators import authenticated_request, results_message
 from vFense.core.results import ApiResultKeys
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class CveIdHandler(BaseHandler):

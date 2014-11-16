@@ -20,7 +20,7 @@ from vFense.core.stats.status_codes import (
 from vFense.core.results import ApiResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class StatManager(object):

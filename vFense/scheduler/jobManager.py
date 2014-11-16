@@ -30,7 +30,7 @@ from vFense.core.results import Results, SchedulerResults
 from vFense.server.hierarchy import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 @db_create_close

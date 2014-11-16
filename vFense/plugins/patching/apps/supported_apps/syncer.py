@@ -9,7 +9,7 @@ from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._db import delete_all_in_table
 from vFense.core.agent._db_model import *
 from vFense.core.agent.agents import get_agents_info, get_agent_info
-from vFense.db.client import rq_queue
+from vFense.db.client import redis_pool
 
 from vFense.plugins.patching.status_codes import PackageCodes
 
@@ -24,20 +24,15 @@ from vFense.plugins.patching.downloader.downloader import \
 
 from vFense.db.client import db_connect, r, db_create_close
 
-import redis
-from rq import Queue
+from rq.decorators import job
 
-RQ_HOST = 'localhost'
-RQ_PORT = 6379
-RQ_DB = 0
-RQ_PKG_POOL = redis.StrictRedis(host=RQ_HOST, port=RQ_PORT, db=RQ_DB)
 
 BASE_URL = 'http://updater2.toppatch.com'
 #GET_AGENT_UPDATES = 'api/new_updater/rvpkglist'
 GET_SUPPORTED_UPDATES = 'api/new_updater/pkglist'
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class IncomingSupportedApps(object):
@@ -376,6 +371,7 @@ def get_supported_apps():
         )
 
 
+@job('incoming_updates', connection=redis_pool(), timeout=3600)
 def get_all_supported_apps_for_agent(agent_id):
     agent = get_agent_info(agent_id)
     apps = fetch_apps_data_by_os_code(

@@ -14,7 +14,7 @@ from vFense.plugins.ra.novnc import stop_novnc
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 def new_rd_session(

@@ -11,7 +11,7 @@ from vFense.plugins.ra.operations.ra_results import RaOperationResults
 from vFense.plugins.ra.processor import Processor
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvlistener')
+logger = logging.getLogger('vfense_listenerener')
 
 
 class RemoteDesktopResults(BaseHandler):

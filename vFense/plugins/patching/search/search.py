@@ -96,7 +96,7 @@ class RetrieveCustomApps(RetrieveApps):
                 view_name=self.view_name, count=self.count,
                 offset=self.offset, sort=self.sort, sort_key=self.sort_key,
                 show_hidden=self.show_hidden,
-                apps_collections=self.apps_collection,
+                apps_collection=self.apps_collection,
                 apps_per_agent_collection=self.apps_per_agent_collection
             )
         )
@@ -124,7 +124,7 @@ class RetrieveSupportedApps(RetrieveApps):
                 view_name=self.view_name, count=self.count,
                 offset=self.offset, sort=self.sort, sort_key=self.sort_key,
                 show_hidden=self.show_hidden,
-                apps_collections=self.apps_collection,
+                apps_collection=self.apps_collection,
                 apps_per_agent_collection=self.apps_per_agent_collection
             )
         )
@@ -151,7 +151,7 @@ class RetrieveAgentApps(RetrieveApps):
                 view_name=self.view_name, count=self.count,
                 offset=self.offset, sort=self.sort, sort_key=self.sort_key,
                 show_hidden=self.show_hidden,
-                apps_collections=self.apps_collection,
+                apps_collection=self.apps_collection,
                 apps_per_agent_collection=self.apps_per_agent_collection
             )
         )

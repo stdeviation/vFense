@@ -18,7 +18,7 @@ from vFense.core.group._db import (
 from vFense.core.user.users import validate_users_in_views
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class GroupManager(object):
     """All actions that need to be performed on a group,

@@ -8,7 +8,7 @@ from vFense.notifications import *
 from vFense.server.hierarchy import Collection, GroupKey, UserKey, ViewKey
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 def translate_opercodes_to_notif_threshold(oper_codes):

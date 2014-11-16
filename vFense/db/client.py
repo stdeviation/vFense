@@ -12,7 +12,7 @@ from rq import Queue
 from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_CONFIG
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 Config = ConfigParser.ConfigParser()
 Config.read(VFENSE_CONFIG)

@@ -16,7 +16,7 @@ from vFense.plugins.notifications.mailer._db import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class MailManager(object):

@@ -5,7 +5,7 @@ from vFense.plugins.mightymouse.mouse_db import mouse_exists, \
     add_mouse, update_mouse, delete_mouse
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class MightyMouse(object):

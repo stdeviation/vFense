@@ -5,7 +5,7 @@ from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class Collection():

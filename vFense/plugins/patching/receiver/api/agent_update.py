@@ -16,7 +16,7 @@ from vFense.core.receiver.results import AgentResults, AgentApiResultKeys
 from vFense.core.receiver.decorators import authenticate_agent
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvlistener')
+logger = logging.getLogger('vfense_listenerener')
 
 
 class AgentUpdateHandler(BaseHandler):

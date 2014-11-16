@@ -5,7 +5,7 @@ from vFense.core.user._db import fetch_user
 from vFense.core.decorators import time_it
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 @time_it

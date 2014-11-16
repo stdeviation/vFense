@@ -18,7 +18,7 @@ from vFense.plugins.notifications._constants import NotifPluginTypes
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 @db_create_close

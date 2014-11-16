@@ -7,7 +7,7 @@ from vFense.core.operations.store_agent_operation import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class StoreAgentOperations(StoreAgentOperationManager):
 

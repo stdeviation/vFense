@@ -17,7 +17,7 @@ from vFense.core.view.status_codes import ViewFailureCodes
 from pytz import all_timezones
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class View(Base):

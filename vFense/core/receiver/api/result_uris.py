@@ -15,7 +15,7 @@ class AgentResultURIs(BaseHandler):
     def get(self, agent_id):
         results = self.get_uris(agent_id)
         self.set_header('Content-Type', 'application/json')
-        self.write(dumps(results, indent=4))
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
     @api_catch_it
     @results_message
@@ -27,6 +27,7 @@ class AgentResultURIs(BaseHandler):
         uri_operation.agent_id = agent_id
         uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
         uri_operation.data = results.data
+        results.operations = []
         results.operations.append(uri_operation.to_dict_non_null())
         return results
 
@@ -35,7 +36,7 @@ class ResultURIs(BaseHandler):
     def get(self):
         results = self.get_uris()
         self.set_header('Content-Type', 'application/json')
-        self.write(dumps(results, indent=4))
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
     @api_catch_it
     @results_message
@@ -46,6 +47,7 @@ class ResultURIs(BaseHandler):
         uri_operation.plugin = 'core'
         uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
         uri_operation.data = results.data
+        results.operations = []
         results.operations.append(uri_operation.to_dict_non_null())
         return results
 
@@ -54,7 +56,7 @@ class AgentResultURIsV2(AgentBaseHandler):
     def get(self, agent_id):
         results = self.get_uris(agent_id)
         self.set_header('Content-Type', 'application/json')
-        self.write(dumps(results, indent=4))
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
     @receiver_catch_it
     @agent_results_message
@@ -66,6 +68,7 @@ class AgentResultURIsV2(AgentBaseHandler):
         uri_operation.agent_id = agent_id
         uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
         uri_operation.data = results.data
+        results.operations = []
         results.operations.append(uri_operation.to_dict_non_null())
         return results
 
@@ -74,16 +77,17 @@ class ResultURIsV2(AgentBaseHandler):
     def get(self):
         results = self.get_uris()
         self.set_header('Content-Type', 'application/json')
-        self.write(dumps(results, indent=4))
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
     @receiver_catch_it
     @agent_results_message
     def get_uris(self):
-        results = get_result_uris(version='v1')
+        results = get_result_uris(version='v2')
         uri_operation = AgentQueueOperation()
         uri_operation.fill_in_defaults()
         uri_operation.plugin = 'core'
         uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
         uri_operation.data = results.data
+        results.operations = []
         results.operations.append(uri_operation.to_dict_non_null())
         return results

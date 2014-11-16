@@ -14,7 +14,7 @@ LOAD_CERT_REQUEST = crypto.load_certificate_request
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 def load_private_key(privkey=SSLConstants.PRIV_KEY):
     pkey = LOAD_PKEY(SSLConstants.PEM, open(privkey, 'rb').read())

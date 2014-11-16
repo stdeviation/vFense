@@ -15,7 +15,7 @@ from vFense.plugins.ra.raoperation import save_result
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 rq_pool = redis.StrictRedis(
     host=settings.REDIS_HOST,

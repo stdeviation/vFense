@@ -22,7 +22,7 @@ from vFense.core.tag.status_codes import TagFailureCodes, TagCodes
 from vFense.core.view.views import validate_view_names
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class TagManager(object):

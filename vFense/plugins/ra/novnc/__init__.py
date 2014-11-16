@@ -8,7 +8,7 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_WWW_PATH
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 websockify_path = os.path.join(os.path.dirname(__file__), 'websockify')
 

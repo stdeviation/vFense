@@ -35,7 +35,7 @@ from vFense.core.status_codes import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 class TimeZonesHandler(BaseHandler):
@@ -63,9 +63,7 @@ class JobHandler(BaseHandler):
     @check_permissions(Permissions.READ)
     def get(self, job_id):
         active_user = self.get_current_user()
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         search = RetrieveJobs(active_view)
         results = self.get_job_by_id(search, job_id)
@@ -96,7 +94,10 @@ class JobsHandler(BaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
-            RetrieveJobs(active_view, count, offset, sort, sort_by)
+            RetrieveJobs(
+                view_name=active_view, count=count, offset=offset,
+                sort=sort, sort_key=sort_by
+            )
         )
         if not operation and not trigger and not query and not timezone:
             results = self.get_all_jobs(search)
@@ -195,7 +196,10 @@ class AgentJobsHandler(BaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
-            RetrieveJobs(agent_id, count, offset, sort, sort_by)
+            RetrieveJobs(
+                agent_id=agent_id, count=count, offset=offset,
+                sort=sort, sort_key=sort_by
+            )
         )
         if not operation and not trigger and not query and not timezone:
             results = self.get_all_jobs(search)
@@ -293,7 +297,10 @@ class TagJobsHandler(BaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
-            RetrieveJobs(tag_id, count, offset, sort, sort_by)
+            RetrieveJobs(
+                tag_id=tag_id, count=count, offset=offset,
+                sort=sort, sort_key=sort_by
+            )
         )
         if not operation and not trigger and not query and not timezone:
             results = self.get_all_jobs(search)

@@ -24,7 +24,7 @@ from vFense.core.status_codes import DbCodes
 from vFense.core.results import ApiResults
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 def get_agent_operation(operation_id):

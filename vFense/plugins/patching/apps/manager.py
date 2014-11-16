@@ -35,7 +35,7 @@ from rq.decorators import job
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class AppsManager(object):
     def __init__(self):

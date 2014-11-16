@@ -1,16 +1,14 @@
-import sys
 import os
 import struct
 import re
 from vFense._constants import (
     VFENSE_CONF_PATH, VFENSE_LOGGING_CONFIG,
-    VFENSE_BASE_PATH, VFENSE_LOG_PATH
+    VFENSE_LOG_PATH
 )
 from socket import socket, SOCK_DGRAM, SOCK_STREAM, AF_INET, SHUT_RDWR
 from datetime import datetime
 import logging
 import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
 import ConfigParser
 from time import sleep
 
@@ -96,15 +94,15 @@ class vFenseLogger():
         self.logdir = LOGDIR
         self.loggers = (
             [
-                'root', 'rvlistener', 'rvweb', 'rvapi',
-                'agentstatus','cve','admin_scheduler','vFense_stats'
+                'root', 'vfense_listener', 'vfense_web', 'vfense_api',
+                'agentstatus','cve','admin_scheduler','vfense_stats'
             ]
         )
         self.handlers = (
             [
-                'root', 'rvlist_file', 'rvweb_file', 'rvapi_file',
+                'root', 'vflist_file', 'vfweb_file', 'vfapi_file',
                 'agentstatus_file', 'cve_file', 'admin_scheduler_file',
-                'vFense_stats_file'
+                'vfstats_file'
             ]
         )
         self.formatters = ['default']

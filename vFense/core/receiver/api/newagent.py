@@ -20,7 +20,7 @@ from vFense.core.receiver.decorators import (
 )
 from vFense.core.receiver.api.base import AgentBaseHandler
 from vFense.core.receiver.status_codes import AgentResultCodes
-from vFense.core.receiver.handoff import HandOff
+from vFense.plugins.patching.receiver.handoff import PatcherHandOff
 
 
 class NewAgentV1(BaseHandler):
@@ -47,7 +47,8 @@ class NewAgentV1(BaseHandler):
         system_info.pop('customer_name', None)
         agent = Agent(**system_info)
         manager = AgentManager()
-        results = AgentApiResults(**manager.create(agent))
+        results = AgentApiResults(**manager.create(agent).to_dict_non_null())
+        results.fill_in_defaults()
         status_code = results.vfense_status_code
         if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results.generated_ids
@@ -66,9 +67,12 @@ class NewAgentV1(BaseHandler):
             results.operations.append(newagent_operation.to_dict_non_null())
             results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
-                HandOff().new_agent_operation(
-                    agent_id, plugins['rv']['data']
+                handoff = (
+                    PatcherHandOff(
+                        agent_id=agent_id, apps_data=plugins['rv']['data']
+                    )
                 )
+                handoff.new_agent_operation()
 
         return results
 
@@ -90,13 +94,13 @@ class NewAgentV2(AgentBaseHandler):
     @receiver_catch_it
     @agent_results_message
     def add_agent(self, system_info, hardware, views, tags, plugins):
-        dfile = open('/home/linuxdynasty/vFense/vFense/core/tests/newagent_data.py', 'w')
         system_info[AgentKeys.Hardware] = hardware
         system_info[AgentKeys.Views] = views
-        dfile.write(dumps(system_info))
         agent = Agent(**system_info)
         manager = AgentManager()
-        results = AgentApiResults(**manager.create(agent, tags))
+        results = (
+            AgentApiResults(**manager.create(agent, tags).to_dict_non_null())
+        )
         results.fill_in_defaults()
         results.data = [results.data]
         status_code = results.vfense_status_code
@@ -117,9 +121,10 @@ class NewAgentV2(AgentBaseHandler):
             results.operations.append(newagent_operation.to_dict_non_null())
             results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
-                dfile.write(dumps(plugins['rv']['data']))
-                HandOff().new_agent_operation(
-                    agent_id, plugins['rv']['data']
+                handoff = (
+                    PatcherHandOff(
+                        agent_id=agent_id, apps_data=plugins['rv']['data']
+                    )
                 )
-            dfile.close()
+                handoff.new_agent_operation()
         return results

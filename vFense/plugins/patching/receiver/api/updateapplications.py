@@ -18,7 +18,7 @@ from vFense.core.receiver.rvhandler import RvHandOff
 #from server.handlers import *
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvlistener')
+logger = logging.getLogger('vfense_listenerener')
 
 
 class UpdateApplicationsV1(BaseHandler):

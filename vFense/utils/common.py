@@ -20,7 +20,7 @@ from vFense._constants import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 twentyfour_hour = {
     '0': 0, '1': 13, '2': 14, '3': 15, '4': 16,

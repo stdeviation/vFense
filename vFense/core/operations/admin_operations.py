@@ -15,7 +15,7 @@ from vFense.core.operations._db_admin import (
 from vFense.core.status_codes import DbCodes
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class AdminOperationManager(object):
     """This is what creates operations for an agent or multiple agents.

@@ -48,7 +48,7 @@ from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing
 from vFense.plugins.vuln.redhat.parser import begin_redhat_archive_processing
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 if os.getuid() != 0:

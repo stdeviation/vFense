@@ -9,7 +9,7 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 
 class Worker(Thread):
     """Thread executing tasks from a given tasks queue"""
-    def __init__(self, tasks, number_of_threads, log_name='rvlistener'):
+    def __init__(self, tasks, number_of_threads, log_name='vfense_listenerener'):
         self.logger = logging.getLogger(log_name)
         Thread.__init__(self)
         self.tasks = tasks
@@ -39,7 +39,7 @@ class Worker(Thread):
 
 class OperationQueue():
 
-    def __init__(self, number_of_threads=10, log_name='rvlistener'):
+    def __init__(self, number_of_threads=10, log_name='vfense_listenerener'):
         self.logger = logging.getLogger(log_name)
         self.number_of_threads = number_of_threads
         self.queue = Queue.Queue()

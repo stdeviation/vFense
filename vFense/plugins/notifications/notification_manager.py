@@ -23,7 +23,7 @@ from vFense.plugins.notifications._db import (
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 def get_valid_fields(view_name):
     results = ApiResults()

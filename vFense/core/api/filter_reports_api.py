@@ -14,7 +14,7 @@ from datetime import datetime
 from jsonpickle import encode
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 class AgentsOsQueryDetailsHandler(BaseHandler):
     @authenticated_request

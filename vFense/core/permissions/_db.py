@@ -9,7 +9,7 @@ from vFense.db.client import r, db_create_close
 from vFense.core.decorators import time_it, catch_it
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 @time_it
 @catch_it(False)

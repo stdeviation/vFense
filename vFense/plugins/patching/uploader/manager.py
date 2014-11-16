@@ -22,7 +22,7 @@ from vFense.plugins.patching.file_data import add_file_data
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 TMP_DIR = VFENSE_APP_TMP_PATH
 

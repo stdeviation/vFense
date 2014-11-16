@@ -18,7 +18,7 @@ from vFense.core.decorators import time_it, catch_it
 from vFense.utils.security import Crypto
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('rvapi')
+logger = logging.getLogger('vfense_api')
 
 
 def return_results_for_permissions(
