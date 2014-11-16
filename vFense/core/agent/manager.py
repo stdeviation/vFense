@@ -20,6 +20,7 @@ from vFense.core.tag._db import (
     add_tags_to_agent, delete_tag_ids_from_agent, fetch_tag,
     fetch_tag_ids_for_agent, delete_agent_from_tags_in_views
 )
+from vFense.core.view._constants import DefaultViews
 from vFense.core.view.views import validate_view_names
 from vFense.core.results import ApiResults
 from vFense.core.status_codes import (
@@ -105,8 +106,11 @@ class AgentManager(object):
                 validate_view_names(agent.views)
             )
             if not invalid_fields:
-                if valid_view_names:
-                    agent.views = valid_view_names
+                if agent.views:
+                    if valid_view_names:
+                        agent.views = valid_view_names
+                else:
+                    agent.views = [DefaultViews.GLOBAL]
 
                 status_code, _, _, generated_ids = (
                     insert_agent(agent.to_dict_db())
@@ -197,8 +201,12 @@ class AgentManager(object):
             invalid_fields = agent.get_invalid_fields()
             last_agent_update = time()
             agent.last_agent_update = last_agent_update
+            print agent.views
             if not agent.views:
-                agent.views = self.views
+                if self.views:
+                    agent.views = self.views
+                else:
+                    agent.views = [DefaultViews.GLOBAL]
 
             views_are_valid, valid_view_names, invalid_view_names = (
                 validate_view_names(agent.views)
@@ -267,16 +275,16 @@ class AgentManager(object):
                 results.message = msg
                 results.data.append(agent.to_dict_non_null())
 
-            else:
+            elif invalid_view_names:
                 msg = (
                     'Failed to update agent {0}:{1}, invalid views were passed.'
                     .format(self.agent_id, self.properties.computer_name)
                 )
                 results.generic_status_code = (
-                    GenericFailureCodes.FailedToCreateObject
+                    GenericFailureCodes.FailedToUpdateObject
                 )
                 results.vfense_status_code = (
-                    AgentFailureResultCodes.NewAgentFailed
+                    AgentFailureResultCodes.StartupFailed
                 )
                 results.message = msg
                 results.errors = invalid_view_names
@@ -288,10 +296,10 @@ class AgentManager(object):
                 .format(type(agent))
             )
             results.generic_status_code = (
-                GenericFailureCodes.FailedToCreateObject
+                GenericFailureCodes.FailedToUpdateObject
             )
             results.vfense_status_code = (
-                AgentFailureResultCodes.NewAgentFailed
+                AgentFailureResultCodes.StartupFailed
             )
             results.message = msg
 

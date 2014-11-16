@@ -47,8 +47,9 @@ class NewAgentV1(BaseHandler):
         system_info.pop('customer_name', None)
         agent = Agent(**system_info)
         manager = AgentManager()
-        results = AgentApiResults(**manager.create(agent).to_dict_non_null())
-        results.fill_in_defaults()
+        results = manager.create(agent)
+        agent_results = AgentApiResults(**results.to_dict_non_null())
+        agent_results.fill_in_defaults()
         status_code = results.vfense_status_code
         if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results.generated_ids
@@ -64,8 +65,10 @@ class NewAgentV1(BaseHandler):
             newagent_operation.operation = 'new_agent_id'
             newagent_operation.plugin = 'core'
             newagent_operation.agent_id = agent_id
-            results.operations.append(newagent_operation.to_dict_non_null())
-            results.operations.append(uri_operation.to_dict_non_null())
+            agent_results.operations.append(
+                newagent_operation.to_dict_non_null()
+            )
+            agent_results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
                 handoff = (
                     PatcherHandOff(
@@ -74,7 +77,7 @@ class NewAgentV1(BaseHandler):
                 )
                 handoff.new_agent_operation()
 
-        return results
+        return agent_results
 
 
 class NewAgentV2(AgentBaseHandler):
@@ -98,11 +101,10 @@ class NewAgentV2(AgentBaseHandler):
         system_info[AgentKeys.Views] = views
         agent = Agent(**system_info)
         manager = AgentManager()
-        results = (
-            AgentApiResults(**manager.create(agent, tags).to_dict_non_null())
-        )
-        results.fill_in_defaults()
-        results.data = [results.data]
+        results = manager.create(agent, tags)
+        agent_results = AgentApiResults(**results.to_dict_non_null())
+        agent_results.fill_in_defaults()
+        agent_results.data = [results.data]
         status_code = results.vfense_status_code
         if status_code == AgentResultCodes.NewAgentSucceeded:
             agent_id = results.generated_ids
@@ -118,8 +120,10 @@ class NewAgentV2(AgentBaseHandler):
             newagent_operation.operation = 'new_agent_id'
             newagent_operation.plugin = 'core'
             newagent_operation.agent_id = agent_id
-            results.operations.append(newagent_operation.to_dict_non_null())
-            results.operations.append(uri_operation.to_dict_non_null())
+            agent_results.operations.append(
+                newagent_operation.to_dict_non_null()
+            )
+            agent_results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
                 handoff = (
                     PatcherHandOff(
@@ -127,4 +131,4 @@ class NewAgentV2(AgentBaseHandler):
                     )
                 )
                 handoff.new_agent_operation()
-        return results
+        return agent_results

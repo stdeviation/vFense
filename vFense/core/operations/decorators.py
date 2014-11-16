@@ -23,7 +23,7 @@ def log_operation(action, performed_on):
                 updated_oper.errors = results.errors
                 updated_oper.ids_created = results.generated_ids
                 updated_oper.ids_updated = results.updated_ids
-                updated_oper.ids_removed = results.removed_ids
+                updated_oper.ids_removed = results.deleted_ids
                 manager.update(operation_id, updated_oper)
                 return results
 

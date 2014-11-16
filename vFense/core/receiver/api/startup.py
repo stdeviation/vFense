@@ -47,7 +47,9 @@ class StartUpV1(BaseHandler):
         system_info[AgentKeys.Views] = views
         agent = Agent(**system_info)
         manager = AgentManager(agent_id)
-        results = AgentApiResults(**manager.update(agent))
+        results = manager.update(agent)
+        agent_results = AgentApiResults(**results.to_dict_non_null())
+        agent_results.fill_in_defaults()
         status_code = results.vfense_status_code
         if status_code == AgentResultCodes.StartUpSucceeded:
             uri_results = get_result_uris(agent_id, version='v1')
@@ -57,13 +59,13 @@ class StartUpV1(BaseHandler):
             uri_operation.agent_id = agent_id
             uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
             uri_operation.data = uri_results.data
-            results.operations.append(uri_operation.to_dict_non_null())
+            agent_results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
                 HandOff().startup_operation(
                     agent_id, plugins['rv']['data']
                 )
 
-        return results
+        return agent_results
 
 
 class StartUpV2(AgentBaseHandler):
@@ -92,8 +94,10 @@ class StartUpV2(AgentBaseHandler):
         system_info[AgentKeys.Views] = views
         agent = Agent(**system_info)
         manager = AgentManager(agent_id)
-        results = AgentApiResults(**manager.update(agent, tags))
-        if results.status_code == AgentResultCodes.StartUpSucceeded:
+        results = manager.update(agent, tags)
+        agent_results = AgentApiResults(**results.to_dict_non_null())
+        agent_results.fill_in_defaults()
+        if results.vfense_status_code == AgentResultCodes.StartUpSucceeded:
             uri_results = get_result_uris(agent_id, version='v1')
             uri_operation = AgentQueueOperation()
             uri_operation.fill_in_defaults()
@@ -101,10 +105,10 @@ class StartUpV2(AgentBaseHandler):
             uri_operation.agent_id = agent_id
             uri_operation.operation = AgentOperations.REFRESH_RESPONSE_URIS
             uri_operation.data = uri_results.data
-            results.operations.append(uri_operation.to_dict_non_null())
+            agent_results.operations.append(uri_operation.to_dict_non_null())
             if 'rv' in plugins:
                 HandOff().startup_operation(
                     agent_id, plugins['rv']['data']
                 )
 
-        return results
+        return agent_results
