@@ -201,7 +201,6 @@ class AgentManager(object):
             invalid_fields = agent.get_invalid_fields()
             last_agent_update = time()
             agent.last_agent_update = last_agent_update
-            print agent.views
             if not agent.views:
                 if self.views:
                     agent.views = self.views
