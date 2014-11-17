@@ -311,7 +311,7 @@ class ViewsHandler(BaseHandler):
             )
 
         self.set_status(results.http_status_code)
-        self.modified_output(results.to_dict_non_null(), output, 'views')
+        self.modified_output(results, output, 'views')
 
     @results_message
     def get_all_views(self, fetch_views):

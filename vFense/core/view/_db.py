@@ -1,6 +1,7 @@
 import logging
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
+from vFense.core.view._db_sub_queries import ViewMerge
 from vFense.core.view._db_model import (
     ViewCollections, ViewKeys, ViewIndexes
 )
@@ -46,6 +47,7 @@ def fetch_view(view_name, keys_to_pluck=None, conn=None):
             r
             .table(ViewCollections.Views)
             .get(view_name)
+            .merge(ViewMerge.VIEWS)
             .pluck(keys_to_pluck)
             .run(conn)
         )
@@ -54,6 +56,7 @@ def fetch_view(view_name, keys_to_pluck=None, conn=None):
             r
             .table(ViewCollections.Views)
             .get(view_name)
+            .merge(ViewMerge.VIEWS)
             .run(conn)
         )
 
@@ -110,6 +113,7 @@ def fetch_view_for_token(token, conn=None):
             |
             (x[ViewKeys.PreviousTokens].contains(token))
         )
+        .merge(ViewMerge.VIEWS)
         .run(conn)
     )
     if data:
@@ -272,6 +276,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
                 lambda name:
                 name[ViewKeys.ViewName].match("(?i)" + match)
             )
+            .merge(ViewMerge.VIEWS)
             .pluck(keys_to_pluck)
             .run(conn)
         )
@@ -284,6 +289,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
                 lambda name:
                 name[ViewKeys.ViewName].match("(?i)" + match)
             )
+            .merge(ViewMerge.VIEWS)
             .run(conn)
         )
 
@@ -291,6 +297,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
         data = list(
             r
             .table(ViewCollections.Views)
+            .merge(ViewMerge.VIEWS)
             .run(conn)
         )
 
@@ -298,6 +305,7 @@ def fetch_views(match=None, keys_to_pluck=None, conn=None):
         data = list(
             r
             .table(ViewCollections.Views)
+            .merge(ViewMerge.VIEWS)
             .pluck(keys_to_pluck)
             .run(conn)
         )

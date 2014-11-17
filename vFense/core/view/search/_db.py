@@ -356,6 +356,12 @@ class FetchViews(FetchBase):
         merge_hash = (
             lambda x:
             {
+                ViewKeys.DateModified: (
+                    x[ViewKeys.DateModified].to_epoch_time()
+                ),
+                ViewKeys.DateAdded: (
+                    x[ViewKeys.DateAdded].to_epoch_time()
+                ),
                 ViewKeys.Users: (
                     r
                     .expr(x[ViewKeys.Users])
