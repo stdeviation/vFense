@@ -6,6 +6,7 @@ from vFense.core.agent._db_model import (
 from vFense.core.tag._db_model import (
     TagCollections, TagKeys, TagsPerAgentKeys, TagsPerAgentIndexes
 )
+from vFense.core.tag._db_sub_queries import TagMerge
 from vFense.plugins.patching._db_model import (
     AppCollections, AppsKey, AppsPerAgentIndexes
 )
@@ -354,6 +355,12 @@ class FetchTags(FetchBase):
         merge_query = (
             lambda x:
             {
+                TagKeys.DateModified: (
+                    x[TagKeys.DateModified].to_epoch_time()
+                ),
+                TagKeys.DateAdded: (
+                    x[TagKeys.DateAdded].to_epoch_time()
+                ),
                 CommonAppKeys.APP_STATS: (
                     [
                         {
@@ -502,6 +509,12 @@ class FetchTags(FetchBase):
         merge_query = (
             lambda x:
             {
+                TagKeys.DateModified: (
+                    x[TagKeys.DateModified].to_epoch_time()
+                ),
+                TagKeys.DateAdded: (
+                    x[TagKeys.DateAdded].to_epoch_time()
+                ),
                 AgentCommonKeys.AVAIL_UPDATES: (
                     r
                     .table(TagCollections.TagsPerAgent)

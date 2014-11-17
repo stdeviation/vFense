@@ -52,6 +52,7 @@ def fetch_tag(tag_id, keys_to_pluck=None, conn=None):
             .table(TagCollections.Tags)
             .get_all(tag_id)
             .merge(TagMerge.AGENTS)
+            .merge(TagMerge.TAGS)
             .pluck(keys_to_pluck)
             .run(conn)
         )
@@ -62,6 +63,7 @@ def fetch_tag(tag_id, keys_to_pluck=None, conn=None):
             .table(TagCollections.Tags)
             .get_all(tag_id)
             .merge(TagMerge.AGENTS)
+            .merge(TagMerge.TAGS)
             .run(conn)
         )
     if data:
@@ -132,6 +134,7 @@ def fetch_tag_by_name_and_view(tag_name, view_name, conn=None):
             }
         )
         .merge(TagMerge.AGENTS)
+        .merge(TagMerge.TAGS)
         .run(conn)
     )
     if tag_info:
@@ -202,6 +205,7 @@ def fetch_tags_by_id(tag_ids, keys_to_pluck=None, conn=None):
                 r
                 .table(TagCollections.Tags)
                 .get_all(tag_id)
+                .merge(TagMerge.TAGS)
                 .pluck(keys_to_pluck)
             )
             .run(conn)
@@ -215,6 +219,7 @@ def fetch_tags_by_id(tag_ids, keys_to_pluck=None, conn=None):
                 r
                 .table(TagCollections.Tags)
                 .get_all(tag_id)
+                .merge(TagMerge.TAGS)
             )
             .run(conn)
         )
@@ -246,6 +251,7 @@ def fetch_tags_by_view(view_name=None, keys_to_pluck=None, conn=None):
                 r
                 .table(TagCollections.Tags)
                 .get_all(view_name, index=TagsIndexes.ViewName)
+                .merge(TagMerge.TAGS)
                 .pluck(keys_to_pluck)
                 .run(conn)
             )
@@ -254,23 +260,25 @@ def fetch_tags_by_view(view_name=None, keys_to_pluck=None, conn=None):
                 r
                 .table(TagCollections.Tags)
                 .get_all(view_name, index=TagsIndexes.ViewName)
+                .merge(TagMerge.TAGS)
                 .run(conn)
             )
     else:
         if keys_to_pluck:
              tag_info = list(
-                 r
-                 .table(TagCollections.Tags)
-                 .pluck(keys_to_pluck)
-                 .run(conn)
+                r
+                .table(TagCollections.Tags)
+                .merge(TagMerge.TAGS)
+                .pluck(keys_to_pluck)
+                .run(conn)
              )
         else:
-             tag_info = list(
-                 r
-                 .table(TagCollections.Tags)
-                 .run(conn)
+            tag_info = list(
+                r
+                .table(TagCollections.Tags)
+                .merge(TagMerge.TAGS)
+                .run(conn)
             )
-
 
     return tag_info
 
@@ -325,7 +333,6 @@ def fetch_tag_ids_for_agent(agent_id, conn=None):
     )
 
     return tag_info
-
 
 @time_it
 @catch_it({})
@@ -419,7 +426,6 @@ def delete_tag_ids_from_view(view_name=None, conn=None):
         )
 
     return data
-
 
 @time_it
 @catch_it({})
@@ -557,7 +563,6 @@ def delete_agent_from_tags_in_views(agent_id, views, conn=None):
     )
 
     return data
-
 
 @time_it
 @catch_it({})

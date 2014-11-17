@@ -276,6 +276,7 @@ def fetch_agents(
             .table(AgentCollections.Agents)
             .filter({filter_key: filter_val})
             .merge(Merge.TAGS)
+            .merge(Merge.AGENTS)
             .run(conn)
         )
 
@@ -286,6 +287,7 @@ def fetch_agents(
             .get_all(view_name, index=AgentIndexes.ViewName)
             .filter({filter_key: filter_val})
             .merge(Merge.TAGS)
+            .merge(Merge.AGENTS)
             .run(conn)
         )
 
@@ -295,6 +297,7 @@ def fetch_agents(
             .table(AgentCollections.Agents)
             .filter({filter_key: filter_val})
             .merge(Merge.TAGS)
+            .merge(Merge.AGENTS)
             .pluck(keys_to_pluck)
             .run(conn)
         )
@@ -306,6 +309,7 @@ def fetch_agents(
             .get_all(view_name, index=AgentIndexes.ViewName)
             .filter({filter_key: filter_val})
             .merge(Merge.TAGS)
+            .merge(Merge.AGENTS)
             .pluck(keys_to_pluck)
             .run(conn)
         )
@@ -315,6 +319,7 @@ def fetch_agents(
             r
             .table(AgentCollections.Agents)
             .merge(Merge.TAGS)
+            .merge(Merge.AGENTS)
             .pluck(keys_to_pluck)
             .run(conn)
         )
@@ -325,6 +330,7 @@ def fetch_agents(
             .table(AgentCollections.Agents)
             .get_all(view_name, index=AgentIndexes.ViewName)
             .merge(Merge.TAGS)
+            .merge(Merge.AGENTS)
             .pluck(keys_to_pluck)
             .run(conn)
         )
@@ -336,6 +342,7 @@ def fetch_agents(
             r
             .table(AgentCollections.Agents)
             .merge(Merge.TAGS)
+            .merge(Merge.AGENTS)
             .run(conn)
         )
 
@@ -347,6 +354,7 @@ def fetch_agents(
             .table(AgentCollections.Agents)
             .get_all(view_name, index=AgentIndexes.ViewName)
             .merge(Merge.TAGS)
+            .merge(Merge.AGENTS)
             .run(conn)
         )
 
@@ -455,6 +463,7 @@ def fetch_all_agents_for_view(view_name, conn=None):
         r
         .table(AgentCollections.Agents)
         .get_all(view_name, index=AgentIndexes.ViewName)
+        .merge(Merge.AGENTS)
         .run(conn)
     )
 

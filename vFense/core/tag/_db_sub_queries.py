@@ -1,7 +1,7 @@
 from vFense.db.client import r
 from vFense.core.tag._db_model import (
     TagCollections, TagsPerAgentKeys,
-    TagsPerAgentIndexes, TagMappedKeys
+    TagsPerAgentIndexes, TagMappedKeys, TagKeys
 )
 
 from vFense.core.agent._db_model import (
@@ -42,6 +42,17 @@ class TagMerge():
                     }
                 )
                 .coerce_to('array')
+            )
+        }
+    )
+
+    TAGS = (
+        {
+            TagKeys.DateModified: (
+                r.row[TagKeys.DateModified].to_epoch_time()
+            ),
+            TagKeys.DateAdded: (
+                r.row[TagKeys.DateAdded].to_epoch_time()
             )
         }
     )

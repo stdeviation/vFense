@@ -30,7 +30,6 @@ from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message,
     api_catch_it
 )
-from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
@@ -136,7 +135,13 @@ class TagsHandler(BaseHandler):
         else:
             is_global = False
 
-        tag = Tag(tag_name, environment, active_view, is_global)
+        tag = (
+            Tag(
+                tag_name=tag_name, environment=environment,
+                view_name=active_view,
+                is_global=is_global
+            )
+        )
         results = self.create_tag(tag)
 
         self.set_status(results.http_status_code)
@@ -174,8 +179,7 @@ class TagsHandler(BaseHandler):
         for tag_id in tags:
             manager = TagManager(tag_id)
             results = manager.remove()
-            if (results.vfense_status_code
-                    == TagCodes.TagsDeleted):
+            if results.vfense_status_code == TagCodes.TagRemoved:
                 tags_deleted.append(tag_id)
             else:
                 tags_unchanged.append(tag_id)
@@ -200,15 +204,9 @@ class TagsHandler(BaseHandler):
             end_results.message = msg
 
         elif tags_deleted and not tags_unchanged:
-            msg = (
-                'Tags: {0} deleted.'.format(', '.join(tags))
-            )
-            end_results.generic_status_code = (
-                TagCodes.ObjectsDeleted
-            )
-            end_results.vfense_status_code = (
-                TagCodes.TagsDeleted
-            )
+            msg = 'Tags: {0} deleted.'.format(', '.join(tags))
+            end_results.generic_status_code = TagCodes.ObjectsDeleted
+            end_results.vfense_status_code = TagCodes.TagsDeleted
             end_results.message = msg
 
         elif tags_unchanged and not tags_deleted:
@@ -243,7 +241,6 @@ class TagHandler(BaseHandler):
     def get_tag(self, search, tag_id):
         results = search.by_id(tag_id)
         return results
-
 
     @api_catch_it
     @authenticated_request
