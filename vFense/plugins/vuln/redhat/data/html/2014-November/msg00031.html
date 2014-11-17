@@ -1,0 +1,349 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1861&#45;01] Important: mariadb security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 17 Nov 2014 06:10:49 &#45;0500 -->
+<!--X-Message-Id: 201411171110.sAHBAliu006905@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1861-01] Important: mariadb security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1861-01] Important: mariadb security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1861-01] Important: mariadb security update</li>
+<li><em>Date</em>: Mon, 17 Nov 2014 11:19:53 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: mariadb security update
+Advisory ID:       RHSA-2014:1861-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1861.html">https://rhn.redhat.com/errata/RHSA-2014-1861.html</a>
+Issue date:        2014-11-17
+CVE Names:         CVE-2014-2494 CVE-2014-4207 CVE-2014-4243 
+                   CVE-2014-4258 CVE-2014-4260 CVE-2014-4274 
+                   CVE-2014-4287 CVE-2014-6463 CVE-2014-6464 
+                   CVE-2014-6469 CVE-2014-6484 CVE-2014-6505 
+                   CVE-2014-6507 CVE-2014-6520 CVE-2014-6530 
+                   CVE-2014-6551 CVE-2014-6555 CVE-2014-6559 
+=====================================================================
+
+1. Summary:
+
+Updated mariadb packages that fix several security issues are now available
+for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+MariaDB is a multi-user, multi-threaded SQL database server that is binary
+compatible with MySQL.
+
+This update fixes several vulnerabilities in the MariaDB database server.
+Information about these flaws can be found on the Oracle Critical Patch
+Update Advisory page, listed in the References section. (CVE-2014-2494,
+CVE-2014-4207, CVE-2014-4243, CVE-2014-4258, CVE-2014-4260, CVE-2014-4287,
+CVE-2014-4274, CVE-2014-6463, CVE-2014-6464, CVE-2014-6469, CVE-2014-6484,
+CVE-2014-6505, CVE-2014-6507, CVE-2014-6520, CVE-2014-6530, CVE-2014-6551,
+CVE-2014-6555, CVE-2014-6559)
+
+These updated packages upgrade MariaDB to version 5.5.40. Refer to the
+MariaDB Release Notes listed in the References section for a complete list
+of changes.
+
+All MariaDB users should upgrade to these updated packages, which correct
+these issues. After installing this update, the MariaDB server daemon
+(mysqld) will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1120382 - CVE-2014-2494 mysql: unspecified vulnerability related to ENARC (CPU July 2014)
+1120383 - CVE-2014-4207 mysql: unspecified vulnerability related to SROPTZR (CPU July 2014)
+1120385 - CVE-2014-4243 mysql: unspecified vulnerability related to ENFED (CPU July 2014)
+1120387 - CVE-2014-4258 mysql: unspecified vulnerability related to SRINFOSC (CPU July 2014)
+1120388 - CVE-2014-4260 mysql: unspecified vulnerability related to SRCHAR (CPU July 2014)
+1126271 - CVE-2014-4274 mysql: unspecified MyISAM temporary file issue fixed in 5.5.39 and 5.6.20
+1153461 - CVE-2014-4287 mysql: unspecified vulnerability related to SERVER:CHARACTER SETS (CPU October 2014)
+1153462 - CVE-2014-6463 mysql: unspecified vulnerability related to SERVER:REPLICATION ROW FORMAT BINARY LOG DML (CPU October 2014)
+1153463 - CVE-2014-6464 mysql: unspecified vulnerability related to SERVER:INNODB DML FOREIGN KEYS (CPU October 2014)
+1153464 - CVE-2014-6469 mysql: unspecified vulnerability related to SERVER:OPTIMIZER (CPU October 2014)
+1153467 - CVE-2014-6484 mysql: unspecified vulnerability related to SERVER:DML (CPU October 2014)
+1153489 - CVE-2014-6505 mysql: unspecified vulnerability related to SERVER:MEMORY STORAGE ENGINE (CPU October 2014)
+1153490 - CVE-2014-6507 mysql: unspecified vulnerability related to SERVER:DML (CPU October 2014)
+1153491 - CVE-2014-6520 mysql: unspecified vulnerability related to SERVER:DDL (CPU October 2014)
+1153493 - CVE-2014-6530 mysql: unspecified vulnerability related to CLIENT:MYSQLDUMP (CPU October 2014)
+1153494 - CVE-2014-6551 mysql: unspecified vulnerability related to CLIENT:MYSQLADMIN (CPU October 2014)
+1153495 - CVE-2014-6555 mysql: unspecified vulnerability related to SERVER:DML (CPU October 2014)
+1153496 - CVE-2014-6559 mysql: unspecified vulnerability related to C API SSL CERTIFICATE HANDLING (CPU October 2014)
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+mariadb-5.5.40-1.el7_0.src.rpm
+
+x86_64:
+mariadb-5.5.40-1.el7_0.x86_64.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.i686.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.x86_64.rpm
+mariadb-libs-5.5.40-1.el7_0.i686.rpm
+mariadb-libs-5.5.40-1.el7_0.x86_64.rpm
+mariadb-server-5.5.40-1.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+mariadb-bench-5.5.40-1.el7_0.x86_64.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.i686.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.x86_64.rpm
+mariadb-devel-5.5.40-1.el7_0.i686.rpm
+mariadb-devel-5.5.40-1.el7_0.x86_64.rpm
+mariadb-embedded-5.5.40-1.el7_0.i686.rpm
+mariadb-embedded-5.5.40-1.el7_0.x86_64.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.i686.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.x86_64.rpm
+mariadb-test-5.5.40-1.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+mariadb-5.5.40-1.el7_0.src.rpm
+
+x86_64:
+mariadb-5.5.40-1.el7_0.x86_64.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.i686.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.x86_64.rpm
+mariadb-libs-5.5.40-1.el7_0.i686.rpm
+mariadb-libs-5.5.40-1.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+mariadb-bench-5.5.40-1.el7_0.x86_64.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.i686.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.x86_64.rpm
+mariadb-devel-5.5.40-1.el7_0.i686.rpm
+mariadb-devel-5.5.40-1.el7_0.x86_64.rpm
+mariadb-embedded-5.5.40-1.el7_0.i686.rpm
+mariadb-embedded-5.5.40-1.el7_0.x86_64.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.i686.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.x86_64.rpm
+mariadb-server-5.5.40-1.el7_0.x86_64.rpm
+mariadb-test-5.5.40-1.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+mariadb-5.5.40-1.el7_0.src.rpm
+
+ppc64:
+mariadb-5.5.40-1.el7_0.ppc64.rpm
+mariadb-bench-5.5.40-1.el7_0.ppc64.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.ppc.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.ppc64.rpm
+mariadb-devel-5.5.40-1.el7_0.ppc.rpm
+mariadb-devel-5.5.40-1.el7_0.ppc64.rpm
+mariadb-libs-5.5.40-1.el7_0.ppc.rpm
+mariadb-libs-5.5.40-1.el7_0.ppc64.rpm
+mariadb-server-5.5.40-1.el7_0.ppc64.rpm
+mariadb-test-5.5.40-1.el7_0.ppc64.rpm
+
+s390x:
+mariadb-5.5.40-1.el7_0.s390x.rpm
+mariadb-bench-5.5.40-1.el7_0.s390x.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.s390.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.s390x.rpm
+mariadb-devel-5.5.40-1.el7_0.s390.rpm
+mariadb-devel-5.5.40-1.el7_0.s390x.rpm
+mariadb-libs-5.5.40-1.el7_0.s390.rpm
+mariadb-libs-5.5.40-1.el7_0.s390x.rpm
+mariadb-server-5.5.40-1.el7_0.s390x.rpm
+mariadb-test-5.5.40-1.el7_0.s390x.rpm
+
+x86_64:
+mariadb-5.5.40-1.el7_0.x86_64.rpm
+mariadb-bench-5.5.40-1.el7_0.x86_64.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.i686.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.x86_64.rpm
+mariadb-devel-5.5.40-1.el7_0.i686.rpm
+mariadb-devel-5.5.40-1.el7_0.x86_64.rpm
+mariadb-libs-5.5.40-1.el7_0.i686.rpm
+mariadb-libs-5.5.40-1.el7_0.x86_64.rpm
+mariadb-server-5.5.40-1.el7_0.x86_64.rpm
+mariadb-test-5.5.40-1.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+mariadb-debuginfo-5.5.40-1.el7_0.ppc.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.ppc64.rpm
+mariadb-embedded-5.5.40-1.el7_0.ppc.rpm
+mariadb-embedded-5.5.40-1.el7_0.ppc64.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.ppc.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.ppc64.rpm
+
+s390x:
+mariadb-debuginfo-5.5.40-1.el7_0.s390.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.s390x.rpm
+mariadb-embedded-5.5.40-1.el7_0.s390.rpm
+mariadb-embedded-5.5.40-1.el7_0.s390x.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.s390.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.s390x.rpm
+
+x86_64:
+mariadb-debuginfo-5.5.40-1.el7_0.i686.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.x86_64.rpm
+mariadb-embedded-5.5.40-1.el7_0.i686.rpm
+mariadb-embedded-5.5.40-1.el7_0.x86_64.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.i686.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+mariadb-5.5.40-1.el7_0.src.rpm
+
+x86_64:
+mariadb-5.5.40-1.el7_0.x86_64.rpm
+mariadb-bench-5.5.40-1.el7_0.x86_64.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.i686.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.x86_64.rpm
+mariadb-devel-5.5.40-1.el7_0.i686.rpm
+mariadb-devel-5.5.40-1.el7_0.x86_64.rpm
+mariadb-libs-5.5.40-1.el7_0.i686.rpm
+mariadb-libs-5.5.40-1.el7_0.x86_64.rpm
+mariadb-server-5.5.40-1.el7_0.x86_64.rpm
+mariadb-test-5.5.40-1.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+mariadb-debuginfo-5.5.40-1.el7_0.i686.rpm
+mariadb-debuginfo-5.5.40-1.el7_0.x86_64.rpm
+mariadb-embedded-5.5.40-1.el7_0.i686.rpm
+mariadb-embedded-5.5.40-1.el7_0.x86_64.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.i686.rpm
+mariadb-embedded-devel-5.5.40-1.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-2494">https://access.redhat.com/security/cve/CVE-2014-2494</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4207">https://access.redhat.com/security/cve/CVE-2014-4207</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4243">https://access.redhat.com/security/cve/CVE-2014-4243</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4258">https://access.redhat.com/security/cve/CVE-2014-4258</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4260">https://access.redhat.com/security/cve/CVE-2014-4260</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4274">https://access.redhat.com/security/cve/CVE-2014-4274</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4287">https://access.redhat.com/security/cve/CVE-2014-4287</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6463">https://access.redhat.com/security/cve/CVE-2014-6463</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6464">https://access.redhat.com/security/cve/CVE-2014-6464</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6469">https://access.redhat.com/security/cve/CVE-2014-6469</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6484">https://access.redhat.com/security/cve/CVE-2014-6484</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6505">https://access.redhat.com/security/cve/CVE-2014-6505</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6507">https://access.redhat.com/security/cve/CVE-2014-6507</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6520">https://access.redhat.com/security/cve/CVE-2014-6520</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6530">https://access.redhat.com/security/cve/CVE-2014-6530</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6551">https://access.redhat.com/security/cve/CVE-2014-6551</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6555">https://access.redhat.com/security/cve/CVE-2014-6555</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6559">https://access.redhat.com/security/cve/CVE-2014-6559</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.oracle.com/technetwork/topics/security/cpuoct2014-1972960.html#AppendixMSQL">http://www.oracle.com/technetwork/topics/security/cpuoct2014-1972960.html#AppendixMSQL</a>
+<a  rel="nofollow" href="http://www.oracle.com/technetwork/topics/security/cpujul2014-1972956.html#AppendixMSQL">http://www.oracle.com/technetwork/topics/security/cpujul2014-1972956.html#AppendixMSQL</a>
+<a  rel="nofollow" href="https://mariadb.com/kb/en/mariadb/development/release-notes/mariadb-5540-release-notes/">https://mariadb.com/kb/en/mariadb/development/release-notes/mariadb-5540-release-notes/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUadeuXlSAg2UNWIIRAq0FAKC2DOhAOg/q+zlOLLV3ztECJ+Gh0gCdEGtr
+rmT+kQlZKObKWBl1L2CyGEU=
+=yhRc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
