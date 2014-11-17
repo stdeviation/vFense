@@ -24,7 +24,7 @@ class AgentDefaults(object):
     REBOOTED = True
     VIEWS = ['global']
     TAGS = []
-    DISPLAY_NAME = None
+    DISPLAY_NAME = ''
 
 def agent_id():
     return '[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}'

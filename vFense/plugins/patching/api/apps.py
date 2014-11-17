@@ -284,7 +284,7 @@ class AppIdAppsHandler(AppsBaseHandler):
             UserManager(active_user).get_attribute(UserKeys.CurrentView)
         )
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
-        search = RetrieveApps(active_view)
+        search = RetrieveApps(view_name=active_view)
         results = self.by_id(search, app_id)
         self.set_status(results.http_status_code)
         self.modified_output(results, output, 'app')
@@ -432,7 +432,10 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
             )
         )
         search = (
-            RetrieveAgentsByAppId(app_id, count, offset, sort, sort_by)
+            RetrieveAgentsByAppId(
+                app_id=app_id, count=count, offset=offset,
+                sort=sort, sort_key=sort_by
+            )
         )
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 

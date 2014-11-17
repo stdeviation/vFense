@@ -17,6 +17,7 @@ class FetchAgentsByAppId(FetchAppsBase):
         apps_collection=AppCollections.UniqueApplications,
         apps_per_agent_collection=AppCollections.AppsPerAgent, **kwargs
     ):
+        super(FetchAgentsByAppId, self).__init__(**kwargs)
         self.app_id = app_id
 
         self.apps_collection = apps_collection

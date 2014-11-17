@@ -23,7 +23,7 @@ class RetrieveAgentsByAppId(RetrieveAppsBase):
     ):
         super(RetrieveAgentsByAppId, self).__init__(**kwargs)
         self.app_id = app_id
-        self.fetch_apps = (
+        self.fetch = (
             FetchAgentsByAppId(
                 app_id=self.app_id, count=self.count,
                 offset=self.offset, sort=self.sort,
@@ -35,19 +35,19 @@ class RetrieveAgentsByAppId(RetrieveAppsBase):
 
     def by_status(self, status):
         if status in CommonAppKeys.ValidPackageStatuses:
-            count, data = self.fetch_agents.by_status(status)
+            count, data = self.fetch.by_status(status)
             return self._base(count, data)
 
         else:
             return self._set_results_invalid_filter_key(status)
 
     def by_name(self, name):
-        count, data = self.fetch_agents.by_name(name)
+        count, data = self.fetch.by_name(name)
         return self._base(count, data)
 
     def by_status_and_name(self, status, name):
         if status in CommonAppKeys.ValidPackageStatuses:
-            count, data = self.fetch_apps.by_status_and_name(status, name)
+            count, data = self.fetch.by_status_and_name(status, name)
             return self._base(count, data)
 
         else:
@@ -63,7 +63,7 @@ class RetrieveAgentsByCustomAppId(RetrieveAgentsByAppId):
         self.apps_collection = AppCollections.CustomApps
         self.apps_per_agent_collection = AppCollections.CustomAppsPerAgent
 
-        self.fetch_agents = (
+        self.fetch = (
             FetchAgentsByAppId(
                 app_id=self.app_id, count=self.count, offset=self.offset,
                 sort=self.sort, sort_key=self.sort_key,
@@ -82,7 +82,7 @@ class RetrieveAgentsBySupportedAppId(RetrieveAgentsByAppId):
         self.apps_collection = AppCollections.SupportedApps
         self.apps_per_agent_collection = AppCollections.SupportedAppsPerAgent
 
-        self.fetch_agents = (
+        self.fetch = (
             FetchAgentsByAppId(
                 app_id=self.app_id, count=self.count, offset=self.offset,
                 sort=self.sort, sort_key=self.sort_key,
@@ -100,7 +100,7 @@ class RetrieveAgentsByAgentAppId(RetrieveAgentsByAppId):
         self.apps_collection = AppCollections.vFenseApps
         self.apps_per_agent_collection = AppCollections.vFenseAppsPerAgent
 
-        self.fetch_agents = (
+        self.fetch = (
             FetchAgentsByAppId(
                 app_id=self.app_id, count=self.count, offset=self.offset,
                 sort=self.sort, sort_key=self.sort_key,
