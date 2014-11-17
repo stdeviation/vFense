@@ -20,7 +20,7 @@ class FetchAppsByTagId(FetchAppsBase):
         apps_collection=AppCollections.UniqueApplications,
         apps_per_agent_collection=AppCollections.AppsPerAgent, **kwargs
     ):
-        super(FetchAppsByTagId, self).__init(**kwargs)
+        super(FetchAppsByTagId, self).__init__(**kwargs)
         self.tag_id = tag_id
         self.show_hidden = show_hidden
         if show_hidden not in CommonAppKeys.ValidHiddenVals:

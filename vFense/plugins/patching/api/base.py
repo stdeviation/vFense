@@ -298,7 +298,7 @@ class AppsBaseHandler(BaseHandler):
             search = (
                 RetrieveCustomAppsByAgentId(
                     agent_id=agent_id, count=self.count, offset=self.offset,
-                    sort=self.sort, sort_by=self.sort_by,
+                    sort=self.sort, sort_key=self.sort_by,
                     show_hidden=self.hidden
                 )
             )
@@ -307,7 +307,7 @@ class AppsBaseHandler(BaseHandler):
             search = (
                 RetrieveSupportedAppsByAgentId(
                     agent_id=agent_id, count=self.count, offset=self.offset,
-                    sort=self.sort, sort_by=self.sort_by,
+                    sort=self.sort, sort_key=self.sort_by,
                     show_hidden=self.hidden
                 )
             )
@@ -316,7 +316,7 @@ class AppsBaseHandler(BaseHandler):
             search = (
                 RetrieveAgentAppsByAgentId(
                     agent_id=agent_id, count=self.count, offset=self.offset,
-                    sort=self.sort, sort_by=self.sort_by,
+                    sort=self.sort, sort_key=self.sort_by,
                     show_hidden=self.hidden
                 )
             )
@@ -328,7 +328,7 @@ class AppsBaseHandler(BaseHandler):
             search = (
                 RetrieveAppsByTagId(
                     tag_id=tag_id, count=self.count, offset=self.offset,
-                    sort=self.sort, sort_by=self.sort_by,
+                    sort=self.sort, sort_key=self.sort_by,
                     show_hidden=self.hidden
                 )
             )
@@ -337,7 +337,7 @@ class AppsBaseHandler(BaseHandler):
             search = (
                 RetrieveCustomAppsByTagId(
                     tag_id=tag_id, count=self.count, offset=self.offset,
-                    sort=self.sort, sort_by=self.sort_by,
+                    sort=self.sort, sort_key=self.sort_by,
                     show_hidden=self.hidden
                 )
             )
@@ -346,7 +346,7 @@ class AppsBaseHandler(BaseHandler):
             search = (
                 RetrieveSupportedAppsByTagId(
                     tag_id=tag_id, count=self.count, offset=self.offset,
-                    sort=self.sort, sort_by=self.sort_by,
+                    sort=self.sort, sort_key=self.sort_by,
                     show_hidden=self.hidden
                 )
             )
@@ -355,7 +355,7 @@ class AppsBaseHandler(BaseHandler):
             search = (
                 RetrieveAgentAppsByTagId(
                     tag_id=tag_id, count=self.count, offset=self.offset,
-                    sort=self.sort, sort_by=self.sort_by,
+                    sort=self.sort, sort_key=self.sort_by,
                     show_hidden=self.hidden
                 )
             )
