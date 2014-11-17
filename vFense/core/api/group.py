@@ -213,24 +213,24 @@ class GroupsHandler(BaseHandler):
             if not view_context and not all_views and not group_id:
                 fetch_groups = (
                     RetrieveGroups(
-                        active_view, count=count, offset=offset, sort=sort,
-                        sort_key=sort_by, is_global=is_global
+                        view_name=active_view, count=count, offset=offset,
+                        sort=sort, sort_key=sort_by, is_global=is_global
                     )
                 )
 
             elif view_context and not all_views and not group_id:
                 fetch_groups = (
                     RetrieveGroups(
-                        view_context, count=count, offset=offset, sort=sort,
-                        sort_key=sort_by, is_global=is_global
+                        view_name=view_context, count=count, offset=offset,
+                        sort=sort, sort_key=sort_by, is_global=is_global
                     )
                 )
 
             else:
                 fetch_groups = (
                     RetrieveGroups(
-                        view_context, count=count, offset=offset, sort=sort,
-                        sort_key=sort_by, is_global=is_global
+                        view_name=view_context, count=count, offset=offset,
+                        sort=sort, sort_key=sort_by, is_global=is_global
                         )
                     )
 

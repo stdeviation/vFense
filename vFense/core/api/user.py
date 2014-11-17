@@ -295,7 +295,7 @@ class UsersHandler(BaseHandler):
             if not view_context and not all_views:
                 fetch_users = (
                     RetrieveUsers(
-                        active_view, count=count, offset=offset,
+                        view_name=active_view, count=count, offset=offset,
                         sort=sort, sort_key=sort_by, is_global=is_global
                     )
                 )
@@ -303,7 +303,7 @@ class UsersHandler(BaseHandler):
             elif view_context and not all_views:
                 fetch_users = (
                     RetrieveUsers(
-                        view_context, count=count, offset=offset,
+                        view_name=view_context, count=count, offset=offset,
                         sort=sort, sort_key=sort_by, is_global=is_global
                     )
                 )

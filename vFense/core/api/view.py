@@ -270,7 +270,8 @@ class ViewsHandler(BaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         fetch_views = (
             RetrieveViews(
-                parent_view, count, offset, sort, sort_by, is_global
+                parent_view=parent_view, count=count, offset=offset,
+                sort=sort, sort_key=sort_by, is_global=is_global
             )
         )
         if not view_context and active_user == DefaultUsers.GLOBAL_ADMIN:
