@@ -5,15 +5,17 @@ from json import dumps
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import (
-    agent_authenticated_request, convert_json_to_arguments
+    convert_json_to_arguments
 )
 
 from vFense.core.results import ApiResults, ExternalApiResults
 
-from vFense.plugins.patching.receiver.handler import PatcherHandOff
+from vFense.plugins.patching.receiver.handoff import PatcherHandOff
 from vFense.core.receiver.api.base import AgentBaseHandler
 from vFense.core.receiver.results import AgentResults, AgentApiResultKeys
-from vFense.core.receiver.decorators import authenticate_agent
+from vFense.core.receiver.decorators import (
+    authenticate_agent, agent_authenticated_request
+)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_listenerener')

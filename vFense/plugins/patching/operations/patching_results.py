@@ -6,38 +6,33 @@ from vFense._constants import VFENSE_LOGGING_CONFIG
 from json import loads
 
 from vFense.core._constants import CommonKeys
-from vFense.core.decorators import results_message
-from vFense.core.agent._db_model import AgentKeys
 from vFense.core.agent.manager import AgentManager
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations.results import OperationResults
-from vFense.core.operations.agent_operations import \
+from vFense.core.operations.agent_operations import (
     operation_for_agent_and_app_exist
-
+)
 from vFense.core.status_codes import GenericCodes, GenericFailureCodes
-
 from vFense.core.operations.status_codes import AgentOperationCodes
-
 from vFense.core.receiver.status_codes import (
     AgentFailureResultCodes, AgentResultCodes
 )
-
 from vFense.plugins.patching._db_model import AppCollections
 from vFense.plugins.patching._constants import SharedAppKeys, CommonAppKeys
 from vFense.plugins.patching._db import fetch_app_data
 
-from vFense.plugins.patching.patching import \
-    update_app_data_by_agentid_and_appid, \
+from vFense.plugins.patching.patching import (
+    update_app_data_by_agentid_and_appid,
     delete_apps_from_agent_by_name_and_version
-
-from vFense.plugins.patching.operations.patching_operations import \
+)
+from vFense.plugins.patching.operations.patching_operations import (
     PatchingOperation
-
-from vFense.plugins.patching.apps.incoming_apps import \
+)
+from vFense.plugins.patching.apps.manager import (
     incoming_applications_from_agent
-
+)
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
@@ -142,13 +137,8 @@ class PatchingOperationResults(OperationResults):
         except Exception as e:
             pass
 
-        incoming_applications_from_agent(
-            self.view_name,
-            self.agent_id,
-            self.agent_data[AgentKeys.OsCode],
-            self.agent_data[AgentKeys.OsString],
-            self.apps_to_add,
-            delete_afterwards=False
+        incoming_applications_from_agent.delay(
+            self.agent_id, self.apps_to_add, delete_afterwards=False
         )
 
     def _apps_to_delete(self):
@@ -170,7 +160,7 @@ class PatchingOperationResults(OperationResults):
         """Update the application status per agent as well as update the
             operation
         """
-        results = {}
+        results = ApiResults()
 
         if self.reboot_required:
             manager = AgentManager(self.agent_id)

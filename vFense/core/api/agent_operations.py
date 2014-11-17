@@ -206,10 +206,12 @@ class OperationHandler(BaseHandler):
             )
         )
 
-        operation_data = get_agent_operation(operation_id)
-        if operation_data:
-            if re.search('install', operation_data[AgentOperationKey.Operation]):
-                results = self.get_install_operation_by_id(search, operation_id)
+        operation = get_agent_operation(operation_id)
+        if operation.operation_id:
+            if re.search('install', operation.operation):
+                results = (
+                    self.get_install_operation_by_id(search, operation_id)
+                )
             else:
                 results = self.get_operation_by_id(search, operation_id)
 
