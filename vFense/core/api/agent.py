@@ -63,9 +63,7 @@ class FetchValidEnvironments(BaseHandler):
     @authenticated_request
     def get(self):
         active_user = self.get_current_user().encode('utf-8')
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         results = self.get_environments(active_view)
         self.set_status(results.http_status_code)

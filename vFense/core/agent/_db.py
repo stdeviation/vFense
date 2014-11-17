@@ -34,7 +34,7 @@ def fetch_environments_from_agent(view_name, conn=None):
     data = (
         r
         .table(AgentCollections.Agents)
-        .get_all(view_name, index=AgentIndexes.ViewName)
+        .get_all(view_name, index=AgentIndexes.Views)
         .pluck(AgentKeys.Environment)
         .distinct()
         .map(lambda x: x[AgentKeys.Environment])
