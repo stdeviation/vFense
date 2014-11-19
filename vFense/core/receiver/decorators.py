@@ -112,7 +112,7 @@ def authenticate_agent(fn):
                 self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
         except Exception as e:
-            msg = e
+            results.message = e
             results.vfense_status_code = GenericCodes.SomethingBroke
             self.set_status(results.http_status_code)
             self.write(json.dumps(results.to_dict_non_null(), indent=4))
@@ -173,7 +173,6 @@ def authenticate_token(fn):
         except Exception as e:
             msg = e
             results.message = msg
-            print msg
             logger.exception(msg)
             results.vfense_status_code = GenericCodes.SomethingBroke
             self.set_status(results.http_status_code)
@@ -187,7 +186,6 @@ def agent_results_message(fn):
         data = fn(*args, **kwargs)
         tornado_handler = args[0]
         if isinstance(data, ApiResults):
-            print data
             results = AgentApiResults(**data.to_dict_non_null())
             results.uri = tornado_handler.request.uri
             results.http_method = tornado_handler.request.method

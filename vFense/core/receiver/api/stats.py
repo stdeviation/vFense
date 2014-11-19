@@ -76,7 +76,7 @@ class UpdateMonitoringStatsV2(AgentBaseHandler):
 
         if data.has_key('file_system'):
             stats = data.get('file_systems')
-            results = self.update_memory(stats, agent_id)
+            results = self.update_filesystems(stats, agent_id)
 
         self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
@@ -87,6 +87,7 @@ class UpdateMonitoringStatsV2(AgentBaseHandler):
     def update_cpu(self, stat, agent_id):
         manager = CPUStatManager(agent_id=agent_id)
         results = manager.update(stat)
+        print results
         return results
 
     @receiver_catch_it
@@ -94,6 +95,7 @@ class UpdateMonitoringStatsV2(AgentBaseHandler):
     def update_memory(self, stat, agent_id):
         manager = MemoryStatManager(agent_id=agent_id)
         results = manager.update(stat)
+        print results
         return results
 
     @receiver_catch_it
@@ -102,4 +104,5 @@ class UpdateMonitoringStatsV2(AgentBaseHandler):
         manager = FileSystemStatManager(agent_id=agent_id)
         stats = map(lambda x: FileSystemStats(**x), stats)
         results = manager.update(stats)
+        print results
         return results

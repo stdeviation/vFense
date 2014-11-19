@@ -37367,6 +37367,30 @@
     {
         "status": "available", 
         "kb": "", 
+        "description": "GNOME translation updates for language English", 
+        "support_url": "", 
+        "release_date": 1415682000, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "fd04e601313a1881841f8c2320058f4338a083e3a0472f7c0a42d93565d8b1ed", 
+                "file_name": "language-pack-gnome-en_14.04+20141110_all.deb", 
+                "file_size": 135190, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/l/language-pack-gnome-en/language-pack-gnome-en_14.04+20141110_all.deb"
+            }
+        ], 
+        "dependencies": [], 
+        "version": "1:14.04+20141110", 
+        "vendor_name": "", 
+        "name": "language-pack-gnome-en"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
         "description": "free implementation of the OpenGL API -- DRI modules", 
         "support_url": "http://mesa3d.sourceforge.net/", 
         "release_date": 1412136000, 

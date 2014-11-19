@@ -48,8 +48,8 @@ class AgentUpdateHandlerV2(AgentBaseHandler):
 
     @receiver_catch_it
     @agent_results_message
-    def avail_agent_update(self, agent_id, app_data):
-        handoff = PatcherHandOff(agent_id=agent_id, app_data=app_data)
+    def agent_update(self, agent_id, app_data):
+        handoff = PatcherHandOff(agent_id=agent_id, apps_data=app_data)
         handoff.available_agent_update_operation()
         results = ApiResults()
         results.fill_in_defaults()
