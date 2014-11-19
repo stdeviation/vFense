@@ -480,19 +480,23 @@ class Apps(Base):
         Returns:
             (dict): A dictionary with the fields corresponding to the
                 install operation.
-
         """
+        data = {}
+        if (isinstance(self.install_date, int) or
+                isinstance(self.install_date, float)):
+            data[DbCommonAppPerAgentKeys.InstallDate] = (
+                 DbTime.epoch_time_to_db_time(self.install_date)
+            )
 
-        data = {
-            DbCommonAppPerAgentKeys.InstallDate: (
-                DbTime.epoch_time_to_db_time(self.install_date)
-            ),
-            DbCommonAppPerAgentKeys.LastModifiedTime: (
-                DbTime.epoch_time_to_db_time(self.last_modified_time)
-            ),
-        }
+        if (isinstance(self.last_modified_time, int) or
+                isinstance(self.last_modified_time, float)):
+            data[DbCommonAppPerAgentKeys.LastModifiedTime] = (
+                 DbTime.epoch_time_to_db_time(self.last_modified_time)
+            )
 
-        return dict(self.to_dict_apps_per_agent().items() + data.items())
+        return dict(
+            self.to_dict_apps_per_agent_non_null().items() + data.items()
+        )
 
 
 class Files(Base):

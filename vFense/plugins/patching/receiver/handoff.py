@@ -23,7 +23,7 @@ class PatcherHandOff(HandOff):
         self.refresh_apps_operation()
 
     def refresh_apps_operation(self):
-        self._add_applications_from_agent()
+        self.add_applications_from_agent()
         #self.add_supported_apps()
 
     def available_agent_update_operation(self):

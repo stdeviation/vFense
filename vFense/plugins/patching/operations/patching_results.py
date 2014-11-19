@@ -19,8 +19,9 @@ from vFense.core.operations.status_codes import AgentOperationCodes
 from vFense.core.receiver.status_codes import (
     AgentFailureResultCodes, AgentResultCodes
 )
+from vFense.plugins.patching import Apps
 from vFense.plugins.patching._db_model import AppCollections
-from vFense.plugins.patching._constants import SharedAppKeys, CommonAppKeys
+from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching._db import fetch_app_data
 
 from vFense.plugins.patching.patching import (
@@ -34,7 +35,7 @@ from vFense.plugins.patching.apps.manager import (
     incoming_applications_from_agent
 )
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('vfense_api')
+logger = logging.getLogger('vfense_listener')
 
 class PatchingOperationResults(OperationResults):
     """This will update the results of an install, uninstall,
@@ -161,6 +162,7 @@ class PatchingOperationResults(OperationResults):
             operation
         """
         results = ApiResults()
+        app = Apps()
 
         if self.reboot_required:
             manager = AgentManager(self.agent_id)
@@ -170,34 +172,28 @@ class PatchingOperationResults(OperationResults):
             if (self.success == CommonKeys.TRUE and
                     re.search(r'^install', self.operation_type)):
 
-                status = CommonAppKeys.INSTALLED
-                install_date = self.date_now
+                app.status = CommonAppKeys.INSTALLED
+                app.install_date = self.date_now
 
             elif (self.success == CommonKeys.TRUE and
                     re.search(r'^uninstall', self.operation_type)):
 
-                status = CommonAppKeys.AVAILABLE
-                install_date = self.begining_of_time
+                app.status = CommonAppKeys.AVAILABLE
+                app.install_date = self.begining_of_time
 
             elif (self.success == CommonKeys.FALSE and
                     re.search(r'^install', self.operation_type)):
 
-                status = CommonAppKeys.AVAILABLE
-                install_date = self.begining_of_time
+                app.status = CommonAppKeys.AVAILABLE
+                app.install_date = self.begining_of_time
 
             elif (self.success == CommonKeys.FALSE and
                     re.search(r'^uninstall', self.operation_type)):
 
-                status = CommonAppKeys.INSTALLED
-                install_date = self.begining_of_time
+                app.status = CommonAppKeys.INSTALLED
+                app.install_date = self.begining_of_time
 
 
-            data_to_update = (
-                {
-                    SharedAppKeys.Status: status,
-                    SharedAppKeys.InstallDate: install_date
-                }
-            )
             app_exist = fetch_app_data(self.app_id, collection)
 
             if app_exist:
@@ -207,7 +203,7 @@ class PatchingOperationResults(OperationResults):
                     update_app_data_by_agentid_and_appid(
                         self.agent_id,
                         self.app_id,
-                        data_to_update,
+                        app.to_dict_db_apps_per_agent(),
                         AppCollections.AppsPerAgent
                     )
 
@@ -216,7 +212,7 @@ class PatchingOperationResults(OperationResults):
                     update_app_data_by_agentid_and_appid(
                         self.agent_id,
                         self.app_id,
-                        data_to_update,
+                        app.to_dict_db_apps_per_agent(),
                         AppCollections.CustomAppsPerAgent
                     )
 
@@ -225,7 +221,7 @@ class PatchingOperationResults(OperationResults):
                     update_app_data_by_agentid_and_appid(
                         self.agent_id,
                         self.app_id,
-                        data_to_update,
+                        app.to_dict_db_apps_per_agent(),
                         AppCollections.SupportedAppsPerAgent
                     )
 
@@ -234,7 +230,7 @@ class PatchingOperationResults(OperationResults):
                     update_app_data_by_agentid_and_appid(
                         self.agent_id,
                         self.app_id,
-                        data_to_update,
+                        app.to_dict_db_apps_per_agent(),
                         AppCollections.vFenseAppsPerAgent
                     )
 
@@ -266,14 +262,11 @@ class PatchingOperationResults(OperationResults):
                 )
                 if operation_updated:
                     msg = 'Results updated'
-                    results.generic_status_code = (
-                        GenericCodes.ObjectUpdated
-                    )
+                    results.generic_status_code = GenericCodes.ObjectUpdated
 
                     results.vfense_status_code = (
                         AgentResultCodes.ResultsUpdated
                     )
-
                     results.message = msg
 
                 else:
@@ -290,9 +283,7 @@ class PatchingOperationResults(OperationResults):
 
             else:
                 msg = 'Invalid operation id'
-                results.generic_status_code = (
-                    GenericFailureCodes.InvalidId
-                )
+                results.generic_status_code = GenericFailureCodes.InvalidId
 
                 results.vfense_status_code = (
                     AgentFailureResultCodes.InvalidOperationId

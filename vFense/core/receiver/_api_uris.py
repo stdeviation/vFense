@@ -31,7 +31,7 @@ def api_handlers():
         (r"/rvl/v1/({0})/core/checkin/?".format(agent_id()), CheckInV1),
         (r"/rvl/v1/({0})/core/results/reboot/?".format(agent_id()), RebootResultsV1),
         (r"/rvl/v1/({0})/core/results/shutdown/?".format(agent_id()), ShutdownResultsV1),
-        (r"/rvl/v2/({0})/monitoring/monitordata/?".format(agent_id()), UpdateMonitoringStatsV1),
+        (r"/rvl/v1/({0})/stats/monitordata/?".format(agent_id()), UpdateMonitoringStatsV1),
         #v2 APIS
         #Operations for the New Core Plugin
         (r"/rvl/v2/core/newagent/?", NewAgentV2),

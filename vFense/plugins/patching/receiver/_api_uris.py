@@ -12,7 +12,7 @@ from vFense.plugins.patching.receiver.api.results import (
     UninstallAppsResults
 )
 from vFense.plugins.patching.receiver.api.agent_update import (
-    AgentUpdateHandler, AgentUpdateHandlerV2
+    AgentUpdateHandlerV1, AgentUpdateHandlerV2
 )
 
 def api_handlers():
@@ -21,7 +21,7 @@ def api_handlers():
         (r"/rvl/v1/({0})/rv/updatesapplications/?".format(agent_id()),
             RefreshAppsV1),
         (r"/rvl/v1/({0})/rv/available_agent_update/?".format(agent_id()),
-            AgentUpdateHandler),
+            AgentUpdateHandlerV1),
         (r"/rvl/v1/({0})/rv/results/install/apps/os?".format(agent_id()),
             InstallOsAppsResults),
         (r"/rvl/v1/({0})/rv/results/install/apps/custom?".format(agent_id()),

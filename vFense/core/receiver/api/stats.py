@@ -5,6 +5,7 @@ from vFense.core.api.base import BaseHandler
 from vFense.core.decorators import (
     convert_json_to_arguments, results_message, api_catch_it
 )
+from vFense.core.receiver.api.base import AgentBaseHandler
 from vFense.core.receiver.decorators import (
     agent_results_message, agent_authenticated_request, receiver_catch_it,
     authenticate_agent
@@ -17,7 +18,7 @@ from vFense.core.stats import (
 )
 
 class UpdateMonitoringStatsV1(BaseHandler):
-    @authenticate_agent
+    @agent_authenticated_request
     @convert_json_to_arguments
     def post(self, agent_id):
         data = self.arguments.get(ApiArguments.DATA)
@@ -60,8 +61,8 @@ class UpdateMonitoringStatsV1(BaseHandler):
         return results
 
 
-class UpdateMonitoringStatsV2(BaseHandler):
-    @agent_authenticated_request
+class UpdateMonitoringStatsV2(AgentBaseHandler):
+    @authenticate_agent
     @convert_json_to_arguments
     def post(self, agent_id):
         data = self.arguments.get(ApiArguments.DATA)

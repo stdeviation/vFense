@@ -279,7 +279,7 @@ def agent_results_message(fn):
                 results.http_status_code = 500
                 if not results.message:
                     results.message = (
-                        'iSomething broke for agent {0} with token {1}'
+                        'Something broke for agent {0} with token {1}'
                         .format(results.agent_id, results.token)
                     )
         else:
