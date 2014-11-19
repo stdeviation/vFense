@@ -1,0 +1,232 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1863&#45;01] Important: Subscription Asset Manager 1.4	security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 17 Nov 2014 12:25:52 &#45;0500 -->
+<!--X-Message-Id: 201411171725.sAHHPpkl004203@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1863-01] Important: Subscription Asset Manager 1.4	security u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1863-01] Important: Subscription Asset Manager 1.4	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2014:1863-01] Important: Subscription Asset Manager 1.4	security update</li>
+<li><em>Date</em>: Mon, 17 Nov 2014 17:25:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Subscription Asset Manager 1.4 security update
+Advisory ID:       RHSA-2014:1863-01
+Product:           Red Hat Subscription Asset Manager
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1863.html">https://rhn.redhat.com/errata/RHSA-2014-1863.html</a>
+Issue date:        2014-11-17
+CVE Names:         CVE-2013-1854 CVE-2013-1855 CVE-2013-1857 
+                   CVE-2013-4491 CVE-2013-6414 CVE-2013-6415 
+                   CVE-2014-0130 
+=====================================================================
+
+1. Summary:
+
+Updated Subscription Asset Manager 1.4 packages that fix multiple security
+issues are now available.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Subscription Asset Manager for RHEL 6 Server - noarch
+
+3. Description:
+
+Red Hat Subscription Asset Manager acts as a proxy for handling
+subscription information and software updates on client machines. Red Hat
+Subscription Asset Manager is built on Ruby on Rails, a
+model-view-controller (MVC) framework for web application development.
+Action Pack implements the controller and the view components.
+
+A directory traversal flaw was found in the way Ruby on Rails handled
+wildcard segments in routes with implicit rendering. A remote attacker
+could use this flaw to retrieve arbitrary local files accessible to a Ruby
+on Rails application using the aforementioned routes via a specially
+crafted request. (CVE-2014-0130)
+
+A flaw was found in the way Ruby on Rails handled hashes in certain
+queries. A remote attacker could use this flaw to perform a denial of
+service (resource consumption) attack by sending specially crafted queries
+that would result in the creation of Ruby symbols, which were never garbage
+collected. (CVE-2013-1854)
+
+Two cross-site scripting (XSS) flaws were found in Action Pack. A remote
+attacker could use these flaws to conduct XSS attacks against users of an
+application using Action Pack. (CVE-2013-1855, CVE-2013-1857)
+
+It was discovered that the internationalization component of Ruby on Rails
+could, under certain circumstances, return a fallback HTML string that
+contained user input. A remote attacker could possibly use this flaw to
+perform a reflective cross-site scripting (XSS) attack by providing a
+specially crafted input to an application using the aforementioned
+component. (CVE-2013-4491)
+
+A denial of service flaw was found in the header handling component of
+Action View. A remote attacker could send strings in specially crafted
+headers that would be cached indefinitely, which would result in all
+available system memory eventually being consumed. (CVE-2013-6414)
+
+It was found that the number_to_currency Action View helper did not
+properly escape the unit parameter. An attacker could use this flaw to
+perform a cross-site scripting (XSS) attack on an application that uses
+data submitted by a user in the unit parameter. (CVE-2013-6415)
+
+Red Hat would like to thank Ruby on Rails upstream for reporting these
+issues. Upstream acknowledges Ben Murphy as the original reporter of
+CVE-2013-1854, Charlie Somerville as the original reporter of
+CVE-2013-1855, Alan Jenkins as the original reporter of CVE-2013-1857,
+Peter McLarnan as the original reporter of CVE-2013-4491, Toby Hsieh as the
+original reporter of CVE-2013-6414, and Ankit Gupta as the original
+reporter of CVE-2013-6415.
+
+All Subscription Asset Manager users are advised to upgrade to these
+updated packages, which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+921329 - CVE-2013-1854 rubygem-activerecord: attribute_dos Symbol DoS vulnerability
+921331 - CVE-2013-1855 rubygem-actionpack: css_sanitization: XSS vulnerability in sanitize_css
+921335 - CVE-2013-1857 rubygem-actionpack: sanitize_protocol: XSS Vulnerability in the  helper of Ruby on Rails
+1036483 - CVE-2013-6414 rubygem-actionpack: Action View DoS
+1036910 - CVE-2013-6415 rubygem-actionpack: number_to_currency XSS
+1036922 - CVE-2013-4491 rubygem-actionpack: i18n missing translation XSS
+1095105 - CVE-2014-0130 rubygem-actionpack: directory traversal issue
+
+6. Package List:
+
+Red Hat Subscription Asset Manager for RHEL 6 Server:
+
+Source:
+katello-1.4.3.28-1.el6sam_splice.src.rpm
+ruby193-rubygem-actionmailer-3.2.17-1.el6sam.src.rpm
+ruby193-rubygem-actionpack-3.2.17-6.el6sam.src.rpm
+ruby193-rubygem-activemodel-3.2.17-1.el6sam.src.rpm
+ruby193-rubygem-activerecord-3.2.17-5.el6sam.src.rpm
+ruby193-rubygem-activeresource-3.2.17-1.el6sam.src.rpm
+ruby193-rubygem-activesupport-3.2.17-2.el6sam.src.rpm
+ruby193-rubygem-i18n-0.6.9-1.el6sam.src.rpm
+ruby193-rubygem-mail-2.5.4-1.el6sam.src.rpm
+ruby193-rubygem-rack-1.4.5-3.el6sam.src.rpm
+ruby193-rubygem-rails-3.2.17-1.el6sam.src.rpm
+ruby193-rubygem-railties-3.2.17-1.el6sam.src.rpm
+
+noarch:
+katello-common-1.4.3.28-1.el6sam_splice.noarch.rpm
+katello-glue-candlepin-1.4.3.28-1.el6sam_splice.noarch.rpm
+katello-glue-elasticsearch-1.4.3.28-1.el6sam_splice.noarch.rpm
+katello-headpin-1.4.3.28-1.el6sam_splice.noarch.rpm
+katello-headpin-all-1.4.3.28-1.el6sam_splice.noarch.rpm
+ruby193-rubygem-actionmailer-3.2.17-1.el6sam.noarch.rpm
+ruby193-rubygem-actionpack-3.2.17-6.el6sam.noarch.rpm
+ruby193-rubygem-activemodel-3.2.17-1.el6sam.noarch.rpm
+ruby193-rubygem-activerecord-3.2.17-5.el6sam.noarch.rpm
+ruby193-rubygem-activeresource-3.2.17-1.el6sam.noarch.rpm
+ruby193-rubygem-activesupport-3.2.17-2.el6sam.noarch.rpm
+ruby193-rubygem-i18n-0.6.9-1.el6sam.noarch.rpm
+ruby193-rubygem-mail-2.5.4-1.el6sam.noarch.rpm
+ruby193-rubygem-rack-1.4.5-3.el6sam.noarch.rpm
+ruby193-rubygem-rails-3.2.17-1.el6sam.noarch.rpm
+ruby193-rubygem-railties-3.2.17-1.el6sam.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-1854">https://access.redhat.com/security/cve/CVE-2013-1854</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-1855">https://access.redhat.com/security/cve/CVE-2013-1855</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-1857">https://access.redhat.com/security/cve/CVE-2013-1857</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-4491">https://access.redhat.com/security/cve/CVE-2013-4491</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-6414">https://access.redhat.com/security/cve/CVE-2013-6414</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-6415">https://access.redhat.com/security/cve/CVE-2013-6415</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0130">https://access.redhat.com/security/cve/CVE-2014-0130</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUai7iXlSAg2UNWIIRAmtEAJ9m+ZUXuva81fLz9G1CLKYi5aJoHACfcd3y
+SoVal0zNgx0pwtSAkS1q5/0=
+=i5aK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00032.html">Date Prev</a>][<a href="msg00034.html">Date Next</a>] &nbsp; [<a href="msg00032.html">Thread Prev</a>][<a href="msg00034.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00033">Thread Index</A>]
+[<A HREF="date.html#00033">Date Index</A>]
+[<A HREF="author.html#00033">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

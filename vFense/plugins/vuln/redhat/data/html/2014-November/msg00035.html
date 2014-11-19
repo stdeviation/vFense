@@ -1,0 +1,390 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1870&#45;01] Important: libXfont security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 18 Nov 2014 12:59:37 &#45;0500 -->
+<!--X-Message-Id: 201411181759.sAIHxXAD024701@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1870-01] Important: libXfont security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1870-01] Important: libXfont security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1870-01] Important: libXfont security update</li>
+<li><em>Date</em>: Tue, 18 Nov 2014 18:08:40 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: libXfont security update
+Advisory ID:       RHSA-2014:1870-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1870.html">https://rhn.redhat.com/errata/RHSA-2014-1870.html</a>
+Issue date:        2014-11-18
+CVE Names:         CVE-2014-0209 CVE-2014-0210 CVE-2014-0211 
+=====================================================================
+
+1. Summary:
+
+Updated libXfont packages that fix three security issues are now available
+for Red Hat Enterprise Linux 6 and 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The libXfont packages provide the X.Org libXfont runtime library. X.Org is
+an open source implementation of the X Window System.
+
+A use-after-free flaw was found in the way libXfont processed certain font
+files when attempting to add a new directory to the font path. A malicious,
+local user could exploit this issue to potentially execute arbitrary code
+with the privileges of the X.Org server. (CVE-2014-0209)
+
+Multiple out-of-bounds write flaws were found in the way libXfont parsed
+replies received from an X.org font server. A malicious X.org server could
+cause an X client to crash or, possibly, execute arbitrary code with the
+privileges of the X.Org server. (CVE-2014-0210, CVE-2014-0211)
+
+Red Hat would like to thank the X.org project for reporting these issues.
+Upstream acknowledges Ilja van Sprundel as the original reporter.
+
+Users of libXfont should upgrade to these updated packages, which contain a
+backported patch to resolve this issue. All running X.Org server instances
+must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1096593 - CVE-2014-0209 libXfont: integer overflow of allocations in font metadata file parsing
+1096597 - CVE-2014-0210 libXfont: unvalidated length fields when parsing xfs protocol replies
+1096601 - CVE-2014-0211 libXfont: integer overflows calculating memory needs for xfs replies
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+libXfont-1.4.5-4.el6_6.src.rpm
+
+i386:
+libXfont-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.i686.rpm
+
+x86_64:
+libXfont-1.4.5-4.el6_6.x86_64.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+libXfont-debuginfo-1.4.5-4.el6_6.i686.rpm
+libXfont-devel-1.4.5-4.el6_6.i686.rpm
+
+x86_64:
+libXfont-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.x86_64.rpm
+libXfont-devel-1.4.5-4.el6_6.i686.rpm
+libXfont-devel-1.4.5-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+libXfont-1.4.5-4.el6_6.src.rpm
+
+x86_64:
+libXfont-1.4.5-4.el6_6.x86_64.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+x86_64:
+libXfont-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.x86_64.rpm
+libXfont-devel-1.4.5-4.el6_6.i686.rpm
+libXfont-devel-1.4.5-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+libXfont-1.4.5-4.el6_6.src.rpm
+
+i386:
+libXfont-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.i686.rpm
+
+ppc64:
+libXfont-1.4.5-4.el6_6.ppc64.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.ppc64.rpm
+
+s390x:
+libXfont-1.4.5-4.el6_6.s390x.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.s390x.rpm
+
+x86_64:
+libXfont-1.4.5-4.el6_6.x86_64.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+libXfont-debuginfo-1.4.5-4.el6_6.i686.rpm
+libXfont-devel-1.4.5-4.el6_6.i686.rpm
+
+ppc64:
+libXfont-1.4.5-4.el6_6.ppc.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.ppc.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.ppc64.rpm
+libXfont-devel-1.4.5-4.el6_6.ppc.rpm
+libXfont-devel-1.4.5-4.el6_6.ppc64.rpm
+
+s390x:
+libXfont-1.4.5-4.el6_6.s390.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.s390.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.s390x.rpm
+libXfont-devel-1.4.5-4.el6_6.s390.rpm
+libXfont-devel-1.4.5-4.el6_6.s390x.rpm
+
+x86_64:
+libXfont-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.x86_64.rpm
+libXfont-devel-1.4.5-4.el6_6.i686.rpm
+libXfont-devel-1.4.5-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+libXfont-1.4.5-4.el6_6.src.rpm
+
+i386:
+libXfont-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.i686.rpm
+
+x86_64:
+libXfont-1.4.5-4.el6_6.x86_64.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+libXfont-debuginfo-1.4.5-4.el6_6.i686.rpm
+libXfont-devel-1.4.5-4.el6_6.i686.rpm
+
+x86_64:
+libXfont-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.i686.rpm
+libXfont-debuginfo-1.4.5-4.el6_6.x86_64.rpm
+libXfont-devel-1.4.5-4.el6_6.i686.rpm
+libXfont-devel-1.4.5-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+libXfont-1.4.7-2.el7_0.src.rpm
+
+x86_64:
+libXfont-1.4.7-2.el7_0.i686.rpm
+libXfont-1.4.7-2.el7_0.x86_64.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.i686.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+libXfont-debuginfo-1.4.7-2.el7_0.i686.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.x86_64.rpm
+libXfont-devel-1.4.7-2.el7_0.i686.rpm
+libXfont-devel-1.4.7-2.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+libXfont-1.4.7-2.el7_0.src.rpm
+
+x86_64:
+libXfont-1.4.7-2.el7_0.i686.rpm
+libXfont-1.4.7-2.el7_0.x86_64.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.i686.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+libXfont-debuginfo-1.4.7-2.el7_0.i686.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.x86_64.rpm
+libXfont-devel-1.4.7-2.el7_0.i686.rpm
+libXfont-devel-1.4.7-2.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+libXfont-1.4.7-2.el7_0.src.rpm
+
+ppc64:
+libXfont-1.4.7-2.el7_0.ppc.rpm
+libXfont-1.4.7-2.el7_0.ppc64.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.ppc.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.ppc64.rpm
+
+s390x:
+libXfont-1.4.7-2.el7_0.s390.rpm
+libXfont-1.4.7-2.el7_0.s390x.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.s390.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.s390x.rpm
+
+x86_64:
+libXfont-1.4.7-2.el7_0.i686.rpm
+libXfont-1.4.7-2.el7_0.x86_64.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.i686.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+libXfont-debuginfo-1.4.7-2.el7_0.ppc.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.ppc64.rpm
+libXfont-devel-1.4.7-2.el7_0.ppc.rpm
+libXfont-devel-1.4.7-2.el7_0.ppc64.rpm
+
+s390x:
+libXfont-debuginfo-1.4.7-2.el7_0.s390.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.s390x.rpm
+libXfont-devel-1.4.7-2.el7_0.s390.rpm
+libXfont-devel-1.4.7-2.el7_0.s390x.rpm
+
+x86_64:
+libXfont-debuginfo-1.4.7-2.el7_0.i686.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.x86_64.rpm
+libXfont-devel-1.4.7-2.el7_0.i686.rpm
+libXfont-devel-1.4.7-2.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+libXfont-1.4.7-2.el7_0.src.rpm
+
+x86_64:
+libXfont-1.4.7-2.el7_0.i686.rpm
+libXfont-1.4.7-2.el7_0.x86_64.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.i686.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+libXfont-debuginfo-1.4.7-2.el7_0.i686.rpm
+libXfont-debuginfo-1.4.7-2.el7_0.x86_64.rpm
+libXfont-devel-1.4.7-2.el7_0.i686.rpm
+libXfont-devel-1.4.7-2.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0209">https://access.redhat.com/security/cve/CVE-2014-0209</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0210">https://access.redhat.com/security/cve/CVE-2014-0210</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0211">https://access.redhat.com/security/cve/CVE-2014-0211</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUa4jtXlSAg2UNWIIRAtg6AJwMZLxMK7F3akvVIF9WSaDWfrBJlQCfbgAv
+quW50QjamJNExQQeN6caCPo=
+=YrUN
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
