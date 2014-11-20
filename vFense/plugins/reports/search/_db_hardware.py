@@ -5,6 +5,10 @@ from vFense.core.agent._db_model import (
 )
 from vFense.core.decorators import time_it, catch_it
 from vFense.search._db_base import FetchBase
+from vFense.core.stats._db_model import (
+    StatsCollections, MemoryStatKeys, CpuStatKeys, AgentStatKeys,
+    FileSystemStatKeys, StatsPerAgentIndexes
+)
 
 
 class FetchHardware(FetchBase):
@@ -41,13 +45,15 @@ class FetchHardware(FetchBase):
         return(count, data)
 
     def memory(self):
-        return self._by_type('memory')
+        merge = self._set_memory_merge_query()
+        return self._by_type('memory', data_merge=merge)
 
     def nic(self):
         return self._by_type('nic')
 
     def cpu(self):
-        return self._by_type('cpu')
+        merge = self._set_cpu_merge_query()
+        return self._by_type('cpu', data_merge=merge)
 
     def display(self):
         return self._by_type('display')
@@ -148,13 +154,15 @@ class FetchHardware(FetchBase):
     @time_it
     @catch_it((0, []))
     @db_create_close
-    def _by_type(self, htype=None, conn=None):
+    def _by_type(self, htype=None, data_merge=None, conn=None):
         base_count, base_filter = self._set_base_query_by_type(htype)
         count = (
             base_count
             .count()
             .run(conn)
         )
+        if data_merge:
+            base_filter = base_filter.merge(data_merge)
 
         data = (
             base_filter
@@ -347,3 +355,61 @@ class FetchHardware(FetchBase):
         else:
             keys = []
         return keys
+
+    def _set_memory_merge_query(self):
+        merge_query = (
+            lambda x:
+            {
+                'stats': (
+                    r
+                    .table(StatsCollections.AgentStats)
+                    .get_all(
+                        [x[MemoryStatKeys.AgentId], 'memory'],
+                        index=StatsPerAgentIndexes.AgentIdAndStatType
+                    )
+                    .pluck(
+                        MemoryStatKeys.Free, MemoryStatKeys.Used,
+                        MemoryStatKeys.Total, MemoryStatKeys.UsedPercent,
+                        MemoryStatKeys.FreePercent, MemoryStatKeys.LastUpdated
+                    )
+                    .merge(
+                        lambda y: {
+                            MemoryStatKeys.LastUpdated: (
+                                y[MemoryStatKeys.LastUpdated].to_epoch_time()
+                            )
+                        }
+                    )
+                    .coerce_to('array')
+                )
+            }
+        )
+        return merge_query
+
+    def _set_cpu_merge_query(self):
+        merge_query = (
+            lambda x:
+            {
+                'stats': (
+                    r
+                    .table(StatsCollections.AgentStats)
+                    .get_all(
+                        [x[MemoryStatKeys.AgentId], 'cpu'],
+                        index=StatsPerAgentIndexes.AgentIdAndStatType
+                    )
+                    .pluck(
+                        CpuStatKeys.Idle, CpuStatKeys.System,
+                        CpuStatKeys.User, CpuStatKeys.Total,
+                        CpuStatKeys.IOWait, CpuStatKeys.LastUpdated
+                    )
+                    .merge(
+                        lambda y: {
+                            CpuStatKeys.LastUpdated: (
+                                y[CpuStatKeys.LastUpdated].to_epoch_time()
+                            )
+                        }
+                    )
+                    .coerce_to('array')
+                )
+            }
+        )
+        return merge_query

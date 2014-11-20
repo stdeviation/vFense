@@ -14,6 +14,7 @@ class CpuStatKeys(AgentStatKeys):
     System = 'system'
     User = 'user'
     IOWait = 'iowait'
+    Total = 'total'
 
 
 class MemoryStatKeys(AgentStatKeys):
@@ -21,6 +22,7 @@ class MemoryStatKeys(AgentStatKeys):
     FreePercent = 'free_percent'
     Used = 'used'
     Free = 'free'
+    Total = 'total'
 
 
 class FileSystemStatKeys(MemoryStatKeys):

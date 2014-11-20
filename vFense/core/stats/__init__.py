@@ -107,7 +107,8 @@ class Stats(Base):
 
 
 class CPUStats(Stats):
-    def __init__(self, idle=None, user=None, system=None, iowait=None, **kwargs):
+    def __init__(self, idle=None, user=None, system=None,
+                 iowait=None, total=None, **kwargs):
         super(CPUStats, self).__init__(**kwargs)
         """
         Kwargs:
@@ -115,6 +116,7 @@ class CPUStats(Stats):
             user (float): Percent of cpu being used by the user.
             system (float): Percent of cpu being used by the system.
             iowait (float): Percent of cpu waiting.
+            total (float): Size in kilobytes.
             agent_id (str): The id of the agent.
             stat_type (str): The type of the stat.
         """
@@ -122,6 +124,7 @@ class CPUStats(Stats):
         self.user = user
         self.system = system
         self.iowait = iowait
+        self.total = total
         self.stat_type = StatsType.CPU
 
     def fill_in_defaults(self):
@@ -149,6 +152,12 @@ class CPUStats(Stats):
         else:
             if not isinstance(self.iowait, float):
                 self.iowait = float(self.iowait)
+
+        if not self.total:
+            self.total = 0.0
+        else:
+            if not isinstance(self.total, float):
+                self.total = float(self.total)
 
     def get_invalid_fields(self):
         """Check the agent for any invalid fields.
@@ -204,6 +213,18 @@ class CPUStats(Stats):
                     }
                 )
 
+        if self.total:
+            if not isinstance(self.total, float):
+                invalid_fields.append(
+                    {
+                        CpuStatKeys.Total: self.total,
+                        CommonKeys.REASON: 'Must be a float',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
         return invalid_fields
 
     def to_dict(self):
@@ -213,12 +234,13 @@ class CPUStats(Stats):
             CpuStatKeys.System: self.system,
             CpuStatKeys.User: self.user,
             CpuStatKeys.IOWait: self.iowait,
+            CpuStatKeys.Total: self.total,
         }
         return dict(data.items() + inherited_data.items())
 
 class MemoryStats(Stats):
     def __init__(self, used_percent=None, free_percent=None,
-                 used=None, free=None, **kwargs):
+                 used=None, free=None, total=None, **kwargs):
         super(MemoryStats, self).__init__(**kwargs)
         """
         Kwargs:
@@ -226,6 +248,7 @@ class MemoryStats(Stats):
             free_percent (float): Percent of free memory.
             used (float): Kilobytes used.
             free (float): kilobytes free.
+            total (float): Size in kilobytes.
             agent_id (str): The id of the agent.
             stat_type (str): The type of the stat.
         """
@@ -233,6 +256,7 @@ class MemoryStats(Stats):
         self.free_percent = free_percent
         self.used = used
         self.free = free
+        self.total = total
         self.stat_type = StatsType.MEM
 
     def fill_in_defaults(self):
@@ -260,6 +284,12 @@ class MemoryStats(Stats):
         else:
             if not isinstance(self.free, float):
                 self.free = float(self.free)
+
+        if not self.total:
+            self.total = 0.0
+        else:
+            if not isinstance(self.total, float):
+                self.total = float(self.total)
 
     def get_invalid_fields(self):
         """Check the agent for any invalid fields.
@@ -315,6 +345,18 @@ class MemoryStats(Stats):
                     }
                 )
 
+        if self.total:
+            if not isinstance(self.total, float):
+                invalid_fields.append(
+                    {
+                        MemoryStatKeys.Total: self.total,
+                        CommonKeys.REASON: 'Must be a float',
+                        ApiResultKeys.VFENSE_STATUS_CODE: (
+                            GenericCodes.InvalidValue
+                        )
+                    }
+                )
+
         return invalid_fields
 
     def to_dict(self):
@@ -324,6 +366,7 @@ class MemoryStats(Stats):
             MemoryStatKeys.FreePercent: self.free_percent,
             MemoryStatKeys.Used: self.used,
             MemoryStatKeys.Free: self.free,
+            MemoryStatKeys.Total: self.total,
         }
         return dict(data.items() + inherited_data.items())
 

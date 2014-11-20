@@ -42,7 +42,6 @@ class HardwareReportsHandler(BaseHandler):
         os_code = self.get_argument(AgentApiArguments.OS_CODE, None)
         os_string = self.get_argument(AgentApiArguments.OS_STRING, None)
         bit_type = self.get_argument(AgentApiArguments.BIT_TYPE, None)
-        hwtype = self.get_argument(HardwarePerAgentKeys.Type, 'nic')
         fkey = self.get_argument(ApiArguments.FILTER_KEY, None)
         search = (
             RetrieveHardware(
@@ -50,17 +49,20 @@ class HardwareReportsHandler(BaseHandler):
                 sort=sort, sort_key=sort_by
             )
         )
-
+        print os_code, os_string, bit_type, query
         if not os_code and not os_string and not bit_type and not query:
-            results = self.by_hw_type(search, hwtype)
+            print 'IN HERE'
+            print search, report_type
+            results = self.by_hw_type(search, report_type)
+            print results
 
         elif os_code and not os_string and not bit_type and not query:
-            results = self.by_cpu_and_os_code(search, hwtype, os_code)
+            results = self.by_cpu_and_os_code(search, report_type, os_code)
 
         elif os_code and query and not os_string and not bit_type:
             results = (
                 self.by_cpu_and_os_code_and_query(
-                    search, hwtype, os_code, fkey, query
+                    search, report_type, os_code, fkey, query
                 )
             )
 
@@ -69,62 +71,67 @@ class HardwareReportsHandler(BaseHandler):
         self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
-    def by_hw_type(self, search, hwtype):
-        if hwtype == 'cpu':
+    def by_hw_type(self, search, report_type):
+        print 'in main func'
+        print search, report_type
+        if report_type == 'cpu':
             results = search.cpu()
 
-        elif hwtype == 'memory':
+        elif report_type == 'memory':
             results = search.memory()
 
-        elif hwtype == 'network':
+        elif report_type == 'network':
             results = search.nic()
 
-        elif hwtype == 'disk':
+        elif report_type == 'disk':
             results = search.storage()
 
-        elif hwtype == 'hardware':
+        elif report_type == 'hardware':
+            results = search.display()
+
+        elif report_type == 'os':
             results = search.display()
 
         return results
 
     @results_message
-    def by_os_code(self, search, hwtype, os_code):
-        if hwtype == 'cpu':
+    def by_os_code(self, search, report_type, os_code):
+        if report_type == 'cpu':
             results = search.cpu_by_regex('os_code', os_code)
 
-        elif hwtype == 'memory':
+        elif report_type == 'memory':
             results = search.memory_by_regex('os_code', os_code)
 
-        elif hwtype == 'nic':
+        elif report_type == 'nic':
             results = search.nic_by_regex('os_code', os_code)
 
-        elif hwtype == 'storage':
+        elif report_type == 'storage':
             results = search.storage_by_regex('os_code', os_code)
 
-        elif hwtype == 'display':
+        elif report_type == 'display':
             results = search.display_by_regex('os_code', os_code)
 
         return results
 
     @results_message
-    def by_os_code_and_query(self, search, hwtype, os_code, fkey, query):
-        if hwtype == 'cpu':
+    def by_os_code_and_query(self, search, report_type, os_code, fkey, query):
+        if report_type == 'cpu':
             results = (
                 search.cpu_by_os_code_and_by_regex(os_code, fkey, query)
             )
-        if hwtype == 'memory':
+        if report_type == 'memory':
             results = (
                 search.memory_by_os_code_and_by_regex(os_code, fkey, query)
             )
-        elif hwtype == 'nic':
+        elif report_type == 'nic':
             results = (
                 search.nic_by_os_code_and_by_regex(os_code, fkey, query)
             )
-        elif hwtype == 'storage':
+        elif report_type == 'storage':
             results = (
                 search.storage_by_os_code_and_by_regex(os_code, fkey, query)
             )
-        elif hwtype == 'display':
+        elif report_type == 'display':
             results = (
                 search.display_by_os_code_and_by_regex(os_code, fkey, query)
             )
