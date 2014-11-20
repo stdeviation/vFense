@@ -21,7 +21,7 @@ class UpdateMonitoringStatsV1(BaseHandler):
     @agent_authenticated_request
     @convert_json_to_arguments
     def post(self, agent_id):
-        data = self.arguments.get(ApiArguments.DATA)
+        data = self.arguments.get('data')
         if data.has_key('cpu'):
             stats = CPUStats(**(data.get('cpu')))
             results = self.update_cpu(stats, agent_id)
@@ -65,7 +65,7 @@ class UpdateMonitoringStatsV2(AgentBaseHandler):
     @authenticate_agent
     @convert_json_to_arguments
     def post(self, agent_id):
-        data = self.arguments.get(ApiArguments.DATA)
+        data = self.arguments.get('data')
         if data.has_key('cpu'):
             stats = CPUStats(**(data.get('cpu')))
             results = self.update_cpu(stats, agent_id)
@@ -75,7 +75,7 @@ class UpdateMonitoringStatsV2(AgentBaseHandler):
             results = self.update_memory(stats, agent_id)
 
         if data.has_key('file_system'):
-            stats = data.get('file_systems')
+            stats = data.get('file_system')
             results = self.update_filesystems(stats, agent_id)
 
         self.set_status(results.http_status_code)
@@ -102,6 +102,7 @@ class UpdateMonitoringStatsV2(AgentBaseHandler):
     @agent_results_message
     def update_filesystems(self, stats, agent_id):
         manager = FileSystemStatManager(agent_id=agent_id)
+        print stats
         stats = map(lambda x: FileSystemStats(**x), stats)
         results = manager.update(stats)
         print results

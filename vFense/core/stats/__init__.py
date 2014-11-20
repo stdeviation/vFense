@@ -352,7 +352,8 @@ class FileSystemStats(MemoryStats):
         invalid_fields = super(FileSystemStats, self).get_invalid_fields()
 
         if self.name:
-            if not isinstance(self.name, str):
+            if (not isinstance(self.name, str) or
+                    not isinstance(self.name, unicode)):
                 invalid_fields.append(
                     {
                         FileSystemStatKeys.Name: self.name,
@@ -364,11 +365,12 @@ class FileSystemStats(MemoryStats):
                 )
 
         if self.mount:
-            if not isinstance(self.mount, str):
+            if (not isinstance(self.mount, str) or
+                    not isinstance(self.mount, unicode)):
                 invalid_fields.append(
                     {
                         FileSystemStatKeys.Mount: self.mount,
-                        CommonKeys.REASON: 'Must be a float',
+                        CommonKeys.REASON: 'Must be a string',
                         ApiResultKeys.VFENSE_STATUS_CODE: (
                             GenericCodes.InvalidValue
                         )

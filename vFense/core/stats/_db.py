@@ -108,13 +108,15 @@ def insert_stat(stat):
 @catch_it({})
 @db_create_close
 @return_status_tuple
-def update_stat(agent_id, hw_type, stat, file_system, conn=None):
+def update_stat(agent_id, hw_type, stat, file_system=None, conn=None):
     """ Insert stats for an agent and its properties into the database
         This function should not be called directly.
     Args:
         agent_id (str): The 36 character UUID of the agent.
         hw_type (str): cpu, memory, nic, storage, or display
         stat (list|dict): Dictionary of the data you are inserting.
+
+    Kwargs:
         file_system (str): The name of the files system.
 
     Basic Usage:
