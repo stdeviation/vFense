@@ -1,7 +1,3 @@
-from vFense.core.agent._constants import AgentCommonKeys
-from vFense.core.agent._db_model import (
-    AgentKeys, AgentCollections, HardwarePerAgentKeys
-)
 from vFense.core.stats._db_model import (
     StatsCollections, CpuStatKeys, MemoryStatKeys, FileSystemStatKeys,
     StatsPerAgentIndexes, AgentStatKeys
@@ -81,5 +77,3 @@ class FetchStats(FetchBase):
         )
 
         return merge_query
-
-

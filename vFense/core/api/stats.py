@@ -45,9 +45,14 @@ class AgentStats(BaseHandler):
     @authenticated_request
     def get(self, agent_id, stat):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
-        results = self.get_uris(agent_id)
+        if stat == 'cpu':
+            results = self.get_cpu(agent_id)
+        elif stat == 'memory':
+            results = self.get_memory(agent_id)
+        else:
+            results = self.get_filesystems(agent_id)
         self.set_status(results.http_status_code)
-        self.modified_output(results, output, 'uris')
+        self.modified_output(results, output, 'stats')
 
     @results_message
     @check_permissions(Permissions.READ)

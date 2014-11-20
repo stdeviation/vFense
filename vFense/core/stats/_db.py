@@ -79,6 +79,29 @@ def fetch_stats_by_agent_id_and_device_path(agent_id, device_path, conn=None):
 
     return data
 
+@time_it
+@catch_it([])
+@db_create_close
+def valid_stat_types(conn=None):
+    """Retrieve a list of stat types
+    Basic Usage:
+        >>> from vFense.core.stats._db import valid_stat_types
+        >>> valid_stat_types()
+
+    Return:
+        list of stat types
+        [u'cpu', u'file_system', u'memory']
+    """
+    data = (
+        r
+        .table(StatsCollections.AgentStats)
+        .group(AgentStatKeys.StatType)
+        .ungroup()
+        .pluck('group')
+        .map(lambda x: x['group'])
+        .run(conn)
+    )
+    return data
 
 @time_it
 def insert_stat(stat):
