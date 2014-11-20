@@ -4,7 +4,7 @@ from vFense.core.api.stats import AgentStats
 def api_handlers():
     handlers = [
         ##### Stats API Handlers
-        (r"/api/v1/agent/({0})/stats/(cpu|memory|filesystem)?"
+        (r"/api/v1/agent/({0})/stats/(cpu|memory|file_system)?"
          .format(agent_id()), AgentStats)
     ]
     return handlers
