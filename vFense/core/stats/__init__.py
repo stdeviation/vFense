@@ -51,7 +51,8 @@ class Stats(Base):
         invalid_fields = []
 
         if self.agent_id:
-            if not isinstance(self.agent_id, str):
+            if (not isinstance(self.agent_id, str) and
+                    not isinstance(self.agent_id, unicode)):
                 invalid_fields.append(
                     {
                         AgentStatKeys.AgentId: self.agent_id,
@@ -352,7 +353,7 @@ class FileSystemStats(MemoryStats):
         invalid_fields = super(FileSystemStats, self).get_invalid_fields()
 
         if self.name:
-            if (not isinstance(self.name, str) or
+            if (not isinstance(self.name, str) and
                     not isinstance(self.name, unicode)):
                 invalid_fields.append(
                     {
@@ -365,7 +366,7 @@ class FileSystemStats(MemoryStats):
                 )
 
         if self.mount:
-            if (not isinstance(self.mount, str) or
+            if (not isinstance(self.mount, str) and
                     not isinstance(self.mount, unicode)):
                 invalid_fields.append(
                     {

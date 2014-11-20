@@ -35,6 +35,8 @@ class FetchAgents(FetchBase):
     @db_create_close
     def by_id(self, agent_id, conn=None):
         """Retrieve an agent by its id and all of its properties.
+        Args:
+            agent_id (str): 36 character UUID of the agent.
 
         Basic Usage:
             >>> from vFense.agent.search._db import FetchAgents
@@ -765,48 +767,7 @@ class FetchAgents(FetchBase):
         return base_filter
 
     def _set_hw_base_query_by_nic(self):
-        base_filter = (
-            r
-            .table(AgentCollections.Agents)
-            .eq_join(
-                lambda x: [
-                    x[AgentKeys.AgentId],
-                    HardwarePerAgentKeys.Nic
-                ],
-                r.table(AgentCollections.Hardware),
-                index=HardwarePerAgentIndexes.AgentIdAndType
-            )
-            .zip()
-        )
-        base_count = (
-            r
-            .table(AgentCollections.Agents)
-            .eq_join(
-                lambda x: [
-                    x[AgentKeys.AgentId],
-                    HardwarePerAgentKeys.Nic
-                ],
-                r.table(AgentCollections.Hardware),
-                index=HardwarePerAgentIndexes.AgentIdAndType
-            )
-            .zip()
-        )
         if self.view_name:
-            base_count = (
-                r
-                .table(AgentCollections.Agents)
-                .get_all(self.view_name, index=AgentIndexes.Views)
-                .eq_join(
-                    lambda x: [
-                        x[AgentKeys.AgentId],
-                        HardwarePerAgentKeys.Nic
-                    ],
-                    r.table(AgentCollections.Hardware),
-                    index=HardwarePerAgentIndexes.AgentIdAndType
-                )
-                .zip()
-            )
-
             base_filter = (
                 r
                 .table(AgentCollections.Agents)
@@ -821,5 +782,21 @@ class FetchAgents(FetchBase):
                 )
                 .zip()
             )
+            base_count = base_filter
+        else:
+            base_filter = (
+                r
+                .table(AgentCollections.Agents)
+                .eq_join(
+                    lambda x: [
+                        x[AgentKeys.AgentId],
+                        HardwarePerAgentKeys.Nic
+                    ],
+                    r.table(AgentCollections.Hardware),
+                    index=HardwarePerAgentIndexes.AgentIdAndType
+                )
+                .zip()
+            )
+            base_count = base_filter
 
         return(base_count, base_filter)

@@ -11,6 +11,7 @@ from vFense.core.agent.manager import AgentManager
 from vFense.core.agent._db_model import AgentKeys
 from vFense.core.results import AgentApiResults, ApiResults
 from vFense.core.status_codes import GenericCodes, GenericFailureCodes
+from vFense.core.stats.status_codes import StatCodes, StatFailureCodes
 from vFense.core.view._db import (
     token_exist_in_current, token_exist_in_previous
 )
@@ -249,7 +250,8 @@ def agent_results_message(fn):
                     )
 
             elif (results.vfense_status_code == AgentResultCodes.ResultsUpdated or
-                  results.vfense_status_code == AgentResultCodes.AgentUpdated):
+                  results.vfense_status_code == AgentResultCodes.AgentUpdated or
+                  results.vfense_status_code == StatCodes.StatCreated):
                 results.http_status_code = 200
                 if not results.message:
                     results.message = (
