@@ -16,7 +16,7 @@ class RetrieveStats(RetrieveBase):
         )
 
     @time_it
-    def by_type(self, stat_type):
+    def by_stat(self, stat_type):
         """Query stats by stat type
         Args:
             stat_type (str): The stat type. Example.. cpu, memory,
@@ -27,7 +27,7 @@ class RetrieveStats(RetrieveBase):
             >>> agent_id = '96f02bcf-2ada-465c-b175-0e5163b36e1c'
             >>> stat_type = 'cpu'
             >>> search = RetrieveStats(agent_id=agent_id)
-            >>> search.by_stat(stat)
+            >>> search.by_stat(stat_type)
     """
         if stat_type in valid_stat_types():
             count, data = self.fetch.by_stat(stat_type)
