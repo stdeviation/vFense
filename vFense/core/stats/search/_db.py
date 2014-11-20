@@ -10,14 +10,14 @@ from vFense.core.decorators import time_it, catch_it
 from vFense.db.client import db_create_close, r
 from vFense.search._db_base import FetchBase
 
-class  FetchStats(FetchBase):
+class FetchStats(FetchBase):
     def __init__(self, agent_id=None, **kwargs):
         """Search agents based on an ip address.
         Args:
             agent_id (str): 36 character UUID of the agent.
         """
         super(FetchStats, self).__init__(**kwargs)
-        self.agent_id = None
+        self.agent_id = agent_id
 
     @time_it
     @catch_it((0, []))

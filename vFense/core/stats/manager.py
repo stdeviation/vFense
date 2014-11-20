@@ -173,6 +173,19 @@ class CPUStatManager(StatManager):
         super(CPUStatManager, self).__init__(**kwargs)
         self.cpu = self.stats()
 
+    def update(self, stats):
+        stat = self.stats()
+        if stat:
+            stats.agent_id = self.agent_id
+            if stats.stat_type == 'cpu':
+                results = super(CPUStatManager, self).update(stats)
+            else:
+                results = super(CPUStatManager, self).create(stats)
+        else:
+            results = super(CPUStatManager, self).create(stats)
+
+        return results
+
     def stats(self):
         cpu = super(CPUStatManager, self).stats(StatsType.CPU)
         if cpu:
@@ -185,6 +198,19 @@ class MemoryStatManager(StatManager):
     def __init__(self, **kwargs):
         super(MemoryStatManager, self).__init__(**kwargs)
         self.memory = self.stats()
+
+    def update(self, stats):
+        stat = self.stats()
+        if stat:
+            stats.agent_id = self.agent_id
+            if stats.stat_type == 'memory':
+                results = super(MemoryStatManager, self).update(stats)
+            else:
+                results = super(MemoryStatManager, self).create(stats)
+        else:
+            results = super(MemoryStatManager, self).create(stats)
+
+        return results
 
     def stats(self):
         mem = super(MemoryStatManager, self).stats(StatsType.MEM)

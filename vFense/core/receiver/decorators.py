@@ -251,6 +251,7 @@ def agent_results_message(fn):
 
             elif (results.vfense_status_code == AgentResultCodes.ResultsUpdated or
                   results.vfense_status_code == AgentResultCodes.AgentUpdated or
+                  results.vfense_status_code == StatCodes.StatUpdated or
                   results.vfense_status_code == StatCodes.StatCreated):
                 results.http_status_code = 200
                 if not results.message:
