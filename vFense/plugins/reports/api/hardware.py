@@ -18,7 +18,7 @@ from vFense.plugins.reports.search.hardware import RetrieveHardware
 class HardwareReportsHandler(BaseHandler):
     @api_catch_it
     @authenticated_request
-    def get(self):
+    def get(self, report_type):
         active_user = self.get_current_user()
         active_view = UserManager(active_user).properties.current_view
         query = self.get_argument(ApiArguments.QUERY, None)
@@ -52,7 +52,7 @@ class HardwareReportsHandler(BaseHandler):
         )
 
         if not os_code and not os_string and not bit_type and not query:
-            results = self.by_hw_typw(search, hwtype)
+            results = self.by_hw_type(search, hwtype)
 
         elif os_code and not os_string and not bit_type and not query:
             results = self.by_cpu_and_os_code(search, hwtype, os_code)
@@ -76,13 +76,13 @@ class HardwareReportsHandler(BaseHandler):
         elif hwtype == 'memory':
             results = search.memory()
 
-        elif hwtype == 'nic':
+        elif hwtype == 'network':
             results = search.nic()
 
-        elif hwtype == 'storage':
+        elif hwtype == 'disk':
             results = search.storage()
 
-        elif hwtype == 'display':
+        elif hwtype == 'hardware':
             results = search.display()
 
         return results
