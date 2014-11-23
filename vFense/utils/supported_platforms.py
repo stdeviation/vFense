@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import platform
+import re
 import sys
 
 REDHAT_DISTROS = [
@@ -8,7 +9,7 @@ REDHAT_DISTROS = [
     'scientific linux'
 ]
 
-DEBIAN_DISTROS = ['debian', 'ubuntu', 'linuxmint']
+DEBIAN_DISTROS = ['debian', 'ubuntu', 'linuxmint', 'elementary os']
 
 SUPPORTED_DISTROS = REDHAT_DISTROS + DEBIAN_DISTROS
 
@@ -25,9 +26,9 @@ def get_distro():
 
     elif plat == 'linux':
         try:
-            return platform.linux_distribution()[0].lower()
+            return re.sub('"', '', platform.linux_distribution()[0].lower())
         except Exception:
-            return platform.dist()[0].lower()
+            return re.sub('"', '', platform.dist()[0].lower())
 
     return ''
 
