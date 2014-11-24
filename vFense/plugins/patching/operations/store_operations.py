@@ -354,11 +354,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
             else:
                 install.agent_ids += fetch_agent_ids_in_tag(install.tag_id)
 
-        operation_manager = (
-            PatchingOperation(
-                self.username, self.view_name,
-            )
-        )
+        manager = PatchingOperation(self.username, self.view_name)
         operation = AgentOperation()
         operation.fill_in_defaults()
         operation.tag_id = install.tag_id
@@ -368,7 +364,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
         operation.net_throttle = install.net_throttle
         operation.plugin = oper_plugin
         operation.performed_on = performed_on
-        operation_id = operation_manager.create_operation(operation)
+        operation_id = manager.create_operation(operation)
         if operation_id:
             msg = (
                 '{0} operation created, operation_id: {1}'
@@ -408,8 +404,8 @@ class StorePatchingOperation(StoreAgentOperationManager):
                 agent_queue.cpu_throttle = install.cpu_throttle
                 agent_queue.net_throttle = install.net_throttle
 
-                self._store_in_agent_queue(agent_queue.to_dict())
-                operation.add_agent_to_install_operation(
+                self._store_in_agent_queue(agent_queue)
+                manager.add_agent_to_install_operation(
                     agent_id, operation_id, pkg_data
                 )
 
@@ -446,4 +442,4 @@ class StorePatchingOperation(StoreAgentOperationManager):
         app_data.app_uris = uris
         app_data.cli_options = data.cli_options
 
-        return app_data.to_dict()
+        return app_data
