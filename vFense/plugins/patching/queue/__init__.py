@@ -6,7 +6,7 @@ class InstallQueueOperation(AgentQueueOperation):
     def __init__(self, restart=None, file_data=None, cpu_throttle=None,
                  net_throttle=None, **kwargs
                  ):
-        super(AgentQueueOperation, self).__init__(**kwargs)
+        super(InstallQueueOperation, self).__init__(**kwargs)
         self.restart = restart
         self.file_data = file_data
         self.cpu_throttle = cpu_throttle

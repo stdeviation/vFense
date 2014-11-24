@@ -85,7 +85,7 @@ def get_base_url(view_name):
         String
     """
     view = ViewManager(view_name)
-    url = view.properties.get(ViewKeys.PackageUrl, None)
+    url = view.properties.package_download_url_base
     return url
 
 def get_download_urls(view_name, app_id, file_data):

@@ -693,7 +693,7 @@ class AgentAppData(Base):
 
 class AgentAppFileData(Apps):
     def __init__(self, file_data=None, **kwargs):
-        super(AgentAppData, self).__init__(**kwargs)
+        super(AgentAppFileData, self).__init__(**kwargs)
         self.file_data = file_data
 
 

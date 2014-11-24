@@ -17,6 +17,7 @@ class AgentQueueKey():
     Operation = 'Operation'
     RequestMethod = 'request_method'
     ResponseURI = 'response_uri'
+    Data = 'data'
 
 
 class AgentQueueIndexes():

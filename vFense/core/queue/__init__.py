@@ -246,9 +246,9 @@ class AgentQueueOperation(Base):
         """
 
         return {
-            AgentOperationKey.Operation: self.operation,
-            AgentOperationKey.OperationId: self.operation_id,
-            AgentOperationKey.AgentId: self.agent_id,
-            AgentOperationKey.Plugin: self.plugin,
-            AgentOperationKey.Data: self.data,
+            AgentQueueKey.Operation: self.operation,
+            AgentQueueKey.OperationId: self.operation_id,
+            AgentQueueKey.AgentId: self.agent_id,
+            AgentQueueKey.Plugin: self.plugin,
+            AgentQueueKey.Data: self.data,
         }
