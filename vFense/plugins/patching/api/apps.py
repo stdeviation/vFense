@@ -508,14 +508,11 @@ class AppsHandler(AppsBaseHandler):
 
     @authenticated_request
     @convert_json_to_arguments
-    @check_permissions(Permissions.HIDE_UNHIDE_APPLICATIONS)
     def put(self, oper_type):
         oper = self.return_operation_type(oper_type)
-
         self.app_ids = self.arguments.get('app_ids')
         self.toggle = self.arguments.get('hide', 'toggle')
         results = self.set_toggle_status(oper)
-
         self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results.to_dict_non_null(), indent=4))

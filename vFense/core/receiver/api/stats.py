@@ -87,7 +87,6 @@ class UpdateMonitoringStatsV2(AgentBaseHandler):
     def update_cpu(self, stat, agent_id):
         manager = CPUStatManager(agent_id=agent_id)
         results = manager.update(stat)
-        print results
         return results
 
     @receiver_catch_it
@@ -95,15 +94,12 @@ class UpdateMonitoringStatsV2(AgentBaseHandler):
     def update_memory(self, stat, agent_id):
         manager = MemoryStatManager(agent_id=agent_id)
         results = manager.update(stat)
-        print results
         return results
 
     @receiver_catch_it
     @agent_results_message
     def update_filesystems(self, stats, agent_id):
         manager = FileSystemStatManager(agent_id=agent_id)
-        print stats
         stats = map(lambda x: FileSystemStats(**x), stats)
         results = manager.update(stats)
-        print results
         return results

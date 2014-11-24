@@ -1,10 +1,8 @@
 import os
-import re
 import logging
 import urllib
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.utils.supported_platforms import REDHAT_DISTROS
 from vFense.core._constants import CommonKeys
 from vFense.core.agent._db import total_agents_in_view
 from vFense.core._db_constants import DbTime
@@ -24,7 +22,7 @@ from vFense.plugins.patching.status_codes import (
 )
 from vFense.plugins.patching.utils import build_agent_app_id
 from vFense.plugins.patching._db_model import (
-    AppsKey, AppCollections, DbCommonAppPerAgentKeys, FileServerKeys
+    AppCollections, FileServerKeys
 )
 from vFense.plugins.patching._constants import (
     CommonAppKeys, FileLocationUris, CommonFileKeys
@@ -37,12 +35,8 @@ from vFense.plugins.patching._db import (
     update_hidden_status, fetch_app_id_by_name_and_version,
     update_app_data_by_app_id, delete_apps_by_view
 )
-from vFense.plugins.vuln import VulnerabilityKeys
 from vFense.plugins.vuln.search.vuln_search import RetrieveVulns
-import vFense.plugins.vuln.windows.ms as ms
-import vFense.plugins.vuln.ubuntu.usn as usn
 import vFense.plugins.vuln.cve.cve as cve
-import vFense.plugins.vuln.redhat.rh as rh
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
@@ -914,7 +908,6 @@ def delete_apps_from_agent_by_name_and_version(
     return completed
 
 @time_it
-@results_message
 def toggle_hidden_status(
         app_ids, hidden=CommonKeys.TOGGLE,
         collection=AppCollections.UniqueApplications
