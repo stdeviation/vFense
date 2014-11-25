@@ -182,8 +182,8 @@ class CPUStatManager(StatManager):
             else:
                 results = super(CPUStatManager, self).create(stats)
         else:
-            if not isinstance(stat, CPUStats):
-                stat = CPUStats(**stat)
+            if not isinstance(stats, CPUStats):
+                stat = CPUStats(**stats)
             results = super(CPUStatManager, self).create(stats)
 
         return results
@@ -210,8 +210,8 @@ class MemoryStatManager(StatManager):
             else:
                 results = super(MemoryStatManager, self).create(stats)
         else:
-            if not isinstance(stat, MemoryStats):
-                stat = MemoryStats(**stat)
+            if not isinstance(stats, MemoryStats):
+                stats = MemoryStats(**stats)
             results = super(MemoryStatManager, self).create(stats)
 
         return results
