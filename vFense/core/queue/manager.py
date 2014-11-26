@@ -105,7 +105,7 @@ class AgentQueueManager(object):
         agent_queue.expire_minutes = expire_mins
         agent_queue.server_queue_ttl = server_queue_ttl
         agent_queue.agent_queue_ttl = agent_process_time
-        status_code, count, error, generated_ids = (
+        status_code, _, _, _ = (
             insert_into_agent_queue(agent_queue.to_dict_db())
         )
 

@@ -7,7 +7,6 @@ from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 from vFense.core.queue._db_model import AgentQueueKey
 from vFense.core.queue._constants import AgentQueueOperationDefaults
-from vFense.core.operations._db_model import AgentOperationKey
 
 
 class AgentQueue(Base):
