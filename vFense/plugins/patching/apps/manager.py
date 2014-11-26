@@ -316,7 +316,6 @@ def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
                     fd.download_url = str(fd.download_url)
                     fd.agent_ids.append(agent_id)
                     fd.app_ids.append(app_data.app_id)
-                    fd.download_urls
                     files_data.append(fd)
 
             apps_data.append(app_data)
