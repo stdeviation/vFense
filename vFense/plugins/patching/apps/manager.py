@@ -203,10 +203,10 @@ class AppsManager(object):
                 .format(type(app), type(file_data))
             )
             results.generic_status_code = (
-                    PackageFailureCodes.FailedToCreateObject
+                PackageFailureCodes.FailedToCreateObject
             )
             results.vfense_status_code = (
-                    PackageFailureCodes.FileUploadFailed
+                PackageFailureCodes.FileUploadFailed
             )
             results.message = msg
             results.data = []
@@ -311,7 +311,13 @@ def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
             app_data.agent_id = agent_id
             if isinstance(files, list):
                 for file_data in files:
-                    files_data.append(Files(**file_data))
+                    fd = Files(**file_data)
+                    fd.fill_in_defaults()
+                    fd.download_url = str(fd.download_url)
+                    fd.agent_ids.append(agent_id)
+                    fd.app_ids.append(app_data.app_id)
+                    fd.download_urls
+                    files_data.append(fd)
 
             apps_data.append(app_data)
             manager._set_vulnerability_info(app_data)
