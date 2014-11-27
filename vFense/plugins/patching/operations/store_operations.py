@@ -403,12 +403,13 @@ class StorePatchingOperation(StoreAgentOperationManager):
                 agent_queue.restart = install.restart
                 agent_queue.cpu_throttle = install.cpu_throttle
                 agent_queue.net_throttle = install.net_throttle
-                agent_queue.file_data = app_dict_data
-                self._store_in_agent_queue(agent_queue)
                 agent_queue.file_data = pkg_data
-                manager.add_agent_to_install_operation(
+                oper_added = manager.add_agent_to_install_operation(
                     agent_id, operation_id, pkg_data
                 )
+                if oper_added:
+                    agent_queue.file_data = app_dict_data
+                    self._store_in_agent_queue(agent_queue)
 
         else:
             msg = '{0} operation failed to create'.format(oper_type)
