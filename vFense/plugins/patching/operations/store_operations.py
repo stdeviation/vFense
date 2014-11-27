@@ -393,7 +393,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
                     )
                     app_data = self._get_apps_data(app_id, agent_id)
                     pkg_data.append(app_data)
-                    app_dict_data.append(app_data.to_dict_db())
+                    app_dict_data.append(app_data.to_dict())
 
                 agent_queue = InstallQueueOperation()
                 agent_queue.operation = oper_type
