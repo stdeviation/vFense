@@ -18,7 +18,7 @@ from vFense.core.results import ApiResults
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('vfense_listenerener')
+logger = logging.getLogger('vfense_listener')
 
 
 class InstallOsAppsResults(BaseHandler):

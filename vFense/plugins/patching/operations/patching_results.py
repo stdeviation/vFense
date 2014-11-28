@@ -76,7 +76,7 @@ class PatchingOperationResults(OperationResults):
         self.apps_to_delete = apps_to_delete
         self.app_id = app_id
         self.reboot_required = reboot_required
-        self.operation_type = self.operation_data[AgentOperationKey.Operation]
+        self.operation_type = self.operation_data.operation
 
     def refresh_apps(self):
         operation_type = AgentOperations.REFRESH_APPS
@@ -162,6 +162,7 @@ class PatchingOperationResults(OperationResults):
             operation
         """
         results = ApiResults()
+        results.fill_in_defaults()
         app = Apps()
 
         if self.reboot_required:

@@ -4,6 +4,7 @@ import logging.config
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import Time
+from vFense.core._db_constants import DbTime
 from vFense.core.operations import (
     AgentOperation, OperPerAgent
 )
@@ -62,7 +63,11 @@ def get_agent_operation(operation_id):
             "view_name": "default"
         }
     """
-    return AgentOperation(**fetch_agent_operation(operation_id))
+    operation = fetch_agent_operation(operation_id)
+    if operation:
+        return AgentOperation(**operation)
+    else:
+        return AgentOperation()
 
 def operation_for_agent_exist(operation_id, agent_id):
     """Verify if the operation exists by operation id and agent id.
@@ -131,6 +136,7 @@ class AgentOperationManager(object):
         self.username = username
         self.view_name = view_name
         self.now = Time.now()
+        self.db_time = DbTime.epoch_time_to_db_time(self.now)
         self.INIT_COUNT = 0
 
     def create_operation(self, operation):

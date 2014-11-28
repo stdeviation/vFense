@@ -3,10 +3,9 @@ from json import dumps
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.receiver.decorators import (
-    authenticate_agent, agent_results_message
+    authenticate_agent, agent_results_message, receiver_catch_it
 )
 from vFense.core.receiver.api.base import AgentBaseHandler
-from vFense.core.receiver.results import AgentResults, AgentApiResultKeys
 from vFense.core.decorators import convert_json_to_arguments
 from vFense.core._constants import CommonKeys
 
@@ -18,7 +17,7 @@ from vFense.core.results import ApiResults
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('vfense_listenerener')
+logger = logging.getLogger('vfense_listener')
 
 
 class AppsResultsV2(AgentBaseHandler):
@@ -52,10 +51,11 @@ class AppsResultsV2(AgentBaseHandler):
                 apps_to_delete, apps_to_add
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(dumps(results, indent=4))
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
+    @receiver_catch_it
     @agent_results_message
     def update_app_results(self, update_results, app_id,
                            reboot_required, apps_to_delete, apps_to_add):
@@ -99,10 +99,11 @@ class CustomAppsResultsV2(AgentBaseHandler):
                 apps_to_delete, apps_to_add
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(dumps(results, indent=4))
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
+    @receiver_catch_it
     @agent_results_message
     def update_custom_app_results(self, update_results, app_id,
                                   reboot_required, apps_to_delete,
@@ -145,10 +146,11 @@ class SupportedAppsResultsV2(AgentBaseHandler):
             apps_to_delete, apps_to_add
         )
 
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(dumps(results, indent=4))
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
+    @receiver_catch_it
     @agent_results_message
     def update_supported_app_results(self, update_results, app_id,
                                      reboot_required, apps_to_delete,
@@ -187,17 +189,18 @@ class vFenseAppsResultsV2(AgentBaseHandler):
                 agent_id, operation_id, success, error, status_code
             )
         )
-        results_data = (
+        results = (
             self.update_agent_app_results(
                 update_results, app_id, reboot_required,
                 apps_to_delete, apps_to_add
             )
         )
 
-        self.set_status(results_data['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(dumps(results_data, indent=4))
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
+    @receiver_catch_it
     @agent_results_message
     def update_agent_app_results(self, update_results, app_id,
                                  reboot_required, apps_to_delete,
@@ -242,10 +245,11 @@ class UninstallResultsV2(AgentBaseHandler):
                 apps_to_delete, apps_to_add
             )
         )
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
-        self.write(dumps(results, indent=4))
+        self.write(dumps(results.to_dict_non_null(), indent=4))
 
+    @receiver_catch_it
     @agent_results_message
     def update_app_results(self, update_results, app_id, reboot_required,
                            apps_to_delete, apps_to_add):
