@@ -1,0 +1,191 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1904&#45;01] Important: Red Hat JBoss Operations Network 3.3.0	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 25 Nov 2014 11:52:45 &#45;0500 -->
+<!--X-Message-Id: 201411251652.sAPGqiFi013204@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1904-01] Important: Red Hat JBoss Operations Network 3.3.0	up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00047.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00047.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00048">Thread Index</A>]
+[<A HREF="date.html#00048">Date Index</A>]
+[<A HREF="author.html#00048">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1904-01] Important: Red Hat JBoss Operations Network 3.3.0	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1904-01] Important: Red Hat JBoss Operations Network 3.3.0	update</li>
+<li><em>Date</em>: Tue, 25 Nov 2014 16:52:44 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Operations Network 3.3.0 update
+Advisory ID:       RHSA-2014:1904-01
+Product:           Red Hat JBoss Operations Network
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1904.html">https://rhn.redhat.com/errata/RHSA-2014-1904.html</a>
+Issue date:        2014-11-25
+CVE Names:         CVE-2012-6153 CVE-2013-2035 CVE-2014-0059 
+                   CVE-2014-3481 CVE-2014-3490 CVE-2014-3577 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Operations Network 3.2.3, which fixes multiple security
+issues and several bugs, is now available from the Red Hat Customer Portal.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Operations Network is a middleware management solution that
+provides a single point of control to deploy, manage, and monitor JBoss
+Enterprise Middleware, applications, and services.
+
+This JBoss Operations Network 3.3.0 release serves as a replacement for
+JBoss Operations Network 3.2.3, and includes several bug fixes. Refer to
+the JBoss Operations Network 3.3.0 Release Notes for information on the
+most significant of these changes. The Release Notes will be available
+shortly from <a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/">https://access.redhat.com/documentation/en-US/</a>
+
+The following security issues are also fixed with this release:
+
+It was found that the fix for CVE-2012-5783 was incomplete: the code added
+to check that the server host name matches the domain name in a subject's
+Common Name (CN) field in X.509 certificates was flawed. A
+man-in-the-middle attacker could use this flaw to spoof an SSL server
+using a specially crafted X.509 certificate. (CVE-2012-6153, CVE-2014-3577)
+
+It was found that the default context parameters as provided to RESTEasy
+deployments by JBoss EAP did not explicitly disable external entity
+expansion for RESTEasy. A remote attacker could use this flaw to perform
+XML External Entity (XXE) attacks on RESTEasy applications accepting XML
+input. (CVE-2014-3481)
+
+It was found that the fix for CVE-2012-0818 was incomplete: external
+parameter entities were not disabled when the
+resteasy.document.expand.entity.references parameter was set to false.
+A remote attacker able to send XML requests to a RESTEasy endpoint could
+use this flaw to read files accessible to the user running the application
+server, and potentially perform other more advanced XXE attacks.
+(CVE-2014-3490)
+
+The HawtJNI Library class wrote native libraries to a predictable file name
+in /tmp when the native libraries were bundled in a JAR file, and no custom
+library path was specified. A local attacker could overwrite these native
+libraries with malicious versions during the window between when HawtJNI
+writes them and when they are executed. (CVE-2013-2035)
+
+It was found that the security auditing functionality provided by PicketBox
+and JBossSX, both security frameworks for Java applications, used a
+world-readable audit.log file to record sensitive information. A local user
+could possibly use this flaw to gain access to the sensitive information in
+the audit.log file. (CVE-2014-0059)
+
+The CVE-2013-2035 and CVE-2012-6153 issues were discovered by Florian
+Weimer of Red Hat Product Security. The CVE-2014-3481 issue was discovered
+by the Red Hat JBoss Enterprise Application Platform QE team. The
+CVE-2014-3490 issue was discovered by David Jorm of Red Hat Product
+Security.
+
+All users of JBoss Operations Network 3.2.3 as provided from the Red Hat
+Customer Portal are advised to upgrade to JBoss Operations Network 3.3.0.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing JBoss Operations Network installation (including its databases,
+applications, configuration files, the JBoss Operations Network server's
+file system directory, and so on).
+
+Refer to the JBoss Operations Network 3.3.0 Release Notes for
+installation information.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+958618 - CVE-2013-2035 HawtJNI: predictable temporary file name leading to local arbitrary code execution
+1063642 - CVE-2014-0059 JBossSX/PicketBox: World readable audit.log file
+1105242 - CVE-2014-3481 JBoss AS JAX-RS: Information disclosure via XML eXternal Entity (XXE)
+1107901 - CVE-2014-3490 RESTEasy: XXE via parameter entities
+1129074 - CVE-2014-3577 Apache HttpComponents client / Apache CXF: SSL hostname verification bypass, incomplete CVE-2012-6153 fix
+1129916 - CVE-2012-6153 Apache HttpComponents client / Apache CXF: SSL hostname verification bypass, incomplete CVE-2012-5783 fix
+
+5. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2012-6153">https://access.redhat.com/security/cve/CVE-2012-6153</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-2035">https://access.redhat.com/security/cve/CVE-2013-2035</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0059">https://access.redhat.com/security/cve/CVE-2014-0059</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3481">https://access.redhat.com/security/cve/CVE-2014-3481</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3490">https://access.redhat.com/security/cve/CVE-2014-3490</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3577">https://access.redhat.com/security/cve/CVE-2014-3577</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=em&amp;downloadType=securityPatches&amp;version=3.3.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=em&amp;downloadType=securityPatches&amp;version=3.3.0</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_JBoss_Operations_Network/">https://access.redhat.com/documentation/en-US/Red_Hat_JBoss_Operations_Network/</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUdLOIXlSAg2UNWIIRAuC/AJ91RRT8aw2h4uzdlNu/tu8BK0yALQCggdDX
+e2x/RBJqZmdvB5ZB0kakl+4=
+=AIdx
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00047.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00047.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00048">Thread Index</A>]
+[<A HREF="date.html#00048">Date Index</A>]
+[<A HREF="author.html#00048">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

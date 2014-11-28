@@ -1,0 +1,338 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1914&#45;01] Moderate: ruby200&#45;ruby security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 26 Nov 2014 17:42:49 &#45;0500 -->
+<!--X-Message-Id: 201411262242.sAQMgmIS020790@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1914-01] Moderate: ruby200-ruby security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00053.html">Date Prev</a>][<a href="msg00055.html">Date Next</a>] &nbsp; [<a href="msg00053.html">Thread Prev</a>][<a href="msg00055.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00054">Thread Index</A>]
+[<A HREF="date.html#00054">Date Index</A>]
+[<A HREF="author.html#00054">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1914-01] Moderate: ruby200-ruby security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1914-01] Moderate: ruby200-ruby security update</li>
+<li><em>Date</em>: Wed, 26 Nov 2014 22:42:48 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ruby200-ruby security update
+Advisory ID:       RHSA-2014:1914-01
+Product:           Red Hat Software Collections
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1914.html">https://rhn.redhat.com/errata/RHSA-2014-1914.html</a>
+Issue date:        2014-11-26
+CVE Names:         CVE-2014-4975 CVE-2014-8080 CVE-2014-8090 
+=====================================================================
+
+1. Summary:
+
+Updated ruby200-ruby packages that fix three security issues are now
+available for Red Hat Software Collections 1.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 6) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 7) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.4) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.5) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.6) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 6) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 7) - noarch, x86_64
+
+3. Description:
+
+Ruby is an extensible, interpreted, object-oriented, scripting language.
+It has features to process text files and to perform system management
+tasks.
+
+Multiple denial of service flaws were found in the way the Ruby REXML XML
+parser performed expansion of parameter entities. A specially crafted XML
+document could cause REXML to use an excessive amount of CPU and memory.
+(CVE-2014-8080, CVE-2014-8090)
+
+A stack-based buffer overflow was found in the implementation of the Ruby
+Array pack() method. When performing base64 encoding, a single byte could
+be written past the end of the buffer, possibly causing Ruby to crash.
+(CVE-2014-4975)
+
+The CVE-2014-8090 issue was discovered by Red Hat Product Security.
+
+All ruby200-ruby users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. All running
+instances of Ruby need to be restarted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1118158 - CVE-2014-4975 ruby: off-by-one stack-based buffer overflow in the encodes() function
+1157709 - CVE-2014-8080 ruby: REXML billion laughs attack via parameter entity expansion
+1159927 - CVE-2014-8090 ruby: REXML incomplete fix for CVE-2014-8080
+
+6. Package List:
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+ruby200-ruby-2.0.0.353-24.el6.src.rpm
+
+noarch:
+ruby200-ruby-doc-2.0.0.353-24.el6.noarch.rpm
+ruby200-ruby-irb-2.0.0.353-24.el6.noarch.rpm
+ruby200-rubygem-minitest-4.3.2-24.el6.noarch.rpm
+ruby200-rubygem-rake-0.9.6-24.el6.noarch.rpm
+ruby200-rubygem-rdoc-4.0.0-24.el6.noarch.rpm
+ruby200-rubygems-devel-2.0.14-24.el6.noarch.rpm
+
+x86_64:
+ruby200-ruby-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-debuginfo-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-devel-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-libs-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-tcltk-2.0.0.353-24.el6.x86_64.rpm
+ruby200-rubygem-bigdecimal-1.2.0-24.el6.x86_64.rpm
+ruby200-rubygem-io-console-0.4.2-24.el6.x86_64.rpm
+ruby200-rubygem-json-1.7.7-24.el6.x86_64.rpm
+ruby200-rubygem-psych-2.0.0-24.el6.x86_64.rpm
+ruby200-rubygems-2.0.14-24.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.4):
+
+Source:
+ruby200-ruby-2.0.0.353-24.el6.src.rpm
+
+noarch:
+ruby200-ruby-doc-2.0.0.353-24.el6.noarch.rpm
+ruby200-ruby-irb-2.0.0.353-24.el6.noarch.rpm
+ruby200-rubygem-minitest-4.3.2-24.el6.noarch.rpm
+ruby200-rubygem-rake-0.9.6-24.el6.noarch.rpm
+ruby200-rubygem-rdoc-4.0.0-24.el6.noarch.rpm
+ruby200-rubygems-devel-2.0.14-24.el6.noarch.rpm
+
+x86_64:
+ruby200-ruby-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-debuginfo-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-devel-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-libs-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-tcltk-2.0.0.353-24.el6.x86_64.rpm
+ruby200-rubygem-bigdecimal-1.2.0-24.el6.x86_64.rpm
+ruby200-rubygem-io-console-0.4.2-24.el6.x86_64.rpm
+ruby200-rubygem-json-1.7.7-24.el6.x86_64.rpm
+ruby200-rubygem-psych-2.0.0-24.el6.x86_64.rpm
+ruby200-rubygems-2.0.14-24.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.5):
+
+Source:
+ruby200-ruby-2.0.0.353-24.el6.src.rpm
+
+noarch:
+ruby200-ruby-doc-2.0.0.353-24.el6.noarch.rpm
+ruby200-ruby-irb-2.0.0.353-24.el6.noarch.rpm
+ruby200-rubygem-minitest-4.3.2-24.el6.noarch.rpm
+ruby200-rubygem-rake-0.9.6-24.el6.noarch.rpm
+ruby200-rubygem-rdoc-4.0.0-24.el6.noarch.rpm
+ruby200-rubygems-devel-2.0.14-24.el6.noarch.rpm
+
+x86_64:
+ruby200-ruby-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-debuginfo-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-devel-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-libs-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-tcltk-2.0.0.353-24.el6.x86_64.rpm
+ruby200-rubygem-bigdecimal-1.2.0-24.el6.x86_64.rpm
+ruby200-rubygem-io-console-0.4.2-24.el6.x86_64.rpm
+ruby200-rubygem-json-1.7.7-24.el6.x86_64.rpm
+ruby200-rubygem-psych-2.0.0-24.el6.x86_64.rpm
+ruby200-rubygems-2.0.14-24.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.6):
+
+Source:
+ruby200-ruby-2.0.0.353-24.el6.src.rpm
+
+noarch:
+ruby200-ruby-doc-2.0.0.353-24.el6.noarch.rpm
+ruby200-ruby-irb-2.0.0.353-24.el6.noarch.rpm
+ruby200-rubygem-minitest-4.3.2-24.el6.noarch.rpm
+ruby200-rubygem-rake-0.9.6-24.el6.noarch.rpm
+ruby200-rubygem-rdoc-4.0.0-24.el6.noarch.rpm
+ruby200-rubygems-devel-2.0.14-24.el6.noarch.rpm
+
+x86_64:
+ruby200-ruby-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-debuginfo-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-devel-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-libs-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-tcltk-2.0.0.353-24.el6.x86_64.rpm
+ruby200-rubygem-bigdecimal-1.2.0-24.el6.x86_64.rpm
+ruby200-rubygem-io-console-0.4.2-24.el6.x86_64.rpm
+ruby200-rubygem-json-1.7.7-24.el6.x86_64.rpm
+ruby200-rubygem-psych-2.0.0-24.el6.x86_64.rpm
+ruby200-rubygems-2.0.14-24.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+ruby200-ruby-2.0.0.353-24.el6.src.rpm
+
+noarch:
+ruby200-ruby-doc-2.0.0.353-24.el6.noarch.rpm
+ruby200-ruby-irb-2.0.0.353-24.el6.noarch.rpm
+ruby200-rubygem-minitest-4.3.2-24.el6.noarch.rpm
+ruby200-rubygem-rake-0.9.6-24.el6.noarch.rpm
+ruby200-rubygem-rdoc-4.0.0-24.el6.noarch.rpm
+ruby200-rubygems-devel-2.0.14-24.el6.noarch.rpm
+
+x86_64:
+ruby200-ruby-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-debuginfo-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-devel-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-libs-2.0.0.353-24.el6.x86_64.rpm
+ruby200-ruby-tcltk-2.0.0.353-24.el6.x86_64.rpm
+ruby200-rubygem-bigdecimal-1.2.0-24.el6.x86_64.rpm
+ruby200-rubygem-io-console-0.4.2-24.el6.x86_64.rpm
+ruby200-rubygem-json-1.7.7-24.el6.x86_64.rpm
+ruby200-rubygem-psych-2.0.0-24.el6.x86_64.rpm
+ruby200-rubygems-2.0.14-24.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+ruby200-ruby-2.0.0.353-24.el7.src.rpm
+
+noarch:
+ruby200-ruby-doc-2.0.0.353-24.el7.noarch.rpm
+ruby200-ruby-irb-2.0.0.353-24.el7.noarch.rpm
+ruby200-rubygem-minitest-4.3.2-24.el7.noarch.rpm
+ruby200-rubygem-rake-0.9.6-24.el7.noarch.rpm
+ruby200-rubygem-rdoc-4.0.0-24.el7.noarch.rpm
+ruby200-rubygems-devel-2.0.14-24.el7.noarch.rpm
+
+x86_64:
+ruby200-ruby-2.0.0.353-24.el7.x86_64.rpm
+ruby200-ruby-debuginfo-2.0.0.353-24.el7.x86_64.rpm
+ruby200-ruby-devel-2.0.0.353-24.el7.x86_64.rpm
+ruby200-ruby-libs-2.0.0.353-24.el7.x86_64.rpm
+ruby200-ruby-tcltk-2.0.0.353-24.el7.x86_64.rpm
+ruby200-rubygem-bigdecimal-1.2.0-24.el7.x86_64.rpm
+ruby200-rubygem-io-console-0.4.2-24.el7.x86_64.rpm
+ruby200-rubygem-json-1.7.7-24.el7.x86_64.rpm
+ruby200-rubygem-psych-2.0.0-24.el7.x86_64.rpm
+ruby200-rubygems-2.0.14-24.el7.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+ruby200-ruby-2.0.0.353-24.el7.src.rpm
+
+noarch:
+ruby200-ruby-doc-2.0.0.353-24.el7.noarch.rpm
+ruby200-ruby-irb-2.0.0.353-24.el7.noarch.rpm
+ruby200-rubygem-minitest-4.3.2-24.el7.noarch.rpm
+ruby200-rubygem-rake-0.9.6-24.el7.noarch.rpm
+ruby200-rubygem-rdoc-4.0.0-24.el7.noarch.rpm
+ruby200-rubygems-devel-2.0.14-24.el7.noarch.rpm
+
+x86_64:
+ruby200-ruby-2.0.0.353-24.el7.x86_64.rpm
+ruby200-ruby-debuginfo-2.0.0.353-24.el7.x86_64.rpm
+ruby200-ruby-devel-2.0.0.353-24.el7.x86_64.rpm
+ruby200-ruby-libs-2.0.0.353-24.el7.x86_64.rpm
+ruby200-ruby-tcltk-2.0.0.353-24.el7.x86_64.rpm
+ruby200-rubygem-bigdecimal-1.2.0-24.el7.x86_64.rpm
+ruby200-rubygem-io-console-0.4.2-24.el7.x86_64.rpm
+ruby200-rubygem-json-1.7.7-24.el7.x86_64.rpm
+ruby200-rubygem-psych-2.0.0-24.el7.x86_64.rpm
+ruby200-rubygems-2.0.14-24.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4975">https://access.redhat.com/security/cve/CVE-2014-4975</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8080">https://access.redhat.com/security/cve/CVE-2014-8080</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8090">https://access.redhat.com/security/cve/CVE-2014-8090</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUdldSXlSAg2UNWIIRAncDAKCvnOdzWmyiFqk1xc4KSTPl26GBpACeNPRg
+xOS8TRWUT/gCl71j9DLqPtE=
+=Opbl
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00053.html">Date Prev</a>][<a href="msg00055.html">Date Next</a>] &nbsp; [<a href="msg00053.html">Thread Prev</a>][<a href="msg00055.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00054">Thread Index</A>]
+[<A HREF="date.html#00054">Date Index</A>]
+[<A HREF="author.html#00054">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
