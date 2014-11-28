@@ -37,12 +37,18 @@ def add_file_data(file_data):
     data_inserted = False
     for fd in file_data:
         if file_data_exists(fd.file_name):
-            if fd.agent_ids:
+            if fd.agent_ids and not fd.app_ids:
                 update_file_data(fd.file_name, agent_ids=fd.agent_ids)
                 data_inserted = True
 
-            elif fd.app_ids:
+            elif not fd.agent_ids and fd.app_ids:
                 update_file_data(fd.file_name, app_ids=fd.app_ids)
+                data_inserted = True
+
+            else:
+                update_file_data(
+                    fd.file_name, app_ids=fd.app_ids, agent_ids=fd.agent_ids
+                )
                 data_inserted = True
         else:
             fd.fill_in_defaults()

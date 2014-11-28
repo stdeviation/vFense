@@ -5,7 +5,7 @@ from vFense.core._db import (
     update_data_in_table
 )
 from vFense.plugins.relay_server._db_model import (
-    RelayServerCollections, RelayServerKeys
+    RelayServerCollections, RelayServerKeys, RelayServerIndexes
 )
 
 @catch_it(False)
@@ -42,13 +42,22 @@ def fetch_relay(mouse_name, conn=None):
 @catch_it([])
 @time_it
 @db_create_close
-def fetch_relay_addresses(view_name, conn=None):
-    data = list(
-        r
-        .table(RelayServerCollections.RelayServers)
-        .pluck(RelayServerKeys.Address)
-        .run(conn)
-    )
+def fetch_relay_addresses(view_name=None, conn=None):
+    if view_name:
+        data = list(
+            r
+            .table(RelayServerCollections.RelayServers)
+            .get_all(RelayServerKeys.Views, index=RelayServerIndexes.Views)
+            .map(lambda x: x[RelayServerKeys.Address])
+            .run(conn)
+        )
+    else:
+        data = list(
+            r
+            .table(RelayServerCollections.RelayServers)
+            .pluck(RelayServerKeys.Address)
+            .run(conn)
+        )
 
     return data
 

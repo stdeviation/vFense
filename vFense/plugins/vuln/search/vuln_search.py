@@ -1,5 +1,5 @@
 import re
-from vFense.utils.supported_platforms import REDHAT_DISTROS
+from vFense.utils.supported_platforms import REDHAT_DISTROS, DEBIAN_DISTROS
 from vFense.plugins.vuln import Vulnerability
 from vFense.plugins.vuln.ubuntu import Ubuntu
 from vFense.plugins.vuln.ubuntu.search._db import FetchUbuntuVulns
@@ -51,16 +51,18 @@ class RetrieveVulns(RetrieveBase):
         self.windows = False
         self.ubuntu = False
         self.redhat = False
+        deb_distros = '|'.join(DEBIAN_DISTROS)
+        rh_distros = '|'.join(REDHAT_DISTROS)
 
         if re.search(r'Windows', os_string, re.IGNORECASE):
             self.search = FetchWindowsVulns(**kwargs)
             self.windows = True
 
-        elif re.search(r'Ubuntu|Mint', os_string, re.IGNORECASE):
+        elif re.search(deb_distros, os_string, re.IGNORECASE):
             self.search = FetchUbuntuVulns(**kwargs)
             self.ubuntu = True
 
-        elif re.search('|'.join(REDHAT_DISTROS), os_string, re.IGNORECASE):
+        elif re.search(rh_distros, os_string, re.IGNORECASE):
             self.search = FetchRedhatVulns(**kwargs)
             self.redhat = True
 

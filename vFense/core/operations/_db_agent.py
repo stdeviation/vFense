@@ -353,6 +353,8 @@ def insert_app_into_agent_operations(operation_data, conn=None):
         .insert(operation_data)
         .run(conn)
     )
+    print data
+    print operation_data
 
     return data
 

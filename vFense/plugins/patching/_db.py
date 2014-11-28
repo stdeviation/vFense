@@ -13,45 +13,13 @@ from vFense.plugins.patching._constants import CommonFileKeys
 from vFense.plugins.patching._db_model import (
     AppCollections, FileCollections, AppsKey,
     DbCommonAppKeys, DbCommonAppPerAgentKeys,
-    DbCommonAppIndexes, DbCommonAppPerAgentIndexes, FilesKey,
-    FileServerIndexes, FileServerKeys
+    DbCommonAppIndexes, DbCommonAppPerAgentIndexes, FilesKey
 )
 
 from vFense.db.client import db_create_close, r
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
-
-@time_it
-@db_create_close
-def fetch_file_servers_addresses(view_name, conn=None):
-    """Fetch file servers for view name. This will
-        retrieve a list of addresses (ip_addresses or hostnames)
-    Args:
-        view_name (str): The name of the view
-
-    Basic Usage:
-        >>> from vFense.plugins.patching._db import fetch_file_servers_addresses
-        >>> view_name = 'default'
-        >>> fetch_file_servers_addresses(view_name)
-
-    Returns:
-        List of addresses
-    """
-    data = []
-    try:
-        data = list(
-            r
-            .table(FileCollections.FileServers)
-            .get_all(view_name, index=FileServerIndexes.ViewName)
-            .map(lambda x: x[FileServerKeys.Views])
-            .run(conn)
-        )
-
-    except Exception as e:
-        logger.exception(e)
-
-    return data
 
 @db_create_close
 def fetch_app_data(

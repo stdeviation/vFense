@@ -35,6 +35,7 @@ def check_if_redhat(os_string):
 
 
 def download_file(uri, dl_path, throttle):
+    uri = str(uri)
     if uri.startswith('https://api.github.com/'):
         # TODO: handle 200 and 302 response
         headers = (("Accept", "application/octet-stream"),)

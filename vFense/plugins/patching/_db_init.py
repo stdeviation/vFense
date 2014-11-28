@@ -190,6 +190,5 @@ try:
         indexes = retrieve_indexes(name)
         initialize_file_indexes(name, indexes)
 
-
 except Exception as e:
     logger.exception(e)

@@ -13,8 +13,7 @@ from vFense.core.results import ApiResults
 from vFense.core.status_codes import (
     DbCodes, GenericCodes, GenericFailureCodes
 )
-from vFense.core.decorators import time_it, results_message
-from vFense.core.view._db_model import ViewKeys
+from vFense.core.decorators import time_it
 from vFense.core.view.manager import ViewManager
 from vFense.plugins.patching import Apps
 from vFense.plugins.patching.status_codes import (
@@ -28,13 +27,14 @@ from vFense.plugins.patching._constants import (
     CommonAppKeys, FileLocationUris, CommonFileKeys
 )
 from vFense.plugins.patching._db import (
-    fetch_file_servers_addresses, delete_app_data_for_agentid,
+    delete_app_data_for_agentid,
     update_apps_per_agent_by_view, update_app_data_by_agentid,
     update_app_data_by_agentid_and_appid, update_views_in_apps_by_view,
     update_apps_per_agent, delete_apps_per_agent_older_than,
     update_hidden_status, fetch_app_id_by_name_and_version,
     update_app_data_by_app_id, delete_apps_by_view
 )
+from vFense.plugins.relay_server._db import fetch_relay_addresses
 from vFense.plugins.vuln.search.vuln_search import RetrieveVulns
 import vFense.plugins.vuln.cve.cve as cve
 
@@ -124,7 +124,7 @@ def get_download_urls(view_name, app_id, file_data):
     file_uris_base = os.path.join(FileLocationUris.PACKAGES, app_id)
 
     for pkg in file_data:
-        file_servers = fetch_file_servers_addresses(view_name)
+        file_servers = fetch_relay_addresses(view_name)
         file_uris = []
 
         # If view defined file_servers exist then add those to the

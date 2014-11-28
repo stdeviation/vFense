@@ -341,7 +341,6 @@ class StorePatchingOperation(StoreAgentOperationManager):
             oper_type (str): The operation type,
                 etc.. install_os_apps, uninstall
         """
-
         oper_plugin = vFensePlugins.RV_PLUGIN
         results = ApiResults()
         results.fill_in_defaults()
@@ -386,13 +385,15 @@ class StorePatchingOperation(StoreAgentOperationManager):
                 )
 
                 pkg_data = []
+                app_dict_data = []
                 for app_id in valid_app_ids:
                     update_app_status_by_agentid_and_appid(
                         agent_id, app_id, CommonAppKeys.PENDING,
                         self.CurrentAppsPerAgentCollection
                     )
-
-                    pkg_data.append(self._get_apps_data(app_id, agent_id))
+                    app_data = self._get_apps_data(app_id, agent_id)
+                    pkg_data.append(app_data)
+                    app_dict_data.append(app_data.to_dict())
 
                 agent_queue = InstallQueueOperation()
                 agent_queue.operation = oper_type
@@ -400,14 +401,15 @@ class StorePatchingOperation(StoreAgentOperationManager):
                 agent_queue.plugin = oper_plugin
                 agent_queue.agent_id = agent_id
                 agent_queue.restart = install.restart
-                agent_queue.file_data = pkg_data
                 agent_queue.cpu_throttle = install.cpu_throttle
                 agent_queue.net_throttle = install.net_throttle
-
-                self._store_in_agent_queue(agent_queue)
-                manager.add_agent_to_install_operation(
+                agent_queue.file_data = pkg_data
+                oper_added = manager.add_agent_to_install_operation(
                     agent_id, operation_id, pkg_data
                 )
+                if oper_added:
+                    agent_queue.file_data = app_dict_data
+                    self._store_in_agent_queue(agent_queue)
 
         else:
             msg = '{0} operation failed to create'.format(oper_type)
