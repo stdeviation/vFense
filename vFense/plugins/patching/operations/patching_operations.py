@@ -63,6 +63,7 @@ class PatchingOperation(AgentOperationManager):
                 app_operation = OperPerApp()
                 app_operation.fill_in_defaults()
                 app_operation.agent_id = agent_id
+                app_operation.operation_id = operation_id
                 app_operation.app_id = app.app_id
                 app_operation.app_name = app.app_name
                 app_operation.app_version = app.app_version
