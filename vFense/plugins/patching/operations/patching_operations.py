@@ -128,7 +128,6 @@ class PatchingOperation(AgentOperationManager):
                 operation_id, agent_id, app_id, operation_data.to_dict_db()
             )
         )
-        print status_code, count, errors, generated_ids
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             self._update_app_stats(operation_id, agent_id, app_id)
             completed = True

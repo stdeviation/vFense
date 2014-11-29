@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-import logging
-import logging.config
-
-from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core._constants import Time
 from vFense.core._db_constants import DbTime
 from vFense.core.operations import (
@@ -22,10 +18,6 @@ from vFense.core.operations.status_codes import (
     AgentOperationCodes, OperationPerAgentCodes
 )
 from vFense.core.status_codes import DbCodes
-from vFense.core.results import ApiResults
-
-logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-logger = logging.getLogger('vfense_api')
 
 
 def get_agent_operation(operation_id):
@@ -274,7 +266,7 @@ class AgentOperationManager(object):
         )
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             status_code, count, errors, generated_ids = (
-                update_agent_operation_expire_time(operation_id, self.now)
+                update_agent_operation_expire_time(operation_id, self.db_time)
             )
             completed = True
 
@@ -309,7 +301,7 @@ class AgentOperationManager(object):
         )
         if status_code == DbCodes.Replaced or status_code == DbCodes.Unchanged:
             status_code, count, errors, generated_ids = (
-                update_agent_operation_pickup_time(operation_id, self.now)
+                update_agent_operation_pickup_time(operation_id, self.db_time)
             )
             completed = True
 
@@ -395,7 +387,7 @@ class AgentOperationManager(object):
             if operation.status == AgentOperationCodes.ResultsReceived:
                 status_code, count, errors, generated_ids = (
                     update_completed_and_pending_count(
-                        operation_id, self.now
+                        operation_id, self.db_time
                     )
                 )
                 if (
@@ -412,7 +404,7 @@ class AgentOperationManager(object):
 
                 status_code, count, errors, generated_ids = (
                     update_failed_and_pending_count(
-                        operation_id, self.now
+                        operation_id, self.db_time
                     )
                 )
                 if (

@@ -26,6 +26,8 @@ class AgentOperationRetriever(RetrieveBase):
             >>> operation = AgentOperationRetriever(view_name)
         """
         super(AgentOperationRetriever, self).__init__(**kwargs)
+        self.sort_key = sort_key
+        self.sort = sort
         sort_by_list = (
             [
                 AgentOperationKey.Operation,
@@ -37,8 +39,8 @@ class AgentOperationRetriever(RetrieveBase):
                 AgentOperationKey.ViewName,
             ]
         )
-        if sort_key not in sort_by_list:
-            sort_key = AgentOperationKey.CreatedTime
+        if self.sort_key not in sort_by_list:
+            self.sort_key = AgentOperationKey.CreatedTime
 
         self.agent_operations = (
             FetchAgentOperations(

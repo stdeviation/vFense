@@ -8,7 +8,6 @@ from json import loads
 from vFense.core._constants import CommonKeys
 from vFense.core.agent.manager import AgentManager
 from vFense.core.results import ApiResults
-from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.operations.results import OperationResults
 from vFense.core.operations.agent_operations import (

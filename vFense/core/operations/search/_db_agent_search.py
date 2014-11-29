@@ -15,6 +15,7 @@ from vFense.search._db_base import FetchBase
 class FetchAgentOperations(FetchBase):
     def __init__(self, sort_key=AgentOperationKey.CreatedTime, **kwargs):
         super(FetchAgentOperations, self).__init__(**kwargs)
+        self.sort_key = sort_key
 
     @time_it
     @catch_it((0, []))
