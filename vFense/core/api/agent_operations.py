@@ -4,16 +4,13 @@ from vFense.core.api._constants import (
     ApiArguments, AgentOperationsApiArguments
 )
 from vFense.core._constants import SortValues, DefaultQueryValues
-from vFense.core.operations._db_model import (
-    AgentOperationKey
-)
+from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.operations.agent_operations import get_agent_operation
 from vFense.core.operations.search.agent_search import AgentOperationRetriever
 from vFense.core.decorators import (
     authenticated_request, results_message, api_catch_it
 )
 from vFense.core.user.manager import UserManager
-from vFense.core.user import UserKeys
 
 
 class GetTransactionsHandler(BaseHandler):
@@ -21,9 +18,7 @@ class GetTransactionsHandler(BaseHandler):
     @authenticated_request
     def get(self):
         active_user = self.get_current_user()
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         count = (
             int(
                 self.get_argument(
@@ -80,9 +75,7 @@ class AgentOperationsHandler(BaseHandler):
     @authenticated_request
     def get(self, agent_id):
         active_user = self.get_current_user()
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         count = (
             int(
                 self.get_argument(
@@ -128,9 +121,7 @@ class TagOperationsHandler(BaseHandler):
     @authenticated_request
     def get(self, tag_id):
         active_user = self.get_current_user()
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         count = (
             int(
                 self.get_argument(
@@ -174,9 +165,7 @@ class OperationHandler(BaseHandler):
     @authenticated_request
     def get(self, operation_id):
         active_user = self.get_current_user()
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         count = (
             int(
                 self.get_argument(
