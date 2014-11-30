@@ -35,10 +35,12 @@ class StoreAgentOperationManager(object):
                 until the operation expires in the agent queue.
 
         Attributes:
-            view_name
-            username
-            server_queue_ttl
-            agent_queue_ttl
+            username (str): The name of the user who called this class
+            view_name (str): The current logged in customer
+            server_queue_ttl (int): The number of minutes,
+                until the operation expires in the server queue.
+            agent_queue_ttl (int): The number of minutes,
+                until the operation expires in the agent queue.
 
         Basic Usage:
             >>> from vFense.core.operations.store_agent_operation import StoreAgentOperation
@@ -85,21 +87,6 @@ class StoreAgentOperationManager(object):
             the queue.
         Args:
             operation (Agentperation): An instance of AgentOperation
-            action (str): This is the action that will be performed,
-                on the agent.
-                Examples.... reboot, shutdown, install_os_apps, etc..
-            plugin (str): The plugin that this operation is for.
-                Examples... core, rv, ra, vuln
-        Kwargs:
-            agentids (list): List of agent ids, this operation will
-                be performed on.
-            tag_id (str): The tag id that this operation will be performed on.
-            custom_key (str): This is a custom key that you want to add
-                to this operation.
-                default=None
-            custom_val (str|int|dict|list): The data you want to send back
-                to the agent. This must be sent with custom_key.
-                default=None
 
         Basic Usage:
             >>> from vFense.core.operations.store_agent_operation import StoreAgentOperationManager
@@ -115,23 +102,6 @@ class StoreAgentOperationManager(object):
 
         Returns:
             Instance of ApiResults
-            {
-                "rv_status_code": 6000,
-                "unchanged_ids": [],
-                "generated_ids": [
-                    "d5fb023c-82a0-4552-adc1-b3f83de7ae8a"
-                ],
-                "message": "operation created",
-                "data": [
-                    {
-                        "operation_id": "d5fb023c-82a0-4552-adc1-b3f83de7ae8a",
-                        "operation": "reboot",
-                        "agent_id": "456404f1-b185-4f4f-8fb7-bfb21b3a5d53",
-                        "plugin": "core"
-                    }
-                ],
-
-            }
         """
         data = []
         operation.action_performed_on = vFenseObjects.AGENT
