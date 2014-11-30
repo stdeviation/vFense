@@ -31,29 +31,7 @@ def get_agent_operation(operation_id):
         >>> get_agent_operation(operation_id)
 
     Results:
-        Dictionary
-        {
-            "agents_expired_count": 0,
-            "cpu_throttle": "normal",
-            "agents_total_count": 1,
-            "plugin": "rv",
-            "tag_id": null,
-            "agents_completed_with_errors_count": 0,
-            "created_by": "admin",
-            "agents_pending_pickup_count": 0,
-            "completed_time": 1397246851,
-            "operation_status": 6006,
-            "agents_completed_count": 1,
-            "operation_id": "8fed3dc7-33d4-4278-9bd4-398a68bf7f22",
-            "created_time": 1397246674,
-            "agents_pending_results_count": 0,
-            "operation": "install_os_apps",
-            "updated_time": 1397246851,
-            "net_throttle": 0,
-            "agents_failed_count": 0,
-            "restart": "none",
-            "view_name": "default"
-        }
+        AgentOperation instance.
     """
     operation = fetch_agent_operation(operation_id)
     if operation:
@@ -114,10 +92,18 @@ class AgentOperationManager(object):
     """
     def __init__(self, username=None, view_name=None):
         """
-        Kwrgs:
+        Kwargs:
             username (str): the name of the user who created the operation.
             view_name (str): the name of the view this user is part of.
                 default=None
+
+        Properties:
+            username (str): the name of the user who created the operation.
+            view_name (str): the name of the view this user is part of.
+                default=None
+            self.now (float): The current time in epoch.
+            self.db_time (r.epoch_time): The current time in epoch.
+            self.init_count (int): The default count.
 
         Basic Usage:
             >>> from vFense.core.operations.agent_operations import AgentOperationManager
@@ -129,34 +115,31 @@ class AgentOperationManager(object):
         self.view_name = view_name
         self.now = Time.now()
         self.db_time = DbTime.epoch_time_to_db_time(self.now)
-        self.INIT_COUNT = 0
+        self.init_count = 0
 
     def create_operation(self, operation):
         """Create the base operation. Here is where the
             operation_id is generated.
         Args:
-            operation (str): The operation (install_os_apps, reboot, etc..).
-            plugin (str): The plugin this operation is from (rv, core, ra, erc..).
-            agent_ids (list): List of agent ids, this operation is being performed on.
-            tag_id (str): The tag id, that this operation is being performed on.
-
-        Kwargs:
-            cpu_throttle (str): The default is normal, do not throttle.
-            net_throttle (int): The default is 0, do not throttle.
-            restart (str): The default is none, do not restart.
-            performed_on (str): The default is agent.
+            operation (AgentOperation): Instance of AgentOperation.
+                Check vFense.core.operations.__init__.py for the
+                properties of AgentOperation
 
         Basic Usage:
+            >>> from vFense.core.operations import AgentOperation
             >>> from vFense.core.operations.agent_operations import AgentOperationManager
+            >>> agent_operation = (
+                AgentOperation(
+                    created_by='admin', view_name='default',
+                    operation='reboot', plugin='core',
+                    agent_ids=['38c1c67e-436f-4652-8cae-f1a2ac2dd4a2'],
+                    performed_on='agent'
+                )
+            )
             >>> username = 'admin'
             >>> view_name = 'default'
             >>> oper = AgentOperationManager(username, view_name)
-            >>> operation = 'reboot'
-            >>> plugin = 'core'
-            >>> agent_ids = ['38c1c67e-436f-4652-8cae-f1a2ac2dd4a2']
-            >>> tag_id = None
-            >>> performed_on = 'agent'
-            >>> oper.create_operation(operation, plugin, agent_ids, tag_id)
+            >>> oper.create_operation(agent_operation)
 
         Returns:
             String The 36 character UUID of the operation that was created.
