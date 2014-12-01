@@ -16,6 +16,8 @@ class FetchJobs(FetchBase):
             JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
             JobKeys.Runs
         ]
+        self.base_filter = self._set_job_base_query()
+        self.merge_query = self._set_merge_query()
 
     @time_it
     @catch_it((0, []))
@@ -35,19 +37,17 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .get_all(job_id)
             .count()
             .run(conn)
         )
 
         data = (
-            base_filter
+            self.base_filter
             .get(job_id)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .run(conn)
         )
 
@@ -71,20 +71,18 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .count()
             .run(conn)
         )
 
         data = (
-            base_filter
+            self.base_filter
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .pluck(self.keys_to_pluck)
             .run(conn)
         )
@@ -111,22 +109,20 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .filter({JobKeys.Trigger: trigger})
             .count()
             .run(conn)
         )
 
         data = (
-            base_filter
+            self.base_filter
             .filter({JobKeys.Trigger: trigger})
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .pluck(self.keys_to_pluck)
             .run(conn)
         )
@@ -154,22 +150,20 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .filter({JobKeys.TimeZone: time_zone})
             .count()
             .run(conn)
         )
 
         data = (
-            base_filter
+            self.base_filter
             .filter({JobKeys.TimeZone: time_zone})
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .pluck(self.keys_to_pluck)
             .run(conn)
         )
@@ -196,22 +190,20 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .filter(lambda x: x[JobKeys.Name].match(name))
             .count()
             .run(conn)
         )
 
         data = (
-            base_filter
+            self.base_filter
             .filter(lambda x: x[JobKeys.Name].match(name))
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .pluck(self.keys_to_pluck)
             .run(conn)
         )
@@ -238,22 +230,20 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .filter({JobKeys.Operation: operation})
             .count()
             .run(conn)
         )
 
         data = (
-            base_filter
+            self.base_filter
             .filter({JobKeys.Operation: operation})
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .pluck(self.keys_to_pluck)
             .run(conn)
         )
@@ -280,10 +270,8 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .filter(
                 lambda x:
                 x[JobKeys.Kwargs][JobKwargKeys.Agents].contains(agent_id)
@@ -293,7 +281,7 @@ class FetchJobs(FetchBase):
         )
 
         data = (
-            base_filter
+            self.base_filter
             .filter(
                 lambda x:
                 x[JobKeys.Kwargs][JobKwargKeys.Agents].contains(agent_id)
@@ -301,7 +289,7 @@ class FetchJobs(FetchBase):
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .pluck(self.keys_to_pluck)
             .run(conn)
         )
@@ -328,10 +316,8 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .filter(
                 lambda x:
                 x[JobKeys.Kwargs][JobKwargKeys.Tags].contains(tag_id)
@@ -341,7 +327,7 @@ class FetchJobs(FetchBase):
         )
 
         data = (
-            base_filter
+            self.base_filter
             .filter(
                 lambda x:
                 x[JobKeys.Kwargs][JobKwargKeys.Tags].contains(tag_id)
@@ -349,7 +335,7 @@ class FetchJobs(FetchBase):
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .pluck(self.keys_to_pluck)
             .run(conn)
         )
@@ -377,10 +363,8 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .filter({JobKeys.Trigger: trigger})
             .filter(lambda x: x[JobKeys.Name].match(name))
             .count()
@@ -388,13 +372,13 @@ class FetchJobs(FetchBase):
         )
 
         data = (
-            base_filter
+            self.base_filter
             .filter({JobKeys.Trigger: trigger})
             .filter(lambda x: x[JobKeys.Name].match(name))
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .pluck(self.keys_to_pluck)
             .run(conn)
         )
@@ -423,10 +407,8 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .filter(
                 {
                     JobKeys.Trigger: trigger,
@@ -438,7 +420,7 @@ class FetchJobs(FetchBase):
         )
 
         data = (
-            base_filter
+            self.base_filter
             .filter(
                 {
                     JobKeys.Trigger: trigger,
@@ -448,7 +430,7 @@ class FetchJobs(FetchBase):
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .pluck(self.keys_to_pluck)
             .run(conn)
         )
@@ -481,10 +463,8 @@ class FetchJobs(FetchBase):
         """
         count = 0
         data = []
-        base_filter = self._set_job_base_query()
-        merge_query = self._set_merge_query()
         count = (
-            base_filter
+            self.base_filter
             .filter(
                 {
                     JobKeys.Trigger: trigger,
@@ -497,7 +477,7 @@ class FetchJobs(FetchBase):
         )
 
         data = (
-            base_filter
+            self.base_filter
             .filter(
                 {
                     JobKeys.Trigger: trigger,
@@ -508,7 +488,7 @@ class FetchJobs(FetchBase):
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
-            .merge(merge_query)
+            .merge(self.merge_query)
             .pluck(self.keys_to_pluck)
             .run(conn)
         )
@@ -552,19 +532,13 @@ class FetchJobs(FetchBase):
 
         return merge
 
+
 class FetchAgentJobs(FetchJobs):
     """Job database queries for an agent"""
     def __init__(self, agent_id=None, sort_key=JobKeys.NextRunTime, **kwargs):
-        super(FetchAgentJobs, self).__init__(**kwargs)
         self.agent_id = agent_id
         self.sort_key = sort_key
-
-        self.keys_to_pluck = [
-            JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
-            JobKeys.StartDate, JobKeys.TimeZone,
-            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
-            JobKeys.Runs
-        ]
+        super(FetchAgentJobs, self).__init__(**kwargs)
 
     def _set_job_base_query(self):
         base_filter = (
@@ -577,19 +551,13 @@ class FetchAgentJobs(FetchJobs):
         )
         return base_filter
 
+
 class FetchTagJobs(FetchJobs):
     """Job database queries for a tag"""
     def __init__(self, tag_id=None, sort_key=JobKeys.NextRunTime, **kwargs):
-        super(FetchTagJobs, self).__init__(**kwargs)
         self.tag_id = tag_id
         self.sort_key = sort_key
-
-        self.keys_to_pluck = [
-            JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
-            JobKeys.StartDate, JobKeys.TimeZone,
-            JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
-            JobKeys.Runs
-        ]
+        super(FetchTagJobs, self).__init__(**kwargs)
 
     def _set_job_base_query(self):
         base_filter = (
