@@ -1,6 +1,5 @@
 from vFense.db.client import db_create_close, r
 from vFense.core.decorators import catch_it, time_it
-from vFense.core._constants import SortValues
 from vFense.core.scheduler._db_model import (
     JobKeys, JobCollections, JobKwargKeys
 )
@@ -8,13 +7,12 @@ from vFense.search._db_base import FetchBase
 
 class FetchJobs(FetchBase):
     """Job database queries."""
-    def __init__(
-        self, sort=SortValues.DESC, sort_key=JobKeys.NextRunTime, **kwargs
-        ):
+    def __init__(self, sort_key=JobKeys.NextRunTime, **kwargs):
         super(FetchJobs, self).__init__(**kwargs)
+        self.sort_key = sort_key
         self.keys_to_pluck = [
             JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
-            JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
+            JobKeys.StartDate, JobKeys.TimeZone,
             JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
             JobKeys.Runs
         ]
@@ -540,14 +538,14 @@ class FetchJobs(FetchBase):
             {
                 JobKeys.NextRunTime: job[JobKeys.NextRunTime].to_epoch_time(),
                 JobKeys.StartDate: job[JobKeys.StartDate].to_epoch_time(),
-                JobKeys.EndDate: (
-                    r
-                    .branch(
-                        job[JobKeys.EndDate] != None,
-                        job[JobKeys.EndDate].to_epoch_time(),
-                        None
-                    )
-                )
+                #JobKeys.EndDate: (
+                #    r
+                #    .branch(
+                #        job[JobKeys.EndDate] != None,
+                #        job[JobKeys.EndDate].to_epoch_time(),
+                #        None
+                #    )
+                #)
             }
         )
 
@@ -555,16 +553,14 @@ class FetchJobs(FetchBase):
 
 class FetchAgentJobs(FetchJobs):
     """Job database queries for an agent"""
-    def __init__(
-        self, agent_id=None, sort=SortValues.DESC,
-        sort_key=JobKeys.NextRunTime, **kwargs
-        ):
+    def __init__(self, agent_id=None, sort_key=JobKeys.NextRunTime, **kwargs):
         super(FetchAgentJobs, self).__init__(**kwargs)
         self.agent_id = agent_id
+        self.sort_key = sort_key
 
         self.keys_to_pluck = [
             JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
-            JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
+            JobKeys.StartDate, JobKeys.TimeZone,
             JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
             JobKeys.Runs
         ]
@@ -582,16 +578,14 @@ class FetchAgentJobs(FetchJobs):
 
 class FetchTagJobs(FetchJobs):
     """Job database queries for a tag"""
-    def __init__(
-        self, tag_id=None, sort=SortValues.DESC,
-        sort_key=JobKeys.NextRunTime, **kwargs
-        ):
+    def __init__(self, tag_id=None, sort_key=JobKeys.NextRunTime, **kwargs):
         super(FetchTagJobs, self).__init__(**kwargs)
         self.tag_id = tag_id
+        self.sort_key = sort_key
 
         self.keys_to_pluck = [
             JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
-            JobKeys.StartDate, JobKeys.EndDate, JobKeys.TimeZone,
+            JobKeys.StartDate, JobKeys.TimeZone,
             JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
             JobKeys.Runs
         ]

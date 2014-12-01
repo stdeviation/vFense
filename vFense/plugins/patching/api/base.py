@@ -252,13 +252,10 @@ class AppsBaseHandler(BaseHandler):
 
         elif self.run_date and self.job_name:
             if not isinstance(self.run_date, float):
-                run_date = float(self.run_date)
+                self.run_date = float(self.run_date)
 
             results = (
-                self.schedule_install_or_uninstall(
-                    job, install, run_date, self.job_name,
-                    self.time_zone, oper
-                )
+                self.schedule_install_or_uninstall(job, install, oper)
             )
 
         else:
