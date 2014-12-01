@@ -1,4 +1,5 @@
 from vFense.db.client import db_create_close, r
+from vFense.core.agent._db_model import AgentCollections, AgentKeys
 from vFense.core.decorators import catch_it, time_it
 from vFense.core.scheduler._db_model import (
     JobKeys, JobCollections, JobKwargKeys
@@ -12,7 +13,7 @@ class FetchJobs(FetchBase):
         self.sort_key = sort_key
         self.keys_to_pluck = [
             JobKeys.Id, JobKeys.Name, JobKeys.ViewName,
-            JobKeys.StartDate, JobKeys.TimeZone,
+            JobKeys.StartDate, JobKeys.TimeZone, JobKeys.EndDate,
             JobKeys.NextRunTime, JobKeys.Trigger, JobKeys.Operation,
             JobKeys.Runs
         ]
@@ -35,6 +36,7 @@ class FetchJobs(FetchBase):
             (count, job_data)
         >>>
         """
+        agent_merge = self._set_agent_merge_query()
         count = 0
         data = []
         count = (
@@ -48,6 +50,7 @@ class FetchJobs(FetchBase):
             self.base_filter
             .get(job_id)
             .merge(self.merge_query)
+            .merge(agent_merge)
             .run(conn)
         )
 
@@ -519,14 +522,36 @@ class FetchJobs(FetchBase):
                 JobKeys.NextRunTime: job[JobKeys.NextRunTime].to_epoch_time(),
                 JobKeys.StartDate: job[JobKeys.StartDate].to_epoch_time(),
                 JobKeys.CreatedTime: job[JobKeys.CreatedTime].to_epoch_time(),
-                #JobKeys.EndDate: (
-                #    r
-                #    .branch(
-                #        job[JobKeys.EndDate] != None,
-                #        job[JobKeys.EndDate].to_epoch_time(),
-                #        None
-                #    )
-                #)
+                JobKeys.EndDate: (
+                    r
+                    .branch(
+                        job.has_fields(JobKeys.EndDate),
+                        job[JobKeys.EndDate].to_epoch_time(),
+                        job[JobKeys.StartDate].to_epoch_time()
+                    )
+                )
+            }
+        )
+
+        return merge
+
+    def _set_agent_merge_query(self):
+        merge = (
+            lambda job:
+            {
+                JobKwargKeys.Agents: (
+                    job[JobKeys.Kwargs]['agent_ids'].do(
+                        lambda agent_id:
+                            r
+                            .table(AgentCollections.Agents)
+                            .get(agent_id)
+                            .pluck(
+                                AgentKeys.ComputerName,
+                                AgentKeys.AgentId,
+                                AgentKeys.DisplayName
+                            )
+                    )
+                )
             }
         )
 
