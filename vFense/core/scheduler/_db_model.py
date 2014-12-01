@@ -17,6 +17,7 @@ class JobKeys():
     NextRunTime = 'next_run_time'
     Trigger = 'trigger'
     JobState = 'job_state'
+    CreatedTime = 'created_time'
 
 class JobKwargKeys():
     Agents = 'agents'

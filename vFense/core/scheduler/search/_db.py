@@ -538,6 +538,7 @@ class FetchJobs(FetchBase):
             {
                 JobKeys.NextRunTime: job[JobKeys.NextRunTime].to_epoch_time(),
                 JobKeys.StartDate: job[JobKeys.StartDate].to_epoch_time(),
+                JobKeys.CreatedTime: job[JobKeys.CreatedTime].to_epoch_time(),
                 #JobKeys.EndDate: (
                 #    r
                 #    .branch(

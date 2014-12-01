@@ -50,7 +50,7 @@ class DateKeys(object):
     RunDate = 'run_date'
 
 def job_id():
-    return '[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}'
+    return '[a-f0-9]{32}'
 
 def job_regex():
     return '({0})'.format(job_id())
