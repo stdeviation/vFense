@@ -38634,6 +38634,551 @@
     {
         "status": "available", 
         "kb": "", 
+        "description": "Python 3 library to handle problem reports\n This Python library provides an interface for creating, modifying,\n and accessing standardized problem reports for program and kernel\n crashes and packaging bugs.\n .\n These problem reports use standard Debian control format syntax\n (RFC822).", 
+        "support_url": "https://wiki.ubuntu.com/Apport", 
+        "release_date": 1414641600, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "45c3384b007d796b13ca97fcb77d0976a95254e351717f539fc0acbe160e8e8f", 
+                "file_name": "python3-problem-report_2.14.1-0ubuntu3.6_all.deb", 
+                "file_size": 9032, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/a/apport/python3-problem-report_2.14.1-0ubuntu3.6_all.deb"
+            }
+        ], 
+        "dependencies": [], 
+        "version": "2.14.1-0ubuntu3.6", 
+        "vendor_name": "", 
+        "name": "python3-problem-report"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "Python 3 library for Apport crash report handling", 
+        "support_url": "https://wiki.ubuntu.com/Apport", 
+        "release_date": 1414641600, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "f68a7533cf31433fb6ddbca332ba83aa1849be8ac5c28c959fa78b1f3920e1c8", 
+                "file_name": "python3-apport_2.14.1-0ubuntu3.6_all.deb", 
+                "file_size": 74972, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/a/apport/python3-apport_2.14.1-0ubuntu3.6_all.deb"
+            }
+        ], 
+        "dependencies": [], 
+        "version": "2.14.1-0ubuntu3.6", 
+        "vendor_name": "", 
+        "name": "python3-apport"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "automatically generate crash reports for debugging\n apport automatically collects data from crashed processes and\n compiles a problem report in /var/crash/. This utilizes the crashdump\n helper hook provided by the Ubuntu kernel.\n .\n This package also provides a command line frontend for browsing and\n handling the crash reports. For desktops, you should consider\n installing the GTK+ or Qt user interface (apport-gtk or apport-kde).", 
+        "support_url": "https://wiki.ubuntu.com/Apport", 
+        "release_date": 1414641600, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "7b8b074b31d0f0e7042a79ddab8938448dbbaeb6634df5aa038740993c445856", 
+                "file_name": "apport_2.14.1-0ubuntu3.6_all.deb", 
+                "file_size": 178448, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/a/apport/apport_2.14.1-0ubuntu3.6_all.deb"
+            }, 
+            {
+                "file_hash": "f68a7533cf31433fb6ddbca332ba83aa1849be8ac5c28c959fa78b1f3920e1c8", 
+                "file_name": "python3-apport_2.14.1-0ubuntu3.6_all.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/a/apport/python3-apport_2.14.1-0ubuntu3.6_all.deb", 
+                "file_size": 74972
+            }
+        ], 
+        "dependencies": [
+            {
+                "version": "2.14.1-0ubuntu3.6", 
+                "name": "python3-apport", 
+                "app_id": "38ca5a6ff653acc3dba4b53f30ce36c24a36830f31c1667f620eb175dd754abd"
+            }
+        ], 
+        "version": "2.14.1-0ubuntu3.6", 
+        "vendor_name": "", 
+        "name": "apport"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "GTK+ frontend for the apport crash report system\n apport automatically collects data from crashed processes and\n compiles a problem report in /var/crash/. This utilizes the crashdump\n helper hook provided by the Ubuntu kernel.\n .\n This package provides a GTK+ frontend for browsing and handling the\n crash reports.", 
+        "support_url": "https://wiki.ubuntu.com/Apport", 
+        "release_date": 1414641600, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "d8723ba99d9c477894b91310bc46228446427c3d770b72ab1e767d3eff9067ea", 
+                "file_name": "apport-gtk_2.14.1-0ubuntu3.6_all.deb", 
+                "file_size": 9558, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/a/apport/apport-gtk_2.14.1-0ubuntu3.6_all.deb"
+            }, 
+            {
+                "file_hash": "f68a7533cf31433fb6ddbca332ba83aa1849be8ac5c28c959fa78b1f3920e1c8", 
+                "file_name": "python3-apport_2.14.1-0ubuntu3.6_all.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/a/apport/python3-apport_2.14.1-0ubuntu3.6_all.deb", 
+                "file_size": 74972
+            }
+        ], 
+        "dependencies": [
+            {
+                "version": "2.14.1-0ubuntu3.6", 
+                "name": "python3-apport", 
+                "app_id": "38ca5a6ff653acc3dba4b53f30ce36c24a36830f31c1667f620eb175dd754abd"
+            }
+        ], 
+        "version": "2.14.1-0ubuntu3.6", 
+        "vendor_name": "", 
+        "name": "apport-gtk"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "Settings library for plugins - OpenCompositing Project\n The OpenCompositing Project brings 3D desktop visual effects that improve\n usability of the X Window System and provide increased productivity\n through plugins and themes contributed by the community giving a\n rich desktop experience.\n .\n This package contains the library for plugins to configure settings.", 
+        "support_url": "", 
+        "release_date": 1416286800, 
+        "vendor_severity": "optional", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "91a42931b27a452ce4794e07c844443747090f0be84ebea66e3c2cbc4f5bd3d8", 
+                "file_name": "libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 117238, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb"
+            }, 
+            {
+                "file_hash": "8dff56e26919b070358000c2a3e998d30666374480f313b662d459f061401fc6", 
+                "file_name": "compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 154712
+            }, 
+            {
+                "file_hash": "634bac83806ecf3188d6d05930860b85cd262434241b66c69f5c52c8cb24a17c", 
+                "file_name": "compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 765618
+            }, 
+            {
+                "file_hash": "51aef2d569822a3263d6f6a4350857e819d46767fd375eedf0520dbbb65b6ace", 
+                "file_name": "libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 49178
+            }, 
+            {
+                "file_hash": "7c548800d75f5b2dca92ec39612d0e05512dec5fde405e067fa9a548bb63fa73", 
+                "file_name": "compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 295712
+            }
+        ], 
+        "dependencies": [
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-gnome", 
+                "app_id": "4ca80fcf5f592e732651b43b37ae77c0f6e18e40590229d3c5957fd2ecc311d8"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-plugins-default", 
+                "app_id": "3f76189609e836e41f24dff11e0be10f610c85091bddddf7f7d815dacab0ab8f"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "libdecoration0", 
+                "app_id": "389c82c698189b87d3f54b8dd0a8de78a231763c5f07b1af398043c04b74c024"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-core", 
+                "app_id": "35de99fedf33e595fffd80d9a2a6f8f34dcdb55aeb3950391f75915bd535ffc2"
+            }
+        ], 
+        "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+        "vendor_name": "", 
+        "name": "libcompizconfig0"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "OpenGL window and compositing manager - GNOME window decorator\n Compiz brings to life a variety of visual effects that make the Linux desktop\n easier to use, more powerful and intuitive, and more accessible for users\n with special needs.\n .\n This package contains files needed to integrate compiz with the GNOME desktop\n environment.", 
+        "support_url": "", 
+        "release_date": 1416286800, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "8dff56e26919b070358000c2a3e998d30666374480f313b662d459f061401fc6", 
+                "file_name": "compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 154712, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb"
+            }, 
+            {
+                "file_hash": "91a42931b27a452ce4794e07c844443747090f0be84ebea66e3c2cbc4f5bd3d8", 
+                "file_name": "libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 117238
+            }, 
+            {
+                "file_hash": "634bac83806ecf3188d6d05930860b85cd262434241b66c69f5c52c8cb24a17c", 
+                "file_name": "compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 765618
+            }, 
+            {
+                "file_hash": "51aef2d569822a3263d6f6a4350857e819d46767fd375eedf0520dbbb65b6ace", 
+                "file_name": "libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 49178
+            }, 
+            {
+                "file_hash": "7c548800d75f5b2dca92ec39612d0e05512dec5fde405e067fa9a548bb63fa73", 
+                "file_name": "compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 295712
+            }
+        ], 
+        "dependencies": [
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "libcompizconfig0", 
+                "app_id": "1ff3a921036cdba8ff88d880df124bf663836602b8b9a9189587ac98109a6ef7"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-plugins-default", 
+                "app_id": "3f76189609e836e41f24dff11e0be10f610c85091bddddf7f7d815dacab0ab8f"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "libdecoration0", 
+                "app_id": "389c82c698189b87d3f54b8dd0a8de78a231763c5f07b1af398043c04b74c024"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-core", 
+                "app_id": "35de99fedf33e595fffd80d9a2a6f8f34dcdb55aeb3950391f75915bd535ffc2"
+            }
+        ], 
+        "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+        "vendor_name": "", 
+        "name": "compiz-gnome"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "OpenGL window and compositing manager - default plugins\n Compiz brings to life a variety of visual effects that make the Linux desktop\n easier to use, more powerful and intuitive, and more accessible for users\n with special needs.\n .\n This package contains the default compiz plugins we activate in ubuntu coming\n with core compiz.", 
+        "support_url": "", 
+        "release_date": 1416286800, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "634bac83806ecf3188d6d05930860b85cd262434241b66c69f5c52c8cb24a17c", 
+                "file_name": "compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 765618, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb"
+            }, 
+            {
+                "file_hash": "91a42931b27a452ce4794e07c844443747090f0be84ebea66e3c2cbc4f5bd3d8", 
+                "file_name": "libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 117238
+            }, 
+            {
+                "file_hash": "8dff56e26919b070358000c2a3e998d30666374480f313b662d459f061401fc6", 
+                "file_name": "compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 154712
+            }, 
+            {
+                "file_hash": "51aef2d569822a3263d6f6a4350857e819d46767fd375eedf0520dbbb65b6ace", 
+                "file_name": "libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 49178
+            }, 
+            {
+                "file_hash": "7c548800d75f5b2dca92ec39612d0e05512dec5fde405e067fa9a548bb63fa73", 
+                "file_name": "compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 295712
+            }
+        ], 
+        "dependencies": [
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "libcompizconfig0", 
+                "app_id": "1ff3a921036cdba8ff88d880df124bf663836602b8b9a9189587ac98109a6ef7"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-gnome", 
+                "app_id": "4ca80fcf5f592e732651b43b37ae77c0f6e18e40590229d3c5957fd2ecc311d8"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "libdecoration0", 
+                "app_id": "389c82c698189b87d3f54b8dd0a8de78a231763c5f07b1af398043c04b74c024"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-core", 
+                "app_id": "35de99fedf33e595fffd80d9a2a6f8f34dcdb55aeb3950391f75915bd535ffc2"
+            }
+        ], 
+        "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+        "vendor_name": "", 
+        "name": "compiz-plugins-default"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "Compiz window decoration library\n The window decoration library is responsible for drawing the window borders\n and title bar of windows managed by Compiz. It is used by window decorators\n like gtk-window-decorator.", 
+        "support_url": "", 
+        "release_date": 1416286800, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "51aef2d569822a3263d6f6a4350857e819d46767fd375eedf0520dbbb65b6ace", 
+                "file_name": "libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 49178, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb"
+            }, 
+            {
+                "file_hash": "91a42931b27a452ce4794e07c844443747090f0be84ebea66e3c2cbc4f5bd3d8", 
+                "file_name": "libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 117238
+            }, 
+            {
+                "file_hash": "8dff56e26919b070358000c2a3e998d30666374480f313b662d459f061401fc6", 
+                "file_name": "compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 154712
+            }, 
+            {
+                "file_hash": "634bac83806ecf3188d6d05930860b85cd262434241b66c69f5c52c8cb24a17c", 
+                "file_name": "compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 765618
+            }, 
+            {
+                "file_hash": "7c548800d75f5b2dca92ec39612d0e05512dec5fde405e067fa9a548bb63fa73", 
+                "file_name": "compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 295712
+            }
+        ], 
+        "dependencies": [
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "libcompizconfig0", 
+                "app_id": "1ff3a921036cdba8ff88d880df124bf663836602b8b9a9189587ac98109a6ef7"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-gnome", 
+                "app_id": "4ca80fcf5f592e732651b43b37ae77c0f6e18e40590229d3c5957fd2ecc311d8"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-plugins-default", 
+                "app_id": "3f76189609e836e41f24dff11e0be10f610c85091bddddf7f7d815dacab0ab8f"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-core", 
+                "app_id": "35de99fedf33e595fffd80d9a2a6f8f34dcdb55aeb3950391f75915bd535ffc2"
+            }
+        ], 
+        "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+        "vendor_name": "", 
+        "name": "libdecoration0"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "OpenGL window and compositing manager\n Compiz brings to life a variety of visual effects that make the Linux desktop\n easier to use, more powerful and intuitive, and more accessible for users\n with special needs.\n .\n Compiz combines together a window manager and a composite manager using\n OpenGL for rendering. A \"window manager\" allows the manipulation of the\n multiple applications and dialog windows that are presented on the screen. A\n \"composite manager\" allows windows and other graphics to be combined together\n to create composite images. Compiz achieves its stunning effects by doing\n both of these functions.", 
+        "support_url": "", 
+        "release_date": 1416286800, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "7c548800d75f5b2dca92ec39612d0e05512dec5fde405e067fa9a548bb63fa73", 
+                "file_name": "compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 295712, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb"
+            }, 
+            {
+                "file_hash": "91a42931b27a452ce4794e07c844443747090f0be84ebea66e3c2cbc4f5bd3d8", 
+                "file_name": "libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 117238
+            }, 
+            {
+                "file_hash": "8dff56e26919b070358000c2a3e998d30666374480f313b662d459f061401fc6", 
+                "file_name": "compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 154712
+            }, 
+            {
+                "file_hash": "634bac83806ecf3188d6d05930860b85cd262434241b66c69f5c52c8cb24a17c", 
+                "file_name": "compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 765618
+            }, 
+            {
+                "file_hash": "51aef2d569822a3263d6f6a4350857e819d46767fd375eedf0520dbbb65b6ace", 
+                "file_name": "libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 49178
+            }
+        ], 
+        "dependencies": [
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "libcompizconfig0", 
+                "app_id": "1ff3a921036cdba8ff88d880df124bf663836602b8b9a9189587ac98109a6ef7"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-gnome", 
+                "app_id": "4ca80fcf5f592e732651b43b37ae77c0f6e18e40590229d3c5957fd2ecc311d8"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-plugins-default", 
+                "app_id": "3f76189609e836e41f24dff11e0be10f610c85091bddddf7f7d815dacab0ab8f"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "libdecoration0", 
+                "app_id": "389c82c698189b87d3f54b8dd0a8de78a231763c5f07b1af398043c04b74c024"
+            }
+        ], 
+        "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+        "vendor_name": "", 
+        "name": "compiz-core"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "OpenGL window and compositing manager\n Compiz brings to life a variety of visual effects that make the Linux desktop\n easier to use, more powerful and intuitive, and more accessible for users\n with special needs.\n .\n This metapackage provides the components necessary for running compiz. It\n provides the compiz core, a set of standard plugins, a window decorator using\n the Gtk toolkit and the files necessary to integrate compiz with the GNOME\n desktop environment.", 
+        "support_url": "", 
+        "release_date": 1416286800, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "eae3c6f564de1889ecf675385f10594f18b5c9d5bfaf90456d5d3e500897cce7", 
+                "file_name": "compiz_0.9.11.3+14.04.20141104-0ubuntu1_all.deb", 
+                "file_size": 4048, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz_0.9.11.3+14.04.20141104-0ubuntu1_all.deb"
+            }, 
+            {
+                "file_hash": "91a42931b27a452ce4794e07c844443747090f0be84ebea66e3c2cbc4f5bd3d8", 
+                "file_name": "libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libcompizconfig0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 117238
+            }, 
+            {
+                "file_hash": "8dff56e26919b070358000c2a3e998d30666374480f313b662d459f061401fc6", 
+                "file_name": "compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-gnome_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 154712
+            }, 
+            {
+                "file_hash": "634bac83806ecf3188d6d05930860b85cd262434241b66c69f5c52c8cb24a17c", 
+                "file_name": "compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-plugins-default_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 765618
+            }, 
+            {
+                "file_hash": "51aef2d569822a3263d6f6a4350857e819d46767fd375eedf0520dbbb65b6ace", 
+                "file_name": "libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/libdecoration0_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 49178
+            }, 
+            {
+                "file_hash": "7c548800d75f5b2dca92ec39612d0e05512dec5fde405e067fa9a548bb63fa73", 
+                "file_name": "compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/c/compiz/compiz-core_0.9.11.3+14.04.20141104-0ubuntu1_amd64.deb", 
+                "file_size": 295712
+            }
+        ], 
+        "dependencies": [
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "libcompizconfig0", 
+                "app_id": "1ff3a921036cdba8ff88d880df124bf663836602b8b9a9189587ac98109a6ef7"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-gnome", 
+                "app_id": "4ca80fcf5f592e732651b43b37ae77c0f6e18e40590229d3c5957fd2ecc311d8"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-plugins-default", 
+                "app_id": "3f76189609e836e41f24dff11e0be10f610c85091bddddf7f7d815dacab0ab8f"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "libdecoration0", 
+                "app_id": "389c82c698189b87d3f54b8dd0a8de78a231763c5f07b1af398043c04b74c024"
+            }, 
+            {
+                "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+                "name": "compiz-core", 
+                "app_id": "35de99fedf33e595fffd80d9a2a6f8f34dcdb55aeb3950391f75915bd535ffc2"
+            }
+        ], 
+        "version": "1:0.9.11.3+14.04.20141104-0ubuntu1", 
+        "vendor_name": "", 
+        "name": "compiz"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
         "description": "simple interprocess messaging system (X11 deps)\n D-Bus is a message bus, used for sending messages between applications.\n Conceptually, it fits somewhere in between raw sockets and CORBA in\n terms of complexity.\n .\n This package contains the dbus-launch utility which is necessary for\n packages using a D-Bus session bus.\n .\n See the dbus description for more information about D-Bus in general.", 
         "support_url": "http://dbus.freedesktop.org/", 
         "release_date": 1417064400, 
@@ -38654,6 +39199,54 @@
         "version": "1.6.18-0ubuntu4.3", 
         "vendor_name": "", 
         "name": "dbus-x11"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "Safe and easy web browser from Mozilla\n Firefox delivers safe, easy web browsing. A familiar user interface,\n enhanced security features including protection from online identity theft,\n and integrated search let you get the most out of the web.", 
+        "support_url": "", 
+        "release_date": 1417496400, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "49faf4f3dbe0a393b1087b5413ba1002a1e323a1fa65d2abe5e805145eecba8d", 
+                "file_name": "firefox_34.0+build2-0ubuntu0.14.04.1_amd64.deb", 
+                "file_size": 38873616, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/f/firefox/firefox_34.0+build2-0ubuntu0.14.04.1_amd64.deb"
+            }
+        ], 
+        "dependencies": [], 
+        "version": "34.0+build2-0ubuntu0.14.04.1", 
+        "vendor_name": "", 
+        "name": "firefox"
+    }, 
+    {
+        "status": "available", 
+        "kb": "", 
+        "description": "English language pack for Firefox", 
+        "support_url": "", 
+        "release_date": 1417496400, 
+        "vendor_severity": "recommended", 
+        "install_date": 0, 
+        "reboot_required": "no", 
+        "uninstallable": "yes", 
+        "repo": "trusty-updates/main", 
+        "file_data": [
+            {
+                "file_hash": "7de276fe51afffa915cd563f569a0331c16bbeb850654b85ce512f3f761dce0e", 
+                "file_name": "firefox-locale-en_34.0+build2-0ubuntu0.14.04.1_amd64.deb", 
+                "file_size": 624558, 
+                "file_uri": "http://us.archive.ubuntu.com/ubuntu/pool/main/f/firefox/firefox-locale-en_34.0+build2-0ubuntu0.14.04.1_amd64.deb"
+            }
+        ], 
+        "dependencies": [], 
+        "version": "34.0+build2-0ubuntu0.14.04.1", 
+        "vendor_name": "", 
+        "name": "firefox-locale-en"
     }, 
     {
         "status": "available", 

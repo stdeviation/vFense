@@ -540,7 +540,11 @@ class FetchJobs(FetchBase):
             lambda job:
             {
                 JobKwargKeys.Agents: (
-                    job[JobKeys.Kwargs]['agent_ids'].do(
+                    r
+                    .expr(
+                        job[JobKeys.Kwargs]['agent_ids']
+                    )
+                    .map(
                         lambda agent_id:
                             r
                             .table(AgentCollections.Agents)
