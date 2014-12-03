@@ -1,0 +1,155 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1947&#45;01] Low: rhevm&#45;log&#45;collector security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 2 Dec 2014 18:53:30 &#45;0500 -->
+<!--X-Message-Id: 201412022353.sB2NrTHU023806@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1947-01] Low: rhevm-log-collector security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00010.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1947-01] Low: rhevm-log-collector security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1947-01] Low: rhevm-log-collector security update</li>
+<li><em>Date</em>: Tue, 2 Dec 2014 23:53:29 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: rhevm-log-collector security update
+Advisory ID:       RHSA-2014:1947-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1947.html">https://rhn.redhat.com/errata/RHSA-2014-1947.html</a>
+Issue date:        2014-12-02
+CVE Names:         CVE-2014-3561 
+=====================================================================
+
+1. Summary:
+
+An updated rhevm-log-collector package that fixes one security issue is now
+available for Red Hat Enterprise Virtualization 3.
+
+Red Hat Product Security has rated this update as having Low security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.4 - noarch
+
+3. Description:
+
+The rhevm-log-collector utility allows users to easily collect log files
+from all systems in their Red Hat Enterprise Virtualization environment.
+
+It was found that rhevm-log-collector called sosreport with the PostgreSQL
+database password passed as a command line parameter. A local attacker
+could read this password by monitoring a process listing. The password
+would also be written to a log file, which could potentially be read by a
+local attacker. (CVE-2014-3561)
+
+This issue was discovered by David Jorm of Red Hat Product Security.
+
+All rhevm-log-collector users are advised to upgrade to this updated
+package, which contains a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1122781 - CVE-2014-3561 ovirt-engine-log-collector: database password disclosed in process listing
+
+6. Package List:
+
+RHEV-M 3.4:
+
+Source:
+rhevm-log-collector-3.4.5-2.el6ev.src.rpm
+
+noarch:
+rhevm-log-collector-3.4.5-2.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3561">https://access.redhat.com/security/cve/CVE-2014-3561</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUflDZXlSAg2UNWIIRAs6gAJ0YWn4ewY8mWSc3E5cSJ7beWlLU9gCfVT3Q
+vAp0YcENw1I4SEeqMlm0hPo=
+=OJ6A
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00010.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

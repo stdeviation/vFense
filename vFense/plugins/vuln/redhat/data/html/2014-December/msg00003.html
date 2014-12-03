@@ -1,0 +1,169 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1939&#45;01] Low: openstack&#45;trove security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 2 Dec 2014 12:16:46 &#45;0500 -->
+<!--X-Message-Id: 201412021716.sB2HGjLV024320@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1939-01] Low: openstack-trove security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1939-01] Low: openstack-trove security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1939-01] Low: openstack-trove security update</li>
+<li><em>Date</em>: Tue, 2 Dec 2014 17:16:45 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: openstack-trove security update
+Advisory ID:       RHSA-2014:1939-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1939.html">https://rhn.redhat.com/errata/RHSA-2014-1939.html</a>
+Issue date:        2014-12-02
+CVE Names:         CVE-2014-7230 CVE-2014-7231 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-trove packages that fix two security issues are now
+available for Red Hat Enterprise Linux OpenStack Platform 5.0 for Red Hat
+Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Low security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7 - noarch
+
+3. Description:
+
+OpenStack Database (trove) is Database as a Service for Openstack. It runs
+entirely on OpenStack, with the goal of allowing users to quickly and
+easily utilize the features of a database without the burden of handling
+complex administrative tasks. Cloud users and database administrators can
+provision and manage multiple database instances as needed.
+
+It was found that the processutils.execute() and strutils.mask_password()
+functions did not correctly sanitize the authentication details from their
+output before storing them in log files. This could allow an attacker with
+read access to these log files to obtain sensitive information such as
+passwords. (CVE-2014-7230, CVE-2014-7231)
+
+The openstack-trove packages have been upgraded to upstream version
+2014.1.3, which provides a number of bug fixes and enhancements over the
+previous version. (BZ#1149745)
+
+All openstack-trove users are advised to upgrade to these updated packages,
+which correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1147722 - CVE-2014-7230 CVE-2014-7231 OpenStack Cinder, Nova, Trove: potential leak of passwords into log files
+1149745 - Rebase openstack-trove to 2014.1.3
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7:
+
+Source:
+openstack-trove-2014.1.3-1.el7ost.src.rpm
+
+noarch:
+openstack-trove-2014.1.3-1.el7ost.noarch.rpm
+openstack-trove-api-2014.1.3-1.el7ost.noarch.rpm
+openstack-trove-common-2014.1.3-1.el7ost.noarch.rpm
+openstack-trove-conductor-2014.1.3-1.el7ost.noarch.rpm
+openstack-trove-guestagent-2014.1.3-1.el7ost.noarch.rpm
+openstack-trove-taskmanager-2014.1.3-1.el7ost.noarch.rpm
+python-trove-2014.1.3-1.el7ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7230">https://access.redhat.com/security/cve/CVE-2014-7230</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7231">https://access.redhat.com/security/cve/CVE-2014-7231</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUffPnXlSAg2UNWIIRAsz3AKCPIQT54upJK9ug4yfF7W2QS9W9dgCdHBfQ
+cuJi/eddAQs7ZIQRhuWDADU=
+=lFU6
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00002.html">Date Prev</a>][<a href="msg00004.html">Date Next</a>] &nbsp; [<a href="msg00002.html">Thread Prev</a>][<a href="msg00004.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00003">Thread Index</A>]
+[<A HREF="date.html#00003">Date Index</A>]
+[<A HREF="author.html#00003">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

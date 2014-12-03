@@ -1,0 +1,167 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1941&#45;01] Low: qemu&#45;kvm&#45;rhev security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 2 Dec 2014 12:17:28 &#45;0500 -->
+<!--X-Message-Id: 201412021717.sB2HHRPB031631@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1941-01] Low: qemu-kvm-rhev security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1941-01] Low: qemu-kvm-rhev security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1941-01] Low: qemu-kvm-rhev security update</li>
+<li><em>Date</em>: Tue, 2 Dec 2014 17:17:26 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: qemu-kvm-rhev security update
+Advisory ID:       RHSA-2014:1941-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1941.html">https://rhn.redhat.com/errata/RHSA-2014-1941.html</a>
+Issue date:        2014-12-02
+CVE Names:         CVE-2014-3615 
+=====================================================================
+
+1. Summary:
+
+Updated qemu-kvm-rhev packages that fix one security issue are now
+available for Red Hat Enterprise Linux OpenStack Platform 5.0 for Red Hat
+Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Low security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7 - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. The qemu-kvm-rhev package provides the
+user-space component for running virtual machines using KVM, in
+environments managed by Red Hat Enterprise Linux OpenStack Platform.
+
+An information leak flaw was found in the way QEMU's VGA emulator accessed
+frame buffer memory for high resolution displays. A privileged guest user
+could use this flaw to leak memory contents of the host to the guest by
+setting the display to use a high resolution in the guest. (CVE-2014-3615)
+
+This issue was discovered by Laszlo Ersek of Red Hat.
+
+All users of qemu-kvm-rhev are advised to upgrade to these updated
+packages, which contain a backported patch to correct this issue. After
+installing this update, shut down all running virtual machines. Once all
+virtual machines have shut down, start them again for this update to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1139115 - CVE-2014-3615 Qemu: information leakage when guest sets high resolution
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7:
+
+Source:
+qemu-kvm-rhev-1.5.3-60.el7_0.10.src.rpm
+
+x86_64:
+libcacard-devel-rhev-1.5.3-60.el7_0.10.x86_64.rpm
+libcacard-rhev-1.5.3-60.el7_0.10.x86_64.rpm
+libcacard-tools-rhev-1.5.3-60.el7_0.10.x86_64.rpm
+qemu-img-rhev-1.5.3-60.el7_0.10.x86_64.rpm
+qemu-kvm-common-rhev-1.5.3-60.el7_0.10.x86_64.rpm
+qemu-kvm-rhev-1.5.3-60.el7_0.10.x86_64.rpm
+qemu-kvm-rhev-debuginfo-1.5.3-60.el7_0.10.x86_64.rpm
+qemu-kvm-tools-rhev-1.5.3-60.el7_0.10.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3615">https://access.redhat.com/security/cve/CVE-2014-3615</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUffQcXlSAg2UNWIIRAq+KAKDDuMxXwv6lr2MCUPGZbWc+Zy630gCfdQcr
+Bl8lN8D3kVhd0OeuuOLgIAc=
+=PBha
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

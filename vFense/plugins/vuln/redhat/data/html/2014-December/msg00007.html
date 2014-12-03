@@ -1,0 +1,218 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1943&#45;01] Moderate: kernel&#45;rt security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 2 Dec 2014 12:18:23 &#45;0500 -->
+<!--X-Message-Id: 201412021718.sB2HIMCM018648@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1943-01] Moderate: kernel-rt security, bug fix,	and enhanceme</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00006.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00006.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1943-01] Moderate: kernel-rt security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1943-01] Moderate: kernel-rt security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 2 Dec 2014 17:18:22 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: kernel-rt security, bug fix, and enhancement update
+Advisory ID:       RHSA-2014:1943-01
+Product:           Red Hat Enterprise MRG for RHEL-6
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1943.html">https://rhn.redhat.com/errata/RHSA-2014-1943.html</a>
+Issue date:        2014-12-02
+CVE Names:         CVE-2014-7283 CVE-2014-7825 CVE-2014-7826 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix three security issues, several bugs,
+and add various enhancements are now available for Red Hat Enterprise MRG
+2.5.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 6 Server v.2 - noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+A denial of service flaw was found in the way the Linux kernel's XFS file
+system implementation ordered directory hashes under certain conditions.
+A local attacker could use this flaw to corrupt the file system by creating
+directories with colliding hash values, potentially resulting in a system
+crash. (CVE-2014-7283, Moderate)
+
+An out-of-bounds memory access flaw was found in the syscall tracing
+functionality of the Linux kernel's perf subsystem. A local, unprivileged
+user could use this flaw to crash the system. (CVE-2014-7825, Moderate)
+
+An out-of-bounds memory access flaw was found in the syscall tracing
+functionality of the Linux kernel's ftrace subsystem. On a system with
+ftrace syscall tracing enabled, a local, unprivileged user could use this
+flaw to crash the system, or escalate their privileges. (CVE-2014-7826,
+Moderate)
+
+Red Hat would like to thank Robert Święcki for reporting CVE-2014-7825 and
+CVE-2014-7826.
+
+The kernel-rt packages have been upgraded to upstream version 3.10.58,
+which provides a number of bug fixes and enhancements over the previous
+version. (BZ#1158105)
+
+This update also fixes the following bugs:
+
+* Automatic NUMA balancing on a low priority thread could cause memory
+contention with a high priority thread running in the same process.
+This contention could trigger poor realtime performance on the system.
+In order to avoid this potential memory contention, the MRG Realtime kernel
+now disables NUMA_BALANCING_DEFAULT_ENABLED. (BZ#1158940)
+
+* When tracing a bug, WARN*() functions could flood the ring buffer making
+the trace useless or even overflowing the ring buffer. To address this
+issue, a traceoff_on_warning option was added to the kernel command line
+and as a sysctl option. This option disables the writing of the warning
+messages to the ring buffer, which results in a cleaner trace for
+debugging. (BZ#1155200)
+
+In addition, this update adds the following enhancement:
+
+* Support for XHCI (USB 3) is now enabled in the MRG Realtime kernel.
+(BZ#1134095)
+
+All kernel-rt users are advised to upgrade to these updated packages, which
+contain correct these issues and add these enhancements. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not use
+&quot;rpm -Uvh&quot; as that will remove the running kernel binaries from your
+system. You may use &quot;rpm -e&quot; to remove old kernels after determining that
+the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1134095 - Enable XHCI (USB 3.0) for MRG
+1148777 - CVE-2014-7283 kernel: xfs: directory hash ordering denial of service
+1158105 - rebase to latest upstream stable 3.10 kernel
+1161565 - CVE-2014-7825 CVE-2014-7826 kernel: insufficient syscall number validation in perf and ftrace subsystems
+
+6. Package List:
+
+MRG Realtime for RHEL 6 Server v.2:
+
+Source:
+kernel-rt-3.10.58-rt62.58.el6rt.src.rpm
+
+noarch:
+kernel-rt-doc-3.10.58-rt62.58.el6rt.noarch.rpm
+kernel-rt-firmware-3.10.58-rt62.58.el6rt.noarch.rpm
+
+x86_64:
+kernel-rt-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-debug-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-debug-debuginfo-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-debug-devel-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-debuginfo-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-debuginfo-common-x86_64-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-devel-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-trace-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-trace-debuginfo-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-trace-devel-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-vanilla-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-3.10.58-rt62.58.el6rt.x86_64.rpm
+kernel-rt-vanilla-devel-3.10.58-rt62.58.el6rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7283">https://access.redhat.com/security/cve/CVE-2014-7283</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7825">https://access.redhat.com/security/cve/CVE-2014-7825</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7826">https://access.redhat.com/security/cve/CVE-2014-7826</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUffRPXlSAg2UNWIIRAqe7AKC9CEAg+zKYnWJcbaFAF3G/O07wtQCffLla
+kueIEqSB0ILMaDeikkM2dUo=
+=uxPB
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00006.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00006.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00007">Thread Index</A>]
+[<A HREF="date.html#00007">Date Index</A>]
+[<A HREF="author.html#00007">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
