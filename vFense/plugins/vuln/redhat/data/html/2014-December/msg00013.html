@@ -1,0 +1,197 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1956&#45;01] Moderate: wpa_supplicant security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 3 Dec 2014 14:30:09 &#45;0500 -->
+<!--X-Message-Id: 201412031930.sB3JU9AV002663@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1956-01] Moderate: wpa_supplicant security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00012.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1956-01] Moderate: wpa_supplicant security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1956-01] Moderate: wpa_supplicant security update</li>
+<li><em>Date</em>: Wed, 3 Dec 2014 19:30:08 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: wpa_supplicant security update
+Advisory ID:       RHSA-2014:1956-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1956.html">https://rhn.redhat.com/errata/RHSA-2014-1956.html</a>
+Issue date:        2014-12-03
+CVE Names:         CVE-2014-3686 
+=====================================================================
+
+1. Summary:
+
+An updated wpa_supplicant package that fixes one security issue is now
+available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+
+3. Description:
+
+The wpa_supplicant package contains an 802.1X Supplicant with support for
+WEP, WPA, WPA2 (IEEE 802.11i / RSN), and various EAP authentication
+methods. It implements key negotiation with a WPA Authenticator for client
+stations and controls the roaming and IEEE 802.11 authentication and
+association of the WLAN driver.
+
+A command injection flaw was found in the way the wpa_cli utility executed
+action scripts. If wpa_cli was run in daemon mode to execute an action
+script (specified using the -a command line option), and wpa_supplicant was
+configured to connect to a P2P group, malicious P2P group parameters could
+cause wpa_cli to execute arbitrary code. (CVE-2014-3686)
+
+Red Hat would like to thank Jouni Malinen for reporting this issue.
+
+All wpa_supplicant users are advised to upgrade to this updated package,
+which contains a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1151259 - CVE-2014-3686 wpa_supplicant and hostapd: wpa_cli and hostapd_cli remote command execution issue
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+wpa_supplicant-2.0-13.el7_0.src.rpm
+
+x86_64:
+wpa_supplicant-2.0-13.el7_0.x86_64.rpm
+wpa_supplicant-debuginfo-2.0-13.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+wpa_supplicant-2.0-13.el7_0.src.rpm
+
+x86_64:
+wpa_supplicant-2.0-13.el7_0.x86_64.rpm
+wpa_supplicant-debuginfo-2.0-13.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+wpa_supplicant-2.0-13.el7_0.src.rpm
+
+ppc64:
+wpa_supplicant-2.0-13.el7_0.ppc64.rpm
+wpa_supplicant-debuginfo-2.0-13.el7_0.ppc64.rpm
+
+s390x:
+wpa_supplicant-2.0-13.el7_0.s390x.rpm
+wpa_supplicant-debuginfo-2.0-13.el7_0.s390x.rpm
+
+x86_64:
+wpa_supplicant-2.0-13.el7_0.x86_64.rpm
+wpa_supplicant-debuginfo-2.0-13.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+wpa_supplicant-2.0-13.el7_0.src.rpm
+
+x86_64:
+wpa_supplicant-2.0-13.el7_0.x86_64.rpm
+wpa_supplicant-debuginfo-2.0-13.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3686">https://access.redhat.com/security/cve/CVE-2014-3686</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUf2SwXlSAg2UNWIIRApUwAJ48U45SYlLj1wa/t3AS5fn7TwMq7QCfY3OR
+CPExuF9X4TakRzUYDDn2tKM=
+=5Piw
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00012.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
