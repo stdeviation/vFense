@@ -13,7 +13,7 @@ logger = logging.getLogger('vfense_api')
 def retrieve_collections(conn=None):
     """Retrieve a list of collections
     Basic Usage:
-        >>> from vFense._db import retrieve_collections
+        >>> from vFense.core._db import retrieve_collections
         >>> retrieve_collections()
 
     Returns:
@@ -34,7 +34,7 @@ def retrieve_primary_key(collection, conn=None):
         collection (str):  The table aka collection you are doing the query against.
 
     Basic Usage:
-        >>> from vFense._db import retrieve_primary_key
+        >>> from vFense.core._db import retrieve_primary_key
         >>> collection = 'users'
         >>> retrieve_primary_key(collection)
 
@@ -61,7 +61,7 @@ def retrieve_indexes(collection, conn=None):
         collection (str):  The table aka collection you are doing the query against.
 
     Basic Usage:
-        >>> from vFense._db import retrieve_indexes
+        >>> from vFense.core._db import retrieve_indexes
         >>> collection, = 'users'
         >>> retrieve_indexes(collection)
 
@@ -89,7 +89,7 @@ def retrieve_object(primary_key, collection, conn=None):
         collection (str):  The table aka collection you are doing the query against.
 
     Basic Usage:
-        >>> from vFense._db import retrieve_object
+        >>> from vFense.core._db import retrieve_object
         >>> collection, = 'users'
         >>> primary_key = 'admin'
         >>> retrieve_object(primary_key, collection)
@@ -106,6 +106,33 @@ def retrieve_object(primary_key, collection, conn=None):
 
     return data
 
+@catch_it(False)
+@db_create_close
+def db_exist(name=None, conn=None):
+    """Verify if datbase exist
+    Args:
+        name (str): The name of the database:
+            default=conn.db
+
+    Basic Usage:
+        >>> from vFense.core._db import db_exist
+        >>> db_exist()
+
+    Returns:
+        Boolean
+    """
+    databases = (
+        r
+        .db_list()
+        .run(conn)
+    )
+    if conn.db in databases:
+        db_exist = True
+    else:
+        db_exist = False
+
+    return db_exist
+
 @time_it
 @catch_it(False)
 @db_create_close
@@ -116,7 +143,7 @@ def object_exist(primary_key, collection, conn=None):
         collection (str):  The table aka collection you are doing the query against.
 
     Basic Usage:
-        >>> from vFense._db import object_exist
+        >>> from vFense.core._db import object_exist
         >>> collection, = 'users'
         >>> primary_key = 'admin'
         >>> object_exist(primary_key, collection)
@@ -139,6 +166,33 @@ def object_exist(primary_key, collection, conn=None):
 
 @catch_it({})
 @db_create_close
+def create_db(name=None, conn=None):
+    """Create a new db
+    Args:
+        name (str):  The name of the collection you are creating.
+            default=conn.db
+
+    Basic Usage:
+        >>> from vFense.core._db import create_db
+        >>> name = "vFense"
+        >>> create_db(name)
+
+    Returns:
+        Boolean
+    """
+    if not name:
+        name = conn.db
+
+    data = (
+        r
+        .db_create(name)
+        .run(conn)
+    )
+
+    return data
+
+@catch_it({})
+@db_create_close
 def create_collection(name, primary_key, conn=None):
     """Create a new collection
     Args:
@@ -146,7 +200,7 @@ def create_collection(name, primary_key, conn=None):
         primary_key (str):  The primary key of this collection.
 
     Basic Usage:
-        >>> from vFense._db import create_collection
+        >>> from vFense.core._db import create_collection
         >>> name = "apps_per_agent"
         >>> key = "id"
         >>> create_collection(name, key)
