@@ -19,6 +19,7 @@ class FetchJobs(FetchBase):
         ]
         self.base_filter = self._set_job_base_query()
         self.merge_query = self._set_merge_query()
+        self.agent_merge = self._set_agent_merge_query()
 
     @time_it
     @catch_it((0, []))
@@ -36,7 +37,6 @@ class FetchJobs(FetchBase):
             (count, job_data)
         >>>
         """
-        agent_merge = self._set_agent_merge_query()
         count = 0
         data = []
         count = (
@@ -50,7 +50,7 @@ class FetchJobs(FetchBase):
             self.base_filter
             .get(job_id)
             .merge(self.merge_query)
-            .merge(agent_merge)
+            .merge(self.agent_merge)
             .run(conn)
         )
 
