@@ -1,40 +1,42 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.db.client import db_create_close, r
+from vFense.db.client import r
+from vFense.db.manager import DbInit
 from vFense.plugins.vuln.windows._db_model import (
     WindowsVulnerabilityCollections, WindowsVulnerabilityKeys,
     WindowsVulnerabilityIndexes
 )
 from vFense.plugins.vuln.windows._constants import WindowsVulnSubKeys
-from vFense.core._db import (
-    retrieve_collections, create_collection, retrieve_indexes
-)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
-def initialize_collections(collection, current_collections):
-    name, key = collection
-    if name not in current_collections:
-        create_collection(name, key)
 
-@db_create_close
-def initialize_windows_indexes(collection, indexes, conn=None):
-    if not WindowsVulnerabilityIndexes.CveIds in indexes:
+collections = [
+    (
+        WindowsVulnerabilityCollections.Vulnerabilities,
+        WindowsVulnerabilityKeys.VulnerabilityId
+    ),
+]
+secondary_indexes = [
+    (
+        WindowsVulnerabilityCollections.Vulnerabilities,
+        WindowsVulnerabilityIndexes.CveIds,
         (
             r
-            .table(collection)
+            .table(WindowsVulnerabilityCollections.Vulnerabilities)
             .index_create(
                 WindowsVulnerabilityIndexes.CveIds,
                 multi=True
             )
-            .run(conn)
         )
-
-    if not WindowsVulnerabilityIndexes.ComponentKb in indexes:
+    ),
+    (
+        WindowsVulnerabilityCollections.Vulnerabilities,
+        WindowsVulnerabilityIndexes.ComponentKb,
         (
             r
-            .table(collection)
+            .table(WindowsVulnerabilityCollections.Vulnerabilities)
             .index_create(
                 WindowsVulnerabilityIndexes.ComponentKb,
                 lambda x:
@@ -42,22 +44,13 @@ def initialize_windows_indexes(collection, indexes, conn=None):
                     lambda y: y[WindowsVulnSubKeys.KB]
                 ), multi=True
             )
-            .run(conn)
         )
+    )
+]
 
 try:
-    windows_collections = [
-        (
-            WindowsVulnerabilityCollections.Vulnerabilities,
-            WindowsVulnerabilityKeys.VulnerabilityId
-        ),
-    ]
-    current_collections = retrieve_collections()
-    for collection in windows_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_windows_indexes(name, indexes)
+    db = DbInit()
+    db.initialize(collections, secondary_indexes)
 
 except Exception as e:
     logger.exception(e)

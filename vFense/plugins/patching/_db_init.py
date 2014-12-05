@@ -1,47 +1,53 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.db.client import db_create_close, r
+from vFense.db.client import r
+from vFense.db.manager import DbInit
 from vFense.plugins.patching._db_model import (
     DbCommonAppIndexes, DbCommonAppKeys, DbCommonAppPerAgentKeys,
     DbCommonAppPerAgentIndexes, AppCollections, FileCollections,
     FilesIndexes, FilesKey
 )
-from vFense.core._db import (
-    retrieve_collections, create_collection, retrieve_indexes
-)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
-def initialize_collections(collection, current_collections):
-    name, key = collection
-    if name not in current_collections:
-        create_collection(name, key)
+collections = [
+    (AppCollections.UniqueApplications, DbCommonAppKeys.AppId),
+    (AppCollections.CustomApps, DbCommonAppKeys.AppId),
+    (AppCollections.SupportedApps, DbCommonAppKeys.AppId),
+    (AppCollections.vFenseApps, DbCommonAppKeys.AppId),
+    (AppCollections.AppsPerAgent, DbCommonAppPerAgentKeys.Id),
+    (AppCollections.CustomAppsPerAgent, DbCommonAppPerAgentKeys.Id),
+    (AppCollections.SupportedAppsPerAgent, DbCommonAppPerAgentKeys.Id),
+    (AppCollections.vFenseAppsPerAgent, DbCommonAppPerAgentKeys.Id),
+    (FileCollections.Files, FilesKey.FileName)
+]
 
-@db_create_close
-def initialize_app_indexes(collection, indexes, conn=None):
-    if not DbCommonAppIndexes.vFenseSeverity in indexes:
+secondary_indexes = [
+    (
+        AppCollections.UniqueApplications,
+        DbCommonAppIndexes.vFenseSeverity,
         (
             r
-            .table(collection)
-            .index_create(
-                DbCommonAppIndexes.vFenseSeverity
-            )
-            .run(conn)
+            .table(AppCollections.UniqueApplications)
+            .index_create(DbCommonAppIndexes.vFenseSeverity)
         )
-
-    if not DbCommonAppIndexes.Name in indexes:
+    ),
+    (
+        AppCollections.UniqueApplications,
+        DbCommonAppIndexes.Name,
         (
             r
-            .table(collection)
+            .table(AppCollections.UniqueApplications)
             .index_create(DbCommonAppIndexes.Name)
-            .run(conn)
         )
-
-    if not DbCommonAppIndexes.NameAndVersion in indexes:
+    ),
+    (
+        AppCollections.UniqueApplications,
+        DbCommonAppIndexes.NameAndVersion,
         (
             r
-            .table(collection)
+            .table(AppCollections.UniqueApplications)
             .index_create(
                 DbCommonAppIndexes.NameAndVersion,
                 lambda x:
@@ -50,13 +56,14 @@ def initialize_app_indexes(collection, indexes, conn=None):
                     x[DbCommonAppKeys.Version]
                 ]
             )
-            .run(conn)
         )
-
-    if not DbCommonAppIndexes.AppIdAndvFenseSeverity in indexes:
+    ),
+    (
+        AppCollections.UniqueApplications,
+        DbCommonAppIndexes.AppIdAndvFenseSeverity,
         (
             r
-            .table(collection)
+            .table(AppCollections.UniqueApplications)
             .index_create(
                 DbCommonAppIndexes.AppIdAndvFenseSeverity,
                 lambda x:
@@ -65,56 +72,202 @@ def initialize_app_indexes(collection, indexes, conn=None):
                     x[DbCommonAppKeys.vFenseSeverity]
                 ]
             )
-            .run(conn)
         )
-
-@db_create_close
-def initialize_file_indexes(collection, indexes, conn=None):
-    if not FilesIndexes.FilesDownloadStatus in indexes:
+    ),
+    (
+        AppCollections.CustomApps,
+        DbCommonAppIndexes.vFenseSeverity,
         (
             r
-            .table(collection)
+            .table(AppCollections.CustomApps)
+            .index_create(DbCommonAppIndexes.vFenseSeverity)
+        )
+    ),
+    (
+        AppCollections.CustomApps,
+        DbCommonAppIndexes.Name,
+        (
+            r
+            .table(AppCollections.CustomApps)
+            .index_create(DbCommonAppIndexes.Name)
+        )
+    ),
+    (
+        AppCollections.CustomApps,
+        DbCommonAppIndexes.NameAndVersion,
+        (
+            r
+            .table(AppCollections.CustomApps)
             .index_create(
-                FilesIndexes.FilesDownloadStatus
+                DbCommonAppIndexes.NameAndVersion,
+                lambda x:
+                [
+                    x[DbCommonAppKeys.Name],
+                    x[DbCommonAppKeys.Version]
+                ]
             )
-            .run(conn)
         )
-
-@db_create_close
-def initialize_apps_per_agent_indexes(collection, indexes, conn=None):
-    if not DbCommonAppPerAgentIndexes.Status in indexes:
+    ),
+    (
+        AppCollections.CustomApps,
+        DbCommonAppIndexes.AppIdAndvFenseSeverity,
         (
             r
-            .table(collection)
+            .table(AppCollections.CustomApps)
+            .index_create(
+                DbCommonAppIndexes.AppIdAndvFenseSeverity,
+                lambda x:
+                [
+                    x[DbCommonAppKeys.AppId],
+                    x[DbCommonAppKeys.vFenseSeverity]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.SupportedApps,
+        DbCommonAppIndexes.vFenseSeverity,
+        (
+            r
+            .table(AppCollections.SupportedApps)
+            .index_create(DbCommonAppIndexes.vFenseSeverity)
+        )
+    ),
+    (
+        AppCollections.SupportedApps,
+        DbCommonAppIndexes.Name,
+        (
+            r
+            .table(AppCollections.SupportedApps)
+            .index_create(DbCommonAppIndexes.Name)
+        )
+    ),
+    (
+        AppCollections.SupportedApps,
+        DbCommonAppIndexes.NameAndVersion,
+        (
+            r
+            .table(AppCollections.SupportedApps)
+            .index_create(
+                DbCommonAppIndexes.NameAndVersion,
+                lambda x:
+                [
+                    x[DbCommonAppKeys.Name],
+                    x[DbCommonAppKeys.Version]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.SupportedApps,
+        DbCommonAppIndexes.AppIdAndvFenseSeverity,
+        (
+            r
+            .table(AppCollections.SupportedApps)
+            .index_create(
+                DbCommonAppIndexes.AppIdAndvFenseSeverity,
+                lambda x:
+                [
+                    x[DbCommonAppKeys.AppId],
+                    x[DbCommonAppKeys.vFenseSeverity]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.vFenseApps,
+        DbCommonAppIndexes.vFenseSeverity,
+        (
+            r
+            .table(AppCollections.vFenseApps)
+            .index_create(DbCommonAppIndexes.vFenseSeverity)
+        )
+    ),
+    (
+        AppCollections.vFenseApps,
+        DbCommonAppIndexes.Name,
+        (
+            r
+            .table(AppCollections.vFenseApps)
+            .index_create(DbCommonAppIndexes.Name)
+        )
+    ),
+    (
+        AppCollections.vFenseApps,
+        DbCommonAppIndexes.NameAndVersion,
+        (
+            r
+            .table(AppCollections.vFenseApps)
+            .index_create(
+                DbCommonAppIndexes.NameAndVersion,
+                lambda x:
+                [
+                    x[DbCommonAppKeys.Name],
+                    x[DbCommonAppKeys.Version]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.vFenseApps,
+        DbCommonAppIndexes.AppIdAndvFenseSeverity,
+        (
+            r
+            .table(AppCollections.vFenseApps)
+            .index_create(
+                DbCommonAppIndexes.AppIdAndvFenseSeverity,
+                lambda x:
+                [
+                    x[DbCommonAppKeys.AppId],
+                    x[DbCommonAppKeys.vFenseSeverity]
+                ]
+            )
+        )
+    ),
+    (
+        FileCollections.Files,
+        FilesIndexes.FilesDownloadStatus,
+        (
+            r
+            .table(FileCollections.Files)
+            .index_create(FilesIndexes.FilesDownloadStatus)
+        )
+    ),
+    (
+        AppCollections.AppsPerAgent,
+        DbCommonAppPerAgentIndexes.Status,
+        (
+            r
+            .table(AppCollections.AppsPerAgent)
             .index_create(
                 DbCommonAppPerAgentIndexes.Status
             )
-            .run(conn)
         )
-
-    if not DbCommonAppPerAgentIndexes.AgentId in indexes:
+    ),
+    (
+        AppCollections.AppsPerAgent,
+        DbCommonAppPerAgentIndexes.AgentId,
         (
             r
-            .table(collection)
-            .index_create(
-                DbCommonAppPerAgentIndexes.AgentId
-            )
-            .run(conn)
+            .table(AppCollections.AppsPerAgent)
+            .index_create(DbCommonAppPerAgentIndexes.AgentId)
         )
-
-    if not DbCommonAppPerAgentIndexes.AppId in indexes:
+    ),
+    (
+        AppCollections.AppsPerAgent,
+        DbCommonAppPerAgentIndexes.AppId,
         (
             r
-            .table(collection)
-            .index_create(
-                DbCommonAppPerAgentIndexes.AppId
-            ).run(conn)
+            .table(AppCollections.AppsPerAgent,)
+            .index_create(DbCommonAppPerAgentIndexes.AppId)
         )
-
-    if not DbCommonAppPerAgentIndexes.AgentIdAndAppId in indexes:
+    ),
+    (
+        AppCollections.AppsPerAgent,
+        DbCommonAppPerAgentIndexes.AgentIdAndAppId,
         (
             r
-            .table(collection)
+            .table(AppCollections.AppsPerAgent)
             .index_create(
                 DbCommonAppPerAgentIndexes.AgentIdAndAppId,
                 lambda x:
@@ -123,14 +276,14 @@ def initialize_apps_per_agent_indexes(collection, indexes, conn=None):
                     x[DbCommonAppPerAgentKeys.AppId]
                 ]
             )
-            .run(conn)
         )
-
-
-    if not DbCommonAppPerAgentIndexes.AppIdAndStatus in indexes:
+    ),
+    (
+        AppCollections.AppsPerAgent,
+        DbCommonAppPerAgentIndexes.AppIdAndStatus,
         (
             r
-            .table(collection)
+            .table(AppCollections.AppsPerAgent)
             .index_create(
                 DbCommonAppPerAgentIndexes.AppIdAndStatus,
                 lambda x:
@@ -139,13 +292,14 @@ def initialize_apps_per_agent_indexes(collection, indexes, conn=None):
                     x[DbCommonAppPerAgentKeys.Status]
                 ]
             )
-            .run(conn)
         )
-
-    if not DbCommonAppPerAgentIndexes.StatusAndAgentId in indexes:
+    ),
+    (
+        AppCollections.AppsPerAgent,
+        DbCommonAppPerAgentIndexes.StatusAndAgentId,
         (
             r
-            .table(collection)
+            .table(AppCollections.AppsPerAgent)
             .index_create(
                 DbCommonAppPerAgentIndexes.StatusAndAgentId,
                 lambda x:
@@ -154,41 +308,244 @@ def initialize_apps_per_agent_indexes(collection, indexes, conn=None):
                     x[DbCommonAppPerAgentKeys.AgentId]
                 ]
             )
-            .run(conn)
         )
+    ),
+    (
+        AppCollections.CustomAppsPerAgent,
+        DbCommonAppPerAgentIndexes.Status,
+        (
+            r
+            .table(AppCollections.CustomAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.Status
+            )
+        )
+    ),
+    (
+        AppCollections.CustomAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AgentId,
+        (
+            r
+            .table(AppCollections.CustomAppsPerAgent)
+            .index_create(DbCommonAppPerAgentIndexes.AgentId)
+        )
+    ),
+    (
+        AppCollections.CustomAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AppId,
+        (
+            r
+            .table(AppCollections.CustomAppsPerAgent,)
+            .index_create(DbCommonAppPerAgentIndexes.AppId)
+        )
+    ),
+    (
+        AppCollections.CustomAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AgentIdAndAppId,
+        (
+            r
+            .table(AppCollections.CustomAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.AgentIdAndAppId,
+                lambda x:
+                [
+                    x[DbCommonAppPerAgentKeys.AgentId],
+                    x[DbCommonAppPerAgentKeys.AppId]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.CustomAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AppIdAndStatus,
+        (
+            r
+            .table(AppCollections.CustomAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.AppIdAndStatus,
+                lambda x:
+                [
+                    x[DbCommonAppPerAgentKeys.AppId],
+                    x[DbCommonAppPerAgentKeys.Status]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.CustomAppsPerAgent,
+        DbCommonAppPerAgentIndexes.StatusAndAgentId,
+        (
+            r
+            .table(AppCollections.CustomAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.StatusAndAgentId,
+                lambda x:
+                [
+                    x[DbCommonAppPerAgentKeys.Status],
+                    x[DbCommonAppPerAgentKeys.AgentId]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.SupportedAppsPerAgent,
+        DbCommonAppPerAgentIndexes.Status,
+        (
+            r
+            .table(AppCollections.SupportedAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.Status
+            )
+        )
+    ),
+    (
+        AppCollections.SupportedAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AgentId,
+        (
+            r
+            .table(AppCollections.SupportedAppsPerAgent)
+            .index_create(DbCommonAppPerAgentIndexes.AgentId)
+        )
+    ),
+    (
+        AppCollections.SupportedAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AppId,
+        (
+            r
+            .table(AppCollections.SupportedAppsPerAgent,)
+            .index_create(DbCommonAppPerAgentIndexes.AppId)
+        )
+    ),
+    (
+        AppCollections.SupportedAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AgentIdAndAppId,
+        (
+            r
+            .table(AppCollections.SupportedAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.AgentIdAndAppId,
+                lambda x:
+                [
+                    x[DbCommonAppPerAgentKeys.AgentId],
+                    x[DbCommonAppPerAgentKeys.AppId]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.SupportedAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AppIdAndStatus,
+        (
+            r
+            .table(AppCollections.SupportedAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.AppIdAndStatus,
+                lambda x:
+                [
+                    x[DbCommonAppPerAgentKeys.AppId],
+                    x[DbCommonAppPerAgentKeys.Status]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.SupportedAppsPerAgent,
+        DbCommonAppPerAgentIndexes.StatusAndAgentId,
+        (
+            r
+            .table(AppCollections.SupportedAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.StatusAndAgentId,
+                lambda x:
+                [
+                    x[DbCommonAppPerAgentKeys.Status],
+                    x[DbCommonAppPerAgentKeys.AgentId]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.vFenseAppsPerAgent,
+        DbCommonAppPerAgentIndexes.Status,
+        (
+            r
+            .table(AppCollections.vFenseAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.Status
+            )
+        )
+    ),
+    (
+        AppCollections.vFenseAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AgentId,
+        (
+            r
+            .table(AppCollections.vFenseAppsPerAgent)
+            .index_create(DbCommonAppPerAgentIndexes.AgentId)
+        )
+    ),
+    (
+        AppCollections.vFenseAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AppId,
+        (
+            r
+            .table(AppCollections.vFenseAppsPerAgent,)
+            .index_create(DbCommonAppPerAgentIndexes.AppId)
+        )
+    ),
+    (
+        AppCollections.vFenseAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AgentIdAndAppId,
+        (
+            r
+            .table(AppCollections.vFenseAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.AgentIdAndAppId,
+                lambda x:
+                [
+                    x[DbCommonAppPerAgentKeys.AgentId],
+                    x[DbCommonAppPerAgentKeys.AppId]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.vFenseAppsPerAgent,
+        DbCommonAppPerAgentIndexes.AppIdAndStatus,
+        (
+            r
+            .table(AppCollections.vFenseAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.AppIdAndStatus,
+                lambda x:
+                [
+                    x[DbCommonAppPerAgentKeys.AppId],
+                    x[DbCommonAppPerAgentKeys.Status]
+                ]
+            )
+        )
+    ),
+    (
+        AppCollections.vFenseAppsPerAgent,
+        DbCommonAppPerAgentIndexes.StatusAndAgentId,
+        (
+            r
+            .table(AppCollections.vFenseAppsPerAgent)
+            .index_create(
+                DbCommonAppPerAgentIndexes.StatusAndAgentId,
+                lambda x:
+                [
+                    x[DbCommonAppPerAgentKeys.Status],
+                    x[DbCommonAppPerAgentKeys.AgentId]
+                ]
+            )
+        )
+    )
+]
 
 try:
-    app_collections = [
-        (AppCollections.UniqueApplications, DbCommonAppKeys.AppId),
-        (AppCollections.CustomApps, DbCommonAppKeys.AppId),
-        (AppCollections.SupportedApps, DbCommonAppKeys.AppId),
-        (AppCollections.vFenseApps, DbCommonAppKeys.AppId),
-    ]
-    apps_per_agent_collections = [
-        (AppCollections.AppsPerAgent, DbCommonAppPerAgentKeys.Id),
-        (AppCollections.CustomAppsPerAgent, DbCommonAppPerAgentKeys.Id),
-        (AppCollections.SupportedAppsPerAgent, DbCommonAppPerAgentKeys.Id),
-        (AppCollections.vFenseAppsPerAgent, DbCommonAppPerAgentKeys.Id),
-    ]
-    file_collections = [
-        (FileCollections.Files, FilesKey.FileName)
-    ]
-    current_collections = retrieve_collections()
-    for collection in app_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_app_indexes(name, indexes)
-    for collection in apps_per_agent_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_apps_per_agent_indexes(name, indexes)
-    for collection in file_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_file_indexes(name, indexes)
+    db = DbInit()
+    db.initialize(collections, secondary_indexes)
 
 except Exception as e:
     logger.exception(e)

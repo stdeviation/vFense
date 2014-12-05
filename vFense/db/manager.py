@@ -17,7 +17,7 @@ class DbInit(object):
         initialize_collection
     """
     def __init__(self):
-        if not db_exist:
+        if not db_exist():
             create_db()
         self.current_collections = retrieve_collections()
 

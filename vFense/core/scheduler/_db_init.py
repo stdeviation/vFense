@@ -1,55 +1,44 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.db.client import db_create_close, r
+from vFense.db.client import r
+from vFense.db.manager import DbInit
 from vFense.core.scheduler._db_model import (
     JobCollections, JobKeys, JobIndexes
-)
-from vFense.core._db import (
-    retrieve_collections, create_collection, retrieve_indexes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
-def initialize_collections(collection, current_collections):
-    name, key = collection
-    if name not in current_collections:
-        create_collection(name, key)
+collections = [
+    (JobCollections.Jobs, JobKeys.Id),
+    (JobCollections.AdministrativeJobs, JobKeys.Id),
+]
 
-@db_create_close
-def initialize_job_indexes(collection, indexes, conn=None):
-    if not JobIndexes.ViewName in indexes:
+secondary_indexes = [
+    (
+        JobCollections.Jobs,
+        JobIndexes.ViewName,
         (
             r
-            .table(collection)
-            .index_create(
-                JobIndexes.ViewName
-            )
-            .run(conn)
+            .table(JobCollections.Jobs)
+            .index_create(JobIndexes.ViewName)
         )
-
-    if not JobIndexes.NextRunTime in indexes:
+    ),
+    (
+        JobCollections.Jobs,
+        JobIndexes.NextRunTime,
         (
             r
-            .table(collection)
-            .index_create(
-                JobIndexes.NextRunTime
-            )
-            .run(conn)
+            .table(JobCollections.Jobs)
+            .index_create(JobIndexes.NextRunTime)
         )
+    )
+]
 
 
 try:
-    job_collections = [
-        (JobCollections.Jobs, JobKeys.Id),
-        (JobCollections.AdministrativeJobs, JobKeys.Id),
-    ]
-    current_collections = retrieve_collections()
-    for collection in job_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_job_indexes(name, indexes)
+    db = DbInit()
+    db.initialize(collections, secondary_indexes)
 
 except Exception as e:
     logger.exception(e)

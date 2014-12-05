@@ -1,37 +1,35 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.db.client import db_create_close, r
+from vFense.db.client import r
+from vFense.db.manager import DbInit
 from vFense.core.tag._db_model import (
     TagCollections, TagKeys, TagsIndexes, TagsPerAgentKeys, TagsPerAgentIndexes
-)
-from vFense.core._db import (
-    retrieve_collections, create_collection, retrieve_indexes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
-def initialize_collections(collection, current_collections):
-    name, key = collection
-    if name not in current_collections:
-        create_collection(name, key)
+collections = [
+    (TagCollections.Tags, TagKeys.TagId),
+    (TagCollections.TagsPerAgent, TagsPerAgentKeys.Id),
+]
 
-@db_create_close
-def initialize_tag_indexes(collection, indexes, conn=None):
-    if not TagsIndexes.ViewName in indexes:
+secondary_indexes = [
+    (
+        TagCollections.Tags,
+        TagsIndexes.ViewName,
         (
             r
-            .table(collection)
-            .index_create(
-                TagsIndexes.ViewName
-            )
-            .run(conn)
+            .table(TagCollections.Tags)
+            .index_create(TagsIndexes.ViewName)
         )
-
-    if not TagsIndexes.TagNameAndView in indexes:
+    ),
+    (
+        TagCollections.Tags,
+        TagsIndexes.TagNameAndView,
         (
             r
-            .table(collection)
+            .table(TagCollections.Tags)
             .index_create(
                 TagsIndexes.TagNameAndView,
                 lambda x:
@@ -40,47 +38,41 @@ def initialize_tag_indexes(collection, indexes, conn=None):
                     x[TagKeys.ViewName]
                 ]
             )
-            .run(conn)
         )
-
-
-@db_create_close
-def initialize_tag_per_agent_indexes(collection, indexes, conn=None):
-    if not TagsPerAgentIndexes.AgentId in indexes:
+    ),
+    (
+        TagCollections.TagsPerAgent,
+        TagsPerAgentIndexes.AgentId,
         (
             r
-            .table(collection)
-            .index_create(
-                TagsPerAgentIndexes.AgentId
-            )
-            .run(conn)
+            .table(TagCollections.TagsPerAgent)
+            .index_create(TagsPerAgentIndexes.AgentId)
         )
-
-
-    if not TagsPerAgentIndexes.TagId in indexes:
+    ),
+    (
+        TagCollections.TagsPerAgent,
+        TagsPerAgentIndexes.TagId,
         (
             r
-            .table(collection)
-            .index_create(
-                TagsPerAgentIndexes.TagId
-            )
-            .run(conn)
+            .table(TagCollections.TagsPerAgent)
+            .index_create(TagsPerAgentIndexes.TagId)
         )
-
-    if not TagsPerAgentIndexes.ViewName in indexes:
+    ),
+    (
+        TagCollections.TagsPerAgent,
+        TagsPerAgentIndexes.ViewName,
         (
             r
-            .table(collection)
-            .index_create(
-                TagsPerAgentIndexes.ViewName
-            )
-            .run(conn)
+            .table(TagCollections.TagsPerAgent)
+            .index_create(TagsPerAgentIndexes.ViewName)
         )
-
-    if not TagsPerAgentIndexes.AgentIdAndTagId in indexes:
+    ),
+    (
+        TagCollections.TagsPerAgent,
+        TagsPerAgentIndexes.AgentIdAndTagId,
         (
             r
-            .table(collection)
+            .table(TagCollections.TagsPerAgent)
             .index_create(
                 TagsPerAgentIndexes.AgentIdAndTagId,
                 lambda x:
@@ -89,28 +81,14 @@ def initialize_tag_per_agent_indexes(collection, indexes, conn=None):
                     x[TagsPerAgentKeys.TagId]
                 ]
             )
-            .run(conn)
         )
+    )
+]
 
 
 try:
-    tag_collections = [
-        (TagCollections.Tags, TagKeys.TagId),
-    ]
-    tag_per_agent_collections = [
-        (TagCollections.TagsPerAgent, TagsPerAgentKeys.Id),
-    ]
-    current_collections = retrieve_collections()
-    for collection in tag_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_tag_indexes(name, indexes)
-    for collection in tag_per_agent_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_tag_per_agent_indexes(name, indexes)
+    db = DbInit()
+    db.initialize(collections, secondary_indexes)
 
 except Exception as e:
     logger.exception(e)

@@ -1,45 +1,43 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.db.client import db_create_close, r
+from vFense.db.client import r
+from vFense.db.manager import DbInit
 from vFense.core.stats._db_model import (
     StatsCollections, StatsPerAgentIndexes, AgentStatKeys
-)
-from vFense.core._db import (
-    retrieve_collections, create_collection, retrieve_indexes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
-def initialize_collections(collection, current_collections):
-    name, key = collection
-    if name not in current_collections:
-        create_collection(name, key)
+collections = [
+    (StatsCollections.AgentStats, AgentStatKeys.Id)
+]
 
-@db_create_close
-def initialize_stat_indexes(collection, indexes, conn=None):
-    if not StatsPerAgentIndexes.AgentId in indexes:
+secondary_indexes = [
+    (
+        StatsCollections.AgentStats,
+        StatsPerAgentIndexes.AgentId,
         (
             r
-            .table(collection)
-            .index_create(
-                StatsPerAgentIndexes.AgentId
-            )
-            .run(conn)
+            .table(StatsCollections.AgentStats)
+            .index_create(StatsPerAgentIndexes.AgentId)
         )
-
-    if not StatsPerAgentIndexes.StatType in indexes:
+    ),
+    (
+        StatsCollections.AgentStats,
+        StatsPerAgentIndexes.StatType,
         (
             r
-            .table(collection)
+            .table(StatsCollections.AgentStats)
             .index_create(StatsPerAgentIndexes.StatType)
-            .run(conn)
         )
-
-    if not StatsPerAgentIndexes.AgentIdAndStatType in indexes:
+    ),
+    (
+        StatsCollections.AgentStats,
+        StatsPerAgentIndexes.AgentIdAndStatType,
         (
             r
-            .table(collection)
+            .table(StatsCollections.AgentStats)
             .index_create(
                 StatsPerAgentIndexes.AgentIdAndStatType,
                 lambda x:
@@ -48,22 +46,13 @@ def initialize_stat_indexes(collection, indexes, conn=None):
                     x[StatsPerAgentIndexes.StatType]
                 ]
             )
-            .run(conn)
         )
-
+    )
+]
 
 try:
-    stat_collections = [
-        (StatsCollections.AgentStats, AgentStatKeys.Id)
-    ]
-    current_collections = retrieve_collections()
-
-    for collection in stat_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_stat_indexes(name, indexes)
-
+    db = DbInit()
+    db.initialize(collections, secondary_indexes)
 
 except Exception as e:
     logger.exception(e)

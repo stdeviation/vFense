@@ -1,40 +1,41 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.db.client import db_create_close, r
+from vFense.db.client import r
+from vFense.db.manager import DbInit
 from vFense.plugins.vuln.ubuntu._db_model import (
     UbuntuVulnerabilityCollections, UbuntuVulnerabilityKeys,
     UbuntuVulnerabilityIndexes
 )
 from vFense.plugins.vuln.ubuntu._constants import UbuntuVulnSubKeys
-from vFense.core._db import (
-    retrieve_collections, create_collection, retrieve_indexes
-)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
-def initialize_collections(collection, current_collections):
-    name, key = collection
-    if name not in current_collections:
-        create_collection(name, key)
-
-@db_create_close
-def initialize_ubuntu_indexes(collection, indexes, conn=None):
-    if not UbuntuVulnerabilityIndexes.CveIds in indexes:
+collections = [
+    (
+        UbuntuVulnerabilityCollections.Vulnerabilities,
+        UbuntuVulnerabilityKeys.VulnerabilityId
+    ),
+]
+secondary_indexes = [
+    (
+        UbuntuVulnerabilityCollections.Vulnerabilities,
+        UbuntuVulnerabilityIndexes.CveIds,
         (
             r
-            .table(collection)
+            .table(UbuntuVulnerabilityCollections.Vulnerabilities)
             .index_create(
                 UbuntuVulnerabilityIndexes.CveIds,
                 multi=True
             )
-            .run(conn)
         )
-
-    if not UbuntuVulnerabilityIndexes.NameAndVersion in indexes:
+    ),
+    (
+        UbuntuVulnerabilityCollections.Vulnerabilities,
+        UbuntuVulnerabilityIndexes.NameAndVersion,
         (
             r
-            .table(collection)
+            .table(UbuntuVulnerabilityCollections.Vulnerabilities)
             .index_create(
                 UbuntuVulnerabilityIndexes.NameAndVersion,
                 lambda x:
@@ -46,13 +47,14 @@ def initialize_ubuntu_indexes(collection, indexes, conn=None):
                     ]
                 ), multi=True
             )
-            .run(conn)
         )
-
-    if not UbuntuVulnerabilityIndexes.AppId in indexes:
+    ),
+    (
+        UbuntuVulnerabilityCollections.Vulnerabilities,
+        UbuntuVulnerabilityIndexes.AppId,
         (
             r
-            .table(collection)
+            .table(UbuntuVulnerabilityCollections.Vulnerabilities)
             .index_create(
                 UbuntuVulnerabilityIndexes.AppId,
                 lambda x:
@@ -60,22 +62,13 @@ def initialize_ubuntu_indexes(collection, indexes, conn=None):
                     lambda y: y[UbuntuVulnSubKeys.APP_ID]
                 ), multi=True
             )
-            .run(conn)
         )
+    )
+]
 
 try:
-    ubuntu_collections = [
-        (
-            UbuntuVulnerabilityCollections.Vulnerabilities,
-            UbuntuVulnerabilityKeys.VulnerabilityId
-        ),
-    ]
-    current_collections = retrieve_collections()
-    for collection in ubuntu_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_ubuntu_indexes(name, indexes)
+    db = DbInit()
+    db.initialize(collections, secondary_indexes)
 
 except Exception as e:
     logger.exception(e)
