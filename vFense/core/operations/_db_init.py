@@ -1,124 +1,114 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.db.client import db_create_close, r
+from vFense.db.client import r
+from vFense.db.manager import DbInit
 from vFense.core.operations._db_model import (
     OperationCollections, AdminOperationKey, AdminOperationIndexes,
     AgentOperationKey, AgentOperationIndexes, OperationPerAgentKey,
     OperationPerAgentIndexes, OperationPerAppKey, OperationPerAppIndexes
 )
-from vFense.core._db import (
-    retrieve_collections, create_collection, retrieve_indexes
-)
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
-def initialize_collections(collection, current_collections):
-    name, key = collection
-    if name not in current_collections:
-        create_collection(name, key)
+collections = [
+   (OperationCollections.Admin, AdminOperationKey.OperationId),
+   (OperationCollections.Agent, AgentOperationKey.OperationId),
+   (OperationCollections.OperationPerAgent, OperationPerAgentKey.Id),
+   (OperationCollections.OperationPerApp, OperationPerAppKey.Id),
+]
 
-@db_create_close
-def initialize_admin_operation_indexes(collection, indexes, conn=None):
-    if not AdminOperationIndexes.CreatedBy in indexes:
+secondary_indexes = [
+    (
+        OperationCollections.Admin,
+        AdminOperationIndexes.CreatedBy,
         (
             r
-            .table(collection)
-            .index_create(
-                AdminOperationIndexes.CreatedBy
-            )
-            .run(conn)
+            .table(OperationCollections.Admin)
+            .index_create(AdminOperationIndexes.CreatedBy)
         )
-
-    if not AdminOperationIndexes.GenericStatusCode in indexes:
+    ),
+    (
+        OperationCollections.Admin,
+        AdminOperationIndexes.GenericStatusCode,
         (
             r
-            .table(collection)
-            .index_create(
-                AdminOperationIndexes.GenericStatusCode
-            )
-            .run(conn)
+            .table(OperationCollections.Admin)
+            .index_create(AdminOperationIndexes.GenericStatusCode)
         )
-
-    if not AdminOperationIndexes.VfenseStatusCode in indexes:
+    ),
+    (
+        OperationCollections.Admin,
+        AdminOperationIndexes.VfenseStatusCode,
         (
             r
-            .table(collection)
-            .index_create(
-                AdminOperationIndexes.VfenseStatusCode
-            )
-            .run(conn)
+            .table(OperationCollections.Admin)
+            .index_create(AdminOperationIndexes.VfenseStatusCode)
         )
-
-    if not AdminOperationIndexes.Action in indexes:
+    )
+    (
+        OperationCollections.Admin,
+        AdminOperationIndexes.Action,
         (
             r
-            .table(collection)
-            .index_create(
-                AdminOperationIndexes.Action
-            )
-            .run(conn)
+            .table(OperationCollections.Admin)
+            .index_create(AdminOperationIndexes.Action)
         )
-
-    if not AdminOperationIndexes.ActionPerformedOn in indexes:
+    ),
+    (
+        OperationCollections.Admin,
+        AdminOperationIndexes.ActionPerformedOn,
         (
             r
-            .table(collection)
-            .index_create(
-                AdminOperationIndexes.ActionPerformedOn
-            )
-            .run(conn)
+            .table(OperationCollections.Admin)
+            .index_create(AdminOperationIndexes.ActionPerformedOn)
         )
-
-
-@db_create_close
-def initialize_agent_operation_indexes(collection, indexes, conn=None):
-
-    if not AgentOperationIndexes.TagId in indexes:
+    ),
+    (
+        OperationCollections.Agent,
+        AgentOperationIndexes.TagId,
         (
             r
-            .table(collection)
-            .index_create(
-                AgentOperationIndexes.TagId
-            )
-            .run(conn)
+            .table(OperationCollections.Agent)
+            .index_create(AgentOperationIndexes.TagId)
         )
-
-    if not AgentOperationIndexes.AgentIds in indexes:
+    ),
+    (
+        OperationCollections.Agent,
+        AgentOperationIndexes.AgentIds,
         (
             r
-            .table(collection)
+            .table(OperationCollections.Agent)
             .index_create(
                 AgentOperationIndexes.AgentIds,
                 multi=True
             )
-            .run(conn)
         )
-
-    if not AgentOperationIndexes.ViewName in indexes:
+    ),
+    (
+        OperationCollections.Agent,
+        AgentOperationIndexes.ViewName,
         (
             r
-            .table(collection)
-            .index_create(
-                AgentOperationIndexes.ViewName
-            )
-            .run(conn)
+            .table(OperationCollections.Agent)
+            .index_create(AgentOperationIndexes.ViewName)
         )
-
-    if not AgentOperationIndexes.Operation in indexes:
+    ),
+    (
+        OperationCollections.Agent,
+        AgentOperationIndexes.Operation,
         (
             r
-            .table(collection)
-            .index_create(
-                AgentOperationIndexes.Operation
-            )
-            .run(conn)
+            .table(OperationCollections.Agent)
+            .index_create(AgentOperationIndexes.Operation)
         )
-
-    if not AgentOperationIndexes.OperationAndView in indexes:
+    ),
+    (
+        OperationCollections.Agent,
+        AgentOperationIndexes.OperationAndView,
         (
             r
-            .table(collection)
+            .table(OperationCollections.Agent)
             .index_create(
                 AgentOperationIndexes.OperationAndView,
                 lambda x:
@@ -129,11 +119,13 @@ def initialize_agent_operation_indexes(collection, indexes, conn=None):
             )
             .run(conn)
         )
-
-    if not AgentOperationIndexes.PluginAndView in indexes:
+    ),
+    (
+        OperationCollections.Agent,
+        AgentOperationIndexes.PluginAndView,
         (
             r
-            .table(collection)
+            .table(OperationCollections.Agent)
             .index_create(
                 AgentOperationIndexes.PluginAndView,
                 lambda x:
@@ -142,13 +134,14 @@ def initialize_agent_operation_indexes(collection, indexes, conn=None):
                     x[AgentOperationKey.ViewName]
                 ]
             )
-            .run(conn)
         )
-
-    if not AgentOperationIndexes.CreatedByAndView in indexes:
+    ),
+    (
+        OperationCollections.Agent,
+        AgentOperationIndexes.CreatedByAndView,
         (
             r
-            .table(collection)
+            .table(OperationCollections.Agent)
             .index_create(
                 AgentOperationIndexes.CreatedByAndView,
                 lambda x:
@@ -157,26 +150,23 @@ def initialize_agent_operation_indexes(collection, indexes, conn=None):
                     x[AgentOperationKey.ViewName]
                 ]
             )
-            .run(conn)
         )
-
-
-@db_create_close
-def initialize_operation_per_agent_indexes(collection, indexes, conn=None):
-    if not OperationPerAgentIndexes.OperationId in indexes:
+    ),
+    (
+        OperationCollections.OperationPerAgent,
+        OperationPerAgentIndexes.OperationId,
         (
             r
-            .table(collection)
-            .index_create(
-                OperationPerAgentIndexes.OperationId
-            )
-            .run(conn)
+            .table(OperationCollections.OperationPerAgent)
+            .index_create(OperationPerAgentIndexes.OperationId)
         )
-
-    if not OperationPerAgentIndexes.AgentIdAndView in indexes:
+    ),
+    (
+        OperationCollections.OperationPerAgent,
+        OperationPerAgentIndexes.AgentIdAndView,
         (
             r
-            .table(collection)
+            .table(OperationCollections.OperationPerAgent)
             .index_create(
                 OperationPerAgentIndexes.AgentIdAndView,
                 lambda x:
@@ -185,13 +175,14 @@ def initialize_operation_per_agent_indexes(collection, indexes, conn=None):
                     x[OperationPerAgentKey.ViewName]
                 ]
             )
-            .run(conn)
         )
-
-    if not OperationPerAgentIndexes.OperationIdAndAgentId in indexes:
+    ),
+    (
+        OperationCollections.OperationPerAgent,
+        OperationPerAgentIndexes.OperationIdAndAgentId,
         (
             r
-            .table(collection)
+            .table(OperationCollections.OperationPerAgent)
             .index_create(
                 OperationPerAgentIndexes.OperationIdAndAgentId,
                 lambda x:
@@ -200,13 +191,14 @@ def initialize_operation_per_agent_indexes(collection, indexes, conn=None):
                     x[OperationPerAgentKey.AgentId]
                 ]
             )
-            .run(conn)
         )
-
-    if not OperationPerAgentIndexes.TagIdAndView in indexes:
+    ),
+    (
+        OperationCollections.OperationPerAgent,
+        OperationPerAgentIndexes.TagIdAndView,
         (
             r
-            .table(collection)
+            .table(OperationCollections.OperationPerAgent)
             .index_create(
                 OperationPerAgentIndexes.TagIdAndView,
                 lambda x:
@@ -215,13 +207,14 @@ def initialize_operation_per_agent_indexes(collection, indexes, conn=None):
                     x[OperationPerAgentKey.ViewName]
                 ]
             )
-            .run(conn)
         )
-
-    if not OperationPerAgentIndexes.StatusAndView in indexes:
+    ),
+    (
+        OperationCollections.OperationPerAgent,
+        OperationPerAgentIndexes.StatusAndView,
         (
             r
-            .table(collection)
+            .table(OperationCollections.OperationPerAgent)
             .index_create(
                 OperationPerAgentIndexes.StatusAndView,
                 lambda x:
@@ -230,26 +223,23 @@ def initialize_operation_per_agent_indexes(collection, indexes, conn=None):
                     x[OperationPerAgentKey.ViewName]
                 ]
             )
-            .run(conn)
         )
-
-
-@db_create_close
-def initialize_operation_per_app_indexes(collection, indexes, conn=None):
-    if not OperationPerAppIndexes.OperationId in indexes:
+    ),
+    (
+        OperationCollections.OperationPerApp,
+        OperationPerAppIndexes.OperationId,
         (
             r
-            .table(collection)
-            .index_create(
-                OperationPerAppIndexes.OperationId
-            )
-            .run(conn)
+            .table(OperationCollections.OperationPerApp)
+            .index_create(OperationPerAppIndexes.OperationId)
         )
-
-    if not OperationPerAppIndexes.OperationIdAndAgentId in indexes:
+    ),
+    (
+        OperationCollections.OperationPerApp,
+        OperationPerAppIndexes.OperationIdAndAgentId,
         (
             r
-            .table(collection)
+            .table(OperationCollections.OperationPerApp)
             .index_create(
                 OperationPerAppIndexes.OperationIdAndAgentId,
                 lambda x:
@@ -258,13 +248,14 @@ def initialize_operation_per_app_indexes(collection, indexes, conn=None):
                     x[OperationPerAppKey.AgentId]
                 ]
             )
-            .run(conn)
         )
-
-    if not OperationPerAppIndexes.OperationIdAndAgentIdAndAppId in indexes:
+    ),
+    (
+        OperationCollections.OperationPerApp,
+        OperationPerAppIndexes.OperationIdAndAgentIdAndAppId,
         (
             r
-            .table(collection)
+            .table(OperationCollections.OperationPerApp)
             .index_create(
                 OperationPerAppIndexes.OperationIdAndAgentIdAndAppId,
                 lambda x:
@@ -274,43 +265,13 @@ def initialize_operation_per_app_indexes(collection, indexes, conn=None):
                     x[OperationPerAppKey.AppId]
                 ]
             )
-            .run(conn)
         )
+    )
+]
 
 try:
-    admin_oper_collections = [
-        (OperationCollections.Admin, AdminOperationKey.OperationId),
-    ]
-    agent_oper_collections = [
-        (OperationCollections.Agent, AgentOperationKey.OperationId),
-    ]
-    oper_per_agent_collections = [
-        (OperationCollections.OperationPerAgent, OperationPerAgentKey.Id),
-    ]
-    oper_per_app_collections = [
-        (OperationCollections.OperationPerApp, OperationPerAppKey.Id),
-    ]
-    current_collections = retrieve_collections()
-    for collection in admin_oper_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_admin_operation_indexes(name, indexes)
-    for collection in agent_oper_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_agent_operation_indexes(name, indexes)
-    for collection in oper_per_agent_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_operation_per_agent_indexes(name, indexes)
-    for collection in oper_per_app_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_operation_per_app_indexes(name, indexes)
+    db = DbInit()
+    db.initialize(collections, secondary_indexes)
 
 except Exception as e:
     logger.exception(e)

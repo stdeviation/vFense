@@ -1,69 +1,69 @@
 import logging, logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
-from vFense.db.client import db_create_close, r
+from vFense.db.client import r
+from vFense.db.manager import DbInit
 from vFense.core.agent._db_model import (
     AgentCollections, AgentKeys, AgentIndexes, HardwarePerAgentKeys,
     HardwarePerAgentIndexes
-)
-from vFense.core._db import (
-    retrieve_collections, create_collection, retrieve_indexes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
-def initialize_collections(collection, current_collections):
-    name, key = collection
-    if name not in current_collections:
-        create_collection(name, key)
+collections = [
+    (AgentCollections.Agents, AgentKeys.AgentId),
+    (AgentCollections.Hardware, HardwarePerAgentKeys.Id),
+]
 
-@db_create_close
-def initialize_agent_indexes(collection, indexes, conn=None):
-    if not AgentIndexes.Views in indexes:
+secondary_indexes = [
+    (
+        AgentCollections.Agents,
+        AgentIndexes.Views,
         (
             r
-            .table(collection)
+            .table(AgentCollections.Agents)
             .index_create(
                 AgentIndexes.Views, multi=True
             )
-            .run(conn)
         )
-
-    if not AgentIndexes.OsCode in indexes:
+    ),
+    (
+        AgentCollections.Agents,
+        AgentIndexes.OsCode,
         (
             r
-            .table(collection)
+            .table(AgentCollections.Agents)
             .index_create(AgentIndexes.OsCode)
-            .run(conn)
         )
-
-
-@db_create_close
-def initialize_hardware_indexes(collection, indexes, conn=None):
-    if not HardwarePerAgentIndexes.AgentId in indexes:
+    ),
+    (
+        AgentCollections.Hardware,
+        HardwarePerAgentIndexes.AgentId,
         (
             r
-            .table(collection)
+            .table(AgentCollections.Hardware)
             .index_create(
                 HardwarePerAgentIndexes.AgentId
             )
-            .run(conn)
         )
-
-    if not HardwarePerAgentIndexes.Type in indexes:
+    ),
+    (
+        AgentCollections.Hardware,
+        HardwarePerAgentIndexes.Type,
         (
             r
-            .table(collection)
+            .table(AgentCollections.Hardware)
             .index_create(
                 HardwarePerAgentIndexes.Type
             )
-            .run(conn)
         )
-
-    if not HardwarePerAgentIndexes.AgentIdAndType in indexes:
+    ),
+    (
+        AgentCollections.Hardware,
+        HardwarePerAgentIndexes.AgentIdAndType,
         (
             r
-            .table(collection)
+            .table(AgentCollections.Hardware)
             .index_create(
                 HardwarePerAgentIndexes.AgentIdAndType,
                 lambda x:
@@ -72,29 +72,14 @@ def initialize_hardware_indexes(collection, indexes, conn=None):
                     x[HardwarePerAgentKeys.Type]
                 ]
             )
-            .run(conn)
         )
+    )
+]
 
 
 try:
-    agent_collections = [
-        (AgentCollections.Agents, AgentKeys.AgentId),
-    ]
-    hardware_collections = [
-        (AgentCollections.Hardware, HardwarePerAgentKeys.Id),
-    ]
-    current_collections = retrieve_collections()
-    for collection in agent_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_agent_indexes(name, indexes)
-    for collection in hardware_collections:
-        initialize_collections(collection, current_collections)
-        name, _ = collection
-        indexes = retrieve_indexes(name)
-        initialize_hardware_indexes(name, indexes)
-
+    db = DbInit()
+    db.initialize(collections, secondary_indexes)
 
 except Exception as e:
     logger.exception(e)
