@@ -297,9 +297,6 @@ def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
     now = time()
     agent = AgentManager(agent_id).properties
     if isinstance(apps, list):
-        dfile = open('/home/linuxdynasty/vFense/vFense/core/tests/startup_data.py', 'w')
-        dfile.write(dumps(apps, indent=4))
-        dfile.close()
         for app in apps:
             files_data = []
             files = app.pop(DbCommonAppKeys.FileData, None)
