@@ -10,6 +10,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.tornado import TornadoScheduler
 from apscheduler.schedulers.blocking import BlockingScheduler
 
+from vFense.core.operations._db_model import AgentOperationKey
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import ScheduleTriggers
 from vFense.core.scheduler._db import (
@@ -396,8 +397,10 @@ class JobManager(object):
                                 **job.to_dict_non_null()
                             )
                         )
-                        print job_status
-
+                        job.job_kwargs[AgentOperationKey.ScheduleId] = (
+                            job_status.id
+                        )
+                        job_status.modify(kwargs=job.job_kwargs)
                         msg = 'Job {0} added successfully'.format(job.name)
                         results.generic_status_code = (
                             GenericCodes.ObjectCreated
@@ -406,7 +409,7 @@ class JobManager(object):
                             SchedulerCodes.ScheduleCreated
                         )
                         results.message = msg
-                        results.generated_ids = job_status.id
+                        results.generated_ids.append(job_status.id)
 
                     else:
                         msg = (
@@ -448,7 +451,6 @@ class JobManager(object):
                     SchedulerFailureCodes.FailedToCreateSchedule
                 )
                 results.message = msg
-
 
         except Exception as e:
             logger.exception(e)

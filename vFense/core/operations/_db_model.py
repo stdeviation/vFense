@@ -56,6 +56,7 @@ class AgentOperationKey():
     Plugin = 'plugin'
     CpuThrottle = 'cpu_throttle'
     NetThrottle = 'net_throttle'
+    ScheduleId = 'schedule_id'
 
 
 class AgentOperationIndexes():

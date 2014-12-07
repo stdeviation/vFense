@@ -1,42 +1,33 @@
-from vFense.core.operations import AgentOperation
 from vFense.core.operations._constants import AgentOperations
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import (
     ScheduleKeys, ScheduleTriggers
 )
 from vFense.core.scheduler.manager import JobManager
-from vFense.core.agent._db import fetch_agent_ids
+from vFense.core.tag._db import fetch_tags_by_view
 from vFense.core.agent.operations.store_agent_operations import (
     StoreAgentOperations
 )
 
-def reboot_agents(agent_ids=None, view_name=None, user_name=None,
-                  schedule_id=None):
-    """Reboot agents
+def reboot_tags(tag_ids=None, view_name=None, user_name=None):
+    """Reboot tags
     Kwargs:
-        agent_ids (list): List of agent ids.
+        tag_ids (list): List of tag ids.
         view_name (str): The name of the view, this operation is being
             performed on.
         user_name (str): The user who performed this operation.
-        schedule_id (str): The id of the schedule that initiated this
-            operation.
     """
-    store_operation = StoreAgentOperations(user_name, view_name)
-    if not agent_ids:
-        agent_ids = fetch_agent_ids(view_name)
+    operation = StoreAgentOperations(user_name, view_name)
+    if not tag_ids:
+        tag_ids = fetch_tags_by_view(view_name=view_name)
 
-    agent_operation = AgentOperation()
-    agent_operation.agent_ids = agent_ids
-    agent_operation.plugin = AgentOperations.REBOOT
-    agent_operation.view_name = view_name
-    agent_operation.action_performed_on = 'agent'
-    agent_operation.schedule_id = schedule_id
-    store_operation.reboot(agent_operation)
+    for tag_id in tag_ids:
+        operation.reboot(tag_id=tag_id)
 
 
-class AgentJobManager(JobManager):
+class TagJobManager(JobManager):
     def reboot_once(self, start_date, label,
-                    user_name, agent_ids=None, time_zone=None):
+                    user_name, agents=None, time_zone=None):
         """Reboot 1 or multiple agents once.
         Args:
             start_date (float): The unix time, aka epoch time
@@ -44,11 +35,11 @@ class AgentJobManager(JobManager):
             user_name (str): The name of the use who initiated this job.
 
         Kwargs:
-            agent_ids (list): List of agent ids.
+            agents (list): List of agent ids.
             time_zone (str):  Example... UTC, Chile/EasterIsland
         """
         job_kwargs = {
-            ScheduleKeys.AgentIds: agent_ids,
+            ScheduleKeys.Agents: agents,
             ScheduleKeys.UserName: user_name,
             ScheduleKeys.ViewName: self.view_name,
         }

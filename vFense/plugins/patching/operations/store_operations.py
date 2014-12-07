@@ -65,13 +65,17 @@ class StorePatchingOperation(StoreAgentOperationManager):
         return results
 
 
-    def install_os_apps(self, install):
+    def install_os_apps(self, install, schedule_id=None):
         """Send the install_os_apps operation to the agent,
             This will install a list of applications on n
             number of agents or tag id.
 
         Args:
             install (Install): An instance of install.
+
+        Kwargs:
+            schedule_id (str): The id of the schedule that initiated this
+                operation.
 
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
@@ -96,7 +100,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
         self.CurrentAppsPerAgentCollection = AppCollections.AppsPerAgent
         self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
         if isinstance(install, Install):
-            results = self.install_apps(install, oper_type)
+            results = self.install_apps(install, oper_type, schedule_id)
 
         else:
             results = ApiResults()
@@ -116,13 +120,17 @@ class StorePatchingOperation(StoreAgentOperationManager):
 
         return results
 
-    def install_custom_apps(self, install):
+    def install_custom_apps(self, install, schedule_id=None):
         """Send the install_custom_apps operation to the agent,
             This will install a list of applications on n
             number of agents or tag id.
 
         Args:
             install (Install): An instance of install.
+
+        Kwargs:
+            schedule_id (str): The id of the schedule that initiated this
+                operation.
 
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
@@ -149,7 +157,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
         self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
         if isinstance(install, Install):
-            results = self.install_apps(install, oper_type)
+            results = self.install_apps(install, oper_type, schedule_id)
 
         else:
             results = ApiResults()
@@ -168,13 +176,17 @@ class StorePatchingOperation(StoreAgentOperationManager):
             results.message = msg
 
 
-    def install_supported_apps(self, install):
+    def install_supported_apps(self, install, schedule_id=None):
         """Send the install_supported_apps operation to the agent,
             This will install a list of supported applications on n
             number of agents or tag id.
 
         Args:
             install (Install): An instance of install.
+
+        Kwargs:
+            schedule_id (str): The id of the schedule that initiated this
+                operation.
 
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
@@ -202,7 +214,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
         self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
         if isinstance(install, Install):
-            results = self.install_apps(install, oper_type)
+            results = self.install_apps(install, oper_type, schedule_id)
 
         else:
             results = ApiResults()
@@ -221,13 +233,17 @@ class StorePatchingOperation(StoreAgentOperationManager):
             results.message = msg
 
 
-    def install_agent_update(self, install):
+    def install_agent_update(self, install, schedule_id=None):
         """Send the install_agent_update operation to the agent,
             This will install the agent update on n
             number of agents or tag id.
 
         Args:
             install (Install): An instance of install.
+
+        Kwargs:
+            schedule_id (str): The id of the schedule that initiated this
+                operation.
 
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
@@ -255,7 +271,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
         self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
         if isinstance(install, Install):
-            results = self.install_apps(install, oper_type)
+            results = self.install_apps(install, oper_type, schedule_id)
 
         else:
             results = ApiResults()
@@ -274,13 +290,17 @@ class StorePatchingOperation(StoreAgentOperationManager):
             results.message = msg
 
 
-    def uninstall_apps(self, install):
+    def uninstall_apps(self, install, schedule_id=None):
         """Send the uninstall_apps operation to the agent,
             This will uninstall the applications from n
             number of agents or tag id.
 
         Args:
             install (Install): An instance of install.
+
+        Kwargs:
+            schedule_id (str): The id of the schedule that initiated this
+                operation.
 
         Basic Usage:
             >>> from vFense.plugins.patching.operations.store_operations import StorePatchingOperation
@@ -315,7 +335,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
         self.CurrentAppsPerAgentKey = DbCommonAppPerAgentKeys
 
         if isinstance(install, Install):
-            results = self.install_apps(install, oper_type)
+            results = self.install_apps(install, oper_type, schedule_id)
 
         else:
             results = ApiResults()
@@ -334,12 +354,16 @@ class StorePatchingOperation(StoreAgentOperationManager):
             results.message = msg
 
 
-    def install_apps(self, install, oper_type):
+    def install_apps(self, install, oper_type, schedule_id=None):
         """This method creates the operation and stores it into the agent queue.
         Args:
             install (Install): An instance of Install.
             oper_type (str): The operation type,
                 etc.. install_os_apps, uninstall
+
+        Kwargs:
+            schedule_id (str): The id of the schedule that initiated this
+                operation.
         """
         oper_plugin = vFensePlugins.RV_PLUGIN
         results = ApiResults()
@@ -363,6 +387,7 @@ class StorePatchingOperation(StoreAgentOperationManager):
         operation.net_throttle = install.net_throttle
         operation.plugin = oper_plugin
         operation.performed_on = performed_on
+        operation.schedule_id = schedule_id
         operation_id = manager.create_operation(operation)
         if operation_id:
             msg = (

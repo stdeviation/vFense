@@ -14,8 +14,8 @@ class FetchAppJobs(FetchJobs):
         self.sort_key = sort_key
 
     def by_id(self, job_id):
-        self.agent_merge = self._set_agent_and_app_merge_query()
         results = super(FetchAppJobs, self).by_id(job_id)
+        self.agent_merge = self._set_agent_and_app_merge_query()
         return results
 
 
@@ -55,7 +55,8 @@ class FetchAppJobs(FetchJobs):
                                                 .pluck(
                                                     AppsKey.AppId,
                                                     AppsKey.Name,
-                                                    AppsKey.Version
+                                                    AppsKey.Version,
+                                                    AppsKey.vFenseSeverity
                                                 )
                                         )
                                     )

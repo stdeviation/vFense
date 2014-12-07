@@ -13,7 +13,7 @@ from vFense.plugins.patching.scheduler._db import (
 
 def agent_apps_operation(agent_ids=None, app_ids=None, view_name=None,
                          user_name=None, restart=None, cpu_throttle=None,
-                         net_throttle=None, operation=None):
+                         net_throttle=None, operation=None, schedule_id=None):
     """Install system updates on 1 or multiple agents.
 
     Kwargs:
@@ -32,6 +32,8 @@ def agent_apps_operation(agent_ids=None, app_ids=None, view_name=None,
             default=0 (unlimitted)
         operation (str): The operation name.
             example install_os_apps, uninstall
+        schedule_id (str): The id of the schedule that initiated this
+            operation.
     """
     if not agent_ids:
         agent_ids = fetch_agent_ids(view_name)
@@ -44,23 +46,25 @@ def agent_apps_operation(agent_ids=None, app_ids=None, view_name=None,
     )
     store_operation = StorePatchingOperation(user_name, view_name)
     if operation == AgentOperations.INSTALL_OS_APPS:
-        store_operation.install_os_apps(install)
+        store_operation.install_os_apps(install, schedule_id=schedule_id)
 
     elif operation == AgentOperations.UNINSTALL:
-        store_operation.uninstall_apps(install)
+        store_operation.uninstall_apps(install, schedule_id=schedule_id)
 
     elif operation == AgentOperations.INSTALL_AGENT_UPDATE:
-        store_operation.install_agent_update(install)
+        store_operation.install_agent_update(install, schedule_id=schedule_id)
 
     elif operation == AgentOperations.INSTALL_CUSTOM_APPS:
-        store_operation.install_custom_apps(install)
+        store_operation.install_custom_apps(install, schedule_id=schedule_id)
 
     elif operation == AgentOperations.INSTALL_SUPPORTED_APPS:
-        store_operation.install_supported_apps(install)
+        store_operation.install_supported_apps(
+            install, schedule_id=schedule_id
+        )
 
 def tag_apps_operation(tag_ids=None, app_ids=None, view_name=None,
                        user_name=None, restart=None, cpu_throttle=None,
-                       net_throttle=None, operation=None):
+                       net_throttle=None, operation=None, schedule_id=None):
     """Install system updates on 1 or multiple tags.
     Kwargs:
         tag_ids (list): List of tag ids.
@@ -78,6 +82,8 @@ def tag_apps_operation(tag_ids=None, app_ids=None, view_name=None,
             default=0 (unlimitted)
         operation (str): The operation name.
             example install_os_apps, uninstall
+        schedule_id (str): The id of the schedule that initiated this
+            operation.
     """
     store_operation = StorePatchingOperation(user_name, view_name)
     if not tag_ids:
@@ -91,20 +97,25 @@ def tag_apps_operation(tag_ids=None, app_ids=None, view_name=None,
             )
         )
         if operation == AgentOperations.INSTALL_OS_APPS:
-            store_operation.install_os_apps(install)
+            store_operation.install_os_apps(install, schedule_id=schedule_id)
 
         elif operation == AgentOperations.UNINSTALL:
-            store_operation.uninstall_apps(install)
+            store_operation.uninstall_apps(install, schedule_id=schedule_id)
 
         elif operation == AgentOperations.INSTALL_AGENT_UPDATE:
-            store_operation.install_agent_update(install)
+            store_operation.install_agent_update(
+                install, schedule_id=schedule_id
+                                                            )
 
         elif operation == AgentOperations.INSTALL_CUSTOM_APPS:
-            store_operation.install_custom_apps(install)
+            store_operation.install_custom_apps(
+                install, schedule_id=schedule_id
+            )
 
         elif operation == AgentOperations.INSTALL_SUPPORTED_APPS:
-            store_operation.install_supported_apps(install)
-
+            store_operation.install_supported_apps(
+                install, schedule_id=schedule_id
+            )
 
 def install_os_apps_by_severity_for_agent(severity, agents=None,
                                           view_name=None, user_name=None):
@@ -131,7 +142,8 @@ def install_os_apps_by_severity_for_agent(severity, agents=None,
                 operation.install_os_apps(app_ids, agentids=[agent_id])
 
 def install_os_apps_by_severity_for_tag(severity, tags=None,
-                                        view_name=None, user_name=None):
+                                        view_name=None, user_name=None,
+                                        schedule_id=None):
     """Install system updates on 1 or multiple tags.
     Args:
         severity (str): Install all updates with a severity level.
@@ -141,6 +153,8 @@ def install_os_apps_by_severity_for_tag(severity, tags=None,
         view_name (str): The name of the view, this operation is being
             performed on.
         user_name (str): The user who performed this operation.
+        schedule_id (str): The id of the schedule that initiated this
+            operation.
     """
     fetch = FetchAppsIdsForSchedule()
     operation = StorePatchingOperation(user_name, view_name)
@@ -152,4 +166,3 @@ def install_os_apps_by_severity_for_tag(severity, tags=None,
             app_ids = fetch.by_sev_for_tag(severity, tag_id)
             if app_ids:
                 operation.install_os_apps(app_ids, tag_id=[tag_id])
-

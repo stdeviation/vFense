@@ -248,7 +248,7 @@ class AgentOperation(Base):
         agents_total_count=None, agents_failed_count=None,
         agents_completed_count=None, agents_expired_count=None,
         agents_pending_results_count=None, token=None,
-        agents_pending_pickup_count=None,
+        agents_pending_pickup_count=None, schedule_id=None,
         agents_completed_with_errors_count=None, applications=None, **kwargs
 
     ):
@@ -287,6 +287,7 @@ class AgentOperation(Base):
                 affects.
             token (str): This is the token that the agent is using to
                 communicate with the server.
+            schedule_id (str): The schedule id that made this operation.
         """
         super(AgentOperation, self).__init__(**kwargs)
         self.created_by = created_by
@@ -317,6 +318,7 @@ class AgentOperation(Base):
         )
         self.applications = applications
         self.token = token
+        self.schedule_id = schedule_id
 
 
     def fill_in_defaults(self):
@@ -466,6 +468,7 @@ class AgentOperation(Base):
                 self.agents_completed_with_errors_count
             ),
             AgentOperationKey.Applications: self.applications,
+            AgentOperationKey.ScheduleId: self.schedule_id
         }
 
     def to_dict_db(self):

@@ -21,7 +21,9 @@ class ScheduleTriggers(object):
 class ScheduleKeys(object):
     Function = 'function'
     Agents = 'agents'
+    AgentIds = 'agent_ids'
     Tags = 'tags'
+    TagIds = 'tag_ids'
     UserName = 'user_name'
     ViewName = 'view_name'
 
@@ -31,18 +33,23 @@ class CronKeys(object):
     Month = 'month'
     Day = 'day'
     DayOfWeek = 'day_of_week'
+    Week = 'week'
     Minute = 'minute'
     Second = 'second'
     TimeZone = 'timezone'
+    StartDate = 'start_date'
+    EndDate = 'end_date'
 
 
 class IntervalKeys(object):
-    Years = 'years'
-    Months = 'months'
+    Weeks = 'weeks'
+    Hours = 'hours'
     Days = 'days'
     Minutes = 'minutes'
     Seconds = 'seconds'
     TimeZone = 'timezone'
+    StartDate = 'start_date'
+    EndDate = 'end_date'
 
 
 class DateKeys(object):

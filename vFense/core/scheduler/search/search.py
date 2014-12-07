@@ -1,7 +1,5 @@
 from vFense.core.scheduler._db_model import JobKeys
-from vFense.core.scheduler.search._db import (
-    FetchJobs, FetchAgentJobs, FetchTagJobs
-)
+from vFense.core.scheduler.search._db import FetchJobs
 from vFense.core.decorators import time_it
 from pytz import all_timezones
 from vFense.search.base import RetrieveBase
@@ -276,42 +274,4 @@ class RetrieveJobs(RetrieveBase):
         """
         count, data = self.fetch_jobs.by_tagid(tag_id)
         return self._base(count, data)
-
-
-class RetrieveAgentJobs(RetrieveJobs):
-    """Job queries for an agent."""
-    def __init__(
-        self, agent_id=None, sort_key=JobKeys.NextRunTime, **kwargs
-    ):
-        super(RetrieveAgentJobs, self).__init__(**kwargs)
-        self.agent_id = agent_id
-        self._set_properties()
-
-        if self.sort_key not in self.valid_keys_to_sort_by:
-            self.sort_key = JobKeys.NextRunTime
-
-        self.fetch_jobs = (
-            FetchAgentJobs(
-                agent_id=self.agent_id, count=self.count,
-                offset=self.offset, sort=self.sort, sort_key=self.sort_key
-            )
-        )
-
-
-class RetrieveTagJobs(RetrieveJobs):
-    """Job queries for a tag."""
-    def __init__(self, tag_id=None, sort_key=JobKeys.NextRunTime, **kwargs):
-        super(RetrieveTagJobs, self).__init__(**kwargs)
-        self.tag_id = tag_id
-        self._set_properties()
-
-        if self.sort_key not in self.valid_keys_to_sort_by:
-            self.sort_key = JobKeys.NextRunTime
-
-        self.fetch_jobs = (
-            FetchTagJobs(
-                tag_id=self.tag_id, count=self.count, offset=self.offset,
-                sort=self.sort, sort_key=self.sort_key
-            )
-        )
 

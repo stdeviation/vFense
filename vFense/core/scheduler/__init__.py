@@ -37,9 +37,9 @@ class Schedule(Base):
     def __init__(self, name=None, fn=None, job_kwargs=None, start_date=None,
                  run_date=None, end_date=None, operation=None,
                  time_zone=None, trigger=None, year=None, month=None,
-                 day=None, day_of_week=None, hour=None, minute=None,
-                 second=None, years=None, months=None, days=None,
-                 hours=None, minutes=None, seconds=None, **kwargs
+                 day=None, week=None, day_of_week=None, hour=None,
+                 minute=None, second=None, weeks=0, days=0,
+                 hours=0, minutes=0, seconds=0, **kwargs
                  ):
         """
         Kwargs:
@@ -61,11 +61,11 @@ class Schedule(Base):
             month (str|int): The month or range of months.
             day (str|int): The day or range of days.
             day_of_week (str|int): The day of week or range of days of week.
+            week (str|int): The week number.
+            weeks (str|int): The week number.
             hour (str|int): The hour or range of hours.
             minute (str|int): The minute or range of minutes.
             second (str|int): The second or range of seconds.
-            years int: The year or range of years.
-            months int: The month or range of months.
             days int: The days.
             hours int: The hours.
             minutes int: The minutes.
@@ -84,12 +84,12 @@ class Schedule(Base):
         self.year = year
         self.month = month
         self.day = day
+        self.week = week
         self.day_of_week = day_of_week
         self.hour = hour
         self.minute = minute
         self.second = second
-        self.years = years
-        self.months = months
+        self.weeks = weeks
         self.days = days
         self.hours = hours
         self.minutes = minutes
@@ -315,6 +315,7 @@ class Schedule(Base):
             CronKeys.Month: self.month,
             CronKeys.Day: self.day,
             CronKeys.DayOfWeek: self.day_of_week,
+            CronKeys.Week: self.week,
             CronKeys.Minute: self.minute,
             CronKeys.Second: self.second,
             CronKeys.TimeZone: self.time_zone,
@@ -324,11 +325,11 @@ class Schedule(Base):
 
     def to_dict_interval(self):
         return {
-            IntervalKeys.Years: self.years,
-            IntervalKeys.Months: self.months,
             IntervalKeys.Days: self.days,
             IntervalKeys.Minutes: self.minutes,
             IntervalKeys.Seconds: self.seconds,
+            IntervalKeys.Hours: self.hours,
+            IntervalKeys.Weeks: self.weeks,
             IntervalKeys.TimeZone: self.time_zone,
             JobKeys.StartDate: self.start_date,
             JobKeys.EndDate: self.end_date,
