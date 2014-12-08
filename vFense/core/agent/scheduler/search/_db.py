@@ -17,7 +17,7 @@ class FetchAgentJobs(FetchJobs):
             .table(JobCollections.Jobs)
             .filter(
                 lambda x:
-                x[JobKeys.Kwargs][JobKwargKeys.Agents].contains(self.agent_id)
+                x[JobKeys.Kwargs][JobKwargKeys.AgentIds].contains(self.agent_id)
             )
         )
         return base_filter

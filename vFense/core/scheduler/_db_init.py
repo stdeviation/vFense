@@ -11,6 +11,7 @@ logger = logging.getLogger('vfense_api')
 
 collections = [
     (JobCollections.Jobs, JobKeys.Id),
+    (JobCollections.JobsHistory, JobKeys.Id),
     (JobCollections.AdministrativeJobs, JobKeys.Id),
 ]
 
@@ -30,6 +31,24 @@ secondary_indexes = [
         (
             r
             .table(JobCollections.Jobs)
+            .index_create(JobIndexes.NextRunTime)
+        )
+    ),
+    (
+        JobCollections.JobsHistory,
+        JobIndexes.ViewName,
+        (
+            r
+            .table(JobCollections.JobsHistory)
+            .index_create(JobIndexes.ViewName)
+        )
+    ),
+    (
+        JobCollections.JobsHistory,
+        JobIndexes.NextRunTime,
+        (
+            r
+            .table(JobCollections.JobsHistory)
             .index_create(JobIndexes.NextRunTime)
         )
     )

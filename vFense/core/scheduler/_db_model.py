@@ -1,5 +1,6 @@
 class JobCollections():
     Jobs = 'jobs'
+    JobsHistory = 'jobs_history'
     AdministrativeJobs = 'administrative_jobs'
 
 
@@ -19,6 +20,11 @@ class JobKeys():
     JobState = 'job_state'
     CreatedTime = 'created_time'
 
+
+class JobHistoryKeys(JobKeys):
+    pass
+
+
 class JobKwargKeys():
     Agents = 'agents'
     AgentIds = 'agent_ids'
@@ -30,5 +36,10 @@ class JobKwargKeys():
     ViewName = 'view_name'
 
 class JobIndexes():
+    NextRunTime = 'next_run_time'
+    ViewName = 'view_name'
+
+
+class JobHistoryIndexes():
     NextRunTime = 'next_run_time'
     ViewName = 'view_name'

@@ -17,7 +17,7 @@ class FetchTagJobs(FetchJobs):
             .table(JobCollections.Jobs)
             .filter(
                 lambda x:
-                x[JobKeys.Kwargs][JobKwargKeys.Tags].contains(self.tag_id)
+                x[JobKeys.Kwargs][JobKwargKeys.TagIds].contains(self.tag_id)
             )
         )
         return base_filter
