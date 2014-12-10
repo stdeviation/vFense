@@ -45,7 +45,7 @@ secondary_indexes = [
             .table(OperationCollections.Admin)
             .index_create(AdminOperationIndexes.VfenseStatusCode)
         )
-    )
+    ),
     (
         OperationCollections.Admin,
         AdminOperationIndexes.Action,
@@ -117,7 +117,6 @@ secondary_indexes = [
                     x[AgentOperationKey.ViewName]
                 ]
             )
-            .run(conn)
         )
     ),
     (

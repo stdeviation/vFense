@@ -40,6 +40,5 @@ class JobIndexes():
     ViewName = 'view_name'
 
 
-class JobHistoryIndexes():
-    NextRunTime = 'next_run_time'
-    ViewName = 'view_name'
+class JobHistoryIndexes(JobIndexes):
+    pass

@@ -3,7 +3,7 @@ from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.db.client import r
 from vFense.db.manager import DbInit
 from vFense.core.scheduler._db_model import (
-    JobCollections, JobKeys, JobIndexes
+    JobCollections, JobKeys, JobIndexes, JobHistoryKeys, JobHistoryIndexes
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -11,7 +11,7 @@ logger = logging.getLogger('vfense_api')
 
 collections = [
     (JobCollections.Jobs, JobKeys.Id),
-    (JobCollections.JobsHistory, JobKeys.Id),
+    (JobCollections.JobsHistory, JobHistoryKeys.Id),
     (JobCollections.AdministrativeJobs, JobKeys.Id),
 ]
 
@@ -36,20 +36,20 @@ secondary_indexes = [
     ),
     (
         JobCollections.JobsHistory,
-        JobIndexes.ViewName,
+        JobHistoryIndexes.ViewName,
         (
             r
             .table(JobCollections.JobsHistory)
-            .index_create(JobIndexes.ViewName)
+            .index_create(JobHistoryIndexes.ViewName)
         )
     ),
     (
         JobCollections.JobsHistory,
-        JobIndexes.NextRunTime,
+        JobHistoryIndexes.NextRunTime,
         (
             r
             .table(JobCollections.JobsHistory)
-            .index_create(JobIndexes.NextRunTime)
+            .index_create(JobHistoryIndexes.NextRunTime)
         )
     )
 ]

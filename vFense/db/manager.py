@@ -32,9 +32,10 @@ class DbInit(object):
         for secondary_index in secondary_indexes:
 
             collection, index_name, index = secondary_index
-            indexes = retrieve_indexes(collection)
-            if index_name not in indexes:
-                index.run(conn)
+            if collection in self.current_collections:
+                indexes = retrieve_indexes(collection)
+                if index_name not in indexes:
+                    index.run(conn)
 
     def initialize_collection(self, collection, primary_key):
         """Create a collection and assign the primary key of this collection.
@@ -42,6 +43,7 @@ class DbInit(object):
             collection(str): The name of the collection you are creating.
             primary_key (str): The name of the primary key.
         """
+
         if collection not in self.current_collections:
             create_collection(collection, primary_key)
 

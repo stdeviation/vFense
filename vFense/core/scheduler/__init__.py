@@ -349,6 +349,25 @@ class Schedule(Base):
             JobKeys.Trigger: self.trigger,
         }
 
+    def datetime_from_timestamp(self):
+        if self.run_date:
+            self.run_date = datetime.fromtimestamp(self.run_date)
+
+        if self.start_date:
+            self.start_date = datetime.fromtimestamp(self.start_date)
+
+        if self.end_date:
+            self.end_date = datetime.fromtimestamp(self.end_date)
+
+    def timestamp_from_datetime(self):
+        if self.run_date:
+            self.run_date = float(self.run_date.strftime('%s'))
+
+        if self.start_date:
+            self.start_date = float(self.start_date.strftime('%s'))
+
+        if self.end_date:
+            self.end_date = float(self.end_date.strftime('%s'))
 
     def to_dict_non_null(self):
         """ Use to get non None fields of a job. Useful when

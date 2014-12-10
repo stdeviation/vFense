@@ -410,6 +410,7 @@ class JobManager(object):
                         )
                         results.message = msg
                         results.generated_ids.append(job_status.id)
+                        results.data.append(job.to_dict_non_null())
 
                     else:
                         msg = (
