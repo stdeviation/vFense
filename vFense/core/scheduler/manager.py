@@ -375,21 +375,7 @@ class JobManager(object):
                 invalid_fields = job.get_invalid_fields()
                 if not invalid_fields:
                     job.fill_in_defaults()
-                    if (job.trigger == ScheduleTriggers.CRON or
-                            job.trigger == ScheduleTriggers.INTERVAL):
-                        if isinstance(job.start_date, float):
-                            job.start_date = (
-                                datetime.fromtimestamp(job.start_date)
-                            )
-                    else:
-                        if isinstance(job.run_date, float):
-                            job.run_date = (
-                                datetime.fromtimestamp(job.run_date)
-                            )
-
-                    if isinstance(job.end_date, float):
-                        job.end_date = datetime.fromtimestamp(job.end_date)
-
+                    job.datetime_from_timestamp()
                     if not self.job_exist(job.name):
                         job_status = (
                             self.schedule.add_job(
@@ -397,6 +383,7 @@ class JobManager(object):
                                 **job.to_dict_non_null()
                             )
                         )
+                        job.timestamp_from_datetime()
                         job.job_kwargs[AgentOperationKey.ScheduleId] = (
                             job_status.id
                         )

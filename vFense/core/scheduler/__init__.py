@@ -361,13 +361,16 @@ class Schedule(Base):
 
     def timestamp_from_datetime(self):
         if self.run_date:
-            self.run_date = float(self.run_date.strftime('%s'))
+            if isinstance(self.run_date, datetime):
+                self.run_date = float(self.run_date.strftime('%s'))
 
         if self.start_date:
-            self.start_date = float(self.start_date.strftime('%s'))
+            if isinstance(self.run_date, datetime):
+                self.start_date = float(self.start_date.strftime('%s'))
 
         if self.end_date:
-            self.end_date = float(self.end_date.strftime('%s'))
+            if isinstance(self.run_date, datetime):
+                self.end_date = float(self.end_date.strftime('%s'))
 
     def to_dict_non_null(self):
         """ Use to get non None fields of a job. Useful when
