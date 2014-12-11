@@ -8,9 +8,8 @@ from vFense.core.scheduler._constants import (
     ScheduleDefaults, ScheduleTriggers, ScheduleKeys,
     CronKeys, IntervalKeys, DateKeys
 )
-from vFense.core._constants import (
-    CommonKeys
-)
+from vFense.core._constants import CommonKeys
+from vFense.db.client import r
 from vFense.core.results import ApiResultKeys
 from vFense.core.status_codes import GenericCodes
 from pytz import all_timezones
@@ -108,6 +107,9 @@ class Schedule(Base):
 
         if not self.time_zone:
             self.time_zone = ScheduleDefaults.TIME_ZONE
+
+        if not self.job_kwargs:
+            self.job_kwargs = {}
 
     def get_invalid_fields(self):
         """Check the agent for any invalid fields.
@@ -396,3 +398,17 @@ class Schedule(Base):
 
         return {k:job_dict[k] for k in job_dict
                 if job_dict[k] != None}
+
+    def to_dict_db(self):
+        self.timestamp_from_datetime()
+        data = self.to_dict_non_null()
+        if self.run_date:
+            data[JobKeys.RunDate] = r.epoch_time(self.run_date)
+
+        if self.start_date:
+            data[JobKeys.StartDate] = r.epoch_time(self.start_date)
+
+        if self.end_date:
+            data[JobKeys.EndDate] = r.epoch_time(self.end_date)
+
+        return data

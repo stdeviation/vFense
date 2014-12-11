@@ -21,7 +21,7 @@ from vFense.core.results import ApiResults
 from vFense.core.status_codes import (
     GenericCodes, GenericFailureCodes,
 )
-
+from vFense.core.scheduler.decorators import add_to_job_history
 from vFense.core.scheduler.status_codes import (
     SchedulerCodes, SchedulerFailureCodes
 )
@@ -340,7 +340,7 @@ class JobManager(object):
 
         return results
 
-
+    @add_to_job_history
     def add_job(self, job):
         """Add a scheduled job into vFense.
         Args:

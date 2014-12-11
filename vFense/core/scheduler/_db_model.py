@@ -14,6 +14,7 @@ class JobKeys():
     ViewName = 'view_name'
     StartDate = 'start_date'
     EndDate = 'end_date'
+    RunDate = 'run_date'
     TimeZone = 'time_zone'
     NextRunTime = 'next_run_time'
     Trigger = 'trigger'

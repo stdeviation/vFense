@@ -3,13 +3,13 @@ from vFense.core._db import (
     update_data_in_table
 )
 from vFense.core.decorators import catch_it, time_it
-from vFense.core.scheduler._db_history_model import (
-    JobCollections, JobHistoryKeys, JobHistoryIndexes
+from vFense.core.scheduler._db_model import (
+    JobCollections, JobHistoryKeys, JobHistoryIndexes, JobKeys
 )
-from vFense.core.scheduler._db_history_sub_queries import (
+from vFense.core.scheduler._db_sub_queries import (
     job_get_merge
 )
-from vFense.db.client import r, db_create_close
+from vFense.db.client import r, db_create_close, db_connect
 
 
 @time_it
@@ -157,7 +157,7 @@ def fetch_job_by_name_and_view(name, view_name, conn=None):
     return job
 
 @time_it
-def insert_historical_job(job_data, conn=None):
+def insert_historical_job(job_data):
     """insert a new historical job
     Args:
         job_data (dict): The historical data you need to insert.
@@ -179,7 +179,39 @@ def insert_historical_job(job_data, conn=None):
     return data
 
 @time_it
-def update_historical_job(job_id, job_data, conn=None):
+def insert_historical_job_by_job_id(job_id):
+    """insert a new historical job
+    Args:
+        job_id (dict): The primary key of the job id
+
+    Basic Usage:
+        >>> from vFense.core.schedule._db_history import insert_historical_job_by_job_id
+        >>> job_id = '4a5a5af65ee54091a08073417be72e5e'
+        >>> insert_historical_job_by_job_id(job_id)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    conn = db_connect()
+    job_data = (
+        r
+        .table(JobCollections.Jobs)
+        .get(job_id)
+        .without(JobKeys.Id)
+        .run(conn)
+    )
+    if job_data:
+        data = (
+            insert_data_in_table(
+                job_data, JobCollections.JobsHistory
+            )
+        )
+    conn.close()
+    return data
+
+@time_it
+def update_historical_job(job_id, job_data):
     """update an existing historical job
     Args:
         job_id (str): The primary key of the job you are updateing.
@@ -203,7 +235,39 @@ def update_historical_job(job_id, job_data, conn=None):
     return data
 
 @time_it
-def delete_historical_job(job_id, conn=None):
+def update_historical_job_by_job_id(job_id):
+    """update a historical job
+    Args:
+        job_id (dict): The primary key of the job id
+
+    Basic Usage:
+        >>> from vFense.core.schedule._db_history import update_historical_job_by_job_id
+        >>> job_id = '4a5a5af65ee54091a08073417be72e5e'
+        >>> update_historical_job_by_job_id(job_id)
+
+    Returns:
+        Tuple (status_code, count, error, generated ids)
+        >>> (2001, 1, None, [])
+    """
+    conn = db_connect()
+    job_data = (
+        r
+        .table(JobCollections.Jobs)
+        .get(job_id)
+        .without(JobKeys.Id)
+        .run(conn)
+    )
+    if job_data:
+        data = (
+            update_data_in_table(
+                job_id, job_data, JobCollections.JobsHistory
+            )
+        )
+    conn.close()
+    return data
+
+@time_it
+def delete_historical_job(job_id):
     """delete an existing historical job
     Args:
         job_id (str): The primary key of the job you are deleteing.
@@ -218,8 +282,8 @@ def delete_historical_job(job_id, conn=None):
         >>> (2001, 1, None, [])
     """
     data = (
-        update_data_in_table(
-            job_id, job_data, JobCollections.JobsHistory
+        delete_data_in_table(
+            job_id, JobCollections.JobsHistory
         )
     )
     return data
