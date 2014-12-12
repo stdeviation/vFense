@@ -4,12 +4,14 @@ from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import (
     ScheduleKeys, ScheduleTriggers
 )
+from vFense.core.scheduler.decorators import update_job_history
 from vFense.core.scheduler.manager import JobManager
 from vFense.core.agent._db import fetch_agent_ids
 from vFense.core.agent.operations.store_agent_operations import (
     StoreAgentOperations
 )
 
+@update_job_history
 def reboot_agents(agent_ids=None, view_name=None, user_name=None,
                   schedule_id=None):
     """Reboot agents

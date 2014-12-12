@@ -141,7 +141,7 @@ class JobManager(object):
 
     def get_jobs(self, view_name=None):
         if view_name:
-            jobs = fetch_jobs_by_view(self.view_name)
+            jobs = fetch_jobs_by_view(view_name)
         else:
             jobs = fetch_jobs_by_view(self.view_name)
 

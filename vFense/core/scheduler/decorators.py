@@ -16,9 +16,10 @@ def add_to_job_history(fn):
 def update_job_history(fn):
     """Update a job in the job_history collection"""
     def db_wrapper(*args, **kwargs):
+        schedule_id = kwargs.get('schedule_id', None)
+        if schedule_id:
+            update_historical_job_by_job_id(schedule_id)
         output = fn(*args, **kwargs)
-        if output.generated_ids:
-            update_historical_job_by_job_id(output.generated_ids[0])
         return(output)
 
     return wraps(fn)(db_wrapper)

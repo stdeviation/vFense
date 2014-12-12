@@ -8,12 +8,13 @@ def job_get_merge():
         {
             JobKeys.NextRunTime: job[JobKeys.NextRunTime].to_epoch_time(),
             JobKeys.StartDate: job[JobKeys.StartDate].to_epoch_time(),
+            JobKeys.CreatedTime: job[JobKeys.CreatedTime].to_epoch_time(),
             JobKeys.EndDate: (
                 r
                 .branch(
-                    job[JobKeys.EndDate] != None,
+                    job.has_fields(JobKeys.EndDate),
                     job[JobKeys.EndDate].to_epoch_time(),
-                    None
+                    job[JobKeys.StartDate].to_epoch_time()
                 )
             )
         }
