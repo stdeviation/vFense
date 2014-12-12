@@ -4,35 +4,32 @@ import logging
 import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
-from vFense.core.api.base import BaseHandler
-from vFense.core.api._constants import (
-    ApiArguments, ApiValues
-)
-from vFense.core.permissions._constants import Permissions
-from vFense.core.permissions.decorators import check_permissions
-from vFense.core.operations.decorators import log_operation
-from vFense.core.operations._admin_constants import AdminActions
-from vFense.core.operations._constants import vFenseObjects
-from vFense.core.scheduler._db_model import JobKeys
-from vFense.core.user._db_model import UserKeys
-from vFense.core.user.manager import UserManager
-from vFense.core.scheduler.search.search import RetrieveJobs
-from vFense.core.results import ApiResults, ExternalApiResults
-from pytz import all_timezones
-
-from vFense.plugins.patching.operations.store_operations import (
-    StorePatchingOperation
-)
 from vFense.core.agent.operations.store_agent_operations import (
     StoreAgentOperations
 )
-
+from vFense.core.agent.scheduler.search.search import RetrieveAgentJobs
+from vFense.core.api.base import BaseHandler
+from vFense.core.api._constants import ApiArguments, ApiValues
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message
 )
-from vFense.core.status_codes import (
-    GenericCodes, GenericFailureCodes
+from vFense.core.operations.decorators import log_operation
+from vFense.core.operations._admin_constants import AdminActions
+from vFense.core.operations._constants import vFenseObjects
+from vFense.core.permissions._constants import Permissions
+from vFense.core.permissions.decorators import check_permissions
+from vFense.core.results import ApiResults, ExternalApiResults
+from vFense.core.scheduler._db_model import JobKeys
+from vFense.core.scheduler.search.search import RetrieveJobs
+from vFense.core.status_codes import GenericCodes, GenericFailureCodes
+from vFense.core.tag.scheduler.search.search import RetrieveTagJobs
+from vFense.core.user._db_model import UserKeys
+from vFense.core.user.manager import UserManager
+from vFense.plugins.patching.operations.store_operations import (
+    StorePatchingOperation
 )
+
+from pytz import all_timezones
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
@@ -196,7 +193,7 @@ class AgentJobsHandler(BaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
-            RetrieveJobs(
+            RetrieveAgentJobs(
                 agent_id=agent_id, count=count, offset=offset,
                 sort=sort, sort_key=sort_by
             )
@@ -297,7 +294,7 @@ class TagJobsHandler(BaseHandler):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
         search = (
-            RetrieveJobs(
+            RetrieveTagJobs(
                 tag_id=tag_id, count=count, offset=offset,
                 sort=sort, sort_key=sort_by
             )
