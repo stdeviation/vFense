@@ -1,0 +1,277 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1982&#45;01] Important: xorg&#45;x11&#45;server security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 11 Dec 2014 15:23:40 &#45;0500 -->
+<!--X-Message-Id: 201412112023.sBBKNdim013479@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1982-01] Important: xorg-x11-server security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1982-01] Important: xorg-x11-server security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1982-01] Important: xorg-x11-server security update</li>
+<li><em>Date</em>: Thu, 11 Dec 2014 20:23:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: xorg-x11-server security update
+Advisory ID:       RHSA-2014:1982-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1982.html">https://rhn.redhat.com/errata/RHSA-2014-1982.html</a>
+Issue date:        2014-12-11
+CVE Names:         CVE-2014-8091 CVE-2014-8092 CVE-2014-8093 
+                   CVE-2014-8095 CVE-2014-8096 CVE-2014-8097 
+                   CVE-2014-8098 CVE-2014-8099 CVE-2014-8100 
+                   CVE-2014-8101 CVE-2014-8102 
+=====================================================================
+
+1. Summary:
+
+Updated xorg-x11-server packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 5.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Workstation (v. 5 client) - i386, x86_64
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+X.Org is an open source implementation of the X Window System. It provides
+the basic low-level functionality that full-fledged graphical user
+interfaces are designed upon.
+
+Multiple integer overflow flaws and out-of-bounds write flaws were found in
+the way the X.Org server calculated memory requirements for certain X11
+core protocol and GLX extension requests. A malicious, authenticated client
+could use either of these flaws to crash the X.Org server or, potentially,
+execute arbitrary code with root privileges. (CVE-2014-8092, CVE-2014-8093,
+CVE-2014-8098)
+
+It was found that the X.Org server did not properly handle SUN-DES-1
+(Secure RPC) authentication credentials. A malicious, unauthenticated
+client could use this flaw to crash the X.Org server by submitting a
+specially crafted authentication request. (CVE-2014-8091)
+
+Multiple out-of-bounds access flaws were found in the way the X.Org server
+calculated memory requirements for certain requests. A malicious,
+authenticated client could use either of these flaws to crash the X.Org
+server, or leak memory contents to the client. (CVE-2014-8097)
+
+Multiple out-of-bounds access flaws were found in the way the X.Org server
+calculated memory requirements for certain requests. A malicious,
+authenticated client could use either of these flaws to crash the X.Org
+server. (CVE-2014-8095, CVE-2014-8096, CVE-2014-8099, CVE-2014-8100,
+CVE-2014-8101, CVE-2014-8102)
+
+All xorg-x11-server users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1168680 - CVE-2014-8091 xorg-x11-server: denial of service due to unchecked malloc in client authentication
+1168684 - CVE-2014-8092 xorg-x11-server: integer overflow in X11 core protocol requests when calculating memory needs for requests
+1168688 - CVE-2014-8093 xorg-x11-server: integer overflow in GLX extension requests when calculating memory needs for requests
+1168694 - CVE-2014-8095 xorg-x11-server: out of bounds access due to not validating length or offset values in XInput extension
+1168700 - CVE-2014-8096 xorg-x11-server: out of bounds access due to not validating length or offset values in XC-MISC extension
+1168705 - CVE-2014-8097 xorg-x11-server: out of bounds access due to not validating length or offset values in DBE extension
+1168707 - CVE-2014-8098 xorg-x11-server: out of bounds access due to not validating length or offset values in GLX extension
+1168710 - CVE-2014-8099 xorg-x11-server: out of bounds access due to not validating length or offset values in XVideo extension
+1168711 - CVE-2014-8100 xorg-x11-server: out of bounds access due to not validating length or offset values in Render extension
+1168713 - CVE-2014-8101 xorg-x11-server: out of bounds access due to not validating length or offset values in RandR extension
+1168714 - CVE-2014-8102 xorg-x11-server: out of bounds access due to not validating length or offset values in XFixes extension
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+xorg-x11-server-1.1.1-48.107.el5_11.src.rpm
+
+i386:
+xorg-x11-server-Xdmx-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-Xephyr-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-Xnest-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-Xorg-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-Xvfb-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-debuginfo-1.1.1-48.107.el5_11.i386.rpm
+
+x86_64:
+xorg-x11-server-Xdmx-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-Xephyr-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-Xnest-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-Xorg-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-Xvfb-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-debuginfo-1.1.1-48.107.el5_11.x86_64.rpm
+
+RHEL Desktop Workstation (v. 5 client):
+
+Source:
+xorg-x11-server-1.1.1-48.107.el5_11.src.rpm
+
+i386:
+xorg-x11-server-debuginfo-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-sdk-1.1.1-48.107.el5_11.i386.rpm
+
+x86_64:
+xorg-x11-server-debuginfo-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-sdk-1.1.1-48.107.el5_11.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+xorg-x11-server-1.1.1-48.107.el5_11.src.rpm
+
+i386:
+xorg-x11-server-Xdmx-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-Xephyr-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-Xnest-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-Xorg-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-Xvfb-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-debuginfo-1.1.1-48.107.el5_11.i386.rpm
+xorg-x11-server-sdk-1.1.1-48.107.el5_11.i386.rpm
+
+ia64:
+xorg-x11-server-Xdmx-1.1.1-48.107.el5_11.ia64.rpm
+xorg-x11-server-Xephyr-1.1.1-48.107.el5_11.ia64.rpm
+xorg-x11-server-Xnest-1.1.1-48.107.el5_11.ia64.rpm
+xorg-x11-server-Xorg-1.1.1-48.107.el5_11.ia64.rpm
+xorg-x11-server-Xvfb-1.1.1-48.107.el5_11.ia64.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.107.el5_11.ia64.rpm
+xorg-x11-server-debuginfo-1.1.1-48.107.el5_11.ia64.rpm
+xorg-x11-server-sdk-1.1.1-48.107.el5_11.ia64.rpm
+
+ppc:
+xorg-x11-server-Xdmx-1.1.1-48.107.el5_11.ppc.rpm
+xorg-x11-server-Xephyr-1.1.1-48.107.el5_11.ppc.rpm
+xorg-x11-server-Xnest-1.1.1-48.107.el5_11.ppc.rpm
+xorg-x11-server-Xorg-1.1.1-48.107.el5_11.ppc.rpm
+xorg-x11-server-Xvfb-1.1.1-48.107.el5_11.ppc.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.107.el5_11.ppc.rpm
+xorg-x11-server-debuginfo-1.1.1-48.107.el5_11.ppc.rpm
+xorg-x11-server-sdk-1.1.1-48.107.el5_11.ppc.rpm
+
+s390x:
+xorg-x11-server-Xephyr-1.1.1-48.107.el5_11.s390x.rpm
+xorg-x11-server-Xnest-1.1.1-48.107.el5_11.s390x.rpm
+xorg-x11-server-Xvfb-1.1.1-48.107.el5_11.s390x.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.107.el5_11.s390x.rpm
+xorg-x11-server-debuginfo-1.1.1-48.107.el5_11.s390x.rpm
+
+x86_64:
+xorg-x11-server-Xdmx-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-Xephyr-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-Xnest-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-Xorg-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-Xvfb-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-Xvnc-source-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-debuginfo-1.1.1-48.107.el5_11.x86_64.rpm
+xorg-x11-server-sdk-1.1.1-48.107.el5_11.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8091">https://access.redhat.com/security/cve/CVE-2014-8091</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8092">https://access.redhat.com/security/cve/CVE-2014-8092</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8093">https://access.redhat.com/security/cve/CVE-2014-8093</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8095">https://access.redhat.com/security/cve/CVE-2014-8095</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8096">https://access.redhat.com/security/cve/CVE-2014-8096</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8097">https://access.redhat.com/security/cve/CVE-2014-8097</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8098">https://access.redhat.com/security/cve/CVE-2014-8098</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8099">https://access.redhat.com/security/cve/CVE-2014-8099</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8100">https://access.redhat.com/security/cve/CVE-2014-8100</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8101">https://access.redhat.com/security/cve/CVE-2014-8101</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8102">https://access.redhat.com/security/cve/CVE-2014-8102</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.x.org/wiki/Development/Security/Advisory-2014-12-09/">http://www.x.org/wiki/Development/Security/Advisory-2014-12-09/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUif0ZXlSAg2UNWIIRAt0eAJ9oT2Qm+Zee6PpZxGjlkY3dAI5DDgCgl9Qf
+6wgzS/bwGtsTNe12Nvx4dvU=
+=cunD
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
