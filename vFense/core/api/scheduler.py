@@ -9,7 +9,7 @@ from vFense.core.agent.operations.store_agent_operations import (
 )
 from vFense.core.agent.scheduler.search.search import RetrieveAgentJobs
 from vFense.core.api.base import BaseHandler
-from vFense.core.api._constants import ApiArguments, ApiValues
+from vFense.core.api._constants import ApiArguments
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message
 )
