@@ -3,12 +3,14 @@ from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import (
     ScheduleKeys, ScheduleTriggers
 )
+from vFense.core.scheduler.decorators import update_job_history
 from vFense.core.scheduler.manager import JobManager
 from vFense.core.tag._db import fetch_tags_by_view
 from vFense.core.agent.operations.store_agent_operations import (
     StoreAgentOperations
 )
 
+@update_job_history
 def reboot_tags(tag_ids=None, view_name=None, user_name=None):
     """Reboot tags
     Kwargs:

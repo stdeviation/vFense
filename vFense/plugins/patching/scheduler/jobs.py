@@ -1,6 +1,7 @@
 from vFense.core.agent._db import fetch_agent_ids
 from vFense.core.tag._db import fetch_tag_ids
 from vFense.core.operations._constants import AgentOperations
+from vFense.core.scheduler.decorators import update_job_history
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
 )
@@ -11,6 +12,7 @@ from vFense.plugins.patching.scheduler._db import (
     FetchSupportedAppsIdsForSchedule
 )
 
+@update_job_history
 def agent_apps_operation(agent_ids=None, app_ids=None, view_name=None,
                          user_name=None, restart=None, cpu_throttle=None,
                          net_throttle=None, operation=None, schedule_id=None):
@@ -62,6 +64,7 @@ def agent_apps_operation(agent_ids=None, app_ids=None, view_name=None,
             install, schedule_id=schedule_id
         )
 
+@update_job_history
 def tag_apps_operation(tag_ids=None, app_ids=None, view_name=None,
                        user_name=None, restart=None, cpu_throttle=None,
                        net_throttle=None, operation=None, schedule_id=None):
@@ -117,6 +120,7 @@ def tag_apps_operation(tag_ids=None, app_ids=None, view_name=None,
                 install, schedule_id=schedule_id
             )
 
+@update_job_history
 def install_os_apps_by_severity_for_agent(severity, agents=None,
                                           view_name=None, user_name=None):
     """Install system updates on 1 or multiple agents.
@@ -141,6 +145,7 @@ def install_os_apps_by_severity_for_agent(severity, agents=None,
             if app_ids:
                 operation.install_os_apps(app_ids, agentids=[agent_id])
 
+@update_job_history
 def install_os_apps_by_severity_for_tag(severity, tags=None,
                                         view_name=None, user_name=None,
                                         schedule_id=None):
