@@ -1,5 +1,5 @@
 from vFense.core.scheduler._constants import job_id
-from vFense.core.api.scheduler import (
+from vFense.core.scheduler.api.scheduler import (
     JobHandler, JobsHandler, TimeZonesHandler
 )
 

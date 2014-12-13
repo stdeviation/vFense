@@ -1,5 +1,5 @@
 from vFense.core.tag._constants import tag_id
-from vFense.core.api.tag import TagHandler, TagsHandler
+from vFense.core.api.tag import TagHandler, TagsHandler, TagJobsHandler
 from vFense.plugins.patching.api.apps import TagIdAppsHandler
 from vFense.core.api.agent_operations import TagOperationsHandler
 from vFense.plugins.patching.api.stats import (
@@ -21,6 +21,8 @@ def api_handlers():
             TagOperationsHandler),
         (r"/api/v1/tag/({0})/stats_by_os?".format(tag_id()),
             TagStatsByOsHandler),
+        (r"/api/v1/tag/({0})/schedules?".format(tag_id()),
+            TagJobsHandler),
 
         ##### Tags API Handlers
         (r"/api/v1/tags", TagsHandler),

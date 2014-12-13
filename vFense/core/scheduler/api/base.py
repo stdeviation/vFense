@@ -1,9 +1,7 @@
 
 from vFense.core.api._constants import ApiArguments
 from vFense.core.api.base import BaseHandler
-from vFense.core.decorators import (
-    authenticated_request, convert_json_to_arguments, results_message
-)
+from vFense.core.decorators import results_message
 from vFense.core.scheduler._db_model import JobKeys
 from vFense.core.user.manager import UserManager
 
@@ -23,7 +21,7 @@ class BaseJob(BaseHandler):
         self.output = self.get_argument(ApiArguments.OUTPUT, 'json')
 
     def apply_search(self, search):
-        if not self.operation and not self.trigger and not self.self.query and not self.timezone:
+        if not self.operation and not self.trigger and not self.query and not self.timezone:
             results = self.get_all_jobs(search)
 
         elif self.query and not self.operation and not self.trigger and not self.imezone:
@@ -103,6 +101,3 @@ class BaseJob(BaseHandler):
             )
         )
         return results
-
-
-

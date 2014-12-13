@@ -17,6 +17,7 @@ class JobKeys():
     RunDate = 'run_date'
     TimeZone = 'time_zone'
     NextRunTime = 'next_run_time'
+    LastRunTime = 'last_run_time'
     Trigger = 'trigger'
     JobState = 'job_state'
     CreatedTime = 'created_time'

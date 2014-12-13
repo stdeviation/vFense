@@ -15,7 +15,7 @@ from vFense.core.operations._db_model import (
 from vFense.core.operations._constants import (
     AgentOperations, vFensePlugins
 )
-from vFense.core.operations.agent_operations import AgentOperation
+from vFense.core.operations.agent_operations import AgentOperationManager
 from vFense.plugins.patching.patching import (
     update_app_status_by_agentid_and_appid
 )
@@ -36,7 +36,7 @@ def remove_expired_jobs_and_update_operations():
     logger.info(msg)
     for job in expired_jobs:
         operation = (
-            AgentOperation()
+            AgentOperationManager()
         )
 
         operation.update_operation_expire_time(

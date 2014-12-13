@@ -1,5 +1,7 @@
 from vFense.core.agent._constants import agent_id
-from vFense.core.api.agent import AgentHandler, AgentsHandler, AgentTagHandler
+from vFense.core.api.agent import (
+    AgentHandler, AgentsHandler, AgentTagHandler, AgentJobsHandler
+)
 from vFense.core.receiver.api.result_uris import AgentResultURIs
 from vFense.plugins.patching.api.apps import AgentIdAppsHandler
 from vFense.core.api.agent_operations import AgentOperationsHandler
@@ -23,6 +25,8 @@ def api_handlers():
             AgentOperationsHandler),
         (r"/api/v1/agent/({0})/uris/response?".format(agent_id()),
             AgentResultURIs),
+        (r"/api/v1/agent/({0})/schedules?".format(agent_id()),
+            AgentJobsHandler),
         ##### Agents API Handlers
         (r"/api/v1/agents", AgentsHandler)
     ]

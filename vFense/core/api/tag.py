@@ -14,11 +14,13 @@ from vFense.core.tag.status_codes import (
     TagCodes, TagFailureCodes
 )
 from vFense.core.agent._constants import Environments
+from vFense.core.tag.scheduler.search.search import RetrieveTagJobs
 from vFense.core.agent.status_codes import AgentFailureCodes
 from vFense.core.agent.manager import AgentManager
 from vFense.core.tag._db_model import TagKeys
 from vFense.core.tag._db import fetch_agent_ids_in_tag
 from vFense.core.tag import Tag
+from vFense.core.scheduler.api.base import BaseJob
 from vFense.core.view._db import token_exist_in_current
 from vFense.core.tag.manager import TagManager
 from vFense.core.tag.search.search import RetrieveTags
@@ -395,3 +397,21 @@ class TagHandler(BaseHandler):
     def remove_tag(self, manager):
         results = manager.remove()
         return results
+
+
+class TagJobsHandler(BaseJob):
+    @authenticated_request
+    @check_permissions(Permissions.READ)
+    def get(self, tag_id):
+        self.get_search_arguments()
+        search = (
+            RetrieveTagJobs(
+                tag_id=tag_id, view_name=self.active_view,
+                count=self.count, offset=self.offset, sort=self.sort,
+                sort_key=self.sort_by
+            )
+        )
+        results = self.apply_search(search)
+
+        self.set_status(results.http_status_code)
+        self.modified_output(results, self.output, 'jobs')
