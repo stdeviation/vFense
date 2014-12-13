@@ -85,7 +85,7 @@ class AgentJobManager(JobManager):
             Schedule(
                 label, reboot_agents, job_kwargs, start_date,
                 operation=AgentOperations.REBOOT, time_zone=time_zone,
-                trigger=ScheduleTriggers.DATE
+                trigger=ScheduleTriggers.CRON
             )
         )
         results = self.add_cron_job(job)

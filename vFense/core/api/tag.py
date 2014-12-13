@@ -20,6 +20,7 @@ from vFense.core.agent.manager import AgentManager
 from vFense.core.tag._db_model import TagKeys
 from vFense.core.tag._db import fetch_agent_ids_in_tag
 from vFense.core.tag import Tag
+from vFense.core.tag.scheduler.manager import TagJobManager
 from vFense.core.scheduler.api.base import BaseJob
 from vFense.core.view._db import token_exist_in_current
 from vFense.core.tag.manager import TagManager
@@ -415,3 +416,27 @@ class TagJobsHandler(BaseJob):
 
         self.set_status(results.http_status_code)
         self.modified_output(results, self.output, 'jobs')
+
+
+class TagSchedulerReboot(BaseHandler):
+    @api_catch_it
+    @authenticated_request
+    @convert_json_to_arguments
+    @check_permissions(Permissions.REBOOT)
+    def post(self, tag_id):
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = UserManager(active_user).properties.current_view
+        sched = self.application.scheduler
+        job = TagJobManager(sched, active_view)
+        run_date = self.arguments.get('run_date')
+        job_name = self.arguments.get('job_name')
+        timezone = self.arguments.get('timezone', None)
+        results = (
+            job.reboot_once(
+                run_date, job_name, user_name=active_user,
+                tag_id=[tag_id], time_zone=timezone
+            )
+        )
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))

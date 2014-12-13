@@ -12,6 +12,7 @@ from vFense.core.agent.manager import AgentManager
 from vFense.core.agent.operations.store_agent_operations import (
     StoreAgentOperations
 )
+from vFense.core.agent.scheduler.manager import AgentJobManager
 from vFense.core.agent.scheduler.search.search import RetrieveAgentJobs
 from vFense.core.agent.search.search import RetrieveAgents
 from vFense.core.agent.status_codes import AgentCodes, AgentFailureCodes
@@ -805,3 +806,27 @@ class AgentJobsHandler(BaseJob):
 
         self.set_status(results.http_status_code)
         self.modified_output(results, self.output, 'jobs')
+
+
+class AgentSchedulerReboot(BaseHandler):
+    @api_catch_it
+    @authenticated_request
+    @convert_json_to_arguments
+    @check_permissions(Permissions.REBOOT)
+    def post(self, agent_id):
+        active_user = self.get_current_user().encode('utf-8')
+        active_view = UserManager(active_user).properties.current_view
+        sched = self.application.scheduler
+        job = AgentJobManager(sched, active_view)
+        run_date = self.arguments.get('run_date')
+        job_name = self.arguments.get('job_name')
+        timezone = self.arguments.get('timezone', None)
+        results = (
+            job.reboot_once(
+                run_date, job_name, user_name=active_user,
+                agent_ids=[agent_id], time_zone=timezone
+            )
+        )
+        self.set_status(results.http_status_code)
+        self.set_header('Content-Type', 'application/json')
+        self.write(json.dumps(results.to_dict_non_null(), indent=4))
