@@ -126,7 +126,7 @@ def rqworker_stop():
 
     for queue in RQ_WORKER_QUEUES:
         queue_name = re.sub(r'_settings', '', queue[1])
-        pid_file = os.path.join(PID_DIR, 'RQW_PID_%s.pid' % (queue_name))
+        pid_file = os.path.join(PID_DIR, 'rqw_pid_%s.pid' % (queue_name))
         rqw = 'RqWorker Queue %s' % (queue_name)
         if os.path.exists(pid_file):
             pid_exists = open(pid_file, 'r').read()
@@ -148,7 +148,10 @@ def rqworker_stop():
                 logger.error(rql_msg)
 
         else:
-            rql_msg = '%s couldnt be stopped\n' % (rqw)
+            rql_msg = (
+                '%s couldnt be stopped, pid file %s couldnt be found\n'
+                % (rqw, pid_file)
+            )
             completed = False
             sys.stderr.write(rql_msg+'\n')
             logger.error(rql_msg)
