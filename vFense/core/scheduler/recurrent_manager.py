@@ -5,14 +5,10 @@ from vFense.core.results import ApiResults
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import ScheduleTriggers
 from vFense.core.scheduler.manager import JobManager
-from vFense.plugins.patching.scheduler.jobs import (
-    install_os_apps_by_severity_for_agent,
-    install_os_apps_by_severity_for_tag
-)
 
 class AgentRecurrentJobManager(JobManager):
     def _set_funcs(self):
-        self.cron_func = install_os_apps_by_severity_for_agent
+        self.cron_func = None
 
     def yearly(self, job_name, start_date,
                end_date=None, time_zone=None, **kwargs):

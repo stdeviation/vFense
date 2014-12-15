@@ -129,10 +129,11 @@ def install_os_apps_by_severity_for_agent(severity, agent_ids=None,
             Example.. (critical, optional, recommended)
     Kwargs:
         agent_ids (list): List of agent ids.
-        apps (list): List of application ids.
         view_name (str): The name of the view, this operation is being
             performed on.
         user_name (str): The user who performed this operation.
+        schedule_id (str): The id of the schedule that initiated this
+            operation.
     """
     fetch = FetchAppsIdsForSchedule()
     operation = StorePatchingOperation(user_name, view_name)
