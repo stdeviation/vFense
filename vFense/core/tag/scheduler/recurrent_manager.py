@@ -3,7 +3,7 @@ from vFense.core.agent.scheduler.recurrent_manager import (
 )
 from vFense.core.tag.scheduler.manager import reboot_tags
 
-class TagAppsRecurrentJobManager(AgentRebootRecurrentJobManager):
+class TagRebootRecurrentJobManager(AgentRebootRecurrentJobManager):
     def _set_funcs(self):
         self.cron_func = reboot_tags
 
@@ -22,7 +22,7 @@ class TagAppsRecurrentJobManager(AgentRebootRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentRebootRecurrentJobManager).yearly(
+            super(TagRebootRecurrentJobManager, self).yearly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 tag_ids=tag_ids, view_name=view_name, user_name=user_name
             )
@@ -44,7 +44,7 @@ class TagAppsRecurrentJobManager(AgentRebootRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentRebootRecurrentJobManager).monthly(
+            super(TagRebootRecurrentJobManager, self).monthly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 tag_ids=tag_ids, view_name=view_name, user_name=user_name
             )
@@ -66,7 +66,7 @@ class TagAppsRecurrentJobManager(AgentRebootRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentRebootRecurrentJobManager).weekly(
+            super(TagRebootRecurrentJobManager, self).weekly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 tag_ids=tag_ids, view_name=view_name, user_name=user_name
             )
@@ -88,7 +88,7 @@ class TagAppsRecurrentJobManager(AgentRebootRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentRebootRecurrentJobManager).daily(
+            super(TagRebootRecurrentJobManager, self).daily(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 tag_ids=tag_ids, view_name=view_name, user_name=user_name
             )

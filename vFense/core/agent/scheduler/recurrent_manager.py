@@ -22,7 +22,7 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentRebootRecurrentJobManager).yearly(
+            super(AgentRebootRecurrentJobManager, self).yearly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 agent_ids=agent_ids, view_name=view_name, user_name=user_name
             )
@@ -44,7 +44,7 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentRebootRecurrentJobManager).monthly(
+            super(AgentRebootRecurrentJobManager, self).monthly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 agent_ids=agent_ids, view_name=view_name, user_name=user_name
             )
@@ -66,7 +66,7 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentRebootRecurrentJobManager).weekly(
+            super(AgentRebootRecurrentJobManager, self).weekly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 agent_ids=agent_ids, view_name=view_name, user_name=user_name
             )
@@ -88,7 +88,7 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentRebootRecurrentJobManager).daily(
+            super(AgentRebootRecurrentJobManager, self).daily(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 agent_ids=agent_ids, view_name=view_name, user_name=user_name
             )

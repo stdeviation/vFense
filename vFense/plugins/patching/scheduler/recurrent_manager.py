@@ -26,7 +26,7 @@ class AgentSeverityRecurrentJobManager(AgentRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentSeverityRecurrentJobManager).yearly(
+            super(AgentSeverityRecurrentJobManager, self).yearly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 severity=severity, agent_ids=agent_ids, view_name=view_name,
                 user_name=user_name
@@ -50,7 +50,7 @@ class AgentSeverityRecurrentJobManager(AgentRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentSeverityRecurrentJobManager).monthly(
+            super(AgentSeverityRecurrentJobManager, self).monthly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 severity=severity, agent_ids=agent_ids, view_name=view_name,
                 user_name=user_name
@@ -74,7 +74,7 @@ class AgentSeverityRecurrentJobManager(AgentRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentSeverityRecurrentJobManager).weekly(
+            super(AgentSeverityRecurrentJobManager, self).weekly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 severity=severity, agent_ids=agent_ids, view_name=view_name,
                 user_name=user_name
@@ -127,7 +127,7 @@ class TagAppsRecurrentJobManager(AgentSeverityRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentSeverityRecurrentJobManager).yearly(
+            super(AgentSeverityRecurrentJobManager, self).yearly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 severity=severity, tag_ids=tag_ids, view_name=view_name,
                 user_name=user_name
@@ -151,7 +151,7 @@ class TagAppsRecurrentJobManager(AgentSeverityRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentSeverityRecurrentJobManager).monthly(
+            super(AgentSeverityRecurrentJobManager, self).monthly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 severity=severity, tag_ids=tag_ids, view_name=view_name,
                 user_name=user_name
@@ -175,7 +175,7 @@ class TagAppsRecurrentJobManager(AgentSeverityRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentSeverityRecurrentJobManager).weekly(
+            super(AgentSeverityRecurrentJobManager, self).weekly(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 severity=severity, tag_ids=tag_ids, view_name=view_name,
                 user_name=user_name
@@ -199,7 +199,7 @@ class TagAppsRecurrentJobManager(AgentSeverityRecurrentJobManager):
             user_name (str): The name of the user.
         """
         results = (
-            super(self, AgentSeverityRecurrentJobManager).daily(
+            super(AgentSeverityRecurrentJobManager, self).daily(
                 job_name, start_date, end_date=end_date, time_zone=time_zone,
                 severity=severity, tag_ids=tag_ids, view_name=view_name,
                 user_name=user_name
