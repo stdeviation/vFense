@@ -25,6 +25,9 @@ from vFense.core.scheduler.decorators import add_to_job_history
 from vFense.core.scheduler.status_codes import (
     SchedulerCodes, SchedulerFailureCodes
 )
+
+from apscheduler.schedulers.base import JobLookupError
+
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
@@ -452,6 +455,83 @@ class JobManager(object):
                 SchedulerFailureCodes.FailedToCreateSchedule
             )
             results.message = msg
+
+        return results
+
+    def delete_job(self, job_id):
+        """Add a scheduled job into vFense.
+        Args:
+            job_id (str): The id of the job you are deleting.
+
+        Basic Usage:
+            >>> from vFense.core.scheduler.manager import JobManager, start_scheduler
+            >>> sched = start_scheduler()
+            >>> view_name = 'global'
+            >>> manager = JobManager(sched, view_name)
+            >>> job_id = '3298495c7b4544d4af14abb86c1f4237'
+            >>> job_status = manager.delete_job(job_id)
+
+        Returns:
+            Instance of ApiResults
+        """
+        results = ApiResults()
+        results.fill_in_defaults()
+        try:
+            self.schedule.remove_job(job_id)
+            results.message = 'Job id {0} deleted'.format(job_id)
+            results.generic_status_code = SchedulerCodes.ObjectDeleted
+            results.vfense_status_code = SchedulerCodes.ScheduleRemoved
+        except JobLookupError as e:
+            results.message = e
+            results.generic_status_code = (
+                SchedulerFailureCodes.FailedToDeleteObject
+            )
+            results.vfense_status_code = (
+                SchedulerFailureCodes.FailedToRemoveSchedule
+            )
+
+        return results
+
+    def delete_all_jobs(self, view_name=None):
+        """Add a scheduled job into vFense.
+        Kwargs:
+            view_name (str): The name of the view, that you are going to
+                remove all the jobs from.
+                default=None (Delete all jobs in all views)
+
+        Basic Usage:
+            >>> from vFense.core.scheduler.manager import JobManager, start_scheduler
+            >>> sched = start_scheduler()
+            >>> view_name = 'global'
+            >>> manager = JobManager(sched, view_name)
+            >>> job_status = manager.delete_all_jobs(view_name)
+
+        Returns:
+            Instance of ApiResults
+        """
+        results = ApiResults()
+        results.fill_in_defaults()
+        try:
+            if view_name:
+                self.schedule.remove_all_jobs(view_name=view_name)
+                results.message = (
+                    'All jobs have been removed from view {0}'
+                    .format(view_name)
+                )
+            else:
+                self.schedule.remove_all_jobs()
+                results.message = 'All jobs have been removed'
+
+            results.generic_status_code = SchedulerCodes.ObjectDeleted
+            results.vfense_status_code = SchedulerCodes.ScheduleRemoved
+        except JobLookupError as e:
+            results.message = e
+            results.generic_status_code = (
+                SchedulerFailureCodes.FailedToDeleteObject
+            )
+            results.vfense_status_code = (
+                SchedulerFailureCodes.FailedToRemoveSchedule
+            )
 
         return results
 
