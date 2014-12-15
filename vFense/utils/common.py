@@ -324,12 +324,8 @@ def return_datetime(timestamp):
     if valid_timestamp:
         parsed_time = (
             datetime
-            .fromtimestamp(
-                timestamp
-            )
-            .strftime(
-                '%m/%d/%Y %H:%M'
-            )
+            .fromtimestamp(timestamp)
+            .strftime('%m/%d/%Y %H:%M')
         )
         return (parsed_time)
 

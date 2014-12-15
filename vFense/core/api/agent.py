@@ -651,7 +651,6 @@ class AgentHandler(BaseHandler):
             agent_operation.token = token
             results = self.new_token(operation, agent_operation)
 
-
         elif refresh_apps:
             operation = StorePatchingOperation(active_user, active_view)
             results = self.refresh_apps(operation, agent_operation)
