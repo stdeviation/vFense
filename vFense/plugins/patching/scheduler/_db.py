@@ -33,7 +33,7 @@ class FetchAppsIdsForSchedule(object):
         self.apps_per_agent_collection = apps_per_agent_collection
 
     @db_create_close
-    def by_sev_for_agent(sev, agent_id, conn=None):
+    def by_sev_for_agent(self, sev, agent_id, conn=None):
         """Fetch all application ids by severity for an agent.
         Args:
             sev (str): The severity of the applications you are searching for.
@@ -73,7 +73,7 @@ class FetchAppsIdsForSchedule(object):
         return app_ids
 
     @db_create_close
-    def by_sev_for_tag(sev, tag_id, conn=None):
+    def by_sev_for_tag(self, sev, tag_id, conn=None):
         """Fetch all application ids by severity for an agent.
         Args:
             sev (str): The severity of the applications you are searching for.

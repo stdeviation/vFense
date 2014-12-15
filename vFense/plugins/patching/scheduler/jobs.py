@@ -137,16 +137,16 @@ def install_os_apps_by_severity_for_agent(severity, agent_ids=None,
     fetch = FetchAppsIdsForSchedule()
     operation = StorePatchingOperation(user_name, view_name)
     if not agent_ids:
-        agents = fetch_agent_ids(view_name)
+        agent_ids = fetch_agent_ids(view_name)
 
-    if agents:
-        for agent_id in agents:
+    if agent_ids:
+        for agent_id in agent_ids:
             app_ids = fetch.by_sev_for_agent(severity, agent_id)
             if app_ids:
                 operation.install_os_apps(app_ids, agentids=[agent_id])
 
 @update_job_history
-def install_os_apps_by_severity_for_tag(severity, tags=None,
+def install_os_apps_by_severity_for_tag(severity, tag_ids=None,
                                         view_name=None, user_name=None,
                                         schedule_id=None):
     """Install system updates on 1 or multiple tags.
@@ -154,7 +154,7 @@ def install_os_apps_by_severity_for_tag(severity, tags=None,
         severity (str): Install all updates with a severity level.
             Example.. (critical, optional, recommended)
     Kwargs:
-        tags (list): List of tag ids.
+        tag_ids (list): List of tag ids.
         view_name (str): The name of the view, this operation is being
             performed on.
         user_name (str): The user who performed this operation.
@@ -163,11 +163,11 @@ def install_os_apps_by_severity_for_tag(severity, tags=None,
     """
     fetch = FetchAppsIdsForSchedule()
     operation = StorePatchingOperation(user_name, view_name)
-    if not tags:
-        tags = fetch_tag_ids(view_name)
+    if not tag_ids:
+        tag_ids = fetch_tag_ids(view_name)
 
-    if tags:
-        for tag_id in tags:
+    if tag_ids:
+        for tag_id in tag_ids:
             app_ids = fetch.by_sev_for_tag(severity, tag_id)
             if app_ids:
                 operation.install_os_apps(app_ids, tag_id=[tag_id])
