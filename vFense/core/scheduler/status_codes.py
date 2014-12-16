@@ -1,5 +1,9 @@
+from vFense.core.status_codes import (
+    GenericCodes, GenericFailureCodes
+)
 
-class SchedulerCodes(object):
+
+class SchedulerCodes(GenericCodes):
     ScheduleCreated = 9000
     ScheduleUpdated = 9001
     FailedToCreateSchedule = 9002
@@ -11,7 +15,7 @@ class SchedulerCodes(object):
     ScheduleExists = 9008
 
 
-class SchedulerFailureCodes(object):
+class SchedulerFailureCodes(GenericFailureCodes):
     FailedToCreateSchedule = 9100
     FailedToRemoveSchedule = 9101
     FailedToUpdateSchedule = 9102
