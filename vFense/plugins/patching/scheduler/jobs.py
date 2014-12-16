@@ -121,13 +121,12 @@ def tag_apps_operation(tag_ids=None, app_ids=None, view_name=None,
             )
 
 @update_job_history
-def install_os_apps_by_severity_for_agent(severity, agent_ids=None,
+def install_os_apps_by_severity_for_agent(severity=None, agent_ids=None,
                                           view_name=None, user_name=None):
     """Install system updates on 1 or multiple agents.
-    Args:
+    Kwargs:
         severity (str): Install all updates with a severity level.
             Example.. (critical, optional, recommended)
-    Kwargs:
         agent_ids (list): List of agent ids.
         apps (list): List of application ids.
         view_name (str): The name of the view, this operation is being
@@ -141,7 +140,8 @@ def install_os_apps_by_severity_for_agent(severity, agent_ids=None,
 
     if agent_ids:
         for agent_id in agent_ids:
-            app_ids = fetch.by_sev_for_agent(severity, agent_id)
+            if severity:
+                app_ids = fetch.by_sev_for_agent(severity, agent_id)
             if app_ids:
                 operation.install_os_apps(app_ids, agentids=[agent_id])
 
