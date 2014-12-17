@@ -1,0 +1,222 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1995&#45;01] Important: Red Hat JBoss Fuse Service Works	6.0.0	security update -->
+<!--X-From-R13: <ohtmvyynNerqung.pbz> -->
+<!--X-Date: Mon, 15 Dec 2014 21:27:37 &#45;0500 -->
+<!--X-Message-Id: 83d91608&#45;f5d8&#45;493b&#45;99d7&#45;c8a5dcd02c7f@journal.report.generator -->
+<!--X-Content-Type: multipart/mixed -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1995-01] Important: Red Hat JBoss Fuse Service Works	6.0.0	se</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1995-01] Important: Red Hat JBoss Fuse Service Works	6.0.0	security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: &lt;bugzilla redhat com&gt;</li>
+<li><em>To</em>: &lt;rhsa-announce redhat com&gt;, &lt;jboss-watch-list redhat com&gt;</li>
+<li><em>Subject</em>: [RHSA-2014:1995-01] Important: Red Hat JBoss Fuse Service Works	6.0.0	security update</li>
+<li><em>Date</em>: Tue, 16 Dec 2014 08:28:34 +1100</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>Sender: rhsa-announce-bounces redhat com
+On-Behalf-Of: bugzilla redhat com
+Subject: [RHSA-2014:1995-01] Important: Red Hat JBoss Fuse Service Works 6.0.0	security update
+Message-Id: &lt;201412152055 sBFKtGJ3026704 int-mx13 intmail prod int phx2 redhat com&gt;
+Recipient: mpatterson transurban com
+
+
+Privileged/Confidential information may be contained in this message. If you are not the addressee indicated in this message (or responsible for delivery of the message to such person), you may not copy or deliver this message to anyone. In such a case, you should destroy this message and kindly notify the sender by reply e-mail or by telephone on (03) 9612-6999 or +61 3 9612-6999.
+
+Please advise immediately if you or your employer does not consent to Internet e-mail for messages of this kind.
+
+Opinions, conclusions and other information in this message that do not relate to the official business of Transurban Limited or any companies within the Transurban Group shall be understood as neither given nor endorsed by them.</pre><blockquote><small>---&nbsp;<i>Begin&nbsp;Message</i>&nbsp;---</small>
+<ul>
+<li><em>From</em>: &lt;bugzilla redhat com&gt;</li>
+<li><em>To</em>: &lt;rhsa-announce redhat com&gt;, &lt;jboss-watch-list redhat com&gt;</li>
+<li><em>Subject</em>: [RHSA-2014:1995-01] Important: Red Hat JBoss Fuse Service Works 6.0.0	security update</li>
+<li><em>Date</em>: Mon, 15 Dec 2014 20:55:15 +0000</li>
+</ul>
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Fuse Service Works 6.0.0 security update
+Advisory ID:       RHSA-2014:1995-01
+Product:           Red Hat JBoss Fuse Service Works
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1995.html">https://rhn.redhat.com/errata/RHSA-2014-1995.html</a>
+Issue date:        2014-12-15
+CVE Names:         CVE-2013-2035 CVE-2013-6440 CVE-2014-0018 
+                   CVE-2014-0058 CVE-2014-0093 CVE-2014-0107 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Fuse Service Works 6.0.0 roll up patch 3, which fixes
+multiple security issues and various bugs, is now available from the Red
+Hat Customer Portal.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Fuse Service Works is the next-generation ESB and business
+process automation infrastructure.
+
+This roll up patch serves as a cumulative upgrade for Red Hat JBoss Fuse
+Service Works 6.0.0. It includes various bug fixes, which are listed in the
+README file included with the patch files.
+
+The following security issues are fixed with this release:
+
+It was found that the secure processing feature of Xalan-Java had
+insufficient restrictions defined for certain properties and features.
+A remote attacker able to provide Extensible Stylesheet Language
+Transformations (XSLT) content to be processed by an application using
+Xalan-Java could use this flaw to bypass the intended constraints of the
+secure processing feature. Depending on the components available in the
+classpath, this could lead to arbitrary remote code execution in the
+context of the application server running the application that uses
+Xalan-Java. (CVE-2014-0107)
+
+It was found that the ParserPool and Decrypter classes in the OpenSAML Java
+implementation resolved external entities, permitting XML External Entity
+(XXE) attacks. A remote attacker could use this flaw to read files
+accessible to the user running the application server, and potentially
+perform other more advanced XXE attacks. (CVE-2013-6440)
+
+It was found that Java Security Manager permissions configured via a policy
+file were not properly applied, causing all deployed applications to be
+granted the java.security.AllPermission permission. In certain cases, an
+attacker could use this flaw to circumvent expected security measures to
+perform actions which would otherwise be restricted. (CVE-2014-0093)
+
+The HawtJNI Library class wrote native libraries to a predictable file name
+in /tmp/ when the native libraries were bundled in a JAR file, and no
+custom library path was specified. A local attacker could overwrite these
+native libraries with malicious versions during the window between when
+HawtJNI writes them and when they are executed. (CVE-2013-2035)
+
+In Red Hat JBoss Enterprise Application Platform, when running under a
+security manager, it was possible for deployed code to get access to the
+Modular Service Container (MSC) service registry without any permission
+checks. This could allow malicious deployments to modify the internal state
+of the server in various ways. (CVE-2014-0018)
+
+It was found that the security audit functionality logged request
+parameters in plain text. This may have caused passwords to be included in
+the audit log files when using BASIC or FORM-based authentication. A local
+attacker with access to audit log files could possibly use this flaw to
+obtain application or server authentication credentials. (CVE-2014-0058)
+
+The CVE-2013-6440 issue was discovered by David Illsley, Ron Gutierrez of
+Gotham Digital Science, and David Jorm of Red Hat Product Security; the
+CVE-2014-0093 issue was discovered by Josef Cacek of the Red Hat JBoss EAP
+Quality Engineering team; the CVE-2013-2035 issue was discovered by Florian
+Weimer of Red Hat Product Security; and the CVE-2014-0018 issue was
+discovered by Stuart Douglas of Red Hat.
+
+All users of Red Hat JBoss Fuse Service Works 6.0.0 as provided from the
+Red Hat Customer Portal are advised to apply this roll up patch.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying the update, back up your
+existing Red Hat JBoss Fuse Service Works installation (including its
+databases, applications, configuration files, and so on).
+
+Note that it is recommended to halt the Red Hat JBoss Fuse Service Works
+server by stopping the JBoss Application Server process before installing
+this update, and then after installing the update, restart the Red Hat
+JBoss Fuse Service Works server by starting the JBoss Application
+Server process.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+958618 - CVE-2013-2035 HawtJNI: predictable temporary file name leading to local arbitrary code execution
+1043332 - CVE-2013-6440 XMLTooling-J/OpenSAML Java: XML eXternal Entity (XXE) flaw in ParserPool and Decrypter
+1052783 - CVE-2014-0018 jboss-as-server: Unchecked access to MSC Service Registry under JSM
+1063641 - CVE-2014-0058 Red Hat JBoss EAP6: Plain text password logging during security audit
+1070046 - CVE-2014-0093 JBoss EAP 6: JSM policy not respected by deployed applications
+1080248 - CVE-2014-0107 Xalan-Java: insufficient constraints in secure processing feature
+
+5. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-2035">https://access.redhat.com/security/cve/CVE-2013-2035</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-6440">https://access.redhat.com/security/cve/CVE-2013-6440</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0018">https://access.redhat.com/security/cve/CVE-2014-0018</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0058">https://access.redhat.com/security/cve/CVE-2014-0058</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0093">https://access.redhat.com/security/cve/CVE-2014-0093</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0107">https://access.redhat.com/security/cve/CVE-2014-0107</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jboss.fuse.serviceworks&amp;downloadType=securityPatches&amp;version=6.0.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jboss.fuse.serviceworks&amp;downloadType=securityPatches&amp;version=6.0.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUj0nCXlSAg2UNWIIRAjeOAJwL5C019EtNlSxhoVx6HzLnqUDwdACeN14o
+jemdaNa95yHXlnPtlRdH95Q=
+=uQ8Q
+-----END PGP SIGNATURE-----
+
+
+--
+RHSA-announce mailing list
+RHSA-announce redhat com
+<a  rel="nofollow" href="https://www.redhat.com/mailman/listinfo/rhsa-announce">https://www.redhat.com/mailman/listinfo/rhsa-announce</a>
+</pre><br><small>---&nbsp;<i>End Message</i>&nbsp;---</small></blockquote>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

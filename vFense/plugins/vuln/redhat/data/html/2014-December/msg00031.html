@@ -1,0 +1,244 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:2000&#45;01] Important: thermostat1&#45;thermostat security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 16 Dec 2014 17:35:38 &#45;0500 -->
+<!--X-Message-Id: 201412162235.sBGMZcuM030181@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:2000-01] Important: thermostat1-thermostat security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00030.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:2000-01] Important: thermostat1-thermostat security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:2000-01] Important: thermostat1-thermostat security update</li>
+<li><em>Date</em>: Tue, 16 Dec 2014 22:35:37 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: thermostat1-thermostat security update
+Advisory ID:       RHSA-2014:2000-01
+Product:           Red Hat Software Collections
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-2000.html">https://rhn.redhat.com/errata/RHSA-2014-2000.html</a>
+Issue date:        2014-12-16
+CVE Names:         CVE-2014-8120 
+=====================================================================
+
+1. Summary:
+
+Updated thermostat1-thermostat packages that fix one security issue are now
+available for Red Hat Software Collections 1.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 6) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 7) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.4) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.5) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.6) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 6) - noarch, x86_64
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 7) - noarch, x86_64
+
+3. Description:
+
+Thermostat is a monitoring and instrumentation tool for the OpenJDK HotSpot
+Java Virtual Machine (JVM) with support for monitoring multiple JVM
+instances.
+
+It was discovered that, in certain configurations, the Thermostat agent
+disclosed JMX management URLs of all local Java virtual machines to any
+local user. A local, unprivileged user could use this flaw to escalate
+their privileges on the system. (CVE-2014-8120)
+
+This issue was discovered by Elliott Baron of Red Hat.
+
+All thermostat1-thermostat users are advised to upgrade to these updated
+packages, which contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1168977 - CVE-2014-8120 thermostat: local JMX URL disclosure
+
+6. Package List:
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+thermostat1-thermostat-1.0.4-60.6.el6.src.rpm
+
+noarch:
+thermostat1-thermostat-javadoc-1.0.4-60.6.el6.noarch.rpm
+thermostat1-thermostat-webapp-1.0.4-60.6.el6.noarch.rpm
+
+x86_64:
+thermostat1-thermostat-1.0.4-60.6.el6.x86_64.rpm
+thermostat1-thermostat-debuginfo-1.0.4-60.6.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.4):
+
+Source:
+thermostat1-thermostat-1.0.4-60.6.el6.src.rpm
+
+noarch:
+thermostat1-thermostat-javadoc-1.0.4-60.6.el6.noarch.rpm
+thermostat1-thermostat-webapp-1.0.4-60.6.el6.noarch.rpm
+
+x86_64:
+thermostat1-thermostat-1.0.4-60.6.el6.x86_64.rpm
+thermostat1-thermostat-debuginfo-1.0.4-60.6.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.5):
+
+Source:
+thermostat1-thermostat-1.0.4-60.6.el6.src.rpm
+
+noarch:
+thermostat1-thermostat-javadoc-1.0.4-60.6.el6.noarch.rpm
+thermostat1-thermostat-webapp-1.0.4-60.6.el6.noarch.rpm
+
+x86_64:
+thermostat1-thermostat-1.0.4-60.6.el6.x86_64.rpm
+thermostat1-thermostat-debuginfo-1.0.4-60.6.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server EUS (v. 6.6):
+
+Source:
+thermostat1-thermostat-1.0.4-60.6.el6.src.rpm
+
+noarch:
+thermostat1-thermostat-javadoc-1.0.4-60.6.el6.noarch.rpm
+thermostat1-thermostat-webapp-1.0.4-60.6.el6.noarch.rpm
+
+x86_64:
+thermostat1-thermostat-1.0.4-60.6.el6.x86_64.rpm
+thermostat1-thermostat-debuginfo-1.0.4-60.6.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+thermostat1-thermostat-1.0.4-60.6.el6.src.rpm
+
+noarch:
+thermostat1-thermostat-javadoc-1.0.4-60.6.el6.noarch.rpm
+thermostat1-thermostat-webapp-1.0.4-60.6.el6.noarch.rpm
+
+x86_64:
+thermostat1-thermostat-1.0.4-60.6.el6.x86_64.rpm
+thermostat1-thermostat-debuginfo-1.0.4-60.6.el6.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+thermostat1-thermostat-1.0.4-70.6.el7.src.rpm
+
+noarch:
+thermostat1-thermostat-javadoc-1.0.4-70.6.el7.noarch.rpm
+thermostat1-thermostat-webapp-1.0.4-70.6.el7.noarch.rpm
+
+x86_64:
+thermostat1-thermostat-1.0.4-70.6.el7.x86_64.rpm
+thermostat1-thermostat-debuginfo-1.0.4-70.6.el7.x86_64.rpm
+
+Red Hat Software Collections 1 for Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+thermostat1-thermostat-1.0.4-70.6.el7.src.rpm
+
+noarch:
+thermostat1-thermostat-javadoc-1.0.4-70.6.el7.noarch.rpm
+thermostat1-thermostat-webapp-1.0.4-70.6.el7.noarch.rpm
+
+x86_64:
+thermostat1-thermostat-1.0.4-70.6.el7.x86_64.rpm
+thermostat1-thermostat-debuginfo-1.0.4-70.6.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8120">https://access.redhat.com/security/cve/CVE-2014-8120</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUkLOwXlSAg2UNWIIRAi+sAKCLIiWGrBxQMR3Z9oaEYnxrvCXSLgCfao3E
+PhRWHjJDSeO6B7wWKIUogME=
+=ZKMp
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00030.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

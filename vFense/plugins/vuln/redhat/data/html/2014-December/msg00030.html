@@ -1,0 +1,259 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:1999&#45;01] Moderate: mailx security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 16 Dec 2014 15:30:22 &#45;0500 -->
+<!--X-Message-Id: 201412162030.sBGKUMZr020272@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:1999-01] Moderate: mailx security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00029.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00029.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:1999-01] Moderate: mailx security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:1999-01] Moderate: mailx security update</li>
+<li><em>Date</em>: Tue, 16 Dec 2014 20:30:21 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: mailx security update
+Advisory ID:       RHSA-2014:1999-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-1999.html">https://rhn.redhat.com/errata/RHSA-2014-1999.html</a>
+Issue date:        2014-12-16
+CVE Names:         CVE-2004-2771 CVE-2014-7844 
+=====================================================================
+
+1. Summary:
+
+Updated mailx packages that fix two security issues are now available for
+Red Hat Enterprise Linux 6 and 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+
+3. Description:
+
+The mailx packages contain a mail user agent that is used to manage mail
+using scripts.
+
+A flaw was found in the way mailx handled the parsing of email addresses.
+A syntactically valid email address could allow a local attacker to cause
+mailx to execute arbitrary shell commands through shell meta-characters and
+the direct command execution functionality. (CVE-2004-2771, CVE-2014-7844)
+
+Note: Applications using mailx to send email to addresses obtained from
+untrusted sources will still remain vulnerable to other attacks if they
+accept email addresses which start with &quot;-&quot; (so that they can be confused
+with mailx options). To counteract this issue, this update also introduces
+the &quot;--&quot; option, which will treat the remaining command line arguments as
+email addresses.
+
+All mailx users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1162783 - CVE-2004-2771 CVE-2014-7844 mailx: command execution flaw
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+mailx-12.4-8.el6_6.src.rpm
+
+i386:
+mailx-12.4-8.el6_6.i686.rpm
+mailx-debuginfo-12.4-8.el6_6.i686.rpm
+
+x86_64:
+mailx-12.4-8.el6_6.x86_64.rpm
+mailx-debuginfo-12.4-8.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+mailx-12.4-8.el6_6.src.rpm
+
+x86_64:
+mailx-12.4-8.el6_6.x86_64.rpm
+mailx-debuginfo-12.4-8.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+mailx-12.4-8.el6_6.src.rpm
+
+i386:
+mailx-12.4-8.el6_6.i686.rpm
+mailx-debuginfo-12.4-8.el6_6.i686.rpm
+
+ppc64:
+mailx-12.4-8.el6_6.ppc64.rpm
+mailx-debuginfo-12.4-8.el6_6.ppc64.rpm
+
+s390x:
+mailx-12.4-8.el6_6.s390x.rpm
+mailx-debuginfo-12.4-8.el6_6.s390x.rpm
+
+x86_64:
+mailx-12.4-8.el6_6.x86_64.rpm
+mailx-debuginfo-12.4-8.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+mailx-12.4-8.el6_6.src.rpm
+
+i386:
+mailx-12.4-8.el6_6.i686.rpm
+mailx-debuginfo-12.4-8.el6_6.i686.rpm
+
+x86_64:
+mailx-12.4-8.el6_6.x86_64.rpm
+mailx-debuginfo-12.4-8.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+mailx-12.5-12.el7_0.src.rpm
+
+x86_64:
+mailx-12.5-12.el7_0.x86_64.rpm
+mailx-debuginfo-12.5-12.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+mailx-12.5-12.el7_0.src.rpm
+
+x86_64:
+mailx-12.5-12.el7_0.x86_64.rpm
+mailx-debuginfo-12.5-12.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+mailx-12.5-12.el7_0.src.rpm
+
+ppc64:
+mailx-12.5-12.el7_0.ppc64.rpm
+mailx-debuginfo-12.5-12.el7_0.ppc64.rpm
+
+s390x:
+mailx-12.5-12.el7_0.s390x.rpm
+mailx-debuginfo-12.5-12.el7_0.s390x.rpm
+
+x86_64:
+mailx-12.5-12.el7_0.x86_64.rpm
+mailx-debuginfo-12.5-12.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+mailx-12.5-12.el7_0.src.rpm
+
+x86_64:
+mailx-12.5-12.el7_0.x86_64.rpm
+mailx-debuginfo-12.5-12.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2004-2771">https://access.redhat.com/security/cve/CVE-2004-2771</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7844">https://access.redhat.com/security/cve/CVE-2014-7844</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUkJYRXlSAg2UNWIIRAk0bAJoDvlL5ZD0oq+gJIgYsmU9QFvNGIQCgnXUv
+DXtMMeMpEPGIAEgO56yd46E=
+=ozlS
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00029.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00029.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00030">Thread Index</A>]
+[<A HREF="date.html#00030">Date Index</A>]
+[<A HREF="author.html#00030">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
