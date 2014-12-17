@@ -5,7 +5,6 @@ from vFense.core.results import ApiResults
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import ScheduleTriggers
 from vFense.core.scheduler.manager import JobManager
-from vFense.core.utils.common import return_recurring_cron
 
 class AgentRecurrentJobManager(JobManager):
     def _set_funcs(self):
@@ -51,6 +50,8 @@ class AgentRecurrentJobManager(JobManager):
         Kwargs:
             end_date (float): The unix time, aka epoch time
             time_zone (str):  Example... UTC, Chile/EasterIsland
+            every (int|str): Repeat every x.
+            months (list): List of days to repeat on.
             **kwargs: all keywords that belong to the calling function
         """
         date = datetime.fromtimestamp(start_date)
@@ -77,6 +78,8 @@ class AgentRecurrentJobManager(JobManager):
         Kwargs:
             end_date (float): The unix time, aka epoch time
             time_zone (str):  Example... UTC, Chile/EasterIsland
+            every (int|str): Repeat every x.
+            days (list): List of days to repeat on.
             **kwargs: all keywords that belong to the calling function
         """
         date = datetime.fromtimestamp(start_date)
@@ -94,7 +97,7 @@ class AgentRecurrentJobManager(JobManager):
         return results
 
     def daily(self, install, job_name, start_date,
-               end_date=None, time_zone=None, **kwargs):
+               end_date=None, time_zone=None, every=None, **kwargs):
         """Perform a job on a daily basis.
         Args:
             job_name (str): The name of this job.
@@ -103,12 +106,14 @@ class AgentRecurrentJobManager(JobManager):
         Kwargs:
             end_date (float): The unix time, aka epoch time
             time_zone (str):  Example... UTC, Chile/EasterIsland
+            every (int|str): Repeat every x.
             **kwargs: all keywords that belong to the calling function
         """
         date = datetime.fromtimestamp(start_date)
+        day, _ = self._return_custom_cron_tuple(start_date, every, None)
         results = (
             self.cron(
-                install, job_name, start_date, hour=date.hour,
+                install, job_name, start_date, hour=date.hour, day=day,
                 minute=date.minute, time_zone=time_zone, end_date=end_date,
                 **kwargs
             )
