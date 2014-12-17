@@ -11,7 +11,7 @@ class AgentRecurrentJobManager(JobManager):
         self.cron_func = None
 
     def yearly(self, job_name, start_date,
-               end_date=None, time_zone=None, **kwargs):
+               end_date=None, time_zone=None, months=None, **kwargs):
         """Perform job on a yearly basis.
         Args:
             job_name (str): The name of this job.
@@ -20,6 +20,7 @@ class AgentRecurrentJobManager(JobManager):
         Kwargs:
             end_date (float): The unix time, aka epoch time
             time_zone (str):  Example... UTC, Chile/EasterIsland
+            months (list): List of months to run this on.
             **kwargs: all keywords that belong to the calling function
         """
         date = datetime.fromtimestamp(start_date)
@@ -139,4 +140,4 @@ class AgentRecurrentJobManager(JobManager):
 
 class TagRecurrentJobManager(AgentRecurrentJobManager):
     def _set_funcs(self):
-        self.cron_func = install_os_apps_by_severity_for_tag
+        self.cron_func = None

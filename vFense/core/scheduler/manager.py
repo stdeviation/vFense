@@ -1,32 +1,33 @@
 #!/usr/bin/env python
-import logging
-import logging.config
-from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from datetime import datetime
-from pytz import utc
-from apscheduler.jobstores.rethinkdb import RethinkDBJobStore
-from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.schedulers.tornado import TornadoScheduler
-from apscheduler.schedulers.blocking import BlockingScheduler
+import logging
+import logging.config
 
+from vFense._constants import VFENSE_LOGGING_CONFIG
 from vFense.core.operations._db_model import AgentOperationKey
+from vFense.core.results import ApiResults
 from vFense.core.scheduler import Schedule
 from vFense.core.scheduler._constants import ScheduleTriggers
 from vFense.core.scheduler._db import (
     fetch_jobs_by_view, fetch_job_by_name_and_view,
     fetch_admin_jobs_by_view, fetch_admin_job_by_name_and_view
 )
-from vFense.core.results import ApiResults
-from vFense.core.status_codes import (
-    GenericCodes, GenericFailureCodes,
-)
 from vFense.core.scheduler.decorators import add_to_job_history
 from vFense.core.scheduler.status_codes import (
     SchedulerCodes, SchedulerFailureCodes
 )
+from vFense.core.status_codes import (
+    GenericCodes, GenericFailureCodes,
+)
 
+from pytz import utc
+
+from apscheduler.jobstores.rethinkdb import RethinkDBJobStore
+from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.base import JobLookupError
+from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.tornado import TornadoScheduler
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
@@ -141,6 +142,12 @@ class JobManager(object):
             )
 
         self.view_name = view_name
+
+    def convert_dates_to_datetime(self, date):
+        if isinstance(date, int) or isinstance(date, float):
+            date = datetime.fromtimestamp(date)
+
+        return date
 
     def get_jobs(self, view_name=None):
         if view_name:
