@@ -542,6 +542,43 @@ class JobManager(object):
 
         return results
 
+    def _return_custom_cron_tuple(self, start, every, custom):
+        """This is strictly a convinience method, to convert the arugments
+            into a valid cron recurrent schedule.
+        Args:
+            start (int|str): This is a number that represents either the
+                starting day, month, week, or day_of_week
+            every (int|str): Every x (days, weeks, months, days of week)
+            custom (list): X number of days, weeks, months, years to recur on.
+
+        Basic Usage:
+            >>> from vFense.core.scheduler.manager import JobManager, start_scheduler
+            >>> month = 2
+            >>> frequency = 3
+            >>> custom = [4, 5]
+            >>> scheduler = start_scheduler()
+            >>> view_name = 'global'
+            >>> manager = JobManager(scheduler, view_name)
+            >>> manager._return_custom_cron_tuple(month, frequency, custom)
+            ('51/3', '4,5')
+
+        Returns:
+            String
+
+        """
+        every = start
+        if isinstance(start, int) or isinstance(start, str):
+            if isinstance(every, int) or isinstance(every, str):
+                every = (
+                    '{start}/{every}'
+                    .format(start=str(start),every=str(every))
+                )
+
+        if isinstance(custom, list):
+            custom = ','.join(map(lambda x: str(x), custom))
+
+        return (every, custom)
+
 
 class AdministrativeJobManager(JobManager):
 
