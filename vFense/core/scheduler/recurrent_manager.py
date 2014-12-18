@@ -51,7 +51,7 @@ class AgentRecurrentJobManager(JobManager):
             end_date (float): The unix time, aka epoch time
             time_zone (str):  Example... UTC, Chile/EasterIsland
             every (int|str): Repeat every x.
-            months (list): List of days to repeat on.
+            days (list): List of days to repeat on.
             **kwargs: all keywords that belong to the calling function
         """
         date = datetime.fromtimestamp(start_date)

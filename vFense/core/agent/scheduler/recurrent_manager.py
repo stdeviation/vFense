@@ -8,7 +8,8 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
         self.cron_func = reboot_agents
 
     def yearly(self, job_name, start_date, end_date=None, time_zone=None,
-               agent_ids=None, view_name=None, user_name=None ):
+               every=None, months=None, agent_ids=None, view_name=None,
+               user_name=None ):
         """Reboot agents on a yearly basis.
         Args:
             job_name (str): The name of this job.
@@ -17,20 +18,24 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
         Kwargs:
             end_date (float): The unix time, aka epoch time.
             time_zone (str):  Example... UTC, Chile/EasterIsland.
+            every (int|str): Repeat every x.
+            months (list): List of months to repeat on.
             agent_ids (list): List of agent ids.
             view_name (str): The name of the view, this was called on.
             user_name (str): The name of the user.
         """
         results = (
             super(AgentRebootRecurrentJobManager, self).yearly(
-                job_name, start_date, end_date=end_date, time_zone=time_zone,
+                job_name, start_date, every=every, months=months,
+                end_date=end_date, time_zone=time_zone,
                 agent_ids=agent_ids, view_name=view_name, user_name=user_name
             )
         )
         return results
 
     def monthly(self, job_name, start_date, end_date=None, time_zone=None,
-               agent_ids=None, view_name=None, user_name=None ):
+                every=None, days=None, agent_ids=None, view_name=None,
+                user_name=None ):
         """Reboot agents on a monthly basis.
         Args:
             job_name (str): The name of this job.
@@ -38,6 +43,8 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
 
         Kwargs:
             end_date (float): The unix time, aka epoch time.
+            every (int|str): Repeat every x.
+            days (list): List of days to repeat on.
             time_zone (str):  Example... UTC, Chile/EasterIsland.
             agent_ids (list): List of agent ids.
             view_name (str): The name of the view, this was called on.
@@ -45,14 +52,16 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
         """
         results = (
             super(AgentRebootRecurrentJobManager, self).monthly(
-                job_name, start_date, end_date=end_date, time_zone=time_zone,
+                job_name, start_date, every=every, days=days,
+                end_date=end_date, time_zone=time_zone,
                 agent_ids=agent_ids, view_name=view_name, user_name=user_name
             )
         )
         return results
 
     def weekly(self, job_name, start_date, end_date=None, time_zone=None,
-               agent_ids=None, view_name=None, user_name=None ):
+               every=None, days=None, agent_ids=None, view_name=None,
+               user_name=None ):
         """Reboot agents on a weekly basis.
         Args:
             job_name (str): The name of this job.
@@ -60,6 +69,8 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
 
         Kwargs:
             end_date (float): The unix time, aka epoch time.
+            every (int|str): Repeat every x.
+            days (list): List of days to repeat on.
             time_zone (str):  Example... UTC, Chile/EasterIsland.
             agent_ids (list): List of agent ids.
             view_name (str): The name of the view, this was called on.
@@ -67,14 +78,15 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
         """
         results = (
             super(AgentRebootRecurrentJobManager, self).weekly(
-                job_name, start_date, end_date=end_date, time_zone=time_zone,
+                job_name, start_date, every=every, days=days,
+                end_date=end_date, time_zone=time_zone,
                 agent_ids=agent_ids, view_name=view_name, user_name=user_name
             )
         )
         return results
 
     def daily(self, job_name, start_date, end_date=None, time_zone=None,
-               agent_ids=None, view_name=None, user_name=None ):
+               every=None, agent_ids=None, view_name=None, user_name=None):
         """Reboot agents on a daily basis.
         Args:
             job_name (str): The name of this job.
@@ -83,14 +95,16 @@ class AgentRebootRecurrentJobManager(AgentRecurrentJobManager):
         Kwargs:
             end_date (float): The unix time, aka epoch time.
             time_zone (str):  Example... UTC, Chile/EasterIsland.
+            every (int|str): Repeat every x.
             agent_ids (list): List of agent ids.
             view_name (str): The name of the view, this was called on.
             user_name (str): The name of the user.
         """
         results = (
             super(AgentRebootRecurrentJobManager, self).daily(
-                job_name, start_date, end_date=end_date, time_zone=time_zone,
-                agent_ids=agent_ids, view_name=view_name, user_name=user_name
+                job_name, start_date, every=None, end_date=end_date,
+                time_zone=time_zone, agent_ids=agent_ids,
+                view_name=view_name, user_name=user_name
             )
         )
         return results
