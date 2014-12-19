@@ -177,7 +177,8 @@ class TagAppsRecurrentJobManager(AgentSeverityRecurrentJobManager):
         return results
 
     def weekly(self, job_name, start_date, end_date=None, time_zone=None,
-               severity=None, tag_ids=None, view_name=None, user_name=None):
+               severity=None, every=None, days=None, tag_ids=None,\
+               view_name=None, user_name=None):
         """Install applications based on a severity on a weekly basis.
         Args:
             job_name (str): The name of this job.
@@ -185,6 +186,8 @@ class TagAppsRecurrentJobManager(AgentSeverityRecurrentJobManager):
 
         Kwargs:
             end_date (float): The unix time, aka epoch time.
+            every (int|str): Repeat every x.
+            days (list): List of days to repeat on.
             time_zone (str):  Example... UTC, Chile/EasterIsland.
             severity (str): Critical, Recommended, or Optional.
             tag_ids (list): List of  tag ids.
@@ -193,15 +196,16 @@ class TagAppsRecurrentJobManager(AgentSeverityRecurrentJobManager):
         """
         results = (
             super(AgentSeverityRecurrentJobManager, self).weekly(
-                job_name, start_date, end_date=end_date, time_zone=time_zone,
-                severity=severity, tag_ids=tag_ids, view_name=view_name,
-                user_name=user_name
+                job_name, start_date, end_date=end_date, every=every,
+                days=days,time_zone=time_zone, severity=severity,
+                tag_ids=tag_ids, view_name=view_name, user_name=user_name
             )
         )
         return results
 
     def daily(self, job_name, start_date, end_date=None, time_zone=None,
-               severity=None, tag_ids=None, view_name=None, user_name=None):
+               every=None, severity=None, tag_ids=None, view_name=None,
+              user_name=None):
         """Install applications based on a severity on a daily basis.
         Args:
             job_name (str): The name of this job.
@@ -209,6 +213,7 @@ class TagAppsRecurrentJobManager(AgentSeverityRecurrentJobManager):
 
         Kwargs:
             end_date (float): The unix time, aka epoch time.
+            every (int|str): Repeat every x.
             time_zone (str):  Example... UTC, Chile/EasterIsland.
             severity (str): Critical, Recommended, or Optional.
             tag_ids (list): List of  tag ids.
@@ -217,9 +222,9 @@ class TagAppsRecurrentJobManager(AgentSeverityRecurrentJobManager):
         """
         results = (
             super(AgentSeverityRecurrentJobManager, self).daily(
-                job_name, start_date, end_date=end_date, time_zone=time_zone,
-                severity=severity, tag_ids=tag_ids, view_name=view_name,
-                user_name=user_name
+                job_name, start_date, every=None, end_date=end_date,
+                time_zone=time_zone, severity=severity, tag_ids=tag_ids,
+                view_name=view_name, user_name=user_name
             )
         )
         return results
