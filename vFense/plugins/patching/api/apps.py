@@ -5,18 +5,13 @@ import simplejson as json
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
 from vFense.core.api.base import BaseHandler
-from vFense.core.agent._db_model import AgentKeys
-from vFense.core._constants import (
-    DefaultQueryValues, SortValues
-)
-from vFense.core.results import ApiResults, ExternalApiResults
+from vFense.core.results import ApiResults
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message,
     api_catch_it
 )
-from vFense.core.user import UserKeys
 from vFense.core.user.manager import UserManager
 from vFense.core.api._constants import ApiArguments
 
@@ -30,19 +25,15 @@ from vFense.plugins.patching.search.search_by_appid import (
     RetrieveAgentsByAppId
 )
 from vFense.plugins.patching.search.search import RetrieveApps
+from vFense.plugins.patching.status_codes import PackageCodes
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching._db_model import AppsKey
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
 )
-from vFense.plugins.patching.api._constants import (
-    AppApiArguments, AppFilterValues
-)
-from vFense.plugins.patching._constants import (
-    AppStatuses, CommonSeverityKeys
-)
+from vFense.plugins.patching._constants import CommonSeverityKeys
 from vFense.plugins.patching.uploader.manager import (
-    move_app_from_tmp
+    move_app_from_tmp, gen_uuid, UploadManager
 )
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -53,9 +44,10 @@ class UploadHandler(BaseHandler):
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
+        print self.request.headers
         file_name = self.request.headers.get('x-Filename')
         tmp_path = self.request.headers.get('x-File')
-        uuid = self.request.headers.get('x-Fileuuid')
+        uuid = self.request.headers.get('X-Fileuuid')
         results = self.return_uploaded_data(file_name, tmp_path, uuid)
         self.set_status(results.http_status_code)
         self.set_header('Content-Type', 'application/json')
@@ -165,7 +157,7 @@ class AgentIdAppsHandler(AppsBaseHandler):
     def delete(self, agent_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(active_user).properties.current_view
         )
         self.get_and_set_install_arguments()
         self.app_ids = self.arguments.get('app_ids')
@@ -210,7 +202,7 @@ class TagIdAppsHandler(AppsBaseHandler):
     def put(self, tag_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(active_user).properties.current_view
         )
         self.get_and_set_install_arguments()
         self.app_ids = self.arguments.get('app_ids')
@@ -244,7 +236,7 @@ class TagIdAppsHandler(AppsBaseHandler):
     def delete(self, tag_id, oper_type):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(active_user).properties.current_view
         )
         self.get_and_set_install_arguments()
         self.app_ids = self.arguments.get('app_ids')
@@ -277,7 +269,7 @@ class AppIdAppsHandler(AppsBaseHandler):
     def get(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
         active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
+            UserManager(active_user).properties.current_view
         )
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         search = RetrieveApps(view_name=active_view)
@@ -326,9 +318,7 @@ class AppIdAppsHandler(AppsBaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         self.get_and_set_install_arguments()
         self.app_ids = [app_id]
         self.agent_ids = self.arguments.get('agent_ids')
@@ -393,10 +383,9 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
     @authenticated_request
     def get(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
-        active_view = UserManager(active_user).properties.current_view
         self.get_and_set_search_arguments()
         oper = self.return_operation_type(oper_type)
-        search = self.set_base_search(oper, active_view)
+        search = self.set_search_for_agents_by_appid(oper, app_id)
         if (not self.query and not self.severity and not self.vuln
                 and not self.status):
             results = self.all(search)
@@ -417,9 +406,7 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
     @check_permissions(Permissions.INSTALL)
     def put(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         self.get_and_set_install_arguments()
         self.app_ids = [app_id]
         self.agent_ids = self.arguments.get('agent_ids')
@@ -453,9 +440,7 @@ class GetAgentsByAppIdHandler(AppsBaseHandler):
     @check_permissions(Permissions.UNINSTALL)
     def delete(self, oper_type, app_id):
         active_user = self.get_current_user().encode('utf-8')
-        active_view = (
-            UserManager(active_user).get_attribute(UserKeys.CurrentView)
-        )
+        active_view = UserManager(active_user).properties.current_view
         self.get_and_set_install_arguments()
         self.app_ids = [app_id]
         self.agent_ids = self.arguments.get('agent_ids')

@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from uuid import uuid4
 from vFense.core.api._constants import ApiArguments
 
 try:
@@ -34,6 +35,9 @@ LISTENERS = []
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return self.get_secure_cookie(CommonKeys.USER)
+
+    def gen_uuid(self):
+        return str(uuid4())
 
     def modified_output(self, results, content_type, file_name):
         if content_type == Outputs.CSV:
