@@ -1,0 +1,430 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:2021&#45;01] Important: jasper security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 18 Dec 2014 13:50:10 &#45;0500 -->
+<!--X-Message-Id: 201412181850.sBIIoAW8027052@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:2021-01] Important: jasper security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00036.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00036.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:2021-01] Important: jasper security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:2021-01] Important: jasper security update</li>
+<li><em>Date</em>: Thu, 18 Dec 2014 18:50:09 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: jasper security update
+Advisory ID:       RHSA-2014:2021-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-2021.html">https://rhn.redhat.com/errata/RHSA-2014-2021.html</a>
+Issue date:        2014-12-18
+CVE Names:         CVE-2014-8137 CVE-2014-8138 CVE-2014-9029 
+=====================================================================
+
+1. Summary:
+
+Updated jasper packages that fix three security issues are now available
+for Red Hat Enterprise Linux 6 and 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+JasPer is an implementation of Part 1 of the JPEG 2000 image compression
+standard.
+
+Multiple off-by-one flaws, leading to heap-based buffer overflows, were
+found in the way JasPer decoded JPEG 2000 image files. A specially crafted
+file could cause an application using JasPer to crash or, possibly, execute
+arbitrary code. (CVE-2014-9029)
+
+A heap-based buffer overflow flaw was found in the way JasPer decoded JPEG
+2000 image files. A specially crafted file could cause an application using
+JasPer to crash or, possibly, execute arbitrary code. (CVE-2014-8138)
+
+A double free flaw was found in the way JasPer parsed ICC color profiles in
+JPEG 2000 image files. A specially crafted file could cause an application
+using JasPer to crash or, possibly, execute arbitrary code. (CVE-2014-8137)
+
+Red Hat would like to thank oCERT for reporting these issues. oCERT
+acknowledges Jose Duart of the Google Security Team as the original
+reporter.
+
+All JasPer users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. All applications using
+the JasPer libraries must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1167537 - CVE-2014-9029 jasper: incorrect component number check in COC, RGN and QCC marker segment decoders (oCERT-2014-009)
+1173157 - CVE-2014-8137 jasper: double-free in in jas_iccattrval_destroy() (oCERT-2014-012)
+1173162 - CVE-2014-8138 jasper: heap overflow in jp2_decode() (oCERT-2014-012)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+jasper-1.900.1-16.el6_6.2.src.rpm
+
+i386:
+jasper-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-libs-1.900.1-16.el6_6.2.i686.rpm
+
+x86_64:
+jasper-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-libs-1.900.1-16.el6_6.2.i686.rpm
+jasper-libs-1.900.1-16.el6_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-devel-1.900.1-16.el6_6.2.i686.rpm
+jasper-utils-1.900.1-16.el6_6.2.i686.rpm
+
+x86_64:
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-devel-1.900.1-16.el6_6.2.i686.rpm
+jasper-devel-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-utils-1.900.1-16.el6_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+jasper-1.900.1-16.el6_6.2.src.rpm
+
+x86_64:
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-libs-1.900.1-16.el6_6.2.i686.rpm
+jasper-libs-1.900.1-16.el6_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+x86_64:
+jasper-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-devel-1.900.1-16.el6_6.2.i686.rpm
+jasper-devel-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-utils-1.900.1-16.el6_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+jasper-1.900.1-16.el6_6.2.src.rpm
+
+i386:
+jasper-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-libs-1.900.1-16.el6_6.2.i686.rpm
+
+ppc64:
+jasper-1.900.1-16.el6_6.2.ppc64.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.ppc.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.ppc64.rpm
+jasper-libs-1.900.1-16.el6_6.2.ppc.rpm
+jasper-libs-1.900.1-16.el6_6.2.ppc64.rpm
+
+s390x:
+jasper-1.900.1-16.el6_6.2.s390x.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.s390.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.s390x.rpm
+jasper-libs-1.900.1-16.el6_6.2.s390.rpm
+jasper-libs-1.900.1-16.el6_6.2.s390x.rpm
+
+x86_64:
+jasper-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-libs-1.900.1-16.el6_6.2.i686.rpm
+jasper-libs-1.900.1-16.el6_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-devel-1.900.1-16.el6_6.2.i686.rpm
+jasper-utils-1.900.1-16.el6_6.2.i686.rpm
+
+ppc64:
+jasper-debuginfo-1.900.1-16.el6_6.2.ppc.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.ppc64.rpm
+jasper-devel-1.900.1-16.el6_6.2.ppc.rpm
+jasper-devel-1.900.1-16.el6_6.2.ppc64.rpm
+jasper-utils-1.900.1-16.el6_6.2.ppc64.rpm
+
+s390x:
+jasper-debuginfo-1.900.1-16.el6_6.2.s390.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.s390x.rpm
+jasper-devel-1.900.1-16.el6_6.2.s390.rpm
+jasper-devel-1.900.1-16.el6_6.2.s390x.rpm
+jasper-utils-1.900.1-16.el6_6.2.s390x.rpm
+
+x86_64:
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-devel-1.900.1-16.el6_6.2.i686.rpm
+jasper-devel-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-utils-1.900.1-16.el6_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+jasper-1.900.1-16.el6_6.2.src.rpm
+
+i386:
+jasper-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-libs-1.900.1-16.el6_6.2.i686.rpm
+
+x86_64:
+jasper-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-libs-1.900.1-16.el6_6.2.i686.rpm
+jasper-libs-1.900.1-16.el6_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-devel-1.900.1-16.el6_6.2.i686.rpm
+jasper-utils-1.900.1-16.el6_6.2.i686.rpm
+
+x86_64:
+jasper-debuginfo-1.900.1-16.el6_6.2.i686.rpm
+jasper-debuginfo-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-devel-1.900.1-16.el6_6.2.i686.rpm
+jasper-devel-1.900.1-16.el6_6.2.x86_64.rpm
+jasper-utils-1.900.1-16.el6_6.2.x86_64.rpm
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+jasper-1.900.1-26.el7_0.2.src.rpm
+
+x86_64:
+jasper-debuginfo-1.900.1-26.el7_0.2.i686.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-libs-1.900.1-26.el7_0.2.i686.rpm
+jasper-libs-1.900.1-26.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+jasper-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.i686.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-devel-1.900.1-26.el7_0.2.i686.rpm
+jasper-devel-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-utils-1.900.1-26.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+jasper-1.900.1-26.el7_0.2.src.rpm
+
+x86_64:
+jasper-debuginfo-1.900.1-26.el7_0.2.i686.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-libs-1.900.1-26.el7_0.2.i686.rpm
+jasper-libs-1.900.1-26.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+jasper-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.i686.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-devel-1.900.1-26.el7_0.2.i686.rpm
+jasper-devel-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-utils-1.900.1-26.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+jasper-1.900.1-26.el7_0.2.src.rpm
+
+ppc64:
+jasper-debuginfo-1.900.1-26.el7_0.2.ppc.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.ppc64.rpm
+jasper-libs-1.900.1-26.el7_0.2.ppc.rpm
+jasper-libs-1.900.1-26.el7_0.2.ppc64.rpm
+
+s390x:
+jasper-debuginfo-1.900.1-26.el7_0.2.s390.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.s390x.rpm
+jasper-libs-1.900.1-26.el7_0.2.s390.rpm
+jasper-libs-1.900.1-26.el7_0.2.s390x.rpm
+
+x86_64:
+jasper-debuginfo-1.900.1-26.el7_0.2.i686.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-libs-1.900.1-26.el7_0.2.i686.rpm
+jasper-libs-1.900.1-26.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+jasper-1.900.1-26.el7_0.2.ppc64.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.ppc.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.ppc64.rpm
+jasper-devel-1.900.1-26.el7_0.2.ppc.rpm
+jasper-devel-1.900.1-26.el7_0.2.ppc64.rpm
+jasper-utils-1.900.1-26.el7_0.2.ppc64.rpm
+
+s390x:
+jasper-1.900.1-26.el7_0.2.s390x.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.s390.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.s390x.rpm
+jasper-devel-1.900.1-26.el7_0.2.s390.rpm
+jasper-devel-1.900.1-26.el7_0.2.s390x.rpm
+jasper-utils-1.900.1-26.el7_0.2.s390x.rpm
+
+x86_64:
+jasper-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.i686.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-devel-1.900.1-26.el7_0.2.i686.rpm
+jasper-devel-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-utils-1.900.1-26.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+jasper-1.900.1-26.el7_0.2.src.rpm
+
+x86_64:
+jasper-debuginfo-1.900.1-26.el7_0.2.i686.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-libs-1.900.1-26.el7_0.2.i686.rpm
+jasper-libs-1.900.1-26.el7_0.2.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+jasper-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.i686.rpm
+jasper-debuginfo-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-devel-1.900.1-26.el7_0.2.i686.rpm
+jasper-devel-1.900.1-26.el7_0.2.x86_64.rpm
+jasper-utils-1.900.1-26.el7_0.2.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8137">https://access.redhat.com/security/cve/CVE-2014-8137</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8138">https://access.redhat.com/security/cve/CVE-2014-8138</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9029">https://access.redhat.com/security/cve/CVE-2014-9029</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUkyHIXlSAg2UNWIIRAoobAKCsxKtKzqLHJaYmB8IYMD3Zk1lm5QCeK0hr
+GoVie2/qPWgMSRKDjAdryvQ=
+=x5ZP
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00036.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00036.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

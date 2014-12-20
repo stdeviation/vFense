@@ -1,0 +1,198 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:2019&#45;01] Important: Red Hat JBoss Enterprise Application	Platform 6.3.2 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 18 Dec 2014 13:48:37 &#45;0500 -->
+<!--X-Message-Id: 201412181848.sBIIma2k014698@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:2019-01] Important: Red Hat JBoss Enterprise Application	Plat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:2019-01] Important: Red Hat JBoss Enterprise Application	Platform 6.3.2 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:2019-01] Important: Red Hat JBoss Enterprise Application	Platform 6.3.2 security update</li>
+<li><em>Date</em>: Thu, 18 Dec 2014 18:48:36 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat JBoss Enterprise Application Platform 6.3.2 security update
+Advisory ID:       RHSA-2014:2019-01
+Product:           Red Hat JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-2019.html">https://rhn.redhat.com/errata/RHSA-2014-2019.html</a>
+Issue date:        2014-12-18
+CVE Names:         CVE-2012-6153 CVE-2014-3577 CVE-2014-3623 
+=====================================================================
+
+1. Summary:
+
+Updated Red Hat JBoss Enterprise Application Platform 6.3.2 packages that
+fix three security issues are now available for Red Hat Enterprise Linux 5,
+6, and 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat JBoss EAP 6.3 for RHEL 5 - noarch
+Red Hat JBoss EAP 6.3 for RHEL 6 - noarch
+Red Hat JBoss EAP 6.3 for RHEL 7 - noarch
+
+3. Description:
+
+Red Hat JBoss Enterprise Application Platform 6 is a platform for Java
+applications based on JBoss Application Server 7.
+
+It was discovered that the Apache CXF incorrectly extracted the host name
+from an X.509 certificate subject's Common Name (CN) field.
+A man-in-the-middle attacker could use this flaw to spoof an SSL server
+using a specially crafted X.509 certificate. (CVE-2012-6153, CVE-2014-3577)
+
+It was found that Apache WSS4J (Web Services Security for Java), as used by
+Apache CXF with the TransportBinding, did not, by default, properly enforce
+all security requirements associated with SAML SubjectConfirmation methods.
+A remote attacker could use this flaw to perform various types of spoofing
+attacks on web service endpoints secured by WSS4j that rely on SAML for
+authentication. (CVE-2014-3623)
+
+The CVE-2012-6153 issue was discovered by Florian Weimer of Red Hat
+Product Security.
+
+All users of Red Hat JBoss Enterprise Application Platform 6.3.2 on Red
+Hat Enterprise Linux 5, 6, and 7 are advised to upgrade to these updated
+packages. The JBoss server process must be restarted for the update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied. Also, back up any customized Red
+Hat JBoss Enterprise Application Platform 6 configuration files. On update,
+the configuration files that have been locally modified will not be
+updated. The updated version of such files will be stored as the rpmnew
+files. Make sure to locate any such files after the update and merge any
+changes manually.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1129074 - CVE-2014-3577 Apache HttpComponents client / Apache CXF: SSL hostname verification bypass, incomplete CVE-2012-6153 fix
+1129916 - CVE-2012-6153 Apache HttpComponents client / Apache CXF: SSL hostname verification bypass, incomplete CVE-2012-5783 fix
+1157304 - CVE-2014-3623 Apache WSS4J / Apache CXF: Improper security semantics enforcement of SAML SubjectConfirmation methods
+
+6. Package List:
+
+Red Hat JBoss EAP 6.3 for RHEL 5:
+
+Source:
+apache-cxf-2.7.12-1.SP1_redhat_5.1.ep6.el5.src.rpm
+wss4j-1.6.16-2.redhat_3.1.ep6.el5.src.rpm
+
+noarch:
+apache-cxf-2.7.12-1.SP1_redhat_5.1.ep6.el5.noarch.rpm
+wss4j-1.6.16-2.redhat_3.1.ep6.el5.noarch.rpm
+
+Red Hat JBoss EAP 6.3 for RHEL 6:
+
+Source:
+apache-cxf-2.7.12-1.SP1_redhat_5.1.ep6.el6.src.rpm
+wss4j-1.6.16-2.redhat_3.1.ep6.el6.src.rpm
+
+noarch:
+apache-cxf-2.7.12-1.SP1_redhat_5.1.ep6.el6.noarch.rpm
+wss4j-1.6.16-2.redhat_3.1.ep6.el6.noarch.rpm
+
+Red Hat JBoss EAP 6.3 for RHEL 7:
+
+Source:
+apache-cxf-2.7.12-1.SP1_redhat_5.1.ep6.el7.src.rpm
+wss4j-1.6.16-2.redhat_3.1.ep6.el7.src.rpm
+
+noarch:
+apache-cxf-2.7.12-1.SP1_redhat_5.1.ep6.el7.noarch.rpm
+wss4j-1.6.16-2.redhat_3.1.ep6.el7.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2012-6153">https://access.redhat.com/security/cve/CVE-2012-6153</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3577">https://access.redhat.com/security/cve/CVE-2014-3577</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3623">https://access.redhat.com/security/cve/CVE-2014-3623</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUkyFkXlSAg2UNWIIRAihmAKCA9J4h4PGqgpQV8EKM2hiYiQtM7QCfXVIM
+K02Gsd+6q4dd/xriBSOjIDY=
+=F2Oo
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

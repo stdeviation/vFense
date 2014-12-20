@@ -1,0 +1,205 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:2025&#45;01] Important: ntp security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Fri, 19 Dec 2014 21:45:32 &#45;0500 -->
+<!--X-Message-Id: 201412200245.sBK2jW9u022173@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:2025-01] Important: ntp security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00039.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00039.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:2025-01] Important: ntp security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:2025-01] Important: ntp security update</li>
+<li><em>Date</em>: Sat, 20 Dec 2014 02:45:31 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: ntp security update
+Advisory ID:       RHSA-2014:2025-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-2025.html">https://rhn.redhat.com/errata/RHSA-2014-2025.html</a>
+Issue date:        2014-12-20
+CVE Names:         CVE-2014-9293 CVE-2014-9294 CVE-2014-9295 
+=====================================================================
+
+1. Summary:
+
+Updated ntp packages that fix several security issues are now available for
+Red Hat Enterprise Linux 5.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, x86_64
+
+3. Description:
+
+The Network Time Protocol (NTP) is used to synchronize a computer's time
+with a referenced time source.
+
+Multiple buffer overflow flaws were discovered in ntpd's crypto_recv(),
+ctl_putdata(), and configure() functions. A remote attacker could use
+either of these flaws to send a specially crafted request packet that could
+crash ntpd or, potentially, execute arbitrary code with the privileges of
+the ntp user. Note: the crypto_recv() flaw requires non-default
+configurations to be active, while the ctl_putdata() flaw, by default, can
+only be exploited via local attackers, and the configure() flaw requires
+additional authentication to exploit. (CVE-2014-9295)
+
+It was found that ntpd automatically generated weak keys for its internal
+use if no ntpdc request authentication key was specified in the ntp.conf
+configuration file. A remote attacker able to match the configured IP
+restrictions could guess the generated key, and possibly use it to send
+ntpdc query or configuration requests. (CVE-2014-9293)
+
+It was found that ntp-keygen used a weak method for generating MD5 keys.
+This could possibly allow an attacker to guess generated MD5 keys that
+could then be used to spoof an NTP client or server. Note: it is
+recommended to regenerate any MD5 keys that had explicitly been generated
+with ntp-keygen; the default installation does not contain such keys).
+(CVE-2014-9294)
+
+All ntp users are advised to upgrade to this updated package, which
+contains backported patches to resolve these issues. After installing the
+update, the ntpd daemon will restart automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata 
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at 
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1176032 - CVE-2014-9293 ntp: automatic generation of weak default key in config_auth()
+1176035 - CVE-2014-9294 ntp: ntp-keygen uses weak random number generator and seed when generating MD5 keys
+1176037 - CVE-2014-9295 ntp: Multiple buffer overflows via specially-crafted packets
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+ntp-4.2.2p1-18.el5_11.src.rpm
+
+i386:
+ntp-4.2.2p1-18.el5_11.i386.rpm
+ntp-debuginfo-4.2.2p1-18.el5_11.i386.rpm
+
+x86_64:
+ntp-4.2.2p1-18.el5_11.x86_64.rpm
+ntp-debuginfo-4.2.2p1-18.el5_11.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+ntp-4.2.2p1-18.el5_11.src.rpm
+
+i386:
+ntp-4.2.2p1-18.el5_11.i386.rpm
+ntp-debuginfo-4.2.2p1-18.el5_11.i386.rpm
+
+ia64:
+ntp-4.2.2p1-18.el5_11.ia64.rpm
+ntp-debuginfo-4.2.2p1-18.el5_11.ia64.rpm
+
+ppc:
+ntp-4.2.2p1-18.el5_11.ppc.rpm
+ntp-debuginfo-4.2.2p1-18.el5_11.ppc.rpm
+
+s390x:
+ntp-4.2.2p1-18.el5_11.s390x.rpm
+ntp-debuginfo-4.2.2p1-18.el5_11.s390x.rpm
+
+x86_64:
+ntp-4.2.2p1-18.el5_11.x86_64.rpm
+ntp-debuginfo-4.2.2p1-18.el5_11.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9293">https://access.redhat.com/security/cve/CVE-2014-9293</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9294">https://access.redhat.com/security/cve/CVE-2014-9294</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9295">https://access.redhat.com/security/cve/CVE-2014-9295</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUlOK5XlSAg2UNWIIRAjqWAKCSca9s0BI59EvKuZnchQpcOfrj7wCgrae3
+UA8SnygB/UEFPTKirinHijI=
+=kt9k
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00039.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00039.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

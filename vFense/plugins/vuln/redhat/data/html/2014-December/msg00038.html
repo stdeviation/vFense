@@ -1,0 +1,330 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2014:2023&#45;01] Moderate: glibc security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 18 Dec 2014 15:33:16 &#45;0500 -->
+<!--X-Message-Id: 201412182033.sBIKXGnR004020@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2014:2023-01] Moderate: glibc security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00037.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00037.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2014:2023-01] Moderate: glibc security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2014:2023-01] Moderate: glibc security and bug fix update</li>
+<li><em>Date</em>: Thu, 18 Dec 2014 20:33:15 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: glibc security and bug fix update
+Advisory ID:       RHSA-2014:2023-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2014-2023.html">https://rhn.redhat.com/errata/RHSA-2014-2023.html</a>
+Issue date:        2014-12-18
+CVE Names:         CVE-2014-7817 
+=====================================================================
+
+1. Summary:
+
+Updated glibc packages that fix one security issue and one bug are now
+available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The glibc packages provide the standard C libraries (libc), POSIX thread
+libraries (libpthread), standard math libraries (libm), and the Name
+Server Caching Daemon (nscd) used by multiple programs on the system.
+Without these libraries, the Linux system cannot function correctly.
+
+It was found that the wordexp() function would perform command substitution
+even when the WRDE_NOCMD flag was specified. An attacker able to provide
+specially crafted input to an application using the wordexp() function, and
+not sanitizing the input correctly, could potentially use this flaw to
+execute arbitrary commands with the credentials of the user running that
+application. (CVE-2014-7817)
+
+This issue was discovered by Tim Waugh of the Red Hat Developer Experience
+Team.
+
+This update also fixes the following bug:
+
+* Prior to this update, if a file stream that was opened in append mode and
+its underlying file descriptor were used at the same time and the file was
+truncated using the ftruncate() function on the file descriptor, a
+subsequent ftell() call on the stream incorrectly modified the file offset
+by seeking to the new end of the file. This update ensures that ftell()
+modifies the state of the file stream only when it is in append mode and
+its buffer is not empty. As a result, the described incorrect changes to
+the file offset no longer occur. (BZ#1170187)
+
+All glibc users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/knowledge/articles/11258">https://access.redhat.com/knowledge/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1157689 - CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
+1170187 - Problems when using ftruncate on files opened in append mode
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+glibc-2.17-55.el7_0.3.src.rpm
+
+x86_64:
+glibc-2.17-55.el7_0.3.i686.rpm
+glibc-2.17-55.el7_0.3.x86_64.rpm
+glibc-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-devel-2.17-55.el7_0.3.i686.rpm
+glibc-devel-2.17-55.el7_0.3.x86_64.rpm
+glibc-headers-2.17-55.el7_0.3.x86_64.rpm
+glibc-utils-2.17-55.el7_0.3.x86_64.rpm
+nscd-2.17-55.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+glibc-debuginfo-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-static-2.17-55.el7_0.3.i686.rpm
+glibc-static-2.17-55.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+glibc-2.17-55.el7_0.3.src.rpm
+
+x86_64:
+glibc-2.17-55.el7_0.3.i686.rpm
+glibc-2.17-55.el7_0.3.x86_64.rpm
+glibc-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-devel-2.17-55.el7_0.3.i686.rpm
+glibc-devel-2.17-55.el7_0.3.x86_64.rpm
+glibc-headers-2.17-55.el7_0.3.x86_64.rpm
+glibc-utils-2.17-55.el7_0.3.x86_64.rpm
+nscd-2.17-55.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+glibc-debuginfo-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-static-2.17-55.el7_0.3.i686.rpm
+glibc-static-2.17-55.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+glibc-2.17-55.el7_0.3.src.rpm
+
+ppc64:
+glibc-2.17-55.el7_0.3.ppc.rpm
+glibc-2.17-55.el7_0.3.ppc64.rpm
+glibc-common-2.17-55.el7_0.3.ppc64.rpm
+glibc-debuginfo-2.17-55.el7_0.3.ppc.rpm
+glibc-debuginfo-2.17-55.el7_0.3.ppc64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.ppc.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.ppc64.rpm
+glibc-devel-2.17-55.el7_0.3.ppc.rpm
+glibc-devel-2.17-55.el7_0.3.ppc64.rpm
+glibc-headers-2.17-55.el7_0.3.ppc64.rpm
+glibc-utils-2.17-55.el7_0.3.ppc64.rpm
+nscd-2.17-55.el7_0.3.ppc64.rpm
+
+s390x:
+glibc-2.17-55.el7_0.3.s390.rpm
+glibc-2.17-55.el7_0.3.s390x.rpm
+glibc-common-2.17-55.el7_0.3.s390x.rpm
+glibc-debuginfo-2.17-55.el7_0.3.s390.rpm
+glibc-debuginfo-2.17-55.el7_0.3.s390x.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.s390.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.s390x.rpm
+glibc-devel-2.17-55.el7_0.3.s390.rpm
+glibc-devel-2.17-55.el7_0.3.s390x.rpm
+glibc-headers-2.17-55.el7_0.3.s390x.rpm
+glibc-utils-2.17-55.el7_0.3.s390x.rpm
+nscd-2.17-55.el7_0.3.s390x.rpm
+
+x86_64:
+glibc-2.17-55.el7_0.3.i686.rpm
+glibc-2.17-55.el7_0.3.x86_64.rpm
+glibc-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-devel-2.17-55.el7_0.3.i686.rpm
+glibc-devel-2.17-55.el7_0.3.x86_64.rpm
+glibc-headers-2.17-55.el7_0.3.x86_64.rpm
+glibc-utils-2.17-55.el7_0.3.x86_64.rpm
+nscd-2.17-55.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+glibc-debuginfo-2.17-55.el7_0.3.ppc.rpm
+glibc-debuginfo-2.17-55.el7_0.3.ppc64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.ppc.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.ppc64.rpm
+glibc-static-2.17-55.el7_0.3.ppc.rpm
+glibc-static-2.17-55.el7_0.3.ppc64.rpm
+
+s390x:
+glibc-debuginfo-2.17-55.el7_0.3.s390.rpm
+glibc-debuginfo-2.17-55.el7_0.3.s390x.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.s390.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.s390x.rpm
+glibc-static-2.17-55.el7_0.3.s390.rpm
+glibc-static-2.17-55.el7_0.3.s390x.rpm
+
+x86_64:
+glibc-debuginfo-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-static-2.17-55.el7_0.3.i686.rpm
+glibc-static-2.17-55.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+glibc-2.17-55.el7_0.3.src.rpm
+
+x86_64:
+glibc-2.17-55.el7_0.3.i686.rpm
+glibc-2.17-55.el7_0.3.x86_64.rpm
+glibc-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-devel-2.17-55.el7_0.3.i686.rpm
+glibc-devel-2.17-55.el7_0.3.x86_64.rpm
+glibc-headers-2.17-55.el7_0.3.x86_64.rpm
+glibc-utils-2.17-55.el7_0.3.x86_64.rpm
+nscd-2.17-55.el7_0.3.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+glibc-debuginfo-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-2.17-55.el7_0.3.x86_64.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.i686.rpm
+glibc-debuginfo-common-2.17-55.el7_0.3.x86_64.rpm
+glibc-static-2.17-55.el7_0.3.i686.rpm
+glibc-static-2.17-55.el7_0.3.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7817">https://access.redhat.com/security/cve/CVE-2014-7817</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2014 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUkznzXlSAg2UNWIIRAlVGAKCur2sagpyDtmtF7hG77CNsIEofkwCgtYJi
+AqP8rukGmHmeK9XtLqZahx4=
+=RU5+
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00037.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00037.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00038">Thread Index</A>]
+[<A HREF="date.html#00038">Date Index</A>]
+[<A HREF="author.html#00038">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
