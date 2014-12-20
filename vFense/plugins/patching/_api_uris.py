@@ -13,7 +13,7 @@ def api_handlers():
         (r"/api/v1/app/(os|supported|agentupdates|custom)/([0-9A-Za-z]{64})/agents?", GetAgentsByAppIdHandler),
         (r"/api/v1/apps/(os|supported|agentupdates|custom)", AppsHandler),
         ##### Upload API
-        (r"/api/v1/apps/upload?", UploadHandler),
+        (r"/api/v1/apps/upload", UploadHandler),
 
         ##### Dashboard API Handlers
         (r"/api/v1/dashboard/graphs/bar/severity?",ViewSeverityHandler),

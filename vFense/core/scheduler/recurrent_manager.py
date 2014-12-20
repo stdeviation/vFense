@@ -11,7 +11,8 @@ class AgentRecurrentJobManager(JobManager):
         self.cron_func = None
 
     def yearly(self, job_name, start_date,
-               end_date=None, time_zone=None, months=None, **kwargs):
+               end_date=None, time_zone=None, every=None, months=None,
+               **kwargs):
         """Perform job on a yearly basis.
         Args:
             job_name (str): The name of this job.
@@ -20,13 +21,18 @@ class AgentRecurrentJobManager(JobManager):
         Kwargs:
             end_date (float): The unix time, aka epoch time
             time_zone (str):  Example... UTC, Chile/EasterIsland
-            months (list): List of months to run this on.
+            every (int|str): Repeat every x.
+            months (list): List of months to repeat on.
             **kwargs: all keywords that belong to the calling function
         """
         date = datetime.fromtimestamp(start_date)
+        year, month = (
+            self._return_custom_cron_tuple(date.year, every, months)
+        )
+
         results = (
             self.cron(
-                job_name, start_date, month=date.month, day=date.day,
+                job_name, start_date, year=year, month=month, day=date.day,
                 hour=date.hour, minute=date.minute, time_zone=time_zone,
                 end_date=end_date, **kwargs
             )
@@ -34,7 +40,8 @@ class AgentRecurrentJobManager(JobManager):
         return results
 
     def monthly(self, install, job_name, start_date,
-               end_date=None, time_zone=None, **kwargs):
+               end_date=None, time_zone=None, every=None, days=None,
+                **kwargs):
         """Perform a job on a monthly basis.
         Args:
             job_name (str): The name of this job.
@@ -43,20 +50,26 @@ class AgentRecurrentJobManager(JobManager):
         Kwargs:
             end_date (float): The unix time, aka epoch time
             time_zone (str):  Example... UTC, Chile/EasterIsland
+            every (int|str): Repeat every x.
+            days (list): List of days to repeat on.
             **kwargs: all keywords that belong to the calling function
         """
         date = datetime.fromtimestamp(start_date)
+        month, day = (
+            self._return_custom_cron_tuple(date.month, every, days)
+        )
         results = (
             self.cron(
-                install, job_name, start_date, day=date.day, hour=date.hour,
-                minute=date.minute, time_zone=time_zone, end_date=end_date,
+                install, job_name, start_date, month=month,
+                day=day, hour=date.hour, minute=date.minute,
+                time_zone=time_zone, end_date=end_date,
                 **kwargs
             )
         )
         return results
 
     def weekly(self, install, job_name, start_date,
-               end_date=None, time_zone=None, **kwargs):
+               end_date=None, time_zone=None, every=None, days=None,**kwargs):
         """Perform a job on a weekly basis.
         Args:
             job_name (str): The name of this job.
@@ -65,20 +78,26 @@ class AgentRecurrentJobManager(JobManager):
         Kwargs:
             end_date (float): The unix time, aka epoch time
             time_zone (str):  Example... UTC, Chile/EasterIsland
+            every (int|str): Repeat every x.
+            days (list): List of days to repeat on.
             **kwargs: all keywords that belong to the calling function
         """
         date = datetime.fromtimestamp(start_date)
+        week_number = date.isocalendar()[1]
+        week, day_of_week = (
+            self._return_custom_cron_tuple(week_number, every, days)
+        )
         results = (
             self.cron(
-                install, job_name, start_date, day_of_week=date.weekday,
-                hour=date.hour, minute=date.minute, time_zone=time_zone,
-                end_date=end_date, **kwargs
+                install, job_name, start_date, week=week,
+                day_of_week=day_of_week, hour=date.hour, minute=date.minute,
+                time_zone=time_zone, end_date=end_date, **kwargs
             )
         )
         return results
 
     def daily(self, install, job_name, start_date,
-               end_date=None, time_zone=None, **kwargs):
+               end_date=None, time_zone=None, every=None, **kwargs):
         """Perform a job on a daily basis.
         Args:
             job_name (str): The name of this job.
@@ -87,12 +106,14 @@ class AgentRecurrentJobManager(JobManager):
         Kwargs:
             end_date (float): The unix time, aka epoch time
             time_zone (str):  Example... UTC, Chile/EasterIsland
+            every (int|str): Repeat every x.
             **kwargs: all keywords that belong to the calling function
         """
         date = datetime.fromtimestamp(start_date)
+        day, _ = self._return_custom_cron_tuple(start_date, every, None)
         results = (
             self.cron(
-                install, job_name, start_date, hour=date.hour,
+                install, job_name, start_date, hour=date.hour, day=day,
                 minute=date.minute, time_zone=time_zone, end_date=end_date,
                 **kwargs
             )

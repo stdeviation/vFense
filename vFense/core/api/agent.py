@@ -84,6 +84,28 @@ class FetchValidEnvironments(BaseHandler):
         return results
 
 
+class GenerateUUID(BaseHandler):
+    @api_catch_it
+    @authenticated_request
+    def get(self):
+        output = self.get_argument(ApiArguments.OUTPUT, 'json')
+        results = self.get_uuid()
+        self.set_status(results.http_status_code)
+        self.modified_output(results, output, 'environments')
+
+    @results_message
+    @check_permissions(Permissions.READ)
+    def get_uuid(self):
+        results = ExternalApiResults()
+        results.fill_in_defaults()
+        results.data.append({'uuid': self.gen_uuid()})
+        results.count = len(results.data)
+        results.generic_status_code = AgentCodes.InformationRetrieved
+        results.vfense_status_code = AgentCodes.InformationRetrieved
+        results.http_status_code = 200
+        return results
+
+
 class FetchSupportedOperatingSystems(BaseHandler):
     @api_catch_it
     @authenticated_request

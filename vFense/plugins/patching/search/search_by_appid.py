@@ -1,9 +1,6 @@
 from vFense.core.agent._db_model import AgentKeys
-from vFense.core._constants import (
-    SortValues, DefaultQueryValues, CommonKeys
-)
 from vFense.plugins.patching._db_model import (
-    AppCollections, DbCommonAppKeys,
+    AppCollections
 )
 from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching.search._db_search_by_appid import (

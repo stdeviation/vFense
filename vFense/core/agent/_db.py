@@ -62,7 +62,7 @@ def total_agents_in_view(view_name, conn=None):
     count = (
         r
         .table(AgentCollections.Agents)
-        .get_all(view_name, index=AgentIndexes.ViewName)
+        .get_all(view_name, index=AgentIndexes.Views)
         .count()
         .run(conn)
     )
@@ -94,7 +94,7 @@ def fetch_supported_os_strings(view_name, conn=None):
     data = (
         r
         .table(AgentCollections.Agents)
-        .get_all(view_name, index=AgentIndexes.ViewName)
+        .get_all(view_name, index=AgentIndexes.Views)
         .pluck(AgentKeys.OsString)
         .distinct()
         .map(lambda x: x[AgentKeys.OsString])
@@ -284,7 +284,7 @@ def fetch_agents(
         data = list(
             r
             .table(AgentCollections.Agents)
-            .get_all(view_name, index=AgentIndexes.ViewName)
+            .get_all(view_name, index=AgentIndexes.Views)
             .filter({filter_key: filter_val})
             .merge(Merge.TAGS)
             .merge(Merge.AGENTS)
@@ -306,7 +306,7 @@ def fetch_agents(
         data = list(
             r
             .table(AgentCollections.Agents)
-            .get_all(view_name, index=AgentIndexes.ViewName)
+            .get_all(view_name, index=AgentIndexes.Views)
             .filter({filter_key: filter_val})
             .merge(Merge.TAGS)
             .merge(Merge.AGENTS)
@@ -328,7 +328,7 @@ def fetch_agents(
         data = list(
             r
             .table(AgentCollections.Agents)
-            .get_all(view_name, index=AgentIndexes.ViewName)
+            .get_all(view_name, index=AgentIndexes.Views)
             .merge(Merge.TAGS)
             .merge(Merge.AGENTS)
             .pluck(keys_to_pluck)
@@ -352,7 +352,7 @@ def fetch_agents(
         data = list(
             r
             .table(AgentCollections.Agents)
-            .get_all(view_name, index=AgentIndexes.ViewName)
+            .get_all(view_name, index=AgentIndexes.Views)
             .merge(Merge.TAGS)
             .merge(Merge.AGENTS)
             .run(conn)
@@ -462,7 +462,7 @@ def fetch_all_agents_for_view(view_name, conn=None):
     data = list(
         r
         .table(AgentCollections.Agents)
-        .get_all(view_name, index=AgentIndexes.ViewName)
+        .get_all(view_name, index=AgentIndexes.Views)
         .merge(Merge.AGENTS)
         .run(conn)
     )

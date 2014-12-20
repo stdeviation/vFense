@@ -19,6 +19,10 @@ from vFense.plugins.patching.scheduler.manager import (
     AgentAppsJobManager, TagAppsJobManager
 )
 from vFense.plugins.patching._constants import AppStatuses
+from vFense.plugins.patching.search.search_by_appid import (
+    RetrieveAgentsByAppId, RetrieveAgentsByCustomAppId,
+    RetrieveAgentsBySupportedAppId, RetrieveAgentsByAgentAppId
+)
 from vFense.plugins.patching.search.search_by_agentid import (
     RetrieveAppsByAgentId, RetrieveCustomAppsByAgentId,
     RetrieveSupportedAppsByAgentId, RetrieveAgentAppsByAgentId
@@ -305,6 +309,45 @@ class AppsBaseHandler(BaseHandler):
             search = (
                 RetrieveAgentAppsByAgentId(
                     agent_id=agent_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_key=self.sort_by,
+                    show_hidden=self.hidden
+                )
+            )
+
+        return search
+
+    def set_search_for_agents_by_appid(self, oper, app_id):
+        if oper == AgentOperations.INSTALL_OS_APPS:
+            search = (
+                RetrieveAgentsByAppId(
+                    app_id=app_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_key=self.sort_by,
+                    show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_CUSTOM_APPS:
+            search = (
+                RetrieveAgentsByCustomAppId(
+                    app_id=app_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_key=self.sort_by,
+                    show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_SUPPORTED_APPS:
+            search = (
+                RetrieveAgentsBySupportedAppId(
+                    app_id=app_id, count=self.count, offset=self.offset,
+                    sort=self.sort, sort_key=self.sort_by,
+                    show_hidden=self.hidden
+                )
+            )
+
+        elif oper == AgentOperations.INSTALL_AGENT_UPDATE:
+            search = (
+                RetrieveAgentsByAgentAppId(
+                    app_id=app_id, count=self.count, offset=self.offset,
                     sort=self.sort, sort_key=self.sort_by,
                     show_hidden=self.hidden
                 )
