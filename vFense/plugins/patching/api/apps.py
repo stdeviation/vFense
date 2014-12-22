@@ -33,8 +33,9 @@ from vFense.plugins.patching.operations.store_operations import (
 )
 from vFense.plugins.patching._constants import CommonSeverityKeys
 from vFense.plugins.patching.uploader.manager import (
-    move_app_from_tmp, gen_uuid, UploadManager
+    move_app_from_tmp
 )
+from vFense.plugins.patching.apps.custom.manager import CustomAppsManager
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
@@ -65,46 +66,47 @@ class UploadHandler(BaseHandler):
     def put(self):
         active_user = self.get_current_user()
         active_view = UserManager(active_user).properties.current_view
-        name = self.arguments.get('name')
-        version = self.arguments.get('version')
-        md5 = self.arguments.get('md5')
-        arch = self.arguments.get('arch')
-        uuid = self.arguments.get('uuid')
-        size = self.arguments.get('size', None)
-        kb = self.arguments.get('kb', '')
-        support_url = self.arguments.get('support_url', '')
-        severity = self.arguments.get('severity', 'Optional')
-        operating_system = self.arguments.get('operating_system')
-        platform = self.arguments.get('platform')
-        vendor_name = self.arguments.get('vendor_name', None)
-        description = self.arguments.get('description', None)
-        cli_options = self.arguments.get('cli_options', None)
-        release_date = self.arguments.get('release_date', None)
-        reboot_required = self.arguments.get('reboot_required', None)
-        vulnerability_id = self.arguments.get('vulnerability_id', None)
-        vulnerability_categories = (
+        app = Apps()
+        file_data = Files()
+        app.fill_in_defaults()
+        file_data.fill_in_defaults()
+        app.views.append(active_view)
+        app.name = self.arguments.get('name')
+        app.version = self.arguments.get('version')
+        file_data.file_hash = self.arguments.get('md5')
+        app.arch = self.arguments.get('arch')
+        app.app_id = self.arguments.get('uuid')
+        app.kb = self.arguments.get('kb', '')
+        app.support_url = self.arguments.get('support_url', '')
+        app.vfense_severity = self.arguments.get('severity', 'Optional')
+        app.os_code = self.arguments.get('operating_system')
+        app.os_string = self.arguments.get('platform')
+        app.vendor_name = self.arguments.get('vendor_name', None)
+        app.description = self.arguments.get('description', None)
+        app.cli_options = self.arguments.get('cli_options', None)
+        app.release_date = self.arguments.get('release_date', None)
+        app.reboot_required = self.arguments.get('reboot_required', None)
+        app.vulnerability_id = self.arguments.get('vulnerability_id', None)
+        app.vulnerability_categories = (
             self.arguments.get('vulnerability_categories', None)
         )
-        cve_ids = self.arguments.get('cve_ids', None)
-        app = (
-            Apps(
-                name, version, arch, uuid, kb, support_url, severity,
-                operating_system, platform, vendor_name, description,
-                cli_options, release_date,
-                reboot_required=reboot_required,
-                vulnerability_id=vulnerability_id,
-                vulnerability_categories=vulnerability_categories,
-                cve_ids=cve_ids
-            )
-        )
-        file_data = Files(name, md5, size)
+        app.cve_ids = self.arguments.get('cve_ids', None)
+        file_data.file_size = self.arguments.get('size', None)
+        file_data.file_name = app.name
+        file_data.app_ids = app.app_id
         results = self.finalize_upload(app, file_data, active_view)
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     def finalize_upload(self, app, file_data, active_view):
-        pass
+        manager = CustomAppsManager()
+        results = manager.store_app_in_db(app, file_data)
+        if results.vfense_status_code == PackageCodes.FileUploadedSuccessfully:
+            inserted, updated, deleted = manager.add_app_to_agents(app)
+            print inserted, updated, deleted
+
+        return results
 
 
 class AgentIdAppsHandler(AppsBaseHandler):

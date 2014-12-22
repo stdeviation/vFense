@@ -155,7 +155,7 @@ class Apps(Base):
             self.update = AppDefaults.update()
 
         if not self.views:
-            self.cve_ids = AppDefaults.views()
+            self.views = AppDefaults.views()
 
         if not self.install_date:
             self.install_date = 0

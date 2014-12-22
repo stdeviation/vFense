@@ -3,22 +3,12 @@ import logging
 import os
 import shutil
 from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
-from vFense.core.view.manager import ViewManager
-from vFense.core.view import ViewKeys
-from vFense.core._db_constants import DbTime
-from vFense.core.status_codes import DbCodes
 from vFense.core.results import ApiResults
 from vFense.plugins.patching.status_codes import (
     PackageCodes, PackageFailureCodes
 )
 from vFense.utils.common import md5sum
-from vFense.plugins.patching import Apps, Files, FileUploadData
-from vFense.plugins.patching._db import insert_app_data
-from vFense.plugins.patching._db_model import (
-    AppCollections, DbCommonAppKeys
-)
-from vFense.plugins.patching.apps.custom_apps.custom_apps import add_custom_app_to_agents
-from vFense.plugins.patching.file_data import add_file_data
+from vFense.plugins.patching import FileUploadData
 
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -109,94 +99,3 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
         logger.exception(e)
 
     return results
-
-
-class UploadManager(object):
-    def __init__(self, view):
-        self.view = view
-
-    def url_tmp_path(self, uuid, app_name):
-        view = ViewManager(self.view)
-        tmp_url = (
-            os.path.join(
-                view.get_attribute(ViewKeys.PackageUrl),
-                'tmp', uuid, app_name
-            )
-        )
-        return tmp_url
-
-    def local_file_path(self, uuid, app_name):
-        return os.path.join(VFENSE_APP_TMP_PATH, uuid, app_name)
-
-    def store_file_data_in_db(self, file_data, app_ids=None, agent_ids=None):
-        """Store the uploaded application into the vFense database.
-        Args:
-            file_data (list): List of Files instances that contains all the
-                file related data.
-        """
-        if isinstance(file_data, list):
-            data_to_insert = []
-            for data in file_data:
-                if isinstance(data, Files):
-                    invalid_fields = data.get_invalid_fields()
-                    if not invalid_fields:
-                        data.fill_in_defaults()
-                        data_to_insert.append(data.to_dict())
-
-            if data_to_insert:
-                add_file_data(app_id, file_data, agent_id)
-
-
-    def store_app_in_db(self, app, file_data, views=None):
-        """Store the uploaded application into the vFense database.
-        Args:
-            apps (Apps): The App instance that contains all the application
-                data.
-
-        Kwargs:
-            file_data (list): List of Files instances that contains all the
-                file related data.
-            views (list): List of views, you want this application to be made
-                available.
-
-        Basic Usage:
-            >>> from vFense.plugins.patching.uploader.uploader import UploadManager
-            >>> from vFense.plugins.patching import Apps, Files
-
-
-        Returns:
-        """
-        results = ApiResults()
-        if isinstance(app, Apps) and isinstance(file_data, list):
-            app_invalid_fields = app.get_invalid_fields()
-            if not app_invalid_fields:
-                app_location = self.local_file_path(app.name, app.app_id)
-                app_url = self.url_tmp_path(app.name, app.app_id)
-                if os.path.exists(app_location):
-                    app.fill_in_defaults()
-                    object_status, _, _, _ = (
-                        insert_app_data(
-                            app.to_dict_db_apps(), AppCollections.CustomApps
-                        )
-                    )
-                    if object_status == DbCodes.Inserted:
-                        if views:
-                            views = list(set(views).union([self.view]))
-                        else:
-                            views = [self.view_name]
-
-                        add_custom_app_to_agents(
-                            file_data,
-                            app_id=app.app_id
-                        )
-                        msg = 'app %s uploaded succesfully - ' % (app.name)
-                        results.generic_status_code = (
-                            PackageCodes.ObjectCreated
-                        )
-                        results.vfense_status_code = (
-                            PackageCodes.FileUploadedSuccessfully
-                        )
-                        results.message = msg
-                        results.data = [app.to_dict()]
-
-        return results

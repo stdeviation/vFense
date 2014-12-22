@@ -47,7 +47,7 @@ class AppsManager(object):
         view = ViewManager(view)
         tmp_url = (
             os.path.join(
-                view.get_attribute(ViewKeys.PackageUrl),
+                view.properties.package_url,
                 app_id, app_name
             )
         )
@@ -57,7 +57,7 @@ class AppsManager(object):
         view = ViewManager(view)
         tmp_url = (
             os.path.join(
-                view.get_attribute(ViewKeys.PackageUrl),
+                view.properties.package_url,
                 'tmp', app_id, app_name
             )
         )
@@ -213,13 +213,28 @@ class AppsManager(object):
 
         return results
 
-    def add_app_to_agent(self, app):
+    def add_app_to_agents(self, app, now=None, delete_afterwards=False):
+        updated = 0
+        inserted = 0
+        deleted = 0
         if isinstance(app, Apps):
             invalid_keys = app.get_invalid_fields()
             if not invalid_keys:
-                pass
+                agent_ids = self.get_agent_ids(app.os_code)
+                if agent_ids:
+                    for agent_id in agent_ids:
+                        counts = (
+                            self.add_apps_to_agent(
+                                agent_id, [app], delete_afterwards=False
+                            )
+                        )
+                        inserted = inserted + counts[0]
+                        updated = updated + counts[1]
+                        deleted = deleted + counts[2]
 
+        return inserted, updated, deleted
 
+    @job('incoming_updates', connection=redis_pool(), timeout=3600)
     def add_apps_to_agent(self, agent_id, app_list, now=None,
                           delete_afterwards=True):
 
@@ -232,9 +247,9 @@ class AppsManager(object):
                 if not now:
                     now = time()
 
-                app.last_modified_time = now
-                app.agent_id = agent_id
                 if isinstance(app, Apps):
+                    app.last_modified_time = now
+                    app.agent_id = agent_id
                     app.fill_in_app_per_agent_defaults()
                     apps_to_insert.append(app.to_dict_db_apps_per_agent())
 
@@ -256,13 +271,14 @@ class AppsManager(object):
                 elif status_code == DbCodes.Inserted:
                     inserted = count
 
-            status_code, count, _, _ = (
-                delete_apps_per_agent_older_than(
-                    agent_id, now, self.apps_per_agent_collection
+            if delete_afterwards:
+                status_code, deleted_count, _, _ = (
+                    delete_apps_per_agent_older_than(
+                        agent_id, now, self.apps_per_agent_collection
+                    )
                 )
-            )
 
-            deleted = count
+                deleted = deleted_count
 
         return inserted, updated, deleted
 

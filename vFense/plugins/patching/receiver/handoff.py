@@ -2,9 +2,7 @@ from vFense.core.receiver.handoff import HandOff
 from vFense.plugins.patching.apps.manager import (
    incoming_applications_from_agent
 )
-from vFense.plugins.patching.apps.custom_apps.custom_apps import (
-    add_custom_app_to_agents
-)
+from vFense.plugins.patching.apps.custom.manager import CustomAppsManager
 from vFense.plugins.patching.apps.supported_apps.syncer import (
     get_all_supported_apps_for_agent
 )
@@ -30,7 +28,8 @@ class PatcherHandOff(HandOff):
         self.add_applications_from_agent()
 
     def add_custom_apps(self):
-        add_custom_app_to_agents.delay(None, self.agent_id)
+        manager = CustomAppsManager()
+        manager.add_apps_to_agents.delay(None, self.agent_id)
 
     def add_supported_apps(self):
         get_all_supported_apps_for_agent.delay(self.agent_id)
