@@ -53,10 +53,12 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
 
     Returns:
     """
+    print file_name, tmp_path, uuid
     results = ApiResults()
     results.fill_in_defaults()
     base_app_dir = os.path.join(TMP_DIR, uuid)
     full_app_path = os.path.join(base_app_dir, file_name)
+    print base_app_dir, full_app_path, tmp_path
 
     if not os.path.exists(base_app_dir):
         try:

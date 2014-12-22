@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from datetime import timedelta
 from uuid import uuid4
 from vFense.core.api._constants import ApiArguments
 
@@ -13,7 +14,7 @@ import tornado.web
 import tornado.websocket
 import tornadoredis
 from vFense.core._constants import CommonKeys
-from vFense.core.results import ApiResultKeys
+from vFense.core.results import ApiResults
 from vFense.core.status_codes import GenericCodes
 from vFense.core.api._constants import (
     ContentTypes, Outputs
@@ -230,17 +231,13 @@ class Authentication(BaseHandler):
     def get(self):
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
         results = self.authenticated()
-        self.set_status(results['http_status'])
+        self.set_status(results.http_status_code)
         self.modified_output(results, output, 'authenticated')
 
     @results_message
     def authenticated(self):
-        results = {
-            ApiResultKeys.GENERIC_STATUS_CODE: (
-                GenericCodes.AuthorizationGranted
-            ),
-            ApiResultKeys.VFENSE_STATUS_CODE: (
-                GenericCodes.AuthorizationGranted
-            )
-        }
+        results = ApiResults()
+        results.fill_in_defaults()
+        results.generic_status_code = GenericCodes.AuthorizationGranted
+        results.vfense_status_code = GenericCodes.AuthorizationGranted
         return results
