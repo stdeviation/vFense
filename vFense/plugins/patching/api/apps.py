@@ -45,7 +45,6 @@ class UploadHandler(BaseHandler):
     @authenticated_request
     @check_permissions(Permissions.ADMINISTRATOR)
     def post(self):
-        print self.request.headers
         file_name = self.request.headers.get('x-Filename')
         tmp_path = self.request.headers.get('x-File')
         uuid = self.request.headers.get('X-Fileuuid')
