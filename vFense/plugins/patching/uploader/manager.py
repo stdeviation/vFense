@@ -67,7 +67,7 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
             file_data.file_path = full_app_path
             results.generic_status_code = PackageCodes.ObjectCreated
             results.vfense_status_code = PackageCodes.FileUploadedSuccessfully
-            results.data = file_data.to_dict()
+            results.data.append(file_data.to_dict())
             results.message = (
                 'File {0} successfully uploaded'.format(file_name)
             )
