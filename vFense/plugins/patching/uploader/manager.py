@@ -53,12 +53,10 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
 
     Returns:
     """
-    print file_name, tmp_path, uuid
     results = ApiResults()
     results.fill_in_defaults()
     base_app_dir = os.path.join(TMP_DIR, uuid)
     full_app_path = os.path.join(base_app_dir, file_name)
-    print base_app_dir, full_app_path, tmp_path
 
     if not os.path.exists(base_app_dir):
         try:
@@ -110,7 +108,7 @@ def move_app_from_tmp(file_name, tmp_path, uuid):
         )
         logger.exception(e)
 
-    return(results)
+    return results
 
 
 class UploadManager(object):
@@ -176,12 +174,10 @@ class UploadManager(object):
                 app_url = self.url_tmp_path(app.name, app.app_id)
                 if os.path.exists(app_location):
                     app.fill_in_defaults()
-                    app_data = app.to_dict().copy()
-                    app_data[DbCommonAppKeys.ReleaseDate] = (
-                        DbTime.epoch_time_to_db_time(app.release_date)
-                    )
                     object_status, _, _, _ = (
-                        insert_app_data(app_data, AppCollections.CustomApps)
+                        insert_app_data(
+                            app.to_dict_db_apps(), AppCollections.CustomApps
+                        )
                     )
                     if object_status == DbCodes.Inserted:
                         if views:
@@ -190,9 +186,8 @@ class UploadManager(object):
                             views = [self.view_name]
 
                         add_custom_app_to_agents(
-                            username, view_name,
                             file_data,
-                            app_id=uuid
+                            app_id=app.app_id
                         )
                         msg = 'app %s uploaded succesfully - ' % (app.name)
                         results.generic_status_code = (
