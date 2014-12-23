@@ -24,7 +24,7 @@ logger = logging.getLogger('vfense_api')
 class CustomAppsManager(AppsManager):
     def __init__(self):
         self.apps_collection = AppCollections.CustomApps
-        self.apps_per_agent_collection = AppCollections.DbCommonAppsPerAgent
+        self.apps_per_agent_collection = AppCollections.CustomAppsPerAgent
 
     def store_app_in_db(self, app, file_data, views=None):
         """Store the uploaded application into the vFense database.

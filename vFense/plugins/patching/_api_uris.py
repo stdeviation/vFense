@@ -1,5 +1,6 @@
 from vFense.plugins.patching.api.apps import (
-    AppIdAppsHandler, GetAgentsByAppIdHandler, AppsHandler, UploadHandler
+    AppIdAppsHandler, GetAgentsByAppIdHandler, AppsHandler, UploadHandler,
+    StoreUploadHandler
 )
 from vFense.plugins.patching.api.stats import (
     ViewStatsByOsHandler, WidgetHandler, OsAppsOverTimeHandler,
@@ -14,7 +15,7 @@ def api_handlers():
         (r"/api/v1/apps/(os|supported|agentupdates|custom)", AppsHandler),
         ##### Upload API
         (r"/api/v1/apps/upload", UploadHandler),
-        (r"/api/v1/apps/finalize/upload", UploadHandler),
+        (r"/api/v1/apps/finalize/upload", StoreUploadHandler),
 
         ##### Dashboard API Handlers
         (r"/api/v1/dashboard/graphs/bar/severity?",ViewSeverityHandler),

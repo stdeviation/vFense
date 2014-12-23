@@ -58,23 +58,21 @@ class UploadHandler(BaseHandler):
         results = move_app_from_tmp(file_name, tmp_path, uuid)
         return results
 
+class StoreUploadHandler(BaseHandler):
     @api_catch_it
     @authenticated_request
     @convert_json_to_arguments
     @check_permissions(Permissions.ADMINISTRATOR)
-    def put(self):
+    def post(self):
         active_user = self.get_current_user()
         active_view = UserManager(active_user).properties.current_view
         app = Apps()
         file_data = Files()
-        app.fill_in_defaults()
-        file_data.fill_in_defaults()
-        app.views.append(active_view)
         app.name = self.arguments.get('name')
         app.version = self.arguments.get('version')
         file_data.file_hash = self.arguments.get('md5')
         app.arch = self.arguments.get('arch')
-        app.app_id = self.arguments.get('uuid')
+        uuid = self.arguments.get('uuid')
         app.kb = self.arguments.get('kb', '')
         app.support_url = self.arguments.get('support_url', '')
         app.vfense_severity = self.arguments.get('severity', 'Optional')
@@ -94,6 +92,9 @@ class UploadHandler(BaseHandler):
         file_data.file_name = app.name
         file_data.app_ids = app.app_id
         results = self.finalize_upload(app, file_data, active_view)
+        app.app_id = uuid
+        app.views = [active_view]
+        file_data.fill_in_defaults()
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
