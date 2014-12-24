@@ -220,7 +220,7 @@ class AppsManager(object):
         if isinstance(app, Apps):
             invalid_keys = app.get_invalid_fields()
             if not invalid_keys:
-                agent_ids = self.get_agent_ids(app.os_code)
+                agent_ids = self.get_agent_ids(app.os_code, app.views)
                 if agent_ids:
                     for agent_id in agent_ids:
                         counts = (

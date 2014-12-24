@@ -106,11 +106,14 @@ def fetch_supported_os_strings(view_name, conn=None):
 @time_it
 @catch_it([])
 @db_create_close
-def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
+def fetch_agent_ids_in_views(views=None, os_string=None,
+                             os_code=None, conn=None):
     """Retrieve a list of agent ids
     Kwargs:
         views (list): List of views, from where you want to retrieve agents
             from.
+        os_string (str): The operating system string.
+        os_code (str): The os_code of the agent (linux, darwin, windows)
 
     Basic Usage:
         >>> from vFense.core.agent._db import fetch_agent_ids_in_views
@@ -124,7 +127,7 @@ def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
             u'3ea8fd7a-8aad-40da-aff0-8da6fa5f8766'
         ]
     """
-    if views and not os_string:
+    if views and not os_string and not os_code:
         data = list(
             r.expr(views)
             .concat_map(
@@ -137,7 +140,7 @@ def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
             .run(conn)
         )
 
-    elif views and os_string:
+    elif views and os_string and not os_code:
         data = list(
             r.expr(views)
             .concat_map(
@@ -151,16 +154,36 @@ def fetch_agent_ids_in_views(views=None, os_string=None, conn=None):
             .run(conn)
         )
 
-    elif not views and os_string:
+    elif views and os_code and not os_string:
         data = list(
             r.expr(views)
             .concat_map(
                 lambda view:
                 r
                 .table(AgentCollections.Agents)
-                .filter({AgentKeys.OsString: os_string})
+                .get_all(view, index=AgentIndexes.Views)
+                .filter({AgentKeys.OsCode: os_code})
                 .map(lambda x: x[AgentKeys.AgentId])
             )
+            .run(conn)
+        )
+
+    elif not views and not os_code and os_string:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .filter({AgentKeys.OsString: os_string})
+            .map(lambda x: x[AgentKeys.AgentId])
+            .run(conn)
+        )
+
+
+    elif not views and not os_string and os_code:
+        data = list(
+            r
+            .table(AgentCollections.Agents)
+            .filter({AgentKeys.OsCode: os_code})
+            .map(lambda x: x[AgentKeys.AgentId])
             .run(conn)
         )
 

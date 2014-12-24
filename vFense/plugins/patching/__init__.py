@@ -368,7 +368,6 @@ class Apps(Base):
                     }
                 )
 
-
         return invalid_fields
 
     def to_dict_apps(self):

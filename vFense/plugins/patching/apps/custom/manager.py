@@ -49,7 +49,7 @@ class CustomAppsManager(AppsManager):
         if isinstance(app, Apps) and isinstance(file_data, list):
             app_invalid_fields = app.get_invalid_fields()
             if not app_invalid_fields:
-                app_location = self.local_file_path(app.name, app.app_id)
+                app_location = self.local_file_path(app.app_id, app.name)
                 if os.path.exists(app_location):
                     app.fill_in_defaults()
                     object_status, _, _, _ = (
@@ -86,7 +86,12 @@ class CustomAppsManager(AppsManager):
             else:
                 msg = (
                     'Failed to add {0}, contained invalid_fields {1}'
-                    .format(app.name, ', '.join(app_invalid_fields))
+                    .format(
+                        app.name,
+                        ','.join(
+                            map(lambda x: x['reason'], app_invalid_fields)
+                        )
+                    )
                 )
                 results.errors = app_invalid_fields
                 results.generic_status_code = (

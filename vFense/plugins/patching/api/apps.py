@@ -4,38 +4,39 @@ import simplejson as json
 
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
+from vFense.core.api._constants import ApiArguments
 from vFense.core.api.base import BaseHandler
-from vFense.core.results import ApiResults
 from vFense.core.permissions._constants import Permissions
 from vFense.core.permissions.decorators import check_permissions
 from vFense.core.decorators import (
     authenticated_request, convert_json_to_arguments, results_message,
     api_catch_it
 )
+from vFense.core.results import ApiResults
 from vFense.core.user.manager import UserManager
-from vFense.core.api._constants import ApiArguments
 
 from vFense.plugins.patching import Apps, Files
-from vFense.plugins.patching.api.base import AppsBaseHandler
-from vFense.plugins.patching.scheduler.manager import (
-    AgentAppsJobManager, TagAppsJobManager
-)
-from vFense.plugins.patching.operations import Install
-from vFense.plugins.patching.search.search_by_appid import (
-    RetrieveAgentsByAppId
-)
-from vFense.plugins.patching.search.search import RetrieveApps
-from vFense.plugins.patching.status_codes import PackageCodes
+from vFense.plugins.patching._constants import CommonSeverityKeys
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching._db_model import AppsKey
+from vFense.plugins.patching.api.base import AppsBaseHandler
+from vFense.plugins.patching.apps.custom.manager import CustomAppsManager
+from vFense.plugins.patching.operations import Install
 from vFense.plugins.patching.operations.store_operations import (
     StorePatchingOperation
 )
-from vFense.plugins.patching._constants import CommonSeverityKeys
+from vFense.plugins.patching.scheduler.manager import (
+    AgentAppsJobManager, TagAppsJobManager
+)
+from vFense.plugins.patching.search.search import RetrieveApps
+from vFense.plugins.patching.search.search_by_appid import (
+    RetrieveAgentsByAppId
+)
+from vFense.plugins.patching.status_codes import PackageCodes
 from vFense.plugins.patching.uploader.manager import (
     move_app_from_tmp
 )
-from vFense.plugins.patching.apps.custom.manager import CustomAppsManager
+from vFense.utils.common import date_parser
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
@@ -90,18 +91,19 @@ class StoreUploadHandler(BaseHandler):
         app.cve_ids = self.arguments.get('cve_ids', None)
         file_data.file_size = self.arguments.get('size', None)
         file_data.file_name = app.name
-        file_data.app_ids = app.app_id
-        results = self.finalize_upload(app, file_data, active_view)
         app.app_id = uuid
         app.views = [active_view]
+        file_data.app_ids = app.app_id
         file_data.fill_in_defaults()
+        results = self.finalize_upload(app, file_data, active_view)
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(results.to_dict_non_null(), indent=4))
 
     @results_message
     def finalize_upload(self, app, file_data, active_view):
         manager = CustomAppsManager()
-        results = manager.store_app_in_db(app, file_data)
+        app.release_date = date_parser(app.release_date)
+        results = manager.store_app_in_db(app, [file_data])
         if results.vfense_status_code == PackageCodes.FileUploadedSuccessfully:
             inserted, updated, deleted = manager.add_app_to_agents(app)
             print inserted, updated, deleted
