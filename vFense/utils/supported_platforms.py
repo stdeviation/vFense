@@ -2,6 +2,7 @@
 import platform
 import re
 import sys
+from vFense.utils._db import get_oscode_by_osstring
 
 REDHAT_DISTROS = [
     'fedora', 'centos', 'centos linux',
@@ -12,6 +13,10 @@ REDHAT_DISTROS = [
 DEBIAN_DISTROS = ['debian', 'ubuntu', 'linuxmint', 'elementary os']
 
 SUPPORTED_DISTROS = REDHAT_DISTROS + DEBIAN_DISTROS
+
+LINUX_DISTROS = SUPPORTED_DISTROS
+WINDOWS_DISTROS = ['windows']
+MAC_DISTROS = ['darwin']
 
 current_python_version = platform.python_version
 SITE_PACKAGES = [f for f in sys.path if f.endswith('packages')]
@@ -38,3 +43,10 @@ def is_distro_supported():
     else:
         return(False)
 
+def return_oscode(os_string):
+    """Retrieve the platform this operating system belongs too.
+    Args:
+        os_string (str): The os_string, that you are verifying against.
+    """
+    os_code = get_oscode_by_osstring(os_string)
+    return os_code

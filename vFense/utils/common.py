@@ -1,17 +1,17 @@
 from __future__ import with_statement
-import re
-import os
-import hashlib
 import fnmatch
+import hashlib
 import importlib
+import logging
+import logging.config
+import os
+import re
 from json import loads
 from datetime import datetime
 import time
 from dateutil.tz import *
 
 from netifaces import ifaddresses, interfaces
-import logging
-import logging.config
 from vFense.utils.supported_platforms import (
     get_distro, DEBIAN_DISTROS, REDHAT_DISTROS, SITE_PACKAGES
 )

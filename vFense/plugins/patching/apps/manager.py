@@ -1,7 +1,6 @@
 import os
 import logging
 from time import time
-from json import dumps
 
 from vFense._constants import VFENSE_LOGGING_CONFIG, VFENSE_APP_TMP_PATH
 from vFense.core.agent._db import(
@@ -11,7 +10,6 @@ from vFense.core.agent.manager import AgentManager
 from vFense.core._db import insert_data_in_table
 from vFense.core.status_codes import DbCodes
 from vFense.core.results import ApiResults
-from vFense.core.view._db_model import ViewKeys
 from vFense.core.view.manager import ViewManager
 from vFense.db.client import redis_pool
 from vFense.plugins.patching import Apps, Files
@@ -213,6 +211,7 @@ class AppsManager(object):
 
         return results
 
+    @job('incoming_updates', connection=redis_pool(), timeout=3600)
     def add_app_to_agents(self, app, now=None, delete_afterwards=False):
         updated = 0
         inserted = 0

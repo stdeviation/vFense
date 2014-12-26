@@ -38,6 +38,7 @@ from vFense.plugins.patching.uploader.manager import (
     move_app_from_tmp
 )
 from vFense.utils.common import date_parser
+from vFense.utils.supported_platforms import return_oscode
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
@@ -78,8 +79,7 @@ class StoreUploadHandler(BaseHandler):
         app.kb = self.arguments.get('kb', '')
         app.support_url = self.arguments.get('support_url', '')
         app.vfense_severity = self.arguments.get('severity', 'Optional')
-        app.os_code = self.arguments.get('operating_system')
-        app.os_string = self.arguments.get('platform')
+        app.os_string = self.arguments.get('operating_system')
         app.vendor_name = self.arguments.get('vendor_name', None)
         app.description = self.arguments.get('description', None)
         app.cli_options = self.arguments.get('cli_options', None)
@@ -104,6 +104,7 @@ class StoreUploadHandler(BaseHandler):
     def finalize_upload(self, app, file_data, active_view):
         manager = CustomAppsManager()
         app.release_date = date_parser(app.release_date)
+        app.os_code = return_oscode(app.os_string)
         results = manager.store_app_in_db(app, [file_data])
         if results.vfense_status_code == PackageCodes.FileUploadedSuccessfully:
             inserted, updated, deleted = manager.add_app_to_agents(app)

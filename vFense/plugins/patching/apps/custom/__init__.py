@@ -11,7 +11,9 @@ class CustomApps(Apps):
             cli_options (str): The arguments that need to be passed with
                 the install of this application
         """
-        super(Apps, self).__init__(**kwargs)
+        self.vfense_app_id = vfense_app_id
+        self.cli_options = cli_options
+        super(CustomApps, self).__init__(**kwargs)
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -53,7 +55,7 @@ class CustomApps(Apps):
                 install operation.
 
         """
-        data = super(Apps, self).to_dict_apps()
+        data = super(CustomApps, self).to_dict_apps()
         data[CustomAppsKey.CliOptions] = self.cli_options
         data[CustomAppsKey.vFenseAppId] = self.vfense_app_id
 
