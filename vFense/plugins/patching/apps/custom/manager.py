@@ -11,7 +11,7 @@ from vFense.plugins.patching.apps.manager import (
 )
 from vFense.core.status_codes import DbCodes
 from vFense.core.results import ApiResults
-from vFense.plugins.patching import Apps
+from vFense.plugins.patching.apps.custom import CustomApps
 from vFense.plugins.patching._db import insert_app_data
 from vFense.plugins.patching.status_codes import (
     PackageCodes, PackageFailureCodes
@@ -46,7 +46,7 @@ class CustomAppsManager(AppsManager):
         Returns:
         """
         results = ApiResults()
-        if isinstance(app, Apps) and isinstance(file_data, list):
+        if isinstance(app, CustomApps) and isinstance(file_data, list):
             app_invalid_fields = app.get_invalid_fields()
             if not app_invalid_fields:
                 app_location = self.local_file_path(app.app_id, app.name)

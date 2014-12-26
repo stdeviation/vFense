@@ -20,6 +20,7 @@ from vFense.plugins.patching._constants import CommonSeverityKeys
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching._db_model import AppsKey
 from vFense.plugins.patching.api.base import AppsBaseHandler
+from vFense.plugins.patching.apps.custom import CustomApps
 from vFense.plugins.patching.apps.custom.manager import CustomAppsManager
 from vFense.plugins.patching.operations import Install
 from vFense.plugins.patching.operations.store_operations import (
@@ -67,7 +68,7 @@ class StoreUploadHandler(BaseHandler):
     def post(self):
         active_user = self.get_current_user()
         active_view = UserManager(active_user).properties.current_view
-        app = Apps()
+        app = CustomApps()
         file_data = Files()
         app.name = self.arguments.get('name')
         app.version = self.arguments.get('version')
