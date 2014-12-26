@@ -26,6 +26,8 @@ class FetchAppsBase(FetchBase):
         super(FetchAppsBase, self).__init__(**kwargs)
         self.show_hidden = show_hidden
         self.sort_key = sort_key
+        self.apps_collection = apps_collection
+        self.apps_per_agent_collection = apps_per_agent_collection
 
         if self.show_hidden not in CommonAppKeys.ValidHiddenVals:
             self.show_hidden = CommonKeys.NO
