@@ -9,7 +9,8 @@ class FetchBase(object):
         count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET,
         sort=SortValues.ASC,
-        sort_key=AgentKeys.ComputerName
+        sort_key=AgentKeys.ComputerName,
+        **kwargs
         ):
         """
         Kwargs:

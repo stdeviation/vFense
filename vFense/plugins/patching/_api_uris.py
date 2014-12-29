@@ -6,12 +6,22 @@ from vFense.plugins.patching.api.stats import (
     ViewStatsByOsHandler, WidgetHandler, OsAppsOverTimeHandler,
     TopAppsNeededHandler, RecentlyReleasedHandler, ViewSeverityHandler
 )
+from vFense.plugins.patching.apps._constants import os_appid
+from vFense.plugins.patching.apps.custom._constants import custom_appid
 
 def api_handlers():
     handlers = [
         ##### Apps API Handlers
-        (r"/api/v1/app/(os|supported|agentupdates|custom)/([0-9A-Za-z]{64})?", AppIdAppsHandler),
-        (r"/api/v1/app/(os|supported|agentupdates|custom)/([0-9A-Za-z]{64})/agents?", GetAgentsByAppIdHandler),
+        (
+            r"/api/v1/app/(os|supported|agentupdates|custom)/({0}|{1})?"
+            .format(os_appid(), custom_appid()),
+            AppIdAppsHandler
+        ),
+        (
+            r"/api/v1/app/(os|supported|agentupdates|custom)/({0}|{1})/agents?"
+            .format(os_appid(), custom_appid()),
+            GetAgentsByAppIdHandler
+        ),
         (r"/api/v1/apps/(os|supported|agentupdates|custom)", AppsHandler),
         ##### Upload API
         (r"/api/v1/apps/upload", UploadHandler),

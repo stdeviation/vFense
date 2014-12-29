@@ -1,4 +1,5 @@
 from vFense.db.client import db_create_close, r
+from vFense.core.agent._constants import AgentCommonKeys
 from vFense.core.decorators import time_it, catch_it
 from vFense.plugins.patching._db_model import (
     AppCollections, DbCommonAppPerAgentKeys, DbCommonAppPerAgentIndexes
@@ -6,9 +7,9 @@ from vFense.plugins.patching._db_model import (
 from vFense.core.agent._db_model import (
     AgentCollections, AgentKeys
 )
-from vFense.plugins.patching.search._db_base_search import FetchAppsBase
+from vFense.core.agent.search._db import FetchAgents
 
-class FetchAgentsByAppId(FetchAppsBase):
+class FetchAgentsByAppId(FetchAgents):
     """
         This class is used to get agent data from within the Packages Page
     """
@@ -38,6 +39,7 @@ class FetchAgentsByAppId(FetchAppsBase):
     @catch_it((0, []))
     @db_create_close
     def by_status(self, status, conn=None):
+        merge_query = self._set_merge_query()
         base = self._set_status_filter(status)
         count = (
             base
@@ -50,6 +52,7 @@ class FetchAgentsByAppId(FetchAppsBase):
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
+            .merge(merge_query)
             .run(conn)
         )
 
@@ -59,7 +62,8 @@ class FetchAgentsByAppId(FetchAppsBase):
     @catch_it((0, []))
     @db_create_close
     def by_name(self, name, conn=None):
-        base = self._set_base_filter()
+        merge_query = self._set_merge_query()
+        base = self._set_agent_base_query()
         count = (
             base
             .filter(
@@ -82,6 +86,7 @@ class FetchAgentsByAppId(FetchAppsBase):
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
+            .merge(merge_query)
             .run(conn)
         )
         return(count, data)
@@ -90,6 +95,7 @@ class FetchAgentsByAppId(FetchAppsBase):
     @catch_it((0, []))
     @db_create_close
     def by_status_and_name(self, status, name, conn=None):
+        merge_query = self._set_merge_query()
         base = self._set_status_filter(status)
         count = (
             base
@@ -113,6 +119,7 @@ class FetchAgentsByAppId(FetchAppsBase):
             .order_by(self.sort(self.sort_key))
             .skip(self.offset)
             .limit(self.count)
+            .merge(merge_query)
             .run(conn)
         )
         return(count, data)
@@ -126,12 +133,21 @@ class FetchAgentsByAppId(FetchAppsBase):
                 AgentKeys.ComputerName: x['right'][AgentKeys.ComputerName],
                 AgentKeys.DisplayName: x['right'][AgentKeys.DisplayName],
                 AgentKeys.AgentId: x['right'][AgentKeys.AgentId],
+                AgentKeys.OsString: x['right'][AgentKeys.OsString],
+                AgentKeys.OsCode: x['right'][AgentKeys.OsCode],
+                AgentKeys.NeedsReboot: x['right'][AgentKeys.NeedsReboot],
+                AgentKeys.Environment: x['right'][AgentKeys.Environment],
+                AgentKeys.AgentStatus: x['right'][AgentKeys.AgentStatus],
+                AgentKeys.Tags: x['right'][AgentKeys.Tags],
+                AgentKeys.Views: x['right'][AgentKeys.Views],
+                AgentKeys.DateAdded: x['right'][AgentKeys.DateAdded],
+                AgentKeys.LastAgentUpdate: x['right'][AgentKeys.LastAgentUpdate],
             }
         )
 
         return map_hash
 
-    def _set_base_filter(self):
+    def _set_agent_base_query(self):
         map_hash = self._set_map_hash()
         base = (
             r
@@ -147,6 +163,23 @@ class FetchAgentsByAppId(FetchAppsBase):
             )
             .map(map_hash)
         )
+
+        if self.view_name:
+            base = (
+                r
+                .table(self.apps_per_agent_collection)
+                .get_all(
+                    self.app_id,
+                    index=DbCommonAppPerAgentIndexes.AppId
+                )
+                .eq_join(
+                    lambda x:
+                    x[DbCommonAppPerAgentKeys.AgentId],
+                    r.table(AgentCollections.Agents)
+                )
+                .map(map_hash)
+                .filter(lambda x: x[AgentKeys.Views].contains(self.view_name))
+            )
 
         return base
 
@@ -166,5 +199,22 @@ class FetchAgentsByAppId(FetchAppsBase):
             )
             .map(map_hash)
         )
+
+        if self.view_name:
+            base = (
+                r
+                .table(self.apps_per_agent_collection)
+                .get_all(
+                    [self.app_id, status],
+                    index=DbCommonAppPerAgentIndexes.AppIdAndStatus
+                )
+                .eq_join(
+                    lambda x:
+                    x[DbCommonAppPerAgentKeys.AgentId],
+                    r.table(AgentCollections.Agents)
+                )
+                .map(map_hash)
+                .filter(lambda x: x[AgentKeys.Views].contains(self.view_name))
+            )
 
         return base

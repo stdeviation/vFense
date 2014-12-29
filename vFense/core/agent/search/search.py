@@ -43,7 +43,7 @@ class RetrieveAgents(RetrieveBase):
         if self.sort_key not in valid_keys_to_sort_by:
             self.sort_key = AgentKeys.ComputerName
 
-        self.fetch_agents = (
+        self.fetch = (
             FetchAgents(
                 view_name=self.view_name, count=self.count,
                 offset=self.offset, sort=self.sort, sort_key=self.sort_key
@@ -95,7 +95,7 @@ class RetrieveAgents(RetrieveBase):
                 ]
             }
         """
-        count, data = self.fetch_agents.by_id(agent_id)
+        count, data = self.fetch.by_id(agent_id)
         return self._base(count, data)
 
     @time_it
@@ -142,7 +142,7 @@ class RetrieveAgents(RetrieveBase):
                 ]
             }
         """
-        count, data = self.fetch_agents.by_name(query)
+        count, data = self.fetch.by_name(query)
         return self._base(count, data)
 
     @time_it
@@ -178,7 +178,7 @@ class RetrieveAgents(RetrieveBase):
                 }
             ]
         """
-        count, data = self.fetch_agents.all()
+        count, data = self.fetch.all()
         return self._base(count, data)
 
     @time_it
@@ -224,7 +224,7 @@ class RetrieveAgents(RetrieveBase):
         data = []
 
         if fkey in self.valid_keys_to_filter_by:
-            count, data = self.fetch_agents.by_key_and_val(fkey, fval)
+            count, data = self.fetch.by_key_and_val(fkey, fval)
             return self._base(count, data)
 
         else:
@@ -276,7 +276,7 @@ class RetrieveAgents(RetrieveBase):
 
         if fkey in self.valid_keys_to_filter_by:
             count, data = (
-                self.fetch_agents.by_key_and_val_and_query(fkey, fval, query)
+                self.fetch.by_key_and_val_and_query(fkey, fval, query)
             )
             return self._base(count, data)
 
@@ -320,7 +320,7 @@ class RetrieveAgents(RetrieveBase):
                 }
             ]
         """
-        count, data = self.fetch_agents.by_ip(ip)
+        count, data = self.fetch.by_ip(ip)
         return self._base(count, data)
 
     @time_it
@@ -368,7 +368,7 @@ class RetrieveAgents(RetrieveBase):
         count = 0
         data = []
         if fkey in self.valid_keys_to_filter_by:
-            count, data = self.fetch_agents.by_ip_and_filter(ip, fkey, fval)
+            count, data = self.fetch.by_ip_and_filter(ip, fkey, fval)
             return self._base(count, data)
 
         else:
@@ -411,7 +411,7 @@ class RetrieveAgents(RetrieveBase):
                 }
             ]
         """
-        count, data = self.fetch_agents.by_mac(mac)
+        count, data = self.fetch.by_mac(mac)
         return self._base(count, data)
 
     @time_it
@@ -459,7 +459,7 @@ class RetrieveAgents(RetrieveBase):
         count = 0
         data = []
         if fkey in self.valid_keys_to_filter_by:
-            count, data = self.fetch_agents.by_mac_and_filter(mac, fkey, fval)
+            count, data = self.fetch.by_mac_and_filter(mac, fkey, fval)
             return self._base(count, data)
 
         else:

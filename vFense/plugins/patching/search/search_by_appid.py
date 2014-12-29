@@ -6,10 +6,10 @@ from vFense.plugins.patching._constants import CommonAppKeys
 from vFense.plugins.patching.search._db_search_by_appid import (
     FetchAgentsByAppId
 )
-from vFense.plugins.patching.search.base_search import RetrieveAppsBase
+from vFense.core.agent.search.search import RetrieveAgents
 
 
-class RetrieveAgentsByAppId(RetrieveAppsBase):
+class RetrieveAgentsByAppId(RetrieveAgents):
     """
         This class is used to get agent data from within the Packages Page
     """
@@ -23,11 +23,10 @@ class RetrieveAgentsByAppId(RetrieveAppsBase):
         self.sort_key = sort_key
         self.fetch = (
             FetchAgentsByAppId(
-                app_id=self.app_id, count=self.count,
-                offset=self.offset, sort=self.sort,
-                sort_key=self.sort_key, show_hidden=self.show_hidden,
-                apps_collection=self.apps_collection,
-                apps_per_agent_collection=self.apps_per_agent_collection
+                app_id=self.app_id, count=self.count, view_name=self.view_name,
+                offset=self.offset, sort=self.sort, sort_key=self.sort_key,
+                apps_collection=apps_collection,
+                apps_per_agent_collection=apps_per_agent_collection
             )
         )
 
@@ -57,18 +56,9 @@ class RetrieveAgentsByCustomAppId(RetrieveAgentsByAppId):
         This class is used to get agent data from within the Packages Page
     """
     def __init__(self, **kwargs):
+        kwargs['apps_collection'] = AppCollections.CustomApps
+        kwargs['apps_per_agent_collection'] = AppCollections.CustomAppsPerAgent
         super(RetrieveAgentsByCustomAppId, self).__init__(**kwargs)
-        self.apps_collection = AppCollections.CustomApps
-        self.apps_per_agent_collection = AppCollections.CustomAppsPerAgent
-
-        self.fetch = (
-            FetchAgentsByAppId(
-                app_id=self.app_id, count=self.count, offset=self.offset,
-                sort=self.sort, sort_key=self.sort_key,
-                apps_collectioon=self.apps_collection,
-                apps_per_agent_collection=self.apps_per_agent_collection
-            )
-        )
 
 
 class RetrieveAgentsBySupportedAppId(RetrieveAgentsByAppId):
@@ -76,33 +66,18 @@ class RetrieveAgentsBySupportedAppId(RetrieveAgentsByAppId):
         This class is used to get agent data from within the Packages Page
     """
     def __init__(self, **kwargs):
-        super(RetrieveAgentsBySupportedAppId, self).__init__(**kwargs)
-        self.apps_collection = AppCollections.SupportedApps
-        self.apps_per_agent_collection = AppCollections.SupportedAppsPerAgent
-
-        self.fetch = (
-            FetchAgentsByAppId(
-                app_id=self.app_id, count=self.count, offset=self.offset,
-                sort=self.sort, sort_key=self.sort_key,
-                apps_collectioon=self.apps_collection,
-                apps_per_agent_collection=self.apps_per_agent_collection
-            )
+        kwargs['apps_collection'] = AppCollections.SupportedApps
+        kwargs['apps_per_agent_collection'] = (
+            AppCollections.SupportedAppsPerAgent
         )
+        super(RetrieveAgentsBySupportedAppId, self).__init__(**kwargs)
+
 
 class RetrieveAgentsByAgentAppId(RetrieveAgentsByAppId):
     """
         This class is used to get agent data from within the Packages Page
     """
     def __init__(self, **kwargs):
+        kwargs['apps_collection'] = AppCollections.vFenseApps
+        kwargs['apps_per_agent_collection'] = AppCollections.vFenseAppsPerAgent
         super(RetrieveAgentsByAgentAppId, self).__init__(**kwargs)
-        self.apps_collection = AppCollections.vFenseApps
-        self.apps_per_agent_collection = AppCollections.vFenseAppsPerAgent
-
-        self.fetch = (
-            FetchAgentsByAppId(
-                app_id=self.app_id, count=self.count, offset=self.offset,
-                sort=self.sort, sort_key=self.sort_key,
-                apps_collectioon=self.apps_collection,
-                apps_per_agent_collection=self.apps_per_agent_collection
-            )
-        )
