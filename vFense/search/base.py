@@ -10,7 +10,8 @@ class RetrieveBase(object):
         count=DefaultQueryValues.COUNT,
         offset=DefaultQueryValues.OFFSET,
         sort=SortValues.ASC,
-        sort_key=AgentKeys.ComputerName
+        sort_key=AgentKeys.ComputerName,
+        **kwargs
         ):
 
         self.view_name = view_name

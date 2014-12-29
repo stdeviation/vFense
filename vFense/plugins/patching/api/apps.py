@@ -278,7 +278,9 @@ class AppIdAppsHandler(AppsBaseHandler):
             UserManager(active_user).properties.current_view
         )
         output = self.get_argument(ApiArguments.OUTPUT, 'json')
-        search = RetrieveApps(view_name=active_view)
+        self.get_and_set_search_arguments()
+        oper = self.return_operation_type(oper_type)
+        search = self.set_base_search(oper, active_view)
         results = self.by_id(search, app_id)
         self.set_status(results.http_status_code)
         self.modified_output(results, output, 'app')
