@@ -16,7 +16,7 @@ from vFense.core.results import ApiResults
 from vFense.core.user.manager import UserManager
 
 from vFense.plugins.patching import Apps, Files
-from vFense.plugins.patching._constants import CommonSeverityKeys
+from vFense.plugins.patching._constants import CommonSeverityKeys, AppStatuses
 from vFense.plugins.patching._db import update_app_data_by_app_id
 from vFense.plugins.patching._db_model import AppsKey
 from vFense.plugins.patching.api.base import AppsBaseHandler
@@ -104,6 +104,7 @@ class StoreUploadHandler(BaseHandler):
     def finalize_upload(self, app, file_data, active_view):
         manager = CustomAppsManager()
         app.release_date = date_parser(app.release_date)
+        app.status = AppStatuses.AVAILABLE
         app.os_code = return_oscode(app.os_string)
         results = manager.store_app_in_db(app, [file_data])
         if results.vfense_status_code == PackageCodes.FileUploadedSuccessfully:
