@@ -14,7 +14,7 @@ class PatcherHandOff(HandOff):
 
     def new_agent_operation(self):
         self.add_applications_from_agent()
-        self.add_custom_apps()
+        #self.add_custom_apps()
         #self.add_supported_apps()
 
     def startup_operation(self, apps_data):
