@@ -1,0 +1,689 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0033&#45;01] Moderate: Red Hat Satellite 5.7.0 General	Availability -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 12 Jan 2015 12:42:13 &#45;0500 -->
+<!--X-Message-Id: 201501121742.t0CHgCCv008844@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0033-01] Moderate: Red Hat Satellite 5.7.0 General	Availabili</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0033-01] Moderate: Red Hat Satellite 5.7.0 General	Availability</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2015:0033-01] Moderate: Red Hat Satellite 5.7.0 General	Availability</li>
+<li><em>Date</em>: Mon, 12 Jan 2015 17:42:12 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Satellite 5.7.0 General Availability
+Advisory ID:       RHSA-2015:0033-01
+Product:           Red Hat Satellite
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0033.html">https://rhn.redhat.com/errata/RHSA-2015-0033.html</a>
+Issue date:        2015-01-12
+CVE Names:         CVE-2014-7811 CVE-2014-7812 
+=====================================================================
+
+1. Summary:
+
+Red Hat Satellite 5.7.0 is now available. Updated packages that fix two
+security issues, several bugs, and add various enhancements are now
+available for Red Hat Satellite 5.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+ 	Red Hat Satellite Managed DB 5.7 (RHEL v.6) - noarch, s390x, x86_64
+Red Hat Satellite 5.7 (RHEL v.6) - noarch, s390x, x86_64
+
+3. Description:
+
+Red Hat Satellite provides a solution to organizations requiring absolute
+control over and privacy of the maintenance and package deployment of their
+servers. It allows organizations to utilize the benefits of Red Hat Network
+(RHN) without having to provide public Internet access to their servers or 
+other client systems.
+
+This update introduces Red Hat Satellite 5.7.0. For the full list of new
+features included in this release, see the Release Notes document at:
+
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_Satellite/5.7/">https://access.redhat.com/documentation/en-US/Red_Hat_Satellite/5.7/</a>
+
+Note: Red Hat Satellite 5.7 and Red Hat Satellite Proxy 5.7 are available
+for installation on Red Hat Enterprise Linux Server 6. For full details,
+including supported architecture combinations, refer to the Red Hat
+Satellite 5.7 Installation Guide.
+
+This update fixes the following security issues:
+
+Multiple stored cross-site scripting (XSS) flaw were found in the handling
+of XML data passed to Satellite via the REST API. By sending a specially
+crafted request to Satellite, a remote, authenticated attacker could embed
+HTML content into the stored data, allowing them to inject malicious
+content into the web page that is used to view that data.
+(CVE-2014-7811)
+
+A stored cross-site scripting (XSS) flaw was found in the System Groups
+field. By sending a specially crafted request to Satellite, a remote,
+authenticated attacker could embed HTML content into the stored data,
+allowing them to inject malicious content into the web page that is used to
+view that data. (CVE-2014-7812)
+
+Red Hat would like to thank Mickaël Gallier for reporting these issues.
+
+All users of Red Hat Satellite are advised to install this newly released
+version.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1156299 - CVE-2014-7811 Red Hat Satellite, Spacewalk: multiple XSS
+1172934 - CVE-2014-7812 Red Hat Satellite, Spacewalk: XSS in system-group
+
+6. Package List:
+
+ 	Red Hat Satellite Managed DB 5.7 (RHEL v.6):
+
+Source:
+postgresql92-1.1-21.el6.src.rpm
+postgresql92-postgresql-9.2.8-2.el6.src.rpm
+satellite-repo-5.6.0.3-1.el6sat.src.rpm
+scl-utils-20120927-11.el6_5.src.rpm
+spacewalk-setup-postgresql-2.3.0-21.el6sat.src.rpm
+spacewalk-web-2.3.2-27.el6sat.src.rpm
+
+noarch:
+satellite-repo-5.6.0.3-1.el6sat.noarch.rpm
+spacewalk-base-2.3.2-27.el6sat.noarch.rpm
+spacewalk-base-minimal-2.3.2-27.el6sat.noarch.rpm
+spacewalk-base-minimal-config-2.3.2-27.el6sat.noarch.rpm
+spacewalk-dobby-2.3.2-27.el6sat.noarch.rpm
+spacewalk-grail-2.3.2-27.el6sat.noarch.rpm
+spacewalk-html-2.3.2-27.el6sat.noarch.rpm
+spacewalk-pxt-2.3.2-27.el6sat.noarch.rpm
+spacewalk-setup-postgresql-2.3.0-21.el6sat.noarch.rpm
+spacewalk-sniglets-2.3.2-27.el6sat.noarch.rpm
+
+s390x:
+postgresql92-postgresql-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-contrib-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-debuginfo-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-libs-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-pltcl-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-server-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-upgrade-9.2.8-2.el6.s390x.rpm
+postgresql92-runtime-1.1-21.el6.s390x.rpm
+scl-utils-20120927-11.el6_5.s390x.rpm
+scl-utils-debuginfo-20120927-11.el6_5.s390x.rpm
+
+x86_64:
+postgresql92-postgresql-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-contrib-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-debuginfo-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-libs-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-pltcl-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-server-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-upgrade-9.2.8-2.el6.x86_64.rpm
+postgresql92-runtime-1.1-21.el6.x86_64.rpm
+scl-utils-20120927-11.el6_5.x86_64.rpm
+scl-utils-debuginfo-20120927-11.el6_5.x86_64.rpm
+
+Red Hat Satellite 5.7 (RHEL v.6):
+
+Source:
+MessageQueue-3.26.10-1.el6sat.src.rpm
+NOCpulsePlugins-2.209.7-1.el6sat.src.rpm
+NPalert-1.127.12-1.el6sat.src.rpm
+ProgAGoGo-1.11.6-1.el6sat.src.rpm
+PyYAML-3.10-3.1.el6.src.rpm
+SNMPAlerts-0.5.7-1.el6sat.src.rpm
+SatConfig-bootstrap-1.11.5-1.el6sat.src.rpm
+SatConfig-bootstrap-server-1.13.5-1.el6sat.src.rpm
+SatConfig-cluster-2.2.2-1.el6sat.src.rpm
+SatConfig-general-1.216.31-1.el6sat.src.rpm
+SatConfig-generator-2.29.14-1.el6sat.src.rpm
+SatConfig-installer-3.24.6-1.el6sat.src.rpm
+SatConfig-spread-1.1.3-1.el6sat.src.rpm
+SputLite-1.10.1-1.el6sat.src.rpm
+ace-editor-1.1.3-2.el6sat.src.rpm
+antlr-2.7.7-7.ep5.el6.src.rpm
+apache-commons-beanutils-1.8.3-10.redhat_2.ep6.el6.src.rpm
+apache-commons-cli-1.2-7.5.redhat_2.ep6.el6.4.src.rpm
+bootstrap-3.0.0-4.el6sat.src.rpm
+bootstrap-datepicker-1.3.0-2.el6sat.src.rpm
+c3p0-0.9.1.2-2.ep5.el6.src.rpm
+cglib-2.2-5.6.ep5.el6.src.rpm
+cobbler-2.0.7-52.el6sat.src.rpm
+cobbler-loaders-1.0.3-1.el6sat.src.rpm
+concurrent-1.3.4-10.1.5_jboss_update1.ep5.el6.src.rpm
+cx_Oracle-5.1.2-5.el6sat.src.rpm
+dojo-1.6.1-1.el6sat.src.rpm
+dom4j-1.6.1-11.1.ep5.el6.src.rpm
+dwr-3.0rc2-6.el6sat.src.rpm
+editarea-0.8.2-14.el6sat.src.rpm
+eventReceivers-2.20.18-1.el6sat.src.rpm
+font-awesome-4.0.3-1.el6sat.src.rpm
+glassfish-jsf-1.2_13-3.1.4.ep5.el6.src.rpm
+hibernate3-3.3.2-1.3.GA_CP04.ep5.el6.src.rpm
+jabberd-2.2.8-23.el6sat.src.rpm
+jabberpy-0.5-0.22.el6sat.src.rpm
+jakarta-commons-chain-1.2-2.2.2.ep5.el6.src.rpm
+jakarta-commons-codec-1.3-11.7.el6.src.rpm
+jakarta-commons-digester-1.8.1-8.1.1.1.ep5.el6.src.rpm
+jakarta-commons-el-1.0-19.2.1.1.ep5.el6.src.rpm
+jakarta-commons-fileupload-1.1.1-7.4.ep5.el6.src.rpm
+jakarta-commons-io-1.4-4.ep5.el6.src.rpm
+jakarta-commons-lang-2.4-1.1.el6.src.rpm
+jakarta-commons-logging-1.1.1-1.ep5.el6.src.rpm
+jakarta-commons-logging-jboss-1.1-10.3_patch_02.1.ep5.el6.src.rpm
+jakarta-commons-parent-11-2.1.2.ep5.el6.src.rpm
+jakarta-commons-validator-1.3.1-7.5.2.ep5.el6.src.rpm
+jakarta-oro-2.0.8-6.6.el6.src.rpm
+jakarta-taglibs-standard-1.1.1-12.ep5.el6.src.rpm
+java-1.6.0-ibm-1.6.0.16.2-1jpp.1.el6.src.rpm
+javassist-3.12.0-6.SP1.ep5.el6.src.rpm
+jboss-javaee-5.0.1-2.9.ep5.el6.src.rpm
+jcommon-1.0.16-1.2.2.ep5.el6.src.rpm
+jdom-1.1.1-1.el6.src.rpm
+jfreechart-1.0.13-2.3.2.1.1.ep5.el6.src.rpm
+jpam-0.4-27.el6sat.src.rpm
+jquery-timepicker-1.3.3-1.el6sat.src.rpm
+jquery-ui-1.10.4.custom-2.el6sat.src.rpm
+libapreq2-2.13-5.el6sat.src.rpm
+libgsasl-1.4.0-5.el6sat.src.rpm
+libntlm-1.0-4.el6sat.src.rpm
+libreadline-java-0.8.0-24.3.el6.src.rpm
+libyaml-0.1.2-5.el6.src.rpm
+momentjs-2.6.0-2.2.el6sat.src.rpm
+nocpulse-common-2.2.9-1.el6sat.src.rpm
+nocpulse-db-perl-3.6.5-1.el6sat.src.rpm
+nutch-1.0-0.16.20081201040121nightly.el6sat.src.rpm
+objectweb-asm-3.2-2.1.el6.src.rpm
+oracle-config-1.1-7.el6sat.src.rpm
+oracle-instantclient-10.2.0-47.el6sat.src.rpm
+oracle-instantclient-selinux-10.2.0.19-6.el6sat.src.rpm
+oracle-selinux-0.1.23.36-1.el6sat.src.rpm
+osad-5.11.44-5.el6sat.src.rpm
+oscache-2.2-3.ep5.el6.src.rpm
+patternfly1-1.0.5-4.el6sat.src.rpm
+perl-Apache-DBI-1.09-3.el6sat.src.rpm
+perl-BerkeleyDB-0.38-6.el6sat.src.rpm
+perl-Cache-Cache-1.06-2.el6sat.src.rpm
+perl-Class-MethodMaker-2.16-4.el6.src.rpm
+perl-Class-Singleton-1.4-6.el6.src.rpm
+perl-Config-IniFiles-2.47-5.el6sat.src.rpm
+perl-Convert-BinHex-1.119-10.1.el6.src.rpm
+perl-Crypt-DES-2.05-10.el6sat.src.rpm
+perl-Crypt-GeneratePassword-0.03-15.el6sat.src.rpm
+perl-DBD-Oracle-1.62-3.el6sat.src.rpm
+perl-DateTime-0.5300-1.el6.src.rpm
+perl-Email-Date-Format-1.002-5.el6.src.rpm
+perl-Filesys-Df-0.92-8.el6sat.src.rpm
+perl-HTML-TableExtract-2.10-8.el6sat.src.rpm
+perl-IO-stringy-2.110-10.1.el6.src.rpm
+perl-IPC-ShareLite-0.13-6.el6sat.src.rpm
+perl-List-MoreUtils-0.22-10.el6.src.rpm
+perl-MIME-Lite-3.027-2.el6.src.rpm
+perl-MIME-Types-1.28-2.el6.src.rpm
+perl-MIME-tools-5.427-4.el6.src.rpm
+perl-Mail-RFC822-Address-0.3-12.el6sat.src.rpm
+perl-NOCpulse-CLAC-1.9.9-1.el6sat.src.rpm
+perl-NOCpulse-Debug-1.23.17-1.el6sat.src.rpm
+perl-NOCpulse-Gritch-2.2.1-1.el6sat.src.rpm
+perl-NOCpulse-Object-1.26.12-1.el6sat.src.rpm
+perl-NOCpulse-OracleDB-1.28.27-1.el6sat.src.rpm
+perl-NOCpulse-PersistentConnection-1.10.1-1.el6sat.src.rpm
+perl-NOCpulse-Probe-1.184.18-1.el6sat.src.rpm
+perl-NOCpulse-ProcessPool-1.6.1-1.el6sat.src.rpm
+perl-NOCpulse-Scheduler-1.58.12-1.el6sat.src.rpm
+perl-NOCpulse-SetID-1.7.2-1.el6sat.src.rpm
+perl-NOCpulse-Utils-1.14.12-1.el6sat.src.rpm
+perl-Net-INET6Glue-0.5-3.el6sat.src.rpm
+perl-Net-IPv4Addr-0.10-7.el6sat.src.rpm
+perl-Net-SNMP-6.0.1-3.el6sat.src.rpm
+perl-Params-Validate-0.92-3.el6.src.rpm
+perl-SOAP-Lite-0.710.10-3.el6.src.rpm
+perl-Satcon-1.20-1.el6sat.src.rpm
+perl-TermReadKey-2.30-13.el6.src.rpm
+perl-XML-Generator-1.01-6.el6sat.src.rpm
+postgresql92-1.1-21.el6.src.rpm
+postgresql92-postgresql-9.2.8-2.el6.src.rpm
+pwstrength-bootstrap-1.0.2-4.el6sat.src.rpm
+python-debian-0.1.16-5.el6sat.src.rpm
+python-gzipstream-1.10.2-1.el6sat.src.rpm
+python-psycopg2-2.0.14-3.el6sat.src.rpm
+quartz-1.8.4-5.el6sat.src.rpm
+redstone-xmlrpc-1.1_20071120-15.el6sat.src.rpm
+rhn-i18n-guides-5.7.0.1-1.el6sat.src.rpm
+rhn-i18n-release-notes-5.7.0.0-3.el6sat.src.rpm
+rhn-solaris-bootstrap-5.4.1-9.el6sat.src.rpm
+rhnlib-2.5.22-15.el6.src.rpm
+rhnpush-5.5.81-8.el6sat.src.rpm
+roboto-1.2-2.el6sat.src.rpm
+satellite-branding-5.7.0.24-1.el6sat.src.rpm
+satellite-doc-indexes-5.7.0-1.el6sat.src.rpm
+satellite-repo-5.6.0.3-1.el6sat.src.rpm
+satellite-schema-5.7.0.11-1.el6sat.src.rpm
+scdb-1.15.8-1.el6sat.src.rpm
+scl-utils-20120927-11.el6_5.src.rpm
+select2-3.4.5-3.el6sat.src.rpm
+select2-bootstrap-css-1.3.0-5.el6sat.src.rpm
+simple-core-3.1.3-6.el6sat.src.rpm
+sitemesh-2.4.2-2.ep6.el6.src.rpm
+spacecmd-2.3.0-2.el6sat.src.rpm
+spacewalk-2.3.0-1.5.el6sat.src.rpm
+spacewalk-admin-2.2.7-1.el6sat.src.rpm
+spacewalk-backend-2.3.3-23.el6sat.src.rpm
+spacewalk-certs-tools-2.3.0-4.el6sat.src.rpm
+spacewalk-config-2.3.0-4.el6sat.src.rpm
+spacewalk-java-2.3.8-96.el6sat.src.rpm
+spacewalk-monitoring-2.2.1-1.el6sat.src.rpm
+spacewalk-monitoring-selinux-2.2.1-1.el6sat.src.rpm
+spacewalk-reports-2.3.0-5.el6sat.src.rpm
+spacewalk-schema-2.3.2-16.el6sat.src.rpm
+spacewalk-search-2.3.0-7.el6sat.src.rpm
+spacewalk-selinux-2.2.1-1.el6sat.src.rpm
+spacewalk-setup-2.3.0-15.el6sat.src.rpm
+spacewalk-setup-jabberd-2.0.1-1.el6sat.src.rpm
+spacewalk-setup-postgresql-2.3.0-21.el6sat.src.rpm
+spacewalk-slf4j-1.6.1-6.el6sat.src.rpm
+spacewalk-ssl-cert-check-2.3-1.el6sat.src.rpm
+spacewalk-utils-2.3.2-13.el6sat.src.rpm
+spacewalk-web-2.3.2-27.el6sat.src.rpm
+ssl_bridge-1.9.3-1.el6sat.src.rpm
+status_log_acceptor-0.12.11-1.el6sat.src.rpm
+stringtree-json-2.0.9-10.el6sat.src.rpm
+struts-1.3.10-6.ep5.el6.src.rpm
+tanukiwrapper-3.2.3-14.el6sat.src.rpm
+tsdb-1.27.29-1.el6sat.src.rpm
+udns-0.1-1.el6sat.src.rpm
+xalan-j2-2.7.0-9.8.el6.src.rpm
+
+noarch:
+MessageQueue-3.26.10-1.el6sat.noarch.rpm
+NOCpulsePlugins-2.209.7-1.el6sat.noarch.rpm
+NOCpulsePlugins-Oracle-2.209.7-1.el6sat.noarch.rpm
+NPalert-1.127.12-1.el6sat.noarch.rpm
+ProgAGoGo-1.11.6-1.el6sat.noarch.rpm
+SNMPAlerts-0.5.7-1.el6sat.noarch.rpm
+SatConfig-bootstrap-1.11.5-1.el6sat.noarch.rpm
+SatConfig-bootstrap-server-1.13.5-1.el6sat.noarch.rpm
+SatConfig-cluster-2.2.2-1.el6sat.noarch.rpm
+SatConfig-general-1.216.31-1.el6sat.noarch.rpm
+SatConfig-generator-2.29.14-1.el6sat.noarch.rpm
+SatConfig-installer-3.24.6-1.el6sat.noarch.rpm
+SatConfig-spread-1.1.3-1.el6sat.noarch.rpm
+SputLite-client-1.10.1-1.el6sat.noarch.rpm
+SputLite-server-1.10.1-1.el6sat.noarch.rpm
+ace-editor-1.1.3-2.el6sat.noarch.rpm
+antlr-2.7.7-7.ep5.el6.noarch.rpm
+apache-commons-beanutils-1.8.3-10.redhat_2.ep6.el6.noarch.rpm
+apache-commons-cli-1.2-7.5.redhat_2.ep6.el6.4.noarch.rpm
+bootstrap-3.0.0-4.el6sat.noarch.rpm
+bootstrap-datepicker-1.3.0-2.el6sat.noarch.rpm
+c3p0-0.9.1.2-2.ep5.el6.noarch.rpm
+cglib-2.2-5.6.ep5.el6.noarch.rpm
+cobbler-2.0.7-52.el6sat.noarch.rpm
+cobbler-loaders-1.0.3-1.el6sat.noarch.rpm
+concurrent-1.3.4-10.1.5_jboss_update1.ep5.el6.noarch.rpm
+dojo-1.6.1-1.el6sat.noarch.rpm
+dom4j-1.6.1-11.1.ep5.el6.noarch.rpm
+dwr-3.0rc2-6.el6sat.noarch.rpm
+editarea-0.8.2-14.el6sat.noarch.rpm
+eventReceivers-2.20.18-1.el6sat.noarch.rpm
+font-awesome-4.0.3-1.el6sat.noarch.rpm
+glassfish-jsf-1.2_13-3.1.4.ep5.el6.noarch.rpm
+hibernate3-3.3.2-1.3.GA_CP04.ep5.el6.noarch.rpm
+jabberpy-0.5-0.22.el6sat.noarch.rpm
+jakarta-commons-chain-1.2-2.2.2.ep5.el6.noarch.rpm
+jakarta-commons-digester-1.8.1-8.1.1.1.ep5.el6.noarch.rpm
+jakarta-commons-el-1.0-19.2.1.1.ep5.el6.noarch.rpm
+jakarta-commons-fileupload-1.1.1-7.4.ep5.el6.noarch.rpm
+jakarta-commons-io-1.4-4.ep5.el6.noarch.rpm
+jakarta-commons-lang-2.4-1.1.el6.noarch.rpm
+jakarta-commons-logging-1.1.1-1.ep5.el6.noarch.rpm
+jakarta-commons-logging-jboss-1.1-10.3_patch_02.1.ep5.el6.noarch.rpm
+jakarta-commons-parent-11-2.1.2.ep5.el6.noarch.rpm
+jakarta-commons-validator-1.3.1-7.5.2.ep5.el6.noarch.rpm
+jakarta-taglibs-standard-1.1.1-12.ep5.el6.noarch.rpm
+javassist-3.12.0-6.SP1.ep5.el6.noarch.rpm
+jboss-javaee-poms-5.0.1-2.9.ep5.el6.noarch.rpm
+jboss-transaction-1.0.1-api-5.0.1-2.9.ep5.el6.noarch.rpm
+jcommon-1.0.16-1.2.2.ep5.el6.noarch.rpm
+jdom-1.1.1-1.el6.noarch.rpm
+jfreechart-1.0.13-2.3.2.1.1.ep5.el6.noarch.rpm
+jquery-timepicker-1.3.3-1.el6sat.noarch.rpm
+jquery-ui-1.10.4.custom-2.el6sat.noarch.rpm
+momentjs-2.6.0-2.2.el6sat.noarch.rpm
+nocpulse-common-2.2.9-1.el6sat.noarch.rpm
+nocpulse-db-perl-3.6.5-1.el6sat.noarch.rpm
+nutch-1.0-0.16.20081201040121nightly.el6sat.noarch.rpm
+objectweb-asm-3.2-2.1.el6.noarch.rpm
+oracle-config-1.1-7.el6sat.noarch.rpm
+oracle-instantclient-selinux-10.2.0.19-6.el6sat.noarch.rpm
+oracle-instantclient-sqlplus-selinux-10.2.0.19-6.el6sat.noarch.rpm
+oracle-nofcontext-selinux-0.1.23.36-1.el6sat.noarch.rpm
+osa-dispatcher-5.11.44-5.el6sat.noarch.rpm
+osa-dispatcher-selinux-5.11.44-5.el6sat.noarch.rpm
+oscache-2.2-3.ep5.el6.noarch.rpm
+patternfly1-1.0.5-4.el6sat.noarch.rpm
+perl-Apache-DBI-1.09-3.el6sat.noarch.rpm
+perl-Cache-Cache-1.06-2.el6sat.noarch.rpm
+perl-Class-Singleton-1.4-6.el6.noarch.rpm
+perl-Config-IniFiles-2.47-5.el6sat.noarch.rpm
+perl-Convert-BinHex-1.119-10.1.el6.noarch.rpm
+perl-Crypt-GeneratePassword-0.03-15.el6sat.noarch.rpm
+perl-Email-Date-Format-1.002-5.el6.noarch.rpm
+perl-HTML-TableExtract-2.10-8.el6sat.noarch.rpm
+perl-IO-stringy-2.110-10.1.el6.noarch.rpm
+perl-MIME-Lite-3.027-2.el6.noarch.rpm
+perl-MIME-Types-1.28-2.el6.noarch.rpm
+perl-MIME-tools-5.427-4.el6.noarch.rpm
+perl-Mail-RFC822-Address-0.3-12.el6sat.noarch.rpm
+perl-NOCpulse-CLAC-1.9.9-1.el6sat.noarch.rpm
+perl-NOCpulse-Debug-1.23.17-1.el6sat.noarch.rpm
+perl-NOCpulse-Gritch-2.2.1-1.el6sat.noarch.rpm
+perl-NOCpulse-Object-1.26.12-1.el6sat.noarch.rpm
+perl-NOCpulse-OracleDB-1.28.27-1.el6sat.noarch.rpm
+perl-NOCpulse-PersistentConnection-1.10.1-1.el6sat.noarch.rpm
+perl-NOCpulse-Probe-1.184.18-1.el6sat.noarch.rpm
+perl-NOCpulse-Probe-Oracle-1.184.18-1.el6sat.noarch.rpm
+perl-NOCpulse-ProcessPool-1.6.1-1.el6sat.noarch.rpm
+perl-NOCpulse-Scheduler-1.58.12-1.el6sat.noarch.rpm
+perl-NOCpulse-SetID-1.7.2-1.el6sat.noarch.rpm
+perl-NOCpulse-Utils-1.14.12-1.el6sat.noarch.rpm
+perl-Net-INET6Glue-0.5-3.el6sat.noarch.rpm
+perl-Net-IPv4Addr-0.10-7.el6sat.noarch.rpm
+perl-Net-SNMP-6.0.1-3.el6sat.noarch.rpm
+perl-SOAP-Lite-0.710.10-3.el6.noarch.rpm
+perl-Satcon-1.20-1.el6sat.noarch.rpm
+perl-XML-Generator-1.01-6.el6sat.noarch.rpm
+pwstrength-bootstrap-1.0.2-4.el6sat.noarch.rpm
+python-debian-0.1.16-5.el6sat.noarch.rpm
+python-gzipstream-1.10.2-1.el6sat.noarch.rpm
+quartz-1.8.4-5.el6sat.noarch.rpm
+quartz-oracle-1.8.4-5.el6sat.noarch.rpm
+redstone-xmlrpc-1.1_20071120-15.el6sat.noarch.rpm
+rhn-i18n-guides-5.7.0.1-1.el6sat.noarch.rpm
+rhn-i18n-release-notes-5.7.0.0-3.el6sat.noarch.rpm
+rhn-solaris-bootstrap-5.4.1-9.el6sat.noarch.rpm
+rhn_solaris_bootstrap_5_4_1_9-1-1.el6sat.noarch.rpm
+rhnlib-2.5.22-15.el6.noarch.rpm
+rhnpush-5.5.81-8.el6sat.noarch.rpm
+roboto-1.2-2.el6sat.noarch.rpm
+satellite-branding-5.7.0.24-1.el6sat.noarch.rpm
+satellite-doc-indexes-5.7.0-1.el6sat.noarch.rpm
+satellite-repo-5.6.0.3-1.el6sat.noarch.rpm
+satellite-schema-5.7.0.11-1.el6sat.noarch.rpm
+scdb-1.15.8-1.el6sat.noarch.rpm
+select2-3.4.5-3.el6sat.noarch.rpm
+select2-bootstrap-css-1.3.0-5.el6sat.noarch.rpm
+simple-core-3.1.3-6.el6sat.noarch.rpm
+sitemesh-2.4.2-2.ep6.el6.noarch.rpm
+spacecmd-2.3.0-2.el6sat.noarch.rpm
+spacewalk-admin-2.2.7-1.el6sat.noarch.rpm
+spacewalk-backend-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-app-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-applet-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-config-files-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-config-files-common-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-config-files-tool-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-iss-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-iss-export-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-libs-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-package-push-server-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-server-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-sql-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-sql-oracle-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-sql-postgresql-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-tools-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-xml-export-libs-2.3.3-23.el6sat.noarch.rpm
+spacewalk-backend-xmlrpc-2.3.3-23.el6sat.noarch.rpm
+spacewalk-base-2.3.2-27.el6sat.noarch.rpm
+spacewalk-base-minimal-2.3.2-27.el6sat.noarch.rpm
+spacewalk-base-minimal-config-2.3.2-27.el6sat.noarch.rpm
+spacewalk-certs-tools-2.3.0-4.el6sat.noarch.rpm
+spacewalk-common-2.3.0-1.5.el6sat.noarch.rpm
+spacewalk-config-2.3.0-4.el6sat.noarch.rpm
+spacewalk-dobby-2.3.2-27.el6sat.noarch.rpm
+spacewalk-grail-2.3.2-27.el6sat.noarch.rpm
+spacewalk-html-2.3.2-27.el6sat.noarch.rpm
+spacewalk-java-2.3.8-96.el6sat.noarch.rpm
+spacewalk-java-config-2.3.8-96.el6sat.noarch.rpm
+spacewalk-java-lib-2.3.8-96.el6sat.noarch.rpm
+spacewalk-java-oracle-2.3.8-96.el6sat.noarch.rpm
+spacewalk-java-postgresql-2.3.8-96.el6sat.noarch.rpm
+spacewalk-monitoring-2.2.1-1.el6sat.noarch.rpm
+spacewalk-monitoring-selinux-2.2.1-1.el6sat.noarch.rpm
+spacewalk-oracle-2.3.0-1.5.el6sat.noarch.rpm
+spacewalk-postgresql-2.3.0-1.5.el6sat.noarch.rpm
+spacewalk-pxt-2.3.2-27.el6sat.noarch.rpm
+spacewalk-reports-2.3.0-5.el6sat.noarch.rpm
+spacewalk-schema-2.3.2-16.el6sat.noarch.rpm
+spacewalk-search-2.3.0-7.el6sat.noarch.rpm
+spacewalk-selinux-2.2.1-1.el6sat.noarch.rpm
+spacewalk-setup-2.3.0-15.el6sat.noarch.rpm
+spacewalk-setup-jabberd-2.0.1-1.el6sat.noarch.rpm
+spacewalk-setup-postgresql-2.3.0-21.el6sat.noarch.rpm
+spacewalk-slf4j-1.6.1-6.el6sat.noarch.rpm
+spacewalk-sniglets-2.3.2-27.el6sat.noarch.rpm
+spacewalk-ssl-cert-check-2.3-1.el6sat.noarch.rpm
+spacewalk-taskomatic-2.3.8-96.el6sat.noarch.rpm
+spacewalk-utils-2.3.2-13.el6sat.noarch.rpm
+ssl_bridge-1.9.3-1.el6sat.noarch.rpm
+status_log_acceptor-0.12.11-1.el6sat.noarch.rpm
+stringtree-json-2.0.9-10.el6sat.noarch.rpm
+struts-1.3.10-6.ep5.el6.noarch.rpm
+struts-core-1.3.10-6.ep5.el6.noarch.rpm
+struts-extras-1.3.10-6.ep5.el6.noarch.rpm
+struts-taglib-1.3.10-6.ep5.el6.noarch.rpm
+tsdb-1.27.29-1.el6sat.noarch.rpm
+xalan-j2-2.7.0-9.8.el6.noarch.rpm
+
+s390x:
+PyYAML-3.10-3.1.el6.s390x.rpm
+PyYAML-debuginfo-3.10-3.1.el6.s390x.rpm
+cx_Oracle-5.1.2-5.el6sat.s390x.rpm
+cx_Oracle-debuginfo-5.1.2-5.el6sat.s390x.rpm
+jabberd-2.2.8-23.el6sat.s390x.rpm
+jabberd-debuginfo-2.2.8-23.el6sat.s390x.rpm
+jakarta-commons-codec-1.3-11.7.el6.s390x.rpm
+jakarta-commons-codec-debuginfo-1.3-11.7.el6.s390x.rpm
+jakarta-oro-2.0.8-6.6.el6.s390x.rpm
+jakarta-oro-debuginfo-2.0.8-6.6.el6.s390x.rpm
+java-1.6.0-ibm-1.6.0.16.2-1jpp.1.el6.s390x.rpm
+java-1.6.0-ibm-devel-1.6.0.16.2-1jpp.1.el6.s390x.rpm
+jpam-0.4-27.el6sat.s390x.rpm
+jpam-debuginfo-0.4-27.el6sat.s390x.rpm
+libapreq2-2.13-5.el6sat.s390x.rpm
+libapreq2-debuginfo-2.13-5.el6sat.s390x.rpm
+libgsasl-1.4.0-5.el6sat.s390x.rpm
+libgsasl-debuginfo-1.4.0-5.el6sat.s390x.rpm
+libntlm-1.0-4.el6sat.s390x.rpm
+libntlm-debuginfo-1.0-4.el6sat.s390x.rpm
+libreadline-java-0.8.0-24.3.el6.s390x.rpm
+libreadline-java-debuginfo-0.8.0-24.3.el6.s390x.rpm
+libyaml-0.1.2-5.el6.s390x.rpm
+libyaml-debuginfo-0.1.2-5.el6.s390x.rpm
+oracle-instantclient-basic-10.2.0-47.el6sat.s390x.rpm
+oracle-instantclient-sqlplus-10.2.0-47.el6sat.s390x.rpm
+perl-BerkeleyDB-0.38-6.el6sat.s390x.rpm
+perl-BerkeleyDB-debuginfo-0.38-6.el6sat.s390x.rpm
+perl-Class-MethodMaker-2.16-4.el6.s390x.rpm
+perl-Class-MethodMaker-debuginfo-2.16-4.el6.s390x.rpm
+perl-Crypt-DES-2.05-10.el6sat.s390x.rpm
+perl-Crypt-DES-debuginfo-2.05-10.el6sat.s390x.rpm
+perl-DBD-Oracle-1.62-3.el6sat.s390x.rpm
+perl-DBD-Oracle-debuginfo-1.62-3.el6sat.s390x.rpm
+perl-DateTime-0.5300-1.el6.s390x.rpm
+perl-DateTime-debuginfo-0.5300-1.el6.s390x.rpm
+perl-Filesys-Df-0.92-8.el6sat.s390x.rpm
+perl-Filesys-Df-debuginfo-0.92-8.el6sat.s390x.rpm
+perl-IPC-ShareLite-0.13-6.el6sat.s390x.rpm
+perl-IPC-ShareLite-debuginfo-0.13-6.el6sat.s390x.rpm
+perl-List-MoreUtils-0.22-10.el6.s390x.rpm
+perl-List-MoreUtils-debuginfo-0.22-10.el6.s390x.rpm
+perl-Params-Validate-0.92-3.el6.s390x.rpm
+perl-Params-Validate-debuginfo-0.92-3.el6.s390x.rpm
+perl-TermReadKey-2.30-13.el6.s390x.rpm
+perl-TermReadKey-debuginfo-2.30-13.el6.s390x.rpm
+perl-libapreq2-2.13-5.el6sat.s390x.rpm
+postgresql92-postgresql-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-contrib-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-debuginfo-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-libs-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-pltcl-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-server-9.2.8-2.el6.s390x.rpm
+postgresql92-postgresql-upgrade-9.2.8-2.el6.s390x.rpm
+postgresql92-runtime-1.1-21.el6.s390x.rpm
+python-psycopg2-2.0.14-3.el6sat.s390x.rpm
+python-psycopg2-debuginfo-2.0.14-3.el6sat.s390x.rpm
+scl-utils-20120927-11.el6_5.s390x.rpm
+scl-utils-debuginfo-20120927-11.el6_5.s390x.rpm
+tanukiwrapper-3.2.3-14.el6sat.s390x.rpm
+tanukiwrapper-debuginfo-3.2.3-14.el6sat.s390x.rpm
+udns-0.1-1.el6sat.s390x.rpm
+udns-debuginfo-0.1-1.el6sat.s390x.rpm
+
+x86_64:
+PyYAML-3.10-3.1.el6.x86_64.rpm
+PyYAML-debuginfo-3.10-3.1.el6.x86_64.rpm
+cx_Oracle-5.1.2-5.el6sat.x86_64.rpm
+cx_Oracle-debuginfo-5.1.2-5.el6sat.x86_64.rpm
+jabberd-2.2.8-23.el6sat.x86_64.rpm
+jabberd-debuginfo-2.2.8-23.el6sat.x86_64.rpm
+java-1.6.0-ibm-1.6.0.16.2-1jpp.1.el6.x86_64.rpm
+java-1.6.0-ibm-devel-1.6.0.16.2-1jpp.1.el6.x86_64.rpm
+jpam-0.4-27.el6sat.x86_64.rpm
+jpam-debuginfo-0.4-27.el6sat.x86_64.rpm
+libapreq2-2.13-5.el6sat.x86_64.rpm
+libapreq2-debuginfo-2.13-5.el6sat.x86_64.rpm
+libgsasl-1.4.0-5.el6sat.x86_64.rpm
+libgsasl-debuginfo-1.4.0-5.el6sat.x86_64.rpm
+libntlm-1.0-4.el6sat.x86_64.rpm
+libntlm-debuginfo-1.0-4.el6sat.x86_64.rpm
+libreadline-java-0.8.0-24.3.el6.x86_64.rpm
+libreadline-java-debuginfo-0.8.0-24.3.el6.x86_64.rpm
+libyaml-0.1.2-5.el6.x86_64.rpm
+libyaml-debuginfo-0.1.2-5.el6.x86_64.rpm
+oracle-instantclient-basic-10.2.0-47.el6sat.x86_64.rpm
+oracle-instantclient-sqlplus-10.2.0-47.el6sat.x86_64.rpm
+perl-BerkeleyDB-0.38-6.el6sat.x86_64.rpm
+perl-BerkeleyDB-debuginfo-0.38-6.el6sat.x86_64.rpm
+perl-Crypt-DES-2.05-10.el6sat.x86_64.rpm
+perl-Crypt-DES-debuginfo-2.05-10.el6sat.x86_64.rpm
+perl-DBD-Oracle-1.62-3.el6sat.x86_64.rpm
+perl-DBD-Oracle-debuginfo-1.62-3.el6sat.x86_64.rpm
+perl-Filesys-Df-0.92-8.el6sat.x86_64.rpm
+perl-Filesys-Df-debuginfo-0.92-8.el6sat.x86_64.rpm
+perl-IPC-ShareLite-0.13-6.el6sat.x86_64.rpm
+perl-IPC-ShareLite-debuginfo-0.13-6.el6sat.x86_64.rpm
+perl-libapreq2-2.13-5.el6sat.x86_64.rpm
+postgresql92-postgresql-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-contrib-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-debuginfo-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-libs-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-pltcl-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-server-9.2.8-2.el6.x86_64.rpm
+postgresql92-postgresql-upgrade-9.2.8-2.el6.x86_64.rpm
+postgresql92-runtime-1.1-21.el6.x86_64.rpm
+python-psycopg2-2.0.14-3.el6sat.x86_64.rpm
+python-psycopg2-debuginfo-2.0.14-3.el6sat.x86_64.rpm
+scl-utils-20120927-11.el6_5.x86_64.rpm
+scl-utils-debuginfo-20120927-11.el6_5.x86_64.rpm
+tanukiwrapper-3.2.3-14.el6sat.x86_64.rpm
+tanukiwrapper-debuginfo-3.2.3-14.el6sat.x86_64.rpm
+udns-0.1-1.el6sat.x86_64.rpm
+udns-debuginfo-0.1-1.el6sat.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7811">https://access.redhat.com/security/cve/CVE-2014-7811</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7812">https://access.redhat.com/security/cve/CVE-2014-7812</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_Satellite/5.7/">https://access.redhat.com/documentation/en-US/Red_Hat_Satellite/5.7/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUtAcfXlSAg2UNWIIRAk5gAJ0bHMvokqYYEKT56KhZrAEhuuzhEwCfcd+8
+eZCtIbnjAj62cfhBJ/lNDx0=
+=zqmG
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

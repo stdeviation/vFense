@@ -1,0 +1,205 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0028&#45;01] Important: cfme security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 14 Jan 2015 15:27:33 &#45;0500 -->
+<!--X-Message-Id: 201501142027.t0EKRWgH028410@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0028-01] Important: cfme security, bug fix,	and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0028-01] Important: cfme security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2015:0028-01] Important: cfme security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 14 Jan 2015 20:27:32 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: cfme security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0028-01
+Product:           Red Hat CloudForms
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0028.html">https://rhn.redhat.com/errata/RHSA-2015-0028.html</a>
+Issue date:        2015-01-14
+CVE Names:         CVE-2014-3692 CVE-2014-7814 
+=====================================================================
+
+1. Summary:
+
+Updated cfme packages that fix two security issues, several bugs, and add
+various enhancements are now available for Red Hat CloudForms 3.1.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+CloudForms Management Engine 5.3 - noarch, x86_64
+
+3. Description:
+
+Red Hat CloudForms Management Engine delivers the insight, control, and
+automation needed to address the challenges of managing virtual
+environments. CloudForms Management Engine is built on Ruby on Rails, a
+model-view-controller (MVC) framework for web application development.
+Action Pack implements the controller and the view components.
+
+It was found that CloudForms Management Engine exposed SQL filters via the
+REST API without any input escaping. An authenticated user could use this
+flaw to perform SQL injection attacks against the CloudForms Management
+Engine database. (CVE-2014-7814)
+
+It was found that the CloudForms Management Engine customization template
+used a default root password for newly created images if no root password
+was specified. (CVE-2014-3692)
+
+These issues were discovered by the Red Hat CloudForms Team.
+
+This update also fixes several bugs and adds various enhancements.
+Documentation for these changes is available from the Technical Notes
+document linked to in the References section.
+
+All cfme users are advised to upgrade to these updated packages, which
+contain correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1145304 - All Passwords visible in UI when viewing page source
+1151258 - CVE-2014-3692 CFME: default fallback password in customization_templates.yml
+1157881 - CVE-2014-7814 CFME: REST API SQL Injection
+1161265 - Button triggered automate actions do not work
+1161761 - Automate Explorer: &quot;Error during 'save': Validation failed: Datatype is not included in the list&quot; when trying to save input parameters for a Method
+1163384 - UI: Missing route error for forest_delete action in Configuration/Configure/Settings/Authentication
+1163875 - RedHat domain - OSE automate model initial checkin.
+1164034 - Performance by Asset Type report undefined method error
+1164035 - [RFE] Need ability to properly override service request message.
+1164036 - Excon::Errors::Conflict]: Expected([200, 202]) &lt;=&gt; Actual(409 Conflict) with 2 security groups of the same name in the same tenant
+1165305 - Openstack inventory collection fails with missing instances
+1166214 - Callback url routing issue
+1166215 - Chargeback throws &quot;undefined method '[]' for nil:NilClass [configuration/form_field_changed]&quot;
+1166286 - Setting start page as Clouds/Availability Zones shows &quot;Page doesnt exist&quot;
+1166290 - Text &quot;Custom reports&quot; displayed twice in import/Export Custom reports
+1168336 - UI: Missing routes error on Infra/Cloud Provider &amp; Resource Pool list views when user has saved searches
+1168384 - Sorting and Paging does not work in Chargeback Rates list
+1168564 - UI: Unable to save a dashboard change after moving a widget to a different spot
+1170320 - Ext3 directory code should account for nil entries
+1170682 - Update miq_ae_service_snapshot.rb with new relationship of vm_or_template
+1170794 - Unable to create dashboard widget for trending reports or filter
+1171343 - Deleting a Cluster with many policy_events takes forever and times out.
+1171346 - ManageIQ - Resolve file differences resulting from model import/export round trip.
+1171821 - 5.3.2.2 doesn't start evmserverd
+1171899 - Storage: Adding a new Storage Manager does not work. Crashes with the error - Error caught: [ArgumentError] wrong number of arguments (2 for 1)
+1172491 - Unable to schedule backup of internal vmdb_production DB using CFME console
+1179957 - ose_installer fails with uninitialized constant FileUtils
+1179959 - ose_installer fails with No such file or directory - /root/.openshift/oo-install-cfg.yml
+
+6. Package List:
+
+CloudForms Management Engine 5.3:
+
+Source:
+cfme-5.3.2.6-1.el6cf.src.rpm
+ruby193-rubygem-fog-1.19.0-2.el6cf.src.rpm
+ruby193-rubygem-linux_admin-0.9.4-1.el6cf.src.rpm
+
+noarch:
+ruby193-rubygem-fog-1.19.0-2.el6cf.noarch.rpm
+ruby193-rubygem-linux_admin-0.9.4-1.el6cf.noarch.rpm
+
+x86_64:
+cfme-5.3.2.6-1.el6cf.x86_64.rpm
+cfme-appliance-5.3.2.6-1.el6cf.x86_64.rpm
+cfme-debuginfo-5.3.2.6-1.el6cf.x86_64.rpm
+cfme-lib-5.3.2.6-1.el6cf.x86_64.rpm
+mingw32-cfme-host-5.3.2.6-1.el6cf.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3692">https://access.redhat.com/security/cve/CVE-2014-3692</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7814">https://access.redhat.com/security/cve/CVE-2014-7814</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/CloudForms/3.1/html/Management_Engine_5.3_Technical_Notes/index.html">https://access.redhat.com/documentation/en-US/CloudForms/3.1/html/Management_Engine_5.3_Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUttEkXlSAg2UNWIIRAioAAJ91U93e5A+kVUSN7y0kDE3hHfgc6ACglGr0
+JD8CJb2SB7Q69xXsenVeD4k=
+=fzvp
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

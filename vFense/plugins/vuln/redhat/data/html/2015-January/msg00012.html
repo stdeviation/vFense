@@ -1,0 +1,244 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0042&#45;01] Low: cloud&#45;init security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 13 Jan 2015 17:55:01 &#45;0500 -->
+<!--X-Message-Id: 201501132255.t0DMt0AV032684@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0042-01] Low: cloud-init security, bug fix,	and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0042-01] Low: cloud-init security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0042-01] Low: cloud-init security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 13 Jan 2015 22:55:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: cloud-init security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0042-01
+Product:           Red Hat Common
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0042.html">https://rhn.redhat.com/errata/RHSA-2015-0042.html</a>
+Issue date:        2015-01-13
+CVE Names:         CVE-2013-2099 
+=====================================================================
+
+1. Summary:
+
+Updated cloud-init packages that fix one security issue, several bugs, and
+add various enhancements are now available for Red Hat Common for Red Hat
+Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Low security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Common for RHEL Client (v. 6) - i386, noarch, x86_64
+Red Hat Common for RHEL Compute Node (v. 6) - noarch, x86_64
+Red Hat Common for RHEL Server (v. 6) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Common for RHEL Workstation (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+The cloud-init packages provide a set of init scripts for cloud instances.
+Cloud instances need special scripts to run during initialization to
+retrieve and install ssh keys and to let the user run various scripts.
+
+A denial of service flaw was found in the way Python's SSL module
+implementation performed matching of certain certificate names. A remote
+attacker able to obtain a valid certificate that contained multiple
+wildcard characters could use this flaw to issue a request to validate such
+a certificate, resulting in excessive consumption of CPU. (CVE-2013-2099)
+
+This issue was discovered by Florian Weimer of Red Hat Product Security.
+
+The cloud-init packages have been upgraded to upstream version 0.7.5, which
+provides a number of bug fixes and enhancements over the previous version.
+(BZ#1111709, BZ#1119334)
+
+All cloud-init users are advised to upgrade to these updated packages,
+which correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+963260 - CVE-2013-2099 python: ssl.match_hostname() DoS via certificates with specially crafted hostname wildcard patterns
+
+6. Package List:
+
+Red Hat Common for RHEL Client (v. 6):
+
+Source:
+python-backports-1.0-3.el6.src.rpm
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.src.rpm
+python-six-1.6.1-1.el6.src.rpm
+python-urllib3-1.5-5.1.2.el6.src.rpm
+
+i386:
+python-backports-1.0-3.el6.i686.rpm
+
+noarch:
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.noarch.rpm
+python-six-1.6.1-1.el6.noarch.rpm
+python-urllib3-1.5-5.1.2.el6.noarch.rpm
+
+x86_64:
+python-backports-1.0-3.el6.x86_64.rpm
+
+Red Hat Common for RHEL Compute Node (v. 6):
+
+Source:
+python-backports-1.0-3.el6.src.rpm
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.src.rpm
+python-six-1.6.1-1.el6.src.rpm
+python-urllib3-1.5-5.1.2.el6.src.rpm
+
+noarch:
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.noarch.rpm
+python-six-1.6.1-1.el6.noarch.rpm
+python-urllib3-1.5-5.1.2.el6.noarch.rpm
+
+x86_64:
+python-backports-1.0-3.el6.x86_64.rpm
+
+Red Hat Common for RHEL Server (v. 6):
+
+Source:
+cloud-init-0.7.5-1.el6.src.rpm
+python-backports-1.0-3.el6.src.rpm
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.src.rpm
+python-boto-2.25.0-2.el6.src.rpm
+python-jsonpatch-1.2-2.el6.src.rpm
+python-jsonpointer-1.0-2.el6.src.rpm
+python-six-1.6.1-1.el6.src.rpm
+python-urllib3-1.5-5.1.2.el6.src.rpm
+
+i386:
+cloud-init-0.7.5-1.el6.i686.rpm
+python-backports-1.0-3.el6.i686.rpm
+
+noarch:
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.noarch.rpm
+python-boto-2.25.0-2.el6.noarch.rpm
+python-jsonpatch-1.2-2.el6.noarch.rpm
+python-jsonpointer-1.0-2.el6.noarch.rpm
+python-six-1.6.1-1.el6.noarch.rpm
+python-urllib3-1.5-5.1.2.el6.noarch.rpm
+
+ppc64:
+python-backports-1.0-3.el6.ppc64.rpm
+
+s390x:
+python-backports-1.0-3.el6.s390x.rpm
+
+x86_64:
+cloud-init-0.7.5-1.el6.x86_64.rpm
+python-backports-1.0-3.el6.x86_64.rpm
+
+Red Hat Common for RHEL Workstation (v. 6):
+
+Source:
+python-backports-1.0-3.el6.src.rpm
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.src.rpm
+python-six-1.6.1-1.el6.src.rpm
+python-urllib3-1.5-5.1.2.el6.src.rpm
+
+i386:
+python-backports-1.0-3.el6.i686.rpm
+
+noarch:
+python-backports-ssl_match_hostname-3.4.0.2-1.el6.noarch.rpm
+python-six-1.6.1-1.el6.noarch.rpm
+python-urllib3-1.5-5.1.2.el6.noarch.rpm
+
+x86_64:
+python-backports-1.0-3.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-2099">https://access.redhat.com/security/cve/CVE-2013-2099</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUtaH/XlSAg2UNWIIRAgWWAJoD2Pbv7YzZ6ajx2ujKSJ/VfNeaHACggX2P
+TJU+JcnWNup0QesbQsz0OUA=
+=r2Mg
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00011.html">Date Prev</a>][<a href="msg00013.html">Date Next</a>] &nbsp; [<a href="msg00011.html">Thread Prev</a>][<a href="msg00013.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00012">Thread Index</A>]
+[<A HREF="date.html#00012">Date Index</A>]
+[<A HREF="author.html#00012">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
