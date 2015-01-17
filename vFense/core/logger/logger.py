@@ -106,7 +106,7 @@ class vFenseLogger():
                 'vfstats_file'
             ]
         )
-        self.formatters = ['default']
+        self.formatters = ['form01']
         self.section_logger_name = 'loggers'
         self.section_handler_name = 'handlers'
         self.section_formatter_name = 'formatters'
@@ -232,10 +232,8 @@ class vFenseLogger():
         default_name = 'formatter_'
         for name in self.formatters:
             app_name = default_name + name
-            msg_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
             self.Config.add_section(app_name)
-            self.Config.set(app_name, 'format', msg_format)
-            self.Config.set(app_name, 'datefmt', '%Y-%m-%d %H:%M:%S')
+            self.Config.set(app_name, 'class', 'logstash_formatter.LogstashFormatter')
 
 
     def _start_listener(self):
