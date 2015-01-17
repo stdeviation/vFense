@@ -64,7 +64,7 @@ class Application(tornado.web.Application):
 
     def log_request(self, handler):
         logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
-        log = logging.getLogger('rvweb')
+        log = logging.getLogger('vfense_web')
         log_method = log.debug
         if handler.get_status() <= 299:
             log_method = log.info
@@ -79,13 +79,27 @@ class Application(tornado.web.Application):
             log_method = log.error
         request_time = 1000.0 * handler.request.request_time()
         real_ip = handler.request.headers.get('X-Real-Ip', None)
-        #remote_ip = handler.request.remote_ip
-        #uri = handler.request.remote_ip
         forwarded_ip = handler.request.headers.get('X-Forwarded-For', None)
         user_agent = handler.request.headers.get('User-Agent')
-        log_message = '%d %s %s, %.2fms' % (handler.get_status(), handler._request_summary(), user_agent, request_time)
+        log_message = {
+            'http_status_code': handler.get_status(),
+            'http_request_method': handler.request.method,
+            'agent_local': handler.get_browser_locale(),
+            'uri': handler.request.uri,
+            'user_agent': user_agent,
+            'request_time': request_time,
+        }
         if real_ip:
-            log_message = '%d %s %s %s %s, %.2fms' % (handler.get_status(), handler._request_summary(), real_ip, forwarded_ip, user_agent, request_time)
+            log_message = {
+                'http_status_code': handler.get_status(),
+                'http_request_method': handler.request.method,
+                'agent_local': handler.get_browser_locale(),
+                'uri': handler.request.uri,
+                'real_ip': real_ip,
+                'forwarded_ip': forwarded_ip,
+                'user_agent': user_agent,
+                'request_time': request_time,
+            }
         log_method(log_message)
 
 if __name__ == '__main__':

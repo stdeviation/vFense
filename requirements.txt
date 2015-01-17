@@ -21,3 +21,4 @@ urlgrabber
 xlrd
 python-dateutil
 py-bcrypt
+logstash_formatter

@@ -15,7 +15,7 @@ def all_agent_status():
         conn = db_connect()
         (
             r
-            .table(AgentCollections.Agent)
+            .table(AgentCollections.Agents)
             .filter(
                 lambda x:
                 x[AgentKeys.LastAgentUpdate].to_epoch_time() < seconds

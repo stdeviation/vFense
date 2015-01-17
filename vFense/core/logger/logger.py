@@ -1,16 +1,17 @@
+from datetime import datetime
+from socket import socket, SOCK_DGRAM, SOCK_STREAM, AF_INET, SHUT_RDWR
+from time import sleep
+import ConfigParser
+import logging
+import logging.config
 import os
-import struct
 import re
+import struct
+
 from vFense._constants import (
     VFENSE_CONF_PATH, VFENSE_LOGGING_CONFIG,
     VFENSE_LOG_PATH
 )
-from socket import socket, SOCK_DGRAM, SOCK_STREAM, AF_INET, SHUT_RDWR
-from datetime import datetime
-import logging
-import logging.config
-import ConfigParser
-from time import sleep
 
 class vFenseLogger():
     def __init__(self):
