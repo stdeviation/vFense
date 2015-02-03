@@ -1,6 +1,8 @@
 vFense
 ======
 
+[![Join the chat at https://gitter.im/vFense/vFense](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vFense/vFense?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 An Open-Source Cross-Platform Patch Management and vulnerabiltiy correlation tool.
 
 ### Basics on how vFense server works.
