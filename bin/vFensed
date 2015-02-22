@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import argparse
 import os
 import os.path
 import sys
@@ -22,6 +23,37 @@ SERVICES = []
 ALLSERVICES = []
 LISTENERSERVICES = []
 APISERVICES = []
+
+parser = argparse.ArgumentParser(description='vFensed daemon')
+parser.add_argument(
+    '--receiver_listeners_count', dest='receiver_listeners_count', default=10,
+    help='The number of vFense_listener daemons to run at once, cannot surpass 40'
+)
+parser.add_argument(
+    '--api_listeners_count', dest='api_listeners_count', default=1,
+    help='The number of vFense_web daemons to run at once, cannot surpass 40'
+)
+parser.add_argument(
+    '--rq-workers', dest='rq_workers', action='store_true',
+    help='Start the redis queue workers with the daemon'
+)
+parser.add_argument(
+    '--no-rq-workers', dest='rq_workers', action='store_false',
+    help='Do not start the redis queue workers with the daemon'
+)
+parser.add_argument(
+    '--admin-scheduler', dest='admin_scheduler', action='store_true',
+    help='Start the admin scheduler for vFense'
+)
+parser.add_argument(
+    '--no-admin-scheduler', dest='admin_scheduler', action='store_false',
+    help='Do not start the admin scheduler for vFense'
+)
+parser.set_defaults(rq_workers=True)
+parser.set_defaults(admin_scheduler=True)
+
+args = parser.parse_args()
+
 
 #################################################################
 RQWORKER = '/usr/local/bin/rqworker'
