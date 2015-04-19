@@ -1,6 +1,8 @@
 """
 Main launching point of the vFense Server
 """
+from _magic import *
+
 import os
 import base64
 import uuid

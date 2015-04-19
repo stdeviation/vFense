@@ -34,30 +34,30 @@ case "$1" in
     check_dependencies
     if [ "$DEPENDENCIES_RUNNING" = "true" ]; then
         if start-stop-daemon --start --quiet --chuid $USERNAME:$USERNAME --exec $DAEMON $1
-	    then
-		    echo "$NAME."
-	    else
-		    echo "failed"
-	    fi
+        then
+            echo "$NAME."
+        else
+            echo "failed"
+        fi
     else
         echo "Failed to start vFense, dependencies are not running"
     fi
-	;;
+;;
   stop)
     if start-stop-daemon --start --quiet --chuid $USERNAME:$USERNAME --exec $DAEMON $1
-	then
-		echo "$NAME."
-	else
-		echo "failed"
-	fi
-	;;	
+    then
+        echo "$NAME."
+    else
+        echo "failed"
+    fi
+    ;;
   restart)
-	${0} stop
-	${0} start
-	;;
+    ${0} stop
+    ${0} start
+    ;;
   status)
-	sh -c "$DAEMON $1"
-	;;
+    sh -c "$DAEMON $1"
+    ;;
   *)
     N=/etc/init.d/$NAME
     echo "Usage: $N {start|stop|restart|status}" >&2

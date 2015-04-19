@@ -1,13 +1,16 @@
+import ConfigParser
+import os
+
 from vFense.utils.common import get_nginx_config_location
 from vFense._constants import (
-    VFENSE_WWW_PATH, VFENSE_APP_PATH,
+    VFENSE_WWW_PATH, VFENSE_APP_PATH, VFENSE_CONFIG,
     VFENSE_APP_TMP_PATH, VFENSE_SSL_PATH
 )
 
 NGINX_CONFIG_FILE = get_nginx_config_location()
 base_nginx_config = """server {
     listen         80;
-    server_name    %(server_name)s localhost;
+    server_name    %(server_name)s localhost _;
     rewrite        ^ https://$server_name$request_uri? permanent;
 }
 
@@ -15,8 +18,8 @@ server {
     listen                      443;
     server_name                 _;
     ssl                         on;
-    ssl_certificate             %(ssl_path)s/%(server_crt)s;
-    ssl_certificate_key         %(ssl_path)s/%(server_key)s;
+    ssl_certificate             %(ssl_crt)s;
+    ssl_certificate_key         %(ssl_key)s;
 
     ssl_session_timeout         5m;
 
@@ -135,26 +138,36 @@ server {
 
 }"""
 
-def nginx_config_builder(
-        server_name='127.0.0.1',
-        server_cert='server.crt',
-        server_key='server.key',
-        rvlistener_starting_port=9020,
-        rvlistener_count=10,
-        rvweb_starting_port=9060,
-        rvweb_count=1):
+def nginx_config_builder(server_name='127.0.0.1'):
 
-    if rvlistener_count >= 41:
-        rvlistener_count=40
+    Config = ConfigParser.ConfigParser()
+    Config.read(VFENSE_CONFIG)
 
+    ssl_key = Config.get('Listener', 'ssl_key')
+    if not ssl_key:
+        ssl_key = os.path.join(VFENSE_SSL_PATH, 'server.key')
+
+    ssl_cert = Config.get('Listener', 'ssl_cert')
+    if not ssl_cert:
+        ssl_cert = os.path.join(VFENSE_SSL_PATH, 'server.crt')
+
+    rvlistener_ending_port = Config.get('Listener', 'ending_port')
+    rvlistener_starting_port = Config.get('Listener', 'starting_port')
+
+    rvweb_ending_port = Config.get('Api', 'ending_port')
+    rvweb_starting_port = Config.get('Api', 'starting_port')
+
+    rvlistener_count = rvlistener_ending_port - rvlistener_starting_port
     rvlistener_port = rvlistener_starting_port
     rvlistener_config = 'upstream rvlistener {\n'
+
     for i in range(rvlistener_count):
         rvlistener_config += '    server 127.0.0.1:%s;\n' % (rvlistener_port)
         rvlistener_port += 1
 
     rvlistener_config += '}\n\n'
 
+    rvweb_count = rvweb_ending_port - rvweb_starting_port
     rvweb_port = rvweb_starting_port
     rvweb_config = 'upstream rvweb {\n'
     for i in range(rvweb_count):
@@ -166,11 +179,10 @@ def nginx_config_builder(
         base_nginx_config %
         {
             'server_name': server_name,
-            'server_crt': server_cert,
-            'server_key': server_key,
+            'server_crt': ssl_cert,
+            'server_key': ssl_key,
             'app_path': VFENSE_APP_PATH,
             'app_tmp_path': VFENSE_APP_TMP_PATH,
-            'ssl_path': VFENSE_SSL_PATH,
             'www_path': VFENSE_WWW_PATH,
         }
     )
@@ -178,4 +190,3 @@ def nginx_config_builder(
     CONFIG_FILE = open(NGINX_CONFIG_FILE, 'w', 0)
     CONFIG_FILE.write(new_config)
     CONFIG_FILE.close()
-
