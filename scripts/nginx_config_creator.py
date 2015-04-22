@@ -151,11 +151,11 @@ def nginx_config_builder(server_name='127.0.0.1'):
     if not ssl_cert:
         ssl_cert = os.path.join(VFENSE_SSL_PATH, 'server.crt')
 
-    rvlistener_ending_port = Config.get('Listener', 'ending_port')
-    rvlistener_starting_port = Config.get('Listener', 'starting_port')
+    rvlistener_ending_port = int(Config.get('Listener', 'ending_port'))
+    rvlistener_starting_port = int(Config.get('Listener', 'starting_port'))
 
-    rvweb_ending_port = Config.get('Api', 'ending_port')
-    rvweb_starting_port = Config.get('Api', 'starting_port')
+    rvweb_ending_port = int(Config.get('Api', 'ending_port'))
+    rvweb_starting_port = int(Config.get('Api', 'starting_port'))
 
     rvlistener_count = rvlistener_ending_port - rvlistener_starting_port
     rvlistener_port = rvlistener_starting_port
@@ -179,8 +179,8 @@ def nginx_config_builder(server_name='127.0.0.1'):
         base_nginx_config %
         {
             'server_name': server_name,
-            'server_crt': ssl_cert,
-            'server_key': ssl_key,
+            'ssl_crt': ssl_cert,
+            'ssl_key': ssl_key,
             'app_path': VFENSE_APP_PATH,
             'app_tmp_path': VFENSE_APP_TMP_PATH,
             'www_path': VFENSE_WWW_PATH,

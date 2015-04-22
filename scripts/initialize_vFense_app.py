@@ -1,6 +1,9 @@
 import sys
 import argparse
 import ConfigParser
+
+import subprocess
+from time import sleep
 from _magic import *
 from vFense._constants import (
     VFENSE_LOGGING_CONFIG, VFENSE_CONFIG
@@ -14,13 +17,14 @@ import logging, logging.config
 
 from vFense.utils.common import import_modules_by_regex
 import nginx_config_creator as ncc
+
 from vFense.utils.supported_platforms import (
     DEBIAN_DISTROS, get_distro
 )
 from vFense.utils.security import generate_pass, check_password
 from vFense.utils.ssl_initialize import generate_generic_certs
 from vFense.utils.common import pick_valid_ip_address
-from vFense.db.client import r, db_create_close
+from vFense.db.client import r, db_create_close, db_connect
 
 from vFense.core.user import User
 from vFense.core.user.manager import UserManager
@@ -93,7 +97,6 @@ def build_nginx_config():
     generate_generic_certs()
     ncc.nginx_config_builder(nginx_server_name)
 
-@db_create_close
 def create_views(conn=None):
     view = View(
         view_name=DefaultViews.GLOBAL,
@@ -105,7 +108,6 @@ def create_views(conn=None):
     print 'Global Token: {0}'.format(view_manager.get_token())
     print 'Place this token in the agent.config file'
 
-@db_create_close
 def create_groups(conn=None):
     group = Group(
         DefaultGroups.GLOBAL_ADMIN, [Permissions.ADMINISTRATOR],
@@ -125,7 +127,6 @@ def create_groups(conn=None):
 
     return(admin_group_id, agent_group_id)
 
-@db_create_close
 def create_users(admin_group_id, conn=None):
     admin_user = User(
         user_name=DefaultUsers.GLOBAL_ADMIN,
@@ -155,6 +156,36 @@ def generate_initial_db_data(conn=None):
 
     return completed
 
+def start_local_db():
+#    os.umask(0)
+#    if not os.path.exists(VFENSE_TMP_PATH):
+#        os.mkdir(VFENSE_TMP_PATH, 0755)
+#    if not os.path.exists(RETHINK_CONF):
+#        subprocess.Popen(
+#            [
+#                'ln', '-s',
+#                RETHINK_SOURCE_CONF,
+#                RETHINK_CONF
+#            ],
+#        )
+#    if not os.path.exists(RETHINK_VFENSE_PATH):
+#        os.makedirs(RETHINK_VFENSE_PATH)
+    if not db_connect():
+        subprocess.Popen(['service', 'rethinkdb','start'])
+
+    while not db_connect():
+        print 'Sleeping until rethink starts'
+        sleep(2)
+
+    if db_connect():
+        completed = True
+        print 'Rethink Initialization and Table creation is now complete'
+    else:
+        completed = False
+        print 'Failed during Rethink startup process'
+
+    return completed
+
 def generate_vuln_data():
     print "Updating CVE's..."
     load_up_all_xml_into_db()
@@ -175,15 +206,12 @@ if __name__ == '__main__':
     db_started = False
     init_data_completed = False
     build_nginx_config()
-    db_clean = clean_database()
-    if db_clean:
-        db_started = start_local_db()
+    #subprocess.Popen(['service', 'rethinkdb','start'])
+    db_started = start_local_db()
 
-    if db_started:
-        init_data_completed = generate_initial_db_data()
+    init_data_completed = generate_initial_db_data()
 
     if init_data_completed:
-        add_local_user()
         db_initialized = True
 
     if args.cve_data and db_initialized:
