@@ -252,8 +252,9 @@ def load_up_all_xml_into_db():
     start_nvd_xml_download()
     for directory, _, files in os.walk(CVEDataDir.XML_DIR):
         for xml_file in files:
-            nvd_file = os.path.join(directory, xml_file)
-            nvd_files.append(nvd_file)
+            if re.search(r'.xml$', xml_file):
+                nvd_file = os.path.join(directory, xml_file)
+                nvd_files.append(nvd_file)
 
     nvd_files.sort()
     parse_cve_and_udpatedb(False, nvd_files)
