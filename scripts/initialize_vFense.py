@@ -362,7 +362,6 @@ def generate_vuln_data():
 
 
 def clean_database():
-    os.chdir(RETHINK_PATH)
     completed = False
     conn = db_connect()
     if conn:
