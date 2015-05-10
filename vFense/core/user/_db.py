@@ -48,7 +48,7 @@ def fetch_user(username, without_fields=None, conn=None):
     """
     data = {}
     if not without_fields:
-        data = (
+        data = list(
             r
             .table(UserCollections.Users)
             .get_all(username)
@@ -57,7 +57,7 @@ def fetch_user(username, without_fields=None, conn=None):
         )
 
     else:
-        data = (
+        data = list(
             r
             .table(UserCollections.Users)
             .get_all(username)
