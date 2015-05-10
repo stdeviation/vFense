@@ -1,0 +1,225 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0856&#45;01] Moderate: postgresql92&#45;postgresql security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Apr 2015 05:50:30 &#45;0400 -->
+<!--X-Message-Id: 201504200950.t3K9oTu1005237@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0856-01] Moderate: postgresql92-postgresql security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0856-01] Moderate: postgresql92-postgresql security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2015:0856-01] Moderate: postgresql92-postgresql security update</li>
+<li><em>Date</em>: Mon, 20 Apr 2015 09:50:29 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: postgresql92-postgresql security update
+Advisory ID:       RHSA-2015:0856-01
+Product:           Red Hat Satellite
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0856.html">https://rhn.redhat.com/errata/RHSA-2015-0856.html</a>
+Issue date:        2015-04-20
+CVE Names:         CVE-2014-8161 CVE-2015-0241 CVE-2015-0243 
+                   CVE-2015-0244 
+=====================================================================
+
+1. Summary:
+
+Updated postgresql packages that fix multiple security issues are now
+available for Red Hat Satellite 5.7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Satellite 5.7 (RHEL v.6) - s390x, x86_64
+Red Hat Satellite Managed DB 5.7 (RHEL v.6) - s390x, x86_64
+
+3. Description:
+
+PostgreSQL is an advanced object-relational database management system
+(DBMS).
+
+An information leak flaw was found in the way the PostgreSQL database
+server handled certain error messages. An authenticated database user could
+possibly obtain the results of a query they did not have privileges to
+execute by observing the constraint violation error messages produced when
+the query was executed. (CVE-2014-8161)
+
+A buffer overflow flaw was found in the way PostgreSQL handled certain
+numeric formatting. An authenticated database user could use a specially
+crafted timestamp formatting template to cause PostgreSQL to crash or,
+under certain conditions, execute arbitrary code with the permissions of
+the user running PostgreSQL. (CVE-2015-0241)
+
+A stack-buffer overflow flaw was found in PostgreSQL's pgcrypto module.
+An authenticated database user could use this flaw to cause PostgreSQL to
+crash or, potentially, execute arbitrary code with the permissions of the
+user running PostgreSQL. (CVE-2015-0243)
+
+A flaw was found in the way PostgreSQL handled certain errors that were
+generated during protocol synchronization. An authenticated database user
+could use this flaw to inject queries into an existing connection.
+(CVE-2015-0244)
+
+Red Hat would like to thank the PostgreSQL project for reporting these
+issues. Upstream acknowledges Stephen Frost as the original reporter of
+CVE-2014-8161; Andres Freund, Peter Geoghegan, Bernd Helmle, and Noah Misch
+as the original reporters of CVE-2015-0241; Marko Tiikkaja as the original
+reporter of CVE-2015-0243; and Emil Lenngren as the original reporter of
+CVE-2015-0244.
+
+All PostgreSQL users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues. If the postgresql
+service is running, it will be automatically restarted after installing
+this update.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1182043 - CVE-2014-8161 postgresql: information leak through constraint violation errors
+1188684 - CVE-2015-0241 postgresql: buffer overflow in the to_char() function
+1188689 - CVE-2015-0243 postgresql: buffer overflow flaws in contrib/pgcrypto
+1188694 - CVE-2015-0244 postgresql: loss of frontend/backend protocol synchronization after an error
+
+6. Package List:
+
+Red Hat Satellite Managed DB 5.7 (RHEL v.6):
+
+Source:
+postgresql92-postgresql-9.2.10-2.el6.src.rpm
+
+s390x:
+postgresql92-postgresql-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-contrib-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-debuginfo-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-libs-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-pltcl-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-server-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-upgrade-9.2.10-2.el6.s390x.rpm
+
+x86_64:
+postgresql92-postgresql-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-contrib-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-debuginfo-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-libs-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-pltcl-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-server-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-upgrade-9.2.10-2.el6.x86_64.rpm
+
+Red Hat Satellite 5.7 (RHEL v.6):
+
+Source:
+postgresql92-postgresql-9.2.10-2.el6.src.rpm
+
+s390x:
+postgresql92-postgresql-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-contrib-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-debuginfo-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-libs-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-pltcl-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-server-9.2.10-2.el6.s390x.rpm
+postgresql92-postgresql-upgrade-9.2.10-2.el6.s390x.rpm
+
+x86_64:
+postgresql92-postgresql-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-contrib-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-debuginfo-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-libs-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-pltcl-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-server-9.2.10-2.el6.x86_64.rpm
+postgresql92-postgresql-upgrade-9.2.10-2.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8161">https://access.redhat.com/security/cve/CVE-2014-8161</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0241">https://access.redhat.com/security/cve/CVE-2015-0241</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0243">https://access.redhat.com/security/cve/CVE-2015-0243</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0244">https://access.redhat.com/security/cve/CVE-2015-0244</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVNMuwXlSAg2UNWIIRAncWAJ9Q7bQYQn9sJyL0P/GMS4R5qbK0QwCeN9I7
+6m3T1xcOkSROTrjeB/6YJto=
+=iXyS
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

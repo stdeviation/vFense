@@ -1,0 +1,239 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0707&#45;01] Moderate: qpid security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 Mar 2015 13:16:07 &#45;0400 -->
+<!--X-Message-Id: 201503191716.t2JHG7tg017800@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0707-01] Moderate: qpid security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0707-01] Moderate: qpid security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0707-01] Moderate: qpid security and bug fix update</li>
+<li><em>Date</em>: Thu, 19 Mar 2015 17:16:06 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: qpid security and bug fix update
+Advisory ID:       RHSA-2015:0707-01
+Product:           Red Hat Enterprise MRG for RHEL-6
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0707.html">https://rhn.redhat.com/errata/RHSA-2015-0707.html</a>
+Issue date:        2015-03-19
+CVE Names:         CVE-2015-0203 CVE-2015-0223 CVE-2015-0224 
+=====================================================================
+
+1. Summary:
+
+Updated qpid packages that fix multiple security issues and one bug are now
+available for Red Hat Enterprise MRG 3 for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat MRG Messaging for RHEL 6 Server v.3 - i386, noarch, x86_64
+
+3. Description:
+
+Red Hat Enterprise MRG is a next-generation IT infrastructure incorporating
+Messaging, Real Time, and Grid functionality. It offers increased
+performance, reliability, interoperability, and faster computing for
+enterprise customers.
+
+MRG Messaging is a high-speed reliable messaging distribution for Linux
+based on AMQP (Advanced Message Queuing Protocol), an open protocol
+standard for enterprise messaging that is designed to make mission critical
+messaging widely available as a standard service, and to make enterprise
+messaging interoperable across platforms, programming languages, and
+vendors.
+
+MRG Messaging includes AMQP messaging broker; AMQP client libraries for
+C++, Java JMS, and Python; as well as persistence libraries and
+management tools.
+
+It was discovered that the Qpid daemon (qpidd) did not restrict access to
+anonymous users when the ANONYMOUS mechanism was disallowed.
+(CVE-2015-0223)
+
+A flaw was found in the way the Qpid daemon (qpidd) processed certain
+protocol sequences. An unauthenticated attacker able to send a specially
+crafted protocol sequence set that could use this flaw to crash qpidd.
+(CVE-2015-0203, CVE-2015-0224)
+
+Red Hat would like to thank the Apache Software Foundation for reporting
+the CVE-2015-0203 issue. Upstream acknowledges G. Geshev from MWR Labs as
+the original reporter.
+
+This update also fixes the following bugs:
+
+* Previously, the neutron messaging client rewrote (by method of
+&quot;monkey-patching&quot;) the python selector module to support eventlet
+threading. The rewritten client did not update select.poll() during this
+process, which is used by qpid-python to manage I/O. This resulted in
+poll() deadlocks and neutron server hangs. The fix introduces updates to
+the python-qpid library that avoid calling poll() if eventlet threading is
+detected. Instead, the eventlet-aware select() is called, which prevents
+deadlocks from occurring and corrects the originally reported issue.
+(BZ#1175872)
+
+* It was discovered that the QPID Broker aborted with an uncaught
+UnknownExchangeTypeException when the client attempted to request an
+unsupported exchange type. The code for the Exchange Registry and Node
+Policy has been improved to prevent this issue from happening again.
+(BZ#1186694)
+
+Users of the Messaging capabilities of Red Hat Enterprise MRG 3, which is
+layered on Red Hat Enterprise Linux 6, are advised to upgrade to these
+updated packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1175872 - [RHEL 6]neutron-server gets stuck in poll python-qpid 0.22
+1181721 - CVE-2015-0203 qpid-cpp: 3 qpidd DoS issues in AMQP 0-10 protocol handling
+1186302 - CVE-2015-0224 qpid-cpp: AMQP 0-10 protocol sequence-set maximal range DoS (incomplete CVE-2015-0203 fix)
+1186308 - CVE-2015-0223 qpid-cpp: anonymous access to qpidd cannot be prevented
+
+6. Package List:
+
+Red Hat MRG Messaging for RHEL 6 Server v.3:
+
+Source:
+python-qpid-0.22-19.el6.src.rpm
+qpid-cpp-0.22-51.el6.src.rpm
+qpid-qmf-0.22-41.el6.src.rpm
+
+i386:
+python-qpid-qmf-0.22-41.el6.i686.rpm
+qpid-cpp-client-0.22-51.el6.i686.rpm
+qpid-cpp-client-devel-0.22-51.el6.i686.rpm
+qpid-cpp-client-rdma-0.22-51.el6.i686.rpm
+qpid-cpp-debuginfo-0.22-51.el6.i686.rpm
+qpid-cpp-server-0.22-51.el6.i686.rpm
+qpid-cpp-server-devel-0.22-51.el6.i686.rpm
+qpid-cpp-server-ha-0.22-51.el6.i686.rpm
+qpid-cpp-server-linearstore-0.22-51.el6.i686.rpm
+qpid-cpp-server-rdma-0.22-51.el6.i686.rpm
+qpid-cpp-server-xml-0.22-51.el6.i686.rpm
+qpid-qmf-0.22-41.el6.i686.rpm
+qpid-qmf-debuginfo-0.22-41.el6.i686.rpm
+qpid-qmf-devel-0.22-41.el6.i686.rpm
+ruby-qpid-qmf-0.22-41.el6.i686.rpm
+
+noarch:
+python-qpid-0.22-19.el6.noarch.rpm
+qpid-cpp-client-devel-docs-0.22-51.el6.noarch.rpm
+
+x86_64:
+python-qpid-qmf-0.22-41.el6.x86_64.rpm
+qpid-cpp-client-0.22-51.el6.i686.rpm
+qpid-cpp-client-0.22-51.el6.x86_64.rpm
+qpid-cpp-client-devel-0.22-51.el6.x86_64.rpm
+qpid-cpp-client-rdma-0.22-51.el6.x86_64.rpm
+qpid-cpp-debuginfo-0.22-51.el6.i686.rpm
+qpid-cpp-debuginfo-0.22-51.el6.x86_64.rpm
+qpid-cpp-server-0.22-51.el6.i686.rpm
+qpid-cpp-server-0.22-51.el6.x86_64.rpm
+qpid-cpp-server-devel-0.22-51.el6.x86_64.rpm
+qpid-cpp-server-ha-0.22-51.el6.x86_64.rpm
+qpid-cpp-server-linearstore-0.22-51.el6.x86_64.rpm
+qpid-cpp-server-rdma-0.22-51.el6.x86_64.rpm
+qpid-cpp-server-xml-0.22-51.el6.x86_64.rpm
+qpid-qmf-0.22-41.el6.i686.rpm
+qpid-qmf-0.22-41.el6.x86_64.rpm
+qpid-qmf-debuginfo-0.22-41.el6.i686.rpm
+qpid-qmf-debuginfo-0.22-41.el6.x86_64.rpm
+qpid-qmf-devel-0.22-41.el6.x86_64.rpm
+ruby-qpid-qmf-0.22-41.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0203">https://access.redhat.com/security/cve/CVE-2015-0203</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0223">https://access.redhat.com/security/cve/CVE-2015-0223</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0224">https://access.redhat.com/security/cve/CVE-2015-0224</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVCwRCXlSAg2UNWIIRAgkSAKCd5bKYzI1QrUjAk1nt684p1lSNSwCfVFpg
+UDSulxhPPPrDYPpnJIuZedo=
+=lM9F
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00042.html">Date Prev</a>][<a href="msg00044.html">Date Next</a>] &nbsp; [<a href="msg00042.html">Thread Prev</a>][<a href="msg00044.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00043">Thread Index</A>]
+[<A HREF="date.html#00043">Date Index</A>]
+[<A HREF="author.html#00043">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

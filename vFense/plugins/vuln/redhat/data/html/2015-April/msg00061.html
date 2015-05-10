@@ -1,0 +1,272 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0888&#45;01] Moderate: Red Hat Enterprise Virtualization	Manager 3.5.1 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 28 Apr 2015 15:56:25 &#45;0400 -->
+<!--X-Message-Id: 201504281956.t3SJuOFX018993@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0888-01] Moderate: Red Hat Enterprise Virtualization	Manager </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00060.html">Date Prev</a>][<a href="msg00062.html">Date Next</a>] &nbsp; [<a href="msg00060.html">Thread Prev</a>][<a href="msg00062.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00061">Thread Index</A>]
+[<A HREF="date.html#00061">Date Index</A>]
+[<A HREF="author.html#00061">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0888-01] Moderate: Red Hat Enterprise Virtualization	Manager 3.5.1 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0888-01] Moderate: Red Hat Enterprise Virtualization	Manager 3.5.1 update</li>
+<li><em>Date</em>: Tue, 28 Apr 2015 19:56:24 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat Enterprise Virtualization Manager 3.5.1 update
+Advisory ID:       RHSA-2015:0888-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0888.html">https://rhn.redhat.com/errata/RHSA-2015-0888.html</a>
+Issue date:        2015-04-28
+CVE Names:         CVE-2015-0237 CVE-2015-0257 
+=====================================================================
+
+1. Summary:
+
+Red Hat Enterprise Virtualization Manager 3.5.1 is now available.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.5 - noarch
+
+3. Description:
+
+Red Hat Enterprise Virtualization Manager is a visual tool for centrally
+managing collections of virtual servers running Red Hat Enterprise Linux
+and Microsoft Windows. This package also includes the Red Hat Enterprise
+Virtualization Manager API, a set of scriptable commands that give
+administrators the ability to perform queries and operations on Red Hat
+Enterprise Virtualization Manager.
+
+The Manager is a JBoss Application Server application that provides several
+interfaces through which the virtual environment can be accessed and
+interacted with, including an Administration Portal, a User Portal, and a
+Representational State Transfer (REST) Application Programming Interface
+(API).
+
+It was discovered that the permissions to allow or deny snapshot creation
+were ignored during live storage migration of a VM's disk between storage
+domains. An attacker able to live migrate a disk between storage domains
+could use this flaw to cause a denial of service. (CVE-2015-0237)
+
+It was discovered that a directory shared between the ovirt-engine-dwhd
+service and a plug-in used during the service's startup had incorrect
+permissions. A local user could use this flaw to access files in this
+directory, which could potentially contain sensitive information. 
+(CVE-2015-0257)
+
+The CVE-2015-0237 issue was discovered by Red Hat Enterprise Visualization
+Engineering, and the CVE-2015-0257 issue was discovered by Yedidyah Bar
+David of the Red Hat Enterprise Virtualization team.
+
+These updated Red Hat Enterprise Virtualization Manager packages also
+include numerous bug fixes and various enhancements. Space precludes
+documenting all of these changes in this advisory. Users are directed to
+the Red Hat Enterprise Virtualization 3.5 Technical Notes, linked to in the
+References, for information on the most significant of these changes.
+
+All Red Hat Enterprise Virtualization Manager users are advised to upgrade
+to these updated packages, which resolve these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1082681 - RHEV-M displays and uses the same values for hypervisor cores regardless of cluster setting for &quot;Count Threads as Cores&quot;
+1140462 - UI crash when configure hosted-engine with unreachable path
+1141543 - [scale] - getdisksvmguid hit the performance due to all_disks_including_snapshots view
+1171724 - [PPC] Mismatch in CPU pinning support
+1171725 - [engine-backend] resizing a disk attached to a paused VM leaves the image LOCKED
+1174812 - [engine-backend] SQLException while starting a VM which was stateless before and had a disk attached to it while it was in stateless
+1174814 - [RFE] Generate sysprep answers file with name matching the version of Windows
+1174815 - Can't run VM with error: CanDoAction of action RunVm failed. Reasons:VAR__ACTION__RUN,VAR__TYPE__VM,ACTION_TYPE_FAILED_O BJECT_LOCKED
+1174816 - Host pending resources are not cleared after migration canceling.
+1174817 - Pending resources are not cleared when network exception occurs.
+1175137 - [RHEL7][log-collector]  Missing some info from host's archive due to sos 3 refactoring
+1175289 - rhevm-setup-plugins is missing some dependencies
+1176546 - [ImportDomain] VM with no disks should be part of the OVF_STORE disk
+1176552 - [ImportDomain] The attach operation should issue a warning, if the Storage Domain is already attached to another Data Center in another setup
+1176578 - already provided old password is used to connect to ISCSI target although a different password was provided in a newly added connection
+1177138 - Live deletion of a snapshot (live merge) is blocked(CDA) when attempting the removal from snapshot overview
+1177220 - RHEV: Failed to Delete First snapshot with live merge
+1177221 - [JSONRPC]Live merge - failed to delete snapshot on 2nd attempt - first attempt was interrupted with shutdown of vm
+1177222 - [Block storage] Basic Live Merge after Delete Snapshot fails
+1178646 - [ImportDomain] Engine should add a CDA validation when trying to attach an imported Storage Domain to an un-initalized Data Center
+1181585 - [hosted-engine] Bad check of iso image permission
+1181586 - engine-setup unconditionally enables the engine if ran on dwh on separate host
+1181639 - DWH log does not show message when it closes due to DisconnectDWH flag on engine
+1181642 - If connection to DB fails , the job that checks DisconnectDwh flag does not reconnect to engine db
+1181678 - [scale] Data Center crashing and contending forever due to missing pvs. All SDs are Unknown/Inactive.
+1181681 - Add rest API to support warning for attached Storage Domains on attach or import of Storage Domain
+1181691 - Issues with rename
+1181695 - Issues with rename
+1182125 - Rebase to 5.5 aggregated war package with bug fixes.
+1182158 - [RFE][ImportDomain] Add support for importing Block Storage Domain using REST-api
+1182779 - [engine-backend] [iSCSI multipath] Cannot edit iSCSI multipath bond while iSCSI SD is in maintenance
+1183298 - [engine-backend] NullPointerException when executing AddDiskCommand on a newly creates storage domain with N/A available space
+1184716 - CVE-2015-0237 vdsm: Users attempting a live storage migration create snapshot without snapshot creation permissions
+1184807 - Storage thresholds should not be inclusive
+1185050 - failure of master migration on deactivation will leave domain locked
+1185613 - Bad error when adding vm to pool with low space on storage domain
+1185614 - faulty storage allocation checks when adding a vm to a pool
+1185619 - External Keystone Connection Fails to Juno-based OpenStack
+1185633 - [scale] [storage] ConnectStorageServer failed - The thread pool is out of limit (engine finish its thread pool)
+1185666 - Change message when importing a data domain to an unsupported version
+1186371 - Import of non data Storage Domains (specifically export domain) should not call engine query for web warning
+1186372 - Failure for calling internal query GetExistingStorageDomainList will cause an NPE
+1186375 - [RFE][engine-backend][HC] - add the possibility to import existing Gluster and POSIXFS export domains
+1186410 - [JSON] Force extend block domain, in JSONRPC, using a &quot;dirty&quot; LUN, fails
+1187985 - [RFE] Add default-options to iDrac7 Fencing agent in RHEVM
+1188326 - [engine-iso-uploader] engine-iso-uploader does not work with Local ISO domain
+1188971 - ENGINE_HEAP_MAX default value as 1G must be changed
+1189085 - CVE-2015-0257 ovirt-engine-dwh: incorrect permissions on plugin file containing passwords
+1190466 - HEAP_MAX default value as 1G must be changed
+1190636 - [hosted-engine] [iSCSI support] connectStoragePools fails with &quot;SSLError: The read operation timed out&quot; while adding a new host to the setup
+1191169 - Extra leap second on 30th of June 2015
+1191466 - Using &quot;iSCSI Bond&quot;, host does not disconnect from iSCSI targets
+1191729 - [3.5_6.6] - VM fails to start in snapshot preview mode with a RAM snapshot
+1192014 - RHEV-M managed firewall blocks NFS rpc.statd notifications
+1192462 - [RFE][HC] make override of iptables configurable when using hosted-engine
+1192931 - Rebase ovirt-hosted-engine-ha to upstream 1.2.5
+1192937 - Rebase ovirt-hosted-engine-setup to upstream 1.2.2
+1192945 - Rebase rhevm-log-collector to upstream 3.5.1
+1192954 - Can not restore backup file to rhevm with non-default lc_messages
+1194272 - [RFE] finer grained user permissions/roles on snapshots and live storage migration
+1194344 - Exception raised while selected report User's Spice Sessions Monthly Activity
+1194394 - Unable to authenticate if user is using <a  rel="nofollow" href="http://indeed-id.com/index.html">http://indeed-id.com/index.html</a> solution for authentication.
+1194600 - Upgrade rhevm-iso-uploader to upstream ovirt-iso-uploader 3.5.1
+1195000 - Locked snapshot prevents VM's basic operations, after it's disk was removed
+1195030 - Changing rpc to 'json-rpc' fails with, &quot;Operation Failed: [Internal Engine Error]&quot;, due to errors on character encoding
+1195114 - Engine does not filter duplicate action on the same entity
+1195115 - REST API Host install action - the option to override firewall definitions should be added
+1195117 - Power management test with non approved host
+1195119 - [backend] [NPE] Adding permission to an object fails if DEBUG level is set
+1196136 - Engine-setup should support cleaning of zombie commands before upgrade
+1197616 - Template creation stuck after upgrade
+1198248 - [performance] bad getVMList output creates unnecessary calls from Engine
+1199812 - Configure new user role dialog: faulty rendering due to javascript exception (missing &quot;ActionGroup___DISK_LIVE_STORAGE_MIGRATION&quot;)
+1202334 - Setup validation: Failed to clear zombie tasks after upgrade
+1209131 - &quot;VdcBLLException: NO_UP_SERVER_FOUND&quot; in seen in engine logs
+
+6. Package List:
+
+RHEV-M 3.5:
+
+Source:
+rhevm-3.5.1-0.4.el6ev.src.rpm
+
+noarch:
+rhevm-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-backend-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-dbscripts-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-extensions-api-impl-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-extensions-api-impl-javadoc-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-lib-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-restapi-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-setup-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-setup-base-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-setup-plugin-allinone-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-setup-plugin-ovirt-engine-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-setup-plugin-ovirt-engine-common-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-setup-plugin-websocket-proxy-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-tools-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-userportal-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-userportal-debuginfo-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-webadmin-portal-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-webadmin-portal-debuginfo-3.5.1-0.4.el6ev.noarch.rpm
+rhevm-websocket-proxy-3.5.1-0.4.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0237">https://access.redhat.com/security/cve/CVE-2015-0237</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0257">https://access.redhat.com/security/cve/CVE-2015-0257</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.5/html-single/Technical_Notes/index.html">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.5/html-single/Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVP+WXXlSAg2UNWIIRAlO5AJ9LOFxE7CF/ElHmDsn3KsJU4qkKqACeI9rL
+PwX+p7VnmXO/f3xwNuP4plI=
+=nwqq
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00060.html">Date Prev</a>][<a href="msg00062.html">Date Next</a>] &nbsp; [<a href="msg00060.html">Thread Prev</a>][<a href="msg00062.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00061">Thread Index</A>]
+[<A HREF="date.html#00061">Date Index</A>]
+[<A HREF="author.html#00061">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

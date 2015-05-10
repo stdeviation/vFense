@@ -1,0 +1,424 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0102&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 28 Jan 2015 14:16:52 &#45;0500 -->
+<!--X-Message-Id: 201501281916.t0SJGqCW011856@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0102-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0102-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0102-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Wed, 28 Jan 2015 19:16:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2015:0102-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0102.html">https://rhn.redhat.com/errata/RHSA-2015-0102.html</a>
+Issue date:        2015-01-28
+CVE Names:         CVE-2014-4171 CVE-2014-5471 CVE-2014-5472 
+                   CVE-2014-7145 CVE-2014-7822 CVE-2014-7841 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues and several bugs
+are now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 7) - noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+* A flaw was found in the way the Linux kernel's SCTP implementation
+validated INIT chunks when performing Address Configuration Change
+(ASCONF). A remote attacker could use this flaw to crash the system by
+sending a specially crafted SCTP packet to trigger a NULL pointer
+dereference on the system. (CVE-2014-7841, Important)
+
+* A race condition flaw was found in the way the Linux kernel's mmap(2),
+madvise(2), and fallocate(2) system calls interacted with each other while
+operating on virtual memory file system files. A local user could use this
+flaw to cause a denial of service. (CVE-2014-4171, Moderate)
+
+* A NULL pointer dereference flaw was found in the way the Linux kernel's
+Common Internet File System (CIFS) implementation handled mounting of file
+system shares. A remote attacker could use this flaw to crash a client
+system that would mount a file system share from a malicious server.
+(CVE-2014-7145, Moderate)
+
+* A flaw was found in the way the Linux kernel's splice() system call
+validated its parameters. On certain file systems, a local, unprivileged
+user could use this flaw to write past the maximum file size, and thus
+crash the system. (CVE-2014-7822, Moderate)
+
+* It was found that the parse_rock_ridge_inode_internal() function of the
+Linux kernel's ISOFS implementation did not correctly check relocated
+directories when processing Rock Ridge child link (CL) tags. An attacker
+with physical access to the system could use a specially crafted ISO image
+to crash the system or, potentially, escalate their privileges on the
+system. (CVE-2014-5471, CVE-2014-5472, Low)
+
+Red Hat would like to thank Akira Fujita of NEC for reporting the
+CVE-2014-7822 issue. The CVE-2014-7841 issue was discovered by Liu Wei of
+Red Hat.
+
+This update also fixes the following bugs:
+
+* Previously, a kernel panic could occur if a process reading from a locked
+NFS file was killed and the lock was not released properly before the read
+operations finished. Consequently, the system crashed. The code handling
+file locks has been fixed, and instead of halting, the system now emits a
+warning about the unreleased lock. (BZ#1172266)
+
+* A race condition in the command abort handling logic of the ipr device
+driver could cause the kernel to panic when the driver received a response
+to an abort command prior to receiving other responses to the aborted
+command due to the support for multiple interrupts. With this update, the
+abort handler waits for the aborted command's responses first before
+completing an abort operation. (BZ#1162734)
+
+* Previously, a race condition could occur when changing a Page Table Entry
+(PTE) or a Page Middle Directory (PMD) to &quot;pte_numa&quot; or &quot;pmd_numa&quot;,
+respectively, causing the kernel to crash. This update removes the BUG_ON()
+macro from the __handle_mm_fault() function, preventing the kernel panic in
+the aforementioned scenario. (BZ#1170662)
+
+All kernel users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not use
+&quot;rpm -Uvh&quot; as that will remove the running kernel binaries from your
+system. You may use &quot;rpm -e&quot; to remove old kernels after determining that
+the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1111180 - CVE-2014-4171 Kernel: mm/shmem: denial of service
+1134099 - CVE-2014-5471 CVE-2014-5472 kernel: isofs: unbound recursion when processing relocated directories
+1147522 - CVE-2014-7145 Kernel: cifs: NULL pointer dereference in SMB2_tcon
+1163087 - CVE-2014-7841 kernel: net: sctp: NULL pointer dereference in af-&gt;from_addr_param on malformed packet
+1163792 - CVE-2014-7822 kernel: splice: lack of generic write checks
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+kernel-3.10.0-123.20.1.el7.src.rpm
+
+noarch:
+kernel-abi-whitelists-3.10.0-123.20.1.el7.noarch.rpm
+
+x86_64:
+kernel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-devel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-devel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-headers-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-libs-3.10.0-123.20.1.el7.x86_64.rpm
+perf-3.10.0-123.20.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+noarch:
+kernel-doc-3.10.0-123.20.1.el7.noarch.rpm
+
+x86_64:
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-libs-devel-3.10.0-123.20.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+kernel-3.10.0-123.20.1.el7.src.rpm
+
+noarch:
+kernel-abi-whitelists-3.10.0-123.20.1.el7.noarch.rpm
+
+x86_64:
+kernel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-devel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-devel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-headers-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-libs-3.10.0-123.20.1.el7.x86_64.rpm
+perf-3.10.0-123.20.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+noarch:
+kernel-doc-3.10.0-123.20.1.el7.noarch.rpm
+
+x86_64:
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-libs-devel-3.10.0-123.20.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+kernel-3.10.0-123.20.1.el7.src.rpm
+
+noarch:
+kernel-abi-whitelists-3.10.0-123.20.1.el7.noarch.rpm
+
+ppc64:
+kernel-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-bootwrapper-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-debug-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-debug-devel-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-debuginfo-common-ppc64-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-devel-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-headers-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-tools-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-tools-debuginfo-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-tools-libs-3.10.0-123.20.1.el7.ppc64.rpm
+perf-3.10.0-123.20.1.el7.ppc64.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.ppc64.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.ppc64.rpm
+
+s390x:
+kernel-3.10.0-123.20.1.el7.s390x.rpm
+kernel-debug-3.10.0-123.20.1.el7.s390x.rpm
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.s390x.rpm
+kernel-debug-devel-3.10.0-123.20.1.el7.s390x.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.s390x.rpm
+kernel-debuginfo-common-s390x-3.10.0-123.20.1.el7.s390x.rpm
+kernel-devel-3.10.0-123.20.1.el7.s390x.rpm
+kernel-headers-3.10.0-123.20.1.el7.s390x.rpm
+kernel-kdump-3.10.0-123.20.1.el7.s390x.rpm
+kernel-kdump-debuginfo-3.10.0-123.20.1.el7.s390x.rpm
+kernel-kdump-devel-3.10.0-123.20.1.el7.s390x.rpm
+perf-3.10.0-123.20.1.el7.s390x.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.s390x.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.s390x.rpm
+
+x86_64:
+kernel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-devel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-devel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-headers-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-libs-3.10.0-123.20.1.el7.x86_64.rpm
+perf-3.10.0-123.20.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+noarch:
+kernel-doc-3.10.0-123.20.1.el7.noarch.rpm
+
+ppc64:
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-debuginfo-common-ppc64-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-tools-debuginfo-3.10.0-123.20.1.el7.ppc64.rpm
+kernel-tools-libs-devel-3.10.0-123.20.1.el7.ppc64.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.ppc64.rpm
+python-perf-3.10.0-123.20.1.el7.ppc64.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.ppc64.rpm
+
+s390x:
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.s390x.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.s390x.rpm
+kernel-debuginfo-common-s390x-3.10.0-123.20.1.el7.s390x.rpm
+kernel-kdump-debuginfo-3.10.0-123.20.1.el7.s390x.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.s390x.rpm
+python-perf-3.10.0-123.20.1.el7.s390x.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.s390x.rpm
+
+x86_64:
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-libs-devel-3.10.0-123.20.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+kernel-3.10.0-123.20.1.el7.src.rpm
+
+noarch:
+kernel-abi-whitelists-3.10.0-123.20.1.el7.noarch.rpm
+
+x86_64:
+kernel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debug-devel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-devel-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-headers-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-libs-3.10.0-123.20.1.el7.x86_64.rpm
+perf-3.10.0-123.20.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+noarch:
+kernel-doc-3.10.0-123.20.1.el7.noarch.rpm
+
+x86_64:
+kernel-debug-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-debuginfo-common-x86_64-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+kernel-tools-libs-devel-3.10.0-123.20.1.el7.x86_64.rpm
+perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-3.10.0-123.20.1.el7.x86_64.rpm
+python-perf-debuginfo-3.10.0-123.20.1.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4171">https://access.redhat.com/security/cve/CVE-2014-4171</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-5471">https://access.redhat.com/security/cve/CVE-2014-5471</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-5472">https://access.redhat.com/security/cve/CVE-2014-5472</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7145">https://access.redhat.com/security/cve/CVE-2014-7145</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7822">https://access.redhat.com/security/cve/CVE-2014-7822</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7841">https://access.redhat.com/security/cve/CVE-2014-7841</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUyTWBXlSAg2UNWIIRAv/PAKCpyK7ufWptj5iPibx+EJ74tX49NACfeDK4
+BRbjwC4o9YTwxlZJoogvChU=
+=2MX6
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

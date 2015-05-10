@@ -1,0 +1,448 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0442&#45;01] Moderate: ipa security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:37:17 &#45;0500 -->
+<!--X-Message-Id: 201503051437.t25EbFtf019784@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0442-01] Moderate: ipa security, bug fix,	and enhancement upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0442-01] Moderate: ipa security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0442-01] Moderate: ipa security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:37:15 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ipa security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0442-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0442.html">https://rhn.redhat.com/errata/RHSA-2015-0442.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2010-5312 CVE-2012-6662 
+=====================================================================
+
+1. Summary:
+
+Updated ipa packages that fix two security issues, several bugs, and add
+various enhancements are now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+
+3. Description:
+
+Red Hat Identity Management (IdM) is a centralized authentication, identity
+management, and authorization solution for both traditional and cloud-based
+enterprise environments.
+
+Two cross-site scripting (XSS) flaws were found in jQuery, which impacted
+the Identity Management web administrative interface, and could allow an
+authenticated user to inject arbitrary HTML or web script into the
+interface. (CVE-2010-5312, CVE-2012-6662)
+
+Note: The IdM version provided by this update no longer uses jQuery.
+
+This update adds several enhancements that are described in more detail in
+the Red Hat Enterprise Linux 7.1 Release Notes, linked to in the References
+section, including:
+
+* Added the &quot;ipa-cacert-manage&quot; command, which renews the Certification
+Authority (CA) file. (BZ#886645)
+
+* Added the ID Views feature. (BZ#891984)
+
+* IdM now supports using one-time password (OTP) authentication and allows
+gradual migration from proprietary OTP solutions to the IdM OTP solution.
+(BZ#919228)
+
+* Added the &quot;ipa-backup&quot; and &quot;ipa-restore&quot; commands to allow manual
+backups. (BZ#951581)
+
+* Added a solution for regulating access permissions to specific sections
+of the IdM server. (BZ#976382)
+
+This update also fixes several bugs, including:
+
+* Previously, when IdM servers were configured to require the Transport
+Layer Security protocol version 1.1 (TLSv1.1) or later in the httpd server,
+the &quot;ipa&quot; command-line utility failed. With this update, running &quot;ipa&quot;
+works as expected with TLSv1.1 or later. (BZ#1156466)
+
+In addition, this update adds multiple enhancements, including:
+
+* The &quot;ipa-getkeytab&quot; utility can now optionally fetch existing keytabs
+from the KDC. Previously, retrieving an existing keytab was not supported,
+as the only option was to generate a new key. (BZ#1007367)
+
+* You can now create and manage a &quot;.&quot; root zone on IdM servers. DNS queries
+sent to the IdM DNS server use this configured zone instead of the public
+zone. (BZ#1056202)
+
+* The IdM server web UI has been updated and is now based on the Patternfly
+framework, offering better responsiveness. (BZ#1108212)
+
+* A new user attribute now enables provisioning systems to add custom tags
+for user objects. The tags can be used for automember rules or for
+additional local interpretation. (BZ#1108229)
+
+* This update adds a new DNS zone type to ensure that forward and master
+zones are better separated. As a result, the IdM DNS interface complies
+with the forward zone semantics in BIND. (BZ#1114013)
+
+* This update adds a set of Apache modules that external applications can
+use to achieve tighter interaction with IdM beyond simple authentication.
+(BZ#1107555)
+
+* IdM supports configuring automember rules for automated assignment of
+users or hosts in respective groups according to their characteristics,
+such as the &quot;userClass&quot; or &quot;departmentNumber&quot; attributes. Previously, the
+rules could be applied only to new entries. This update allows applying the
+rules also to existing users or hosts. (BZ#1108226)
+
+* The extdom plug-in translates Security Identifiers (SIDs) of Active
+Directory (AD) users and groups to names and POSIX IDs. With this update,
+extdom returns the full member list for groups and the full list of group
+memberships for a user, the GECOS field, the home directory, as well as the
+login shell of a user. Also, an optional list of key-value pairs contains
+the SID of the requested object if the SID is available. (BZ#1030699)
+
+All ipa users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+711693 - [RFE] Normal users should not be given privileges to view all sudorules and their details.
+788645 - [RFE] Allow filter and subtree to be added in same permission
+815828 - Rename DNS permissions to use mixed-case
+817909 - error indicates a different reason when ipa permission-mod fails to modify attrs
+854335 - Unable to update &quot;remove automount keys&quot; - it has filter and subtree specified
+887988 - [RFE] Expose the krbPrincipalExpiration attribute for editing in the IPA CLI / WEBUI
+891984 - [RFE] ID Views: Support migration from the sync solution to the trust solution
+893850 - Unable to update permissions for &quot;Add Automount Keys&quot;
+921655 - fix UI CSS to support RH branding
+922749 - IPA Navigation links overlaped or unclickable
+924008 - Unknown binary attributes can cause migration to fail
+924395 - [RFE] ipa-client-install should configure sudo automatically
+951581 - [RFE] Backup &amp; Restore mechanism
+970618 - [RFE] pac-type change must be effective immediately without kdc restart
+971061 - Localization not working even for languages that are localized
+975456 - [RFE] add option to ipa-client-install to configure automount
+985234 - ipa-client-install --uninstall starts nscd service
+1027712 - &quot;username&quot; field  in IPA webUI login page should be mandatory
+1027713 - There is no version information on IPA WebUI
+1030699 - [RFE] Support initgroups for unauthenticated AD users
+1031111 - ipa-client: add root CA to trust anchors if not already available
+1033357 - ipactl can not restart ipa services if current status is &quot;stopped&quot;
+1035286 - [WebUI] Realm domain is not providing proper error message
+1048934 - [WebUI] Retry and Cancel dialogs do not support 'confirmation by Enter'
+1048956 - [WebUI] &quot;OK&quot; button is not focused on &quot;Operations Error&quot; dialog, once we opened &quot;show details&quot;
+1056202 - [RFE] Support DNS root zone
+1058780 - Missing checks during ipa idrange-add
+1060349 - IPA: Unable to add host when ipv6 address already exits
+1061772 - [WebUI] Maximum serial number search accepts negative inputs and lists wrong search results.
+1072502 - running ipa-server-install --setup-dns results in a crash
+1075129 - bogus time estimates shown for configuration of various component in replica installation
+1077734 - [WebUI] select all checkbox remains selected after operation
+1080209 - IPA server does not allow sudo host network filters
+1080532 - ipa-client-install --uninstall crash on a freshly installed machine joined to IPA via reamd and anaconda
+1081626 - When certmonger is still tracking cert in ipa, uninstall fails but error does not indicate this
+1084609 - [RFE] RHEL7 support for ipa-admintools on other architectures
+1099811 - Apache crashes when replica is restarted when installing
+1107555 - [RFE] Provide a stack of apache modules for any applications to consume
+1108195 - MOD command returns duplicate memberships
+1108201 - cannot create dns zone when name has consecutive dash characters
+1108202 - dnsrecord-* with absolute target gives error
+1108203 - [RFE] Add EmployeeID in the Web UI and command name
+1108204 - PTR record cannot be added from UI, if user added zone without last '.'
+1108205 - Replica installation dies if /etc/resolv.conf is not writeable
+1108206 - sshd should run at least once before ipa-client-install
+1108207 - [WebUI] When adding a condition to an automember rule, expression field should be required
+1108208 - The Synchronizing time with KDC... message looks strange between login and password prompts
+1108212 - [RFE] Adopt Patternfly/RCUE open interface project for the Web UI
+1108213 - Installers should explicitly specify auth mechanism when calling ldapmodify
+1108214 - ipa-replica-install: DNS check is between &quot;host already exists&quot; message and exit
+1108215 - Make Read replication agreements permission less more targeted
+1108216 - Unexpected error when providing incorrect password to ipa-ldap-updater
+1108220 - Broken Firefox configuration files in freeipa-client package
+1108222 - SSH widget doesn't honor a lack of write right
+1108224 - Replace ntpdate calls with ntpd
+1108225 - ipadb.so could get tripped up by DAL changes to support keyless principals
+1108226 - [RFE] Use automember for hosts after the host is added
+1108228 - Add UI for the new user and host userClass attribute
+1108229 - [RFE] Better integration with the external provisioning systems - users
+1108230 - Should not display ports to open when password is incorrect during ipa-client-install.
+1108231 - ipa-join usage instructions are incorrect
+1108232 - [RFE] ipa migrate-ds should have an argument to specify cert to use for DS connection
+1108233 - [RFE] ipa dnsrecord-add should allow internationalized names
+1108234 - [WebUI] it is not clear which row a value belongs to
+1108235 - xmlrpc system commands do not work
+1108236 - Name is blank in error message for duplicate automember rule
+1108237 - [RFE] Enhance input validation for filters in access control
+1109726 - Rebase IPA to 4.1
+1112603 - Internal Error: `ipa sudorule-mod rule --order=`
+1112605 - [RFE] Add support for SubjectAltNames (SAN) to IPA service certificates
+1112691 - ipa-server-install break sshd
+1113918 - Setting a sudo category to all doesn't check to see if rules already exist
+1113919 - Let deny commands be added to sudo rule with cmdcatetory=ALL
+1113920 - Sudo runasgroup entry not generated by the sudo compat tree
+1114013 - [RFE] Separate master and forward DNS zones
+1115048 - Description attribute should not be required
+1115616 - [RFE] Allow unlocking user in Web UI
+1126989 - ipa-client-install creates configuration file with deprecated values
+1128380 - Failure when installing on dual stacked system with external ca
+1129558 - Windows Server 2012 CA does not accept CSR generated by IdM External CA installation
+1129730 - CA-less installation fails when the CA cert has an empty subject
+1131049 - Update SSL ciphers configured in 389-ds-base
+1131187 - ipa-ldap-upgrade should restore Directory Server settings when upgrade fails
+1131877 - Registering one IPA server with the browser removes entries for another
+1133966 - ipa trust-add cmd should be interactive
+1138773 - Internal error received for blank password with --trust-secret
+1138775 - Password migration is broken
+1138777 - Renewal with no master CA
+1138791 - Prohibit setting --rid-base for ranges of ipa-trust-ad-posix type
+1138792 - Disable unsupported ID range types
+1138795 - DS returns limited RootDSE
+1138798 - Add support for bounce_url to /ipa/ui/reset_password.html
+1138803 - Do not store host certificate in shared NSS database /etc/pki/nssdb
+1142088 - ipa-server-install searches CA under different hostname
+1142789 - host-del command does not accept --continue
+1147679 - ipa man page incorrectly indicates how to add users
+1149124 - group-add doesn't accept gid parameter
+1156466 - POODLE: force using safe ciphers (non-SSLv3) in IPA client and server
+1159011 - Trust setting not restored for CA cert with ipa-restore command
+1159330 - RHEL7.1 ipa-server-install --uninstall Could not set SELinux booleans for httpd
+1159816 - ignoring user attributes in migrate-ds does not work if uppercase characters are returned by ldap
+1160756 - Investigate &amp; fix Coverity defects in IPA DS/KDC plugins
+1160758 - Tests: host-del returns DatabaseError
+1161128 - Upgrade 3.3.5 to 4.1 failed
+1161129 - ipactl stop should stop dirsrv last
+1161131 - Deadlock in schema compat plugin
+1162340 - ipa-server-install fails when restarting named
+1163498 - Renewing the CA signing certificate does not extend its validity period end
+1163849 - error message which is not understandable when IDNA2003 characters are present in --zonemgr (--zonemgr=TÃªko redhat com)
+1164859 - Traceback when adding zone with long name
+1164896 - RHEL7.1 IPA server httpd avc denials after upgrade
+1166041 - CVE-2010-5312 jquery-ui: XSS vulnerability in jQuery.ui.dialog title option
+1166064 - CVE-2012-6662 jquery-ui: XSS vulnerability in default content in Tooltip widget
+1166641 - ipa-otp-lasttoken loads all user's tokens on every mod/del
+1166931 - RHEL7.1 ipa automatic CA cert renewal stuck in submitting state
+1167196 - schema update on RHEL-6.6 using latest copy-schema-to-ca.py from RHEL-7.1 build fails
+1167270 - Tracebacks with latest build for --zonemgr cli option
+1167964 - RHEL7.1 ipa replica unable to replicate to rhel6 master
+1168214 - [WebUI] Not able to unprovisioning service in IPA 4.1
+1168376 - Clean up debug log for trust-add
+1168916 - Extend host-show to add the view attribute in set of default attributes
+1169591 - RHEL7.1 ipa-cacert-manage renewed certificate from MS ADCS not compatible
+1169867 - Winsync: Setup is broken due to incorrect import of certificate
+1170003 - RHEL7.1 ipa-cacert-manage cannot change external to self-signed ca cert
+1170695 - krb5kdc crash in ldap_pvt_search
+1171089 - webui: increase notification duration
+1172578 - CLI doesn't show SSHFP records with SHA256 added via nsupdate (regression)
+1172598 - Access is not rejected for disabled domain
+1173207 - IPA certs fail to autorenew simultaneouly
+1175277 - Data replication not working as expected after data restore from full backup
+1175287 - No error message thrown on restore(full kind) on replica from full backup taken on master
+1175326 - ipa-restore proceed even IPA not configured
+1175384 - DNS zones are not migrated into forward zones if 4.0+ replica is added
+1176034 - More validation required on ipa-restore's options
+1176995 - IPA replica missing data after master upgraded
+1177133 - When migrating warn user if compat is enabled
+1178128 - IPA externally signed CA cert expiration warning missing from log
+1181010 - ipa-replica-manage list does not list synced domain
+1181093 - PassSync does not sync passwords due to missing ACIs
+1181767 - ipa-upgradeconfig fails in CA-less installs
+1183279 - ipa-replica-manage disconnect fails without password
+1184149 - DUA profile not available anonymously
+1185410 - idoverrideuser-add option --sshpubkey does not work
+1186396 - ipa-restore crashes if replica is unreachable
+1186398 - Wrong directories created on full restore
+1187342 - Login ignores global OTP enablement
+1187540 - Full set of objectclass not available post group detach.
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+ipa-4.1.0-18.el7.src.rpm
+
+x86_64:
+ipa-client-4.1.0-18.el7.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7.x86_64.rpm
+ipa-python-4.1.0-18.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+ipa-admintools-4.1.0-18.el7.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7.x86_64.rpm
+ipa-server-4.1.0-18.el7.x86_64.rpm
+ipa-server-trust-ad-4.1.0-18.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+ipa-4.1.0-18.el7.src.rpm
+
+x86_64:
+ipa-client-4.1.0-18.el7.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7.x86_64.rpm
+ipa-python-4.1.0-18.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+ipa-admintools-4.1.0-18.el7.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7.x86_64.rpm
+ipa-server-4.1.0-18.el7.x86_64.rpm
+ipa-server-trust-ad-4.1.0-18.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+ipa-4.1.0-18.el7.src.rpm
+
+ppc64:
+ipa-client-4.1.0-18.el7.ppc64.rpm
+ipa-debuginfo-4.1.0-18.el7.ppc64.rpm
+ipa-python-4.1.0-18.el7.ppc64.rpm
+
+s390x:
+ipa-client-4.1.0-18.el7.s390x.rpm
+ipa-debuginfo-4.1.0-18.el7.s390x.rpm
+ipa-python-4.1.0-18.el7.s390x.rpm
+
+x86_64:
+ipa-admintools-4.1.0-18.el7.x86_64.rpm
+ipa-client-4.1.0-18.el7.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7.x86_64.rpm
+ipa-python-4.1.0-18.el7.x86_64.rpm
+ipa-server-4.1.0-18.el7.x86_64.rpm
+ipa-server-trust-ad-4.1.0-18.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+ipa-admintools-4.1.0-18.el7.ppc64.rpm
+ipa-debuginfo-4.1.0-18.el7.ppc64.rpm
+
+s390x:
+ipa-admintools-4.1.0-18.el7.s390x.rpm
+ipa-debuginfo-4.1.0-18.el7.s390x.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+ipa-4.1.0-18.el7.src.rpm
+
+x86_64:
+ipa-admintools-4.1.0-18.el7.x86_64.rpm
+ipa-client-4.1.0-18.el7.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7.x86_64.rpm
+ipa-python-4.1.0-18.el7.x86_64.rpm
+ipa-server-4.1.0-18.el7.x86_64.rpm
+ipa-server-trust-ad-4.1.0-18.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2010-5312">https://access.redhat.com/security/cve/CVE-2010-5312</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2012-6662">https://access.redhat.com/security/cve/CVE-2012-6662</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/7.1_Release_Notes/index.html">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/7.1_Release_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+Gn6XlSAg2UNWIIRAom6AJ450oYK39lzrnhP1tEAjyWJSSuIewCghc9I
+YLx9EP6hrQprcMa6HO/FYX0=
+=5cxi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

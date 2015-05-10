@@ -1,0 +1,455 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0416&#45;02] Important: 389&#45;ds&#45;base security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:44:27 &#45;0500 -->
+<!--X-Message-Id: 201503051444.t25EiP6q017654@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0416-02] Important: 389-ds-base security, bug fix,	and enhanc</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0416-02] Important: 389-ds-base security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0416-02] Important: 389-ds-base security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:44:25 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: 389-ds-base security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0416-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0416.html">https://rhn.redhat.com/errata/RHSA-2015-0416.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-8105 CVE-2014-8112
+=====================================================================
+
+1. Summary:
+
+Updated 389-ds-base packages that fix two security issues, several bugs,
+and add various enhancements are now available for Red Hat Enterprise
+Linux 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The 389 Directory Server is an LDAPv3 compliant server. The base packages
+include the Lightweight Directory Access Protocol (LDAP) server and
+command-line utilities for server administration.
+
+An information disclosure flaw was found in the way the 389 Directory
+Server stored information in the Changelog that is exposed via the
+'cn=changelog' LDAP sub-tree. An unauthenticated user could in certain
+cases use this flaw to read data from the Changelog, which could include
+sensitive information such as plain-text passwords.
+(CVE-2014-8105)
+
+It was found that when the nsslapd-unhashed-pw-switch 389 Directory Server
+configuration option was set to &quot;off&quot;, it did not prevent the writing of
+unhashed passwords into the Changelog. This could potentially allow an
+authenticated user able to access the Changelog to read sensitive
+information. (CVE-2014-8112)
+
+The CVE-2014-8105 issue was discovered by Petr Špaček of the Red Hat
+Identity Management Engineering Team, and the CVE-2014-8112 issue was
+discovered by Ludwig Krispenz of the Red Hat Identity Management
+Engineering Team.
+
+Enhancements:
+
+* Added new WinSync configuration parameters: winSyncSubtreePair for
+synchronizing multiple subtrees, as well as winSyncWindowsFilter and
+winSyncDirectoryFilter for synchronizing restricted sets by filters.
+(BZ#746646)
+
+* It is now possible to stop, start, or configure plug-ins without the need
+to restart the server for the change to take effect. (BZ#994690)
+
+* Access control related to the MODDN and MODRDN operations has been
+updated: the source and destination targets can be specified in the same
+access control instruction. (BZ#1118014)
+
+* The nsDS5ReplicaBindDNGroup attribute for using a group distinguished
+name in binding to replicas has been added. (BZ#1052754)
+
+* WinSync now supports range retrieval. If more than the MaxValRange number
+of attribute values exist per attribute, WinSync synchronizes all the
+attributes to the directory server using the range retrieval. (BZ#1044149)
+
+* Support for the RFC 4527 Read Entry Controls and RFC 4533 Content
+Synchronization Operation LDAP standards has been added. (BZ#1044139,
+BZ#1044159)
+
+* The Referential Integrity (referint) plug-in can now use an alternate
+configuration area. The PlugInArg plug-in configuration now uses unique
+configuration attributes. Configuration changes no longer require a server
+restart. (BZ#1044203)
+
+* The logconv.pl log analysis tool now supports gzip, bzip2, and xz
+compressed files and also TAR archives and compressed TAR archives of these
+files. (BZ#1044188)
+
+* Only the Directory Manager could add encoded passwords or force users to
+change their password after a reset. Users defined in the passwordAdminDN
+attribute can now also do this. (BZ#1118007)
+
+* The &quot;nsslapd-memberofScope&quot; configuration parameter has been added to the
+MemberOf plug-in. With MemberOf enabled and a scope defined, moving a group
+out of scope with a MODRDN operation failed. Moving a member entry out of
+scope now correctly removes the memberof value. (BZ#1044170)
+
+* The alwaysRecordLoginAttr attribute has been addded to the Account Policy
+plug-in configuration entry, which allows to distinguish between an
+attribute for checking the activity of an account and an attribute to be
+updated at successful login. (BZ#1060032)
+
+* A root DSE search, using the ldapsearch command with the '-s base -b &quot;&quot;'
+options, returns only the user attributes instead of the operational
+attributes. The &quot;nsslapd-return-default&quot; option has been added for backward
+compatibility. (BZ#1118021)
+
+* The configuration of the MemberOf plug-in can be stored in a suffix
+mapped to a back-end database, which allows MemberOf configuration to be
+replicated. (BZ#1044205)
+
+* Added support for the SSL versions from the range supported by the NSS
+library available on the system. Due to the POODLE vulnerability, SSLv3 is
+disabled by default even if NSS supports it. (BZ#1044191)
+
+4. Solution:
+
+All 389-ds-base users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues and add these
+enhancements. After installing this update, the 389 server service will be
+restarted automatically.
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+881372 - nsDS5BeginReplicaRefresh attribute accepts any value and it doesn't throw any error when server restarts.
+920597 - Possible to add invalid ACI value
+921162 - Possible to add nonexistent target to ACI
+923799 - if nsslapd-cachememsize set to the number larger than the RAM available, should result in proper error message.
+924937 - Attribute &quot;dsOnlyMemberUid&quot; not allowed when syncing nested posix groups from AD with posixWinsync
+951754 - Self entry access ACI not working properly
+975176 - Non-directory manager can change the individual userPassword's storage scheme
+982597 - Some attributes in cn=config should not be multivalued
+994690 - [RFE] Allow dynamically adding/enabling/disabling/removing plugins without requiring a server restart
+1012991 - errorlog-level 16384 is listed as 0 in cn=config
+1013736 - Enabling/Disabling DNA plug-in throws &quot;ldap_modify: Server Unwilling to Perform (53)&quot; error
+1014380 - setup-ds.pl doesn't lookup the &quot;root&quot; group correctly
+1024541 - start dirsrv after ntpd
+1029959 - Managed Entries betxnpreoperation - transaction not aborted upon failure to create managed entry
+1031216 - add dbmon.sh
+1044133 - Indexed search with filter containing '&amp;' and  &quot;!&quot; with attribute subtypes gives wrong result
+1044134 - [RFE] should set LDAP_OPT_X_SASL_NOCANON to LDAP_OPT_ON by default
+1044135 - [RFE] make connection buffer size adjustable
+1044137 - [RFE] posix winsync should support ADD user/group entries from DS to AD
+1044138 - mep_pre_op: Unable to fetch origin entry
+1044139 - [RFE] Support RFC 4527 Read Entry Controls
+1044140 - Allow search to look up 'in memory RUV'
+1044141 - MMR stress test with dna enabled causes a deadlock
+1044142 - winsync doesn't sync DN valued attributes if DS DN value doesn't exist
+1044143 - modrdn + NSMMReplicationPlugin - Consumer failed to replay change
+1044144 - resurrected entry is not correctly indexed
+1044146 - Add a warning message when a connection hits the max number of threads
+1044147 - 7-bit check plugin does not work for userpassword attribute
+1044148 - The backend name provided to bak2db is not validated
+1044149 - [RFE] Winsync should support range retrieval
+1044150 - 7-bit checking is not necessary for userPassword
+1044151 - With SeLinux, ports can be labelled per range. setup-ds.pl or setup-ds-admin.pl fail to detect already ranged labelled ports
+1044152 - ChainOnUpdate: &quot;cn=directory manager&quot; can modify userRoot on consumer without changes being chained or replicated. Directory integrity compromised.
+1044153 - mods optimizer
+1044154 - multi master replication allows schema violation
+1044156 - DS crashes with some 7-bit check plugin configurations
+1044157 - Some updates of &quot;passwordgraceusertime&quot; are useless when updating &quot;userpassword&quot;
+1044159 - [RFE] Support 'Content Synchronization Operation' (SyncRepl) - RFC 4533
+1044160 - remove-ds.pl should remove /var/lock/dirsrv
+1044162 - enhance retro changelog
+1044163 - updates to ruv entry are written to retro changelog
+1044164 - Password administrators should be able to violate password policy
+1044168 - Schema replication between DS versions may overwrite newer base schema
+1044169 - [RFE] ACIs do not allow attribute subtypes in targetattr keyword
+1044170 - [RFE] Allow memberOf suffixes to be configurable
+1044171 - [RFE] Allow referential integrity suffixes to be configurable
+1044172 - Plugin library path validation prevents intentional loading of out-of-tree modules
+1044173 - [RFE] make referential integrity configuration more flexible
+1044177 - allow configuring changelog trim interval
+1044179 - objectclass may, must lists skip rest of objectclass once first is found in sup
+1044180 - memberOf on a user is converted to lowercase
+1044181 - report unindexed internal searches
+1044183 - With 1.3.04 and subtree-renaming OFF, when a user is deleted after restarting the server, the same entry can't be added
+1044185 - dbscan on entryrdn should show all matching values
+1044187 - [RFE] logconv.pl - add on option for a minimum etime for unindexed search stats
+1044188 - [RFE] Recognize compressed log files
+1044191 - [RFE] support TLSv1.1 and TLSv1.2, if supported by NSS
+1044193 - default nsslapd-sasl-max-buffer-size should be 2MB
+1044194 - Complex filter in a search request doen't work as expected.
+1044196 - Automember plug-in should treat MODRDN operations as ADD operations
+1044198 - Replication of the schema may overwrite consumer 'attributetypes' even if consumer definition is a superset
+1044202 - db2bak.pl issue when specifying non-default directory
+1044203 - [RFE] Allow referint plugin to use an alternate config area
+1044205 - [RFE] Allow memberOf to use an alternate config area
+1044210 - idl switch does not work
+1044211 - [RFE] make old-idl tunable
+1044212 - IDL-style can become mismatched during partial restoration
+1044213 - backend performance - introduce optimization levels
+1044215 - using transaction batchval violates durability
+1044216 - examine replication code to reduce amount of stored state information
+1048980 - 7-bit check plugin not checking MODRDN operation
+1049030 - Windows Sync group issues
+1052751 - Page control does not work if effective rights control is specified
+1052754 - [RFE] Allow nsDS5ReplicaBindDN to be a group DN
+1057803 - logconv errors when search has invalid bind dn
+1061060 - betxn: retro changelog broken after cancelled transaction
+1063990 - single valued attribute replicated ADD does not work
+1064006 - Size returned by slapi_entry_size is not accurate
+1064986 - Replication retry time attributes cannot be added
+1067090 - Missing warning for invalid replica backoff configuration
+1072032 - Updating nsds5ReplicaHost attribute in a replication agreement fails with error 53
+1074306 - Under heavy stress, failure of turning a tombstone into glue makes the server hung
+1074447 - Part of DNA shared configuration is deleted after server restart
+1076729 - Continuous add/delete of an entry in MMR setup causes entryrdn-index conflict
+1077884 - ldap/servers/slapd/back-ldbm/dblayer.c: possible minor problem with sscanf
+1077897 - Memory leak with proxy auth control
+1079099 - Simultaneous adding a user and binding as the user could fail in the password policy check
+1080186 - Creating a glue fails if one above level is a conflict or missing
+1082967 - attribute uniqueness plugin fails when set as a chaining component
+1086890 - empty modify returns LDAP_INVALID_DN_SYNTAX
+1086902 - mem leak in do_bind when there is an error
+1086904 - mem leak in do_search - rawbase not freed upon certain errors
+1086908 - Performing deletes during tombstone purging results in operation errors
+1090178 - #481 breaks possibility to reassemble memberuid list
+1092099 - A replicated MOD fails (Unwilling to perform) if it targets a tombstone
+1092342 - nsslapd-ndn-cache-max-size accepts any invalid value.
+1092648 - Negative value of nsSaslMapPriority is not reset to lowest priority
+1097004 - Problem with deletion while replicated
+1098654 - db2bak.pl error with changelogdb
+1099654 - Normalization from old DN format to New DN format doesnt handel condition properly when there is space in a suffix after the seperator operator.
+1108298 - Rebase 389-ds-base to 1.3.3
+1108405 - find a way to remove replication plugin errors messages &quot;changelog iteration code returned a dummy entry with csn %s, skipping ...&quot;
+1108407 - managed entry plugin fails to update managed entry pointer on modrdn operation
+1108872 - Logconv.pl with an empty access log gives lots of errors
+1108874 - logconv.pl memory continually grows
+1108881 - rsearch filter error on any search filter
+1108895 - [RFE] CLI report to monitor replication
+1108902 - rhds91 389-ds-base-1.2.11.15-31.el6_5.x86_64 crash in db4  __dbc_get_pp env = 0x0 ?
+1108909 - single valued attribute replicated ADD does not work
+1109334 - 389 Server crashes if uniqueMember is invalid syntax and memberOf plugin is enabled.
+1109336 - Parent numsubordinate count can be incorrectly updated if an error occurs
+1109339 - Nested tombstones become orphaned after purge
+1109354 - Tombstone purging can crash the server if the backend is stopped/disabled
+1109357 - Coverity issue in 1.3.3
+1109364 - valgrind - value mem leaks, uninit mem usage
+1109375 - provide default syntax plugin
+1109378 - Environment variables are not passed when DS is started via service
+1111364 - Updating winsync one-way sync does not affect the behaviour dynamically
+1112824 - Broken dereference control with the FreeIPA 4.0 ACIs
+1113605 - server restart wipes out index config if there is a default index
+1115177 - attrcrypt_generate_key calls slapd_pk11_TokenKeyGenWithFlags with improper macro
+1117021 - Server deadlock if online import started while server is under load
+1117975 - paged results control is not working in some cases when we have a subsuffix.
+1117979 - harden the list of ciphers available by default
+1117981 - Fix various typos in manpages &amp; code
+1117982 - Fix hyphens used as minus signed and other manpage mistakes
+1118002 - server crashes deleting a replication agreement
+1118006 - [RFE] forcing passwordmustchange attribute by non-cn=directory manager
+1118007 - [RFE] Make it possible for privileges to be provided to an admin user to import an LDIF file containing hashed passwords
+1118014 - [RFE] Enhance ACIs to have more control over MODRDN operations
+1118021 - [RFE] Don't return all attributes in rootdse without explicit request
+1118032 - Schema Replication Issue
+1118043 - Failed deletion of aci: no such attribute
+1118048 - If be_txn plugin fails in ldbm_back_add, adding entry is double freed.
+1118051 - Add switch to disable pre-hashed password checking
+1118054 - Make ldbm_back_seq independently support transactions
+1118055 - Add operations rejected by betxn plugins remain in cache
+1118057 - online import crashes server if using verbose error logging
+1118059 - [RFE] add fixup-memberuid.pl script
+1118060 - winsync plugin modify is broken
+1118066 - [RFE] memberof scope: allow to exclude subtrees
+1118069 - 389-ds production segfault: __memcpy_sse2_unaligned () at ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:144
+1118074 - ds logs many &quot;SLAPI_PLUGIN_BE_TXN_POST_DELETE_FN plugin returned error&quot; messages
+1118076 - ds logs many &quot;Operation error fetching Null DN&quot; messages
+1118077 - Improve import logging and abort handling
+1118079 - Multi master replication initialization incomplete after restore of one master
+1118080 - Don't add unhashed password mod if we don't have an unhashed value
+1118081 - Investigate betxn plugins to ensure they return the correct error code
+1118082 - The error result text message should be obtained just prior to sending result
+1139882 - coverity defects found in 1.3.3.x
+1140888 - Broken dereference control with the FreeIPA 4.0 ACIs
+1145846 - 389-ds 1.3.3.0 does not adjust cipher suite configuration on upgrade, breaks itself and pki-server: &quot;Cipher suite fortezza is not available in NSS 3.17&quot; , &quot;Cannot communicate securely with peer: no common encryption algorithm(s).&quot;
+1150206 - result of dna_dn_is_shared_config is incorrectly used
+1150694 - Encoding of SearchResultEntry is missing tag
+1150695 - ldbm_back_modify  SLAPI_PLUGIN_BE_PRE_MODIFY_FN does not return even if one of the preop plugins fails.
+1151287 - dynamically added macro aci is not evaluated on the fly
+1153737 - Disable SSL v3, by default.
+1156607 - Crash in entry_add_present_values_wsi_multi_valued
+1162997 - Directory Server crashes while trying to perform export task for automember plugin with dynamic plugin on.
+1163461 - Should not check aci syntax when deleting an aci
+1166252 - RHEL7.1 ns-slapd segfault when ipa-replica-install restarts dirsrv
+1166260 - cookie_change_info returns random negative number if there was no change in a tree
+1167858 - CVE-2014-8105 389-ds-base: information disclosure through 'cn=changelog' subtree
+1170707 - cos_cache_build_definition_list does not stop during server shutdown
+1170708 - COS memory leak when rebuilding the cache
+1170709 - Account lockout attributes incorrectly updated after failed SASL Bind
+1171355 - start dirsrv after chrony
+1171356 - Bind DN tracking unable to write to internalModifiersName without special permissions
+1172597 - Server crashes when memberOf plugin is partially configured
+1172729 - CVE-2014-8112 389-ds-base: password hashing bypassed when &quot;nsslapd-unhashed-pw-switch&quot; is set to off
+1173273 - [RFE] BDB backend - clear free page files to reduce main db and changelog db size
+1180325 - RHEL 7.1 ipa-server-4.1.0 upgrade fails
+1182477 - User enable/disable does not sync with ipawinsyncacctdisable set to both
+1183655 - IPA replica missing data after master upgraded
+
+6. Package List:
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+Source:
+389-ds-base-1.3.3.1-13.el7.src.rpm
+
+x86_64:
+389-ds-base-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-debuginfo-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-devel-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-libs-1.3.3.1-13.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+Source:
+389-ds-base-1.3.3.1-13.el7.src.rpm
+
+x86_64:
+389-ds-base-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-debuginfo-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-devel-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-libs-1.3.3.1-13.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+389-ds-base-1.3.3.1-13.el7.src.rpm
+
+x86_64:
+389-ds-base-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-debuginfo-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-libs-1.3.3.1-13.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+x86_64:
+389-ds-base-debuginfo-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-devel-1.3.3.1-13.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+389-ds-base-1.3.3.1-13.el7.src.rpm
+
+x86_64:
+389-ds-base-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-debuginfo-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-libs-1.3.3.1-13.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+389-ds-base-debuginfo-1.3.3.1-13.el7.x86_64.rpm
+389-ds-base-devel-1.3.3.1-13.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8105">https://access.redhat.com/security/cve/CVE-2014-8105</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8112">https://access.redhat.com/security/cve/CVE-2014-8112</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+Gu4XlSAg2UNWIIRArLbAJ4tEDwAhKtaOZvw+UaJ//ynpIhmFACfSlAp
+PthBh7lPAwEIEoahfYVfBIg=
+=c1GO
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00014.html">Date Prev</a>][<a href="msg00016.html">Date Next</a>] &nbsp; [<a href="msg00014.html">Thread Prev</a>][<a href="msg00016.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00015">Thread Index</A>]
+[<A HREF="date.html#00015">Date Index</A>]
+[<A HREF="author.html#00015">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

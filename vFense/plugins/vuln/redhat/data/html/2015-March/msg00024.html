@@ -1,0 +1,246 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0301&#45;02] Moderate: hivex security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:52:47 &#45;0500 -->
+<!--X-Message-Id: 201503051452.t25EqjSt004334@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0301-02] Moderate: hivex security, bug fix,	and enhancement u</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0301-02] Moderate: hivex security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0301-02] Moderate: hivex security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:52:45 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: hivex security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0301-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0301.html">https://rhn.redhat.com/errata/RHSA-2015-0301.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-9273 
+=====================================================================
+
+1. Summary:
+
+Updated hivex packages that fix one security issue, several bugs, and add
+various enhancements are now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+Hive files are undocumented binary files that Windows uses to store the
+Windows Registry on disk. Hivex is a library that can read and write to
+these files.
+
+It was found that hivex attempted to read beyond its allocated buffer when
+reading a hive file with a very small size or with a truncated or
+improperly formatted content. An attacker able to supply a specially
+crafted hive file to an application using the hivex library could possibly
+use this flaw to execute arbitrary code with the privileges of the user
+running that application. (CVE-2014-9273)
+
+Red Hat would like to thank Mahmoud Al-Qudsi of NeoSmart Technologies for
+reporting this issue.
+
+The hivex package has been upgraded to upstream version 1.3.10, which
+provides a number of bug fixes and enhancements over the previous version.
+(BZ#1023978)
+
+This update also fixes the following bugs:
+
+* Due to an error in the hivex_value_data_cell_offset() function, the hivex
+utility could, in some cases, print an &quot;Argument list is too long&quot; message
+and terminate unexpectedly when processing hive files from the Windows
+Registry. This update fixes the underlying code and hivex now processes
+hive files as expected. (BZ#1145056)
+
+* A typographical error in the Win::Hivex.3pm manual page has been
+corrected. (BZ#1099286)
+
+Users of hivex are advised to upgrade to these updated packages, which
+correct these issues and adds these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1023978 - Rebase hivex in RHEL 7.1
+1099286 - typo error in man page
+1145056 - hivexml generate &quot;Argument list too long&quot; on some Windows Registry
+1158992 - CVE-2014-9273 hivex: missing checks for small-sized files [rhel-7.1]
+1167756 - CVE-2014-9273 hivex: missing checks for small-sized files
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+hivex-1.3.10-5.7.el7.src.rpm
+
+x86_64:
+hivex-1.3.10-5.7.el7.i686.rpm
+hivex-1.3.10-5.7.el7.x86_64.rpm
+hivex-debuginfo-1.3.10-5.7.el7.i686.rpm
+hivex-debuginfo-1.3.10-5.7.el7.x86_64.rpm
+perl-hivex-1.3.10-5.7.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+hivex-debuginfo-1.3.10-5.7.el7.i686.rpm
+hivex-debuginfo-1.3.10-5.7.el7.x86_64.rpm
+hivex-devel-1.3.10-5.7.el7.i686.rpm
+hivex-devel-1.3.10-5.7.el7.x86_64.rpm
+ocaml-hivex-1.3.10-5.7.el7.x86_64.rpm
+ocaml-hivex-devel-1.3.10-5.7.el7.x86_64.rpm
+python-hivex-1.3.10-5.7.el7.x86_64.rpm
+ruby-hivex-1.3.10-5.7.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+hivex-1.3.10-5.7.el7.src.rpm
+
+x86_64:
+hivex-1.3.10-5.7.el7.i686.rpm
+hivex-1.3.10-5.7.el7.x86_64.rpm
+hivex-debuginfo-1.3.10-5.7.el7.i686.rpm
+hivex-debuginfo-1.3.10-5.7.el7.x86_64.rpm
+perl-hivex-1.3.10-5.7.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+x86_64:
+hivex-debuginfo-1.3.10-5.7.el7.i686.rpm
+hivex-debuginfo-1.3.10-5.7.el7.x86_64.rpm
+hivex-devel-1.3.10-5.7.el7.i686.rpm
+hivex-devel-1.3.10-5.7.el7.x86_64.rpm
+ocaml-hivex-1.3.10-5.7.el7.x86_64.rpm
+ocaml-hivex-devel-1.3.10-5.7.el7.x86_64.rpm
+python-hivex-1.3.10-5.7.el7.x86_64.rpm
+ruby-hivex-1.3.10-5.7.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+hivex-1.3.10-5.7.el7.src.rpm
+
+x86_64:
+hivex-1.3.10-5.7.el7.i686.rpm
+hivex-1.3.10-5.7.el7.x86_64.rpm
+hivex-debuginfo-1.3.10-5.7.el7.i686.rpm
+hivex-debuginfo-1.3.10-5.7.el7.x86_64.rpm
+perl-hivex-1.3.10-5.7.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+hivex-debuginfo-1.3.10-5.7.el7.i686.rpm
+hivex-debuginfo-1.3.10-5.7.el7.x86_64.rpm
+hivex-devel-1.3.10-5.7.el7.i686.rpm
+hivex-devel-1.3.10-5.7.el7.x86_64.rpm
+ocaml-hivex-1.3.10-5.7.el7.x86_64.rpm
+ocaml-hivex-devel-1.3.10-5.7.el7.x86_64.rpm
+python-hivex-1.3.10-5.7.el7.x86_64.rpm
+ruby-hivex-1.3.10-5.7.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9273">https://access.redhat.com/security/cve/CVE-2014-9273</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+G21XlSAg2UNWIIRAjXlAKC2Ky/2O69op28Vq8t+MscCIKyMiQCeKsi8
+mQMp17f7h6xxy00NyVCW4wY=
+=wWZK
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

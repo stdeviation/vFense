@@ -1,0 +1,363 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0716&#45;01] Moderate: openssl security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 23 Mar 2015 19:16:45 &#45;0400 -->
+<!--X-Message-Id: 201503232316.t2NNGgms025638@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0716-01] Moderate: openssl security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0716-01] Moderate: openssl security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0716-01] Moderate: openssl security and bug fix update</li>
+<li><em>Date</em>: Mon, 23 Mar 2015 23:16:41 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openssl security and bug fix update
+Advisory ID:       RHSA-2015:0716-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0716.html">https://rhn.redhat.com/errata/RHSA-2015-0716.html</a>
+Issue date:        2015-03-23
+CVE Names:         CVE-2015-0209 CVE-2015-0286 CVE-2015-0287 
+                   CVE-2015-0288 CVE-2015-0289 CVE-2015-0292 
+                   CVE-2015-0293 
+=====================================================================
+
+1. Summary:
+
+Updated openssl packages that fix several security issues and one bug are
+now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security 
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give 
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, ppc64le, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, ppc64le, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+OpenSSL is a toolkit that implements the Secure Sockets Layer (SSL v2/v3)
+and Transport Layer Security (TLS v1) protocols, as well as a
+full-strength, general purpose cryptography library.
+
+An invalid pointer use flaw was found in OpenSSL's ASN1_TYPE_cmp()
+function. A remote attacker could crash a TLS/SSL client or server using
+OpenSSL via a specially crafted X.509 certificate when the
+attacker-supplied certificate was verified by the application.
+(CVE-2015-0286)
+
+An integer underflow flaw, leading to a buffer overflow, was found in the
+way OpenSSL decoded malformed Base64-encoded inputs. An attacker able to
+make an application using OpenSSL decode a specially crafted Base64-encoded
+input (such as a PEM file) could use this flaw to cause the application to
+crash. Note: this flaw is not exploitable via the TLS/SSL protocol because
+the data being transferred is not Base64-encoded. (CVE-2015-0292)
+
+A denial of service flaw was found in the way OpenSSL handled SSLv2
+handshake messages. A remote attacker could use this flaw to cause a
+TLS/SSL server using OpenSSL to exit on a failed assertion if it had both
+the SSLv2 protocol and EXPORT-grade cipher suites enabled. (CVE-2015-0293)
+
+A use-after-free flaw was found in the way OpenSSL imported malformed
+Elliptic Curve private keys. A specially crafted key file could cause an
+application using OpenSSL to crash when imported. (CVE-2015-0209)
+
+An out-of-bounds write flaw was found in the way OpenSSL reused certain
+ASN.1 structures. A remote attacker could possibly use a specially crafted
+ASN.1 structure that, when parsed by an application, would cause that
+application to crash. (CVE-2015-0287)
+
+A NULL pointer dereference flaw was found in OpenSSL's X.509 certificate
+handling implementation. A specially crafted X.509 certificate could cause
+an application using OpenSSL to crash if the application attempted to
+convert the certificate to a certificate request. (CVE-2015-0288)
+
+A NULL pointer dereference was found in the way OpenSSL handled certain
+PKCS#7 inputs. An attacker able to make an application using OpenSSL
+verify, decrypt, or parse a specially crafted PKCS#7 input could cause that
+application to crash. TLS/SSL clients and servers using OpenSSL were not
+affected by this flaw. (CVE-2015-0289)
+
+Red Hat would like to thank the OpenSSL project for reporting
+CVE-2015-0286, CVE-2015-0287, CVE-2015-0288, CVE-2015-0289, CVE-2015-0292,
+and CVE-2015-0293. Upstream acknowledges Stephen Henson of the OpenSSL
+development team as the original reporter of CVE-2015-0286, Emilia Käsper
+of the OpenSSL development team as the original reporter of CVE-2015-0287,
+Brian Carpenter as the original reporter of CVE-2015-0288, Michal Zalewski
+of Google as the original reporter of CVE-2015-0289, Robert Dugal and David
+Ramos as the original reporters of CVE-2015-0292, and Sean Burford of
+Google and Emilia Käsper of the OpenSSL development team as the original
+reporters of CVE-2015-0293.
+
+This update also fixes the following bug:
+
+* When a wrapped Advanced Encryption Standard (AES) key did not require any
+padding, it was incorrectly padded with 8 bytes, which could lead to data
+corruption and interoperability problems. With this update, the rounding
+algorithm in the RFC 5649 key wrapping implementation has been fixed. As a
+result, the wrapped key conforms to the specification, which prevents the
+described problems. (BZ#1197667)
+
+All openssl users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. For the update to take
+effect, all services linked to the OpenSSL library must be restarted, or
+the system rebooted.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1196737 - CVE-2015-0209 openssl: use-after-free on invalid EC private key import
+1202366 - CVE-2015-0286 openssl: invalid pointer use in ASN1_TYPE_cmp()
+1202380 - CVE-2015-0287 openssl: ASN.1 structure reuse memory corruption
+1202384 - CVE-2015-0289 openssl: PKCS7 NULL pointer dereference
+1202395 - CVE-2015-0292 openssl: integer underflow leading to buffer overflow in base64 decoding
+1202404 - CVE-2015-0293 openssl: assertion failure in SSLv2 servers
+1202418 - CVE-2015-0288 openssl: X509_to_X509_REQ NULL pointer dereference
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+openssl-1.0.1e-42.el7_1.4.src.rpm
+
+x86_64:
+openssl-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.i686.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-libs-1.0.1e-42.el7_1.4.i686.rpm
+openssl-libs-1.0.1e-42.el7_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+openssl-debuginfo-1.0.1e-42.el7_1.4.i686.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-devel-1.0.1e-42.el7_1.4.i686.rpm
+openssl-devel-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-perl-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-static-1.0.1e-42.el7_1.4.i686.rpm
+openssl-static-1.0.1e-42.el7_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+openssl-1.0.1e-42.el7_1.4.src.rpm
+
+x86_64:
+openssl-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.i686.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-libs-1.0.1e-42.el7_1.4.i686.rpm
+openssl-libs-1.0.1e-42.el7_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+openssl-debuginfo-1.0.1e-42.el7_1.4.i686.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-devel-1.0.1e-42.el7_1.4.i686.rpm
+openssl-devel-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-perl-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-static-1.0.1e-42.el7_1.4.i686.rpm
+openssl-static-1.0.1e-42.el7_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+openssl-1.0.1e-42.el7_1.4.src.rpm
+
+ppc64:
+openssl-1.0.1e-42.el7_1.4.ppc64.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.ppc.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.ppc64.rpm
+openssl-devel-1.0.1e-42.el7_1.4.ppc.rpm
+openssl-devel-1.0.1e-42.el7_1.4.ppc64.rpm
+openssl-libs-1.0.1e-42.el7_1.4.ppc.rpm
+openssl-libs-1.0.1e-42.el7_1.4.ppc64.rpm
+
+s390x:
+openssl-1.0.1e-42.el7_1.4.s390x.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.s390.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.s390x.rpm
+openssl-devel-1.0.1e-42.el7_1.4.s390.rpm
+openssl-devel-1.0.1e-42.el7_1.4.s390x.rpm
+openssl-libs-1.0.1e-42.el7_1.4.s390.rpm
+openssl-libs-1.0.1e-42.el7_1.4.s390x.rpm
+
+x86_64:
+openssl-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.i686.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-devel-1.0.1e-42.el7_1.4.i686.rpm
+openssl-devel-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-libs-1.0.1e-42.el7_1.4.i686.rpm
+openssl-libs-1.0.1e-42.el7_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+openssl-1.0.1e-42.ael7b_1.4.src.rpm
+
+ppc64le:
+openssl-1.0.1e-42.ael7b_1.4.ppc64le.rpm
+openssl-debuginfo-1.0.1e-42.ael7b_1.4.ppc64le.rpm
+openssl-devel-1.0.1e-42.ael7b_1.4.ppc64le.rpm
+openssl-libs-1.0.1e-42.ael7b_1.4.ppc64le.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+openssl-debuginfo-1.0.1e-42.el7_1.4.ppc.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.ppc64.rpm
+openssl-perl-1.0.1e-42.el7_1.4.ppc64.rpm
+openssl-static-1.0.1e-42.el7_1.4.ppc.rpm
+openssl-static-1.0.1e-42.el7_1.4.ppc64.rpm
+
+s390x:
+openssl-debuginfo-1.0.1e-42.el7_1.4.s390.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.s390x.rpm
+openssl-perl-1.0.1e-42.el7_1.4.s390x.rpm
+openssl-static-1.0.1e-42.el7_1.4.s390.rpm
+openssl-static-1.0.1e-42.el7_1.4.s390x.rpm
+
+x86_64:
+openssl-debuginfo-1.0.1e-42.el7_1.4.i686.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-perl-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-static-1.0.1e-42.el7_1.4.i686.rpm
+openssl-static-1.0.1e-42.el7_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64le:
+openssl-debuginfo-1.0.1e-42.ael7b_1.4.ppc64le.rpm
+openssl-perl-1.0.1e-42.ael7b_1.4.ppc64le.rpm
+openssl-static-1.0.1e-42.ael7b_1.4.ppc64le.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+openssl-1.0.1e-42.el7_1.4.src.rpm
+
+x86_64:
+openssl-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.i686.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-devel-1.0.1e-42.el7_1.4.i686.rpm
+openssl-devel-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-libs-1.0.1e-42.el7_1.4.i686.rpm
+openssl-libs-1.0.1e-42.el7_1.4.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+openssl-debuginfo-1.0.1e-42.el7_1.4.i686.rpm
+openssl-debuginfo-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-perl-1.0.1e-42.el7_1.4.x86_64.rpm
+openssl-static-1.0.1e-42.el7_1.4.i686.rpm
+openssl-static-1.0.1e-42.el7_1.4.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0209">https://access.redhat.com/security/cve/CVE-2015-0209</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0286">https://access.redhat.com/security/cve/CVE-2015-0286</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0287">https://access.redhat.com/security/cve/CVE-2015-0287</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0288">https://access.redhat.com/security/cve/CVE-2015-0288</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0289">https://access.redhat.com/security/cve/CVE-2015-0289</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0292">https://access.redhat.com/security/cve/CVE-2015-0292</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0293">https://access.redhat.com/security/cve/CVE-2015-0293</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVEJ57XlSAg2UNWIIRApBLAKCABezmWbiQOlAWY6b+K6zE75PL1gCeOwR2
+3cNZhN5KoBB3VDTmN7uiuVo=
+=e+xE
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00045.html">Date Prev</a>][<a href="msg00047.html">Date Next</a>] &nbsp; [<a href="msg00045.html">Thread Prev</a>][<a href="msg00047.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00046">Thread Index</A>]
+[<A HREF="date.html#00046">Date Index</A>]
+[<A HREF="author.html#00046">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

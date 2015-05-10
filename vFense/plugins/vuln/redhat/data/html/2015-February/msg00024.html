@@ -1,0 +1,189 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0215&#45;01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.3.3 update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 11 Feb 2015 15:53:17 &#45;0500 -->
+<!--X-Message-Id: 201502112053.t1BKrGAs001497@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0215-01] Moderate: Red Hat JBoss Enterprise Application	Platf</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0215-01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.3.3 update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0215-01] Moderate: Red Hat JBoss Enterprise Application	Platform 6.3.3 update</li>
+<li><em>Date</em>: Wed, 11 Feb 2015 20:53:16 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Enterprise Application Platform 6.3.3 update
+Advisory ID:       RHSA-2015:0215-01
+Product:           Red Hat JBoss Enterprise Application Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0215.html">https://rhn.redhat.com/errata/RHSA-2015-0215.html</a>
+Issue date:        2015-02-11
+CVE Names:         CVE-2014-7827 CVE-2014-7839 CVE-2014-7849 
+                   CVE-2014-7853 CVE-2014-8122 
+=====================================================================
+
+1. Summary:
+
+Updated packages that provide Red Hat JBoss Enterprise Application Platform
+6.3.3 and fix multiple security issues, several bugs, and add various
+enhancements are now available from the Red Hat Customer Portal.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Enterprise Application Platform 6 is a platform for Java
+applications based on JBoss Application Server 7.
+
+It was found that the RESTEasy DocumentProvider did not set the
+external-parameter-entities and external-general-entities features
+appropriately, thus allowing external entity expansion. A remote attacker
+able to send XML requests to a RESTEasy endpoint could use this flaw to
+read files accessible to the user running the application server, and
+potentially perform other more advanced XML eXternal Entity (XXE) attacks.
+(CVE-2014-7839)
+
+It was discovered that the Role Based Access Control (RBAC) implementation
+did not sufficiently verify all authorization conditions that are required
+by the Maintainer role to perform certain administrative actions.
+An authenticated user with the Maintainer role could use this flaw to add,
+modify, or undefine a limited set of attributes and their values, which
+otherwise cannot be written to. (CVE-2014-7849)
+
+It was discovered that the JBoss Application Server (WildFly) JacORB
+subsystem incorrectly assigned socket-binding-ref sensitivity
+classification for the security-domain attribute. An authenticated user
+with a role that has access to attributes with socket-binding-ref and not
+security-domain-ref sensitivity classification could use this flaw to
+access sensitive information present in the security-domain attribute.
+(CVE-2014-7853)
+
+It was found that when processing undefined security domains, the
+org.jboss.security.plugins.mapping.JBossMappingManager implementation would
+fall back to the default security domain if it was available. A user with
+valid credentials in the defined default domain, with a role that is valid
+in the expected application domain, could perform actions that were
+otherwise not available to them. When using the SAML2 STS Login Module,
+JBossMappingManager exposed this issue due to the PicketLink Trust
+SecurityActions implementation using a hardcoded default value when
+defining the context. (CVE-2014-7827)
+
+It was discovered that under specific conditions the conversation state
+information stored in a thread-local variable was not sanitized correctly
+when the conversation ended. This could lead to a race condition that could
+potentially expose sensitive information from a previous conversation to
+the current conversation. (CVE-2014-8122)
+
+Red Hat would like to thank Rune Steinseth of JProfessionals for reporting
+the CVE-2014-8122 issue. The CVE-2014-7849 and CVE-2014-7853 issues were
+discovered by Darran Lofthouse of the Red Hat JBoss Enterprise Application
+Platform Team, and the CVE-2014-7827 issue was discovered by Ondra Lukas of
+the Red Hat Quality Engineering Team.
+
+This release serves as a replacement for Red Hat JBoss Enterprise
+Application Platform 6.3.2, and includes bug fixes and enhancements.
+Documentation for these changes is available from the link in the
+References section.
+
+All users of Red Hat JBoss Enterprise Application Platform 6.3 as provided
+from the Red Hat Customer Portal are advised to apply this update.
+The JBoss server process must be restarted for the update to take effect.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing Red Hat JBoss Enterprise Application Platform installation and
+deployed applications.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1160574 - CVE-2014-7827 JBoss Security: Wrong security context loaded when using SAML2 STS Login Module
+1165170 - CVE-2014-7849 JBoss AS/WildFly Domain Management: Limited RBAC authorization bypass
+1165328 - CVE-2014-7839 RESTeasy: External entities expanded by DocumentProvider
+1165522 - CVE-2014-7853 JBoss AS/WildFly JacORB Subsystem: Information disclosure via incorrect sensitivity classification of attribute
+1169237 - CVE-2014-8122 JBoss Weld: Limited information disclosure via stale thread state
+
+5. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7827">https://access.redhat.com/security/cve/CVE-2014-7827</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7839">https://access.redhat.com/security/cve/CVE-2014-7839</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7849">https://access.redhat.com/security/cve/CVE-2014-7849</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7853">https://access.redhat.com/security/cve/CVE-2014-7853</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8122">https://access.redhat.com/security/cve/CVE-2014-8122</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=securityPatches&amp;version=6.3.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=appplatform&amp;downloadType=securityPatches&amp;version=6.3.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU28EvXlSAg2UNWIIRAvnWAJ9C7nlDup3LB3OZTMK+M/U0rd6jCwCgv7J8
+XUcq0+gz2MSL5NfMdyDCWAM=
+=v0VX
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00023.html">Date Prev</a>][<a href="msg00025.html">Date Next</a>] &nbsp; [<a href="msg00023.html">Thread Prev</a>][<a href="msg00025.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00024">Thread Index</A>]
+[<A HREF="date.html#00024">Date Index</A>]
+[<A HREF="author.html#00024">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

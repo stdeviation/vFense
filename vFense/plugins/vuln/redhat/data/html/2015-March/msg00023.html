@@ -1,0 +1,666 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0323&#45;02] Low: libvirt security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:52:00 &#45;0500 -->
+<!--X-Message-Id: 201503051451.t25EpwtH023942@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0323-02] Low: libvirt security, bug fix,	and enhancement upda</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0323-02] Low: libvirt security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0323-02] Low: libvirt security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:51:58 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: libvirt security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0323-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0323.html">https://rhn.redhat.com/errata/RHSA-2015-0323.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-8136 CVE-2015-0236 
+=====================================================================
+
+1. Summary:
+
+Updated libvirt packages that fix two security issues, several bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Low security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The libvirt library is a C API for managing and interacting with the
+virtualization capabilities of Linux and other operating systems.
+
+It was found that QEMU's qemuDomainMigratePerform() and
+qemuDomainMigrateFinish2() functions did not correctly perform a domain
+unlock on a failed ACL check. A remote attacker able to establish a
+connection to libvirtd could use this flaw to lock a domain of a more
+privileged user, causing a denial of service. (CVE-2014-8136)
+
+It was discovered that the virDomainSnapshotGetXMLDesc() and
+virDomainSaveImageGetXMLDesc() functions did not sufficiently limit the
+usage of the VIR_DOMAIN_XML_SECURE flag when fine-grained ACLs were
+enabled. A remote attacker able to establish a connection to libvirtd could
+use this flaw to obtain certain sensitive information from the domain XML
+file. (CVE-2015-0236)
+
+The CVE-2015-0236 issue was found by Luyao Huang of Red Hat.
+
+Bug fixes:
+
+* The libvirtd daemon previously attempted to search for SELinux contexts
+even when SELinux was disabled on the host. Consequently, libvirtd logged
+&quot;Unable to lookup SELinux process context&quot; error messages every time a
+client connected to libvirtd and SELinux was disabled. libvirtd now
+verifies whether SELinux is enabled before searching for SELinux contexts,
+and no longer logs the error messages on a host with SELinux disabled.
+(BZ#1135155)
+
+* The libvirt utility passed incomplete PCI addresses to QEMU.
+Consequently, assigning a PCI device that had a PCI address with a non-zero
+domain to a guest failed. Now, libvirt properly passes PCI domain to QEMU
+when assigning PCI devices, which prevents the described problem.
+(BZ#1127080)
+
+* Because the virDomainSetMaxMemory API did not allow changing the current
+memory in the LXC driver, the &quot;virsh setmaxmem&quot; command failed when
+attempting to set the maximum memory to be lower than the current memory.
+Now, &quot;virsh setmaxmem&quot; sets the current memory to the intended value of the
+maximum memory, which avoids the mentioned problem. (BZ#1091132)
+
+* Attempting to start a non-existent domain caused network filters to stay
+locked for read-only access. Because of this, subsequent attempts to gain
+read-write access to network filters triggered a deadlock. Network filters
+are now properly unlocked in the described scenario, and the deadlock no
+longer occurs. (BZ#1088864)
+
+* If a guest configuration had an active nwfilter using the DHCP snooping
+feature and an attempt was made to terminate libvirtd before the associated
+nwfilter rule snooped the guest IP address from DHCP packets, libvirtd
+became unresponsive. This problem has been fixed by setting a longer wait
+time for snooping the guest IP address. (BZ#1075543)
+
+Enhancements:
+
+* A new &quot;migrate_host&quot; option is now available in /etc/libvirt/qemu.conf,
+which allows users to set a custom IP address to be used for incoming
+migrations. (BZ#1087671)
+
+* With this update, libvirt is able to create a compressed memory-only
+crash dump of a QEMU domain. This type of crash dump is directly readable
+by the GNU Debugger and requires significantly less hard disk space than
+the standard crash dump. (BZ#1035158)
+
+* Support for reporting the NUMA node distance of the host has been added
+to libvirt. This enhances the current libvirt capabilities for reporting
+NUMA topology of the host, and allows for easier optimization of new
+domains. (BZ#1086331)
+
+* The XML file of guest and host capabilities generated by the &quot;virsh
+capabilities&quot; command has been enhanced to list the following information,
+where relevant: the interface speed and link status of the host, the PCI
+Express (PCIe) details, the host's hardware support for I/O virtualization,
+and a report on the huge memory pages. (BZ#1076960, BZ#1076957, BZ#1076959,
+BZ#1076962)
+
+These packages also include a number of other bug fixes and enhancements.
+For additional details, see the &quot;Bugs Fixed&quot; section below.
+
+4. Solution:
+
+All libvirt users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements. After installing the updated packages, libvirtd will be
+restarted automatically.
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+706887 - [TestOnly] qemu truncates JSON numbers &gt;= 0x8000_0000_0000_0000
+765733 - Error reporting when qemu terminates unexpectedly is inconsistent and sometimes unhelpful
+823535 - Libvirt is sensitive to the order in which the video devices are passed
+872628 - List available LXC consoles using container_ttys env variable
+874418 - clear the error message when dump a guest with pass-through device
+876829 - create external checkpoint snapshot will change the guest pmsuspended state and guest hang forever
+877244 - Virsh command will delay a long time if restart libvirtd with many virtual networks running
+878394 - virsh iface-dumpxml or virt-manager reports &quot;bond interface misses the bond element&quot; for inactive bond interfaces
+880483 - Guest can use inactive macvtap-passthrough network
+921094 - Missing auditing for serial, parallel, channel, console and smartcard devices
+924853 - blockcopy to cifs fails
+956506 - virsh snapshot-delete --children-only bypasses safety check for deleting disk-only children
+957293 - support libiscsi for SCSI passthrough devices
+963817 - Stable SCSI host addressing
+964177 - virConnectDomainEventRTCChangeCallback returns wrong offset
+967493 - Lockfailure action Ignore  will lead to sanlock rem_lockspace stuck
+967494 - Lockfailure action Restart can shutdown the guest but fail to start it
+972964 - WWN option for Hot Attaching SCSI Disks
+983350 - The running Guest was paused while cancel the migration on the third machine
+985782 - Some flag values of method are missing in libvirt-python bindings
+985980 - virsh vcpuinfo output is difficult to read with large cpu counts
+990418 - Provide option to enable/disable 64-bit PCI hole
+991290 - Fail to modify the name attribute of ipv6 dhcp host via virsh net-update
+992980 - Separate limits for anonymous and authenticated users
+994731 - Documentation for virDomainLookupBy* should mention caller's responsibility to free virDomainPtr
+995377 - Domain without autostart can't be resumed by the libvirt-guests script after rebooting the host
+997802 - domdisplay should show all URI if config both vnc and spice in guest
+999926 - Policy denies libvirtd the permission to relabel unix domain sockets
+1006700 - need add &quot;interface&quot; to virt-xml-validate manual page
+1007698 - The cpu_shares value of domain xml should be consistent with return value of schedinfo.
+1007759 - libvirt should forbid to attach a device with boot order for the first time if the os/boot element exists
+1021703 - [RFE] Support for qemu-kvm's &quot;-boot splash_time&quot; parameter
+1022874 - In man page of virsh, a typo 'COMMMANDS' displays three times
+1023366 - [virsh cmd] Error message is not clear for commands blkiotune and schedinfo
+1025407 - autoport='yes' doesn't skip over ports in use with IPv6
+1027076 - Fail to start lxc with disabled selinux due to the existed empty /selinux
+1029266 - Error message is not clear for command nwfilter-define under non-root user.
+1029732 - Libvirt can not update/modify queues value of interface element using update-device command
+1032363 - document need to pass image name for block backed disks with --disk-only
+1033398 - Nodedev-destroy commands both doc and error message when destroy HBA are not clear
+1033704 - domain xml: libvirt should take defaultMode value into account when discarding &lt;channel ... mode='MODE'/&gt; entries
+1035128 - Stable guest ABI doesn't check redirected usb device
+1035966 - Start autostarted virtual networks in background
+1041569 - [NFR] libvirt: Returning the allocation watermark for all the images opened for writing during block-commit
+1043735 - virsh command domiftune bound parameter checking error
+1046192 - Can't set the timer base as localtime once localtime is used in the variable attribute.
+1047818 - VFs can not be listed by net-dumpxml directly after starting the hostdev network
+1052114 - guest fail to start with permission denied error when with gluster volume
+1056902 - virsh attach-interface/detach-interface mishandles inactive configuration on device hot(un)plug commands
+1062142 - live snapshot merge (commit) of the active layer
+1064770 - Fail to update floor attribute of QoS using updateDeviceFlags
+1066280 - Fail to restore guest from the save file while set the static selinux lable for the guest and set the relabel='no' in the guest's xml
+1066894 - Implement for libvirt guest's xml for security label
+1067338 - Mem leak while start a guest with a character followed
+1069784 - block commit/pull support for disks using libgfapi volumes
+1070680 - cpu-stats boundary value problem
+1071095 - Libvirt report incorrect error message when parsing invalid value of CTRL_IP_LEARNING in nwfilter
+1072141 - &quot;pool-list --type gluster&quot; list other types pool
+1072292 - Libvirt report incorrect message when starting domain with nwfilter whose chain priority is greater than its filter rule priority
+1072653 - vol-upload should change the volume target format type after uploading a different format file to it
+1072677 - Incorrect error message when hot-plugging interface with an inexistence nwfilter
+1073368 - [libvirt] can create live snapshot of passthrough device (iSCSI LUN or block device)
+1075290 - gluster option is not showed in virsh --version=long
+1075299 - Failed to get the vol-name by giving volume path in gluster pool.
+1075543 - Libvirt does not terminate when DHCP snooping is being used
+1076098 - [RFE] allow setting video ram size (vgamem_mb) for qemu vga cards.
+1076725 - libvirt: Multi-node NUMA policy assignment
+1076957 - Expose huge pages information through libvirt API
+1076959 - Expose host hardware support for I/O virtualization via libvirt API
+1076960 - Expose interface speed and link information via API
+1076962 - Expose PCIe BW and lane information through API
+1076989 - Enable complex memory requirements for virtual machines
+1077009 - It shouldn't be permitted to change the uuid of a nwfilter
+1077572 - Python setInterfaceParameters function is broken
+1078590 - use of tls with libvirt.so can leave zombie processes
+1079162 - The guest will be destroyed abnormally while revert the guest's snapshot which took in &quot;pmsuspended&quot; status
+1079173 - libvirt can not do vol-download for gluster pool volume
+1080859 - [Snapshot Doc] In snapshot-create-as manual page, supported snapshot type should be no, internal and external
+1081461 - Dropped guest network connection during migration (before it finished)
+1081881 - Fail to start guest with 2 displays mixed with port allocated automatically and fixed port.
+1081932 - the return value of API virNodeDevice.listCaps() is not correct
+1082124 - RHEL7 libvirt vs older qemu: unable to execute QEMU command 'qom-get': The command qom-get has not been found
+1082521 - The sg disk is not really shared within 2 guests
+1083345 - The --memspec parameters &quot;snapshot=no&quot; doesn't work when creating internal disk snapshot
+1084360 - [doc] Document behavior of --reuse-external (VIR_DOMAIN_SNAPSHOT_CREATE_REUSE_EXT)
+1085706 - virsh numatune should forbid to accept int as parameter values
+1085769 - [Stroage][vol-clone] Volume was cloned successfully when passing an non-existing pool
+1086121 - Improve the error message when failed to restore a guest with a not availabe disk with startupPolicy='optional'
+1086704 - Don't allow aio=native without cache=none
+1087104 - [Storage][vol-download] virsh cmd vol-download works with option offset and length by passing a negative integer
+1088667 - [storage] some volume related virsh commands work when the passed volume is not one volume of the passed pool
+1088787 - Libvirt should clean up socket file on destroyed domain with UNIX character device
+1088864 - nwfilter deadlock
+1088901 - Fail to do external disk-only snapshot when guest use FC storage
+1089179 - The error is inaccurate when create snapshot with memspec snapshot=external and diskspec snapshot=no
+1091866 - volume is disappered after vol-wipe with logical type pool
+1092253 - Improve the error message when blockpull with a wrong base path
+1092363 - [RHEL7] Virsh cmd maxvcpus returns 255 for kvm type, but the maximum number of vcpus supported by kvm is 160.
+1093127 - RFE: report NUMA node locality for PCI devices
+1095035 - [RHEL7][Storage]The &quot;lazy_refcounts&quot; feature was missing in the xml printed by vol-dumpxml for a qcow3 disk in a native gluster pool
+1095636 - SELinux prevent qemu from attaching tuntap queues
+1097028 - Don't fail starting domain without cpu, cpuset and cpuacct cgroups controllers
+1097503 - guest will be paused and can't resume when do external system checkpoint snapshot with wrong compression format
+1097677 - libvirt loses track of hotplugged vcpus after daemon restart
+1097968 - libvirt-python API baselineCPU doesn't generate exception
+1098659 - libvirt binds only to ipv6
+1099978 - Maintain relative path to backing file image during live merge (block-commit)
+1100769 - blkiotune weight range should be (10, 1000)
+1101059 - virsh vcpupin need accurate error message when --vcpu argument is negative
+1101510 - no need to require iptables-ipv6
+1101731 - Rebase libvirt to current upstream release
+1101987 - Libvirt should report error when try to revert guest to external system checkpoint snapshot
+1101999 - virt-xml-validate should pass when netfs pool xml with glusterfs backend
+1102611 - The running guest will disappear while change the security_driver from &quot;none&quot; to &quot;selinux&quot;
+1103245 - libvirt reset rtc interrupt backlog after guest-set-time
+1104992 - Guest fail to start while disks use same no-exist source file even though with startupPolicy='optional'
+1104993 - Garbage characters show in the output of pool-name with no-exist pool UUID
+1105939 - Fail to start guest while disable the default security labeling
+1108593 - Libvirtd will crash while start a guest which DAC's seclabel type='none' in guest's xml
+1110198 - domblkinfo doesn't work when guest use glusterfs as source
+1110212 - The error info is not correct when do blockcommit with --base and --top point to same source
+1110673 - typo errors in man page VIRSH(1)
+1111044 - capabilities mode hostdev shouldn't be added in KVM
+1112939 - libvirt should prompt more readable error message while ide/sata bus disk do not support readonly
+1113116 - [RFE] add API to query the stats of multiple VMs at once
+1113332 - python bindings for graphics event have wrong value for address type
+1113668 - libvirt failed to start a domain with unix+guestfwd channel
+1113861 - The guest will disappear after restart the libvirtd service while set seclabel type='static' model='none'  relabel='yes'/&gt; in guest's xml.
+1113868 - domxml-to-native fails for spice graphics with autoport='yes' when spice_tls is disabled
+1115898 - [RFE] Add events for cputune and iotune change
+1118710 - The error info is not accurate when do vol-wipe with volume based on gluster pool
+1119206 - RFE: Multiple virtio-rng devices support
+1119215 - Generate the redundant record in guest's xml while configure the same listen address in guest's xm
+1119387 - The default behavor of abort block job with pivot flag isn't sync
+1119592 - libvirt will report error after use pool-build in Non-root mode(qemu:///session)
+1119784 - QMP: extend block events with error information
+1121837 - numatune can use nodeset 0,^0 but can't edit xml like this
+1121955 - virsh command takes long time to finish after set &quot;log_level = 1&quot; only
+1122255 - 'virsh desc $dom blah' doesn't survive libvirtd restart
+1122455 - libvirt should refuse to start domain with unsupported/useless min-guarantee element in qemu driver
+1122973 - missing pci address for vga devices
+1126329 - Libvirt should forbid using relative path to the new overaly snapshot image for external snapshots
+1126721 - [Doc] Attribute name vlan-id should be vlanid in nwfilter xml docs
+1126909 - Wrong block job type reported for active layer commit
+1126991 - [libvirt] expose ivshmem
+1128097 - Can't use domiftune  --inbound 0 or --outbound 0 to clear inbound or outbound settings for a shut off guest
+1128751 - &lt;driver/&gt; isn't always formated as it should be
+1129207 - libvirtd will crash after do managedsave the same guest in the same time
+1129372 - Failed to start domain with specified cputune after decreasing vcpu number
+1129998 - numatune --mode can't work well
+1130089 - Possible deadlock when the domain is destroyed on destination during migration
+1130379 - [Doc]no manual about metadata command in virsh manual
+1131306 - number range should be checked for the 4 new options of blkiotune
+1131445 - Could not show process info for migration at once.
+1131788 - blkdeviotune should can be used in session mode
+1131811 - The iotune element will disappear from the guest's xml while set an invalid value
+1131819 - Libvirtd crash while set blkdeviotune with the hotplug disk and specify the --config option
+1131876 - The range for blkdeviotune was different in guest's xml and virsh command line
+1131897 - virDomainSetMemoryFlags doesn't process flag VIR_DOMAIN_MEM_MAXIMUM for LXC
+1132301 - Error msg is not right for option -k and -K against virsh command
+1132305 - option -k and -K should point out range of reasonable values against virsh command
+1132347 - Libvirt crash after defining/editing macvtap network pool with &lt;address&gt; elements
+1134154 - snapshot's race condition
+1134454 - pkg-config --libs contains cflags
+1135169 - blockcopy job was cancel by &quot;CTRL+C&quot; while it show there still be one block job in background
+1135339 - active commit will be cancelled by another commit
+1135396 - Honor hugepage settings on UMA guest
+1135431 - libvirt should pass &quot;-enable-fips&quot; to QEMU
+1135955 - The usage for migrate's option --auto-converge missed in virsh man page
+1136736 - Failed to remove libvirt-daemon-1.2.8-1.el7.x86_64 package
+1138221 - Fail to managedsave while configure &lt;cpu mode='host-model'&gt; in the guest's xml
+1138231 - Report better error when backing chain detection fails
+1138487 - one of guest will be shut off when restart libvirtd while disable the default security labeling
+1138545 - guest NUMA cannot start when automatic NUMA placement
+1139567 - virsh cmd will hang when remove blockcopy file
+1140085 - guest interface which use existing bridge source bridge will disappear after libvirtd restart
+1140981 - Libvirt should post more accurate error when do blockpull with qemu-kvm
+1140984 - sub-element in &lt;disk&gt;...&lt;/disk&gt; change after create external disk snapshot
+1141209 - Back port selected upstream Coverity resolutions since 1.2.8
+1141621 - libvirtd will crashed after hot-plug a virtual NIC to a guest which use qemu-attach connect to libvirtd
+1141732 - wrong QMP argument 'id' when detaching iscsi hostdev
+1141943 - libvirtd crash when defining scsi storage pool
+1142294 - libvirt should report error when failed to use domtime to set a guest time
+1142693 - [RFE] Add a qemu resume hook that is able to preprocess the domain XML
+1142722 - libvirtd dead while destroy one guest with block disk
+1143780 - Deadlock on nwfilter when taking same concurrent jobs
+1143955 - libvirtd crashed after running &quot;virsh metadata --remove&quot; command
+1144303 - memory leak when starting a domain with cpu mode='host-model'
+1144920 - libvirtd crashed after use qemu-monitor-event --regex to a running guest
+1144922 - wrong backingStore info after blockpull and destroy/start guest
+1145048 - freepages argument has wrong unit and range
+1145050 - API virNodeGetFreePages need report specific error when node out of range
+1146511 - Updating blkdeviotune for live domain doesn't survive restarting the libvirtd
+1146550 - USB Redirection no longer works: Permission Denied
+1146837 - Libvirtd crash when defining scsi pool with 'scsi_host' type adapter and parentaddr attribute
+1147331 - [migration] Tunnelled migration failed
+1147494 - libvirtd crashes when starting a domain with 0 cpu shares
+1147584 - save/managedsave doesn't work with host-passthrough
+1150322 - libvirt should recognize __com.redhat_change-backing-file for relative path preservation
+1150505 - Domain is out of control from libvirt when running some concurrent define/undefine/start/destroy jobs rapidly
+1151718 - Permission denied when create external snapshot for guest whose source file based on nfs
+1151885 - libvirtd loses track of a running restored guest with host-passthrough cpu
+1152382 - [NPIV] The volume in scsi pool appears only after refreshing pool
+1155410 - An LXC domain without console dies soon after start
+1155441 - forbid NIC offloads change on the fly using update-device
+1155458 - libvirt can not save mode='client' of vhostuser interface to domain xml
+1156288 - libvirtd crashed on disk snapshot with rdma glusterfs image
+1156367 - network using host bridge gets a MAC on libvirt update
+1158715 - A memory error report when use domstats
+1159227 - lxc domain startup is slow
+1159245 - repeated migration with NBD fails
+1160084 - domfsfreeze and domfsthaw cannot work well when guest restart
+1160212 - libvirt doesn't stop the NBD server after migration
+1160565 - Libvirt should check if the parent defined in xml matches the wwn of vHBA when starting pool
+1160926 - Destroying 'fc_host' pool the HBA is NOT destroyed when not using 'parent' attribute
+1161024 - libvirtd crashes after device hot-unplug crashes qemu
+1161124 - small memory leak in migration
+1161358 - [ACL] polkit: wrong attribute name 'interface_mac' for network interface in the documentation
+1161540 - kvm_init_vcpu failed for cpu hot-plugging in NUMA
+1162097 - crash after attempted spice channel hotplug
+1162208 - libvirtd occasionally crashes at the end of migration
+1162915 - net-event should not report unsuccessful event
+1162974 - external disk snapshot with fault glusterfs snapshot xml crash libvirtd
+1163463 - use after free in callers of virNetDevLinkDump
+1163953 - No way to turn off rdma-pin-all once it was turned on
+1164528 - VM with a storage volume that contains a RBD volume in the backing chain fails to start
+1166592 - Failed to create logical volume with specified xml
+1167145 - networkMigrateStateFiles function does not work on xfs file system due to using unsupported t_type field
+1167883 - Report job type in virDomainGetJobInfo
+1168866 - &quot;libvirtError: Unable to write to '/sys/fs/cgroup/cpuset/machine.slice/machine-qemu\x2dinstance\x2d00000002.scope/cpuset.mems': Device or resource busy&quot;
+1169409 - Libvirt will crash with segfault if you try to set non-existing nwfilter to network interface for live guest
+1170484 - guest can not start when setting &quot;  vcpu placement='auto'  &quot;
+1174053 - libvirtd crash when try to cold plug a network iscsi hostdev which guest already have a iscsi hostdev
+1174090 - extra space will be added to xml when update a network
+1174859 - missing support for -spice disable-agent-file-xfer qemu commandline option
+1175234 - virDomainGetSchedulerParameters() fails with Unable to read from '/sys/fs/cgroup/cpu,cpuacct/machine.slice/machine-qemu\x2dMic2.scope/cpu.shares': No such file or directory
+1175397 - memdev= option is not supported on rhel6 machine-types
+1175668 - Attach a usb disk to guest failed.
+1175709 - Unable to start guest with hugepages and strict numa pinning
+1176176 - CVE-2014-8136 libvirt: local denial of service in qemu/qemu_driver.c
+1177194 - Fail to Migrate with Bridged network, eth + macvtap ,with different interface name on two hosts
+1180136 - Memory leak when parsing invalid network XML
+1180574 - migration rhel7.1 -&gt; rhel7.0 wont work if you set &quot;ram&quot; &lt; 2*&quot;vgamem&quot; for QXL device
+1181052 - update default vgamem size from 8 MiB to 16 MiB
+1181157 - libvirtError: argument unsupported: QEMU driver does not support &lt;metadata&gt; element
+1181408 - Libvirtd crash while hotplug the guest agent without target type for many times
+1182448 - cpu features are not formatted in XML for host-model
+1182486 - libvirtd crashed when updating a IPv6 &lt;host&gt; and a IPv4 &lt;host&gt; into a IPv4 &lt;ip&gt; element
+1184431 - CVE-2015-0236 libvirt: missing ACL check for the VIR_DOMAIN_XML_SECURE flag in save images and snapshots objects
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+libvirt-1.2.8-16.el7.src.rpm
+
+x86_64:
+libvirt-1.2.8-16.el7.x86_64.rpm
+libvirt-client-1.2.8-16.el7.i686.rpm
+libvirt-client-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-config-network-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-config-nwfilter-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-interface-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-lxc-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-network-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-nodedev-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-nwfilter-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-qemu-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-secret-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-storage-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-kvm-1.2.8-16.el7.x86_64.rpm
+libvirt-debuginfo-1.2.8-16.el7.i686.rpm
+libvirt-debuginfo-1.2.8-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+libvirt-daemon-lxc-1.2.8-16.el7.x86_64.rpm
+libvirt-debuginfo-1.2.8-16.el7.i686.rpm
+libvirt-debuginfo-1.2.8-16.el7.x86_64.rpm
+libvirt-devel-1.2.8-16.el7.i686.rpm
+libvirt-devel-1.2.8-16.el7.x86_64.rpm
+libvirt-docs-1.2.8-16.el7.x86_64.rpm
+libvirt-lock-sanlock-1.2.8-16.el7.x86_64.rpm
+libvirt-login-shell-1.2.8-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+libvirt-1.2.8-16.el7.src.rpm
+
+x86_64:
+libvirt-client-1.2.8-16.el7.i686.rpm
+libvirt-client-1.2.8-16.el7.x86_64.rpm
+libvirt-debuginfo-1.2.8-16.el7.i686.rpm
+libvirt-debuginfo-1.2.8-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+libvirt-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-config-network-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-config-nwfilter-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-interface-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-lxc-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-network-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-nodedev-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-nwfilter-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-qemu-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-secret-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-storage-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-kvm-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-lxc-1.2.8-16.el7.x86_64.rpm
+libvirt-debuginfo-1.2.8-16.el7.i686.rpm
+libvirt-debuginfo-1.2.8-16.el7.x86_64.rpm
+libvirt-devel-1.2.8-16.el7.i686.rpm
+libvirt-devel-1.2.8-16.el7.x86_64.rpm
+libvirt-docs-1.2.8-16.el7.x86_64.rpm
+libvirt-lock-sanlock-1.2.8-16.el7.x86_64.rpm
+libvirt-login-shell-1.2.8-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+libvirt-1.2.8-16.el7.src.rpm
+
+ppc64:
+libvirt-1.2.8-16.el7.ppc64.rpm
+libvirt-client-1.2.8-16.el7.ppc.rpm
+libvirt-client-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-config-network-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-config-nwfilter-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-driver-interface-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-driver-lxc-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-driver-network-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-driver-nodedev-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-driver-nwfilter-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-driver-qemu-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-driver-secret-1.2.8-16.el7.ppc64.rpm
+libvirt-daemon-driver-storage-1.2.8-16.el7.ppc64.rpm
+libvirt-debuginfo-1.2.8-16.el7.ppc.rpm
+libvirt-debuginfo-1.2.8-16.el7.ppc64.rpm
+libvirt-devel-1.2.8-16.el7.ppc.rpm
+libvirt-devel-1.2.8-16.el7.ppc64.rpm
+libvirt-docs-1.2.8-16.el7.ppc64.rpm
+
+s390x:
+libvirt-1.2.8-16.el7.s390x.rpm
+libvirt-client-1.2.8-16.el7.s390.rpm
+libvirt-client-1.2.8-16.el7.s390x.rpm
+libvirt-daemon-1.2.8-16.el7.s390x.rpm
+libvirt-daemon-config-network-1.2.8-16.el7.s390x.rpm
+libvirt-daemon-config-nwfilter-1.2.8-16.el7.s390x.rpm
+libvirt-daemon-driver-interface-1.2.8-16.el7.s390x.rpm
+libvirt-daemon-driver-lxc-1.2.8-16.el7.s390x.rpm
+libvirt-daemon-driver-network-1.2.8-16.el7.s390x.rpm
+libvirt-daemon-driver-nodedev-1.2.8-16.el7.s390x.rpm
+libvirt-daemon-driver-nwfilter-1.2.8-16.el7.s390x.rpm
+libvirt-daemon-driver-secret-1.2.8-16.el7.s390x.rpm
+libvirt-daemon-driver-storage-1.2.8-16.el7.s390x.rpm
+libvirt-debuginfo-1.2.8-16.el7.s390.rpm
+libvirt-debuginfo-1.2.8-16.el7.s390x.rpm
+libvirt-devel-1.2.8-16.el7.s390.rpm
+libvirt-devel-1.2.8-16.el7.s390x.rpm
+libvirt-docs-1.2.8-16.el7.s390x.rpm
+
+x86_64:
+libvirt-1.2.8-16.el7.x86_64.rpm
+libvirt-client-1.2.8-16.el7.i686.rpm
+libvirt-client-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-config-network-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-config-nwfilter-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-interface-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-lxc-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-network-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-nodedev-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-nwfilter-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-qemu-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-secret-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-storage-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-kvm-1.2.8-16.el7.x86_64.rpm
+libvirt-debuginfo-1.2.8-16.el7.i686.rpm
+libvirt-debuginfo-1.2.8-16.el7.x86_64.rpm
+libvirt-devel-1.2.8-16.el7.i686.rpm
+libvirt-devel-1.2.8-16.el7.x86_64.rpm
+libvirt-docs-1.2.8-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+libvirt-daemon-lxc-1.2.8-16.el7.ppc64.rpm
+libvirt-debuginfo-1.2.8-16.el7.ppc64.rpm
+libvirt-lock-sanlock-1.2.8-16.el7.ppc64.rpm
+libvirt-login-shell-1.2.8-16.el7.ppc64.rpm
+
+s390x:
+libvirt-daemon-lxc-1.2.8-16.el7.s390x.rpm
+libvirt-debuginfo-1.2.8-16.el7.s390x.rpm
+libvirt-login-shell-1.2.8-16.el7.s390x.rpm
+
+x86_64:
+libvirt-daemon-lxc-1.2.8-16.el7.x86_64.rpm
+libvirt-debuginfo-1.2.8-16.el7.x86_64.rpm
+libvirt-lock-sanlock-1.2.8-16.el7.x86_64.rpm
+libvirt-login-shell-1.2.8-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+libvirt-1.2.8-16.el7.src.rpm
+
+x86_64:
+libvirt-1.2.8-16.el7.x86_64.rpm
+libvirt-client-1.2.8-16.el7.i686.rpm
+libvirt-client-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-config-network-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-config-nwfilter-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-interface-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-lxc-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-network-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-nodedev-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-nwfilter-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-qemu-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-secret-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-driver-storage-1.2.8-16.el7.x86_64.rpm
+libvirt-daemon-kvm-1.2.8-16.el7.x86_64.rpm
+libvirt-debuginfo-1.2.8-16.el7.i686.rpm
+libvirt-debuginfo-1.2.8-16.el7.x86_64.rpm
+libvirt-devel-1.2.8-16.el7.i686.rpm
+libvirt-devel-1.2.8-16.el7.x86_64.rpm
+libvirt-docs-1.2.8-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+libvirt-daemon-lxc-1.2.8-16.el7.x86_64.rpm
+libvirt-debuginfo-1.2.8-16.el7.x86_64.rpm
+libvirt-lock-sanlock-1.2.8-16.el7.x86_64.rpm
+libvirt-login-shell-1.2.8-16.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8136">https://access.redhat.com/security/cve/CVE-2014-8136</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0236">https://access.redhat.com/security/cve/CVE-2015-0236</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+G2FXlSAg2UNWIIRAt6BAJ0dU65z6s/tiZCo7wJ7woSK/lE/BQCfRIz4
+RqgEguJ1FT67e1HVYLzvRdc=
+=uR7R
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00022.html">Date Prev</a>][<a href="msg00024.html">Date Next</a>] &nbsp; [<a href="msg00022.html">Thread Prev</a>][<a href="msg00024.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00023">Thread Index</A>]
+[<A HREF="date.html#00023">Date Index</A>]
+[<A HREF="author.html#00023">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

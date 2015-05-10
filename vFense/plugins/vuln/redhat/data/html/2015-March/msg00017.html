@@ -1,0 +1,181 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0383&#45;01] Moderate: ppc64&#45;diag security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:45:48 &#45;0500 -->
+<!--X-Message-Id: 201503051445.t25Ejl2j018502@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0383-01] Moderate: ppc64-diag security, bug fix,	and enhancem</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0383-01] Moderate: ppc64-diag security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0383-01] Moderate: ppc64-diag security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:45:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ppc64-diag security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0383-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0383.html">https://rhn.redhat.com/errata/RHSA-2015-0383.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-4038 CVE-2014-4039 
+=====================================================================
+
+1. Summary:
+
+Updated ppc64-diag packages that fix two security issues, several bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Server (v. 7) - ppc64
+
+3. Description:
+
+The ppc64-diag packages provide diagnostic tools for Linux on the 64-bit
+PowerPC platforms. The platform diagnostics write events reported by the
+firmware to the service log, provide automated responses to urgent events,
+and notify system administrators or connected service frameworks about the
+reported events.
+
+Multiple insecure temporary file use flaws were found in the way the
+ppc64-diag utility created certain temporary files. A local attacker could
+possibly use either of these flaws to perform a symbolic link attack and
+overwrite arbitrary files with the privileges of the user running
+ppc64-diag, or obtain sensitive information from the temporary files.
+(CVE-2014-4038, CVE-2014-4039)
+
+The ppc64-diag packages have been upgraded to upstream version 2.6.7, which
+provides a number of bug fixes and enhancements over the previous version
+including support for hot plugging of QEMU PCI devices. (BZ#1088493,
+BZ#1084062)
+
+This update also fixes the following bugs:
+
+* Prior to this update, the rtas_errd daemon was not started by default on
+system boot. With this update, rtas_errd has been modified to start
+automatically by default. (BZ#1170146)
+
+* Previously, the /var/log/dump file was not automatically created when
+installing the ppc64-diag package. This bug has been fixed, and
+/var/log/dump is now created at package install time as expected.
+(BZ#1175808)
+
+In addition, this update adds the following enhancement:
+
+* This update adds support for building the ppc64-diag packages on the
+little-endian variant of IBM Power Systems platform architecture.
+(BZ#1124007)
+
+Users of ppc64-diag are advised to upgrade to these updated packages, which
+correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1109371 - CVE-2014-4038 CVE-2014-4039 ppc64-diag: multiple temporary file races
+
+6. Package List:
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+ppc64-diag-2.6.7-6.el7.src.rpm
+
+ppc64:
+ppc64-diag-2.6.7-6.el7.ppc64.rpm
+ppc64-diag-debuginfo-2.6.7-6.el7.ppc64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4038">https://access.redhat.com/security/cve/CVE-2014-4038</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4039">https://access.redhat.com/security/cve/CVE-2014-4039</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+GwOXlSAg2UNWIIRAuU0AJ9GsJLUXge1QJOtZp++HA8LeoyC/QCdGCGL
+EbyjWRjt+pt2SZQBWXzUo10=
+=wmy4
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00016.html">Date Prev</a>][<a href="msg00018.html">Date Next</a>] &nbsp; [<a href="msg00016.html">Thread Prev</a>][<a href="msg00018.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00017">Thread Index</A>]
+[<A HREF="date.html#00017">Date Index</A>]
+[<A HREF="author.html#00017">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

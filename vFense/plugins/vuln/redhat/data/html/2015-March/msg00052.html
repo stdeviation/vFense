@@ -1,0 +1,322 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0728&#45;01] Moderate: ipa and slapi&#45;nis security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 26 Mar 2015 13:08:55 &#45;0400 -->
+<!--X-Message-Id: 201503261708.t2QH8qYe023435@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0728-01] Moderate: ipa and slapi-nis security and bug fix	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00051.html">Date Prev</a>][<a href="msg00053.html">Date Next</a>] &nbsp; [<a href="msg00051.html">Thread Prev</a>][<a href="msg00053.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00052">Thread Index</A>]
+[<A HREF="date.html#00052">Date Index</A>]
+[<A HREF="author.html#00052">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0728-01] Moderate: ipa and slapi-nis security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0728-01] Moderate: ipa and slapi-nis security and bug fix	update</li>
+<li><em>Date</em>: Thu, 26 Mar 2015 17:08:51 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: ipa and slapi-nis security and bug fix update
+Advisory ID:       RHSA-2015:0728-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0728.html">https://rhn.redhat.com/errata/RHSA-2015-0728.html</a>
+Issue date:        2015-03-26
+CVE Names:         CVE-2015-0283 CVE-2015-1827 
+=====================================================================
+
+1. Summary:
+
+Updated ipa and slapi-nis packages that fix two security issues and several
+bugs are now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, ppc64le, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+
+3. Description:
+
+Red Hat Identity Management is a centralized authentication, identity
+management, and authorization solution for both traditional and cloud-based
+enterprise environments. It integrates components of the Red Hat Directory
+Server, MIT Kerberos, Red Hat Certificate System, NTP, and DNS. It provides
+web browser and command-line interfaces. Its administration tools allow an
+administrator to quickly install, set up, and administer a group of domain
+controllers to meet the authentication and identity management requirements
+of large-scale Linux and UNIX deployments.
+
+The ipa component provides centrally managed Identity, Policy, and Audit.
+The slapi-nis component provides NIS Server and Schema Compatibility
+plug-ins for Directory Server.
+
+It was discovered that the IPA extdom Directory Server plug-in did not
+correctly perform memory reallocation when handling user account
+information. A request for a list of groups for a user that belongs to a
+large number of groups would cause a Directory Server to crash.
+(CVE-2015-1827)
+
+It was discovered that the slapi-nis Directory Server plug-in did not
+correctly perform memory reallocation when handling user account
+information. A request for information about a group with many members, or
+a request for a user that belongs to a large number of groups, would cause
+a Directory Server to enter an infinite loop and consume an excessive
+amount of CPU time. (CVE-2015-0283)
+
+These issues were discovered by Sumit Bose of Red Hat.
+
+This update fixes the following bugs:
+
+* Previously, users of IdM were not properly granted the default permission
+to read the &quot;facsimiletelephonenumber&quot; user attribute. This update adds
+&quot;facsimiletelephonenumber&quot; to the Access Control Instruction (ACI) for user
+data, which makes the attribute readable to authenticated users as
+expected. (BZ#1198430)
+
+* Prior to this update, when a DNS zone was saved in an LDAP database
+without a dot character (.) at the end, internal DNS commands and
+operations, such as dnsrecord-* or dnszone-*, failed. With this update, DNS
+commands always supply the DNS zone with a dot character at the end, which
+prevents the described problem. (BZ#1198431)
+
+* After a full-server IdM restore operation, the restored server in some
+cases contained invalid data. In addition, if the restored server was used
+to reinitialize a replica, the replica then contained invalid data as well.
+To fix this problem, the IdM API is now created correctly during the
+restore operation, and *.ldif files are not skipped during the removal of
+RUV data. As a result, the restored server and its replica no longer
+contain invalid data. (BZ#1199060)
+
+* Previously, a deadlock in some cases occurred during an IdM upgrade,
+which could cause the IdM server to become unresponsive. With this update,
+the Schema Compatibility plug-in has been adjusted not to parse the subtree
+that contains the configuration of the DNA plug-in, which prevents this
+deadlock from triggering. (BZ#1199128)
+
+* When using the extdom plug-in of IdM to handle large groups, user lookups
+and group lookups previously failed due to insufficient buffer size.
+With this update, the getgrgid_r() call gradually increases the buffer
+length if needed, and the described failure of extdom thus no longer
+occurs. (BZ#1203204)
+
+Users of ipa and slapi-nis are advised to upgrade to these updated
+packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1195729 - CVE-2015-0283 slapi-nis: infinite loop in getgrnam_r() and getgrgid_r()
+1198430 - Fax number not displayed for user-show when kinit'ed as normal user.
+1198431 - &quot;an internal error has occurred&quot; during ipa host-del --updatedns
+1199060 - Replication agreement with replica not disabled when ipa-restore done without IPA installed
+1199128 - Limit deadlocks between DS plugin DNA and slapi-nis
+1205200 - CVE-2015-1827 ipa: memory corruption when using get_user_grouplist()
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+ipa-4.1.0-18.el7_1.3.src.rpm
+
+x86_64:
+ipa-client-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-python-4.1.0-18.el7_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+Source:
+slapi-nis-0.54-3.el7_1.src.rpm
+
+x86_64:
+ipa-admintools-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-server-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-server-trust-ad-4.1.0-18.el7_1.3.x86_64.rpm
+slapi-nis-0.54-3.el7_1.x86_64.rpm
+slapi-nis-debuginfo-0.54-3.el7_1.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+ipa-4.1.0-18.el7_1.3.src.rpm
+
+x86_64:
+ipa-client-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-python-4.1.0-18.el7_1.3.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+Source:
+slapi-nis-0.54-3.el7_1.src.rpm
+
+x86_64:
+ipa-admintools-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-server-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-server-trust-ad-4.1.0-18.el7_1.3.x86_64.rpm
+slapi-nis-0.54-3.el7_1.x86_64.rpm
+slapi-nis-debuginfo-0.54-3.el7_1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+ipa-4.1.0-18.el7_1.3.src.rpm
+slapi-nis-0.54-3.el7_1.src.rpm
+
+ppc64:
+ipa-client-4.1.0-18.el7_1.3.ppc64.rpm
+ipa-debuginfo-4.1.0-18.el7_1.3.ppc64.rpm
+ipa-python-4.1.0-18.el7_1.3.ppc64.rpm
+
+s390x:
+ipa-client-4.1.0-18.el7_1.3.s390x.rpm
+ipa-debuginfo-4.1.0-18.el7_1.3.s390x.rpm
+ipa-python-4.1.0-18.el7_1.3.s390x.rpm
+
+x86_64:
+ipa-admintools-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-client-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-python-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-server-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-server-trust-ad-4.1.0-18.el7_1.3.x86_64.rpm
+slapi-nis-0.54-3.el7_1.x86_64.rpm
+slapi-nis-debuginfo-0.54-3.el7_1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+ipa-4.1.0-18.ael7b_1.3.src.rpm
+slapi-nis-0.54-3.ael7b_1.src.rpm
+
+ppc64le:
+ipa-admintools-4.1.0-18.ael7b_1.3.ppc64le.rpm
+ipa-client-4.1.0-18.ael7b_1.3.ppc64le.rpm
+ipa-debuginfo-4.1.0-18.ael7b_1.3.ppc64le.rpm
+ipa-python-4.1.0-18.ael7b_1.3.ppc64le.rpm
+slapi-nis-0.54-3.ael7b_1.ppc64le.rpm
+slapi-nis-debuginfo-0.54-3.ael7b_1.ppc64le.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+ipa-admintools-4.1.0-18.el7_1.3.ppc64.rpm
+ipa-debuginfo-4.1.0-18.el7_1.3.ppc64.rpm
+
+s390x:
+ipa-admintools-4.1.0-18.el7_1.3.s390x.rpm
+ipa-debuginfo-4.1.0-18.el7_1.3.s390x.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+ipa-4.1.0-18.el7_1.3.src.rpm
+slapi-nis-0.54-3.el7_1.src.rpm
+
+x86_64:
+ipa-admintools-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-client-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-debuginfo-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-python-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-server-4.1.0-18.el7_1.3.x86_64.rpm
+ipa-server-trust-ad-4.1.0-18.el7_1.3.x86_64.rpm
+slapi-nis-0.54-3.el7_1.x86_64.rpm
+slapi-nis-debuginfo-0.54-3.el7_1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0283">https://access.redhat.com/security/cve/CVE-2015-0283</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-1827">https://access.redhat.com/security/cve/CVE-2015-1827</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVFDz8XlSAg2UNWIIRAvgUAJ9U0eyenVvxsLHHI9au97GRESR+xwCgwc4m
+jbpHQeTlpEla/QvB1RMD0BM=
+=qyzj
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00051.html">Date Prev</a>][<a href="msg00053.html">Date Next</a>] &nbsp; [<a href="msg00051.html">Thread Prev</a>][<a href="msg00053.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00052">Thread Index</A>]
+[<A HREF="date.html#00052">Date Index</A>]
+[<A HREF="author.html#00052">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

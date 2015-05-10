@@ -1,0 +1,207 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0791&#45;01] Important: Red Hat Enterprise Linux OpenStack	Platform Installer update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 7 Apr 2015 20:37:20 &#45;0400 -->
+<!--X-Message-Id: 201504080037.t380bH4a013000@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0791-01] Important: Red Hat Enterprise Linux OpenStack	Platfo</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0791-01] Important: Red Hat Enterprise Linux OpenStack	Platform Installer update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0791-01] Important: Red Hat Enterprise Linux OpenStack	Platform Installer update</li>
+<li><em>Date</em>: Wed, 8 Apr 2015 00:37:16 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Enterprise Linux OpenStack Platform Installer update
+Advisory ID:       RHSA-2015:0791-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0791.html">https://rhn.redhat.com/errata/RHSA-2015-0791.html</a>
+Issue date:        2015-04-07
+CVE Names:         CVE-2015-1842 
+=====================================================================
+
+1. Summary:
+
+Updated Red Hat Enterprise Linux OpenStack Platform Installer packages that
+fix one security issue and several bugs are now available for Red Hat
+Enterprise Linux OpenStack Platform 6.0.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+OpenStack 6 Installer for RHEL 7 - noarch
+
+3. Description:
+
+Red Hat Enterprise OpenStack Platform Installer is a deployment management
+tool. It provides a web user interface for managing the installation and
+configuration of remote systems. Deployment of changes is performed using
+Puppet. Additionally, Dynamic Host Configuration Protocol (DHCP), Domain
+Name System (DNS), Preboot Execution Environment (PXE), and Trivial File
+Transfer Protocol (TFTP) services can be provided. Controlling these
+services also enables provisioning of physical systems that do not yet have
+an operating system installed.
+
+It was discovered that the puppet manifests, as provided with the
+openstack-puppet-modules package, would configure the pcsd daemon with a
+known default password. If this password was not changed and an attacker
+was able to gain access to pcsd, they could potentially run shell commands
+as root. (CVE-2015-1842)
+
+Note: This flaw only affects Red Hat Enterprise Linux OpenStack Platform
+installations deployed using the HA feature set.
+
+For additional information on addressing this flaw see:
+<a  rel="nofollow" href="https://access.redhat.com/articles/1396123">https://access.redhat.com/articles/1396123</a>
+
+This issue was discovered by Alessandro Vozza of Red Hat.
+
+In addition to the above issue, this update also addresses multiple bugs
+which are documented in the Red Hat Enterprise Linux OpenStack Platform
+Technical Notes, linked to in the References section.
+
+All Red Hat Enterprise Linux OpenStack Platform Installer users are advised
+to upgrade to these updated packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1131584 - If fd0 is in /proc/partitions in the provisioned nodes installation fails with &quot;Specified nonexistent disk fd0 in partition command&quot;
+1179892 - Could not retrieve catalog from remote server: Error 400 on SERVER: undefined method `to_a' for &quot;eqlx1&quot;:String at /etc/puppet/environments/production/modules/quickstack/manifests/cinder_volume.pp:179
+1187815 - Add an indicator to Assigned Hosts table to show when networks have been configured
+1188602 - Can't change the IP in interfaces of hosts assigned to an OSP deployment if the interfaces are a bond device
+1189921 - [HA] start/stop ordering constraint are not correct and can cause cluster to fail on shutdown
+1190185 - OFI not reliably setting IP for tenant bridge when using tunnels
+1191519 - Need to increase the value of max_connections in Galera to avoid disconnections
+1192513 - Ceilometer not installed correctly via installer
+1192862 - Glance fails to start after RHEL-OSP6 install with Ceph backend (missing known_stores)
+1192864 - Ceph public network is evaluated to be the Provisioning/PXE network
+1193582 - [Neutron][Staypuft] Single Controller fails to create router
+1194269 - Deployment will stop on systems which boots/shutdowns quickly and foreman-proxy is terminated before buffer is flushed.
+1196310 - Include  rhel-ha-for-rhel-7-server-rpms channel for HA deployments
+1198032 - VRRP_Instance are on MASTER STATE on all controllers.
+1199266 - OSP compute nodes should not rely on ceph command
+1199827 - RHEL-OSP-Installer should disable all repos before activating the right ones
+1201363 - Changes in fencing require OFI changes
+1201875 - CVE-2015-1842 openstack-puppet-modules: pacemaker configured with default password
+1202464 - rubygem-staypuft:  During deployment -error in reports: Execution of '/usr/bin/systemctl start openstack-nova-compute' returned 1: Job for openstack-nova-compute.service failed
+1204483 - HA | Duplicate entry exception for vxlan-allocation cause to neutron-server fail to start. VXLAN.
+1204647 - Download of glance image fails because of wrong glance_store option.
+1207284 - l2pop and l3-ha should never be turned on together
+
+6. Package List:
+
+OpenStack 6 Installer for RHEL 7:
+
+Source:
+foreman-discovery-image-7.0-20150227.0.el7ost.src.rpm
+foreman-proxy-1.6.0.30-6.el7ost.src.rpm
+openstack-foreman-installer-3.0.22-1.el7ost.src.rpm
+openstack-puppet-modules-2014.2.13-2.el7ost.src.rpm
+rhel-osp-installer-0.5.7-1.el7ost.src.rpm
+ruby193-rubygem-staypuft-0.5.22-1.el7ost.src.rpm
+
+noarch:
+foreman-discovery-image-7.0-20150227.0.el7ost.noarch.rpm
+foreman-proxy-1.6.0.30-6.el7ost.noarch.rpm
+openstack-foreman-installer-3.0.22-1.el7ost.noarch.rpm
+openstack-puppet-modules-2014.2.13-2.el7ost.noarch.rpm
+rhel-osp-installer-0.5.7-1.el7ost.noarch.rpm
+rhel-osp-installer-client-0.5.7-1.el7ost.noarch.rpm
+ruby193-rubygem-staypuft-0.5.22-1.el7ost.noarch.rpm
+ruby193-rubygem-staypuft-doc-0.5.22-1.el7ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-1842">https://access.redhat.com/security/cve/CVE-2015-1842</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/6/html/Technical_Notes/index.html">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/6/html/Technical_Notes/index.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/articles/1396123">https://access.redhat.com/articles/1396123</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVJHgvXlSAg2UNWIIRAmjiAJ9mRPeObffyQfqpnNijZ5sMTRZ8qACgqGNk
+lFuldaWjVK6ld2aZ537/+DU=
+=AvXo
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

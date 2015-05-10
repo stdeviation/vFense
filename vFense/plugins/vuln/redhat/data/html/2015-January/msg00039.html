@@ -1,0 +1,386 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0100&#45;01] Moderate: libyaml security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 28 Jan 2015 12:49:11 &#45;0500 -->
+<!--X-Message-Id: 201501281749.t0SHnAkA018775@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0100-01] Moderate: libyaml security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00038.html">Date Prev</a>][<a href="msg00040.html">Date Next</a>] &nbsp; [<a href="msg00038.html">Thread Prev</a>][<a href="msg00040.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00039">Thread Index</A>]
+[<A HREF="date.html#00039">Date Index</A>]
+[<A HREF="author.html#00039">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0100-01] Moderate: libyaml security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0100-01] Moderate: libyaml security update</li>
+<li><em>Date</em>: Wed, 28 Jan 2015 17:49:10 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libyaml security update
+Advisory ID:       RHSA-2015:0100-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0100.html">https://rhn.redhat.com/errata/RHSA-2015-0100.html</a>
+Issue date:        2015-01-28
+CVE Names:         CVE-2014-9130 
+=====================================================================
+
+1. Summary:
+
+Updated libyaml packages that fix one security issue are now available for
+Red Hat Enterprise Linux 6 and 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+YAML is a data serialization format designed for human readability and
+interaction with scripting languages. LibYAML is a YAML parser and emitter
+written in C.
+
+An assertion failure was found in the way the libyaml library parsed
+wrapped strings. An attacker able to load specially crafted YAML input into
+an application using libyaml could cause the application to crash.
+(CVE-2014-9130)
+
+All libyaml users are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue. All running applications
+linked against the libyaml library must be restarted for this update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1169369 - CVE-2014-9130 libyaml: assert failure when processing wrapped strings
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+libyaml-0.1.3-4.el6_6.src.rpm
+
+i386:
+libyaml-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+
+x86_64:
+libyaml-0.1.3-4.el6_6.i686.rpm
+libyaml-0.1.3-4.el6_6.x86_64.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-devel-0.1.3-4.el6_6.i686.rpm
+
+x86_64:
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.x86_64.rpm
+libyaml-devel-0.1.3-4.el6_6.i686.rpm
+libyaml-devel-0.1.3-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+libyaml-0.1.3-4.el6_6.src.rpm
+
+x86_64:
+libyaml-0.1.3-4.el6_6.i686.rpm
+libyaml-0.1.3-4.el6_6.x86_64.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+x86_64:
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.x86_64.rpm
+libyaml-devel-0.1.3-4.el6_6.i686.rpm
+libyaml-devel-0.1.3-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+libyaml-0.1.3-4.el6_6.src.rpm
+
+i386:
+libyaml-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+
+ppc64:
+libyaml-0.1.3-4.el6_6.ppc.rpm
+libyaml-0.1.3-4.el6_6.ppc64.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.ppc.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.ppc64.rpm
+
+s390x:
+libyaml-0.1.3-4.el6_6.s390.rpm
+libyaml-0.1.3-4.el6_6.s390x.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.s390.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.s390x.rpm
+
+x86_64:
+libyaml-0.1.3-4.el6_6.i686.rpm
+libyaml-0.1.3-4.el6_6.x86_64.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-devel-0.1.3-4.el6_6.i686.rpm
+
+ppc64:
+libyaml-debuginfo-0.1.3-4.el6_6.ppc.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.ppc64.rpm
+libyaml-devel-0.1.3-4.el6_6.ppc.rpm
+libyaml-devel-0.1.3-4.el6_6.ppc64.rpm
+
+s390x:
+libyaml-debuginfo-0.1.3-4.el6_6.s390.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.s390x.rpm
+libyaml-devel-0.1.3-4.el6_6.s390.rpm
+libyaml-devel-0.1.3-4.el6_6.s390x.rpm
+
+x86_64:
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.x86_64.rpm
+libyaml-devel-0.1.3-4.el6_6.i686.rpm
+libyaml-devel-0.1.3-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+libyaml-0.1.3-4.el6_6.src.rpm
+
+i386:
+libyaml-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+
+x86_64:
+libyaml-0.1.3-4.el6_6.i686.rpm
+libyaml-0.1.3-4.el6_6.x86_64.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-devel-0.1.3-4.el6_6.i686.rpm
+
+x86_64:
+libyaml-debuginfo-0.1.3-4.el6_6.i686.rpm
+libyaml-debuginfo-0.1.3-4.el6_6.x86_64.rpm
+libyaml-devel-0.1.3-4.el6_6.i686.rpm
+libyaml-devel-0.1.3-4.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+libyaml-0.1.4-11.el7_0.src.rpm
+
+x86_64:
+libyaml-0.1.4-11.el7_0.i686.rpm
+libyaml-0.1.4-11.el7_0.x86_64.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.i686.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+libyaml-debuginfo-0.1.4-11.el7_0.i686.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.x86_64.rpm
+libyaml-devel-0.1.4-11.el7_0.i686.rpm
+libyaml-devel-0.1.4-11.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+libyaml-0.1.4-11.el7_0.src.rpm
+
+x86_64:
+libyaml-0.1.4-11.el7_0.i686.rpm
+libyaml-0.1.4-11.el7_0.x86_64.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.i686.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+libyaml-debuginfo-0.1.4-11.el7_0.i686.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.x86_64.rpm
+libyaml-devel-0.1.4-11.el7_0.i686.rpm
+libyaml-devel-0.1.4-11.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+libyaml-0.1.4-11.el7_0.src.rpm
+
+ppc64:
+libyaml-0.1.4-11.el7_0.ppc.rpm
+libyaml-0.1.4-11.el7_0.ppc64.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.ppc.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.ppc64.rpm
+
+s390x:
+libyaml-0.1.4-11.el7_0.s390.rpm
+libyaml-0.1.4-11.el7_0.s390x.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.s390.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.s390x.rpm
+
+x86_64:
+libyaml-0.1.4-11.el7_0.i686.rpm
+libyaml-0.1.4-11.el7_0.x86_64.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.i686.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+libyaml-debuginfo-0.1.4-11.el7_0.ppc.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.ppc64.rpm
+libyaml-devel-0.1.4-11.el7_0.ppc.rpm
+libyaml-devel-0.1.4-11.el7_0.ppc64.rpm
+
+s390x:
+libyaml-debuginfo-0.1.4-11.el7_0.s390.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.s390x.rpm
+libyaml-devel-0.1.4-11.el7_0.s390.rpm
+libyaml-devel-0.1.4-11.el7_0.s390x.rpm
+
+x86_64:
+libyaml-debuginfo-0.1.4-11.el7_0.i686.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.x86_64.rpm
+libyaml-devel-0.1.4-11.el7_0.i686.rpm
+libyaml-devel-0.1.4-11.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+libyaml-0.1.4-11.el7_0.src.rpm
+
+x86_64:
+libyaml-0.1.4-11.el7_0.i686.rpm
+libyaml-0.1.4-11.el7_0.x86_64.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.i686.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+libyaml-debuginfo-0.1.4-11.el7_0.i686.rpm
+libyaml-debuginfo-0.1.4-11.el7_0.x86_64.rpm
+libyaml-devel-0.1.4-11.el7_0.i686.rpm
+libyaml-devel-0.1.4-11.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9130">https://access.redhat.com/security/cve/CVE-2014-9130</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUySEHXlSAg2UNWIIRAoGEAKC0egLgLq6URggei0bM9ypl+sZ3SgCeLjGH
+Ew/C9aKmZARHJdmHtaSJJKs=
+=CZvQ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00038.html">Date Prev</a>][<a href="msg00040.html">Date Next</a>] &nbsp; [<a href="msg00038.html">Thread Prev</a>][<a href="msg00040.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00039">Thread Index</A>]
+[<A HREF="date.html#00039">Date Index</A>]
+[<A HREF="author.html#00039">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

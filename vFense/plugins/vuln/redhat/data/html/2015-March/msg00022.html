@@ -1,0 +1,315 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0325&#45;02] Low: httpd security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:51:06 &#45;0500 -->
+<!--X-Message-Id: 201503051451.t25Ep5Am018170@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0325-02] Low: httpd security, bug fix,	and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0325-02] Low: httpd security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0325-02] Low: httpd security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:51:05 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: httpd security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0325-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0325.html">https://rhn.redhat.com/errata/RHSA-2015-0325.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2013-5704 CVE-2014-3581 
+=====================================================================
+
+1. Summary:
+
+Updated httpd packages that fix two security issues, several bugs, and add
+various enhancements are for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Low security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 7) - noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The httpd packages provide the Apache HTTP Server, a powerful, efficient,
+and extensible web server.
+
+A flaw was found in the way httpd handled HTTP Trailer headers when
+processing requests using chunked encoding. A malicious client could use
+Trailer headers to set additional HTTP headers after header processing was
+performed by other modules. This could, for example, lead to a bypass of
+header restrictions defined with mod_headers. (CVE-2013-5704)
+
+A NULL pointer dereference flaw was found in the way the mod_cache httpd
+module handled Content-Type headers. A malicious HTTP server could cause
+the httpd child process to crash when the Apache HTTP server was configured
+to proxy to a server with caching enabled. (CVE-2014-3581)
+
+This update also fixes the following bugs:
+
+* Previously, the mod_proxy_fcgi Apache module always kept the back-end
+connections open even when they should have been closed. As a consequence,
+the number of open file descriptors was increasing over the time. With this
+update, mod_proxy_fcgi has been fixed to check the state of the back-end
+connections, and it closes the idle back-end connections as expected.
+(BZ#1168050)
+
+* An integer overflow occurred in the ab utility when a large request count
+was used. Consequently, ab terminated unexpectedly with a segmentation
+fault while printing statistics after the benchmark. This bug has been
+fixed, and ab no longer crashes in this scenario. (BZ#1092420)
+
+* Previously, when httpd was running in the foreground and the user pressed
+Ctrl+C to interrupt the httpd processes, a race condition in signal
+handling occurred. The SIGINT signal was sent to all children followed by
+SIGTERM from the main process, which interrupted the SIGINT handler.
+Consequently, the affected processes became unresponsive or terminated
+unexpectedly. With this update, the SIGINT signals in the child processes
+are ignored, and httpd no longer hangs or crashes in this scenario.
+(BZ#1131006)
+
+In addition, this update adds the following enhancements:
+
+* With this update, the mod_proxy module of the Apache HTTP Server supports
+the Unix Domain Sockets (UDS). This allows mod_proxy back ends to listen on
+UDS sockets instead of TCP sockets, and as a result, mod_proxy can be used
+to connect UDS back ends. (BZ#1168081)
+
+* This update adds support for using the SetHandler directive together with
+the mod_proxy module. As a result, it is possible to configure SetHandler
+to use proxy for incoming requests, for example, in the following format:
+SetHandler &quot;proxy:fcgi://127.0.0.1:9000&quot;. (BZ#1136290)
+
+* The htaccess API changes introduced in httpd 2.4.7 have been backported
+to httpd shipped with Red Hat Enterprise Linux 7.1. These changes allow for
+the MPM-ITK module to be compiled as an httpd module. (BZ#1059143)
+
+All httpd users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements. After installing the updated packages, the httpd daemon will
+be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1059143 - Feature request: update httpd to 2.4.7 / backport htaccess API changes
+1060536 - mod_rewrite doesn't expose client_addr
+1073078 - mod_ssl uses small DHE parameters for non standard RSA keys
+1073081 - mod_ssl selects correct DHE parameters for keys only up to 4096 bit
+1080125 - httpd uses hardcoded curve for ECDHE suites
+1082903 - CVE-2013-5704 httpd: bypass of mod_headers rules via chunked requests
+1114123 - RFE: set vstring dynamically
+1131006 - Error in `/usr/sbin/httpd': free(): invalid pointer
+1131847 - authzprovideralias and authnprovideralias-defined provider can't be used in virtualhost .
+1136290 - SetHandler to proxy support
+1149709 - CVE-2014-3581 httpd: NULL pointer dereference in mod_cache if Content-Type has empty value
+
+6. Package List:
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+Source:
+httpd-2.4.6-31.el7.src.rpm
+
+noarch:
+httpd-manual-2.4.6-31.el7.noarch.rpm
+
+x86_64:
+httpd-2.4.6-31.el7.x86_64.rpm
+httpd-debuginfo-2.4.6-31.el7.x86_64.rpm
+httpd-devel-2.4.6-31.el7.x86_64.rpm
+httpd-tools-2.4.6-31.el7.x86_64.rpm
+mod_ldap-2.4.6-31.el7.x86_64.rpm
+mod_proxy_html-2.4.6-31.el7.x86_64.rpm
+mod_session-2.4.6-31.el7.x86_64.rpm
+mod_ssl-2.4.6-31.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+Source:
+httpd-2.4.6-31.el7.src.rpm
+
+noarch:
+httpd-manual-2.4.6-31.el7.noarch.rpm
+
+x86_64:
+httpd-2.4.6-31.el7.x86_64.rpm
+httpd-debuginfo-2.4.6-31.el7.x86_64.rpm
+httpd-devel-2.4.6-31.el7.x86_64.rpm
+httpd-tools-2.4.6-31.el7.x86_64.rpm
+mod_ldap-2.4.6-31.el7.x86_64.rpm
+mod_proxy_html-2.4.6-31.el7.x86_64.rpm
+mod_session-2.4.6-31.el7.x86_64.rpm
+mod_ssl-2.4.6-31.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+httpd-2.4.6-31.el7.src.rpm
+
+noarch:
+httpd-manual-2.4.6-31.el7.noarch.rpm
+
+ppc64:
+httpd-2.4.6-31.el7.ppc64.rpm
+httpd-debuginfo-2.4.6-31.el7.ppc64.rpm
+httpd-devel-2.4.6-31.el7.ppc64.rpm
+httpd-tools-2.4.6-31.el7.ppc64.rpm
+mod_ssl-2.4.6-31.el7.ppc64.rpm
+
+s390x:
+httpd-2.4.6-31.el7.s390x.rpm
+httpd-debuginfo-2.4.6-31.el7.s390x.rpm
+httpd-devel-2.4.6-31.el7.s390x.rpm
+httpd-tools-2.4.6-31.el7.s390x.rpm
+mod_ssl-2.4.6-31.el7.s390x.rpm
+
+x86_64:
+httpd-2.4.6-31.el7.x86_64.rpm
+httpd-debuginfo-2.4.6-31.el7.x86_64.rpm
+httpd-devel-2.4.6-31.el7.x86_64.rpm
+httpd-tools-2.4.6-31.el7.x86_64.rpm
+mod_ssl-2.4.6-31.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+httpd-debuginfo-2.4.6-31.el7.ppc64.rpm
+mod_ldap-2.4.6-31.el7.ppc64.rpm
+mod_proxy_html-2.4.6-31.el7.ppc64.rpm
+mod_session-2.4.6-31.el7.ppc64.rpm
+
+s390x:
+httpd-debuginfo-2.4.6-31.el7.s390x.rpm
+mod_ldap-2.4.6-31.el7.s390x.rpm
+mod_proxy_html-2.4.6-31.el7.s390x.rpm
+mod_session-2.4.6-31.el7.s390x.rpm
+
+x86_64:
+httpd-debuginfo-2.4.6-31.el7.x86_64.rpm
+mod_ldap-2.4.6-31.el7.x86_64.rpm
+mod_proxy_html-2.4.6-31.el7.x86_64.rpm
+mod_session-2.4.6-31.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+httpd-2.4.6-31.el7.src.rpm
+
+noarch:
+httpd-manual-2.4.6-31.el7.noarch.rpm
+
+x86_64:
+httpd-2.4.6-31.el7.x86_64.rpm
+httpd-debuginfo-2.4.6-31.el7.x86_64.rpm
+httpd-devel-2.4.6-31.el7.x86_64.rpm
+httpd-tools-2.4.6-31.el7.x86_64.rpm
+mod_ssl-2.4.6-31.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+httpd-debuginfo-2.4.6-31.el7.x86_64.rpm
+mod_ldap-2.4.6-31.el7.x86_64.rpm
+mod_proxy_html-2.4.6-31.el7.x86_64.rpm
+mod_session-2.4.6-31.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-5704">https://access.redhat.com/security/cve/CVE-2013-5704</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3581">https://access.redhat.com/security/cve/CVE-2014-3581</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+G1OXlSAg2UNWIIRApdZAJ9WoUSSz1gMZRg0enaqlQXWp6sZJgCeLTaB
+F9KjL6Xrpxvd6e3GWkQBfGE=
+=hvwa
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00021.html">Date Prev</a>][<a href="msg00023.html">Date Next</a>] &nbsp; [<a href="msg00021.html">Thread Prev</a>][<a href="msg00023.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00022">Thread Index</A>]
+[<A HREF="date.html#00022">Date Index</A>]
+[<A HREF="author.html#00022">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

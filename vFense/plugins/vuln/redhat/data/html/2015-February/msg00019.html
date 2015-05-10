@@ -1,0 +1,386 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0158&#45;01] Important: Red Hat Enterprise Virtualization	Manager 3.5.0 -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 11 Feb 2015 13:21:56 &#45;0500 -->
+<!--X-Message-Id: 201502111821.t1BILtcT031639@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0158-01] Important: Red Hat Enterprise Virtualization	Manager</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0158-01] Important: Red Hat Enterprise Virtualization	Manager 3.5.0</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0158-01] Important: Red Hat Enterprise Virtualization	Manager 3.5.0</li>
+<li><em>Date</em>: Wed, 11 Feb 2015 18:21:55 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: Red Hat Enterprise Virtualization Manager 3.5.0
+Advisory ID:       RHSA-2015:0158-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0158.html">https://rhn.redhat.com/errata/RHSA-2015-0158.html</a>
+Issue date:        2014-07-13
+Updated on:        2015-02-11
+CVE Names:         CVE-2012-6153 CVE-2014-0151 CVE-2014-0154 
+                   CVE-2014-3577 
+=====================================================================
+
+1. Summary:
+
+Red Hat Enterprise Virtualization Manager 3.5.0 is now available.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.5 - noarch
+
+3. Description:
+
+Red Hat Enterprise Virtualization Manager is a visual tool for centrally
+managing collections of virtual servers running Red Hat Enterprise Linux
+and Microsoft Windows. This package also includes the Red Hat Enterprise
+Virtualization Manager API, a set of scriptable commands that give
+administrators the ability to perform queries and operations on Red Hat
+Enterprise Virtualization Manager.
+
+The Manager is a JBoss Application Server application that provides several
+interfaces through which the virtual environment can be accessed and
+interacted with, including an Administration Portal, a User Portal, and a
+Representational State Transfer (REST) Application Programming Interface
+(API).
+
+It was discovered that the HttpClient incorrectly extracted the host name
+from an X.509 certificate subject's Common Name (CN) field.
+A man-in-the-middle attacker could use this flaw to spoof an SSL server
+using a specially crafted X.509 certificate. (CVE-2012-6153, CVE-2014-3577)
+
+A Cross-Site Request Forgery (CSRF) flaw was found in the oVirt REST API.
+A remote attacker could provide a specially crafted web page that, when
+visited by a user with a valid REST API session, would allow the attacker
+to trigger calls to the oVirt REST API. (CVE-2014-0151)
+
+It was found that the oVirt web admin interface did not include the
+HttpOnly flag when setting session IDs with the Set-Cookie header.
+This flaw could make it is easier for a remote attacker to hijack an oVirt
+web admin session by leveraging a cross-site scripting (XSS) vulnerability.
+(CVE-2014-0154)
+
+The CVE-2012-6153 issue was discovered by Florian Weimer of Red Hat
+Product Security.
+
+These updated Red Hat Enterprise Virtualization Manager packages also
+include numerous bug fixes and various enhancements. Space precludes
+documenting all of these changes in this advisory. Users are directed to
+the Red Hat Enterprise Virtualization 3.5 Manager Release Notes document,
+linked to in the References, for information on the most significant of
+these changes.
+
+All Red Hat Enterprise Virtualization Manager users are advised to upgrade
+to these updated packages, which resolve these issues and add these
+enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+570191 - PRD35 - [RFE] [AAA] support Kerberos authentication (for REST API)
+716511 - PRD35 - [RFE] support discovery of existing virtual machines on RHEV storage
+723211 - PRD35 - [RFE] clone vm - support copy/duplicate virtual machines (without having to create a template)
+800155 - PRD35 - [RFE] configure SPICE disable-copy-paste in GUIs
+804530 - PRD35 - [RFE] Change the &quot;Slot&quot; field to &quot;Service Profile&quot; when cisco_ucs is selected as the fencing type
+817180 - PRD35 - [RFE] sysprep needs ability to specify Active Directory OU for VMs to join
+828591 - PRD35 - [RFE] ability to &quot;rebalance&quot; cluster load with a single button
+832167 - PRD35 - [RFE] NUMA information(memory and cpu) in guest - RHEV-M support
+859024 - PRD35 - [RFE] Provide confirmation prompt while deactivating a NIC
+874328 - PRD35 - [RFE] Add Instance Types (hardware profiles/flavors)
+878662 - PRD35 - [RFE] Mechanism for adding additional fence agents to mgr
+879077 - PRD35 - [RFE] left-hand pane in the AdminPortal (the tree) should auto-refresh
+884653 - [RFE][AAA] support single sign-on to user and admin portals
+890517 - PRD35 - [RFE] add gluster profile support
+894027 - PRD35 - [RFE] [restapi] Display the current logged in user in API
+894084 - PRD35 - [RFE] report SELinux policy and show it in UI + warn when not enabled
+895222 - PRD35 - [RFE] Unable to sort on columns in WebAdmin for RHEV
+902298 - PRD35 - [RFE] Change Time Zone after the initial-run
+906243 - PRD35 - [RFE] provide separate netbios name VM property for Windows sysprep, and relax the VM name limitations
+906938 - PRD35 - [RFE] Support blkio SLA features
+912057 - PRD35 - [RFE] webadmin [TEXT]: unclear warning that template of linked vm does not exist in export domain
+918138 - PRD35 - [RFE] Allow guest serial number to be configurable
+920708 - [RESTAPI] Create Data Storage Domain request on non-empty mount results in attempt to import existing domain
+922377 - PRD35 - [RFE] Allow to edit VM properties that need VM to be down to apply, just mark it as such and apply on VM shutdown
+928727 - [RFE] [engine-webadmin-portal]  Resizable columns in add virtual disk window
+947965 - RHEVM Backend : VM can be removed while in other state than down, like migrating and powering off
+955235 - PRD35 - [RFE] support BIOS boot device menu
+961753 - PRD35 - [RFE] Improve fencing robustness by retrying failed attempts
+962220 - PRD35 - [RFE] allow to set locale, language and keyboard settings for sysprep operation per vm
+962880 - PRD35 - [RFE] when viewing a grid that contains only one item, *automatically* select that item
+967466 - PRD35 - [RFE] Show live migration progress in the UI
+977079 - [RFE] Add virtio-rng support [EL 6.6 only]
+977306 - Password validity time related information is missing in &quot;console.vv&quot; for rhevm 3.2.
+985945 - PRD35 - [RFE] rhevm-websocket-proxy - using as standalone service - automatic configuration
+987295 - PRD35 - [RFE] Add periodic power management health check to detect/warn about link-down detection of power management LAN
+987299 - PRD35 - [RFE] Display of NIC Slave/Bond fault on RHEV-M Event Log and UI
+988392 - PRD35 - [RFE] Ability to dismiss alerts from web-admin portal
+988422 - PRD35 - [RFE] Neutron Integration: Providing a Neutron appliance
+989546 - PRD35 - [RFE] Re-work engine ovirt-node host-deploy sequence
+996512 - PRD35 - [RFE] Need API to 'unlock' a running VM when connecting to it through the REST API
+999975 - PRD35 - [RFE] Accept vlan devices identified by any name
+1001419 - [User Portal] Right hand pane in user portal takes too much space
+1003785 - [RFE] cannot edit/create network on DC via left hand panel tree on DC which was recreated
+1007133 - PRD35 - [RFE][host-deploy] support more ciphers for ssh - upgrade apache-sshd to 0.11.0
+1008512 - [RFE] QoS support is missing from CLI, SDK and REST API
+1013670 - New Template: comment is not saved when creating new template
+1014326 - Adding a new VM and choosing the OS of any linux, prevents you from changing the time zone.
+1015186 - PRD35 - [RFE] Give notification to Admin User, when RHEV Storage Domain approaches the limit of 350 LVs
+1016916 - PRD35 - [RFE] Search VMs based on MAC address from RHEVM web-admin portal
+1022795 - PRD35 - [RFE] Disk alias recycling in web-admin portal
+1025376 - PRD35 - [RFE] [rhevm] Webadmin - RFE - Run Once from CD should Show ISO name
+1025831 - PRD35 - [RFE] add administrator password and OrgName properties to Initial Run of Run Once of VMs of Windows OS type
+1028387 - virtio-serial and balloon should be managed devices
+1029934 - No error message displayed when trying to add an already existing (but unattached) SD in a DC
+1032686 - PRD35 - [RFE] Save &quot;domain related&quot; OVFs on any data domain
+1034309 - PRD35 - [RFE] add a warning when adding display network
+1034885 - PRD35 - [RFE] Snapshot overview in webadmin portal
+1038632 - PRD35 - [RFE] [spice-html5] spice-html5 js client is dumb: no error about network connection issue
+1040952 - Job and step tables not cleaned after the failure or completion of some tasks.
+1043430 - Add Firefox 31 to supported browsers (replacing FF17)
+1043808 - For an interface with multiple VLAN interfaces, rhev Host assigns highest mtu of a vlan interface to all vlan interface under the parent interface .
+1044033 - PRD35 - [RFE] Support ethtool_opts functionality within RHEV
+1044042 - PRD35 - [RFE] Support bridging_opts functionality within RHEV
+1048019 - PRD35 - [RFE] [slow RHEV-M portal] optimize queries invocation for left-pane tree data retrieval
+1052348 - PRD35 - [RFE] Include iotop package in RHEV-H images
+1053884 - Guest fails to migrate while paused
+1058022 - PRD35 - [RFE] Decommission the Storage Pool Metadata
+1059435 - PRD35 - [RFE] RHEVM Self Hosted Engine on RHEV-H
+1061156 - PRD35 - [RFE] Description field in Virtual machines tab
+1062435 - PRD35 - [RFE] have rhevm-shell and API provide same functionality that the UI does for ovirt-scheduler-proxy
+1064273 - Cannot create a new VM in a local SD
+1064544 - PRD35 - [RFE] new engine GUI look and feel (LAF) - phase 1
+1065753 - PRD35 - [RFE] Maintenance operations on a VM would ask for an optional reason
+1067162 - PRD35 - [RFE] Hosted Engine on iSCSI data centers
+1070348 - PRD35 - [RFE] RHEVM GUI - Add host uptime information to the &quot;General&quot; tab
+1070823 - PRD35 - [RFE] Wipe after Delete flag modification while VM is Up
+1071217 - Misleading error message when user with ClusterAdmin role on cluster tries to add a disk to a VM without permissions on any storage domain
+1076705 - RHEV 3.3 rhevm-shell can't change cluster policy to a custom policy
+1077284 - [RFE] Allow big ranges in MacPoolManager
+1079583 - When RHEV reports a problem with a storage domain, it should report **which** storage domain
+1080144 - USB Support select box always shows &quot;Disabled&quot; choice.
+1081533 - SPICE ActiveX download fails if user performs upgrade from 3.3.0 to 3.3.1
+1081849 - CVE-2014-0151 ovirt-engine: cross-site request forgery (CSRF)
+1081896 - CVE-2014-0154 ovirt-engine-webadmin: HttpOnly flag is not included when the session ID is set
+1082110 - Event ID 1200 (VM rename) does not record the initating User id
+1082681 - RHEV-M displays and uses the same values for hypervisor cores regardless of cluster setting for &quot;Count Threads as Cores&quot;
+1083760 - PRD35 - [RFE] Prevent host fencing while kdumping
+1083763 - PRD35 - [RFE] replace XML-RPC communication (engine-vdsm) with json-rpc based on bidirectional transport
+1083766 - console.vv file does not display name of VM for VNC consoles
+1083769 - PRD35 - [RFE] - introduction of Command-Coordination infrastructure
+1083926 - The hosts max_scheduling_memory should be updated when a live migration starts.
+1083998 - PRD35 - [RFE] using foreman provider to provision bare-metal hosts
+1084120 - PRD35 - [RFE] Please add host count and guest count columns to &quot;Clusters&quot; tab in webadmin
+1084611 - [RFE] RHEV-M networking went down, 90% of hosts were fenced causing a massive outage
+1085136 - PRD35 - [RFE] webadmin : Allow online vDisk description editing.
+1085380 - Dialog is not highlighted if VM cannot be created before clicking to &quot;Show Advanced Options&quot;
+1087745 - Recommended size of memory is too low for RHEL6 64bit systems
+1087917 - [GUI/General sub-tab] Windows-based Template &amp; Pool: Time Zone is blank when set to the global default
+1091692 - [Network labels] Removal of labelled network from DC inconsistent with removal from cluster
+1092609 - Searching for objects that _do not_ have a tag in the search bar is not possible
+1092884 - [RFE] Please improve RHEVM Webadmin portal vm migration displayed only into min:sec format.
+1093393 - [engine-backend] [iSCSI multipath] Required cluster network shouldn't be allowed to be added to an iSCSI multipath bond
+1093742 - System is not power on after a fencing operation (ILO3).
+1093784 - The Expect header is ignored
+1093786 - Negative values for &quot;Shared Memory&quot;
+1095240 - PRD35 - [RFE] Support logging of commands parameters
+1096662 - [RFE] Long strings in dialogs adversely affect GUI
+1096971 - Importing an Export/ISO storage domain automatically activates the domain
+1097256 - 10 minute delay on migrating VMs out after requesting maintenance mode
+1097622 - Inconsistent VirtIO direct lun disk attachment behaviour.
+1098591 - [TEXT] Tool tips for weights on Cluster Policy module in Configuration Dialogue are incorrect
+1098638 - smartcard entries are duplicated every time a template is saved, resulting in unbootable VMs
+1098791 - Reduce blocking operations as part of hosts &amp; VMs monitoring cycles
+1100194 - Unable to scroll down template list using IE9
+1100810 - Edit button for Setup Host Networks window should always be displayed
+1101018 - PRD35 - [RFE][RHEV] Support single disk snapshot on preview snapshot action in REST-API
+1101565 - Cannot approve hosts using REST API
+1102018 - PRD35 - [RFE] Drop Linux bridge plugin support from neutron integration
+1103490 - [REST API]: Missing VM statistics field.
+1103676 - ovirt-engine should not store long term files in &quot;/var/tmp/ovirt-engine/&quot;: tmpwatch will remove that directory after 30 days
+1103707 - application list database limit is too small (4000 chars)
+1103976 - rhevm-engine-setup: weak default passwords for PostgreSQL database users
+1104030 - Failed VM migrations do not release VM resource lock properly leading to failures in subsequent migration attempts
+1104195 - &quot;Domain not found: no domain with matching uuid&quot; error logged to audit_log after live migration fails due to timeout exceeded
+1104233 - VM Pools do not properly inherit admin roles in the admin portal
+1109326 - 3.4 upgrade does not set correct iptables rules when serving ISO domain from RHEV-M host
+1109721 - storage domain ownership of LUN not displayed
+1110172 - [RFE]API to check if a host has renew its lease
+1110636 - [RFE] Enable PPC Support in RHEV
+1111551 - [rhevm] unable to create template from Windows 2012 guest with SPICE videocard in RHEV 3.4
+1112359 - Failed to remove host xxxxxxxx
+1113499 - [RHEVM] Special character handling on VM Description is not correct
+1113937 - [RFE][AAA] Single sign-on into web applications
+1114041 - Cannot add AD group to a new VM from the user portal
+1114241 - PRD35 - [RFE] Set 'save network configuration' default to 'true' on setup networks dialog
+1114244 - [RFE] Admin GUI: Sort by 'IP address' (in VM tab) should not treat the IP address as a string
+1114253 - PRD35 - [RFE] Allow to perform fence operations from a host in another DC
+1114260 - [RFE] Public extension API for ovirt-engine
+1114554 - [RFE] Expose bookmarks through REST API
+1115845 - Enable sync of LUNs after storage domain activation for FC - duplicate LUNs
+1115966 - Update storage domain from rhevm-shell fails with java.lang.NullPointerException
+1116486 - When importing a VM in RHEVM 3.4 all its disks turn from thin provision to preallocated
+1118191 - unlock_entity.sh fails with &quot;psql: fe_sendauth: no password supplied&quot;
+1118818 - Luns either missing from or having no 'volume_group_id' in the luns table in the RHEV database.
+1118847 - ovirt-engine currently sets the disk device to &quot;lun&quot; for all virtio-scsi direct LUN connections and disables read-only for these devices
+1118879 - [RFE] Provide configuration screen for &quot;Fencing Policy&quot; within the &quot;Edit Cluster&quot; dialog
+1119922 - [RFE]embed the  check (&quot;if a host has renew its lease on any SD&quot;) into the fencing flow - according to cluster level policy
+1120197 - The Balloon driver on VM ... on host ... is requested but unavailable.
+1120829 - [RFE] Do not fence hosts when more than X% of hosts are in a Non-Responding or Connecting state
+1120858 - [RFE] Option to disable fencing for a cluster
+1121454 - In RHEV, admin UI rejects FQDNs ending in a digit when creating NFS storage domains
+1123396 - Admin Portal: Unresponsive script leading to Virtual Machines not being displayed any more
+1123754 - Direct FC lun disk details aren't validated
+1125834 - [engine-setup] &quot;badly formed hexadecimal UUID string&quot; error when ISO domain path contains a directory
+1126839 - &quot;There is no over-utilized host in cluster &quot; repeated every minute
+1128949 - OvfUpdateIntervalInMinutes/OvfItemsCountPerUpdate fields should be exposed to engine-config tool
+1129012 - Unable to add description for &quot;Affinity Group&quot; with space character.
+1129074 - CVE-2014-3577 Apache HttpComponents client / Apache CXF: SSL hostname verification bypass, incomplete CVE-2012-6153 fix
+1129634 - Cannot export VM. Disk configuration (COW Preallocated) is incompatible with the storage domain type.
+1129916 - CVE-2012-6153 Apache HttpComponents client / Apache CXF: SSL hostname verification bypass, incomplete CVE-2012-5783 fix
+1130076 - engine.log is flooded with messages as &quot;Executing a command: java.util.concurrent.FutureTask , but note that there are 1 tasks in the queue.&quot;
+1131693 - Error connecting to VM using RDP if NLA is enabled
+1132078 - RESTAPI: RSDL does not document all available parameters
+1132191 - [Windows sysprep] Run Once: Special characters are not encoded in XML sysprep files for Windows 7, 8, 2008, 2012
+1133938 - SD inactive after 2nd extension (with already added LUN)
+1134009 - [Network label] RHEV does not allow adding label for a network being used by VMs
+1136087 - engine-manage-domains always searches for KDC servers over DNS, even when --resolve-kdc is not set
+1139866 - PRD35 - [RFE] Test RHEV 3.5 on RHEL 6.6
+1140098 - [RHEV-M] System is not power on after a fencing operation in power management (agent: ipmilan)
+1140430 - Failure to Attach ISO domain causes SPM failover
+1141693 - VM Importer Screen does not update disk tab if more than one machine are selected for import
+1142233 - Description of affinity group not loaded to edit affinity group tab
+1148379 - In case of using new template version (sealed with sysprep) for a pool, VMs get stuck in minisetup
+1148623 - Windows 7 guests reports incorrect time after a cold restart.
+1149135 - Prestarted VMs dissapear from UI after failure to restore snapshot once VM turns from Unknown status to Down
+1149235 - [Admin Portal][ppc64][Power mgmt] ipmi doesn't work - Authentication type NONE not supported/Unable to obtain correct plug status or plug is not available
+1153544 - Failed VM migrations do not release VM resource lock properly
+1154607 - GetAllFromVms stored function is inefficient
+1154630 - [PPC]-Can't Hotplug/unplug VM nic while vm is running and has OS installed
+1156577 - [AAA] Adding an LDAP domain against ldap installed on rhel 6.6 fails
+1157211 - Engine does not free pending_vmem_size and pending_vcpus_count on migrate host, in case of VM migration failure.
+1160889 - Live Storage Migration &quot;completes&quot; but the engine sequence does not, leaving an unfinished job.
+
+6. Package List:
+
+RHEV-M 3.5:
+
+Source:
+rhevm-3.5.0-0.29.el6ev.src.rpm
+
+noarch:
+rhevm-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-backend-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-dbscripts-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-extensions-api-impl-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-extensions-api-impl-javadoc-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-lib-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-restapi-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-setup-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-setup-base-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-setup-plugin-allinone-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-setup-plugin-ovirt-engine-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-setup-plugin-ovirt-engine-common-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-setup-plugin-websocket-proxy-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-tools-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-userportal-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-webadmin-portal-3.5.0-0.29.el6ev.noarch.rpm
+rhevm-websocket-proxy-3.5.0-0.29.el6ev.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2012-6153">https://access.redhat.com/security/cve/CVE-2012-6153</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0151">https://access.redhat.com/security/cve/CVE-2014-0151</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0154">https://access.redhat.com/security/cve/CVE-2014-0154</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3577">https://access.redhat.com/security/cve/CVE-2014-3577</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.5/html/Manager_Release_Notes/index.html">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.5/html/Manager_Release_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU2521XlSAg2UNWIIRAlpBAJ4qJ09kkqJQZliit+6/Qt/+UCdSQwCeJaJR
+nC4RORf/00dOzvZXzMPNDL0=
+=mB9a
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00018.html">Date Prev</a>][<a href="msg00020.html">Date Next</a>] &nbsp; [<a href="msg00018.html">Thread Prev</a>][<a href="msg00020.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00019">Thread Index</A>]
+[<A HREF="date.html#00019">Date Index</A>]
+[<A HREF="author.html#00019">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

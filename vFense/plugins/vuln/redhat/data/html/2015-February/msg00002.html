@@ -1,0 +1,198 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0115&#45;01] Important: kernel security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 3 Feb 2015 13:17:10 &#45;0500 -->
+<!--X-Message-Id: 201502031817.t13IH990016736@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0115-01] Important: kernel security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0115-01] Important: kernel security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0115-01] Important: kernel security update</li>
+<li><em>Date</em>: Tue, 3 Feb 2015 18:17:09 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security update
+Advisory ID:       RHSA-2015:0115-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0115.html">https://rhn.redhat.com/errata/RHSA-2015-0115.html</a>
+Issue date:        2015-02-03
+CVE Names:         CVE-2014-3673 CVE-2014-3687 CVE-2014-3688 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix three security issues are now available
+for Red Hat Enterprise Linux 6.2 Advanced Update Support.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AUS (v. 6.2 server) - noarch, x86_64
+Red Hat Enterprise Linux Server Optional AUS (v. 6.2) - x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+* A flaw was found in the way the Linux kernel's SCTP implementation
+handled malformed or duplicate Address Configuration Change Chunks
+(ASCONF). A remote attacker could use either of these flaws to crash the
+system. (CVE-2014-3673, CVE-2014-3687, Important)
+
+* A flaw was found in the way the Linux kernel's SCTP implementation
+handled the association's output queue. A remote attacker could send
+specially crafted packets that would cause the system to use an excessive
+amount of memory, leading to a denial of service. (CVE-2014-3688,
+Important)
+
+The CVE-2014-3673 issue was discovered by Liu Wei of Red Hat.
+
+All kernel users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not use
+&quot;rpm -Uvh&quot; as that will remove the running kernel binaries from your
+system. You may use &quot;rpm -e&quot; to remove old kernels after determining that
+the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1147850 - CVE-2014-3673 kernel: sctp: skb_over_panic when receiving malformed ASCONF chunks
+1155731 - CVE-2014-3687 kernel: net: sctp: fix panic on duplicate ASCONF chunks
+1155745 - CVE-2014-3688 kernel: net: sctp: remote memory pressure from excessive queueing
+
+6. Package List:
+
+Red Hat Enterprise Linux AUS (v. 6.2 server):
+
+Source:
+kernel-2.6.32-220.58.1.el6.src.rpm
+
+noarch:
+kernel-doc-2.6.32-220.58.1.el6.noarch.rpm
+kernel-firmware-2.6.32-220.58.1.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-220.58.1.el6.x86_64.rpm
+kernel-debug-2.6.32-220.58.1.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-220.58.1.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-220.58.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-220.58.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-220.58.1.el6.x86_64.rpm
+kernel-devel-2.6.32-220.58.1.el6.x86_64.rpm
+kernel-headers-2.6.32-220.58.1.el6.x86_64.rpm
+perf-2.6.32-220.58.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-220.58.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-220.58.1.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional AUS (v. 6.2):
+
+Source:
+kernel-2.6.32-220.58.1.el6.src.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-220.58.1.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-220.58.1.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-220.58.1.el6.x86_64.rpm
+perf-debuginfo-2.6.32-220.58.1.el6.x86_64.rpm
+python-perf-2.6.32-220.58.1.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-220.58.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3673">https://access.redhat.com/security/cve/CVE-2014-3673</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3687">https://access.redhat.com/security/cve/CVE-2014-3687</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3688">https://access.redhat.com/security/cve/CVE-2014-3688</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU0RBeXlSAg2UNWIIRApb8AJ0ZRWRFKzng5mDm/C8tfJ5s4/FwPQCfXM+C
+UU+Ei4yQmo/ao+kUkW8BhVk=
+=qd3y
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00001.html">Date Prev</a>][<a href="msg00003.html">Date Next</a>] &nbsp; [<a href="msg00001.html">Thread Prev</a>][<a href="msg00003.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00002">Thread Index</A>]
+[<A HREF="date.html#00002">Date Index</A>]
+[<A HREF="author.html#00002">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

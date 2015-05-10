@@ -1,0 +1,216 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0843&#45;01] Important: openstack&#45;nova security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 16 Apr 2015 15:03:00 &#45;0400 -->
+<!--X-Message-Id: 201504161902.t3GJ2vAQ022337@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0843-01] Important: openstack-nova security, bug fix,	and enh</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0843-01] Important: openstack-nova security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0843-01] Important: openstack-nova security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 16 Apr 2015 19:02:56 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openstack-nova security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0843-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0843.html">https://rhn.redhat.com/errata/RHSA-2015-0843.html</a>
+Issue date:        2015-04-16
+CVE Names:         CVE-2014-3708 CVE-2014-8333 CVE-2015-0259 
+=====================================================================
+
+1. Summary:
+
+Updated OpenStack Compute (nova) packages that fix three security issues,
+several bugs, and add various enhancements are now available for Red Hat
+Enterprise Linux OpenStack Platform 5.0 for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7 - noarch
+
+3. Description:
+
+OpenStack Compute (nova) launches and schedules large networks of virtual
+machines, creating a redundant and scalable cloud computing platform.
+Compute provides the software, control panels, and APIs required to
+orchestrate a cloud, including running virtual machine instances and
+controlling access through users and projects.
+
+It was discovered that the OpenStack Compute (nova) console websocket did
+not correctly verify the origin header. An attacker could use this flaw to
+conduct a cross-site websocket hijack attack. Note that only Compute setups
+with VNC or SPICE enabled were affected by this flaw. (CVE-2015-0259)
+
+A denial of service flaw was found in the way OpenStack Compute (nova)
+looked up VM instances based on an IP address filter. An attacker with
+sufficient privileges on an OpenStack installation with a large amount of
+VMs could use this flaw to cause the main nova process to block for an
+extended amount of time. (CVE-2014-3708)
+
+A flaw was found in the OpenStack Compute (nova) VMWare driver, which could
+allow an authenticated user to delete an instance while it was in the
+resize state, causing the instance to remain on the back end. A malicious
+user could use this flaw to cause a denial of service by exhausting all
+available resources on the system. (CVE-2014-8333)
+
+Red Hat would like to thank the OpenStack project for reporting the
+CVE-2015-0259 and CVE-2014-3708 issues. Upstream acknowledges Brian
+Manifold of Cisco and Paul McMillan of Nebula as the original reporters of
+CVE-2015-0259, and Mohammed Naser from Vexxhost as the original reporter of
+CVE-2014-3708.
+
+In addition to the above issues, this update also addresses several bugs
+and adds various enhancements, which are documented in the Red Hat
+Enterprise Linux OpenStack Platform Technical Notes (see References
+section).
+
+All openstack-nova users are advised to upgrade to these updated packages,
+which correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, ensure all previously released errata
+relevant to your system have been applied.
+
+Red Hat Enterprise Linux OpenStack Platform 5 for RHEL 7 runs on Red Hat
+Enterprise Linux 7.1.
+
+The Red Hat Enterprise Linux OpenStack Platform 5 for RHEL 7 Release Notes
+contain the following:
+* An explanation of the way in which the provided components interact to
+form a working cloud computing environment.
+* Technology Previews, Recommended Practices, and Known Issues.
+* The channels required for Red Hat Enterprise Linux OpenStack Platform 5
+for RHEL 7, including which channels need to be enabled and disabled.
+
+For details on how to apply this update, refer to:
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1141518 - NOVA API will not update nova compute with vif-plugged events when booting many VMs
+1151114 - Ephemeral disk format option ignored
+1154890 - CVE-2014-8333 openstack-nova: Nova VMware instance in resize state may leak
+1154951 - CVE-2014-3708 openstack-nova: Nova network denial of service through API filtering
+1174422 - Evacuate Fails 'Invalid state of instance files' using Ceph Ephemeral RBD
+1188355 - Fix nova evacuate for shared storage
+1189836 - nova-compute fails to start when there is an instance with port with binding:vif_type=binding_failed
+1190112 - CVE-2015-0259 openstack-nova: console Cross-Site WebSocket hijacking
+1199106 - Rebase openstack-nova to 2014.1.4
+1205806 - QCOW2 virtual size can bypass disk size checks for a flavor
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7:
+
+Source:
+openstack-nova-2014.1.4-3.el7ost.src.rpm
+
+noarch:
+openstack-nova-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-api-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-cells-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-cert-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-common-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-compute-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-conductor-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-console-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-doc-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-network-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-novncproxy-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-objectstore-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-scheduler-2014.1.4-3.el7ost.noarch.rpm
+openstack-nova-serialproxy-2014.1.4-3.el7ost.noarch.rpm
+python-nova-2014.1.4-3.el7ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3708">https://access.redhat.com/security/cve/CVE-2014-3708</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8333">https://access.redhat.com/security/cve/CVE-2014-8333</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0259">https://access.redhat.com/security/cve/CVE-2015-0259</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/5/html/Technical_Notes/index.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/5/html/Technical_Notes/index.html</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/5/html/Release_Notes/index.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/5/html/Release_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVMAdPXlSAg2UNWIIRAjNRAJ4m/HhOUk6RcuOofB1mJVF1nuU7UgCfck5v
+o/624lQCnJFVXfoltSZeXI0=
+=vhmm
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

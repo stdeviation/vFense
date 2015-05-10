@@ -1,0 +1,358 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0858&#45;01] Important: java&#45;1.6.0&#45;sun security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 20 Apr 2015 10:44:57 &#45;0400 -->
+<!--X-Message-Id: 201504201444.t3KEisbg015616@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0858-01] Important: java-1.6.0-sun security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00047.html">Date Prev</a>][<a href="msg00049.html">Date Next</a>] &nbsp; [<a href="msg00047.html">Thread Prev</a>][<a href="msg00049.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00048">Thread Index</A>]
+[<A HREF="date.html#00048">Date Index</A>]
+[<A HREF="author.html#00048">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0858-01] Important: java-1.6.0-sun security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0858-01] Important: java-1.6.0-sun security update</li>
+<li><em>Date</em>: Mon, 20 Apr 2015 14:44:54 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: java-1.6.0-sun security update
+Advisory ID:       RHSA-2015:0858-01
+Product:           Oracle Java for Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0858.html">https://rhn.redhat.com/errata/RHSA-2015-0858.html</a>
+Issue date:        2015-04-20
+CVE Names:         CVE-2005-1080 CVE-2015-0458 CVE-2015-0459 
+                   CVE-2015-0460 CVE-2015-0469 CVE-2015-0477 
+                   CVE-2015-0478 CVE-2015-0480 CVE-2015-0488 
+                   CVE-2015-0491 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.6.0-sun packages that fix several security issues are now
+available for Oracle Java for Red Hat Enterprise Linux 5, 6, and 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Oracle Java for Red Hat Enterprise Linux Client (v. 7) - x86_64
+Oracle Java for Red Hat Enterprise Linux Client 5 - i386, x86_64
+Oracle Java for Red Hat Enterprise Linux Compute Node (v. 7) - x86_64
+Oracle Java for Red Hat Enterprise Linux Desktop 5 - i386, x86_64
+Oracle Java for Red Hat Enterprise Linux Desktop 6 - i386, x86_64
+Oracle Java for Red Hat Enterprise Linux HPC Node 6 - i386, x86_64
+Oracle Java for Red Hat Enterprise Linux Server (v. 7) - x86_64
+Oracle Java for Red Hat Enterprise Linux Server 6 - i386, x86_64
+Oracle Java for Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Oracle Java for Red Hat Enterprise Linux Workstation 6 - i386, x86_64
+
+3. Description:
+
+Oracle Java SE version 6 includes the Oracle Java Runtime Environment and
+the Oracle Java Software Development Kit.
+
+This update fixes several vulnerabilities in the Oracle Java Runtime
+Environment and the Oracle Java Software Development Kit. Further
+information about these flaws can be found on the Oracle Java SE Critical
+Patch Update Advisory page, listed in the References section.
+(CVE-2005-1080, CVE-2015-0458, CVE-2015-0459, CVE-2015-0460, CVE-2015-0469,
+CVE-2015-0477, CVE-2015-0478, CVE-2015-0480, CVE-2015-0488, CVE-2015-0491)
+
+The CVE-2015-0478 issue was discovered by Florian Weimer of Red Hat
+Product Security.
+
+All users of java-1.6.0-sun are advised to upgrade to these updated
+packages, which provide Oracle Java 6 Update 95 and resolve these issues.
+All running instances of Oracle Java must be restarted for the update to
+take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+606442 - CVE-2005-1080 jar: directory traversal vulnerability
+1210355 - CVE-2015-0478 OpenJDK: RSA implementation hardening (JCE, 8071726)
+1210829 - CVE-2015-0469 ICU: layout engine glyphStorage off-by-one (OpenJDK 2D, 8067699)
+1211285 - CVE-2015-0460 OpenJDK: incorrect handling of phantom references (Hotspot, 8071931)
+1211299 - CVE-2015-0477 OpenJDK: incorrect permissions check in resource loading (Beans, 8068320)
+1211504 - CVE-2015-0480 OpenJDK: jar directory traversal issues (Tools, 8064601)
+1211543 - CVE-2015-0488 OpenJDK: certificate options parsing uncaught exception (JSSE, 8068720)
+1211768 - CVE-2015-0459 Oracle JDK: unspecified vulnerability fixed in 5.0u85, 6u95, 7u79 and 8u45 (2D)
+1211769 - CVE-2015-0491 Oracle JDK: unspecified vulnerability fixed in 5.0u85, 6u95, 7u79 and 8u45 (2D)
+1211771 - CVE-2015-0458 Oracle JDK: unspecified vulnerability fixed in 6u95, 7u79 and 8u45 (Deployment)
+
+6. Package List:
+
+Oracle Java for Red Hat Enterprise Linux Client 5:
+
+i386:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el5_11.i586.rpm
+
+x86_64:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+
+Oracle Java for Red Hat Enterprise Linux Desktop 5:
+
+i386:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el5_11.i586.rpm
+
+x86_64:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el5_11.i586.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el5_11.x86_64.rpm
+
+Oracle Java for Red Hat Enterprise Linux Desktop 6:
+
+i386:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el6_6.i686.rpm
+
+x86_64:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+
+Oracle Java for Red Hat Enterprise Linux HPC Node 6:
+
+i386:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el6_6.i686.rpm
+
+x86_64:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+
+Oracle Java for Red Hat Enterprise Linux Server 6:
+
+i386:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el6_6.i686.rpm
+
+x86_64:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+
+Oracle Java for Red Hat Enterprise Linux Workstation 6:
+
+i386:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el6_6.i686.rpm
+
+x86_64:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el6_6.x86_64.rpm
+
+Oracle Java for Red Hat Enterprise Linux Client (v. 7):
+
+x86_64:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el7_1.i686.rpm
+java-1.6.0-sun-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el7_1.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+
+Oracle Java for Red Hat Enterprise Linux Compute Node (v. 7):
+
+x86_64:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el7_1.i686.rpm
+java-1.6.0-sun-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el7_1.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+
+Oracle Java for Red Hat Enterprise Linux Server (v. 7):
+
+x86_64:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el7_1.i686.rpm
+java-1.6.0-sun-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el7_1.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+
+Oracle Java for Red Hat Enterprise Linux Workstation (v. 7):
+
+x86_64:
+java-1.6.0-sun-1.6.0.95-1jpp.3.el7_1.i686.rpm
+java-1.6.0-sun-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-demo-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el7_1.i686.rpm
+java-1.6.0-sun-devel-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-jdbc-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-plugin-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+java-1.6.0-sun-src-1.6.0.95-1jpp.3.el7_1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2005-1080">https://access.redhat.com/security/cve/CVE-2005-1080</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0458">https://access.redhat.com/security/cve/CVE-2015-0458</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0459">https://access.redhat.com/security/cve/CVE-2015-0459</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0460">https://access.redhat.com/security/cve/CVE-2015-0460</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0469">https://access.redhat.com/security/cve/CVE-2015-0469</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0477">https://access.redhat.com/security/cve/CVE-2015-0477</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0478">https://access.redhat.com/security/cve/CVE-2015-0478</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0480">https://access.redhat.com/security/cve/CVE-2015-0480</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0488">https://access.redhat.com/security/cve/CVE-2015-0488</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0491">https://access.redhat.com/security/cve/CVE-2015-0491</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://www.oracle.com/technetwork/topics/security/cpuapr2015-2365600.html#AppendixJAVA">http://www.oracle.com/technetwork/topics/security/cpuapr2015-2365600.html#AppendixJAVA</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVNRC1XlSAg2UNWIIRAjECAJwMRNP9KubHK5tvIPOMZ3cvG0XjZACghu3T
+d2/IGgPrh/0p5RO9vjqxIUg=
+=hEPD
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00047.html">Date Prev</a>][<a href="msg00049.html">Date Next</a>] &nbsp; [<a href="msg00047.html">Thread Prev</a>][<a href="msg00049.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00048">Thread Index</A>]
+[<A HREF="date.html#00048">Date Index</A>]
+[<A HREF="author.html#00048">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

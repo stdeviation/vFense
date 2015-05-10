@@ -1,0 +1,196 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0869&#45;01] Important: kvm security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 22 Apr 2015 06:43:19 &#45;0400 -->
+<!--X-Message-Id: 201504221043.t3MAhGHk030496@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0869-01] Important: kvm security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00056.html">Date Prev</a>][<a href="msg00058.html">Date Next</a>] &nbsp; [<a href="msg00056.html">Thread Prev</a>][<a href="msg00058.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00057">Thread Index</A>]
+[<A HREF="date.html#00057">Date Index</A>]
+[<A HREF="author.html#00057">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0869-01] Important: kvm security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0869-01] Important: kvm security update</li>
+<li><em>Date</em>: Wed, 22 Apr 2015 10:54:50 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kvm security update
+Advisory ID:       RHSA-2015:0869-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0869.html">https://rhn.redhat.com/errata/RHSA-2015-0869.html</a>
+Issue date:        2015-04-22
+CVE Names:         CVE-2014-3610 CVE-2014-3611 
+=====================================================================
+
+1. Summary:
+
+Updated kvm packages that fix two security issues are now available for Red
+Hat Enterprise Linux 5.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEL Desktop Multi OS (v. 5 client) - x86_64
+RHEL Virtualization (v. 5 server) - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. KVM is a Linux kernel module built for
+the standard Red Hat Enterprise Linux kernel.
+
+It was found that KVM's Write to Model Specific Register (WRMSR)
+instruction emulation would write non-canonical values passed in by the
+guest to certain MSRs in the host's context. A privileged guest user could
+use this flaw to crash the host. (CVE-2014-3610)
+
+A race condition flaw was found in the way the Linux kernel's KVM subsystem
+handled PIT (Programmable Interval Timer) emulation. A guest user who has
+access to the PIT I/O ports could use this flaw to crash the host.
+(CVE-2014-3611)
+
+Red Hat would like to thank Lars Bull of Google and Nadav Amit for
+reporting the CVE-2014-3610 issue, and Lars Bull of Google for reporting
+the CVE-2014-3611 issue.
+
+All kvm users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. Note: The procedure in
+the Solution section must be performed before this update will take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+The following procedure must be performed before this update will take
+effect:
+
+1) Stop all KVM guest virtual machines.
+
+2) Either reboot the hypervisor machine or, as the root user, remove (using
+&quot;modprobe -r [module]&quot;) and reload (using &quot;modprobe [module]&quot;) all of the
+following modules which are currently running (determined using &quot;lsmod&quot;):
+kvm, ksm, kvm-intel or kvm-amd.
+
+3) Restart the KVM guest virtual machines.
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1144878 - CVE-2014-3611 kernel: kvm: PIT timer race condition
+1144883 - CVE-2014-3610 kernel: kvm: noncanonical MSR writes
+
+6. Package List:
+
+RHEL Desktop Multi OS (v. 5 client):
+
+Source:
+kvm-83-270.el5_11.src.rpm
+
+x86_64:
+kmod-kvm-83-270.el5_11.x86_64.rpm
+kmod-kvm-debug-83-270.el5_11.x86_64.rpm
+kvm-83-270.el5_11.x86_64.rpm
+kvm-debuginfo-83-270.el5_11.x86_64.rpm
+kvm-qemu-img-83-270.el5_11.x86_64.rpm
+kvm-tools-83-270.el5_11.x86_64.rpm
+
+RHEL Virtualization (v. 5 server):
+
+Source:
+kvm-83-270.el5_11.src.rpm
+
+x86_64:
+kmod-kvm-83-270.el5_11.x86_64.rpm
+kmod-kvm-debug-83-270.el5_11.x86_64.rpm
+kvm-83-270.el5_11.x86_64.rpm
+kvm-debuginfo-83-270.el5_11.x86_64.rpm
+kvm-qemu-img-83-270.el5_11.x86_64.rpm
+kvm-tools-83-270.el5_11.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3610">https://access.redhat.com/security/cve/CVE-2014-3610</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3611">https://access.redhat.com/security/cve/CVE-2014-3611</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVN3s3XlSAg2UNWIIRAg/UAKCBiZgLwNuXdKojCQWm2SRiRQ6cigCfZhEj
+TXPj/BwdH1WwdLjMvtODoQM=
+=MgBT
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00056.html">Date Prev</a>][<a href="msg00058.html">Date Next</a>] &nbsp; [<a href="msg00056.html">Thread Prev</a>][<a href="msg00058.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00057">Thread Index</A>]
+[<A HREF="date.html#00057">Date Index</A>]
+[<A HREF="author.html#00057">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

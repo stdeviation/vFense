@@ -1,0 +1,218 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0197&#45;01] Moderate: rhevm&#45;spice&#45;client security and bug fix	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 11 Feb 2015 13:22:18 &#45;0500 -->
+<!--X-Message-Id: 201502111822.t1BIMIOs020902@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0197-01] Moderate: rhevm-spice-client security and bug fix	up</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0197-01] Moderate: rhevm-spice-client security and bug fix	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0197-01] Moderate: rhevm-spice-client security and bug fix	update</li>
+<li><em>Date</em>: Wed, 11 Feb 2015 18:22:17 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: rhevm-spice-client security and bug fix update
+Advisory ID:       RHSA-2015:0197-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0197.html">https://rhn.redhat.com/errata/RHSA-2015-0197.html</a>
+Issue date:        2014-07-25
+Updated on:        2015-02-11
+CVE Names:         CVE-2014-3509 CVE-2014-3511 
+=====================================================================
+
+1. Summary:
+
+Updated rhevm-spice-client packages that fix two security issues and
+several bugs are now available for Red Hat Enterprise Virtualization
+Manager 3.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.5 - noarch
+
+3. Description:
+
+Red Hat Enterprise Virtualization Manager provides access to virtual
+machines using SPICE. These SPICE client packages provide the SPICE client
+and usbclerk service for both Windows 32-bit operating systems and Windows
+64-bit operating systems.
+
+A race condition was found in the way OpenSSL handled ServerHello messages
+with an included Supported EC Point Format extension. A malicious server
+could possibly use this flaw to cause a multi-threaded TLS/SSL client using
+OpenSSL to write into freed memory, causing the client to crash or execute
+arbitrary code. (CVE-2014-3509)
+
+A flaw was found in the way OpenSSL handled fragmented handshake packets.
+A man-in-the-middle attacker could use this flaw to force a TLS/SSL server
+using OpenSSL to use TLS 1.0, even if both the client and the server
+supported newer protocol versions. (CVE-2014-3511)
+
+This update also fixes the following bugs:
+
+* Previously, various clipboard managers, operating on the client or on the
+guest, would occasionally lose synchronization, which resulted in clipboard
+data loss and the SPICE console freezing. Now, spice-gtk have been patched,
+such that clipboard synchronization does not freeze the SPICE console
+anymore. (BZ#1083489)
+
+* Prior to this update, when a SPICE console was launched from the Red Hat
+Enterprise Virtualization User Portal with the 'Native Client' invocation
+method and 'Open in Full Screen' selected, the displays of the guest
+virtual machine were not always configured to match the client displays.
+After this update, the SPICE console will show a full-screen guest display
+for each client monitor. (BZ#1076243)
+
+* A difference in behavior between Linux and Windows clients caused an
+extra nul character to be sent when pasting text in a guest machine from a
+Windows client. This invisible character was visible in some Java
+applications. With this update, the extra nul character is removed from
+text strings and no more extraneous character would appear. (BZ#1090122)
+
+* Previously, If the clipboard is of type image/bmp, and the data is of 0
+size, GTK+ will crash. With this update, the data size is checked first,
+and GTK+ no longer crashes when clipboard is of type image/bmp, and the
+data is of 0 size. (BZ#1090433)
+
+* Modifier-only key combinations cannot be registered by users as hotkeys
+so if a user tries to set a modifier-only key sequence (for example,
+'ctrl+alt') as the hotkey for releasing the cursor, it will fail, and the
+user will be able to release the cursor from the window. With this update,
+when a modifier-only hotkey is attempted to be registered, it will fall
+back to the default cursor-release sequence (which happens to be
+'ctrl+alt'). (BZ#985319)
+
+* Display configuration sometimes used outdated information about the
+position of the remote-viewer windows in order to align and configure the
+guest displays. Occasionally, this caused the guest displays to became
+unexpectedly swapped when a window is resized. With this update,
+remote-viewer will always use the current window locations to align
+displays, rather than using a possibly outdated cached location
+information. (BZ#1018182)
+
+All rhevm-spice-client users are advised to upgrade to these updated
+packages, which contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1018145 - --full-screen=auto-conf sometimes (but frequently) doesn't work correctly
+1018182 - primary monitor is switched if some screen gets bigger then current primary screen
+1076243 - [BUG] RHEV SPICE console not opening in full screen or detecting resolution by default
+1083489 - [SPICE][BUG] Spice session freezes randomly
+1090122 - Pasting into java apps inserts unprintable character
+1090433 - [GTK][BUG] win32: add more clipboard data checks to avoid crash
+1103366 - Rebase virt-viewer to 0.6.0
+1105650 - Fix windows productversion to fit -z releases
+1115445 - in About dialog, hyphen version-build dividing hyphen is missing
+1127498 - CVE-2014-3509 openssl: race condition in ssl_parse_serverhello_tlsext
+1127504 - CVE-2014-3511 openssl: TLS protocol downgrade attack
+
+6. Package List:
+
+RHEV-M 3.5:
+
+Source:
+rhevm-spice-client-3.5-2.el6.src.rpm
+
+noarch:
+rhevm-spice-client-x64-cab-3.5-2.el6.noarch.rpm
+rhevm-spice-client-x64-msi-3.5-2.el6.noarch.rpm
+rhevm-spice-client-x86-cab-3.5-2.el6.noarch.rpm
+rhevm-spice-client-x86-msi-3.5-2.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3509">https://access.redhat.com/security/cve/CVE-2014-3509</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3511">https://access.redhat.com/security/cve/CVE-2014-3511</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU253LXlSAg2UNWIIRAjJEAKCrqGkFJHhLN3Iqt069y96etuCAxgCcCTWW
+1SViofNGiqbiufMWwY7okg4=
+=cjiU
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

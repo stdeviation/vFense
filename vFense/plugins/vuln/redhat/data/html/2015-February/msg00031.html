@@ -1,0 +1,398 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0251&#45;01] Critical: samba security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Mon, 23 Feb 2015 14:48:07 &#45;0500 -->
+<!--X-Message-Id: 201502231948.t1NJm6sn015345@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0251-01] Critical: samba security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0251-01] Critical: samba security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0251-01] Critical: samba security update</li>
+<li><em>Date</em>: Mon, 23 Feb 2015 19:48:06 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Critical: samba security update
+Advisory ID:       RHSA-2015:0251-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0251.html">https://rhn.redhat.com/errata/RHSA-2015-0251.html</a>
+Issue date:        2015-02-23
+CVE Names:         CVE-2015-0240 
+=====================================================================
+
+1. Summary:
+
+Updated samba packages that fix one security issue are now available for
+Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Critical security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+Samba is an open-source implementation of the Server Message Block (SMB) or
+Common Internet File System (CIFS) protocol, which allows PC-compatible
+machines to share files, printers, and other information.
+
+An uninitialized pointer use flaw was found in the Samba daemon (smbd).
+A malicious Samba client could send specially crafted netlogon packets
+that, when processed by smbd, could potentially lead to arbitrary code
+execution with the privileges of the user running smbd (by default, the
+root user). (CVE-2015-0240)
+
+For additional information about this flaw, see the Knowledgebase article
+at <a  rel="nofollow" href="https://access.redhat.com/articles/1346913">https://access.redhat.com/articles/1346913</a>
+
+Red Hat would like to thank the Samba project for reporting this issue.
+Upstream acknowledges Richard van Eeden of Microsoft Vulnerability Research
+as the original reporter of this issue.
+
+All Samba users are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue. After installing this
+update, the smb service will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1191325 - CVE-2015-0240 samba: talloc free on uninitialized stack pointer in netlogon server could lead to remote-code execution
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+samba-3.6.23-14.el6_6.src.rpm
+
+i386:
+libsmbclient-3.6.23-14.el6_6.i686.rpm
+samba-client-3.6.23-14.el6_6.i686.rpm
+samba-common-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-winbind-3.6.23-14.el6_6.i686.rpm
+samba-winbind-clients-3.6.23-14.el6_6.i686.rpm
+
+x86_64:
+libsmbclient-3.6.23-14.el6_6.i686.rpm
+libsmbclient-3.6.23-14.el6_6.x86_64.rpm
+samba-client-3.6.23-14.el6_6.x86_64.rpm
+samba-common-3.6.23-14.el6_6.i686.rpm
+samba-common-3.6.23-14.el6_6.x86_64.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-clients-3.6.23-14.el6_6.i686.rpm
+samba-winbind-clients-3.6.23-14.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+libsmbclient-devel-3.6.23-14.el6_6.i686.rpm
+samba-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-doc-3.6.23-14.el6_6.i686.rpm
+samba-domainjoin-gui-3.6.23-14.el6_6.i686.rpm
+samba-swat-3.6.23-14.el6_6.i686.rpm
+samba-winbind-devel-3.6.23-14.el6_6.i686.rpm
+samba-winbind-krb5-locator-3.6.23-14.el6_6.i686.rpm
+
+x86_64:
+libsmbclient-devel-3.6.23-14.el6_6.i686.rpm
+libsmbclient-devel-3.6.23-14.el6_6.x86_64.rpm
+samba-3.6.23-14.el6_6.x86_64.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.x86_64.rpm
+samba-doc-3.6.23-14.el6_6.x86_64.rpm
+samba-domainjoin-gui-3.6.23-14.el6_6.x86_64.rpm
+samba-glusterfs-3.6.23-14.el6_6.x86_64.rpm
+samba-swat-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-devel-3.6.23-14.el6_6.i686.rpm
+samba-winbind-devel-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-krb5-locator-3.6.23-14.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+samba-3.6.23-14.el6_6.src.rpm
+
+x86_64:
+samba-client-3.6.23-14.el6_6.x86_64.rpm
+samba-common-3.6.23-14.el6_6.i686.rpm
+samba-common-3.6.23-14.el6_6.x86_64.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-clients-3.6.23-14.el6_6.i686.rpm
+samba-winbind-clients-3.6.23-14.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+x86_64:
+libsmbclient-3.6.23-14.el6_6.i686.rpm
+libsmbclient-3.6.23-14.el6_6.x86_64.rpm
+libsmbclient-devel-3.6.23-14.el6_6.i686.rpm
+libsmbclient-devel-3.6.23-14.el6_6.x86_64.rpm
+samba-3.6.23-14.el6_6.x86_64.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.x86_64.rpm
+samba-doc-3.6.23-14.el6_6.x86_64.rpm
+samba-domainjoin-gui-3.6.23-14.el6_6.x86_64.rpm
+samba-glusterfs-3.6.23-14.el6_6.x86_64.rpm
+samba-swat-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-devel-3.6.23-14.el6_6.i686.rpm
+samba-winbind-devel-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-krb5-locator-3.6.23-14.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+samba-3.6.23-14.el6_6.src.rpm
+
+i386:
+libsmbclient-3.6.23-14.el6_6.i686.rpm
+samba-3.6.23-14.el6_6.i686.rpm
+samba-client-3.6.23-14.el6_6.i686.rpm
+samba-common-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-winbind-3.6.23-14.el6_6.i686.rpm
+samba-winbind-clients-3.6.23-14.el6_6.i686.rpm
+
+ppc64:
+libsmbclient-3.6.23-14.el6_6.ppc.rpm
+libsmbclient-3.6.23-14.el6_6.ppc64.rpm
+samba-3.6.23-14.el6_6.ppc64.rpm
+samba-client-3.6.23-14.el6_6.ppc64.rpm
+samba-common-3.6.23-14.el6_6.ppc.rpm
+samba-common-3.6.23-14.el6_6.ppc64.rpm
+samba-debuginfo-3.6.23-14.el6_6.ppc.rpm
+samba-debuginfo-3.6.23-14.el6_6.ppc64.rpm
+samba-winbind-3.6.23-14.el6_6.ppc64.rpm
+samba-winbind-clients-3.6.23-14.el6_6.ppc.rpm
+samba-winbind-clients-3.6.23-14.el6_6.ppc64.rpm
+
+s390x:
+libsmbclient-3.6.23-14.el6_6.s390.rpm
+libsmbclient-3.6.23-14.el6_6.s390x.rpm
+samba-3.6.23-14.el6_6.s390x.rpm
+samba-client-3.6.23-14.el6_6.s390x.rpm
+samba-common-3.6.23-14.el6_6.s390.rpm
+samba-common-3.6.23-14.el6_6.s390x.rpm
+samba-debuginfo-3.6.23-14.el6_6.s390.rpm
+samba-debuginfo-3.6.23-14.el6_6.s390x.rpm
+samba-winbind-3.6.23-14.el6_6.s390x.rpm
+samba-winbind-clients-3.6.23-14.el6_6.s390.rpm
+samba-winbind-clients-3.6.23-14.el6_6.s390x.rpm
+
+x86_64:
+libsmbclient-3.6.23-14.el6_6.i686.rpm
+libsmbclient-3.6.23-14.el6_6.x86_64.rpm
+samba-3.6.23-14.el6_6.x86_64.rpm
+samba-client-3.6.23-14.el6_6.x86_64.rpm
+samba-common-3.6.23-14.el6_6.i686.rpm
+samba-common-3.6.23-14.el6_6.x86_64.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-clients-3.6.23-14.el6_6.i686.rpm
+samba-winbind-clients-3.6.23-14.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+libsmbclient-devel-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-doc-3.6.23-14.el6_6.i686.rpm
+samba-domainjoin-gui-3.6.23-14.el6_6.i686.rpm
+samba-swat-3.6.23-14.el6_6.i686.rpm
+samba-winbind-devel-3.6.23-14.el6_6.i686.rpm
+samba-winbind-krb5-locator-3.6.23-14.el6_6.i686.rpm
+
+ppc64:
+libsmbclient-devel-3.6.23-14.el6_6.ppc.rpm
+libsmbclient-devel-3.6.23-14.el6_6.ppc64.rpm
+samba-debuginfo-3.6.23-14.el6_6.ppc.rpm
+samba-debuginfo-3.6.23-14.el6_6.ppc64.rpm
+samba-doc-3.6.23-14.el6_6.ppc64.rpm
+samba-domainjoin-gui-3.6.23-14.el6_6.ppc64.rpm
+samba-swat-3.6.23-14.el6_6.ppc64.rpm
+samba-winbind-devel-3.6.23-14.el6_6.ppc.rpm
+samba-winbind-devel-3.6.23-14.el6_6.ppc64.rpm
+samba-winbind-krb5-locator-3.6.23-14.el6_6.ppc64.rpm
+
+s390x:
+libsmbclient-devel-3.6.23-14.el6_6.s390.rpm
+libsmbclient-devel-3.6.23-14.el6_6.s390x.rpm
+samba-debuginfo-3.6.23-14.el6_6.s390.rpm
+samba-debuginfo-3.6.23-14.el6_6.s390x.rpm
+samba-doc-3.6.23-14.el6_6.s390x.rpm
+samba-domainjoin-gui-3.6.23-14.el6_6.s390x.rpm
+samba-swat-3.6.23-14.el6_6.s390x.rpm
+samba-winbind-devel-3.6.23-14.el6_6.s390.rpm
+samba-winbind-devel-3.6.23-14.el6_6.s390x.rpm
+samba-winbind-krb5-locator-3.6.23-14.el6_6.s390x.rpm
+
+x86_64:
+libsmbclient-devel-3.6.23-14.el6_6.i686.rpm
+libsmbclient-devel-3.6.23-14.el6_6.x86_64.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.x86_64.rpm
+samba-doc-3.6.23-14.el6_6.x86_64.rpm
+samba-domainjoin-gui-3.6.23-14.el6_6.x86_64.rpm
+samba-glusterfs-3.6.23-14.el6_6.x86_64.rpm
+samba-swat-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-devel-3.6.23-14.el6_6.i686.rpm
+samba-winbind-devel-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-krb5-locator-3.6.23-14.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+samba-3.6.23-14.el6_6.src.rpm
+
+i386:
+libsmbclient-3.6.23-14.el6_6.i686.rpm
+samba-3.6.23-14.el6_6.i686.rpm
+samba-client-3.6.23-14.el6_6.i686.rpm
+samba-common-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-winbind-3.6.23-14.el6_6.i686.rpm
+samba-winbind-clients-3.6.23-14.el6_6.i686.rpm
+
+x86_64:
+libsmbclient-3.6.23-14.el6_6.i686.rpm
+libsmbclient-3.6.23-14.el6_6.x86_64.rpm
+samba-3.6.23-14.el6_6.x86_64.rpm
+samba-client-3.6.23-14.el6_6.x86_64.rpm
+samba-common-3.6.23-14.el6_6.i686.rpm
+samba-common-3.6.23-14.el6_6.x86_64.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-clients-3.6.23-14.el6_6.i686.rpm
+samba-winbind-clients-3.6.23-14.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+libsmbclient-devel-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-doc-3.6.23-14.el6_6.i686.rpm
+samba-domainjoin-gui-3.6.23-14.el6_6.i686.rpm
+samba-swat-3.6.23-14.el6_6.i686.rpm
+samba-winbind-devel-3.6.23-14.el6_6.i686.rpm
+samba-winbind-krb5-locator-3.6.23-14.el6_6.i686.rpm
+
+x86_64:
+libsmbclient-devel-3.6.23-14.el6_6.i686.rpm
+libsmbclient-devel-3.6.23-14.el6_6.x86_64.rpm
+samba-debuginfo-3.6.23-14.el6_6.i686.rpm
+samba-debuginfo-3.6.23-14.el6_6.x86_64.rpm
+samba-doc-3.6.23-14.el6_6.x86_64.rpm
+samba-domainjoin-gui-3.6.23-14.el6_6.x86_64.rpm
+samba-glusterfs-3.6.23-14.el6_6.x86_64.rpm
+samba-swat-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-devel-3.6.23-14.el6_6.i686.rpm
+samba-winbind-devel-3.6.23-14.el6_6.x86_64.rpm
+samba-winbind-krb5-locator-3.6.23-14.el6_6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0240">https://access.redhat.com/security/cve/CVE-2015-0240</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#critical">https://access.redhat.com/security/updates/classification/#critical</a>
+<a  rel="nofollow" href="https://access.redhat.com/articles/1346913">https://access.redhat.com/articles/1346913</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU64PoXlSAg2UNWIIRAnfHAJ9YqqUCbLH4hn6gdd6VFYGWh9oKyACfVFDH
+RxOf2dC/8PEAJy/4iV2j/sw=
+=Zv75
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00030.html">Date Prev</a>][<a href="msg00032.html">Date Next</a>] &nbsp; [<a href="msg00030.html">Thread Prev</a>][<a href="msg00032.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00031">Thread Index</A>]
+[<A HREF="date.html#00031">Date Index</A>]
+[<A HREF="author.html#00031">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

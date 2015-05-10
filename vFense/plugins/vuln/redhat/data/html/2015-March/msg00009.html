@@ -1,0 +1,462 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0535&#45;01] Low: GNOME Shell security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:34:53 &#45;0500 -->
+<!--X-Message-Id: 201503051434.t25EYq9J006695@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0535-01] Low: GNOME Shell security, bug fix,	and enhancement </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0535-01] Low: GNOME Shell security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0535-01] Low: GNOME Shell security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:34:52 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: GNOME Shell security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0535-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0535.html">https://rhn.redhat.com/errata/RHSA-2015-0535.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-7300 
+=====================================================================
+
+1. Summary:
+
+Updated gnome-shell, mutter, clutter, and cogl packages that fix one
+security issue, several bugs, and add one enhancement are now available for
+Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Low security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - noarch, x86_64
+
+3. Description:
+
+GNOME Shell and the packages it depends upon provide the core user
+interface of the Red Hat Enterprise Linux desktop, including functions such
+as navigating between windows and launching applications.
+
+It was found that the GNOME shell did not disable the Print Screen key when
+the screen was locked. This could allow an attacker with physical access to
+a system with a locked screen to crash the screen-locking application by
+creating a large amount of screenshots. (CVE-2014-7300)
+
+This update also fixes the following bugs:
+
+* The Timed Login feature, which automatically logs in a specified user
+after a specified period of time, stopped working after the first user of
+the GUI logged out. This has been fixed, and the specified user is always
+logged in if no one else logs in. (BZ#1043571)
+
+* If two monitors were arranged vertically with the secondary monitor above
+the primary monitor, it was impossible to move windows onto the secondary
+monitor. With this update, windows can be moved through the upper edge of
+the first monitor to the secondary monitor. (BZ#1075240)
+
+* If the Gnome Display Manager (GDM) user list was disabled and a user
+entered the user name, the password prompt did not appear. Instead, the
+user had to enter the user name one more time. The GDM code that contained
+this error has been fixed, and users can enter their user names and
+passwords as expected. (BZ#1109530)
+
+* Prior to this update, only a small area was available on the GDM login
+screen for a custom text banner. As a consequence, when a long banner was
+used, it did not fit into the area, and the person reading the banner had
+to use scrollbars to view the whole text. With this update, more space is
+used for the banner if necessary, which allows the user to read the message
+conveniently. (BZ#1110036)
+
+* When the Cancel button was pressed while an LDAP user name and password
+was being validated, the GDM code did not handle the situation correctly.
+As a consequence, GDM became unresponsive, and it was impossible to return
+to the login screen. The affected code has been fixed, and LDAP user
+validation can be canceled, allowing another user to log in instead.
+(BZ#1137041)
+
+* If the window focus mode in GNOME was set to &quot;mouse&quot; or &quot;sloppy&quot;,
+navigating through areas of a pop-up menu displayed outside its parent
+window caused the window to lose its focus. Consequently, the menu was not
+usable. This has been fixed, and the window focus is kept in under this
+scenario. (BZ#1149585)
+
+* If user authentication is configured to require a smart card to log in,
+user names are obtained from the smart card. The authentication is then
+performed by entering the smart card PIN. Prior to this update, the login
+screen allowed a user name to be entered if no smart card was inserted, but
+due to a bug in the underlying code, the screen became unresponsive. If, on
+the other hand, a smart card was used for authentication, the user was
+logged in as soon as the authentication was complete. As a consequence, it
+was impossible to select a session other than GNOME Classic. Both of these
+problems have been fixed. Now, a smart card is required when this type of
+authentication is enabled, and any other installed session can be selected
+by the user. (BZ#1159385, BZ#1163474)
+
+In addition, this update adds the following enhancement:
+
+* Support for quad-buffer OpenGL stereo visuals has been added. As a
+result, OpenGL applications that use quad-buffer stereo can be run and
+properly displayed within the GNOME desktop when used with a video driver
+and hardware with the necessary capabilities. (BZ#861507, BZ#1108890,
+BZ#1108891, BZ#1108893)
+
+All GNOME Shell users are advised to upgrade to these updated packages,
+which contain backported patches to correct these issues and add this
+enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1043571 - Timed Login Failure
+1052201 - Details -- Default Applications -- calendar
+1092102 - workspaces thumbnails in overview too narrow with large number of workspaces
+1108322 - Qt menu placement problem with gnome-shell and vertical monitors
+1126754 - Workspace window placement is not persistent if monitors are switched
+1137041 - GDM hangs when cancelling ldap user login
+1147917 - CVE-2014-7300 gnome-shell: lockscreen bypass with printscreen key
+1149585 - sloppy/mouse focus mode break with long pull-down menus
+1153641 - [multi-head] Window is moved on its own to other screen
+1154107 - CVE-2014-7300 gnome-shell: lockscreen bypass with printscreen key [rhel-7.1]
+1154122 - Respect disable-save-to-disk lockdown setting
+1159385 - GDM does not prompt for smartcard
+1163474 - pam_pkcs11 with card_only breaks session selection
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+clutter-1.14.4-12.el7.src.rpm
+cogl-1.14.0-6.el7.src.rpm
+gnome-shell-3.8.4-45.el7.src.rpm
+mutter-3.8.4-16.el7.src.rpm
+
+x86_64:
+clutter-1.14.4-12.el7.i686.rpm
+clutter-1.14.4-12.el7.x86_64.rpm
+clutter-debuginfo-1.14.4-12.el7.i686.rpm
+clutter-debuginfo-1.14.4-12.el7.x86_64.rpm
+cogl-1.14.0-6.el7.i686.rpm
+cogl-1.14.0-6.el7.x86_64.rpm
+cogl-debuginfo-1.14.0-6.el7.i686.rpm
+cogl-debuginfo-1.14.0-6.el7.x86_64.rpm
+gnome-shell-3.8.4-45.el7.x86_64.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.x86_64.rpm
+mutter-3.8.4-16.el7.i686.rpm
+mutter-3.8.4-16.el7.x86_64.rpm
+mutter-debuginfo-3.8.4-16.el7.i686.rpm
+mutter-debuginfo-3.8.4-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+noarch:
+cogl-doc-1.14.0-6.el7.noarch.rpm
+
+x86_64:
+clutter-debuginfo-1.14.4-12.el7.i686.rpm
+clutter-debuginfo-1.14.4-12.el7.x86_64.rpm
+clutter-devel-1.14.4-12.el7.i686.rpm
+clutter-devel-1.14.4-12.el7.x86_64.rpm
+clutter-doc-1.14.4-12.el7.x86_64.rpm
+cogl-debuginfo-1.14.0-6.el7.i686.rpm
+cogl-debuginfo-1.14.0-6.el7.x86_64.rpm
+cogl-devel-1.14.0-6.el7.i686.rpm
+cogl-devel-1.14.0-6.el7.x86_64.rpm
+gnome-shell-browser-plugin-3.8.4-45.el7.x86_64.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.x86_64.rpm
+mutter-debuginfo-3.8.4-16.el7.i686.rpm
+mutter-debuginfo-3.8.4-16.el7.x86_64.rpm
+mutter-devel-3.8.4-16.el7.i686.rpm
+mutter-devel-3.8.4-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+Source:
+clutter-1.14.4-12.el7.src.rpm
+cogl-1.14.0-6.el7.src.rpm
+gnome-shell-3.8.4-45.el7.src.rpm
+mutter-3.8.4-16.el7.src.rpm
+
+noarch:
+cogl-doc-1.14.0-6.el7.noarch.rpm
+
+x86_64:
+clutter-1.14.4-12.el7.i686.rpm
+clutter-1.14.4-12.el7.x86_64.rpm
+clutter-debuginfo-1.14.4-12.el7.i686.rpm
+clutter-debuginfo-1.14.4-12.el7.x86_64.rpm
+clutter-devel-1.14.4-12.el7.i686.rpm
+clutter-devel-1.14.4-12.el7.x86_64.rpm
+clutter-doc-1.14.4-12.el7.x86_64.rpm
+cogl-1.14.0-6.el7.i686.rpm
+cogl-1.14.0-6.el7.x86_64.rpm
+cogl-debuginfo-1.14.0-6.el7.i686.rpm
+cogl-debuginfo-1.14.0-6.el7.x86_64.rpm
+cogl-devel-1.14.0-6.el7.i686.rpm
+cogl-devel-1.14.0-6.el7.x86_64.rpm
+gnome-shell-3.8.4-45.el7.x86_64.rpm
+gnome-shell-browser-plugin-3.8.4-45.el7.x86_64.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.x86_64.rpm
+mutter-3.8.4-16.el7.i686.rpm
+mutter-3.8.4-16.el7.x86_64.rpm
+mutter-debuginfo-3.8.4-16.el7.i686.rpm
+mutter-debuginfo-3.8.4-16.el7.x86_64.rpm
+mutter-devel-3.8.4-16.el7.i686.rpm
+mutter-devel-3.8.4-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+clutter-1.14.4-12.el7.src.rpm
+cogl-1.14.0-6.el7.src.rpm
+gnome-shell-3.8.4-45.el7.src.rpm
+mutter-3.8.4-16.el7.src.rpm
+
+ppc64:
+clutter-1.14.4-12.el7.ppc.rpm
+clutter-1.14.4-12.el7.ppc64.rpm
+clutter-debuginfo-1.14.4-12.el7.ppc.rpm
+clutter-debuginfo-1.14.4-12.el7.ppc64.rpm
+cogl-1.14.0-6.el7.ppc.rpm
+cogl-1.14.0-6.el7.ppc64.rpm
+cogl-debuginfo-1.14.0-6.el7.ppc.rpm
+cogl-debuginfo-1.14.0-6.el7.ppc64.rpm
+gnome-shell-3.8.4-45.el7.ppc64.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.ppc64.rpm
+mutter-3.8.4-16.el7.ppc.rpm
+mutter-3.8.4-16.el7.ppc64.rpm
+mutter-debuginfo-3.8.4-16.el7.ppc.rpm
+mutter-debuginfo-3.8.4-16.el7.ppc64.rpm
+
+s390x:
+clutter-1.14.4-12.el7.s390.rpm
+clutter-1.14.4-12.el7.s390x.rpm
+clutter-debuginfo-1.14.4-12.el7.s390.rpm
+clutter-debuginfo-1.14.4-12.el7.s390x.rpm
+cogl-1.14.0-6.el7.s390.rpm
+cogl-1.14.0-6.el7.s390x.rpm
+cogl-debuginfo-1.14.0-6.el7.s390.rpm
+cogl-debuginfo-1.14.0-6.el7.s390x.rpm
+gnome-shell-3.8.4-45.el7.s390x.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.s390x.rpm
+mutter-3.8.4-16.el7.s390.rpm
+mutter-3.8.4-16.el7.s390x.rpm
+mutter-debuginfo-3.8.4-16.el7.s390.rpm
+mutter-debuginfo-3.8.4-16.el7.s390x.rpm
+
+x86_64:
+clutter-1.14.4-12.el7.i686.rpm
+clutter-1.14.4-12.el7.x86_64.rpm
+clutter-debuginfo-1.14.4-12.el7.i686.rpm
+clutter-debuginfo-1.14.4-12.el7.x86_64.rpm
+cogl-1.14.0-6.el7.i686.rpm
+cogl-1.14.0-6.el7.x86_64.rpm
+cogl-debuginfo-1.14.0-6.el7.i686.rpm
+cogl-debuginfo-1.14.0-6.el7.x86_64.rpm
+gnome-shell-3.8.4-45.el7.x86_64.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.x86_64.rpm
+mutter-3.8.4-16.el7.i686.rpm
+mutter-3.8.4-16.el7.x86_64.rpm
+mutter-debuginfo-3.8.4-16.el7.i686.rpm
+mutter-debuginfo-3.8.4-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+noarch:
+cogl-doc-1.14.0-6.el7.noarch.rpm
+
+ppc64:
+clutter-debuginfo-1.14.4-12.el7.ppc.rpm
+clutter-debuginfo-1.14.4-12.el7.ppc64.rpm
+clutter-devel-1.14.4-12.el7.ppc.rpm
+clutter-devel-1.14.4-12.el7.ppc64.rpm
+clutter-doc-1.14.4-12.el7.ppc64.rpm
+cogl-debuginfo-1.14.0-6.el7.ppc.rpm
+cogl-debuginfo-1.14.0-6.el7.ppc64.rpm
+cogl-devel-1.14.0-6.el7.ppc.rpm
+cogl-devel-1.14.0-6.el7.ppc64.rpm
+gnome-shell-browser-plugin-3.8.4-45.el7.ppc64.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.ppc64.rpm
+mutter-debuginfo-3.8.4-16.el7.ppc.rpm
+mutter-debuginfo-3.8.4-16.el7.ppc64.rpm
+mutter-devel-3.8.4-16.el7.ppc.rpm
+mutter-devel-3.8.4-16.el7.ppc64.rpm
+
+s390x:
+clutter-debuginfo-1.14.4-12.el7.s390.rpm
+clutter-debuginfo-1.14.4-12.el7.s390x.rpm
+clutter-devel-1.14.4-12.el7.s390.rpm
+clutter-devel-1.14.4-12.el7.s390x.rpm
+clutter-doc-1.14.4-12.el7.s390x.rpm
+cogl-debuginfo-1.14.0-6.el7.s390.rpm
+cogl-debuginfo-1.14.0-6.el7.s390x.rpm
+cogl-devel-1.14.0-6.el7.s390.rpm
+cogl-devel-1.14.0-6.el7.s390x.rpm
+gnome-shell-browser-plugin-3.8.4-45.el7.s390x.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.s390x.rpm
+mutter-debuginfo-3.8.4-16.el7.s390.rpm
+mutter-debuginfo-3.8.4-16.el7.s390x.rpm
+mutter-devel-3.8.4-16.el7.s390.rpm
+mutter-devel-3.8.4-16.el7.s390x.rpm
+
+x86_64:
+clutter-debuginfo-1.14.4-12.el7.i686.rpm
+clutter-debuginfo-1.14.4-12.el7.x86_64.rpm
+clutter-devel-1.14.4-12.el7.i686.rpm
+clutter-devel-1.14.4-12.el7.x86_64.rpm
+clutter-doc-1.14.4-12.el7.x86_64.rpm
+cogl-debuginfo-1.14.0-6.el7.i686.rpm
+cogl-debuginfo-1.14.0-6.el7.x86_64.rpm
+cogl-devel-1.14.0-6.el7.i686.rpm
+cogl-devel-1.14.0-6.el7.x86_64.rpm
+gnome-shell-browser-plugin-3.8.4-45.el7.x86_64.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.x86_64.rpm
+mutter-debuginfo-3.8.4-16.el7.i686.rpm
+mutter-debuginfo-3.8.4-16.el7.x86_64.rpm
+mutter-devel-3.8.4-16.el7.i686.rpm
+mutter-devel-3.8.4-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+clutter-1.14.4-12.el7.src.rpm
+cogl-1.14.0-6.el7.src.rpm
+gnome-shell-3.8.4-45.el7.src.rpm
+mutter-3.8.4-16.el7.src.rpm
+
+x86_64:
+clutter-1.14.4-12.el7.i686.rpm
+clutter-1.14.4-12.el7.x86_64.rpm
+clutter-debuginfo-1.14.4-12.el7.i686.rpm
+clutter-debuginfo-1.14.4-12.el7.x86_64.rpm
+cogl-1.14.0-6.el7.i686.rpm
+cogl-1.14.0-6.el7.x86_64.rpm
+cogl-debuginfo-1.14.0-6.el7.i686.rpm
+cogl-debuginfo-1.14.0-6.el7.x86_64.rpm
+gnome-shell-3.8.4-45.el7.x86_64.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.x86_64.rpm
+mutter-3.8.4-16.el7.i686.rpm
+mutter-3.8.4-16.el7.x86_64.rpm
+mutter-debuginfo-3.8.4-16.el7.i686.rpm
+mutter-debuginfo-3.8.4-16.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+noarch:
+cogl-doc-1.14.0-6.el7.noarch.rpm
+
+x86_64:
+clutter-debuginfo-1.14.4-12.el7.i686.rpm
+clutter-debuginfo-1.14.4-12.el7.x86_64.rpm
+clutter-devel-1.14.4-12.el7.i686.rpm
+clutter-devel-1.14.4-12.el7.x86_64.rpm
+clutter-doc-1.14.4-12.el7.x86_64.rpm
+cogl-debuginfo-1.14.0-6.el7.i686.rpm
+cogl-debuginfo-1.14.0-6.el7.x86_64.rpm
+cogl-devel-1.14.0-6.el7.i686.rpm
+cogl-devel-1.14.0-6.el7.x86_64.rpm
+gnome-shell-browser-plugin-3.8.4-45.el7.x86_64.rpm
+gnome-shell-debuginfo-3.8.4-45.el7.x86_64.rpm
+mutter-debuginfo-3.8.4-16.el7.i686.rpm
+mutter-debuginfo-3.8.4-16.el7.x86_64.rpm
+mutter-devel-3.8.4-16.el7.i686.rpm
+mutter-devel-3.8.4-16.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7300">https://access.redhat.com/security/cve/CVE-2014-7300</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+GiQXlSAg2UNWIIRApjUAJ4+FOmuNc0peDf2u2Bp5vsq/t1qbwCeIr0R
+jx/foC/4KMC6SRRgGMZ+BLI=
+=BV/R
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00008.html">Date Prev</a>][<a href="msg00010.html">Date Next</a>] &nbsp; [<a href="msg00008.html">Thread Prev</a>][<a href="msg00010.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00009">Thread Index</A>]
+[<A HREF="date.html#00009">Date Index</A>]
+[<A HREF="author.html#00009">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

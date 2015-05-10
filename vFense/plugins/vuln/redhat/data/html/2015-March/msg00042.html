@@ -1,0 +1,286 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0700&#45;01] Moderate: unzip security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 18 Mar 2015 15:13:47 &#45;0400 -->
+<!--X-Message-Id: 201503181913.t2IJDkub019285@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0700-01] Moderate: unzip security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0700-01] Moderate: unzip security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0700-01] Moderate: unzip security update</li>
+<li><em>Date</em>: Wed, 18 Mar 2015 19:13:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: unzip security update
+Advisory ID:       RHSA-2015:0700-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0700.html">https://rhn.redhat.com/errata/RHSA-2015-0700.html</a>
+Issue date:        2015-03-18
+CVE Names:         CVE-2014-8139 CVE-2014-8140 CVE-2014-8141 
+                   CVE-2014-9636 
+=====================================================================
+
+1. Summary:
+
+Updated unzip packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 6 and 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, ppc64le, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+
+3. Description:
+
+The unzip utility is used to list, test, or extract files from a
+zip archive.
+
+A buffer overflow was found in the way unzip uncompressed certain extra
+fields of a file. A specially crafted Zip archive could cause unzip to
+crash or, possibly, execute arbitrary code when the archive was tested with
+unzip's '-t' option. (CVE-2014-9636)
+
+A buffer overflow flaw was found in the way unzip computed the CRC32
+checksum of certain extra fields of a file. A specially crafted Zip archive
+could cause unzip to crash when the archive was tested with unzip's '-t'
+option. (CVE-2014-8139)
+
+An integer underflow flaw, leading to a buffer overflow, was found in the
+way unzip uncompressed certain extra fields of a file. A specially crafted
+Zip archive could cause unzip to crash when the archive was tested with
+unzip's '-t' option. (CVE-2014-8140)
+
+A buffer overflow flaw was found in the way unzip handled Zip64 files.
+A specially crafted Zip archive could possibly cause unzip to crash when
+the archive was uncompressed. (CVE-2014-8141)
+
+Red Hat would like to thank oCERT for reporting the CVE-2014-8139,
+CVE-2014-8140, and CVE-2014-8141 issues. oCERT acknowledges Michele
+Spagnuolo of the Google Security Team as the original reporter of
+these issues.
+
+All unzip users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1174844 - CVE-2014-8139 unzip: CRC32 verification heap-based buffer overread (oCERT-2014-011)
+1174851 - CVE-2014-8140 unzip: out-of-bounds write issue in test_compr_eb() (oCERT-2014-011)
+1174856 - CVE-2014-8141 unzip: getZip64Data() out-of-bounds read issues (oCERT-2014-011)
+1184985 - CVE-2014-9636 unzip: out-of-bounds read/write in test_compr_eb() in extract.c
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+unzip-6.0-2.el6_6.src.rpm
+
+i386:
+unzip-6.0-2.el6_6.i686.rpm
+unzip-debuginfo-6.0-2.el6_6.i686.rpm
+
+x86_64:
+unzip-6.0-2.el6_6.x86_64.rpm
+unzip-debuginfo-6.0-2.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+unzip-6.0-2.el6_6.src.rpm
+
+x86_64:
+unzip-6.0-2.el6_6.x86_64.rpm
+unzip-debuginfo-6.0-2.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+unzip-6.0-2.el6_6.src.rpm
+
+i386:
+unzip-6.0-2.el6_6.i686.rpm
+unzip-debuginfo-6.0-2.el6_6.i686.rpm
+
+ppc64:
+unzip-6.0-2.el6_6.ppc64.rpm
+unzip-debuginfo-6.0-2.el6_6.ppc64.rpm
+
+s390x:
+unzip-6.0-2.el6_6.s390x.rpm
+unzip-debuginfo-6.0-2.el6_6.s390x.rpm
+
+x86_64:
+unzip-6.0-2.el6_6.x86_64.rpm
+unzip-debuginfo-6.0-2.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+unzip-6.0-2.el6_6.src.rpm
+
+i386:
+unzip-6.0-2.el6_6.i686.rpm
+unzip-debuginfo-6.0-2.el6_6.i686.rpm
+
+x86_64:
+unzip-6.0-2.el6_6.x86_64.rpm
+unzip-debuginfo-6.0-2.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+unzip-6.0-15.el7.src.rpm
+
+x86_64:
+unzip-6.0-15.el7.x86_64.rpm
+unzip-debuginfo-6.0-15.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+unzip-6.0-15.el7.src.rpm
+
+x86_64:
+unzip-6.0-15.el7.x86_64.rpm
+unzip-debuginfo-6.0-15.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+unzip-6.0-15.el7.src.rpm
+
+ppc64:
+unzip-6.0-15.el7.ppc64.rpm
+unzip-debuginfo-6.0-15.el7.ppc64.rpm
+
+s390x:
+unzip-6.0-15.el7.s390x.rpm
+unzip-debuginfo-6.0-15.el7.s390x.rpm
+
+x86_64:
+unzip-6.0-15.el7.x86_64.rpm
+unzip-debuginfo-6.0-15.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+unzip-6.0-15.ael7b.src.rpm
+
+ppc64le:
+unzip-6.0-15.ael7b.ppc64le.rpm
+unzip-debuginfo-6.0-15.ael7b.ppc64le.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+unzip-6.0-15.el7.src.rpm
+
+x86_64:
+unzip-6.0-15.el7.x86_64.rpm
+unzip-debuginfo-6.0-15.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8139">https://access.redhat.com/security/cve/CVE-2014-8139</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8140">https://access.redhat.com/security/cve/CVE-2014-8140</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8141">https://access.redhat.com/security/cve/CVE-2014-8141</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9636">https://access.redhat.com/security/cve/CVE-2014-9636</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVCc5UXlSAg2UNWIIRAqcXAJ9QbTPShF0n7Xbnl5Qysxgz9klA7wCgmGC4
+RChl4UvFXmR97bfbmKQaCvM=
+=1ZcZ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00041.html">Date Prev</a>][<a href="msg00043.html">Date Next</a>] &nbsp; [<a href="msg00041.html">Thread Prev</a>][<a href="msg00043.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

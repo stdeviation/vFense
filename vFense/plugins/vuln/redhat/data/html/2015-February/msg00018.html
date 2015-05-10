@@ -1,0 +1,355 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0166&#45;01] Moderate: subversion security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 10 Feb 2015 18:13:39 &#45;0500 -->
+<!--X-Message-Id: 201502102313.t1ANDcna016004@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0166-01] Moderate: subversion security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0166-01] Moderate: subversion security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0166-01] Moderate: subversion security update</li>
+<li><em>Date</em>: Tue, 10 Feb 2015 23:13:38 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: subversion security update
+Advisory ID:       RHSA-2015:0166-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0166.html">https://rhn.redhat.com/errata/RHSA-2015-0166.html</a>
+Issue date:        2015-02-10
+CVE Names:         CVE-2014-3528 CVE-2014-3580 CVE-2014-8108 
+=====================================================================
+
+1. Summary:
+
+Updated subversion packages that fix three security issues are now
+available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+Subversion (SVN) is a concurrent version control system which enables one
+or more users to collaborate in developing and maintaining a hierarchy of
+files and directories while keeping a history of all changes. The
+mod_dav_svn module is used with the Apache HTTP Server to allow access
+to Subversion repositories via HTTP.
+
+A NULL pointer dereference flaw was found in the way the mod_dav_svn module
+handled REPORT requests. A remote, unauthenticated attacker could use a
+specially crafted REPORT request to crash mod_dav_svn. (CVE-2014-3580)
+
+A NULL pointer dereference flaw was found in the way the mod_dav_svn module
+handled certain requests for URIs that trigger a lookup of a virtual
+transaction name. A remote, unauthenticated attacker could send a request
+for a virtual transaction name that does not exist, causing mod_dav_svn to
+crash. (CVE-2014-8108)
+
+It was discovered that Subversion clients retrieved cached authentication
+credentials using the MD5 hash of the server realm string without also
+checking the server's URL. A malicious server able to provide a realm that
+triggers an MD5 collision could possibly use this flaw to obtain the
+credentials for a different realm. (CVE-2014-3528)
+
+Red Hat would like to thank the Subversion project for reporting
+CVE-2014-3580 and CVE-2014-8108. Upstream acknowledges Evgeny Kotkov of
+VisualSVN as the original reporter.
+
+All subversion users should upgrade to these updated packages, which
+contain backported patches to correct these issues. After installing the
+updated packages, for the update to take effect, you must restart the httpd
+daemon, if you are using mod_dav_svn, and the svnserve daemon, if you are
+serving Subversion repositories via the svn:// protocol.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1125799 - CVE-2014-3528 subversion: credentials leak via MD5 collision
+1174054 - CVE-2014-3580 subversion: NULL pointer dereference flaw in mod_dav_svn when handling REPORT requests
+1174057 - CVE-2014-8108 subversion: NULL pointer dereference flaw in mod_dav_svn when handling URIs for virtual transaction names
+
+6. Package List:
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+Source:
+subversion-1.7.14-7.el7_0.src.rpm
+
+x86_64:
+mod_dav_svn-1.7.14-7.el7_0.x86_64.rpm
+subversion-1.7.14-7.el7_0.i686.rpm
+subversion-1.7.14-7.el7_0.x86_64.rpm
+subversion-debuginfo-1.7.14-7.el7_0.i686.rpm
+subversion-debuginfo-1.7.14-7.el7_0.x86_64.rpm
+subversion-devel-1.7.14-7.el7_0.i686.rpm
+subversion-devel-1.7.14-7.el7_0.x86_64.rpm
+subversion-gnome-1.7.14-7.el7_0.i686.rpm
+subversion-gnome-1.7.14-7.el7_0.x86_64.rpm
+subversion-javahl-1.7.14-7.el7_0.i686.rpm
+subversion-javahl-1.7.14-7.el7_0.x86_64.rpm
+subversion-kde-1.7.14-7.el7_0.i686.rpm
+subversion-kde-1.7.14-7.el7_0.x86_64.rpm
+subversion-libs-1.7.14-7.el7_0.i686.rpm
+subversion-libs-1.7.14-7.el7_0.x86_64.rpm
+subversion-perl-1.7.14-7.el7_0.i686.rpm
+subversion-perl-1.7.14-7.el7_0.x86_64.rpm
+subversion-python-1.7.14-7.el7_0.x86_64.rpm
+subversion-ruby-1.7.14-7.el7_0.i686.rpm
+subversion-ruby-1.7.14-7.el7_0.x86_64.rpm
+subversion-tools-1.7.14-7.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+Source:
+subversion-1.7.14-7.el7_0.src.rpm
+
+x86_64:
+mod_dav_svn-1.7.14-7.el7_0.x86_64.rpm
+subversion-1.7.14-7.el7_0.i686.rpm
+subversion-1.7.14-7.el7_0.x86_64.rpm
+subversion-debuginfo-1.7.14-7.el7_0.i686.rpm
+subversion-debuginfo-1.7.14-7.el7_0.x86_64.rpm
+subversion-devel-1.7.14-7.el7_0.i686.rpm
+subversion-devel-1.7.14-7.el7_0.x86_64.rpm
+subversion-gnome-1.7.14-7.el7_0.i686.rpm
+subversion-gnome-1.7.14-7.el7_0.x86_64.rpm
+subversion-javahl-1.7.14-7.el7_0.i686.rpm
+subversion-javahl-1.7.14-7.el7_0.x86_64.rpm
+subversion-kde-1.7.14-7.el7_0.i686.rpm
+subversion-kde-1.7.14-7.el7_0.x86_64.rpm
+subversion-libs-1.7.14-7.el7_0.i686.rpm
+subversion-libs-1.7.14-7.el7_0.x86_64.rpm
+subversion-perl-1.7.14-7.el7_0.i686.rpm
+subversion-perl-1.7.14-7.el7_0.x86_64.rpm
+subversion-python-1.7.14-7.el7_0.x86_64.rpm
+subversion-ruby-1.7.14-7.el7_0.i686.rpm
+subversion-ruby-1.7.14-7.el7_0.x86_64.rpm
+subversion-tools-1.7.14-7.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+subversion-1.7.14-7.el7_0.src.rpm
+
+ppc64:
+mod_dav_svn-1.7.14-7.el7_0.ppc64.rpm
+subversion-1.7.14-7.el7_0.ppc64.rpm
+subversion-debuginfo-1.7.14-7.el7_0.ppc.rpm
+subversion-debuginfo-1.7.14-7.el7_0.ppc64.rpm
+subversion-libs-1.7.14-7.el7_0.ppc.rpm
+subversion-libs-1.7.14-7.el7_0.ppc64.rpm
+
+s390x:
+mod_dav_svn-1.7.14-7.el7_0.s390x.rpm
+subversion-1.7.14-7.el7_0.s390x.rpm
+subversion-debuginfo-1.7.14-7.el7_0.s390.rpm
+subversion-debuginfo-1.7.14-7.el7_0.s390x.rpm
+subversion-libs-1.7.14-7.el7_0.s390.rpm
+subversion-libs-1.7.14-7.el7_0.s390x.rpm
+
+x86_64:
+mod_dav_svn-1.7.14-7.el7_0.x86_64.rpm
+subversion-1.7.14-7.el7_0.x86_64.rpm
+subversion-debuginfo-1.7.14-7.el7_0.i686.rpm
+subversion-debuginfo-1.7.14-7.el7_0.x86_64.rpm
+subversion-libs-1.7.14-7.el7_0.i686.rpm
+subversion-libs-1.7.14-7.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+subversion-1.7.14-7.el7_0.ppc.rpm
+subversion-debuginfo-1.7.14-7.el7_0.ppc.rpm
+subversion-debuginfo-1.7.14-7.el7_0.ppc64.rpm
+subversion-devel-1.7.14-7.el7_0.ppc.rpm
+subversion-devel-1.7.14-7.el7_0.ppc64.rpm
+subversion-gnome-1.7.14-7.el7_0.ppc.rpm
+subversion-gnome-1.7.14-7.el7_0.ppc64.rpm
+subversion-javahl-1.7.14-7.el7_0.ppc.rpm
+subversion-javahl-1.7.14-7.el7_0.ppc64.rpm
+subversion-kde-1.7.14-7.el7_0.ppc.rpm
+subversion-kde-1.7.14-7.el7_0.ppc64.rpm
+subversion-perl-1.7.14-7.el7_0.ppc.rpm
+subversion-perl-1.7.14-7.el7_0.ppc64.rpm
+subversion-python-1.7.14-7.el7_0.ppc64.rpm
+subversion-ruby-1.7.14-7.el7_0.ppc.rpm
+subversion-ruby-1.7.14-7.el7_0.ppc64.rpm
+subversion-tools-1.7.14-7.el7_0.ppc64.rpm
+
+s390x:
+subversion-1.7.14-7.el7_0.s390.rpm
+subversion-debuginfo-1.7.14-7.el7_0.s390.rpm
+subversion-debuginfo-1.7.14-7.el7_0.s390x.rpm
+subversion-devel-1.7.14-7.el7_0.s390.rpm
+subversion-devel-1.7.14-7.el7_0.s390x.rpm
+subversion-gnome-1.7.14-7.el7_0.s390.rpm
+subversion-gnome-1.7.14-7.el7_0.s390x.rpm
+subversion-javahl-1.7.14-7.el7_0.s390.rpm
+subversion-javahl-1.7.14-7.el7_0.s390x.rpm
+subversion-kde-1.7.14-7.el7_0.s390.rpm
+subversion-kde-1.7.14-7.el7_0.s390x.rpm
+subversion-perl-1.7.14-7.el7_0.s390.rpm
+subversion-perl-1.7.14-7.el7_0.s390x.rpm
+subversion-python-1.7.14-7.el7_0.s390x.rpm
+subversion-ruby-1.7.14-7.el7_0.s390.rpm
+subversion-ruby-1.7.14-7.el7_0.s390x.rpm
+subversion-tools-1.7.14-7.el7_0.s390x.rpm
+
+x86_64:
+subversion-1.7.14-7.el7_0.i686.rpm
+subversion-debuginfo-1.7.14-7.el7_0.i686.rpm
+subversion-debuginfo-1.7.14-7.el7_0.x86_64.rpm
+subversion-devel-1.7.14-7.el7_0.i686.rpm
+subversion-devel-1.7.14-7.el7_0.x86_64.rpm
+subversion-gnome-1.7.14-7.el7_0.i686.rpm
+subversion-gnome-1.7.14-7.el7_0.x86_64.rpm
+subversion-javahl-1.7.14-7.el7_0.i686.rpm
+subversion-javahl-1.7.14-7.el7_0.x86_64.rpm
+subversion-kde-1.7.14-7.el7_0.i686.rpm
+subversion-kde-1.7.14-7.el7_0.x86_64.rpm
+subversion-perl-1.7.14-7.el7_0.i686.rpm
+subversion-perl-1.7.14-7.el7_0.x86_64.rpm
+subversion-python-1.7.14-7.el7_0.x86_64.rpm
+subversion-ruby-1.7.14-7.el7_0.i686.rpm
+subversion-ruby-1.7.14-7.el7_0.x86_64.rpm
+subversion-tools-1.7.14-7.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+subversion-1.7.14-7.el7_0.src.rpm
+
+x86_64:
+mod_dav_svn-1.7.14-7.el7_0.x86_64.rpm
+subversion-1.7.14-7.el7_0.x86_64.rpm
+subversion-debuginfo-1.7.14-7.el7_0.i686.rpm
+subversion-debuginfo-1.7.14-7.el7_0.x86_64.rpm
+subversion-libs-1.7.14-7.el7_0.i686.rpm
+subversion-libs-1.7.14-7.el7_0.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+subversion-1.7.14-7.el7_0.i686.rpm
+subversion-debuginfo-1.7.14-7.el7_0.i686.rpm
+subversion-debuginfo-1.7.14-7.el7_0.x86_64.rpm
+subversion-devel-1.7.14-7.el7_0.i686.rpm
+subversion-devel-1.7.14-7.el7_0.x86_64.rpm
+subversion-gnome-1.7.14-7.el7_0.i686.rpm
+subversion-gnome-1.7.14-7.el7_0.x86_64.rpm
+subversion-javahl-1.7.14-7.el7_0.i686.rpm
+subversion-javahl-1.7.14-7.el7_0.x86_64.rpm
+subversion-kde-1.7.14-7.el7_0.i686.rpm
+subversion-kde-1.7.14-7.el7_0.x86_64.rpm
+subversion-perl-1.7.14-7.el7_0.i686.rpm
+subversion-perl-1.7.14-7.el7_0.x86_64.rpm
+subversion-python-1.7.14-7.el7_0.x86_64.rpm
+subversion-ruby-1.7.14-7.el7_0.i686.rpm
+subversion-ruby-1.7.14-7.el7_0.x86_64.rpm
+subversion-tools-1.7.14-7.el7_0.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3528">https://access.redhat.com/security/cve/CVE-2014-3528</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3580">https://access.redhat.com/security/cve/CVE-2014-3580</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8108">https://access.redhat.com/security/cve/CVE-2014-8108</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://subversion.apache.org/security/CVE-2014-3528-advisory.txt">https://subversion.apache.org/security/CVE-2014-3528-advisory.txt</a>
+<a  rel="nofollow" href="https://subversion.apache.org/security/CVE-2014-3580-advisory.txt">https://subversion.apache.org/security/CVE-2014-3580-advisory.txt</a>
+<a  rel="nofollow" href="https://subversion.apache.org/security/CVE-2014-8108-advisory.txt">https://subversion.apache.org/security/CVE-2014-8108-advisory.txt</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU2pCEXlSAg2UNWIIRAmlpAJ4o2MhM6glIBctGbU52rfN8EZXCDgCdEIll
+KM6EsnQkXd09uLTe1k+tQaU=
+=CuZg
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

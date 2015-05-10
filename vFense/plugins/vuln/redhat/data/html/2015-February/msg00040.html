@@ -1,0 +1,274 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0264&#45;01] Low: Red Hat Satellite IBM Java Runtime security	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 24 Feb 2015 08:45:12 &#45;0500 -->
+<!--X-Message-Id: 201502241345.t1ODjAfG014614@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0264-01] Low: Red Hat Satellite IBM Java Runtime security	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0264-01] Low: Red Hat Satellite IBM Java Runtime security	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2015:0264-01] Low: Red Hat Satellite IBM Java Runtime security	update</li>
+<li><em>Date</em>: Tue, 24 Feb 2015 13:45:10 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: Red Hat Satellite IBM Java Runtime security update
+Advisory ID:       RHSA-2015:0264-01
+Product:           Red Hat Satellite
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0264.html">https://rhn.redhat.com/errata/RHSA-2015-0264.html</a>
+Issue date:        2015-02-24
+CVE Names:         CVE-2014-3065 CVE-2014-3068 CVE-2014-3566 
+                   CVE-2014-4209 CVE-2014-4218 CVE-2014-4219 
+                   CVE-2014-4227 CVE-2014-4244 CVE-2014-4252 
+                   CVE-2014-4262 CVE-2014-4263 CVE-2014-4265 
+                   CVE-2014-4288 CVE-2014-6457 CVE-2014-6458 
+                   CVE-2014-6492 CVE-2014-6493 CVE-2014-6502 
+                   CVE-2014-6503 CVE-2014-6506 CVE-2014-6511 
+                   CVE-2014-6512 CVE-2014-6515 CVE-2014-6531 
+                   CVE-2014-6532 CVE-2014-6558 CVE-2014-6585 
+                   CVE-2014-6587 CVE-2014-6591 CVE-2014-6593 
+                   CVE-2014-8891 CVE-2014-8892 CVE-2015-0395 
+                   CVE-2015-0403 CVE-2015-0406 CVE-2015-0407 
+                   CVE-2015-0408 CVE-2015-0410 CVE-2015-0412 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.6.0-ibm packages that fix several security issues are now
+available for Red Hat Satellite 5.6.
+
+Red Hat Product Security has rated this update as having Low security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Satellite 5.6 (RHEL v.5) - s390x, x86_64
+Red Hat Satellite 5.6 (RHEL v.6) - s390x, x86_64
+
+3. Description:
+
+This update corrects several security vulnerabilities in the IBM Java
+Runtime Environment shipped as part of Red Hat Satellite 5.6. In a typical
+operating environment, these are of low security risk as the runtime is not
+used on untrusted applets.
+
+Several flaws were fixed in the IBM Java 2 Runtime Environment.
+(CVE-2014-3065, CVE-2014-3068, CVE-2014-3566, CVE-2014-4209, CVE-2014-4218,
+CVE-2014-4219, CVE-2014-4227, CVE-2014-4244, CVE-2014-4252, CVE-2014-4262,
+CVE-2014-4263, CVE-2014-4265, CVE-2014-4288, CVE-2014-6457, CVE-2014-6458,
+CVE-2014-6492, CVE-2014-6493, CVE-2014-6502, CVE-2014-6503, CVE-2014-6506,
+CVE-2014-6511, CVE-2014-6512, CVE-2014-6515, CVE-2014-6531, CVE-2014-6532,
+CVE-2014-6558, CVE-2014-6585, CVE-2014-6587, CVE-2014-6591, CVE-2014-6593,
+CVE-2014-8891, CVE-2014-8892, CVE-2015-0395, CVE-2015-0403, CVE-2015-0406,
+CVE-2015-0407, CVE-2015-0408, CVE-2015-0410, CVE-2015-0412)
+
+The CVE-2014-4262 and CVE-2014-6512 issues were discovered by Florian
+Weimer of Red Hat Product Security.
+
+Users of Red Hat Satellite 5.6 are advised to upgrade to these updated
+packages, which contain the IBM Java SE 6 SR16-FP3 release. For this
+update to take effect, Red Hat Satellite must be restarted
+(&quot;/usr/sbin/rhn-satellite restart&quot;), as well as all running instances of
+IBM Java.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1071210 - CVE-2014-6512 OpenJDK: DatagramSocket connected socket missing source check (Libraries, 8039509)
+1075795 - CVE-2014-4262 OpenJDK: AtomicReferenceFieldUpdater missing primitive type check (Libraries, 8039520)
+1119475 - CVE-2014-4244 OpenJDK: RSA blinding issues (Security, 8031346)
+1119476 - CVE-2014-4263 OpenJDK: insufficient Diffie-Hellman public key validation (Security, 8037162)
+1119596 - CVE-2014-4219 OpenJDK: Bytecode verification does not prevent ctor calls to this() and super() (Hotspot, 8035119)
+1119608 - CVE-2014-4209 OpenJDK: SubjectDelegator protection insufficient (JMX, 8029755)
+1119611 - CVE-2014-4218 OpenJDK: Clone interfaces passed to proxy methods (Libraries, 8035009)
+1119613 - CVE-2014-4252 OpenJDK: Prevent instantiation of service with non-public constructor (Security, 8035004)
+1119912 - CVE-2014-4227 Oracle JDK: unspecified vulnerability fixed in 6u81, 7u65 and 8u11 (Deployment)
+1119913 - CVE-2014-4265 Oracle JDK: unspecified vulnerability fixed in 6u81, 7u65 and 8u11 (Deployment)
+1150155 - CVE-2014-6506 OpenJDK: insufficient permission checks when setting resource bundle on system logger (Libraries, 8041564)
+1150651 - CVE-2014-6531 OpenJDK: insufficient ResourceBundle name check (Libraries, 8044274)
+1150669 - CVE-2014-6502 OpenJDK: LogRecord use of incorrect CL when loading ResourceBundle (Libraries, 8042797)
+1151046 - CVE-2014-6457 OpenJDK: Triple Handshake attack against TLS/SSL connections (JSSE, 8037066)
+1151063 - CVE-2014-6558 OpenJDK: CipherInputStream incorrect exception handling (Security, 8037846)
+1151517 - CVE-2014-6511 ICU: Layout Engine ContextualSubstitution missing boundary checks (JDK 2D, 8041540)
+1152756 - CVE-2014-6532 Oracle JDK: unspecified vulnerability fixed in 6u85, 7u71 and 8u25 (Deployment)
+1152757 - CVE-2014-6503 Oracle JDK: unspecified vulnerability fixed in 6u85, 7u71 and 8u25 (Deployment)
+1152759 - CVE-2014-6492 Oracle JDK: unspecified vulnerability fixed in 6u85, 7u71 and 8u25 (Deployment)
+1152760 - CVE-2014-6493 Oracle JDK: unspecified vulnerability fixed in 6u85, 7u71 and 8u25 (Deployment)
+1152761 - CVE-2014-4288 Oracle JDK: unspecified vulnerability fixed in 6u85, 7u71 and 8u25 (Deployment)
+1152763 - CVE-2014-6458 Oracle JDK: unspecified vulnerability fixed in 6u85, 7u71 and 8u25 (Deployment)
+1152766 - CVE-2014-6515 Oracle JDK: unspecified vulnerability fixed in 6u85, 7u71 and 8u25 (Deployment)
+1152789 - CVE-2014-3566 SSL/TLS: Padding Oracle On Downgraded Legacy Encryption attack
+1162554 - CVE-2014-3065 IBM JDK: privilege escalation via shared class cache
+1164201 - CVE-2014-3068 IBM JDK: Java CMS keystore provider potentially allows brute-force private key recovery
+1183021 - CVE-2015-0412 OpenJDK: insufficient code privileges checks (JAX-WS, 8054367)
+1183023 - CVE-2015-0408 OpenJDK: incorrect context class loader use in RMI transport (RMI, 8055309)
+1183031 - CVE-2015-0395 OpenJDK: phantom references handling issue in garbage collector (Hotspot, 8047125)
+1183043 - CVE-2015-0407 OpenJDK: directory information leak via file chooser (Swing, 8055304)
+1183044 - CVE-2015-0410 OpenJDK: DER decoder infinite loop  (Security, 8059485)
+1183049 - CVE-2014-6593 OpenJDK: incorrect tracking of ChangeCipherSpec during SSL/TLS handshake (JSSE, 8057555)
+1183645 - CVE-2014-6585 ICU: font parsing OOB read (OpenJDK 2D, 8055489)
+1183646 - CVE-2014-6591 ICU: font parsing OOB read (OpenJDK 2D, 8056276)
+1183715 - CVE-2014-6587 OpenJDK: MulticastSocket NULL pointer dereference (Libraries, 8056264)
+1184275 - CVE-2015-0403 Oracle JDK: unspecified vulnerability fixed in 6u91, 7u75 and 8u31 (Deployment)
+1184277 - CVE-2015-0406 Oracle JDK: unspecified vulnerability fixed in 6u91, 7u75 and 8u31 (Deployment)
+1189142 - CVE-2014-8891 IBM JDK: unspecified full Java sandbox bypass fixed in Feb 2015 update
+1189145 - CVE-2014-8892 IBM JDK: unspecified partial Java sandbox bypass fixed in Feb 2015 update
+
+6. Package List:
+
+Red Hat Satellite 5.6 (RHEL v.5):
+
+Source:
+java-1.6.0-ibm-1.6.0.16.3-1jpp.1.el5.src.rpm
+
+s390x:
+java-1.6.0-ibm-1.6.0.16.3-1jpp.1.el5.s390x.rpm
+java-1.6.0-ibm-devel-1.6.0.16.3-1jpp.1.el5.s390x.rpm
+
+x86_64:
+java-1.6.0-ibm-1.6.0.16.3-1jpp.1.el5.x86_64.rpm
+java-1.6.0-ibm-devel-1.6.0.16.3-1jpp.1.el5.x86_64.rpm
+
+Red Hat Satellite 5.6 (RHEL v.6):
+
+Source:
+java-1.6.0-ibm-1.6.0.16.3-1jpp.1.el6.src.rpm
+
+s390x:
+java-1.6.0-ibm-1.6.0.16.3-1jpp.1.el6.s390x.rpm
+java-1.6.0-ibm-devel-1.6.0.16.3-1jpp.1.el6.s390x.rpm
+
+x86_64:
+java-1.6.0-ibm-1.6.0.16.3-1jpp.1.el6.x86_64.rpm
+java-1.6.0-ibm-devel-1.6.0.16.3-1jpp.1.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3065">https://access.redhat.com/security/cve/CVE-2014-3065</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3068">https://access.redhat.com/security/cve/CVE-2014-3068</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3566">https://access.redhat.com/security/cve/CVE-2014-3566</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4209">https://access.redhat.com/security/cve/CVE-2014-4209</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4218">https://access.redhat.com/security/cve/CVE-2014-4218</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4219">https://access.redhat.com/security/cve/CVE-2014-4219</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4227">https://access.redhat.com/security/cve/CVE-2014-4227</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4244">https://access.redhat.com/security/cve/CVE-2014-4244</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4252">https://access.redhat.com/security/cve/CVE-2014-4252</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4262">https://access.redhat.com/security/cve/CVE-2014-4262</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4263">https://access.redhat.com/security/cve/CVE-2014-4263</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4265">https://access.redhat.com/security/cve/CVE-2014-4265</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4288">https://access.redhat.com/security/cve/CVE-2014-4288</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6457">https://access.redhat.com/security/cve/CVE-2014-6457</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6458">https://access.redhat.com/security/cve/CVE-2014-6458</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6492">https://access.redhat.com/security/cve/CVE-2014-6492</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6493">https://access.redhat.com/security/cve/CVE-2014-6493</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6502">https://access.redhat.com/security/cve/CVE-2014-6502</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6503">https://access.redhat.com/security/cve/CVE-2014-6503</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6506">https://access.redhat.com/security/cve/CVE-2014-6506</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6511">https://access.redhat.com/security/cve/CVE-2014-6511</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6512">https://access.redhat.com/security/cve/CVE-2014-6512</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6515">https://access.redhat.com/security/cve/CVE-2014-6515</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6531">https://access.redhat.com/security/cve/CVE-2014-6531</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6532">https://access.redhat.com/security/cve/CVE-2014-6532</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6558">https://access.redhat.com/security/cve/CVE-2014-6558</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6585">https://access.redhat.com/security/cve/CVE-2014-6585</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6587">https://access.redhat.com/security/cve/CVE-2014-6587</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6591">https://access.redhat.com/security/cve/CVE-2014-6591</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6593">https://access.redhat.com/security/cve/CVE-2014-6593</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8891">https://access.redhat.com/security/cve/CVE-2014-8891</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8892">https://access.redhat.com/security/cve/CVE-2014-8892</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0395">https://access.redhat.com/security/cve/CVE-2015-0395</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0403">https://access.redhat.com/security/cve/CVE-2015-0403</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0406">https://access.redhat.com/security/cve/CVE-2015-0406</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0407">https://access.redhat.com/security/cve/CVE-2015-0407</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0408">https://access.redhat.com/security/cve/CVE-2015-0408</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0410">https://access.redhat.com/security/cve/CVE-2015-0410</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0412">https://access.redhat.com/security/cve/CVE-2015-0412</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+<a  rel="nofollow" href="https://www.ibm.com/developerworks/java/jdk/alerts/">https://www.ibm.com/developerworks/java/jdk/alerts/</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU7IBcXlSAg2UNWIIRAmnVAJ9RzYdFI7Hnqtp44schpVp6Vm56zwCfWSIa
+WtUxnhr9LPERyAPysYa8+IM=
+=PfUz
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

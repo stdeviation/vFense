@@ -1,0 +1,230 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0623&#45;02] Low: docker security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 05:38:01 &#45;0500 -->
+<!--X-Message-Id: 201503051038.t25Abx8X008647@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0623-02] Low: docker security, bug fix,	and enhancement updat</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0623-02] Low: docker security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2015:0623-02] Low: docker security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 10:37:59 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: docker security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0623-02
+Product:           RHEL Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0623.html">https://rhn.redhat.com/errata/RHSA-2015-0623.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-9356 CVE-2014-9357 
+=====================================================================
+
+1. Summary:
+
+Updated docker packages that fix two security issues, several bugs, and add
+various enhancements are now available for Red Hat Enterprise Linux 7
+Extras.
+
+Red Hat Product Security has rated this update as having Low security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux 7 Extras - noarch, x86_64
+
+3. Description:
+
+Docker is a service providing container management on Linux.
+
+It was found that a malicious container image could overwrite arbitrary
+portions of the host file system by including absolute symlinks,
+potentially leading to privilege escalation. (CVE-2014-9356)
+
+A flaw was found in the way the Docker service unpacked images or builds
+after a &quot;docker pull&quot;. An attacker could use this flaw to provide a
+malicious image or build that, when unpacked, would escalate their
+privileges on the system. (CVE-2014-9357)
+
+Red Hat would like to thank Docker Inc. for reporting these issues.
+
+The docker-python subpackage provides the new Atomic tool. The goal of
+Atomic is to provide a high level, coherent entry point for Red Hat
+Enterprise Linux Atomic Host. Atomic makes it easier to interact with
+special kinds of containers, such as super-privileged debugging tools.
+Comprehensive information and documentation is available in the atomic
+manual pages.
+
+The docker packages have been upgraded to upstream version 1.4.1, which
+provides a number of bug fixes and enhancements over the previous version,
+most notably an experimental overlayfs storage driver. (BZ#1174351)
+
+Bug fixes:
+
+* The JSON configuration files for containers and images were inconsistent.
+As a consequence, when these files were parsed by the &quot;docker inspect&quot;
+command, the output was unnecessarily complex. This update improves the key
+naming schema in the configuration files and the output from &quot;docker
+inspect&quot; is now uniform. (BZ#1092773)
+
+* The /run directory had an incorrect SELinux label. As a consequence,
+containers could not access /run. This update corrects the SELinux label
+and containers now have access to /run. (BZ#1100009)
+
+* The Docker service contained an incorrect path for the secrets directory.
+As a consequence, executing &quot;docker run&quot; failed to create containers. This
+update fixes the default path to the secrets directory and &quot;docker run&quot; now
+executes successfully. (BZ#1102568)
+
+* It was not possible to specify a default repository in the configuration
+file in cases where all docker.io files are inaccessible. As a consequence,
+running docker commands failed because they could not contact the default
+repositories. Now, it is possible to specify a local Docker repository, and
+commands no longer fail because they are able to connect to a local private
+repository. (BZ#1106430)
+
+* When executing the &quot;docker attach&quot; command on a container which was in
+the process of shutting down, the process did not fail, but became
+unresponsive. This bug has been fixed, and running &quot;docker attach&quot; on a
+container which is shutting down causes the attach process to fail with an
+informative error message that it is not possible to attach to a stopped
+container. (BZ#1113608)
+
+* The &quot;docker run&quot; sub-command incorrectly returned non-zero exit codes,
+when they all should have been zero. As a consequence, it was not possible
+to differentiate between the exit codes of the docker command line and exit
+codes of contained processes, which in turn made automated control of
+&quot;docker run&quot; impossible. This update fixes the inconsistencies within the
+exit codes of &quot;docker run&quot;. Additionally, this update also fixes
+inconsistencies of other docker sub-commands and improves the language in
+the error and warning messages. (BZ#1162807)
+
+* Adding a new registry with the &quot;--registry-prepend&quot; option did not follow
+the correct order to query and download an image. As a consequence, it did
+not query the prepended new registry first, but rather started with
+querying docker.io. The &quot;--registry-prepend&quot; option has been renamed to
+&quot;--registry-add&quot; and its behavior has been changed to query the registries
+added in the given order, with docker.io queried last. (BZ#1186153)
+
+All docker users are advised to upgrade to these updated packages, which
+correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1092773 - Image and container JSON keys have no consistency
+1100009 - /run is broken with SELinux
+1102568 - Wrong path of default secrets docker tries to open
+1113608 - `docker attach` hangs when attaching container, which is exiting
+1162807 - Docker CLI exit codes for errors?
+1172761 - CVE-2014-9356 docker: Path traversal during processing of absolute symlinks
+1172782 - CVE-2014-9357 docker: Escalation of privileges during decompression of LZMA archives
+1174351 - docker 1.4.1 is available
+
+6. Package List:
+
+Red Hat Enterprise Linux 7 Extras:
+
+Source:
+docker-1.4.1-37.el7.src.rpm
+
+noarch:
+python-websocket-client-0.14.1-37.el7.noarch.rpm
+
+x86_64:
+docker-1.4.1-37.el7.x86_64.rpm
+docker-logrotate-1.4.1-37.el7.x86_64.rpm
+docker-python-0.7.1-37.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9356">https://access.redhat.com/security/cve/CVE-2014-9356</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9357">https://access.redhat.com/security/cve/CVE-2014-9357</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+DHpXlSAg2UNWIIRAly9AJ4ojPcNx80T9yuureW4F1EhGlbF5gCfbexP
+k2mYbecv/U9QrVGEXZLBvfY=
+=vTkf
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

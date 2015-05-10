@@ -1,0 +1,183 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0246&#45;01] Important: openstack&#45;glance security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 19 Feb 2015 16:19:22 &#45;0500 -->
+<!--X-Message-Id: 201502192119.t1JLJMja002481@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0246-01] Important: openstack-glance security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00027.html">Date Prev</a>][<a href="msg00029.html">Date Next</a>] &nbsp; [<a href="msg00027.html">Thread Prev</a>][<a href="msg00029.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00028">Thread Index</A>]
+[<A HREF="date.html#00028">Date Index</A>]
+[<A HREF="author.html#00028">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0246-01] Important: openstack-glance security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0246-01] Important: openstack-glance security update</li>
+<li><em>Date</em>: Thu, 19 Feb 2015 21:19:22 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openstack-glance security update
+Advisory ID:       RHSA-2015:0246-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0246.html">https://rhn.redhat.com/errata/RHSA-2015-0246.html</a>
+Issue date:        2015-02-19
+CVE Names:         CVE-2014-9493 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-glance packages that fix one security issue are now
+available for Red Hat Enterprise Linux OpenStack Platform 4.0 and Red Hat
+Enterprise Linux OpenStack Platform 5.0 for Red Hat Enterprise Linux 6
+and 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 4.0 - noarch
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 6 - noarch
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7 - noarch
+
+3. Description:
+
+OpenStack Image service (glance) provides discovery, registration, and
+delivery services for disk and server images. It provides the ability to
+copy or snapshot a server image, and immediately store it away. Stored
+images can be used as a template to get new servers up and running quickly
+and more consistently than installing a server operating system and
+individually configuring additional services.
+
+It was discovered that an authenticated user could use a path traversal
+flaw in glance to download or delete any file on the glance server that is
+accessible to the glance process user. Note that only setups using the
+OpenStack Image V2 API were affected by this flaw. (CVE-2014-9493)
+
+All openstack-glance users are advised to upgrade to these updated
+packages, which correct these issues. After installing the updated
+packages, the running glance services will be restarted automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to
+use the Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1174474 - CVE-2014-9493 openstack-glance: unrestricted path traversal flaw
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 6:
+
+Source:
+openstack-glance-2014.1.3-4.el6ost.src.rpm
+
+noarch:
+openstack-glance-2014.1.3-4.el6ost.noarch.rpm
+openstack-glance-doc-2014.1.3-4.el6ost.noarch.rpm
+python-glance-2014.1.3-4.el6ost.noarch.rpm
+
+Red Hat Enterprise Linux OpenStack Platform 4.0:
+
+Source:
+openstack-glance-2013.2.4-3.el6ost.src.rpm
+
+noarch:
+openstack-glance-2013.2.4-3.el6ost.noarch.rpm
+openstack-glance-doc-2013.2.4-3.el6ost.noarch.rpm
+python-glance-2013.2.4-3.el6ost.noarch.rpm
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 7:
+
+Source:
+openstack-glance-2014.1.3-4.el7ost.src.rpm
+
+noarch:
+openstack-glance-2014.1.3-4.el7ost.noarch.rpm
+openstack-glance-doc-2014.1.3-4.el7ost.noarch.rpm
+python-glance-2014.1.3-4.el7ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9493">https://access.redhat.com/security/cve/CVE-2014-9493</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU5lMiXlSAg2UNWIIRArIZAJ4mEJoI/v+DIVLB5Y5zPzn+wPwPlgCfeslz
+abNwYE5vef+NrO9++i029+U=
+=t+eg
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00027.html">Date Prev</a>][<a href="msg00029.html">Date Next</a>] &nbsp; [<a href="msg00027.html">Thread Prev</a>][<a href="msg00029.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00028">Thread Index</A>]
+[<A HREF="date.html#00028">Date Index</A>]
+[<A HREF="author.html#00028">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

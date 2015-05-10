@@ -1,0 +1,332 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0062&#45;01] Important: kernel security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 21 Jan 2015 11:53:48 &#45;0500 -->
+<!--X-Message-Id: 201501211653.t0LGrlnW012569@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0062-01] Important: kernel security, bug fix,	and enhancement</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0062-01] Important: kernel security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0062-01] Important: kernel security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 21 Jan 2015 16:53:47 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0062-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0062.html">https://rhn.redhat.com/errata/RHSA-2015-0062.html</a>
+Issue date:        2015-01-20
+CVE Names:         CVE-2014-3673 CVE-2014-3687 CVE-2014-3688 
+                   CVE-2014-4608 CVE-2014-5045 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues, several bugs,
+and add one enhancement are now available for Red Hat Enterprise Linux 6.5
+Extended Update Support.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.5) - x86_64
+Red Hat Enterprise Linux HPC Node EUS (v. 6.5) - noarch, x86_64
+Red Hat Enterprise Linux Server EUS (v. 6.5) - i386, noarch, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.5) - i386, ppc64, s390x, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+* A flaw was found in the way the Linux kernel's SCTP implementation
+handled malformed or duplicate Address Configuration Change Chunks
+(ASCONF). A remote attacker could use either of these flaws to crash the
+system. (CVE-2014-3673, CVE-2014-3687, Important)
+
+* A flaw was found in the way the Linux kernel's SCTP implementation
+handled the association's output queue. A remote attacker could send
+specially crafted packets that would cause the system to use an excessive
+amount of memory, leading to a denial of service. (CVE-2014-3688,
+Important)
+
+* A flaw was found in the way the Linux kernel's VFS subsystem handled
+reference counting when performing unmount operations on symbolic links.
+A local, unprivileged user could use this flaw to exhaust all available
+memory on the system or, potentially, trigger a use-after-free error,
+resulting in a system crash or privilege escalation. (CVE-2014-5045,
+Moderate)
+
+* An integer overflow flaw was found in the way the lzo1x_decompress_safe()
+function of the Linux kernel's LZO implementation processed Literal Runs.
+A local attacker could, in extremely rare cases, use this flaw to crash the
+system or, potentially, escalate their privileges on the system.
+(CVE-2014-4608, Low)
+
+Red Hat would like to thank Vasily Averin of Parallels for reporting
+CVE-2014-5045, and Don A. Bailey from Lab Mouse Security for reporting
+CVE-2014-4608. The CVE-2014-3673 issue was discovered by Liu Wei of
+Red Hat.
+
+This update also fixes several bugs and adds one enhancement.
+Documentation for these changes is available from the Technical Notes
+document linked to in the References section.
+
+All kernel users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add this
+enhancement. The system must be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+To install kernel packages manually, use &quot;rpm -ivh [package]&quot;. Do not use
+&quot;rpm -Uvh&quot; as that will remove the running kernel binaries from your
+system. You may use &quot;rpm -e&quot; to remove old kernels after determining that
+the new kernel functions properly on your system.
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1113899 - CVE-2014-4608 kernel: lzo1x_decompress_safe() integer overflow
+1122472 - CVE-2014-5045 kernel: vfs: refcount issues during unmount on symlink
+1147850 - CVE-2014-3673 kernel: sctp: skb_over_panic when receiving malformed ASCONF chunks
+1155731 - CVE-2014-3687 kernel: net: sctp: fix panic on duplicate ASCONF chunks
+1155745 - CVE-2014-3688 kernel: net: sctp: remote memory pressure from excessive queueing
+
+6. Package List:
+
+Red Hat Enterprise Linux HPC Node EUS (v. 6.5):
+
+Source:
+kernel-2.6.32-431.46.2.el6.src.rpm
+
+noarch:
+kernel-abi-whitelists-2.6.32-431.46.2.el6.noarch.rpm
+kernel-doc-2.6.32-431.46.2.el6.noarch.rpm
+kernel-firmware-2.6.32-431.46.2.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debug-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-devel-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-headers-2.6.32-431.46.2.el6.x86_64.rpm
+perf-2.6.32-431.46.2.el6.x86_64.rpm
+perf-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.5):
+
+Source:
+kernel-2.6.32-431.46.2.el6.src.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-431.46.2.el6.x86_64.rpm
+perf-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+python-perf-2.6.32-431.46.2.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server EUS (v. 6.5):
+
+Source:
+kernel-2.6.32-431.46.2.el6.src.rpm
+
+i386:
+kernel-2.6.32-431.46.2.el6.i686.rpm
+kernel-debug-2.6.32-431.46.2.el6.i686.rpm
+kernel-debug-debuginfo-2.6.32-431.46.2.el6.i686.rpm
+kernel-debug-devel-2.6.32-431.46.2.el6.i686.rpm
+kernel-debuginfo-2.6.32-431.46.2.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-431.46.2.el6.i686.rpm
+kernel-devel-2.6.32-431.46.2.el6.i686.rpm
+kernel-headers-2.6.32-431.46.2.el6.i686.rpm
+perf-2.6.32-431.46.2.el6.i686.rpm
+perf-debuginfo-2.6.32-431.46.2.el6.i686.rpm
+python-perf-debuginfo-2.6.32-431.46.2.el6.i686.rpm
+
+noarch:
+kernel-abi-whitelists-2.6.32-431.46.2.el6.noarch.rpm
+kernel-doc-2.6.32-431.46.2.el6.noarch.rpm
+kernel-firmware-2.6.32-431.46.2.el6.noarch.rpm
+
+ppc64:
+kernel-2.6.32-431.46.2.el6.ppc64.rpm
+kernel-bootwrapper-2.6.32-431.46.2.el6.ppc64.rpm
+kernel-debug-2.6.32-431.46.2.el6.ppc64.rpm
+kernel-debug-debuginfo-2.6.32-431.46.2.el6.ppc64.rpm
+kernel-debug-devel-2.6.32-431.46.2.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-431.46.2.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-431.46.2.el6.ppc64.rpm
+kernel-devel-2.6.32-431.46.2.el6.ppc64.rpm
+kernel-headers-2.6.32-431.46.2.el6.ppc64.rpm
+perf-2.6.32-431.46.2.el6.ppc64.rpm
+perf-debuginfo-2.6.32-431.46.2.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-431.46.2.el6.ppc64.rpm
+
+s390x:
+kernel-2.6.32-431.46.2.el6.s390x.rpm
+kernel-debug-2.6.32-431.46.2.el6.s390x.rpm
+kernel-debug-debuginfo-2.6.32-431.46.2.el6.s390x.rpm
+kernel-debug-devel-2.6.32-431.46.2.el6.s390x.rpm
+kernel-debuginfo-2.6.32-431.46.2.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-431.46.2.el6.s390x.rpm
+kernel-devel-2.6.32-431.46.2.el6.s390x.rpm
+kernel-headers-2.6.32-431.46.2.el6.s390x.rpm
+kernel-kdump-2.6.32-431.46.2.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-431.46.2.el6.s390x.rpm
+kernel-kdump-devel-2.6.32-431.46.2.el6.s390x.rpm
+perf-2.6.32-431.46.2.el6.s390x.rpm
+perf-debuginfo-2.6.32-431.46.2.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-431.46.2.el6.s390x.rpm
+
+x86_64:
+kernel-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debug-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-devel-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-headers-2.6.32-431.46.2.el6.x86_64.rpm
+perf-2.6.32-431.46.2.el6.x86_64.rpm
+perf-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.5):
+
+Source:
+kernel-2.6.32-431.46.2.el6.src.rpm
+
+i386:
+kernel-debug-debuginfo-2.6.32-431.46.2.el6.i686.rpm
+kernel-debuginfo-2.6.32-431.46.2.el6.i686.rpm
+kernel-debuginfo-common-i686-2.6.32-431.46.2.el6.i686.rpm
+perf-debuginfo-2.6.32-431.46.2.el6.i686.rpm
+python-perf-2.6.32-431.46.2.el6.i686.rpm
+python-perf-debuginfo-2.6.32-431.46.2.el6.i686.rpm
+
+ppc64:
+kernel-debug-debuginfo-2.6.32-431.46.2.el6.ppc64.rpm
+kernel-debuginfo-2.6.32-431.46.2.el6.ppc64.rpm
+kernel-debuginfo-common-ppc64-2.6.32-431.46.2.el6.ppc64.rpm
+perf-debuginfo-2.6.32-431.46.2.el6.ppc64.rpm
+python-perf-2.6.32-431.46.2.el6.ppc64.rpm
+python-perf-debuginfo-2.6.32-431.46.2.el6.ppc64.rpm
+
+s390x:
+kernel-debug-debuginfo-2.6.32-431.46.2.el6.s390x.rpm
+kernel-debuginfo-2.6.32-431.46.2.el6.s390x.rpm
+kernel-debuginfo-common-s390x-2.6.32-431.46.2.el6.s390x.rpm
+kernel-kdump-debuginfo-2.6.32-431.46.2.el6.s390x.rpm
+perf-debuginfo-2.6.32-431.46.2.el6.s390x.rpm
+python-perf-2.6.32-431.46.2.el6.s390x.rpm
+python-perf-debuginfo-2.6.32-431.46.2.el6.s390x.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-431.46.2.el6.x86_64.rpm
+perf-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+python-perf-2.6.32-431.46.2.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-431.46.2.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3673">https://access.redhat.com/security/cve/CVE-2014-3673</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3687">https://access.redhat.com/security/cve/CVE-2014-3687</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3688">https://access.redhat.com/security/cve/CVE-2014-3688</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-4608">https://access.redhat.com/security/cve/CVE-2014-4608</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-5045">https://access.redhat.com/security/cve/CVE-2014-5045</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.5_Technical_Notes/kernel.html">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/6.5_Technical_Notes/kernel.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUv9luXlSAg2UNWIIRAr1lAJ9xTVsfAVNvetOGBZgYPw4gRw8PJgCbB3/6
+BWbvr4QSp5bITDqfC/0B3Ng=
+=9QzL
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

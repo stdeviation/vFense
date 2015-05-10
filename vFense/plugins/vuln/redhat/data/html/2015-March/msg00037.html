@@ -1,0 +1,231 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0695&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 17 Mar 2015 10:55:23 &#45;0400 -->
+<!--X-Message-Id: 201503171455.t2HEtMO8025630@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0695-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00035.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00035.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0695-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0695-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 17 Mar 2015 14:55:22 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2015:0695-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0695.html">https://rhn.redhat.com/errata/RHSA-2015-0695.html</a>
+Issue date:        2015-03-17
+CVE Names:         CVE-2013-2596 CVE-2014-5471 CVE-2014-5472 
+                   CVE-2014-7841 CVE-2014-8159 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix multiple security issues and two bugs are
+now available for Red Hat Enterprise Linux 6.2 Advanced Update Support.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux AUS (v. 6.2 server) - noarch, x86_64
+Red Hat Enterprise Linux Server Optional AUS (v. 6.2) - x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+* A flaw was found in the way the Linux kernel's SCTP implementation
+validated INIT chunks when performing Address Configuration Change
+(ASCONF). A remote attacker could use this flaw to crash the system by
+sending a specially crafted SCTP packet to trigger a NULL pointer
+dereference on the system. (CVE-2014-7841, Important)
+
+* It was found that the Linux kernel's Infiniband subsystem did not
+properly sanitize input parameters while registering memory regions from
+user space via the (u)verbs API. A local user with access to a
+/dev/infiniband/uverbsX device could use this flaw to crash the system or,
+potentially, escalate their privileges on the system. (CVE-2014-8159,
+Important)
+
+* An integer overflow flaw was found in the way the Linux kernel's Frame
+Buffer device implementation mapped kernel memory to user space via the
+mmap syscall. A local user able to access a frame buffer device file
+(/dev/fb*) could possibly use this flaw to escalate their privileges on the
+system. (CVE-2013-2596, Important)
+
+* It was found that the parse_rock_ridge_inode_internal() function of the
+Linux kernel's ISOFS implementation did not correctly check relocated
+directories when processing Rock Ridge child link (CL) tags. An attacker
+with physical access to the system could use a specially crafted ISO image
+to crash the system or, potentially, escalate their privileges on the
+system. (CVE-2014-5471, CVE-2014-5472, Low)
+
+Red Hat would like to thank Mellanox for reporting the CVE-2014-8159 issue.
+The CVE-2014-7841 issue was discovered by Liu Wei of Red Hat.
+
+This update also fixes the following bugs:
+
+* Previously, certain network device drivers did not accept ethtool
+commands right after they were loaded. As a consequence, the current
+setting of the specified device driver was not applied and an error message
+was returned. The ETHTOOL_DELAY variable has been added, which makes sure
+the ethtool utility waits for some time before it tries to apply the
+options settings, thus fixing the bug. (BZ#1138299)
+
+* During the memory allocation for a new socket to communicate to the
+server, the rpciod daemon released a clean page which needed to be
+committed. However, the commit was queueing indefinitely as the commit
+could only be provided with a socket connection. As a consequence, a
+deadlock occurred in rpciod. This update sets the PF_FSTRANS flag on the
+work queue task prior to the socket allocation, and adds the
+nfs_release_page check for the flag when deciding whether to make a commit
+call, thus fixing this bug. (BZ#1192326)
+
+All kernel users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1034490 - CVE-2013-2596 kernel: integer overflow in fb_mmap
+1134099 - CVE-2014-5471 CVE-2014-5472 kernel: isofs: unbound recursion when processing relocated directories
+1163087 - CVE-2014-7841 kernel: net: sctp: NULL pointer dereference in af-&gt;from_addr_param on malformed packet
+1181166 - CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access
+
+6. Package List:
+
+Red Hat Enterprise Linux AUS (v. 6.2 server):
+
+Source:
+kernel-2.6.32-220.60.2.el6.src.rpm
+
+noarch:
+kernel-doc-2.6.32-220.60.2.el6.noarch.rpm
+kernel-firmware-2.6.32-220.60.2.el6.noarch.rpm
+
+x86_64:
+kernel-2.6.32-220.60.2.el6.x86_64.rpm
+kernel-debug-2.6.32-220.60.2.el6.x86_64.rpm
+kernel-debug-debuginfo-2.6.32-220.60.2.el6.x86_64.rpm
+kernel-debug-devel-2.6.32-220.60.2.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-220.60.2.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-220.60.2.el6.x86_64.rpm
+kernel-devel-2.6.32-220.60.2.el6.x86_64.rpm
+kernel-headers-2.6.32-220.60.2.el6.x86_64.rpm
+perf-2.6.32-220.60.2.el6.x86_64.rpm
+perf-debuginfo-2.6.32-220.60.2.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-220.60.2.el6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional AUS (v. 6.2):
+
+Source:
+kernel-2.6.32-220.60.2.el6.src.rpm
+
+x86_64:
+kernel-debug-debuginfo-2.6.32-220.60.2.el6.x86_64.rpm
+kernel-debuginfo-2.6.32-220.60.2.el6.x86_64.rpm
+kernel-debuginfo-common-x86_64-2.6.32-220.60.2.el6.x86_64.rpm
+perf-debuginfo-2.6.32-220.60.2.el6.x86_64.rpm
+python-perf-2.6.32-220.60.2.el6.x86_64.rpm
+python-perf-debuginfo-2.6.32-220.60.2.el6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2013-2596">https://access.redhat.com/security/cve/CVE-2013-2596</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-5471">https://access.redhat.com/security/cve/CVE-2014-5471</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-5472">https://access.redhat.com/security/cve/CVE-2014-5472</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7841">https://access.redhat.com/security/cve/CVE-2014-7841</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8159">https://access.redhat.com/security/cve/CVE-2014-8159</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVCEAsXlSAg2UNWIIRAqmNAJ955zmv/qt9gEtu+M3yPnEs/V2wcgCeLvdF
+5P9bWkJ/QIJR+llLjMF2RWI=
+=1dCs
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00035.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00035.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00037">Thread Index</A>]
+[<A HREF="date.html#00037">Date Index</A>]
+[<A HREF="author.html#00037">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

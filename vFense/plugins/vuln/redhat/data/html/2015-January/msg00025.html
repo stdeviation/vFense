@@ -1,0 +1,354 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0069&#45;01] Important: java&#45;1.8.0&#45;openjdk security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 21 Jan 2015 18:19:00 &#45;0500 -->
+<!--X-Message-Id: 201501212319.t0LNIxSc001309@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0069-01] Important: java-1.8.0-openjdk security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0069-01] Important: java-1.8.0-openjdk security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0069-01] Important: java-1.8.0-openjdk security update</li>
+<li><em>Date</em>: Wed, 21 Jan 2015 23:18:59 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: java-1.8.0-openjdk security update
+Advisory ID:       RHSA-2015:0069-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0069.html">https://rhn.redhat.com/errata/RHSA-2015-0069.html</a>
+Issue date:        2015-01-21
+CVE Names:         CVE-2014-3566 CVE-2014-6549 CVE-2014-6585 
+                   CVE-2014-6587 CVE-2014-6591 CVE-2014-6593 
+                   CVE-2014-6601 CVE-2015-0383 CVE-2015-0395 
+                   CVE-2015-0407 CVE-2015-0408 CVE-2015-0410 
+                   CVE-2015-0412 CVE-2015-0437 
+=====================================================================
+
+1. Summary:
+
+Updated java-1.8.0-openjdk packages that fix multiple security issues are
+now available for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - noarch, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, noarch, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, noarch, x86_64
+
+3. Description:
+
+The java-1.8.0-openjdk packages provide the OpenJDK 8 Java Runtime
+Environment and the OpenJDK 8 Java Software Development Kit.
+
+Multiple flaws were found in the way the Hotspot component in OpenJDK
+verified bytecode from the class files, and in the way this component
+generated code for bytecode. An untrusted Java application or applet could
+possibly use these flaws to bypass Java sandbox restrictions.
+(CVE-2014-6601, CVE-2015-0437)
+
+Multiple improper permission check issues were discovered in the JAX-WS,
+Libraries, and RMI components in OpenJDK. An untrusted Java application or
+applet could use these flaws to bypass Java sandbox restrictions.
+(CVE-2015-0412, CVE-2014-6549, CVE-2015-0408)
+
+A flaw was found in the way the Hotspot garbage collector handled phantom
+references. An untrusted Java application or applet could use this flaw to
+corrupt the Java Virtual Machine memory and, possibly, execute arbitrary
+code, bypassing Java sandbox restrictions. (CVE-2015-0395)
+
+A flaw was found in the way the DER (Distinguished Encoding Rules) decoder
+in the Security component in OpenJDK handled negative length values. A
+specially crafted, DER-encoded input could cause a Java application to
+enter an infinite loop when decoded. (CVE-2015-0410)
+
+A flaw was found in the way the SSL 3.0 protocol handled padding bytes when
+decrypting messages that were encrypted using block ciphers in cipher block
+chaining (CBC) mode. This flaw could possibly allow a man-in-the-middle
+(MITM) attacker to decrypt portions of the cipher text using a padding
+oracle attack. (CVE-2014-3566)
+
+Note: This update disables SSL 3.0 by default to address this issue.
+The jdk.tls.disabledAlgorithms security property can be used to re-enable
+SSL 3.0 support if needed. For additional information, refer to the Red Hat
+Bugzilla bug linked to in the References section.
+
+It was discovered that the SSL/TLS implementation in the JSSE component in
+OpenJDK failed to properly check whether the ChangeCipherSpec was received
+during the SSL/TLS connection handshake. An MITM attacker could possibly
+use this flaw to force a connection to be established without encryption
+being enabled. (CVE-2014-6593)
+
+An information leak flaw was found in the Swing component in OpenJDK. An
+untrusted Java application or applet could use this flaw to bypass certain
+Java sandbox restrictions. (CVE-2015-0407)
+
+A NULL pointer dereference flaw was found in the MulticastSocket
+implementation in the Libraries component of OpenJDK. An untrusted Java
+application or applet could possibly use this flaw to bypass certain Java
+sandbox restrictions. (CVE-2014-6587)
+
+Multiple boundary check flaws were found in the font parsing code in the 2D
+component in OpenJDK. A specially crafted font file could allow an
+untrusted Java application or applet to disclose portions of the Java
+Virtual Machine memory. (CVE-2014-6585, CVE-2014-6591)
+
+Multiple insecure temporary file use issues were found in the way the
+Hotspot component in OpenJDK created performance statistics and error log
+files. A local attacker could possibly make a victim using OpenJDK
+overwrite arbitrary files using a symlink attack. (CVE-2015-0383)
+
+The CVE-2015-0383 issue was discovered by Red Hat.
+
+All users of java-1.8.0-openjdk are advised to upgrade to these updated
+packages, which resolve these issues. All running instances of OpenJDK Java
+must be restarted for the update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1123870 - CVE-2015-0383 OpenJDK: insecure hsperfdata temporary file handling (Hotspot, 8050807)
+1152789 - CVE-2014-3566 SSL/TLS: Padding Oracle On Downgraded Legacy Encryption attack
+1183020 - CVE-2014-6601 OpenJDK: class verifier insufficient invokespecial calls verification (Hotspot, 8058982)
+1183021 - CVE-2015-0412 OpenJDK: insufficient code privileges checks (JAX-WS, 8054367)
+1183023 - CVE-2015-0408 OpenJDK: incorrect context class loader use in RMI transport (RMI, 8055309)
+1183031 - CVE-2015-0395 OpenJDK: phantom references handling issue in garbage collector (Hotspot, 8047125)
+1183043 - CVE-2015-0407 OpenJDK: directory information leak via file chooser (Swing, 8055304)
+1183044 - CVE-2015-0410 OpenJDK: DER decoder infinite loop  (Security, 8059485)
+1183049 - CVE-2014-6593 OpenJDK: incorrect tracking of ChangeCipherSpec during SSL/TLS handshake (JSSE, 8057555)
+1183645 - CVE-2014-6585 ICU: font parsing OOB read (OpenJDK 2D, 8055489)
+1183646 - CVE-2014-6591 ICU: font parsing OOB read (OpenJDK 2D, 8056276)
+1183660 - CVE-2014-6549 OpenJDK: incorrect class loader permission check in ClassLoader getParent() (Libraries, 8055314)
+1183670 - CVE-2015-0437 OpenJDK: code generation issue (Hotspot, 8064524)
+1183715 - CVE-2014-6587 OpenJDK: MulticastSocket NULL pointer dereference (Libraries, 8056264)
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.src.rpm
+
+i386:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.i686.rpm
+
+x86_64:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-demo-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-devel-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-src-1.8.0.31-1.b13.el6_6.i686.rpm
+
+noarch:
+java-1.8.0-openjdk-javadoc-1.8.0.31-1.b13.el6_6.noarch.rpm
+
+x86_64:
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-demo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-devel-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-src-1.8.0.31-1.b13.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.src.rpm
+
+x86_64:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+noarch:
+java-1.8.0-openjdk-javadoc-1.8.0.31-1.b13.el6_6.noarch.rpm
+
+x86_64:
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-demo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-devel-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-src-1.8.0.31-1.b13.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.src.rpm
+
+i386:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-devel-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.i686.rpm
+
+x86_64:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-devel-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-demo-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-src-1.8.0.31-1.b13.el6_6.i686.rpm
+
+noarch:
+java-1.8.0-openjdk-javadoc-1.8.0.31-1.b13.el6_6.noarch.rpm
+
+x86_64:
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-demo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-src-1.8.0.31-1.b13.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.src.rpm
+
+i386:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-devel-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.i686.rpm
+
+x86_64:
+java-1.8.0-openjdk-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-devel-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-demo-1.8.0.31-1.b13.el6_6.i686.rpm
+java-1.8.0-openjdk-src-1.8.0.31-1.b13.el6_6.i686.rpm
+
+noarch:
+java-1.8.0-openjdk-javadoc-1.8.0.31-1.b13.el6_6.noarch.rpm
+
+x86_64:
+java-1.8.0-openjdk-debuginfo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-demo-1.8.0.31-1.b13.el6_6.x86_64.rpm
+java-1.8.0-openjdk-src-1.8.0.31-1.b13.el6_6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3566">https://access.redhat.com/security/cve/CVE-2014-3566</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6549">https://access.redhat.com/security/cve/CVE-2014-6549</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6585">https://access.redhat.com/security/cve/CVE-2014-6585</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6587">https://access.redhat.com/security/cve/CVE-2014-6587</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6591">https://access.redhat.com/security/cve/CVE-2014-6591</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6593">https://access.redhat.com/security/cve/CVE-2014-6593</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6601">https://access.redhat.com/security/cve/CVE-2014-6601</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0383">https://access.redhat.com/security/cve/CVE-2015-0383</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0395">https://access.redhat.com/security/cve/CVE-2015-0395</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0407">https://access.redhat.com/security/cve/CVE-2015-0407</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0408">https://access.redhat.com/security/cve/CVE-2015-0408</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0410">https://access.redhat.com/security/cve/CVE-2015-0410</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0412">https://access.redhat.com/security/cve/CVE-2015-0412</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0437">https://access.redhat.com/security/cve/CVE-2015-0437</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://bugzilla.redhat.com/show_bug.cgi?id=1152789#c82">https://bugzilla.redhat.com/show_bug.cgi?id=1152789#c82</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUwDPEXlSAg2UNWIIRAv+XAJ9+Pp5RagMJjI5RABzSN1YvwUEcjwCeO1pA
+yahYGV3My67xuO8tkqe9sNc=
+=lohj
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00024.html">Date Prev</a>][<a href="msg00026.html">Date Next</a>] &nbsp; [<a href="msg00024.html">Thread Prev</a>][<a href="msg00026.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00025">Thread Index</A>]
+[<A HREF="date.html#00025">Date Index</A>]
+[<A HREF="author.html#00025">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

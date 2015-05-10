@@ -1,0 +1,236 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0789&#45;01] Important: openstack&#45;packstack and	openstack&#45;puppet&#45;modules security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 7 Apr 2015 22:01:53 &#45;0400 -->
+<!--X-Message-Id: 201504080201.t3821nI7012966@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0789-01] Important: openstack-packstack and	openstack-puppet-</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0789-01] Important: openstack-packstack and	openstack-puppet-modules security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0789-01] Important: openstack-packstack and	openstack-puppet-modules security and bug fix update</li>
+<li><em>Date</em>: Wed, 8 Apr 2015 02:01:48 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: openstack-packstack and openstack-puppet-modules security and bug fix update
+Advisory ID:       RHSA-2015:0789-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0789.html">https://rhn.redhat.com/errata/RHSA-2015-0789.html</a>
+Issue date:        2015-04-07
+CVE Names:         CVE-2015-1842 
+=====================================================================
+
+1. Summary:
+
+Updated openstack-packstack and openstack-puppet-modules packages that fix
+one security issue and several bugs are now available for Red Hat
+Enterprise Linux OpenStack Platform 6.0.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 6.0 for RHEL 7 - noarch
+
+3. Description:
+
+PackStack is a command-line utility for deploying OpenStack on existing
+servers over an SSH connection. Deployment options are provided either
+interactively, using the command line, or non-interactively by means of a
+text file containing a set of preconfigured values for OpenStack
+parameters. PackStack is suitable for proof-of-concept installations.
+PackStack is suitable for deploying proof-of-concept installations.
+
+It was discovered that the puppet manifests, as provided with the
+openstack-puppet-modules package, would configure the pcsd daemon with a
+known default password. If this password was not changed and an attacker
+was able to gain access to pcsd, they could potentially run shell commands
+as root. (CVE-2015-1842)
+
+This issue was discovered by Alessandro Vozza of Red Hat.
+
+This update also fixes the following bugs:
+
+* If OpenStack Networking is enabled, Packstack would display a warning if
+the Network Manager service is active on hosts. (BZ#1117277)
+
+* A quiet dependency on a newer version of selinux-policy causes
+openstack-selinux 0.6.23 to fail to install modules when paired with
+selinux-policy packages from Red Hat Enterprise Linux 7.0 or 7.0.z.
+This causes Identity and other OpenStack services to receive 'AVC' denials
+and malfunction under some circumstances. The following workarounds allow
+the OpenStack services to function correctly:
+
+1) Leave openstack-selinux at 0.6.18-2.el7ost until you are ready to update
+to Red Hat Enterprise Linux 7.1. At that time, a 'yum update' will resolve
+the issue.
+
+2) Install the updated selinux-policy and selinux-policy-targeted packages
+from Red Hat Enterprise Linux 7.1 (version selinux-policy-3.13.1-23.el7 or
+later), then update openstack-selinux to version 0.6.23-1.el7ost.
+(BZ#1195252)
+
+* A typo in the code caused a Sahara option that uses OpenStack Networking
+to be always false. Sahara now uses OpenStack Networking if the parameter
+'CONFIG_NEUTRON_INSTALL is set to 'y'. (BZ#1199047)
+
+* Prior to this update, users had to install the OpenStack Unified Client
+separately after an installation of Packstack. Packstack now installs it by
+default. (BZ#1199114)
+
+* This enhancement updates Packstack to retain temporary directories when
+running an installation in debug mode. This assists with troubleshooting
+activities. As a result, temporary directories are not deleted when running
+Packstack with the --debug command line option. (BZ#1199565)
+
+* Prior to this update, some validators did not use 'validate_not_empty' to
+ensure that certain parameters contained values. As a result, a number of
+internal validations could not be properly handled, leading to the
+possibility of unexpected errors. This update fixes validators to use
+validate_not_empty when required, resulting in correct validation behavior
+from validators. (BZ#11995889)
+
+In addition to the above issues, this update also addresses bugs and
+enhancements which can be found in the Red Hat Enterprise Linux OpenStack
+Platform Technical Notes, linked to in the References section.
+
+All openstack-packstack and openstack-puppet-modules users are advised to
+upgrade to these updated packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1117277 - Test Packstack/RHEL OSP on RHEL 7 nodes where Network Manager is NOT disabled
+1123117 - Deploy Keystone in Apache httpd
+1171744 - Configure TCP keepalive setting via puppet-rabbitmq
+1172305 - [RFE] Support Keystone read-only LDAP configuration with domain-specific identity backends
+1173930 - Horizon help url in RHEL-OSP6 points to the RHEL-OSP5 documentation
+1187343 - Packstack does not install Ironic with CONFIG_IRONIC_INSTALL flag set to &quot;y&quot;
+1187706 - problems with puppet-keystone LDAP support
+1193889 - puppet restart neutron server every 30 minutes on evironments deployed by staypuft
+1195252 - [keystone] - selinux denial
+1195258 - Packstack doesn't set firewall so vxlan traffic can be received in multinode setup
+1199047 - The value of use_neutron is set to false (instead of true) when neutron is used.
+1199072 - packstack does not set ironic password
+1199076 - glance_image provider doesn't respect custom region name
+1199085 - RHOS backport RDO fix for packstack error: Error: sysctl -p /etc/sysctl.conf returned 255 instead of one of
+1199114 - add openstack unified client
+1199423 - Use flake8 and hacking instead of pep8 for Python syntax checks
+1199427 - Cherrypick documentation fixes from RDO
+1199519 - Packstack install AMQP with SSL, fails to start rabbitmq service
+1199547 - Install rhos-log-collector only on RHEL systems
+1199549 - Backport packstack RDO fixes for rebased modules
+1199562 - RFE: Allow command-line options with --gen-answer-file
+1199565 - Do not delete temporary directories after a failed installation in debug mode
+1199589 - Cherry pick internal Packstack enhancements from RDO
+1199677 - Update OSP OPM to the latest RDO package
+1201875 - CVE-2015-1842 openstack-puppet-modules: pacemaker configured with default password
+1202107 - packstack --help throws a traceback at the end of the output
+1204482 - nova-novncproxy fails with ValidationError: Origin header protocol does not match this host
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 6.0 for RHEL 7:
+
+Source:
+openstack-packstack-2014.2-0.20.dev1467.g70c9655.el7ost.src.rpm
+openstack-puppet-modules-2014.2.13-2.el7ost.src.rpm
+
+noarch:
+openstack-packstack-2014.2-0.20.dev1467.g70c9655.el7ost.noarch.rpm
+openstack-packstack-doc-2014.2-0.20.dev1467.g70c9655.el7ost.noarch.rpm
+openstack-packstack-puppet-2014.2-0.20.dev1467.g70c9655.el7ost.noarch.rpm
+openstack-puppet-modules-2014.2.13-2.el7ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-1842">https://access.redhat.com/security/cve/CVE-2015-1842</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/6/html/Technical_Notes/index.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/6/html/Technical_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVJIwIXlSAg2UNWIIRAsCcAJwJJgMiSeZR4LcGJojRRw3ZPGQGzACgngwB
+Pv0MBb8SUgDiiKc/3zJ1Uo4=
+=bo/b
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00010.html">Date Prev</a>][<a href="msg00012.html">Date Next</a>] &nbsp; [<a href="msg00010.html">Thread Prev</a>][<a href="msg00012.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00011">Thread Index</A>]
+[<A HREF="date.html#00011">Date Index</A>]
+[<A HREF="author.html#00011">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
