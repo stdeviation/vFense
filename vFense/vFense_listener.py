@@ -1,6 +1,9 @@
 """
 Main launching point of the Top Patch Server
 """
+
+from _magic import *
+
 import base64
 import uuid
 import os

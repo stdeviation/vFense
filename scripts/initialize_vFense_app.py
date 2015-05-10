@@ -1,21 +1,15 @@
+import sys
 import argparse
 import ConfigParser
-import os
-import pwd
-import shutil
+
 import subprocess
-import sys
 from time import sleep
 from _magic import *
 from vFense._constants import (
-    VFENSE_BASE_SRC_PATH, VFENSE_BASE_PATH, VFENSE_APP_PATH,
-    VFENSE_LOG_PATH, VFENSE_LOGGING_CONFIG, VFENSE_VULN_PATH,
-    VFENSE_APP_TMP_PATH, VFENSE_SCHEDULER_PATH, RETHINK_CONF,
-    VFENSE_TMP_PATH, VFENSED_SYMLINK, VFENSED, VFENSE_BASE_PATH,
-    VFENSE_INIT_D_SCRIPT, VFENSE_INIT_D_SYMLINK, VFENSE_CONFIG,
-    VFENSE_SSL_PATH, RETHINK_VFENSE_PATH, RETHINK_PATH, RETHINK_SOURCE_CONF
+    VFENSE_LOGGING_CONFIG, VFENSE_CONFIG
 )
 from vFense.core.logger.logger import vFenseLogger
+
 vfense_logger = vFenseLogger()
 vfense_logger.create_config()
 
@@ -23,14 +17,14 @@ import logging, logging.config
 
 from vFense.utils.common import import_modules_by_regex
 import nginx_config_creator as ncc
+
 from vFense.utils.supported_platforms import (
-    REDHAT_DISTROS, DEBIAN_DISTROS, get_distro, SITE_PACKAGES
+    DEBIAN_DISTROS, get_distro
 )
 from vFense.utils.security import generate_pass, check_password
 from vFense.utils.ssl_initialize import generate_generic_certs
 from vFense.utils.common import pick_valid_ip_address
-from vFense.db.client import db_connect, r, db_create_close
-
+from vFense.db.client import r, db_create_close, db_connect
 
 from vFense.core.user import User
 from vFense.core.user.manager import UserManager
@@ -54,11 +48,12 @@ logger = logging.getLogger('vfense_api')
 Config = ConfigParser.ConfigParser()
 Config.read(VFENSE_CONFIG)
 
-if os.getuid() != 0:
-    print 'MUST BE ROOT IN ORDER TO RUN'
-    sys.exit(1)
 
 parser = argparse.ArgumentParser(description='Initialize vFense Options')
+parser.add_argument(
+    '--dnsname', dest='dns_name', default=None,
+    help='Pass the DNS Name of the patching Server'
+)
 parser.add_argument(
     '--ipaddress', dest='ip_address', default=pick_valid_ip_address(),
     help='Pass the IP Address of the patching Server'
@@ -90,7 +85,8 @@ if args.admin_password:
         )
         sys.exit(1)
 
-if Config.get("vFense"):
+
+if args.dns_name:
     url = 'https://%s/packages/' % (args.dns_name)
     nginx_server_name = args.dns_name
 else:
@@ -99,139 +95,19 @@ else:
 
 def build_nginx_config():
     generate_generic_certs()
-    ncc.nginx_config_builder(
-        nginx_server_name,
-        args.server_cert,
-        args.server_key,
-        rvlistener_count=int(args.listener_count),
-        rvweb_count=int(args.web_count)
-    )
+    ncc.nginx_config_builder(nginx_server_name)
 
-
-def create_directories():
-    if not os.path.exists(VFENSE_SSL_PATH):
-        os.mkdir(VFENSE_SSL_PATH, 0755)
-    if not os.path.exists(VFENSE_LOG_PATH):
-        os.mkdir(VFENSE_LOG_PATH, 0755)
-    if not os.path.exists(VFENSE_SCHEDULER_PATH):
-        os.mkdir(VFENSE_SCHEDULER_PATH, 0755)
-    if not os.path.exists(VFENSE_APP_PATH):
-        os.mkdir(VFENSE_APP_PATH, 0755)
-    if not os.path.exists(VFENSE_APP_TMP_PATH):
-        os.mkdir(VFENSE_APP_TMP_PATH, 0775)
-    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls')):
-        os.makedirs(os.path.join(VFENSE_VULN_PATH, 'windows/data/xls'), 0755)
-    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'cve/data/xml')):
-        os.makedirs(os.path.join(VFENSE_VULN_PATH,'cve/data/xml'), 0755)
-    if not os.path.exists(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html')):
-        os.makedirs(os.path.join(VFENSE_VULN_PATH, 'ubuntu/data/html'), 0755)
-
-def create_symlinks():
-    try:
-        if os.path.exists(os.path.join(SITE_PACKAGES[-1], 'vFense')):
-            os.remove(os.path.join(SITE_PACKAGES[-1], 'vFense'))
-
-        elif (
-                not os.path.exists(
-                    os.readlink(os.path.join(SITE_PACKAGES[-1], 'vFense'))
-                )
-            ):
-            os.remove(os.path.join(SITE_PACKAGES[-1], 'vFense'))
-
-    except Exception as e:
-        pass
-
-    subprocess.Popen(
-        [
-            'ln', '-s', VFENSE_BASE_SRC_PATH, SITE_PACKAGES[-1]
-        ],
-    )
-
-    try:
-        if os.path.exists(VFENSED_SYMLINK):
-            os.remove(VFENSED_SYMLINK)
-
-        elif not os.path.exists(os.readlink(VFENSED_SYMLINK)):
-            os.remove(VFENSED_SYMLINK)
-
-    except Exception as e:
-        pass
-
-    subprocess.Popen(
-        [
-            'ln', '-s', VFENSED, VFENSED_SYMLINK
-        ],
-    )
-
-    try:
-        if os.path.exists(VFENSE_INIT_D_SYMLINK):
-            os.remove(VFENSE_INIT_D_SYMLINK)
-
-        elif not os.path.exists(os.readlink(VFENSE_INIT_D_SYMLINK)):
-            os.remove(VFENSE_INIT_D_SYMLINK)
-
-    except Exception as e:
-        pass
-
-    subprocess.Popen(
-        [
-            'ln', '-s',
-            VFENSE_INIT_D_SCRIPT,
-            VFENSE_INIT_D_SYMLINK
-        ],
-    )
-
-    if get_distro() in DEBIAN_DISTROS:
-        subprocess.Popen(
-            [
-                'update-rc.d', 'vFense',
-                'defaults'
-            ],
-        )
-
-    if get_distro() in REDHAT_DISTROS:
-        if os.path.exists('/usr/bin/rqworker'):
-            subprocess.Popen(
-                [
-                    'ln', '-s',
-                    '/usr/bin/rqworker',
-                    '/usr/local/bin/rqworker'
-                ],
-            )
-
-
-def add_local_user():
-    try:
-        pwd.getpwnam('vfense')
-
-    except Exception as e:
-        if get_distro() in DEBIAN_DISTROS:
-            subprocess.Popen(
-                [
-                    'adduser', '--disabled-password', '--gecos', '', 'vfense',
-                ],
-            )
-        elif get_distro() in REDHAT_DISTROS:
-            subprocess.Popen(
-                [
-                    'useradd', 'vfense',
-                ],
-            )
-
-
-@db_create_close
 def create_views(conn=None):
     view = View(
         view_name=DefaultViews.GLOBAL,
-        server_queue_ttl=args.queue_ttl,
-        package_download_url_base=url
+        server_queue_ttl=Config.get('vFense', 'server_queue_ttl'),
+        package_download_url_base=Config.get('vFense', 'packages_url')
     )
     view_manager = ViewManager(view.view_name)
     view_manager.create(view)
     print 'Global Token: {0}'.format(view_manager.get_token())
     print 'Place this token in the agent.config file'
 
-@db_create_close
 def create_groups(conn=None):
     group = Group(
         DefaultGroups.GLOBAL_ADMIN, [Permissions.ADMINISTRATOR],
@@ -251,8 +127,6 @@ def create_groups(conn=None):
 
     return(admin_group_id, agent_group_id)
 
-
-@db_create_close
 def create_users(admin_group_id, conn=None):
     admin_user = User(
         user_name=DefaultUsers.GLOBAL_ADMIN,
@@ -265,7 +139,6 @@ def create_users(admin_group_id, conn=None):
     user_manager.create(admin_user, [admin_group_id])
     print 'Admin username = %s' % (DefaultUsers.GLOBAL_ADMIN)
     print 'Admin password = %s' % (args.admin_password)
-
 
 @db_create_close
 def generate_initial_db_data(conn=None):
@@ -284,26 +157,19 @@ def generate_initial_db_data(conn=None):
     return completed
 
 def start_local_db():
-    os.umask(0)
-    if not os.path.exists(VFENSE_TMP_PATH):
-        os.mkdir(VFENSE_TMP_PATH, 0755)
-    if not os.path.exists(RETHINK_CONF):
-        subprocess.Popen(
-            [
-                'ln', '-s',
-                RETHINK_SOURCE_CONF,
-                RETHINK_CONF
-            ],
-        )
-    if not os.path.exists(RETHINK_VFENSE_PATH):
-        os.makedirs(RETHINK_VFENSE_PATH)
-        subprocess.Popen(
-            [
-                'chown', '-R', 'rethinkdb.rethinkdb',
-                RETHINK_VFENSE_PATH
-            ],
-        )
-
+#    os.umask(0)
+#    if not os.path.exists(VFENSE_TMP_PATH):
+#        os.mkdir(VFENSE_TMP_PATH, 0755)
+#    if not os.path.exists(RETHINK_CONF):
+#        subprocess.Popen(
+#            [
+#                'ln', '-s',
+#                RETHINK_SOURCE_CONF,
+#                RETHINK_CONF
+#            ],
+#        )
+#    if not os.path.exists(RETHINK_VFENSE_PATH):
+#        os.makedirs(RETHINK_VFENSE_PATH)
     if not db_connect():
         subprocess.Popen(['service', 'rethinkdb','start'])
 
@@ -335,56 +201,21 @@ def generate_vuln_data():
     print "Done Updating Redhat Security Bulletin Ids..."
 
 
-def clean_database():
-    completed = False
-    conn = db_connect()
-    if conn:
-        subprocess.Popen(['service', 'rethinkdb','stop'])
-        sleep(3)
-        print 'Rethink stopped successfully\n'
-    try:
-        if os.path.exists(RETHINK_VFENSE_PATH):
-            shutil.rmtree(RETHINK_VFENSE_PATH)
-        completed = True
-        print 'Rethink instances.d directory removed and cleaned'
-
-    except Exception as e:
-        print 'Rethink instances.d directory could not be removed'
-        print e
-        completed = False
-
-    return completed
-
-
 if __name__ == '__main__':
     db_initialized = False
     db_started = False
     init_data_completed = False
-    create_symlinks()
-    create_directories()
     build_nginx_config()
-    db_clean = clean_database()
-    if db_clean:
-        db_started = start_local_db()
+    #subprocess.Popen(['service', 'rethinkdb','start'])
+    db_started = start_local_db()
 
-    if db_started:
-        init_data_completed = generate_initial_db_data()
+    init_data_completed = generate_initial_db_data()
 
     if init_data_completed:
-        add_local_user()
         db_initialized = True
 
     if args.cve_data and db_initialized:
         generate_vuln_data()
 
-    if db_initialized:
-        print 'vFense environment has been succesfully initialized\n'
-        subprocess.Popen(
-            [
-                'chown', '-R', 'vfense.vfense', VFENSE_BASE_PATH
-            ],
-        )
-
     else:
         print 'vFense Failed to initialize'
-

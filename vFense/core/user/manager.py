@@ -333,7 +333,9 @@ class UserManager(object):
         if isinstance(views, str):
             views = views.split(',')
 
-        views_are_valid, _, _ = validate_view_names(views)
+        views_are_valid, valid_views, invalid_views = (
+            validate_view_names(views)
+        )
         if self.properties.is_global:
             views = fetch_all_view_names()
 
@@ -375,10 +377,10 @@ class UserManager(object):
             )
             results.invalid_ids.append(self.user_name)
 
-        elif not views_are_valid[0]:
+        elif not views_are_valid:
             msg = (
                 'View names are invalid: %s' % (
-                    ' and '.join(views_are_valid[2])
+                    ' and '.join(invalid_views)
                 )
             )
             results.message = msg
@@ -435,6 +437,7 @@ class UserManager(object):
                 status_code, _, _, generated_ids = (
                     add_user_to_groups(group_ids, self.user_name)
                 )
+                print status_code, generated_ids
 
                 if status_code == DbCodes.Replaced:
                     msg = (

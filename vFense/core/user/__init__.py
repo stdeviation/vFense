@@ -247,7 +247,7 @@ class User(Base):
             ),
         }
 
-        combined_data = dict(self.to_dict_non_null().items() + data.items())
+        combined_data = dict(self.to_dict().items() + data.items())
         return combined_data
 
     def to_dict_db_update(self):
