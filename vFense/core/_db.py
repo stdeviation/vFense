@@ -217,7 +217,7 @@ def create_collection(name, primary_key, conn=None):
     return data
 
 @time_it
-@catch_it({})
+#@catch_it({})
 @db_create_close
 @return_status_tuple
 def insert_data_in_table(data, collection, conn=None):
@@ -241,8 +241,9 @@ def insert_data_in_table(data, collection, conn=None):
         r
         .table(collection)
         .insert(data, conflict="replace")
-        .run(conn, no_reply=True, durability='soft')
+        .run(conn, noreply=False, durability='soft')
     )
+    print results,'FOO BAR'
 
     return results
 
@@ -305,7 +306,7 @@ def update_data_in_table(primary_key, data, collection, conn=None):
         .table(collection)
         .get(primary_key)
         .update(data)
-        .run(conn, no_reply=True, durability='soft')
+        .run(conn, noreply=False, durability='soft')
     )
 
     return results
@@ -333,7 +334,7 @@ def delete_all_in_table(collection, conn=None):
         r
         .table(collection)
         .delete()
-        .run(conn, no_reply=True, durability='soft')
+        .run(conn, noreply=False, durability='soft')
     )
 
     return data
