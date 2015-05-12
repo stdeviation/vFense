@@ -49,8 +49,28 @@ parser.add_argument(
     '--no-admin-scheduler', dest='admin_scheduler', action='store_false',
     help='Do not start the admin scheduler for vFense'
 )
+parser.add_argument(
+    '--start', dest='start', action='store_true',
+    help='Start vFense'
+)
+parser.add_argument(
+    '--stop', dest='stop', action='store_true',
+    help='Stop vFense'
+)
+parser.add_argument(
+    '--restart', dest='restart', action='store_true',
+    help='Restart vFense'
+)
+parser.add_argument(
+    '--status', dest='status', action='store_true',
+    help='Status of vFense'
+)
 parser.set_defaults(rq_workers=True)
 parser.set_defaults(admin_scheduler=True)
+parser.set_defaults(start=False)
+parser.set_defaults(stop=False)
+parser.set_defaults(restart=False)
+parser.set_defaults(status=False)
 
 args = parser.parse_args()
 
@@ -290,22 +310,16 @@ def vfense_status():
             logger.error(message)
     sys.exit(0)
 
-ACTIONS = sys.argv[1]
-
 if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        if ACTIONS == 'start':
-            vfense_start()
-        elif ACTIONS == 'stop':
-            vfense_stop()
-        elif ACTIONS == 'restart':
-            vfense_restart()
-            logger.info("vFense server restarting..")
-        elif ACTIONS == 'status':
-            vfense_status()
-        else:
-            print "Unknown command"
-            sys.exit(2)
-        sys.exit(0)
+    if args.start:
+        vfense_start()
+    elif args.stop:
+        vfense_stop()
+    elif args.restart:
+        vfense_restart()
+        logger.info("vFense server restarting..")
+    elif args.status == 'status':
+        vfense_status()
     else:
-        print "usage: %s start|stop|restart|status" % sys.argv[0]
+        print "Unknown command"
+        sys.exit(2)
