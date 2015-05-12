@@ -103,7 +103,7 @@ class Application(tornado.web.Application):
         log_method(log_message)
 
 if __name__ == '__main__':
-    import_modules_by_regex('_db_init')
+    import_modules_by_regex('_db_init.py')
     tornado.options.parse_command_line()
     https_server = tornado.httpserver.HTTPServer(
         Application(options.debug),
