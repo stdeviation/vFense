@@ -1,0 +1,273 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0330&#45;02] Low: pcre security and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:49:11 &#45;0500 -->
+<!--X-Message-Id: 201503051449.t25EnAO1016549@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0330-02] Low: pcre security and enhancement update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0330-02] Low: pcre security and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0330-02] Low: pcre security and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:49:09 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Low: pcre security and enhancement update
+Advisory ID:       RHSA-2015:0330-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0330.html">https://rhn.redhat.com/errata/RHSA-2015-0330.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-8964 
+=====================================================================
+
+1. Summary:
+
+Updated pcre packages that fix one security issue and add one enhancement
+are now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Low security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+PCRE is a Perl-compatible regular expression library.
+
+A flaw was found in the way PCRE handled certain malformed regular
+expressions. This issue could cause an application (for example, Konqueror)
+linked against PCRE to crash while parsing malicious regular expressions.
+(CVE-2014-8964)
+
+This update also adds the following enhancement:
+
+* Support for the little-endian variant of IBM Power Systems has been added
+to the pcre packages. (BZ#1123498, BZ#1125642)
+
+All pcre users are advised to upgrade to these updated packages, which
+contain a backported patch to correct this issue and add this enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1166147 - CVE-2014-8964 pcre: incorrect handling of zero-repeat assertion conditions
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+pcre-8.32-14.el7.src.rpm
+
+x86_64:
+pcre-8.32-14.el7.i686.rpm
+pcre-8.32-14.el7.x86_64.rpm
+pcre-debuginfo-8.32-14.el7.i686.rpm
+pcre-debuginfo-8.32-14.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+pcre-debuginfo-8.32-14.el7.i686.rpm
+pcre-debuginfo-8.32-14.el7.x86_64.rpm
+pcre-devel-8.32-14.el7.i686.rpm
+pcre-devel-8.32-14.el7.x86_64.rpm
+pcre-static-8.32-14.el7.i686.rpm
+pcre-static-8.32-14.el7.x86_64.rpm
+pcre-tools-8.32-14.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+pcre-8.32-14.el7.src.rpm
+
+x86_64:
+pcre-8.32-14.el7.i686.rpm
+pcre-8.32-14.el7.x86_64.rpm
+pcre-debuginfo-8.32-14.el7.i686.rpm
+pcre-debuginfo-8.32-14.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+pcre-debuginfo-8.32-14.el7.i686.rpm
+pcre-debuginfo-8.32-14.el7.x86_64.rpm
+pcre-devel-8.32-14.el7.i686.rpm
+pcre-devel-8.32-14.el7.x86_64.rpm
+pcre-static-8.32-14.el7.i686.rpm
+pcre-static-8.32-14.el7.x86_64.rpm
+pcre-tools-8.32-14.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+pcre-8.32-14.el7.src.rpm
+
+ppc64:
+pcre-8.32-14.el7.ppc.rpm
+pcre-8.32-14.el7.ppc64.rpm
+pcre-debuginfo-8.32-14.el7.ppc.rpm
+pcre-debuginfo-8.32-14.el7.ppc64.rpm
+pcre-devel-8.32-14.el7.ppc.rpm
+pcre-devel-8.32-14.el7.ppc64.rpm
+
+s390x:
+pcre-8.32-14.el7.s390.rpm
+pcre-8.32-14.el7.s390x.rpm
+pcre-debuginfo-8.32-14.el7.s390.rpm
+pcre-debuginfo-8.32-14.el7.s390x.rpm
+pcre-devel-8.32-14.el7.s390.rpm
+pcre-devel-8.32-14.el7.s390x.rpm
+
+x86_64:
+pcre-8.32-14.el7.i686.rpm
+pcre-8.32-14.el7.x86_64.rpm
+pcre-debuginfo-8.32-14.el7.i686.rpm
+pcre-debuginfo-8.32-14.el7.x86_64.rpm
+pcre-devel-8.32-14.el7.i686.rpm
+pcre-devel-8.32-14.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+pcre-debuginfo-8.32-14.el7.ppc.rpm
+pcre-debuginfo-8.32-14.el7.ppc64.rpm
+pcre-static-8.32-14.el7.ppc.rpm
+pcre-static-8.32-14.el7.ppc64.rpm
+pcre-tools-8.32-14.el7.ppc64.rpm
+
+s390x:
+pcre-debuginfo-8.32-14.el7.s390.rpm
+pcre-debuginfo-8.32-14.el7.s390x.rpm
+pcre-static-8.32-14.el7.s390.rpm
+pcre-static-8.32-14.el7.s390x.rpm
+pcre-tools-8.32-14.el7.s390x.rpm
+
+x86_64:
+pcre-debuginfo-8.32-14.el7.i686.rpm
+pcre-debuginfo-8.32-14.el7.x86_64.rpm
+pcre-static-8.32-14.el7.i686.rpm
+pcre-static-8.32-14.el7.x86_64.rpm
+pcre-tools-8.32-14.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+pcre-8.32-14.el7.src.rpm
+
+x86_64:
+pcre-8.32-14.el7.i686.rpm
+pcre-8.32-14.el7.x86_64.rpm
+pcre-debuginfo-8.32-14.el7.i686.rpm
+pcre-debuginfo-8.32-14.el7.x86_64.rpm
+pcre-devel-8.32-14.el7.i686.rpm
+pcre-devel-8.32-14.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+pcre-debuginfo-8.32-14.el7.i686.rpm
+pcre-debuginfo-8.32-14.el7.x86_64.rpm
+pcre-static-8.32-14.el7.i686.rpm
+pcre-static-8.32-14.el7.x86_64.rpm
+pcre-tools-8.32-14.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8964">https://access.redhat.com/security/cve/CVE-2014-8964</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#low">https://access.redhat.com/security/updates/classification/#low</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+GzbXlSAg2UNWIIRAkNgAKCAkawLEpQI4rSoGfsmA+KjTS990gCgqHyp
+3W3gApSWf0aj4+EHvUJTaaE=
+=LWYn
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00019.html">Date Prev</a>][<a href="msg00021.html">Date Next</a>] &nbsp; [<a href="msg00019.html">Thread Prev</a>][<a href="msg00021.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00020">Thread Index</A>]
+[<A HREF="date.html#00020">Date Index</A>]
+[<A HREF="author.html#00020">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

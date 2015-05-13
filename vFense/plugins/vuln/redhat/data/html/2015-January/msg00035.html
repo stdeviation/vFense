@@ -1,0 +1,250 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0093&#45;01] Important: chromium&#45;browser security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 27 Jan 2015 15:39:23 &#45;0500 -->
+<!--X-Message-Id: 201501272039.t0RKdNkE005187@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0093-01] Important: chromium-browser security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0093-01] Important: chromium-browser security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0093-01] Important: chromium-browser security update</li>
+<li><em>Date</em>: Tue, 27 Jan 2015 20:39:23 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: chromium-browser security update
+Advisory ID:       RHSA-2015:0093-01
+Product:           Red Hat Enterprise Linux Supplementary
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0093.html">https://rhn.redhat.com/errata/RHSA-2015-0093.html</a>
+Issue date:        2015-01-27
+CVE Names:         CVE-2014-7923 CVE-2014-7924 CVE-2014-7925 
+                   CVE-2014-7926 CVE-2014-7927 CVE-2014-7928 
+                   CVE-2014-7929 CVE-2014-7930 CVE-2014-7931 
+                   CVE-2014-7932 CVE-2014-7933 CVE-2014-7934 
+                   CVE-2014-7935 CVE-2014-7936 CVE-2014-7937 
+                   CVE-2014-7938 CVE-2014-7939 CVE-2014-7940 
+                   CVE-2014-7941 CVE-2014-7942 CVE-2014-7943 
+                   CVE-2014-7944 CVE-2014-7945 CVE-2014-7946 
+                   CVE-2014-7947 CVE-2014-7948 
+=====================================================================
+
+1. Summary:
+
+Updated chromium-browser packages that fix multiple security issues are now
+available for Red Hat Enterprise Linux 6 Supplementary.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server Supplementary (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation Supplementary (v. 6) - i386, x86_64
+
+3. Description:
+
+Chromium is an open-source web browser, powered by WebKit (Blink).
+
+Several flaws were found in the processing of malformed web content. A web
+page containing malicious content could cause Chromium to crash or,
+potentially, execute arbitrary code with the privileges of the user running
+Chromium. (CVE-2014-7923, CVE-2014-7924, CVE-2014-7925, CVE-2014-7926,
+CVE-2014-7927, CVE-2014-7928, CVE-2014-7929, CVE-2014-7930, CVE-2014-7931,
+CVE-2014-7932, CVE-2014-7933, CVE-2014-7934, CVE-2014-7935, CVE-2014-7936,
+CVE-2014-7937, CVE-2014-7938, CVE-2014-7939, CVE-2014-7940, CVE-2014-7941,
+CVE-2014-7942, CVE-2014-7943, CVE-2014-7944, CVE-2014-7945, CVE-2014-7946,
+CVE-2014-7947, CVE-2014-7948)
+
+All Chromium users should upgrade to these updated packages, which contain
+Chromium version 40.0.2214.91, which corrects these issues. After
+installing the update, Chromium must be restarted for the changes to take
+effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1185202 - CVE-2014-7923 ICU: regexp engine memory corruption
+1185203 - CVE-2014-7924 chromium-browser: use-after-free in IndexedDB
+1185204 - CVE-2014-7925 chromium-browser: use-after-free in WebAudio
+1185205 - CVE-2014-7926 ICU: regexp engine memory corruption
+1185206 - CVE-2014-7927 chromium-browser: memory corruption in V8
+1185208 - CVE-2014-7928 chromium-browser: memory corruption in V8
+1185209 - CVE-2014-7929 chromium-browser: use-after-free in DOM
+1185210 - CVE-2014-7930 chromium-browser: use-after-free in DOM
+1185211 - CVE-2014-7931 chromium-browser: memory corruption in V8
+1185212 - CVE-2014-7932 chromium-browser: use-after-free in DOM
+1185213 - CVE-2014-7933 chromium-browser: use-after-free in FFmpeg
+1185214 - CVE-2014-7934 chromium-browser: use-after-free in DOM
+1185215 - CVE-2014-7935 chromium-browser: use-after-free in Speech
+1185216 - CVE-2014-7936 chromium-browser: use-after-free in Views
+1185217 - CVE-2014-7937 chromium-browser: use-after-free in FFmpeg
+1185218 - CVE-2014-7938 chromium-browser: memory corruption in Fonts
+1185219 - CVE-2014-7939 chromium-browser: same-origin-bypass in V8
+1185220 - CVE-2014-7940 ICU: uninitialized value use in the collation component
+1185221 - CVE-2014-7941 chromium-browser: out-of-bounds read in UI
+1185222 - CVE-2014-7942 chromium-browser: uninitialized-value in Fonts
+1185223 - CVE-2014-7943 chromium-browser: out-of-bounds read in Skia
+1185224 - CVE-2014-7944 chromium-browser: out-of-bounds read in PDFium
+1185225 - CVE-2014-7945 chromium-browser: out-of-bounds read in PDFium
+1185226 - CVE-2014-7946 chromium-browser: out-of-bounds read in Fonts
+1185229 - CVE-2014-7947 chromium-browser: out-of-bounds read in PDFium
+1185230 - CVE-2014-7948 chromium-browser: caching error in AppCache
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop Supplementary (v. 6):
+
+Source:
+chromium-browser-40.0.2214.91-1.el6_6.src.rpm
+
+i386:
+chromium-browser-40.0.2214.91-1.el6_6.i686.rpm
+chromium-browser-debuginfo-40.0.2214.91-1.el6_6.i686.rpm
+
+x86_64:
+chromium-browser-40.0.2214.91-1.el6_6.x86_64.rpm
+chromium-browser-debuginfo-40.0.2214.91-1.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server Supplementary (v. 6):
+
+Source:
+chromium-browser-40.0.2214.91-1.el6_6.src.rpm
+
+i386:
+chromium-browser-40.0.2214.91-1.el6_6.i686.rpm
+chromium-browser-debuginfo-40.0.2214.91-1.el6_6.i686.rpm
+
+x86_64:
+chromium-browser-40.0.2214.91-1.el6_6.x86_64.rpm
+chromium-browser-debuginfo-40.0.2214.91-1.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Supplementary (v. 6):
+
+Source:
+chromium-browser-40.0.2214.91-1.el6_6.src.rpm
+
+i386:
+chromium-browser-40.0.2214.91-1.el6_6.i686.rpm
+chromium-browser-debuginfo-40.0.2214.91-1.el6_6.i686.rpm
+
+x86_64:
+chromium-browser-40.0.2214.91-1.el6_6.x86_64.rpm
+chromium-browser-debuginfo-40.0.2214.91-1.el6_6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7923">https://access.redhat.com/security/cve/CVE-2014-7923</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7924">https://access.redhat.com/security/cve/CVE-2014-7924</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7925">https://access.redhat.com/security/cve/CVE-2014-7925</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7926">https://access.redhat.com/security/cve/CVE-2014-7926</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7927">https://access.redhat.com/security/cve/CVE-2014-7927</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7928">https://access.redhat.com/security/cve/CVE-2014-7928</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7929">https://access.redhat.com/security/cve/CVE-2014-7929</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7930">https://access.redhat.com/security/cve/CVE-2014-7930</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7931">https://access.redhat.com/security/cve/CVE-2014-7931</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7932">https://access.redhat.com/security/cve/CVE-2014-7932</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7933">https://access.redhat.com/security/cve/CVE-2014-7933</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7934">https://access.redhat.com/security/cve/CVE-2014-7934</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7935">https://access.redhat.com/security/cve/CVE-2014-7935</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7936">https://access.redhat.com/security/cve/CVE-2014-7936</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7937">https://access.redhat.com/security/cve/CVE-2014-7937</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7938">https://access.redhat.com/security/cve/CVE-2014-7938</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7939">https://access.redhat.com/security/cve/CVE-2014-7939</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7940">https://access.redhat.com/security/cve/CVE-2014-7940</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7941">https://access.redhat.com/security/cve/CVE-2014-7941</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7942">https://access.redhat.com/security/cve/CVE-2014-7942</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7943">https://access.redhat.com/security/cve/CVE-2014-7943</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7944">https://access.redhat.com/security/cve/CVE-2014-7944</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7945">https://access.redhat.com/security/cve/CVE-2014-7945</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7946">https://access.redhat.com/security/cve/CVE-2014-7946</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7947">https://access.redhat.com/security/cve/CVE-2014-7947</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7948">https://access.redhat.com/security/cve/CVE-2014-7948</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+<a  rel="nofollow" href="http://googlechromereleases.blogspot.com/2015/01/stable-update.html">http://googlechromereleases.blogspot.com/2015/01/stable-update.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUx/dpXlSAg2UNWIIRAicvAJ48EWNhTADIJpssRxTnXXoorLHcPQCeOXCx
+tHGzcUTFc2XPKT1/opdUYIw=
+=QwdV
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00034.html">Date Prev</a>][<a href="msg00036.html">Date Next</a>] &nbsp; [<a href="msg00034.html">Thread Prev</a>][<a href="msg00036.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00035">Thread Index</A>]
+[<A HREF="date.html#00035">Date Index</A>]
+[<A HREF="author.html#00035">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

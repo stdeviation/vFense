@@ -1,0 +1,202 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0845&#45;01] Moderate: python&#45;django&#45;horizon and	python&#45;django&#45;openstack&#45;auth update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 16 Apr 2015 15:04:04 &#45;0400 -->
+<!--X-Message-Id: 201504161904.t3GJ41DH023483@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0845-01] Moderate: python-django-horizon and	python-django-op</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00043.html">Date Prev</a>][<a href="msg00045.html">Date Next</a>] &nbsp; [<a href="msg00043.html">Thread Prev</a>][<a href="msg00045.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00044">Thread Index</A>]
+[<A HREF="date.html#00044">Date Index</A>]
+[<A HREF="author.html#00044">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0845-01] Moderate: python-django-horizon and	python-django-openstack-auth update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0845-01] Moderate: python-django-horizon and	python-django-openstack-auth update</li>
+<li><em>Date</em>: Thu, 16 Apr 2015 19:04:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: python-django-horizon and python-django-openstack-auth update
+Advisory ID:       RHSA-2015:0845-01
+Product:           Red Hat Enterprise Linux OpenStack Platform
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0845.html">https://rhn.redhat.com/errata/RHSA-2015-0845.html</a>
+Issue date:        2015-04-16
+CVE Names:         CVE-2014-8124 
+=====================================================================
+
+1. Summary:
+
+Updated python-django-horizon and python-django-openstack-auth packages
+that fix one security issue and multiple bugs are now available for Red Hat
+Enterprise Linux OpenStack Platform 5.0 for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 6 - noarch
+
+3. Description:
+
+OpenStack Dashboard (horizon) provides administrators and users a graphical
+interface to access, provision and automate cloud-based resources.
+The dashboard allows cloud administrators to get an overall view of the
+size and state of the cloud and it provides end-users a self-service portal
+to provision their own resources within the limits set by administrators.
+
+A denial of service flaw was found in the OpenStack Dashboard (horizon)
+when using the db or memcached session engine. An attacker could make
+repeated requests to the login page, which would result in a large number
+of unwanted backend session entries, possibly leading to a denial of
+service. (CVE-2014-8124)
+
+Red Hat would like to thank the OpenStack Project for reporting this issue.
+Upstream acknowledges Eric Peterson from Time Warner Cable as the original
+reporter.
+
+The python-django-horizon packages have been upgraded to upstream version
+2014.1.4, which provides a number of bug fixes over the previous version,
+including:
+
+* Default 'target={}' value leaks into subsequent 'policy.check()' calls.
+* Neutron subnet create tooltip has invalid HTML tags.
+* Memory reported improperly in admin dashboard.
+* The container dashboard does not handle unicode URL correctly.
+(BZ#1203281)
+
+This update also fixes the following bugs:
+
+* The option 'OPENSTACK_SSL_NO_VERIFY' is used to enable or disable checks
+for SSL certificate validity. Prior to this update, swift clients ignored
+this check. As a result, you could not use horizon with swift, and swift
+was accessed via a self signed certificate. With this update, the option is
+now handled properly and Horizon is able to use this endpoint while the
+'OPENSTACK_SSL_NO_VERIFY' option is enabled. (BZ#1192517)
+
+* Previously, horizon.log was not truncated automatically, resulting in
+very large log files. With this update, files are now trimmed by logrotate,
+fixing this issue. (BZ#1112621)
+
+All OpenStack Dashboard users are advised to upgrade to these updated
+packages, which correct these issues.
+
+4. Solution:
+
+Before applying this update, ensure all previously released errata relevant
+to your system have been applied.
+
+Red Hat Enterprise Linux OpenStack Platform 5 runs on Red Hat Enterprise
+Linux 6.6.
+
+The Red Hat Enterprise Linux OpenStack Platform 5 Release Notes (see
+References section) contain the following:
+* An explanation of the way in which the provided components interact to
+form a working cloud computing environment.
+* Technology Previews, Recommended Practices, and Known Issues.
+* The channels required for Red Hat Enterprise Linux OpenStack Platform 5,
+including which channels need to be enabled and disabled.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1169637 - CVE-2014-8124 python-django-horizon: denial of service via login page requests
+1203231 - Rebase python-django-horizon to 2014.1.4
+
+6. Package List:
+
+Red Hat Enterprise Linux OpenStack Platform 5.0 for RHEL 6:
+
+Source:
+python-django-horizon-2014.1.4-1.el6ost.src.rpm
+python-django-openstack-auth-1.1.5-4.el6ost.src.rpm
+
+noarch:
+openstack-dashboard-2014.1.4-1.el6ost.noarch.rpm
+openstack-dashboard-theme-2014.1.4-1.el6ost.noarch.rpm
+python-django-horizon-2014.1.4-1.el6ost.noarch.rpm
+python-django-horizon-doc-2014.1.4-1.el6ost.noarch.rpm
+python-django-openstack-auth-1.1.5-4.el6ost.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8124">https://access.redhat.com/security/cve/CVE-2014-8124</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/5/html/Release_Notes/index.html">https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/5/html/Release_Notes/index.html</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVMAeRXlSAg2UNWIIRAj3LAJ0Xr8uD4FQfGk7u+wY34nWFxCqsqwCguCQK
+hRAQONjLK7bNzdC8KmgT8oM=
+=0q1B
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00043.html">Date Prev</a>][<a href="msg00045.html">Date Next</a>] &nbsp; [<a href="msg00043.html">Thread Prev</a>][<a href="msg00045.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00044">Thread Index</A>]
+[<A HREF="date.html#00044">Date Index</A>]
+[<A HREF="author.html#00044">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

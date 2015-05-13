@@ -1,0 +1,152 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0236&#45;01] Moderate: Red Hat JBoss Fuse/A&#45;MQ 6.1.0 security	and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 18 Feb 2015 16:38:27 &#45;0500 -->
+<!--X-Message-Id: 201502182138.t1ILcQ9C001626@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0236-01] Moderate: Red Hat JBoss Fuse/A-MQ 6.1.0 security	and</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0236-01] Moderate: Red Hat JBoss Fuse/A-MQ 6.1.0 security	and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0236-01] Moderate: Red Hat JBoss Fuse/A-MQ 6.1.0 security	and bug fix update</li>
+<li><em>Date</em>: Wed, 18 Feb 2015 21:38:26 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Fuse/A-MQ 6.1.0 security and bug fix update
+Advisory ID:       RHSA-2015:0236-01
+Product:           Red Hat JBoss Fuse
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0236.html">https://rhn.redhat.com/errata/RHSA-2015-0236.html</a>
+Issue date:        2015-02-18
+CVE Names:         CVE-2014-3623 CVE-2014-3625 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Fuse and A-MQ 6.1.0 Rollup Patch 2 (R2), which includes
+several bug fixes, enhancements, and resolves two security issues, is now
+available from the Red Hat Customer Portal.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Fuse, based on Apache ServiceMix, provides a small-footprint,
+flexible, open source enterprise service bus and integration platform.
+Red Hat JBoss A-MQ, based on Apache ActiveMQ, is a standards compliant
+messaging system that is tailored for use in mission critical applications.
+
+This patch is an update to Red Hat JBoss Fuse 6.1.0 and Red Hat JBoss A-MQ
+6.1.0. It includes bug fixes, which are documented in the readme.txt file
+included with the patch files. The following security issues are addressed
+in this release:
+
+It was found that Apache WSS4J (Web Services Security for Java), as used by
+Apache CXF with the TransportBinding, did not, by default, properly enforce
+all security requirements associated with SAML SubjectConfirmation methods.
+A remote attacker could use this flaw to perform various types of spoofing
+attacks on web service endpoints secured by WSS4J that rely on SAML for
+authentication. (CVE-2014-3623)
+
+A directory traversal flaw was found in the way the Spring Framework
+sanitized certain URLs. A remote attacker could use this flaw to obtain any
+file on the file system that was also accessible to the process in which
+the Spring web application was running. (CVE-2014-3625)
+
+Refer to the readme.txt file included with the patch files for
+installation instructions.
+
+All users of Red Hat JBoss Fuse 6.1.0 and Red Hat JBoss A-MQ 6.1.0 as
+provided from the Red Hat Customer Portal are advised to apply this
+security update.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update).
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1157304 - CVE-2014-3623 Apache WSS4J / Apache CXF: Improper security semantics enforcement of SAML SubjectConfirmation methods
+1165936 - CVE-2014-3625 Spring Framework: directory traversal flaw
+
+5. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3623">https://access.redhat.com/security/cve/CVE-2014-3623</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3625">https://access.redhat.com/security/cve/CVE-2014-3625</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jboss.fuse&amp;downloadType=securityPatches&amp;version=6.1.0">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=jboss.fuse&amp;downloadType=securityPatches&amp;version=6.1.0</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD4DBQFU5QYXXlSAg2UNWIIRAgkWAJiv55yCPmHe7rybr+dueY5r92D6AJ48fz6j
+zKx/WBizIM3SNa3Q1awnug==
+=REEV
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00026.html">Date Prev</a>][<a href="msg00028.html">Date Next</a>] &nbsp; [<a href="msg00026.html">Thread Prev</a>][<a href="msg00028.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00027">Thread Index</A>]
+[<A HREF="date.html#00027">Date Index</A>]
+[<A HREF="author.html#00027">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0920&#45;01] Moderate: Red Hat JBoss Operations Network 3.3.2	update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 30 Apr 2015 12:22:02 &#45;0400 -->
+<!--X-Message-Id: 201504301622.t3UGM1Bn018014@int&#45;mx11.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0920-01] Moderate: Red Hat JBoss Operations Network 3.3.2	upd</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00064.html">Date Prev</a>][<a href="msg00066.html">Date Next</a>] &nbsp; [<a href="msg00064.html">Thread Prev</a>][<a href="msg00066.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00065">Thread Index</A>]
+[<A HREF="date.html#00065">Date Index</A>]
+[<A HREF="author.html#00065">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0920-01] Moderate: Red Hat JBoss Operations Network 3.3.2	update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, jboss-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0920-01] Moderate: Red Hat JBoss Operations Network 3.3.2	update</li>
+<li><em>Date</em>: Thu, 30 Apr 2015 16:22:01 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: Red Hat JBoss Operations Network 3.3.2 update
+Advisory ID:       RHSA-2015:0920-01
+Product:           Red Hat JBoss Operations Network
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0920.html">https://rhn.redhat.com/errata/RHSA-2015-0920.html</a>
+Issue date:        2015-04-30
+CVE Names:         CVE-2014-7849 CVE-2014-7853 CVE-2014-8122 
+=====================================================================
+
+1. Summary:
+
+Red Hat JBoss Operations Network 3.3 update 2, which fixes three security
+issues and several bugs, is now available from the Red Hat Customer Portal.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Description:
+
+Red Hat JBoss Operations Network is a middleware management solution that
+provides a single point of control to deploy, manage, and monitor JBoss
+Enterprise Middleware, applications, and services.
+
+This JBoss Operations Network 3.3.2 release serves as a replacement for
+JBoss Operations Network 3.3.1, and includes several bug fixes. Refer to
+the Customer Portal page linked in the References section for information
+on the most significant of these changes.
+
+The following security issue is also fixed with this release:
+
+It was discovered that the Role Based Access Control (RBAC) implementation
+did not sufficiently verify all authorization conditions that are required
+by the Maintainer role to perform certain administrative actions.
+An authenticated user with the Maintainer role could use this flaw to add,
+modify, or undefine a limited set of attributes and their values, which
+otherwise cannot be written to. (CVE-2014-7849)
+
+It was discovered that the JBoss Application Server (WildFly) JacORB
+subsystem incorrectly assigned socket-binding-ref sensitivity
+classification for the security-domain attribute. An authenticated user
+with a role that has access to attributes with socket-binding-ref and not
+security-domain-ref sensitivity classification could use this flaw to
+access sensitive information present in the security-domain attribute.
+(CVE-2014-7853)
+
+It was discovered that under specific conditions the conversation state
+information stored in a thread-local variable in JBoss Weld was not
+sanitized correctly when the conversation ended. This could lead to a race
+condition that could potentially expose sensitive information from a
+previous conversation to the current conversation. (CVE-2014-8122)
+
+Red Hat would like to thank Rune Steinseth of JProfessionals for reporting
+CVE-2014-8122. The CVE-2014-7849 and CVE-2014-7853 issues were
+discovered by Darran Lofthouse of the Red Hat JBoss Enterprise Application
+Platform Team.
+
+All users of JBoss Operations Network 3.3.1 as provided from the Red Hat
+Customer Portal are advised to upgrade to JBoss Operations Network 3.3.2.
+
+3. Solution:
+
+The References section of this erratum contains a download link (you must
+log in to download the update). Before applying this update, back up your
+existing JBoss Operations Network installation (including its databases,
+applications, configuration files, the JBoss Operations Network server's
+file system directory, and so on).
+
+Refer to the JBoss Operations Network 3.3.2 Release Notes for
+installation information.
+
+4. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1089495 - Add support for Java 8 with JBoss ON 3.3.2 components
+1147098 - The server needs to handle failures inserting raw data
+1165170 - CVE-2014-7849 JBoss AS/WildFly Domain Management: Limited RBAC authorization bypass
+1165522 - CVE-2014-7853 JBoss AS/WildFly JacORB Subsystem: Information disclosure via incorrect sensitivity classification of attribute
+1169237 - CVE-2014-8122 JBoss Weld: Limited information disclosure via stale thread state
+1176162 - rhqctl console does not handle signals correctly
+1185375 - Upgrade from 3.2 to 3.3 fails at upgrade --storage-schema due to MigrateAggregateMetrics taking too long
+1187645 - UnsupportedOperationException on mergeInventoryReport()
+1188743 - Packages in a repository, that have an identical name to the deployment it's subscribed to, disappear in the Content-&gt;New screen.
+1194690 - CLI doesn't work when agent-server communication uses sslsocket
+1198034 - Incorrect link in the readme.txt file of the JBoss ON 3.3.0 distribution package
+1198086 - Error loading global condition cache: ORA-01427: single-row subquery returns more than one row
+1200493 - The output of rhq:audit  is changed - Date is added to the &quot;info&quot;
+1200579 - Unable to delete/remove agent plug-ins that define a bundle type target
+1202327 - Relax the 1h minimum Session timeout validation
+1206387 - apply-updates creates rhq-storage directory even if storage node is not installed causing rhqctl to fail install/start
+1206641 - Fix for BZ-1088046 is lost when storage node is installed from 3.3 Update-01 patched server
+1206671 - Aggregation timeslices not properly computed due to DST changes
+1207393 - Add support for configuration options to rhq-server.properites for RequestLimit, RequestLimitTopologyChange, Warmup period, Warmup Counter Maximum
+
+5. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7849">https://access.redhat.com/security/cve/CVE-2014-7849</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7853">https://access.redhat.com/security/cve/CVE-2014-7853</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8122">https://access.redhat.com/security/cve/CVE-2014-8122</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=em&amp;downloadType=securityPatches&amp;version=3.3">https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?product=em&amp;downloadType=securityPatches&amp;version=3.3</a>
+
+6. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVQlZ2XlSAg2UNWIIRAjDxAJ91SGMq9NdN4a6hU1xfBK4lHkCLiQCfe5Re
+5bXj6Z4W4tnVPrYzVD0yGU0=
+=8BYc
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00064.html">Date Prev</a>][<a href="msg00066.html">Date Next</a>] &nbsp; [<a href="msg00064.html">Thread Prev</a>][<a href="msg00066.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00065">Thread Index</A>]
+[<A HREF="date.html#00065">Date Index</A>]
+[<A HREF="author.html#00065">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

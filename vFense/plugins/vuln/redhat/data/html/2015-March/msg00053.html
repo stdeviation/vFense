@@ -1,0 +1,321 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0729&#45;01] Important: setroubleshoot security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 26 Mar 2015 13:10:58 &#45;0400 -->
+<!--X-Message-Id: 201503261710.t2QHAtI6017837@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0729-01] Important: setroubleshoot security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0729-01] Important: setroubleshoot security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0729-01] Important: setroubleshoot security update</li>
+<li><em>Date</em>: Thu, 26 Mar 2015 17:10:54 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: setroubleshoot security update
+Advisory ID:       RHSA-2015:0729-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0729.html">https://rhn.redhat.com/errata/RHSA-2015-0729.html</a>
+Issue date:        2015-03-26
+CVE Names:         CVE-2015-1815 
+=====================================================================
+
+1. Summary:
+
+Updated setroubleshoot packages that fix one security issue are now
+available for Red Hat Enterprise Linux 5, 6, and 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - noarch
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - noarch
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, ppc64le, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 6) - i386, x86_64
+
+3. Description:
+
+The setroubleshoot packages provide tools to help diagnose SELinux
+problems. When Access Vector Cache (AVC) messages are returned, an alert
+can be generated that provides information about the problem and helps to
+track its resolution.
+
+It was found that setroubleshoot did not sanitize file names supplied in a
+shell command look-up for RPMs associated with access violation reports.
+An attacker could use this flaw to escalate their privileges on the system
+by supplying a specially crafted file to the underlying shell command.
+(CVE-2015-1815)
+
+Red Hat would like to thank Sebastian Krahmer of the SUSE Security Team for
+reporting this issue.
+
+All setroubleshoot users are advised to upgrade to these updated packages,
+which contain a backported patch to correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1203352 - CVE-2015-1815 setroubleshoot: command injection via crafted file name
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+setroubleshoot-2.0.5-7.el5_11.src.rpm
+
+noarch:
+setroubleshoot-2.0.5-7.el5_11.noarch.rpm
+setroubleshoot-server-2.0.5-7.el5_11.noarch.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+setroubleshoot-2.0.5-7.el5_11.src.rpm
+
+noarch:
+setroubleshoot-2.0.5-7.el5_11.noarch.rpm
+setroubleshoot-server-2.0.5-7.el5_11.noarch.rpm
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+setroubleshoot-3.0.47-6.el6_6.1.src.rpm
+
+i386:
+setroubleshoot-3.0.47-6.el6_6.1.i686.rpm
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.i686.rpm
+setroubleshoot-server-3.0.47-6.el6_6.1.i686.rpm
+
+x86_64:
+setroubleshoot-3.0.47-6.el6_6.1.x86_64.rpm
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.x86_64.rpm
+setroubleshoot-server-3.0.47-6.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.i686.rpm
+setroubleshoot-doc-3.0.47-6.el6_6.1.i686.rpm
+
+x86_64:
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.x86_64.rpm
+setroubleshoot-doc-3.0.47-6.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+setroubleshoot-3.0.47-6.el6_6.1.src.rpm
+
+i386:
+setroubleshoot-3.0.47-6.el6_6.1.i686.rpm
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.i686.rpm
+setroubleshoot-server-3.0.47-6.el6_6.1.i686.rpm
+
+ppc64:
+setroubleshoot-3.0.47-6.el6_6.1.ppc64.rpm
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.ppc64.rpm
+setroubleshoot-server-3.0.47-6.el6_6.1.ppc64.rpm
+
+s390x:
+setroubleshoot-3.0.47-6.el6_6.1.s390x.rpm
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.s390x.rpm
+setroubleshoot-server-3.0.47-6.el6_6.1.s390x.rpm
+
+x86_64:
+setroubleshoot-3.0.47-6.el6_6.1.x86_64.rpm
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.x86_64.rpm
+setroubleshoot-server-3.0.47-6.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 6):
+
+i386:
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.i686.rpm
+setroubleshoot-doc-3.0.47-6.el6_6.1.i686.rpm
+
+ppc64:
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.ppc64.rpm
+setroubleshoot-doc-3.0.47-6.el6_6.1.ppc64.rpm
+
+s390x:
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.s390x.rpm
+setroubleshoot-doc-3.0.47-6.el6_6.1.s390x.rpm
+
+x86_64:
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.x86_64.rpm
+setroubleshoot-doc-3.0.47-6.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+setroubleshoot-3.0.47-6.el6_6.1.src.rpm
+
+i386:
+setroubleshoot-3.0.47-6.el6_6.1.i686.rpm
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.i686.rpm
+setroubleshoot-server-3.0.47-6.el6_6.1.i686.rpm
+
+x86_64:
+setroubleshoot-3.0.47-6.el6_6.1.x86_64.rpm
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.x86_64.rpm
+setroubleshoot-server-3.0.47-6.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 6):
+
+i386:
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.i686.rpm
+setroubleshoot-doc-3.0.47-6.el6_6.1.i686.rpm
+
+x86_64:
+setroubleshoot-debuginfo-3.0.47-6.el6_6.1.x86_64.rpm
+setroubleshoot-doc-3.0.47-6.el6_6.1.x86_64.rpm
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+setroubleshoot-3.2.17-4.1.el7_1.src.rpm
+
+x86_64:
+setroubleshoot-3.2.17-4.1.el7_1.x86_64.rpm
+setroubleshoot-debuginfo-3.2.17-4.1.el7_1.x86_64.rpm
+setroubleshoot-server-3.2.17-4.1.el7_1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+setroubleshoot-3.2.17-4.1.el7_1.src.rpm
+
+ppc64:
+setroubleshoot-3.2.17-4.1.el7_1.ppc64.rpm
+setroubleshoot-debuginfo-3.2.17-4.1.el7_1.ppc64.rpm
+setroubleshoot-server-3.2.17-4.1.el7_1.ppc64.rpm
+
+s390x:
+setroubleshoot-3.2.17-4.1.el7_1.s390x.rpm
+setroubleshoot-debuginfo-3.2.17-4.1.el7_1.s390x.rpm
+setroubleshoot-server-3.2.17-4.1.el7_1.s390x.rpm
+
+x86_64:
+setroubleshoot-3.2.17-4.1.el7_1.x86_64.rpm
+setroubleshoot-debuginfo-3.2.17-4.1.el7_1.x86_64.rpm
+setroubleshoot-server-3.2.17-4.1.el7_1.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+setroubleshoot-3.2.17-4.1.ael7b_1.src.rpm
+
+ppc64le:
+setroubleshoot-3.2.17-4.1.ael7b_1.ppc64le.rpm
+setroubleshoot-debuginfo-3.2.17-4.1.ael7b_1.ppc64le.rpm
+setroubleshoot-server-3.2.17-4.1.ael7b_1.ppc64le.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+setroubleshoot-3.2.17-4.1.el7_1.src.rpm
+
+x86_64:
+setroubleshoot-3.2.17-4.1.el7_1.x86_64.rpm
+setroubleshoot-debuginfo-3.2.17-4.1.el7_1.x86_64.rpm
+setroubleshoot-server-3.2.17-4.1.el7_1.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-1815">https://access.redhat.com/security/cve/CVE-2015-1815</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVFD1uXlSAg2UNWIIRAuzXAJ0chHa+GhzjWfuzIPJqetSPZGBHnwCeLvgf
+PQHMUAYE8btQS2923pjzVXk=
+=rmWi
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00052.html">Date Prev</a>][<a href="msg00054.html">Date Next</a>] &nbsp; [<a href="msg00052.html">Thread Prev</a>][<a href="msg00054.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00053">Thread Index</A>]
+[<A HREF="date.html#00053">Date Index</A>]
+[<A HREF="author.html#00053">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

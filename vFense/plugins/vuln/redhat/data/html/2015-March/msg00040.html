@@ -1,0 +1,222 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0698&#45;01] Important: rhevm&#45;spice&#45;client security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 18 Mar 2015 08:20:18 &#45;0400 -->
+<!--X-Message-Id: 201503181220.t2ICKGvs002866@int&#45;mx09.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0698-01] Important: rhevm-spice-client security, bug fix,	and</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0698-01] Important: rhevm-spice-client security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0698-01] Important: rhevm-spice-client security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Wed, 18 Mar 2015 12:20:17 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: rhevm-spice-client security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0698-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0698.html">https://rhn.redhat.com/errata/RHSA-2015-0698.html</a>
+Issue date:        2015-03-18
+CVE Names:         CVE-2008-3520 CVE-2008-3522 CVE-2011-4516 
+                   CVE-2011-4517 CVE-2014-8137 CVE-2014-8138 
+                   CVE-2014-8157 CVE-2014-8158 CVE-2014-9029 
+=====================================================================
+
+1. Summary:
+
+Updated rhevm-spice-client packages that fix multiple security issues,
+several bugs, and add one enhancement are now available for Red Hat
+Enterprise Virtualization Manager 3.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-M 3.5 - noarch
+
+3. Description:
+
+Red Hat Enterprise Virtualization Manager provides access to virtual
+machines using SPICE. These SPICE client packages provide the SPICE client
+and usbclerk service for both Windows 32-bit operating systems and Windows
+64-bit operating systems.
+
+This update adds support for the TLS Fallback Signaling Cipher Suite Value
+(TLS_FALLBACK_SCSV), which can be used to prevent protocol downgrade
+attacks against applications which re-connect using a lower SSL/TLS
+protocol version when the initial connection indicating the highest
+supported protocol version fails.
+
+This can prevent a forceful downgrade of the communication to SSL 3.0.
+The SSL 3.0 protocol was found to be vulnerable to the padding oracle
+attack when using block cipher suites in cipher block chaining (CBC) mode.
+This issue is identified as CVE-2014-3566, and also known under the alias
+POODLE. This SSL 3.0 protocol flaw will not be addressed in a future
+update; it is recommended that users configure their applications to
+require at least TLS protocol version 1.0 for secure communication.
+
+For additional information about this flaw, see the Knowledgebase article
+at <a  rel="nofollow" href="https://access.redhat.com/articles/1232123">https://access.redhat.com/articles/1232123</a>
+
+Multiple flaws were found in the way JasPer decoded JPEG 2000 image files.
+A specially crafted file could cause an application using JasPer to crash
+or, possibly, execute arbitrary code. (CVE-2014-8138, CVE-2014-8157,
+CVE-2014-8158, CVE-2014-9029, CVE-2014-8137, CVE-2011-4516, CVE-2011-4517,
+CVE-2008-3520, CVE-2008-3522)
+
+Red Hat would like to thank oCERT for reporting CVE-2014-8137,
+CVE-2014-8138, CVE-2014-8157, CVE-2014-8158, CVE-2014-9029, CVE-2011-4516,
+and CVE-2011-4517. oCERT acknowledges Jose Duart of the Google Security
+Team as the original reporter of CVE-2014-8137 and CVE-2014-8138; and
+pyddeh as the original reporter of CVE-2014-8157 and CVE-2014-8158.
+
+The mingw-openssl and mingw-jasper packages have been upgraded to the
+latest upstream version, which provides a number of bug fixes and
+enhancements over the previous version. (BZ#1187585)
+
+This update also fixes the following bugs:
+
+* Previously, a guest system installed with tools incorrectly always
+started in full screen mode, even when the &quot;Open in Full Screen&quot; option was
+unchecked in console options. Now, when connecting in window mode with the
+option unchecked, the guest system starts in a window as expected.
+(BZ#1172126)
+
+* Prior to this update, copying and pasting of images from the client to
+the guest did not work when spice-gtk was built from upstream. Now, images
+can be copied and pasted without problems. (BZ#1187270)
+
+In addition, this update adds the following enhancement:
+
+* Administrators now have the option of automatic multiuser installation of
+virt-viewer onto many client workstations. (BZ#1187272)
+
+All rhevm-spice-client users are advised to upgrade to these updated
+packages, which correct these issues and add these enhancement.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+461476 - CVE-2008-3520 jasper: multiple integer overflows in jas_alloc calls
+461478 - CVE-2008-3522 jasper: possible buffer overflow in jas_stream_printf()
+747726 - CVE-2011-4516 CVE-2011-4517 jasper: heap buffer overflow flaws lead to arbitrary code execution (CERT VU#887409)
+1167537 - CVE-2014-9029 jasper: incorrect component number check in COC, RGN and QCC marker segment decoders (oCERT-2014-009)
+1172126 - always fullscreen for SPICE-xpi
+1173157 - CVE-2014-8137 jasper: double-free in in jas_iccattrval_destroy() (oCERT-2014-012)
+1173162 - CVE-2014-8138 jasper: heap overflow in jp2_decode() (oCERT-2014-012)
+1179282 - CVE-2014-8157 jasper: dec-&gt;numtiles off-by-one check in jpc_dec_process_sot() (oCERT-2015-001)
+1179298 - CVE-2014-8158 jasper: unrestricted stack memory use in jpc_qmfb.c (oCERT-2015-001)
+1187270 - copy/paste images does not work -- images are truncated
+
+6. Package List:
+
+RHEV-M 3.5:
+
+Source:
+rhevm-spice-client-3.5-3.el6.src.rpm
+
+noarch:
+rhevm-spice-client-x64-cab-3.5-3.el6.noarch.rpm
+rhevm-spice-client-x64-msi-3.5-3.el6.noarch.rpm
+rhevm-spice-client-x86-cab-3.5-3.el6.noarch.rpm
+rhevm-spice-client-x86-msi-3.5-3.el6.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2008-3520">https://access.redhat.com/security/cve/CVE-2008-3520</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2008-3522">https://access.redhat.com/security/cve/CVE-2008-3522</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2011-4516">https://access.redhat.com/security/cve/CVE-2011-4516</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2011-4517">https://access.redhat.com/security/cve/CVE-2011-4517</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8137">https://access.redhat.com/security/cve/CVE-2014-8137</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8138">https://access.redhat.com/security/cve/CVE-2014-8138</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8157">https://access.redhat.com/security/cve/CVE-2014-8157</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8158">https://access.redhat.com/security/cve/CVE-2014-8158</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9029">https://access.redhat.com/security/cve/CVE-2014-9029</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVCW1JXlSAg2UNWIIRAj17AJ9D5Ru9tGR35TSGT8iu/yJSU600IgCgi4sI
+rMWgPfb/bHCRBSJZHtlQ6b4=
+=F97H
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00039.html">Date Prev</a>][<a href="msg00041.html">Date Next</a>] &nbsp; [<a href="msg00039.html">Thread Prev</a>][<a href="msg00041.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00040">Thread Index</A>]
+[<A HREF="date.html#00040">Date Index</A>]
+[<A HREF="author.html#00040">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

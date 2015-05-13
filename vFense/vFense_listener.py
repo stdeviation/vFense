@@ -28,7 +28,7 @@ define("debug", default=True, help="enable debugging features", type=bool)
 
 class Application(tornado.web.Application):
     def __init__(self, debug):
-        import_modules_by_regex('_db_init')
+        import_modules_by_regex('_db_init.py')
         handlers = get_api_uris(receiver=True)
         template_path = VFENSE_TEMPLATE_PATH
         settings = {

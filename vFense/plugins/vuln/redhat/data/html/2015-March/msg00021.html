@@ -1,0 +1,352 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0327&#45;02] Moderate: glibc security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:50:21 &#45;0500 -->
+<!--X-Message-Id: 201503051450.t25EoJi0004778@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0327-02] Moderate: glibc security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0327-02] Moderate: glibc security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0327-02] Moderate: glibc security and bug fix update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:50:19 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: glibc security and bug fix update
+Advisory ID:       RHSA-2015:0327-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0327.html">https://rhn.redhat.com/errata/RHSA-2015-0327.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-6040 CVE-2014-8121 
+=====================================================================
+
+1. Summary:
+
+Updated glibc packages that fix two security issues and several bugs are
+now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+The glibc packages provide the standard C libraries (libc), POSIX thread
+libraries (libpthread), standard math libraries (libm), and the Name Server
+Caching Daemon (nscd) used by multiple programs on the system. Without
+these libraries, the Linux system cannot function correctly.
+
+An out-of-bounds read flaw was found in the way glibc's iconv() function
+converted certain encoded data to UTF-8. An attacker able to make an
+application call the iconv() function with a specially crafted argument
+could use this flaw to crash that application. (CVE-2014-6040)
+
+It was found that the files back end of Name Service Switch (NSS) did not
+isolate iteration over an entire database from key-based look-up API calls.
+An application performing look-ups on a database while iterating over it
+could enter an infinite loop, leading to a denial of service.
+(CVE-2014-8121)
+
+This update also fixes the following bugs:
+
+* Due to problems with buffer extension and reallocation, the nscd daemon
+terminated unexpectedly with a segmentation fault when processing long
+netgroup entries. With this update, the handling of long netgroup entries
+has been corrected and nscd no longer crashes in the described scenario.
+(BZ#1138520)
+
+* If a file opened in append mode was truncated with the ftruncate()
+function, a subsequent ftell() call could incorrectly modify the file
+offset. This update ensures that ftell() modifies the stream state only
+when it is in append mode and the buffer for the stream is not empty.
+(BZ#1156331)
+
+* A defect in the C library headers caused builds with older compilers to
+generate incorrect code for the btowc() function in the older compatibility
+C++ standard library. Applications calling btowc() in the compatibility C++
+standard library became unresponsive. With this update, the C library
+headers have been corrected, and the compatibility C++ standard library
+shipped with Red Hat Enterprise Linux has been rebuilt. Applications that
+rely on the compatibility C++ standard library no longer hang when calling
+btowc(). (BZ#1120490)
+
+* Previously, when using netgroups and the nscd daemon was set up to cache
+netgroup information, the sudo utility denied access to valid users. The
+bug in nscd has been fixed, and sudo now works in netgroups as
+expected. (BZ#1080766)
+
+Users of glibc are advised to upgrade to these updated packages, which fix
+these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1103874 - Fix memory fencing error in unwind-forcedunwind.c
+1124453 - getconf PATH returns non-directory &quot;/bin&quot;
+1135841 - CVE-2014-6040 glibc: crash in code page decoding functions (IBM933, IBM935, IBM937, IBM939, IBM1364)
+1138520 - nscd segfaults when running sudo with netgroup caching enabled.
+1165192 - CVE-2014-8121 glibc: Unexpected closing of nss_files databases after lookups causes denial of service
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+glibc-2.17-78.el7.src.rpm
+
+x86_64:
+glibc-2.17-78.el7.i686.rpm
+glibc-2.17-78.el7.x86_64.rpm
+glibc-common-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-2.17-78.el7.i686.rpm
+glibc-debuginfo-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-common-2.17-78.el7.i686.rpm
+glibc-debuginfo-common-2.17-78.el7.x86_64.rpm
+glibc-devel-2.17-78.el7.i686.rpm
+glibc-devel-2.17-78.el7.x86_64.rpm
+glibc-headers-2.17-78.el7.x86_64.rpm
+glibc-utils-2.17-78.el7.x86_64.rpm
+nscd-2.17-78.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+glibc-debuginfo-2.17-78.el7.i686.rpm
+glibc-debuginfo-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-common-2.17-78.el7.i686.rpm
+glibc-debuginfo-common-2.17-78.el7.x86_64.rpm
+glibc-static-2.17-78.el7.i686.rpm
+glibc-static-2.17-78.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+glibc-2.17-78.el7.src.rpm
+
+x86_64:
+glibc-2.17-78.el7.i686.rpm
+glibc-2.17-78.el7.x86_64.rpm
+glibc-common-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-2.17-78.el7.i686.rpm
+glibc-debuginfo-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-common-2.17-78.el7.i686.rpm
+glibc-debuginfo-common-2.17-78.el7.x86_64.rpm
+glibc-devel-2.17-78.el7.i686.rpm
+glibc-devel-2.17-78.el7.x86_64.rpm
+glibc-headers-2.17-78.el7.x86_64.rpm
+glibc-utils-2.17-78.el7.x86_64.rpm
+nscd-2.17-78.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+glibc-debuginfo-2.17-78.el7.i686.rpm
+glibc-debuginfo-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-common-2.17-78.el7.i686.rpm
+glibc-debuginfo-common-2.17-78.el7.x86_64.rpm
+glibc-static-2.17-78.el7.i686.rpm
+glibc-static-2.17-78.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+glibc-2.17-78.el7.src.rpm
+
+ppc64:
+glibc-2.17-78.el7.ppc.rpm
+glibc-2.17-78.el7.ppc64.rpm
+glibc-common-2.17-78.el7.ppc64.rpm
+glibc-debuginfo-2.17-78.el7.ppc.rpm
+glibc-debuginfo-2.17-78.el7.ppc64.rpm
+glibc-debuginfo-common-2.17-78.el7.ppc.rpm
+glibc-debuginfo-common-2.17-78.el7.ppc64.rpm
+glibc-devel-2.17-78.el7.ppc.rpm
+glibc-devel-2.17-78.el7.ppc64.rpm
+glibc-headers-2.17-78.el7.ppc64.rpm
+glibc-utils-2.17-78.el7.ppc64.rpm
+nscd-2.17-78.el7.ppc64.rpm
+
+s390x:
+glibc-2.17-78.el7.s390.rpm
+glibc-2.17-78.el7.s390x.rpm
+glibc-common-2.17-78.el7.s390x.rpm
+glibc-debuginfo-2.17-78.el7.s390.rpm
+glibc-debuginfo-2.17-78.el7.s390x.rpm
+glibc-debuginfo-common-2.17-78.el7.s390.rpm
+glibc-debuginfo-common-2.17-78.el7.s390x.rpm
+glibc-devel-2.17-78.el7.s390.rpm
+glibc-devel-2.17-78.el7.s390x.rpm
+glibc-headers-2.17-78.el7.s390x.rpm
+glibc-utils-2.17-78.el7.s390x.rpm
+nscd-2.17-78.el7.s390x.rpm
+
+x86_64:
+glibc-2.17-78.el7.i686.rpm
+glibc-2.17-78.el7.x86_64.rpm
+glibc-common-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-2.17-78.el7.i686.rpm
+glibc-debuginfo-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-common-2.17-78.el7.i686.rpm
+glibc-debuginfo-common-2.17-78.el7.x86_64.rpm
+glibc-devel-2.17-78.el7.i686.rpm
+glibc-devel-2.17-78.el7.x86_64.rpm
+glibc-headers-2.17-78.el7.x86_64.rpm
+glibc-utils-2.17-78.el7.x86_64.rpm
+nscd-2.17-78.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+glibc-debuginfo-2.17-78.el7.ppc.rpm
+glibc-debuginfo-2.17-78.el7.ppc64.rpm
+glibc-debuginfo-common-2.17-78.el7.ppc.rpm
+glibc-debuginfo-common-2.17-78.el7.ppc64.rpm
+glibc-static-2.17-78.el7.ppc.rpm
+glibc-static-2.17-78.el7.ppc64.rpm
+
+s390x:
+glibc-debuginfo-2.17-78.el7.s390.rpm
+glibc-debuginfo-2.17-78.el7.s390x.rpm
+glibc-debuginfo-common-2.17-78.el7.s390.rpm
+glibc-debuginfo-common-2.17-78.el7.s390x.rpm
+glibc-static-2.17-78.el7.s390.rpm
+glibc-static-2.17-78.el7.s390x.rpm
+
+x86_64:
+glibc-debuginfo-2.17-78.el7.i686.rpm
+glibc-debuginfo-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-common-2.17-78.el7.i686.rpm
+glibc-debuginfo-common-2.17-78.el7.x86_64.rpm
+glibc-static-2.17-78.el7.i686.rpm
+glibc-static-2.17-78.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+glibc-2.17-78.el7.src.rpm
+
+x86_64:
+glibc-2.17-78.el7.i686.rpm
+glibc-2.17-78.el7.x86_64.rpm
+glibc-common-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-2.17-78.el7.i686.rpm
+glibc-debuginfo-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-common-2.17-78.el7.i686.rpm
+glibc-debuginfo-common-2.17-78.el7.x86_64.rpm
+glibc-devel-2.17-78.el7.i686.rpm
+glibc-devel-2.17-78.el7.x86_64.rpm
+glibc-headers-2.17-78.el7.x86_64.rpm
+glibc-utils-2.17-78.el7.x86_64.rpm
+nscd-2.17-78.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+glibc-debuginfo-2.17-78.el7.i686.rpm
+glibc-debuginfo-2.17-78.el7.x86_64.rpm
+glibc-debuginfo-common-2.17-78.el7.i686.rpm
+glibc-debuginfo-common-2.17-78.el7.x86_64.rpm
+glibc-static-2.17-78.el7.i686.rpm
+glibc-static-2.17-78.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-6040">https://access.redhat.com/security/cve/CVE-2014-6040</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8121">https://access.redhat.com/security/cve/CVE-2014-8121</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+G0jXlSAg2UNWIIRAinCAJ9TnVVjNrWKqyabgFdA1Itf53M0uACfcunQ
+4VVcn4EsVKgxJ2kqkFg2sxc=
+=mUlw
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00020.html">Date Prev</a>][<a href="msg00022.html">Date Next</a>] &nbsp; [<a href="msg00020.html">Thread Prev</a>][<a href="msg00022.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00021">Thread Index</A>]
+[<A HREF="date.html#00021">Date Index</A>]
+[<A HREF="author.html#00021">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

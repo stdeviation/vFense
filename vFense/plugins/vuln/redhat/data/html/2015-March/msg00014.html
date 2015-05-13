@@ -1,0 +1,349 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0425&#45;02] Moderate: openssh security,	bug fix and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:43:22 &#45;0500 -->
+<!--X-Message-Id: 201503051443.t25EhKol029454@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0425-02] Moderate: openssh security,	bug fix and enhancement </TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0425-02] Moderate: openssh security,	bug fix and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0425-02] Moderate: openssh security,	bug fix and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:43:20 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: openssh security, bug fix and enhancement update
+Advisory ID:       RHSA-2015:0425-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0425.html">https://rhn.redhat.com/errata/RHSA-2015-0425.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-2653 CVE-2014-9278
+=====================================================================
+
+1. Summary:
+
+Updated openssh packages that fix two security issues, several bugs, and
+add various enhancements are now available for Red Hat Enterprise Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode (v. 7) - x86_64
+Red Hat Enterprise Linux ComputeNode Optional (v. 7) - x86_64
+Red Hat Enterprise Linux Server (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - x86_64
+
+3. Description:
+
+OpenSSH is OpenBSD's SSH (Secure Shell) protocol implementation. These
+packages include the core files necessary for both the OpenSSH client and
+server.
+
+It was discovered that OpenSSH clients did not correctly verify DNS SSHFP
+records. A malicious server could use this flaw to force a connecting
+client to skip the DNS SSHFP record check and require the user to perform
+manual host verification of the DNS SSHFP record. (CVE-2014-2653)
+
+It was found that when OpenSSH was used in a Kerberos environment, remote
+authenticated users were allowed to log in as a different user if they were
+listed in the ~/.k5users file of that user, potentially bypassing intended
+authentication restrictions. (CVE-2014-9278)
+
+The openssh packages have been upgraded to upstream version 6.6.1, which
+provides a number of bug fixes and enhancements over the previous version.
+(BZ#1059667)
+
+Bug fixes:
+
+* An existing /dev/log socket is needed when logging using the syslog
+utility, which is not possible for all chroot environments based on the
+user's home directories. As a consequence, the sftp commands were not
+logged in the chroot setup without /dev/log in the internal sftp subsystem.
+With this update, openssh has been enhanced to detect whether /dev/log
+exists. If /dev/log does not exist, processes in the chroot environment use
+their master processes for logging. (BZ#1083482)
+
+* The buffer size for a host name was limited to 64 bytes. As a
+consequence, when a host name was 64 bytes long or longer, the ssh-keygen
+utility failed. The buffer size has been increased to fix this bug, and
+ssh-keygen no longer fails in the described situation. (BZ#1097665)
+
+* Non-ASCII characters have been replaced by their octal representations in
+banner messages in order to prevent terminal re-programming attacks.
+Consequently, banners containing UTF-8 strings were not correctly displayed
+in a client. With this update, banner messages are processed according to
+RFC 3454, control characters have been removed, and banners containing
+UTF-8 strings are now displayed correctly. (BZ#1104662)
+
+* Red Hat Enterprise Linux uses persistent Kerberos credential caches,
+which are shared between sessions. Previously, the GSSAPICleanupCredentials
+option was set to &quot;yes&quot; by default. Consequently, removing a Kerberos cache
+on logout could remove unrelated credentials of other sessions, which could
+make the system unusable. To fix this bug, GSSAPICleanupCredentials is set
+by default to &quot;no&quot;. (BZ#1134447)
+
+* Access permissions for the /etc/ssh/moduli file were set to 0600, which
+was unnecessarily strict. With this update, the permissions for
+/etc/ssh/moduli have been changed to 0644 to make the access to the file
+easier. (BZ#1134448)
+
+* Due to the KRB5CCNAME variable being truncated, the Kerberos ticket cache
+was not found after login using a Kerberos-enabled SSH connection. The
+underlying source code has been modified to fix this bug, and Kerberos
+authentication works as expected in the described situation. (BZ#1161173)
+
+Enhancements:
+
+* When the sshd daemon is configured to force the internal SFTP session, a
+connection other then SFTP is used, the appropriate message is logged to
+the /var/log/secure file. (BZ#1130198)
+
+* The sshd-keygen service was run using the
+&quot;ExecStartPre=-/usr/sbin/sshd-keygen&quot; option in the sshd.service unit file.
+With this update, the separate sshd-keygen.service unit file has been
+added, and sshd.service has been adjusted to require sshd-keygen.service.
+(BZ#1134997)
+
+Users of openssh are advised to upgrade to these updated packages, which
+correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+912792 - ssh client showing Connection closed by UNKNOWN after timeout at password prompt
+1071967 - Inconsistent error message when generating keys in FIPS mode
+1081338 - CVE-2014-2653 openssh: failure to check DNS SSHFP records in certain scenarios
+1084079 - sftp / symlink does not create relative links
+1097665 - ssh-keygen with error :  gethostname: File name too long
+1102288 - AuthorizedKeysCommand does not work under the Match section
+1134997 - sshd.service shouldn't call /usr/sbin/sshd-keygen directly using ExecStartPre
+1143867 - sshd fails to start in FIPS mode due to ED25519 key generation
+1153011 - sshd requires that .k5login exists even if krb5_kuserok() returns TRUE
+1155626 - KerberosUseKuserok default changed from &quot;yes&quot; to &quot;no&quot;
+1161173 - sshd sets KRB5CCNAME environment variable with a truncated value
+1162620 - fatal: monitor_read: unsupported request: 82 on server while attempting GSSAPI key exchange
+1169843 - CVE-2014-9278 openssh: ~/.k5users unexpectedly grants remote login
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+openssh-6.6.1p1-11.el7.src.rpm
+
+x86_64:
+openssh-6.6.1p1-11.el7.x86_64.rpm
+openssh-askpass-6.6.1p1-11.el7.x86_64.rpm
+openssh-clients-6.6.1p1-11.el7.x86_64.rpm
+openssh-debuginfo-6.6.1p1-11.el7.x86_64.rpm
+openssh-keycat-6.6.1p1-11.el7.x86_64.rpm
+openssh-server-6.6.1p1-11.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+x86_64:
+openssh-debuginfo-6.6.1p1-11.el7.i686.rpm
+openssh-debuginfo-6.6.1p1-11.el7.x86_64.rpm
+openssh-ldap-6.6.1p1-11.el7.x86_64.rpm
+openssh-server-sysvinit-6.6.1p1-11.el7.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.i686.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode (v. 7):
+
+Source:
+openssh-6.6.1p1-11.el7.src.rpm
+
+x86_64:
+openssh-6.6.1p1-11.el7.x86_64.rpm
+openssh-clients-6.6.1p1-11.el7.x86_64.rpm
+openssh-debuginfo-6.6.1p1-11.el7.x86_64.rpm
+openssh-keycat-6.6.1p1-11.el7.x86_64.rpm
+openssh-server-6.6.1p1-11.el7.x86_64.rpm
+
+Red Hat Enterprise Linux ComputeNode Optional (v. 7):
+
+x86_64:
+openssh-askpass-6.6.1p1-11.el7.x86_64.rpm
+openssh-debuginfo-6.6.1p1-11.el7.i686.rpm
+openssh-debuginfo-6.6.1p1-11.el7.x86_64.rpm
+openssh-ldap-6.6.1p1-11.el7.x86_64.rpm
+openssh-server-sysvinit-6.6.1p1-11.el7.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.i686.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+openssh-6.6.1p1-11.el7.src.rpm
+
+ppc64:
+openssh-6.6.1p1-11.el7.ppc64.rpm
+openssh-askpass-6.6.1p1-11.el7.ppc64.rpm
+openssh-clients-6.6.1p1-11.el7.ppc64.rpm
+openssh-debuginfo-6.6.1p1-11.el7.ppc64.rpm
+openssh-keycat-6.6.1p1-11.el7.ppc64.rpm
+openssh-server-6.6.1p1-11.el7.ppc64.rpm
+
+s390x:
+openssh-6.6.1p1-11.el7.s390x.rpm
+openssh-askpass-6.6.1p1-11.el7.s390x.rpm
+openssh-clients-6.6.1p1-11.el7.s390x.rpm
+openssh-debuginfo-6.6.1p1-11.el7.s390x.rpm
+openssh-keycat-6.6.1p1-11.el7.s390x.rpm
+openssh-server-6.6.1p1-11.el7.s390x.rpm
+
+x86_64:
+openssh-6.6.1p1-11.el7.x86_64.rpm
+openssh-askpass-6.6.1p1-11.el7.x86_64.rpm
+openssh-clients-6.6.1p1-11.el7.x86_64.rpm
+openssh-debuginfo-6.6.1p1-11.el7.x86_64.rpm
+openssh-keycat-6.6.1p1-11.el7.x86_64.rpm
+openssh-server-6.6.1p1-11.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+ppc64:
+openssh-debuginfo-6.6.1p1-11.el7.ppc.rpm
+openssh-debuginfo-6.6.1p1-11.el7.ppc64.rpm
+openssh-ldap-6.6.1p1-11.el7.ppc64.rpm
+openssh-server-sysvinit-6.6.1p1-11.el7.ppc64.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.ppc.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.ppc64.rpm
+
+s390x:
+openssh-debuginfo-6.6.1p1-11.el7.s390.rpm
+openssh-debuginfo-6.6.1p1-11.el7.s390x.rpm
+openssh-ldap-6.6.1p1-11.el7.s390x.rpm
+openssh-server-sysvinit-6.6.1p1-11.el7.s390x.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.s390.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.s390x.rpm
+
+x86_64:
+openssh-debuginfo-6.6.1p1-11.el7.i686.rpm
+openssh-debuginfo-6.6.1p1-11.el7.x86_64.rpm
+openssh-ldap-6.6.1p1-11.el7.x86_64.rpm
+openssh-server-sysvinit-6.6.1p1-11.el7.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.i686.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+openssh-6.6.1p1-11.el7.src.rpm
+
+x86_64:
+openssh-6.6.1p1-11.el7.x86_64.rpm
+openssh-askpass-6.6.1p1-11.el7.x86_64.rpm
+openssh-clients-6.6.1p1-11.el7.x86_64.rpm
+openssh-debuginfo-6.6.1p1-11.el7.x86_64.rpm
+openssh-keycat-6.6.1p1-11.el7.x86_64.rpm
+openssh-server-6.6.1p1-11.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+x86_64:
+openssh-debuginfo-6.6.1p1-11.el7.i686.rpm
+openssh-debuginfo-6.6.1p1-11.el7.x86_64.rpm
+openssh-ldap-6.6.1p1-11.el7.x86_64.rpm
+openssh-server-sysvinit-6.6.1p1-11.el7.x86_64.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.i686.rpm
+pam_ssh_agent_auth-0.9.3-9.11.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-2653">https://access.redhat.com/security/cve/CVE-2014-2653</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9278">https://access.redhat.com/security/cve/CVE-2014-9278</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+GtaXlSAg2UNWIIRAi+rAJ4+qTCxrYsgDAf8feg2qmUdPQ/pJQCfSrSR
+6GwhuQQHZIECM4DVyma5hLo=
+=syDk
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00013.html">Date Prev</a>][<a href="msg00015.html">Date Next</a>] &nbsp; [<a href="msg00013.html">Thread Prev</a>][<a href="msg00015.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00014">Thread Index</A>]
+[<A HREF="date.html#00014">Date Index</A>]
+[<A HREF="author.html#00014">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

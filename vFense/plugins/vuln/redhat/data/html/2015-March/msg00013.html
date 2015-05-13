@@ -1,0 +1,227 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0430&#45;01] Moderate: virt&#45;who security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:38:56 &#45;0500 -->
+<!--X-Message-Id: 201503051438.t25EcsN5026248@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0430-01] Moderate: virt-who security, bug fix,	and enhancemen</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0430-01] Moderate: virt-who security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0430-01] Moderate: virt-who security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:38:54 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: virt-who security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0430-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0430.html">https://rhn.redhat.com/errata/RHSA-2015-0430.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-0189 
+=====================================================================
+
+1. Summary:
+
+An updated virt-who package that fixes one security issue, several bugs,
+and adds various enhancements is now available for Red Hat Enterprise
+Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. A Common Vulnerability Scoring System (CVSS) base score, which
+gives a detailed severity rating, is available from the CVE link in the
+References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - noarch
+Red Hat Enterprise Linux Server (v. 7) - noarch
+Red Hat Enterprise Linux Workstation (v. 7) - noarch
+
+3. Description:
+
+The virt-who package provides an agent that collects information about
+virtual guests present in the system and reports them to the
+subscription manager.
+
+It was discovered that the /etc/sysconfig/virt-who configuration file,
+which may contain hypervisor authentication credentials, was
+world-readable. A local user could use this flaw to obtain authentication
+credentials from this file. (CVE-2014-0189)
+
+Red Hat would like to thank Sal Castiglione for reporting this issue.
+
+The virt-who package has been upgraded to upstream version 0.11, which
+provides a number of bug fixes and enhancements over the previous version.
+The most notable bug fixes and enhancements include:
+
+* Support for remote libvirt.
+* A fix for using encrypted passwords.
+* Bug fixes and enhancements that increase the stability of virt-who.
+(BZ#1122489)
+
+This update also fixes the following bugs:
+
+* Prior to this update, the virt-who agent failed to read the list of
+virtual guests provided by the VDSM daemon. As a consequence, when in VDSM
+mode, the virt-who agent was not able to send updates about virtual guests
+to Subscription Asset Manager (SAM) and Red Hat Satellite. With this
+update, the agent reads the list of guests when in VDSM mode correctly and
+reports to SAM and Satellite as expected. (BZ#1153405)
+
+* Previously, virt-who used incorrect information when connecting to Red
+Hat Satellite 5. Consequently, virt-who could not connect to Red Hat
+Satellite 5 servers. The incorrect parameter has been corrected, and
+virt-who can now successfully connect to Red Hat Satellite 5. (BZ#1158859)
+
+* Prior to this update, virt-who did not decode the hexadecimal
+representation of a password before decrypting it. As a consequence, the
+decrypted password did not match the original password, and attempts to
+connect using the password failed. virt-who has been updated to decode the
+encrypted password and, as a result, virt-who now handles storing
+credentials using encrypted passwords as expected. (BZ#1161607)
+
+In addition, this update adds the following enhancement:
+
+* With this update, virt-who is able to read the list of guests from a
+remote libvirt hypervisor. (BZ#1127965)
+
+Users of virt-who are advised to upgrade to this updated package, which
+corrects these issues and adds these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1065421 - Remove dependency on 'libvirt' RPM
+1076290 - virt-who creat a null system in SAM server in esx mode
+1082981 - Faild to add Hyper-V 2012 to SAM as virt-who communication with Hyper-V failed
+1086517 - virt-who failed when testing against Satellite 5.6 due to missing folder /var/lib/virt-who in RHEL 7
+1088732 - CVE-2014-0189 virt-who: plaintext hypervisor passwords in world-readable /etc/sysconfig/virt-who configuration file
+1098448 - virt-who dies when the system is being unregistered
+1122489 - virt-who rebase
+1127965 - [RFE] Please add libvirt parameter for using Red Hat Enterprise Linux for Virtual Datacenter in kvm environments.
+1153405 - virt-who can't work in the VDSM mode
+1158759 - Wrong permission for configuration file /etc/sysconfig/virt-who on rhel7.1
+1158803 - Can't display the running mode in the virt-who log
+1158859 - virt-who uses wrong server when connecting to satellite
+1159187 - &quot;/etc/virt-who.d&quot; hasn't been created by default.
+1161434 - Take over one minute to stop/restart virt-who service in ESX mode.
+1161607 - virt-who not able to decrypt encrypted password
+1162049 - syslog.target depenancy
+1163021 - Failed to send host/guest associate to SAM when virt-who run at esx mode
+1168111 - [VDSM mode]Failed to send host/guest associate to SAM when there is a vm in the host
+1168122 - virt-who incorrectly says that VM is from 'None' hypervisor
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+virt-who-0.11-5.el7.src.rpm
+
+noarch:
+virt-who-0.11-5.el7.noarch.rpm
+
+Red Hat Enterprise Linux Server (v. 7):
+
+Source:
+virt-who-0.11-5.el7.src.rpm
+
+noarch:
+virt-who-0.11-5.el7.noarch.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+virt-who-0.11-5.el7.src.rpm
+
+noarch:
+virt-who-0.11-5.el7.noarch.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0189">https://access.redhat.com/security/cve/CVE-2014-0189</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+GphXlSAg2UNWIIRAoE6AJ91cRX75wBg0NbM2uckB4JzO2giPwCgqZb/
+InvxPci5HOMZ7m+LSxdOr5E=
+=9G90
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

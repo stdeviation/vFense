@@ -1,0 +1,288 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0783&#45;01] Important: kernel security and bug fix update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 7 Apr 2015 11:31:42 &#45;0400 -->
+<!--X-Message-Id: 201504071531.t37FVdes021283@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0783-01] Important: kernel security and bug fix update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0783-01] Important: kernel security and bug fix update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0783-01] Important: kernel security and bug fix update</li>
+<li><em>Date</em>: Tue, 7 Apr 2015 15:31:38 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel security and bug fix update
+Advisory ID:       RHSA-2015:0783-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0783.html">https://rhn.redhat.com/errata/RHSA-2015-0783.html</a>
+Issue date:        2015-04-07
+CVE Names:         CVE-2014-8159 CVE-2014-8867 
+=====================================================================
+
+1. Summary:
+
+Updated kernel packages that fix two security issues and two bugs are now
+available for Red Hat Enterprise Linux 5.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux (v. 5 server) - i386, ia64, noarch, ppc, s390x, x86_64
+Red Hat Enterprise Linux Desktop (v. 5 client) - i386, noarch, x86_64
+
+3. Description:
+
+The kernel packages contain the Linux kernel, the core of any Linux
+operating system.
+
+* It was found that the Linux kernel's Infiniband subsystem did not
+properly sanitize input parameters while registering memory regions from
+user space via the (u)verbs API. A local user with access to a
+/dev/infiniband/uverbsX device could use this flaw to crash the system or,
+potentially, escalate their privileges on the system. (CVE-2014-8159,
+Important)
+
+* An insufficient bound checking flaw was found in the Xen hypervisor's
+implementation of acceleration support for the &quot;REP MOVS&quot; instructions.
+A privileged HVM guest user could potentially use this flaw to crash the
+host. (CVE-2014-8867, Important)
+
+Red Hat would like to thank Mellanox for reporting CVE-2014-8159, and the
+Xen project for reporting CVE-2014-8867.
+
+This update also fixes the following bugs:
+
+* Under memory pressure, cached data was previously flushed to the backing
+server using the PID of the thread responsible for flushing the data in the
+Server Message Block (SMB) headers instead of the PID of the thread which
+actually wrote the data. As a consequence, when a file was locked by the
+writing thread prior to writing, the server considered writes by the thread
+flushing the pagecache as being a separate process from writing to a locked
+file, and thus rejected the writes. In addition, the data to be written was
+discarded. This update ensures that the correct PID is sent to the server,
+and data corruption is avoided when data is being written from a client
+under memory pressure. (BZ#1169304)
+
+* This update adds support for new cryptographic hardware in toleration
+mode for IBM System z. (BZ#1182522)
+
+All kernel users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues. The system must be
+rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1164255 - CVE-2014-8867 xen: Insufficient bounding of &quot;REP MOVS&quot; to MMIO emulated inside the hypervisor (xsa112)
+1181166 - CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 5 client):
+
+Source:
+kernel-2.6.18-404.el5.src.rpm
+
+i386:
+kernel-2.6.18-404.el5.i686.rpm
+kernel-PAE-2.6.18-404.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-404.el5.i686.rpm
+kernel-PAE-devel-2.6.18-404.el5.i686.rpm
+kernel-debug-2.6.18-404.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-404.el5.i686.rpm
+kernel-debug-devel-2.6.18-404.el5.i686.rpm
+kernel-debuginfo-2.6.18-404.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-404.el5.i686.rpm
+kernel-devel-2.6.18-404.el5.i686.rpm
+kernel-headers-2.6.18-404.el5.i386.rpm
+kernel-xen-2.6.18-404.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-404.el5.i686.rpm
+kernel-xen-devel-2.6.18-404.el5.i686.rpm
+
+noarch:
+kernel-doc-2.6.18-404.el5.noarch.rpm
+
+x86_64:
+kernel-2.6.18-404.el5.x86_64.rpm
+kernel-debug-2.6.18-404.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-404.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-404.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-404.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-404.el5.x86_64.rpm
+kernel-devel-2.6.18-404.el5.x86_64.rpm
+kernel-headers-2.6.18-404.el5.x86_64.rpm
+kernel-xen-2.6.18-404.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-404.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-404.el5.x86_64.rpm
+
+Red Hat Enterprise Linux (v. 5 server):
+
+Source:
+kernel-2.6.18-404.el5.src.rpm
+
+i386:
+kernel-2.6.18-404.el5.i686.rpm
+kernel-PAE-2.6.18-404.el5.i686.rpm
+kernel-PAE-debuginfo-2.6.18-404.el5.i686.rpm
+kernel-PAE-devel-2.6.18-404.el5.i686.rpm
+kernel-debug-2.6.18-404.el5.i686.rpm
+kernel-debug-debuginfo-2.6.18-404.el5.i686.rpm
+kernel-debug-devel-2.6.18-404.el5.i686.rpm
+kernel-debuginfo-2.6.18-404.el5.i686.rpm
+kernel-debuginfo-common-2.6.18-404.el5.i686.rpm
+kernel-devel-2.6.18-404.el5.i686.rpm
+kernel-headers-2.6.18-404.el5.i386.rpm
+kernel-xen-2.6.18-404.el5.i686.rpm
+kernel-xen-debuginfo-2.6.18-404.el5.i686.rpm
+kernel-xen-devel-2.6.18-404.el5.i686.rpm
+
+ia64:
+kernel-2.6.18-404.el5.ia64.rpm
+kernel-debug-2.6.18-404.el5.ia64.rpm
+kernel-debug-debuginfo-2.6.18-404.el5.ia64.rpm
+kernel-debug-devel-2.6.18-404.el5.ia64.rpm
+kernel-debuginfo-2.6.18-404.el5.ia64.rpm
+kernel-debuginfo-common-2.6.18-404.el5.ia64.rpm
+kernel-devel-2.6.18-404.el5.ia64.rpm
+kernel-headers-2.6.18-404.el5.ia64.rpm
+kernel-xen-2.6.18-404.el5.ia64.rpm
+kernel-xen-debuginfo-2.6.18-404.el5.ia64.rpm
+kernel-xen-devel-2.6.18-404.el5.ia64.rpm
+
+noarch:
+kernel-doc-2.6.18-404.el5.noarch.rpm
+
+ppc:
+kernel-2.6.18-404.el5.ppc64.rpm
+kernel-debug-2.6.18-404.el5.ppc64.rpm
+kernel-debug-debuginfo-2.6.18-404.el5.ppc64.rpm
+kernel-debug-devel-2.6.18-404.el5.ppc64.rpm
+kernel-debuginfo-2.6.18-404.el5.ppc64.rpm
+kernel-debuginfo-common-2.6.18-404.el5.ppc64.rpm
+kernel-devel-2.6.18-404.el5.ppc64.rpm
+kernel-headers-2.6.18-404.el5.ppc.rpm
+kernel-headers-2.6.18-404.el5.ppc64.rpm
+kernel-kdump-2.6.18-404.el5.ppc64.rpm
+kernel-kdump-debuginfo-2.6.18-404.el5.ppc64.rpm
+kernel-kdump-devel-2.6.18-404.el5.ppc64.rpm
+
+s390x:
+kernel-2.6.18-404.el5.s390x.rpm
+kernel-debug-2.6.18-404.el5.s390x.rpm
+kernel-debug-debuginfo-2.6.18-404.el5.s390x.rpm
+kernel-debug-devel-2.6.18-404.el5.s390x.rpm
+kernel-debuginfo-2.6.18-404.el5.s390x.rpm
+kernel-debuginfo-common-2.6.18-404.el5.s390x.rpm
+kernel-devel-2.6.18-404.el5.s390x.rpm
+kernel-headers-2.6.18-404.el5.s390x.rpm
+kernel-kdump-2.6.18-404.el5.s390x.rpm
+kernel-kdump-debuginfo-2.6.18-404.el5.s390x.rpm
+kernel-kdump-devel-2.6.18-404.el5.s390x.rpm
+
+x86_64:
+kernel-2.6.18-404.el5.x86_64.rpm
+kernel-debug-2.6.18-404.el5.x86_64.rpm
+kernel-debug-debuginfo-2.6.18-404.el5.x86_64.rpm
+kernel-debug-devel-2.6.18-404.el5.x86_64.rpm
+kernel-debuginfo-2.6.18-404.el5.x86_64.rpm
+kernel-debuginfo-common-2.6.18-404.el5.x86_64.rpm
+kernel-devel-2.6.18-404.el5.x86_64.rpm
+kernel-headers-2.6.18-404.el5.x86_64.rpm
+kernel-xen-2.6.18-404.el5.x86_64.rpm
+kernel-xen-debuginfo-2.6.18-404.el5.x86_64.rpm
+kernel-xen-devel-2.6.18-404.el5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8159">https://access.redhat.com/security/cve/CVE-2014-8159</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8867">https://access.redhat.com/security/cve/CVE-2014-8867</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVI/dsXlSAg2UNWIIRAqOlAJwOOKtqsWgPuw58Ymh3jc30ZPbMMQCfUnWh
+Q6oblLEtjh4aBkyzP5f6o1k=
+=wufe
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0794&#45;01] Moderate: krb5 security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 9 Apr 2015 01:13:22 &#45;0400 -->
+<!--X-Message-Id: 201504090513.t395DJPR005160@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0794-01] Moderate: krb5 security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0794-01] Moderate: krb5 security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0794-01] Moderate: krb5 security update</li>
+<li><em>Date</em>: Thu, 9 Apr 2015 05:13:18 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: krb5 security update
+Advisory ID:       RHSA-2015:0794-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0794.html">https://rhn.redhat.com/errata/RHSA-2015-0794.html</a>
+Issue date:        2015-04-09
+CVE Names:         CVE-2014-5352 CVE-2014-5353 CVE-2014-5355 
+                   CVE-2014-9421 CVE-2014-9422 
+=====================================================================
+
+1. Summary:
+
+Updated krb5 packages that fix multiple security issues are now available
+for Red Hat Enterprise Linux 6.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Desktop (v. 6) - i386, x86_64
+Red Hat Enterprise Linux Desktop Optional (v. 6) - i386, x86_64
+Red Hat Enterprise Linux HPC Node (v. 6) - x86_64
+Red Hat Enterprise Linux HPC Node Optional (v. 6) - x86_64
+Red Hat Enterprise Linux Server (v. 6) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Workstation (v. 6) - i386, x86_64
+
+3. Description:
+
+Kerberos is a networked authentication system which allows clients and
+servers to authenticate to each other with the help of a trusted third
+party, the Kerberos KDC.
+
+The following security issues are fixed with this release:
+
+A use-after-free flaw was found in the way the MIT Kerberos libgssapi_krb5
+library processed valid context deletion tokens. An attacker able to make
+an application using the GSS-API library (libgssapi) could call the
+gss_process_context_token() function and use this flaw to crash that
+application. (CVE-2014-5352)
+
+If kadmind were used with an LDAP back end for the KDC database, a remote,
+authenticated attacker who has the permissions to set the password policy
+could crash kadmind by attempting to use a named ticket policy object as a
+password policy for a principal. (CVE-2014-5353)
+
+It was found that the krb5_read_message() function of MIT Kerberos did not
+correctly sanitize input, and could create invalid krb5_data objects.
+A remote, unauthenticated attacker could use this flaw to crash a Kerberos
+child process via a specially crafted request. (CVE-2014-5355)
+
+A double-free flaw was found in the way MIT Kerberos handled invalid
+External Data Representation (XDR) data. An authenticated user could use
+this flaw to crash the MIT Kerberos administration server (kadmind), or
+other applications using Kerberos libraries, via specially crafted XDR
+packets. (CVE-2014-9421)
+
+It was found that the MIT Kerberos administration server (kadmind)
+incorrectly accepted certain authentication requests for two-component
+server principal names. A remote attacker able to acquire a key with a
+particularly named principal (such as &quot;kad/x&quot;) could use this flaw to
+impersonate any user to kadmind, and perform administrative actions as that
+user. (CVE-2014-9422)
+
+Red Hat would like to thank the MIT Kerberos project for reporting
+CVE-2014-5352, CVE-2014-9421, and CVE-2014-9422. The MIT Kerberos project
+acknowledges Nico Williams for assisting with the analysis of
+CVE-2014-5352.
+
+All krb5 users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1174543 - CVE-2014-5353 krb5: NULL pointer dereference when using a ticket policy name as a password policy name
+1179856 - CVE-2014-5352 krb5: gss_process_context_token() incorrectly frees context (MITKRB5-SA-2015-001)
+1179857 - CVE-2014-9421 krb5: kadmind doubly frees partial deserialization results (MITKRB5-SA-2015-001)
+1179861 - CVE-2014-9422 krb5: kadmind incorrectly validates server principal name (MITKRB5-SA-2015-001)
+1193939 - CVE-2014-5355 krb5: unauthenticated denial of service in recvauth_common() and others
+
+6. Package List:
+
+Red Hat Enterprise Linux Desktop (v. 6):
+
+Source:
+krb5-1.10.3-37.el6_6.src.rpm
+
+i386:
+krb5-debuginfo-1.10.3-37.el6_6.i686.rpm
+krb5-libs-1.10.3-37.el6_6.i686.rpm
+krb5-pkinit-openssl-1.10.3-37.el6_6.i686.rpm
+krb5-workstation-1.10.3-37.el6_6.i686.rpm
+
+x86_64:
+krb5-debuginfo-1.10.3-37.el6_6.i686.rpm
+krb5-debuginfo-1.10.3-37.el6_6.x86_64.rpm
+krb5-libs-1.10.3-37.el6_6.i686.rpm
+krb5-libs-1.10.3-37.el6_6.x86_64.rpm
+krb5-pkinit-openssl-1.10.3-37.el6_6.x86_64.rpm
+krb5-workstation-1.10.3-37.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Desktop Optional (v. 6):
+
+i386:
+krb5-debuginfo-1.10.3-37.el6_6.i686.rpm
+krb5-devel-1.10.3-37.el6_6.i686.rpm
+krb5-server-1.10.3-37.el6_6.i686.rpm
+krb5-server-ldap-1.10.3-37.el6_6.i686.rpm
+
+x86_64:
+krb5-debuginfo-1.10.3-37.el6_6.i686.rpm
+krb5-debuginfo-1.10.3-37.el6_6.x86_64.rpm
+krb5-devel-1.10.3-37.el6_6.i686.rpm
+krb5-devel-1.10.3-37.el6_6.x86_64.rpm
+krb5-server-1.10.3-37.el6_6.x86_64.rpm
+krb5-server-ldap-1.10.3-37.el6_6.i686.rpm
+krb5-server-ldap-1.10.3-37.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node (v. 6):
+
+Source:
+krb5-1.10.3-37.el6_6.src.rpm
+
+x86_64:
+krb5-debuginfo-1.10.3-37.el6_6.i686.rpm
+krb5-debuginfo-1.10.3-37.el6_6.x86_64.rpm
+krb5-libs-1.10.3-37.el6_6.i686.rpm
+krb5-libs-1.10.3-37.el6_6.x86_64.rpm
+krb5-pkinit-openssl-1.10.3-37.el6_6.x86_64.rpm
+krb5-workstation-1.10.3-37.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux HPC Node Optional (v. 6):
+
+x86_64:
+krb5-debuginfo-1.10.3-37.el6_6.i686.rpm
+krb5-debuginfo-1.10.3-37.el6_6.x86_64.rpm
+krb5-devel-1.10.3-37.el6_6.i686.rpm
+krb5-devel-1.10.3-37.el6_6.x86_64.rpm
+krb5-server-1.10.3-37.el6_6.x86_64.rpm
+krb5-server-ldap-1.10.3-37.el6_6.i686.rpm
+krb5-server-ldap-1.10.3-37.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Server (v. 6):
+
+Source:
+krb5-1.10.3-37.el6_6.src.rpm
+
+i386:
+krb5-debuginfo-1.10.3-37.el6_6.i686.rpm
+krb5-devel-1.10.3-37.el6_6.i686.rpm
+krb5-libs-1.10.3-37.el6_6.i686.rpm
+krb5-pkinit-openssl-1.10.3-37.el6_6.i686.rpm
+krb5-server-1.10.3-37.el6_6.i686.rpm
+krb5-server-ldap-1.10.3-37.el6_6.i686.rpm
+krb5-workstation-1.10.3-37.el6_6.i686.rpm
+
+ppc64:
+krb5-debuginfo-1.10.3-37.el6_6.ppc.rpm
+krb5-debuginfo-1.10.3-37.el6_6.ppc64.rpm
+krb5-devel-1.10.3-37.el6_6.ppc.rpm
+krb5-devel-1.10.3-37.el6_6.ppc64.rpm
+krb5-libs-1.10.3-37.el6_6.ppc.rpm
+krb5-libs-1.10.3-37.el6_6.ppc64.rpm
+krb5-pkinit-openssl-1.10.3-37.el6_6.ppc64.rpm
+krb5-server-1.10.3-37.el6_6.ppc64.rpm
+krb5-server-ldap-1.10.3-37.el6_6.ppc.rpm
+krb5-server-ldap-1.10.3-37.el6_6.ppc64.rpm
+krb5-workstation-1.10.3-37.el6_6.ppc64.rpm
+
+s390x:
+krb5-debuginfo-1.10.3-37.el6_6.s390.rpm
+krb5-debuginfo-1.10.3-37.el6_6.s390x.rpm
+krb5-devel-1.10.3-37.el6_6.s390.rpm
+krb5-devel-1.10.3-37.el6_6.s390x.rpm
+krb5-libs-1.10.3-37.el6_6.s390.rpm
+krb5-libs-1.10.3-37.el6_6.s390x.rpm
+krb5-pkinit-openssl-1.10.3-37.el6_6.s390x.rpm
+krb5-server-1.10.3-37.el6_6.s390x.rpm
+krb5-server-ldap-1.10.3-37.el6_6.s390.rpm
+krb5-server-ldap-1.10.3-37.el6_6.s390x.rpm
+krb5-workstation-1.10.3-37.el6_6.s390x.rpm
+
+x86_64:
+krb5-debuginfo-1.10.3-37.el6_6.i686.rpm
+krb5-debuginfo-1.10.3-37.el6_6.x86_64.rpm
+krb5-devel-1.10.3-37.el6_6.i686.rpm
+krb5-devel-1.10.3-37.el6_6.x86_64.rpm
+krb5-libs-1.10.3-37.el6_6.i686.rpm
+krb5-libs-1.10.3-37.el6_6.x86_64.rpm
+krb5-pkinit-openssl-1.10.3-37.el6_6.x86_64.rpm
+krb5-server-1.10.3-37.el6_6.x86_64.rpm
+krb5-server-ldap-1.10.3-37.el6_6.i686.rpm
+krb5-server-ldap-1.10.3-37.el6_6.x86_64.rpm
+krb5-workstation-1.10.3-37.el6_6.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 6):
+
+Source:
+krb5-1.10.3-37.el6_6.src.rpm
+
+i386:
+krb5-debuginfo-1.10.3-37.el6_6.i686.rpm
+krb5-devel-1.10.3-37.el6_6.i686.rpm
+krb5-libs-1.10.3-37.el6_6.i686.rpm
+krb5-pkinit-openssl-1.10.3-37.el6_6.i686.rpm
+krb5-server-1.10.3-37.el6_6.i686.rpm
+krb5-server-ldap-1.10.3-37.el6_6.i686.rpm
+krb5-workstation-1.10.3-37.el6_6.i686.rpm
+
+x86_64:
+krb5-debuginfo-1.10.3-37.el6_6.i686.rpm
+krb5-debuginfo-1.10.3-37.el6_6.x86_64.rpm
+krb5-devel-1.10.3-37.el6_6.i686.rpm
+krb5-devel-1.10.3-37.el6_6.x86_64.rpm
+krb5-libs-1.10.3-37.el6_6.i686.rpm
+krb5-libs-1.10.3-37.el6_6.x86_64.rpm
+krb5-pkinit-openssl-1.10.3-37.el6_6.x86_64.rpm
+krb5-server-1.10.3-37.el6_6.x86_64.rpm
+krb5-server-ldap-1.10.3-37.el6_6.i686.rpm
+krb5-server-ldap-1.10.3-37.el6_6.x86_64.rpm
+krb5-workstation-1.10.3-37.el6_6.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-5352">https://access.redhat.com/security/cve/CVE-2014-5352</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-5353">https://access.redhat.com/security/cve/CVE-2014-5353</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-5355">https://access.redhat.com/security/cve/CVE-2014-5355</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9421">https://access.redhat.com/security/cve/CVE-2014-9421</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9422">https://access.redhat.com/security/cve/CVE-2014-9422</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVJgpoXlSAg2UNWIIRAnT5AKCBCQt2KyA8O/YfHB9Nqr8pAljqGgCghHdO
+AI8Ls1UYpkK6YMkE+jfyw+M=
+=MmEH
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00012.html">Date Prev</a>][<a href="msg00014.html">Date Next</a>] &nbsp; [<a href="msg00012.html">Thread Prev</a>][<a href="msg00014.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00013">Thread Index</A>]
+[<A HREF="date.html#00013">Date Index</A>]
+[<A HREF="author.html#00013">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

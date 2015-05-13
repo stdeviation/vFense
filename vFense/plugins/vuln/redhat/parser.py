@@ -39,7 +39,7 @@ def get_threads():
     """
 
     threads=[]
-    req = requests.get(URL)
+    req = requests.get(URL, verify=False)
     soup= BeautifulSoup(req.text)
     threads = (
         map(
@@ -70,7 +70,7 @@ def get_msg_links_by_thread(thread):
     """
 
     dlinks = []
-    req=requests.get(thread)
+    req=requests.get(thread, verify=False)
     if req.ok:
         date = thread.split('/')[-2]
         tsoup=BeautifulSoup(req.text)
@@ -109,7 +109,7 @@ def get_html_content(hlink, force=False):
 
     if os.path.exists(msg_location) and not force:
         if os.stat(msg_location).st_size == 0:
-            request = requests.get(hlink)
+            request = requests.get(hlink, verify=False)
             if request.ok:
                 content = request.content
                 msg_file = open(msg_location, 'wb')
@@ -118,7 +118,7 @@ def get_html_content(hlink, force=False):
         else:
             content = open(msg_location, 'rb').read()
     else:
-        request = requests.get(hlink)
+        request = requests.get(hlink, verify=False)
         if request.ok:
             content = request.content
             msg_file = open(msg_location, 'wb')
@@ -152,7 +152,7 @@ def get_html_latest_content(hlink):
     )
 
     if not os.path.exists(msg_location):
-        request = requests.get(hlink)
+        request = requests.get(hlink, verify=False)
         if request.ok:
             content = request.content
             msg_file = open(msg_location, 'wb')

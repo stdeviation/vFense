@@ -1,0 +1,290 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0624&#45;01] Important: qemu&#45;kvm&#45;rhev security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:16:42 &#45;0500 -->
+<!--X-Message-Id: 201503051416.t25EGeI9007026@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0624-01] Important: qemu-kvm-rhev security, bug fix,	and enha</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0624-01] Important: qemu-kvm-rhev security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, rhev-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0624-01] Important: qemu-kvm-rhev security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:16:39 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: qemu-kvm-rhev security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0624-01
+Product:           Red Hat Enterprise Virtualization
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0624.html">https://rhn.redhat.com/errata/RHSA-2015-0624.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-3640 CVE-2014-7815 CVE-2014-7840 
+                   CVE-2014-8106 
+=====================================================================
+
+1. Summary:
+
+Updated qemu-kvm-rhev packages that fix multiple security issues, several
+bugs, and add various enhancements are now available for Red Hat Enterprise
+Virtualization Hypervisor 7.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+RHEV-H and VDSM for 7 Hosts - x86_64
+
+3. Description:
+
+KVM (Kernel-based Virtual Machine) is a full virtualization solution for
+Linux on AMD64 and Intel 64 systems. The qemu-kvm-rhev package provides the
+user-space component for running virtual machines using KVM, in
+environments managed by Red Hat Enterprise Virtualization Manager.
+
+It was found that the Cirrus blit region checks were insufficient.
+A privileged guest user could use this flaw to write outside of
+VRAM-allocated buffer boundaries in the host's QEMU process address space
+with attacker-provided data. (CVE-2014-8106)
+
+An uninitialized data structure use flaw was found in the way the
+set_pixel_format() function sanitized the value of bits_per_pixel.
+An attacker able to access a guest's VNC console could use this flaw to
+crash the guest. (CVE-2014-7815)
+
+It was found that certain values that were read when loading RAM during
+migration were not validated. A user able to alter the savevm data (either
+on the disk or over the wire during migration) could use either of these
+flaws to corrupt QEMU process memory on the (destination) host, which could
+potentially result in arbitrary code execution on the host with the
+privileges of the QEMU process. (CVE-2014-7840)
+
+A NULL pointer dereference flaw was found in the way QEMU handled UDP
+packets with a source port and address of 0 when QEMU's user networking was
+in use. A local guest user could use this flaw to crash the guest.
+(CVE-2014-3640)
+
+Red Hat would like to thank James Spadaro of Cisco for reporting
+CVE-2014-7815, and Xavier Mehrenberger and Stephane Duverger of Airbus for
+reporting CVE-2014-3640. The CVE-2014-8106 issue was found by Paolo Bonzini
+of Red Hat, and the CVE-2014-7840 issue was discovered by Michael S.
+Tsirkin of Red Hat.
+
+This update provides the enhanced version of the qemu-kvm-rhev packages for
+Red Hat Enterprise Virtualization (RHEV) Hypervisor, which also fixes
+several bugs and adds various enhancements.
+
+All Red Hat Enterprise Virtualization users with deployed virtualization
+hosts are advised to install these updated packages, which add this
+enhancement. After installing this update, shut down all running virtual
+machines. Once all virtual machines have shut down, start them again for
+this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+733600 - qemu-kvm doesn't report error when supplied negative vnc port value
+760898 - kvm should disable to change vnc password after removing vnc password option
+801284 - usb-host accepting out-of-range values for various parameters ending an invalid usb device occupy an ehci port
+852348 - fail to block_resize local data disk with IDE/AHCI disk_interface
+893654 - allow non-contiguous CPU ranges on -numa command-line options
+923599 - Virtio serial chardev will be still in use even failed to hot plug a serial port on it
+946993 - Q35 does not honor -drive if=ide,... and its sugared forms -cdrom, -hda, ...
+1003432 - qemu-kvm should not allow different virtio serial port use the same name
+1013157 - backport block-layer dataplane implementation
+1024599 - Windows7 x86 guest with ahci backend hit BSOD when do &quot;hibernate&quot;
+1029987 - spice-server reports incorrect listening address on monitor with &quot;ipv6&quot; option
+1032855 - qemu-kvm core dump when do S4 inside guest after drive-mirror got BLOCK_JOB_READY status(from libiscsi storage to libiscsi storage))
+1039745 - qemu vcpu hotplug support for q35 machine type
+1047748 - fail to specify the bootindex for the usb-storage with usb-xhci controller
+1052041 - Rubbish serial port device is generated once failed to hotplug a serial port
+1055532 - QEMU should abort when invalid CPU flag name is used
+1057425 - multiple qxl devices(&gt;9) cause qemu-kvm core dump
+1061827 - Maintain relative path to backing file image during live merge (block-commit)
+1064742 - QMP: &quot;query-version&quot; doesn't include the -rhev prefix from the qemu-kvm-rhev package
+1066239 - Hotplug second virtioserialport failed after attached and detached virtconsole port
+1071058 - qemu-img unable to create image filename containing a ':'
+1071199 - qemu-kvm numa emulation won't check duplicate node id
+1076990 - Enable complex memory requirements for virtual machines
+1083844 - Original image checking get errors after commit back with lazy_refcounts=on+qcow2_v3
+1086502 - QEMU core dumped when blockdev_add with 'aio': 'native' but without 'cache' specified
+1093023 - provide RHEL-specific machine types in QEMU
+1096196 - QEMU should abort if NUMA node configuration don't cover all RAM
+1102411 - qemu guest-set-time: RTC timer interrupt reinjection vs guest-set-time
+1110429 - need a non-event way to determine qemu's current offset from utc
+1114889 - drive-mirror cause qemu-kvm process segfaults
+1116729 - Backport qemu_bh_schedule() race condition fix
+1117445 - QMP: extend block events with error information
+1120718 - Migration: Something broken with video
+1121025 - Migration: acpi/tables size mismatch
+1122619 - unnecessary files being distributed
+1123908 - block.c: multiwrite_merge() truncates overlapping requests
+1126777 - guest which set numa in xml can't start success
+1128095 - chardev 'chr0' isn't initialized when we try to open rng backend
+1128608 - [AHCI] RHEL 5.10 x86_64 guest kernel panic - VFS: Unable to mount root fs on unknown-block(9,1)
+1129259 - Add traces to virtio-rng device
+1129593 - Guest can't poweroff after finishing installation
+1132385 - qemu-img convert rate about 100k/second from qcow2/raw to vmdk format on nfs system file
+1132569 - RFE: Enable curl driver in qemu-kvm-rhev: https only
+1133736 - qemu should provide iothread and x-data-plane properties for /usr/libexec/qemu-kvm -device virtio-blk-pci,?
+1134980 - Should export first vga display with Spice
+1135844 - [virtio-win]communication ports were marked with a  yellow exclamation after hotplug pci-serial,pci-serial-2x,pci-serial-4x
+1135893 - qemu-kvm should report an error message when host's freehugepage memory &lt; domain's memory
+1136381 - RFE: Supporting creating vdi/vpc format disk with protocols (glusterfs) for qemu-kvm-rhev-2.1.x
+1136752 - virtio-blk dataplane support for block_resize and hot unplug
+1138359 - RFE: Enable ssh driver in qemu-kvm-rhev
+1138579 - Migration failed with nec-usb-xhci from RHEL7. 0 to RHEL7.1
+1140001 - data-plane hotplug should be refused to start if device is already in use (drive-mirror job)
+1140145 - qemu-kvm crashed when doing iofuzz testing
+1140620 - Should replace &quot;qemu-system-i386&quot; by &quot;/usr/libexec/qemu-kvm&quot; in manpage of qemu-kvm for our official qemu-kvm build
+1140744 - Enable native support for Ceph
+1140975 - fail to login spice session with password + expire time
+1140997 - guest is stuck when setting balloon memory with large guest-stats-polling-interval
+1141656 - Virtio-scsi: performance degradation from 1.5.3 to 2.1.0
+1141666 - Qemu crashed if reboot guest after hot remove AC97 sound device
+1142331 - qemu-img convert intermittently corrupts output images
+1144325 - Can not probe  &quot;qemu.kvm.virtio_blk_data_plane_complete_request&quot;
+1144818 - CVE-2014-3640 qemu: slirp: NULL pointer deref in sosendto()
+1145042 - The output of &quot;/usr/libexec/qemu-kvm -M ?&quot; should be ordered.
+1146573 - qemu core dump when boot guest with smp(num)&lt;cores(num)
+1146801 - sendkey: releasing order of combined keys was wrongly converse
+1146826 - QEMU will not reject invalid number of queues (num_queues = 0) specified for virtio-scsi
+1147354 - Qemu core dump when boot up a guest on a non-existent hugepage path
+1150820 - fail to specify wwn for virtual IDE CD-ROM
+1151947 - virtconsole causes qemu-kvm core dump
+1152830 - Fix sense buffer in virtio-scsi LUN passthrough
+1152901 - block/curl: Fix type safety of s-&gt;timeout
+1152922 - smbios uuid mismatched
+1153590 - Improve error message on huge page preallocation
+1157329 - qemu-kvm: undefined symbol: glfs_discard_async
+1157641 - CVE-2014-7815 qemu: vnc: insufficient bits_per_pixel from the client sanitization
+1160102 - opening read-only iscsi lun as read-write should fail
+1160504 - guest can not show usb device after adding some usb controllers and redirdevs.
+1161397 - qemu core dump when install a RHEL.7 guest(xhci) with migration
+1163075 - CVE-2014-7840 qemu: insufficient parameter validation during ram load
+1163735 - -device pc-dimm fails to initialize on non-NUMA configs
+1164759 - Handle multipage ranges in invalidate_and_set_dirty()
+1166481 - Allow qemu-img to bypass the host cache (check, compare, convert, rebase, amend)
+1169280 - Segfault while query device properties (ics, icp)
+1169454 - CVE-2014-8106 qemu: cirrus: insufficient blit region checks
+1169589 - test case 051 071 and 087 of qemu-iotests fail for qcow2 with qemu-kvm-rhev-2.1.2-14.el7
+1170093 - guest NUMA failed to migrate when machine is rhel6.5.0
+1170533 - Should disalbe S3/S4 in default  under Q35 machine type in rhel7
+1170871 - qemu core dumped when unhotplug gpu card assigned to guest
+1171552 - Storage vm migration failed when running BurnInTes
+1172473 - BUG: seccomp filter failure with &quot;-object memory-backend-ram&quot;
+1173167 - Corrupted ACPI tables in some configurations using pc-i440fx-rhel7.0.0
+1175841 - Delete cow block driver
+1177127 - [SVVP]smbios HCT job failed with  'Processor Max Speed cannot be Unknown' with -M pc-i440fx-rhel7.1.0
+1179165 - [SVVP]smbios HCT job failed with  Unspecified error  with -M pc-i440fx-rhel7.1.0
+1182494 - BUG: qemu-kvm hang when enabled both sandbox and mlock
+
+6. Package List:
+
+RHEV-H and VDSM for 7 Hosts:
+
+Source:
+qemu-kvm-rhev-2.1.2-23.el7.src.rpm
+
+x86_64:
+libcacard-devel-rhev-2.1.2-23.el7.x86_64.rpm
+libcacard-rhev-2.1.2-23.el7.x86_64.rpm
+libcacard-tools-rhev-2.1.2-23.el7.x86_64.rpm
+qemu-img-rhev-2.1.2-23.el7.x86_64.rpm
+qemu-kvm-common-rhev-2.1.2-23.el7.x86_64.rpm
+qemu-kvm-rhev-2.1.2-23.el7.x86_64.rpm
+qemu-kvm-rhev-debuginfo-2.1.2-23.el7.x86_64.rpm
+qemu-kvm-tools-rhev-2.1.2-23.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3640">https://access.redhat.com/security/cve/CVE-2014-3640</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7815">https://access.redhat.com/security/cve/CVE-2014-7815</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7840">https://access.redhat.com/security/cve/CVE-2014-7840</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8106">https://access.redhat.com/security/cve/CVE-2014-8106</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+GUyXlSAg2UNWIIRAlF1AJ4w3xZf7cELYU6E0hmCPO/N//XI1wCfX2S4
+Wb9RVUb6NYsR2wRSp0JFzyk=
+=Xa/T
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00007.html">Date Prev</a>][<a href="msg00009.html">Date Next</a>] &nbsp; [<a href="msg00007.html">Thread Prev</a>][<a href="msg00009.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00008">Thread Index</A>]
+[<A HREF="date.html#00008">Date Index</A>]
+[<A HREF="author.html#00008">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

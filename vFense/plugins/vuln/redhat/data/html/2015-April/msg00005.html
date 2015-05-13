@@ -1,0 +1,162 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0776&#45;01] Moderate: docker security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 2 Apr 2015 15:35:17 &#45;0400 -->
+<!--X-Message-Id: 201504021935.t32JZEoH009282@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0776-01] Moderate: docker security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0776-01] Moderate: docker security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com</li>
+<li><em>Cc</em>: </li>
+<li><em>Subject</em>: [RHSA-2015:0776-01] Moderate: docker security update</li>
+<li><em>Date</em>: Thu, 2 Apr 2015 19:35:13 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: docker security update
+Advisory ID:       RHSA-2015:0776-01
+Product:           RHEL Extras
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0776.html">https://rhn.redhat.com/errata/RHSA-2015-0776.html</a>
+Issue date:        2015-04-02
+CVE Names:         CVE-2015-1843 
+=====================================================================
+
+1. Summary:
+
+Updated docker packages that fix one security issue are now available for
+Red Hat Enterprise Linux 7 Extras.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux 7 Extras - noarch, x86_64
+
+3. Description:
+
+Docker is a service providing container management on Linux.
+
+It was found that the fix for the CVE-2014-5277 issue was incomplete: the
+docker client could under certain circumstances erroneously fall back to
+HTTP when an HTTPS connection to a registry failed. This could allow a
+man-in-the-middle attacker to obtain authentication and image data from
+traffic sent from a client to the registry. (CVE-2015-1843)
+
+Red Hat would like to thank Eric Windisch of Docker Inc. for reporting
+this issue.
+
+All docker users are advised to upgrade to these updated packages, which
+correct this issue.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1206443 - CVE-2015-1843 docker: regression of CVE-2014-5277
+
+6. Package List:
+
+Red Hat Enterprise Linux 7 Extras:
+
+Source:
+docker-1.5.0-28.el7.src.rpm
+
+noarch:
+python-websocket-client-0.14.1-65.el7.noarch.rpm
+
+x86_64:
+atomic-0-0.9.git4ff7dbd.el7.x86_64.rpm
+docker-1.5.0-28.el7.x86_64.rpm
+docker-logrotate-1.5.0-28.el7.x86_64.rpm
+docker-python-1.0.0-22.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-1843">https://access.redhat.com/security/cve/CVE-2015-1843</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVHZmgXlSAg2UNWIIRArLBAJ9/rpy8T3xHKVFb8/uVrOnZM5yH2wCfdVpS
+YSbgdSN4AlAdUFAA0Py9N/Y=
+=omYZ
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00004.html">Date Prev</a>][<a href="msg00006.html">Date Next</a>] &nbsp; [<a href="msg00004.html">Thread Prev</a>][<a href="msg00006.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00005">Thread Index</A>]
+[<A HREF="date.html#00005">Date Index</A>]
+[<A HREF="author.html#00005">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

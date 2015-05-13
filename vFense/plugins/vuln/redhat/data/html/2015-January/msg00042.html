@@ -1,0 +1,247 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0104&#45;01] Important: ntp security update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Wed, 28 Jan 2015 14:18:05 &#45;0500 -->
+<!--X-Message-Id: 201501281918.t0SJI4Vg011961@int&#45;mx14.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0104-01] Important: ntp security update</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00041.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00041.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0104-01] Important: ntp security update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0104-01] Important: ntp security update</li>
+<li><em>Date</em>: Wed, 28 Jan 2015 19:18:04 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: ntp security update
+Advisory ID:       RHSA-2015:0104-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0104.html">https://rhn.redhat.com/errata/RHSA-2015-0104.html</a>
+Issue date:        2015-01-28
+CVE Names:         CVE-2014-9293 CVE-2014-9294 CVE-2014-9295 
+                   CVE-2014-9296 
+=====================================================================
+
+1. Summary:
+
+Updated ntp packages that fix several security issues are now available for
+Red Hat Enterprise Linux 6.5 Extended Update Support.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.5) - noarch, x86_64
+Red Hat Enterprise Linux HPC Node EUS (v. 6.5) - x86_64
+Red Hat Enterprise Linux Server EUS (v. 6.5) - i386, ppc64, s390x, x86_64
+Red Hat Enterprise Linux Server Optional EUS (v. 6.5) - i386, noarch, ppc64, s390x, x86_64
+
+3. Description:
+
+The Network Time Protocol (NTP) is used to synchronize a computer's time
+with a referenced time source.
+
+Multiple buffer overflow flaws were discovered in ntpd's crypto_recv(),
+ctl_putdata(), and configure() functions. A remote attacker could use
+either of these flaws to send a specially crafted request packet that could
+crash ntpd or, potentially, execute arbitrary code with the privileges of
+the ntp user. Note: the crypto_recv() flaw requires non-default
+configurations to be active, while the ctl_putdata() flaw, by default, can
+only be exploited via local attackers, and the configure() flaw requires
+additional authentication to exploit. (CVE-2014-9295)
+
+It was found that ntpd automatically generated weak keys for its internal
+use if no ntpdc request authentication key was specified in the ntp.conf
+configuration file. A remote attacker able to match the configured IP
+restrictions could guess the generated key, and possibly use it to send
+ntpdc query or configuration requests. (CVE-2014-9293)
+
+It was found that ntp-keygen used a weak method for generating MD5 keys.
+This could possibly allow an attacker to guess generated MD5 keys that
+could then be used to spoof an NTP client or server. Note: it is
+recommended to regenerate any MD5 keys that had explicitly been generated
+with ntp-keygen; the default installation does not contain such keys.
+(CVE-2014-9294)
+
+A missing return statement in the receive() function could potentially
+allow a remote attacker to bypass NTP's authentication mechanism.
+(CVE-2014-9296)
+
+All ntp users are advised to upgrade to this updated package, which
+contains backported patches to resolve these issues. After installing the
+update, the ntpd daemon will restart automatically.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata 
+relevant to your system have been applied.
+
+This update is available via the Red Hat Network. Details on how to use the
+Red Hat Network to apply this update are available at 
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1176032 - CVE-2014-9293 ntp: automatic generation of weak default key in config_auth()
+1176035 - CVE-2014-9294 ntp: ntp-keygen uses weak random number generator and seed when generating MD5 keys
+1176037 - CVE-2014-9295 ntp: Multiple buffer overflows via specially-crafted packets
+1176040 - CVE-2014-9296 ntp: receive() missing return on error
+
+6. Package List:
+
+Red Hat Enterprise Linux HPC Node EUS (v. 6.5):
+
+Source:
+ntp-4.2.6p5-2.el6_5.src.rpm
+
+x86_64:
+ntp-4.2.6p5-2.el6_5.x86_64.rpm
+ntp-debuginfo-4.2.6p5-2.el6_5.x86_64.rpm
+ntpdate-4.2.6p5-2.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Compute Node Optional EUS (v. 6.5):
+
+Source:
+ntp-4.2.6p5-2.el6_5.src.rpm
+
+noarch:
+ntp-doc-4.2.6p5-2.el6_5.noarch.rpm
+
+x86_64:
+ntp-debuginfo-4.2.6p5-2.el6_5.x86_64.rpm
+ntp-perl-4.2.6p5-2.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server EUS (v. 6.5):
+
+Source:
+ntp-4.2.6p5-2.el6_5.src.rpm
+
+i386:
+ntp-4.2.6p5-2.el6_5.i686.rpm
+ntp-debuginfo-4.2.6p5-2.el6_5.i686.rpm
+ntpdate-4.2.6p5-2.el6_5.i686.rpm
+
+ppc64:
+ntp-4.2.6p5-2.el6_5.ppc64.rpm
+ntp-debuginfo-4.2.6p5-2.el6_5.ppc64.rpm
+ntpdate-4.2.6p5-2.el6_5.ppc64.rpm
+
+s390x:
+ntp-4.2.6p5-2.el6_5.s390x.rpm
+ntp-debuginfo-4.2.6p5-2.el6_5.s390x.rpm
+ntpdate-4.2.6p5-2.el6_5.s390x.rpm
+
+x86_64:
+ntp-4.2.6p5-2.el6_5.x86_64.rpm
+ntp-debuginfo-4.2.6p5-2.el6_5.x86_64.rpm
+ntpdate-4.2.6p5-2.el6_5.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional EUS (v. 6.5):
+
+Source:
+ntp-4.2.6p5-2.el6_5.src.rpm
+
+i386:
+ntp-debuginfo-4.2.6p5-2.el6_5.i686.rpm
+ntp-perl-4.2.6p5-2.el6_5.i686.rpm
+
+noarch:
+ntp-doc-4.2.6p5-2.el6_5.noarch.rpm
+
+ppc64:
+ntp-debuginfo-4.2.6p5-2.el6_5.ppc64.rpm
+ntp-perl-4.2.6p5-2.el6_5.ppc64.rpm
+
+s390x:
+ntp-debuginfo-4.2.6p5-2.el6_5.s390x.rpm
+ntp-perl-4.2.6p5-2.el6_5.s390x.rpm
+
+x86_64:
+ntp-debuginfo-4.2.6p5-2.el6_5.x86_64.rpm
+ntp-perl-4.2.6p5-2.el6_5.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9293">https://access.redhat.com/security/cve/CVE-2014-9293</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9294">https://access.redhat.com/security/cve/CVE-2014-9294</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9295">https://access.redhat.com/security/cve/CVE-2014-9295</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-9296">https://access.redhat.com/security/cve/CVE-2014-9296</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFUyTXWXlSAg2UNWIIRAsXzAKCilJuJeeWLOABs1xY+ueRvRTSpWACcDhoC
+YQlhn66RRMYQCWymo1OCUoI=
+=4Rft
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00041.html">Date Prev</a>][Date Next] &nbsp; [<a href="msg00041.html">Thread Prev</a>][Thread Next] &nbsp; 
+[<A HREF="thread.html#00042">Thread Index</A>]
+[<A HREF="date.html#00042">Date Index</A>]
+[<A HREF="author.html#00042">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

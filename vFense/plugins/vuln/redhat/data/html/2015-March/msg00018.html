@@ -1,0 +1,857 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0377&#45;01] Moderate: libreoffice security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Thu, 5 Mar 2015 09:47:02 &#45;0500 -->
+<!--X-Message-Id: 201503051447.t25El05l026103@int&#45;mx13.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0377-01] Moderate: libreoffice security, bug fix,	and enhance</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0377-01] Moderate: libreoffice security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0377-01] Moderate: libreoffice security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Thu, 5 Mar 2015 14:47:00 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Moderate: libreoffice security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0377-01
+Product:           Red Hat Enterprise Linux
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0377.html">https://rhn.redhat.com/errata/RHSA-2015-0377.html</a>
+Issue date:        2015-03-05
+CVE Names:         CVE-2014-0247 CVE-2014-3575 CVE-2014-3693 
+=====================================================================
+
+1. Summary:
+
+Updated libreoffice packages that fix three security issues, several bugs,
+and add various enhancements are now available for Red Hat Enterprise
+Linux 7.
+
+Red Hat Product Security has rated this update as having Moderate security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+Red Hat Enterprise Linux Client (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Client Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Server Optional (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Workstation (v. 7) - noarch, x86_64
+Red Hat Enterprise Linux Workstation Optional (v. 7) - noarch, x86_64
+
+3. Description:
+
+LibreOffice is an open source, community-developed office productivity
+suite. It includes key desktop applications, such as a word processor, a
+spreadsheet, a presentation manager, a formula editor, and a drawing
+program. LibreOffice replaces OpenOffice and provides a similar but
+enhanced and extended office suite.
+
+It was found that LibreOffice documents executed macros unconditionally,
+without user approval, when these documents were opened using LibreOffice.
+An attacker could use this flaw to execute arbitrary code as the user
+running LibreOffice by embedding malicious VBA scripts in the document as
+macros. (CVE-2014-0247)
+
+A flaw was found in the OLE (Object Linking and Embedding) generation in
+LibreOffice. An attacker could use this flaw to embed malicious OLE code in
+a LibreOffice document, allowing for arbitrary code execution.
+(CVE-2014-3575)
+
+A use-after-free flaw was found in the &quot;Remote Control&quot; capabilities of the
+LibreOffice Impress application. An attacker could use this flaw to
+remotely execute code with the permissions of the user running LibreOffice
+Impress. (CVE-2014-3693)
+
+The libreoffice packages have been upgraded to upstream version 4.2.6.3,
+which provides a number of bug fixes and enhancements over the previous
+version. Among others:
+
+* Improved OpenXML interoperability.
+
+* Additional statistic functions in Calc (for interoperability with Excel
+and Excel's Add-in &quot;Analysis ToolPak&quot;).
+
+* Various performance improvements in Calc.
+
+* Apple Keynote and Abiword import.
+
+* Improved MathML export.
+
+* New Start screen with thumbnails of recently opened documents.
+
+* Visual clue in Slide Sorter when a slide has a transition or an
+animation.
+
+* Improvements for trend lines in charts.
+
+* Support for BCP-47 language tags. (BZ#1119709)
+
+All libreoffice users are advised to upgrade to these updated packages,
+which correct these issues and add these enhancements.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1065807 - [fix available] Usability - libreoffice does not search XDG defined &quot;Templates&quot; directory
+1096295 - [fix available] Highlighting the currently selected slide vs the currently viewed slide is hard in impress
+1111083 - CVE-2014-0247 libreoffice: VBA macros executed unconditionally
+1111216 - [fix available] LibreOffice Calc: PDF export of an empty document fails with Write Error
+1117853 - [fix available] impress killed by SIGABRT on paste into outline view at a position where the slide has no title object
+1119709 - Rebase to latest stable LibreOffice 4.2.X in RHEL-7.1
+1132065 - rebase libcmis to 0.4.1
+1132069 - rebase mdds to 0.10.3
+1132070 - rebase libmwaw to 0.2.0
+1132072 - rebase libodfgen to 0.0.4
+1132077 - rebase liblangtag to 0.5.4
+1138882 - CVE-2014-3575 openoffice: Arbitrary file disclosure via crafted OLE objects
+1164733 - CVE-2014-3693 libreoffice: Use-After-Free in socket manager of Impress Remote
+
+6. Package List:
+
+Red Hat Enterprise Linux Client (v. 7):
+
+Source:
+libabw-0.0.2-1.el7.src.rpm
+libcmis-0.4.1-5.el7.src.rpm
+libetonyek-0.0.4-2.el7.src.rpm
+libfreehand-0.0.0-3.el7.src.rpm
+liblangtag-0.5.4-8.el7.src.rpm
+libmwaw-0.2.0-4.el7.src.rpm
+libodfgen-0.0.4-1.el7.src.rpm
+libreoffice-4.2.6.3-5.el7.src.rpm
+
+noarch:
+autocorr-af-4.2.6.3-5.el7.noarch.rpm
+autocorr-bg-4.2.6.3-5.el7.noarch.rpm
+autocorr-ca-4.2.6.3-5.el7.noarch.rpm
+autocorr-cs-4.2.6.3-5.el7.noarch.rpm
+autocorr-da-4.2.6.3-5.el7.noarch.rpm
+autocorr-de-4.2.6.3-5.el7.noarch.rpm
+autocorr-en-4.2.6.3-5.el7.noarch.rpm
+autocorr-es-4.2.6.3-5.el7.noarch.rpm
+autocorr-fa-4.2.6.3-5.el7.noarch.rpm
+autocorr-fi-4.2.6.3-5.el7.noarch.rpm
+autocorr-fr-4.2.6.3-5.el7.noarch.rpm
+autocorr-ga-4.2.6.3-5.el7.noarch.rpm
+autocorr-hr-4.2.6.3-5.el7.noarch.rpm
+autocorr-hu-4.2.6.3-5.el7.noarch.rpm
+autocorr-is-4.2.6.3-5.el7.noarch.rpm
+autocorr-it-4.2.6.3-5.el7.noarch.rpm
+autocorr-ja-4.2.6.3-5.el7.noarch.rpm
+autocorr-ko-4.2.6.3-5.el7.noarch.rpm
+autocorr-lb-4.2.6.3-5.el7.noarch.rpm
+autocorr-lt-4.2.6.3-5.el7.noarch.rpm
+autocorr-mn-4.2.6.3-5.el7.noarch.rpm
+autocorr-nl-4.2.6.3-5.el7.noarch.rpm
+autocorr-pl-4.2.6.3-5.el7.noarch.rpm
+autocorr-pt-4.2.6.3-5.el7.noarch.rpm
+autocorr-ro-4.2.6.3-5.el7.noarch.rpm
+autocorr-ru-4.2.6.3-5.el7.noarch.rpm
+autocorr-sk-4.2.6.3-5.el7.noarch.rpm
+autocorr-sl-4.2.6.3-5.el7.noarch.rpm
+autocorr-sr-4.2.6.3-5.el7.noarch.rpm
+autocorr-sv-4.2.6.3-5.el7.noarch.rpm
+autocorr-tr-4.2.6.3-5.el7.noarch.rpm
+autocorr-vi-4.2.6.3-5.el7.noarch.rpm
+autocorr-zh-4.2.6.3-5.el7.noarch.rpm
+libreoffice-opensymbol-fonts-4.2.6.3-5.el7.noarch.rpm
+
+x86_64:
+libabw-0.0.2-1.el7.i686.rpm
+libabw-0.0.2-1.el7.x86_64.rpm
+libabw-debuginfo-0.0.2-1.el7.i686.rpm
+libabw-debuginfo-0.0.2-1.el7.x86_64.rpm
+libcmis-0.4.1-5.el7.i686.rpm
+libcmis-0.4.1-5.el7.x86_64.rpm
+libcmis-debuginfo-0.4.1-5.el7.i686.rpm
+libcmis-debuginfo-0.4.1-5.el7.x86_64.rpm
+libetonyek-0.0.4-2.el7.i686.rpm
+libetonyek-0.0.4-2.el7.x86_64.rpm
+libetonyek-debuginfo-0.0.4-2.el7.i686.rpm
+libetonyek-debuginfo-0.0.4-2.el7.x86_64.rpm
+libfreehand-0.0.0-3.el7.i686.rpm
+libfreehand-0.0.0-3.el7.x86_64.rpm
+libfreehand-debuginfo-0.0.0-3.el7.i686.rpm
+libfreehand-debuginfo-0.0.0-3.el7.x86_64.rpm
+liblangtag-0.5.4-8.el7.i686.rpm
+liblangtag-0.5.4-8.el7.x86_64.rpm
+liblangtag-debuginfo-0.5.4-8.el7.i686.rpm
+liblangtag-debuginfo-0.5.4-8.el7.x86_64.rpm
+libmwaw-0.2.0-4.el7.i686.rpm
+libmwaw-0.2.0-4.el7.x86_64.rpm
+libmwaw-debuginfo-0.2.0-4.el7.i686.rpm
+libmwaw-debuginfo-0.2.0-4.el7.x86_64.rpm
+libodfgen-0.0.4-1.el7.i686.rpm
+libodfgen-0.0.4-1.el7.x86_64.rpm
+libodfgen-debuginfo-0.0.4-1.el7.i686.rpm
+libodfgen-debuginfo-0.0.4-1.el7.x86_64.rpm
+libreoffice-base-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-calc-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-core-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-debuginfo-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-draw-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-emailmerge-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-graphicfilter-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-impress-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-af-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ar-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-as-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-bg-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-bn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-br-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ca-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-cs-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-cy-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-da-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-de-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-dz-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-el-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-en-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-es-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-et-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-eu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-fa-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-fi-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-fr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ga-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-gl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-gu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-he-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-hi-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-hr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-hu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-it-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ja-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-kk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-kn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ko-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-lt-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-lv-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-mai-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ml-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-mr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nb-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nso-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-or-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pa-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pt-BR-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pt-PT-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ro-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ru-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-si-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ss-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-st-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sv-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ta-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-te-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-th-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-tn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-tr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ts-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-uk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ve-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-xh-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-zh-Hans-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-zh-Hant-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-zu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-math-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-ogltrans-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-pdfimport-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-pyuno-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-ure-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-wiki-publisher-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-writer-4.2.6.3-5.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Client Optional (v. 7):
+
+Source:
+mdds-0.10.3-1.el7.src.rpm
+
+noarch:
+libabw-doc-0.0.2-1.el7.noarch.rpm
+libetonyek-doc-0.0.4-2.el7.noarch.rpm
+libfreehand-doc-0.0.0-3.el7.noarch.rpm
+liblangtag-doc-0.5.4-8.el7.noarch.rpm
+libmwaw-doc-0.2.0-4.el7.noarch.rpm
+libodfgen-doc-0.0.4-1.el7.noarch.rpm
+mdds-devel-0.10.3-1.el7.noarch.rpm
+
+x86_64:
+libabw-debuginfo-0.0.2-1.el7.i686.rpm
+libabw-debuginfo-0.0.2-1.el7.x86_64.rpm
+libabw-devel-0.0.2-1.el7.i686.rpm
+libabw-devel-0.0.2-1.el7.x86_64.rpm
+libabw-tools-0.0.2-1.el7.x86_64.rpm
+libcmis-debuginfo-0.4.1-5.el7.i686.rpm
+libcmis-debuginfo-0.4.1-5.el7.x86_64.rpm
+libcmis-devel-0.4.1-5.el7.i686.rpm
+libcmis-devel-0.4.1-5.el7.x86_64.rpm
+libcmis-tools-0.4.1-5.el7.x86_64.rpm
+libetonyek-debuginfo-0.0.4-2.el7.i686.rpm
+libetonyek-debuginfo-0.0.4-2.el7.x86_64.rpm
+libetonyek-devel-0.0.4-2.el7.i686.rpm
+libetonyek-devel-0.0.4-2.el7.x86_64.rpm
+libetonyek-tools-0.0.4-2.el7.x86_64.rpm
+libfreehand-debuginfo-0.0.0-3.el7.i686.rpm
+libfreehand-debuginfo-0.0.0-3.el7.x86_64.rpm
+libfreehand-devel-0.0.0-3.el7.i686.rpm
+libfreehand-devel-0.0.0-3.el7.x86_64.rpm
+libfreehand-tools-0.0.0-3.el7.x86_64.rpm
+liblangtag-debuginfo-0.5.4-8.el7.i686.rpm
+liblangtag-debuginfo-0.5.4-8.el7.x86_64.rpm
+liblangtag-devel-0.5.4-8.el7.i686.rpm
+liblangtag-devel-0.5.4-8.el7.x86_64.rpm
+liblangtag-gobject-0.5.4-8.el7.i686.rpm
+liblangtag-gobject-0.5.4-8.el7.x86_64.rpm
+libmwaw-debuginfo-0.2.0-4.el7.i686.rpm
+libmwaw-debuginfo-0.2.0-4.el7.x86_64.rpm
+libmwaw-devel-0.2.0-4.el7.i686.rpm
+libmwaw-devel-0.2.0-4.el7.x86_64.rpm
+libmwaw-tools-0.2.0-4.el7.x86_64.rpm
+libodfgen-debuginfo-0.0.4-1.el7.i686.rpm
+libodfgen-debuginfo-0.0.4-1.el7.x86_64.rpm
+libodfgen-devel-0.0.4-1.el7.i686.rpm
+libodfgen-devel-0.0.4-1.el7.x86_64.rpm
+libreoffice-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-bsh-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-debuginfo-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-filters-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-gdb-debug-support-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-glade-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-headless-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-librelogo-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-nlpsolver-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-postgresql-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-rhino-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-sdk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-sdk-doc-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-xsltfilter-4.2.6.3-5.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Server Optional (v. 7):
+
+Source:
+libabw-0.0.2-1.el7.src.rpm
+libcmis-0.4.1-5.el7.src.rpm
+libetonyek-0.0.4-2.el7.src.rpm
+libfreehand-0.0.0-3.el7.src.rpm
+liblangtag-0.5.4-8.el7.src.rpm
+libmwaw-0.2.0-4.el7.src.rpm
+libodfgen-0.0.4-1.el7.src.rpm
+libreoffice-4.2.6.3-5.el7.src.rpm
+mdds-0.10.3-1.el7.src.rpm
+
+noarch:
+autocorr-af-4.2.6.3-5.el7.noarch.rpm
+autocorr-bg-4.2.6.3-5.el7.noarch.rpm
+autocorr-ca-4.2.6.3-5.el7.noarch.rpm
+autocorr-cs-4.2.6.3-5.el7.noarch.rpm
+autocorr-da-4.2.6.3-5.el7.noarch.rpm
+autocorr-de-4.2.6.3-5.el7.noarch.rpm
+autocorr-en-4.2.6.3-5.el7.noarch.rpm
+autocorr-es-4.2.6.3-5.el7.noarch.rpm
+autocorr-fa-4.2.6.3-5.el7.noarch.rpm
+autocorr-fi-4.2.6.3-5.el7.noarch.rpm
+autocorr-fr-4.2.6.3-5.el7.noarch.rpm
+autocorr-ga-4.2.6.3-5.el7.noarch.rpm
+autocorr-hr-4.2.6.3-5.el7.noarch.rpm
+autocorr-hu-4.2.6.3-5.el7.noarch.rpm
+autocorr-is-4.2.6.3-5.el7.noarch.rpm
+autocorr-it-4.2.6.3-5.el7.noarch.rpm
+autocorr-ja-4.2.6.3-5.el7.noarch.rpm
+autocorr-ko-4.2.6.3-5.el7.noarch.rpm
+autocorr-lb-4.2.6.3-5.el7.noarch.rpm
+autocorr-lt-4.2.6.3-5.el7.noarch.rpm
+autocorr-mn-4.2.6.3-5.el7.noarch.rpm
+autocorr-nl-4.2.6.3-5.el7.noarch.rpm
+autocorr-pl-4.2.6.3-5.el7.noarch.rpm
+autocorr-pt-4.2.6.3-5.el7.noarch.rpm
+autocorr-ro-4.2.6.3-5.el7.noarch.rpm
+autocorr-ru-4.2.6.3-5.el7.noarch.rpm
+autocorr-sk-4.2.6.3-5.el7.noarch.rpm
+autocorr-sl-4.2.6.3-5.el7.noarch.rpm
+autocorr-sr-4.2.6.3-5.el7.noarch.rpm
+autocorr-sv-4.2.6.3-5.el7.noarch.rpm
+autocorr-tr-4.2.6.3-5.el7.noarch.rpm
+autocorr-vi-4.2.6.3-5.el7.noarch.rpm
+autocorr-zh-4.2.6.3-5.el7.noarch.rpm
+libabw-doc-0.0.2-1.el7.noarch.rpm
+libetonyek-doc-0.0.4-2.el7.noarch.rpm
+libfreehand-doc-0.0.0-3.el7.noarch.rpm
+liblangtag-doc-0.5.4-8.el7.noarch.rpm
+libmwaw-doc-0.2.0-4.el7.noarch.rpm
+libodfgen-doc-0.0.4-1.el7.noarch.rpm
+libreoffice-opensymbol-fonts-4.2.6.3-5.el7.noarch.rpm
+mdds-devel-0.10.3-1.el7.noarch.rpm
+
+x86_64:
+libabw-0.0.2-1.el7.i686.rpm
+libabw-0.0.2-1.el7.x86_64.rpm
+libabw-debuginfo-0.0.2-1.el7.i686.rpm
+libabw-debuginfo-0.0.2-1.el7.x86_64.rpm
+libabw-devel-0.0.2-1.el7.i686.rpm
+libabw-devel-0.0.2-1.el7.x86_64.rpm
+libabw-tools-0.0.2-1.el7.x86_64.rpm
+libcmis-0.4.1-5.el7.i686.rpm
+libcmis-0.4.1-5.el7.x86_64.rpm
+libcmis-debuginfo-0.4.1-5.el7.i686.rpm
+libcmis-debuginfo-0.4.1-5.el7.x86_64.rpm
+libcmis-devel-0.4.1-5.el7.i686.rpm
+libcmis-devel-0.4.1-5.el7.x86_64.rpm
+libcmis-tools-0.4.1-5.el7.x86_64.rpm
+libetonyek-0.0.4-2.el7.i686.rpm
+libetonyek-0.0.4-2.el7.x86_64.rpm
+libetonyek-debuginfo-0.0.4-2.el7.i686.rpm
+libetonyek-debuginfo-0.0.4-2.el7.x86_64.rpm
+libetonyek-devel-0.0.4-2.el7.i686.rpm
+libetonyek-devel-0.0.4-2.el7.x86_64.rpm
+libetonyek-tools-0.0.4-2.el7.x86_64.rpm
+libfreehand-0.0.0-3.el7.i686.rpm
+libfreehand-0.0.0-3.el7.x86_64.rpm
+libfreehand-debuginfo-0.0.0-3.el7.i686.rpm
+libfreehand-debuginfo-0.0.0-3.el7.x86_64.rpm
+libfreehand-devel-0.0.0-3.el7.i686.rpm
+libfreehand-devel-0.0.0-3.el7.x86_64.rpm
+libfreehand-tools-0.0.0-3.el7.x86_64.rpm
+liblangtag-0.5.4-8.el7.i686.rpm
+liblangtag-0.5.4-8.el7.x86_64.rpm
+liblangtag-debuginfo-0.5.4-8.el7.i686.rpm
+liblangtag-debuginfo-0.5.4-8.el7.x86_64.rpm
+liblangtag-devel-0.5.4-8.el7.i686.rpm
+liblangtag-devel-0.5.4-8.el7.x86_64.rpm
+liblangtag-gobject-0.5.4-8.el7.i686.rpm
+liblangtag-gobject-0.5.4-8.el7.x86_64.rpm
+libmwaw-0.2.0-4.el7.i686.rpm
+libmwaw-0.2.0-4.el7.x86_64.rpm
+libmwaw-debuginfo-0.2.0-4.el7.i686.rpm
+libmwaw-debuginfo-0.2.0-4.el7.x86_64.rpm
+libmwaw-devel-0.2.0-4.el7.i686.rpm
+libmwaw-devel-0.2.0-4.el7.x86_64.rpm
+libmwaw-tools-0.2.0-4.el7.x86_64.rpm
+libodfgen-0.0.4-1.el7.i686.rpm
+libodfgen-0.0.4-1.el7.x86_64.rpm
+libodfgen-debuginfo-0.0.4-1.el7.i686.rpm
+libodfgen-debuginfo-0.0.4-1.el7.x86_64.rpm
+libodfgen-devel-0.0.4-1.el7.i686.rpm
+libodfgen-devel-0.0.4-1.el7.x86_64.rpm
+libreoffice-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-base-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-bsh-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-calc-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-core-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-debuginfo-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-draw-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-emailmerge-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-filters-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-gdb-debug-support-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-glade-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-graphicfilter-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-headless-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-impress-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-af-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ar-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-as-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-bg-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-bn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-br-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ca-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-cs-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-cy-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-da-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-de-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-dz-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-el-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-en-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-es-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-et-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-eu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-fa-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-fi-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-fr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ga-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-gl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-gu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-he-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-hi-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-hr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-hu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-it-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ja-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-kk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-kn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ko-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-lt-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-lv-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-mai-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ml-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-mr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nb-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nso-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-or-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pa-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pt-BR-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pt-PT-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ro-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ru-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-si-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ss-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-st-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sv-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ta-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-te-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-th-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-tn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-tr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ts-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-uk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ve-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-xh-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-zh-Hans-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-zh-Hant-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-zu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-librelogo-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-math-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-nlpsolver-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-ogltrans-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-pdfimport-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-postgresql-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-pyuno-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-rhino-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-sdk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-sdk-doc-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-ure-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-wiki-publisher-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-writer-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-xsltfilter-4.2.6.3-5.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation (v. 7):
+
+Source:
+libabw-0.0.2-1.el7.src.rpm
+libcmis-0.4.1-5.el7.src.rpm
+libetonyek-0.0.4-2.el7.src.rpm
+libfreehand-0.0.0-3.el7.src.rpm
+liblangtag-0.5.4-8.el7.src.rpm
+libmwaw-0.2.0-4.el7.src.rpm
+libodfgen-0.0.4-1.el7.src.rpm
+libreoffice-4.2.6.3-5.el7.src.rpm
+
+noarch:
+autocorr-af-4.2.6.3-5.el7.noarch.rpm
+autocorr-bg-4.2.6.3-5.el7.noarch.rpm
+autocorr-ca-4.2.6.3-5.el7.noarch.rpm
+autocorr-cs-4.2.6.3-5.el7.noarch.rpm
+autocorr-da-4.2.6.3-5.el7.noarch.rpm
+autocorr-de-4.2.6.3-5.el7.noarch.rpm
+autocorr-en-4.2.6.3-5.el7.noarch.rpm
+autocorr-es-4.2.6.3-5.el7.noarch.rpm
+autocorr-fa-4.2.6.3-5.el7.noarch.rpm
+autocorr-fi-4.2.6.3-5.el7.noarch.rpm
+autocorr-fr-4.2.6.3-5.el7.noarch.rpm
+autocorr-ga-4.2.6.3-5.el7.noarch.rpm
+autocorr-hr-4.2.6.3-5.el7.noarch.rpm
+autocorr-hu-4.2.6.3-5.el7.noarch.rpm
+autocorr-is-4.2.6.3-5.el7.noarch.rpm
+autocorr-it-4.2.6.3-5.el7.noarch.rpm
+autocorr-ja-4.2.6.3-5.el7.noarch.rpm
+autocorr-ko-4.2.6.3-5.el7.noarch.rpm
+autocorr-lb-4.2.6.3-5.el7.noarch.rpm
+autocorr-lt-4.2.6.3-5.el7.noarch.rpm
+autocorr-mn-4.2.6.3-5.el7.noarch.rpm
+autocorr-nl-4.2.6.3-5.el7.noarch.rpm
+autocorr-pl-4.2.6.3-5.el7.noarch.rpm
+autocorr-pt-4.2.6.3-5.el7.noarch.rpm
+autocorr-ro-4.2.6.3-5.el7.noarch.rpm
+autocorr-ru-4.2.6.3-5.el7.noarch.rpm
+autocorr-sk-4.2.6.3-5.el7.noarch.rpm
+autocorr-sl-4.2.6.3-5.el7.noarch.rpm
+autocorr-sr-4.2.6.3-5.el7.noarch.rpm
+autocorr-sv-4.2.6.3-5.el7.noarch.rpm
+autocorr-tr-4.2.6.3-5.el7.noarch.rpm
+autocorr-vi-4.2.6.3-5.el7.noarch.rpm
+autocorr-zh-4.2.6.3-5.el7.noarch.rpm
+libreoffice-opensymbol-fonts-4.2.6.3-5.el7.noarch.rpm
+
+x86_64:
+libabw-0.0.2-1.el7.i686.rpm
+libabw-0.0.2-1.el7.x86_64.rpm
+libabw-debuginfo-0.0.2-1.el7.i686.rpm
+libabw-debuginfo-0.0.2-1.el7.x86_64.rpm
+libcmis-0.4.1-5.el7.i686.rpm
+libcmis-0.4.1-5.el7.x86_64.rpm
+libcmis-debuginfo-0.4.1-5.el7.i686.rpm
+libcmis-debuginfo-0.4.1-5.el7.x86_64.rpm
+libetonyek-0.0.4-2.el7.i686.rpm
+libetonyek-0.0.4-2.el7.x86_64.rpm
+libetonyek-debuginfo-0.0.4-2.el7.i686.rpm
+libetonyek-debuginfo-0.0.4-2.el7.x86_64.rpm
+libfreehand-0.0.0-3.el7.i686.rpm
+libfreehand-0.0.0-3.el7.x86_64.rpm
+libfreehand-debuginfo-0.0.0-3.el7.i686.rpm
+libfreehand-debuginfo-0.0.0-3.el7.x86_64.rpm
+liblangtag-0.5.4-8.el7.i686.rpm
+liblangtag-0.5.4-8.el7.x86_64.rpm
+liblangtag-debuginfo-0.5.4-8.el7.i686.rpm
+liblangtag-debuginfo-0.5.4-8.el7.x86_64.rpm
+libmwaw-0.2.0-4.el7.i686.rpm
+libmwaw-0.2.0-4.el7.x86_64.rpm
+libmwaw-debuginfo-0.2.0-4.el7.i686.rpm
+libmwaw-debuginfo-0.2.0-4.el7.x86_64.rpm
+libodfgen-0.0.4-1.el7.i686.rpm
+libodfgen-0.0.4-1.el7.x86_64.rpm
+libodfgen-debuginfo-0.0.4-1.el7.i686.rpm
+libodfgen-debuginfo-0.0.4-1.el7.x86_64.rpm
+libreoffice-base-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-calc-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-core-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-debuginfo-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-draw-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-emailmerge-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-graphicfilter-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-impress-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-af-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ar-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-as-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-bg-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-bn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-br-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ca-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-cs-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-cy-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-da-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-de-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-dz-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-el-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-en-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-es-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-et-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-eu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-fa-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-fi-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-fr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ga-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-gl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-gu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-he-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-hi-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-hr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-hu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-it-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ja-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-kk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-kn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ko-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-lt-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-lv-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-mai-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ml-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-mr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nb-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-nso-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-or-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pa-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pt-BR-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-pt-PT-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ro-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ru-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-si-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sl-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ss-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-st-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-sv-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ta-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-te-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-th-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-tn-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-tr-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ts-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-uk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-ve-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-xh-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-zh-Hans-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-zh-Hant-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-langpack-zu-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-math-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-ogltrans-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-pdfimport-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-pyuno-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-ure-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-wiki-publisher-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-writer-4.2.6.3-5.el7.x86_64.rpm
+
+Red Hat Enterprise Linux Workstation Optional (v. 7):
+
+Source:
+mdds-0.10.3-1.el7.src.rpm
+
+noarch:
+libabw-doc-0.0.2-1.el7.noarch.rpm
+libetonyek-doc-0.0.4-2.el7.noarch.rpm
+libfreehand-doc-0.0.0-3.el7.noarch.rpm
+liblangtag-doc-0.5.4-8.el7.noarch.rpm
+libmwaw-doc-0.2.0-4.el7.noarch.rpm
+libodfgen-doc-0.0.4-1.el7.noarch.rpm
+mdds-devel-0.10.3-1.el7.noarch.rpm
+
+x86_64:
+libabw-debuginfo-0.0.2-1.el7.i686.rpm
+libabw-debuginfo-0.0.2-1.el7.x86_64.rpm
+libabw-devel-0.0.2-1.el7.i686.rpm
+libabw-devel-0.0.2-1.el7.x86_64.rpm
+libabw-tools-0.0.2-1.el7.x86_64.rpm
+libcmis-debuginfo-0.4.1-5.el7.i686.rpm
+libcmis-debuginfo-0.4.1-5.el7.x86_64.rpm
+libcmis-devel-0.4.1-5.el7.i686.rpm
+libcmis-devel-0.4.1-5.el7.x86_64.rpm
+libcmis-tools-0.4.1-5.el7.x86_64.rpm
+libetonyek-debuginfo-0.0.4-2.el7.i686.rpm
+libetonyek-debuginfo-0.0.4-2.el7.x86_64.rpm
+libetonyek-devel-0.0.4-2.el7.i686.rpm
+libetonyek-devel-0.0.4-2.el7.x86_64.rpm
+libetonyek-tools-0.0.4-2.el7.x86_64.rpm
+libfreehand-debuginfo-0.0.0-3.el7.i686.rpm
+libfreehand-debuginfo-0.0.0-3.el7.x86_64.rpm
+libfreehand-devel-0.0.0-3.el7.i686.rpm
+libfreehand-devel-0.0.0-3.el7.x86_64.rpm
+libfreehand-tools-0.0.0-3.el7.x86_64.rpm
+liblangtag-debuginfo-0.5.4-8.el7.i686.rpm
+liblangtag-debuginfo-0.5.4-8.el7.x86_64.rpm
+liblangtag-devel-0.5.4-8.el7.i686.rpm
+liblangtag-devel-0.5.4-8.el7.x86_64.rpm
+liblangtag-gobject-0.5.4-8.el7.i686.rpm
+liblangtag-gobject-0.5.4-8.el7.x86_64.rpm
+libmwaw-debuginfo-0.2.0-4.el7.i686.rpm
+libmwaw-debuginfo-0.2.0-4.el7.x86_64.rpm
+libmwaw-devel-0.2.0-4.el7.i686.rpm
+libmwaw-devel-0.2.0-4.el7.x86_64.rpm
+libmwaw-tools-0.2.0-4.el7.x86_64.rpm
+libodfgen-debuginfo-0.0.4-1.el7.i686.rpm
+libodfgen-debuginfo-0.0.4-1.el7.x86_64.rpm
+libodfgen-devel-0.0.4-1.el7.i686.rpm
+libodfgen-devel-0.0.4-1.el7.x86_64.rpm
+libreoffice-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-bsh-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-debuginfo-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-filters-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-gdb-debug-support-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-glade-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-headless-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-librelogo-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-nlpsolver-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-postgresql-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-rhino-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-sdk-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-sdk-doc-4.2.6.3-5.el7.x86_64.rpm
+libreoffice-xsltfilter-4.2.6.3-5.el7.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-0247">https://access.redhat.com/security/cve/CVE-2014-0247</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3575">https://access.redhat.com/security/cve/CVE-2014-3575</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-3693">https://access.redhat.com/security/cve/CVE-2014-3693</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#moderate">https://access.redhat.com/security/updates/classification/#moderate</a>
+<a  rel="nofollow" href="https://wiki.documentfoundation.org/ReleaseNotes/4.2">https://wiki.documentfoundation.org/ReleaseNotes/4.2</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFU+GxYXlSAg2UNWIIRApfBAKCpJcRPGvlm3ec2TV3wmMrDVG4yoQCfX/g8
+zlpKuandu+/uTL5rwr6y6P0=
+=muCP
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00017.html">Date Prev</a>][<a href="msg00019.html">Date Next</a>] &nbsp; [<a href="msg00017.html">Thread Prev</a>][<a href="msg00019.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00018">Thread Index</A>]
+[<A HREF="date.html#00018">Date Index</A>]
+[<A HREF="author.html#00018">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>

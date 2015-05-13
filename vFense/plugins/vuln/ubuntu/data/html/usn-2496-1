@@ -1,0 +1,521 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie10 lt-ie9" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js lt-ie10" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" dir="ltr"> <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="Canonical" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>USN-2496-1: GNU binutils vulnerabilities | Ubuntu</title>
+
+        <link rel="shortcut icon" href="//assets.ubuntu.com/sites/ubuntu/latest/u/img/favicon.ico" type="image/x-icon" />
+
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="//assets.ubuntu.com/sites/ubuntu/latest/u/img/apple-touch-icon-144x144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="//assets.ubuntu.com/sites/ubuntu/latest/u/img/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="//assets.ubuntu.com/sites/ubuntu/latest/u/img/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="//assets.ubuntu.com/sites/ubuntu/latest/u/img/apple-touch-icon-precomposed.png">
+        <link type="text/plain" rel="author" href="//assets.ubuntu.com/sites/ubuntu/latest/u/files/humans.txt" />
+
+        <!-- google fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,700,700italic%7CUbuntu+Mono' rel='stylesheet' type='text/css' />
+
+        <!-- stylesheets -->
+        <link rel="stylesheet" type="text/css" media="screen" href="//assets.ubuntu.com/sites/guidelines/css/responsive/latest/ubuntu-styles.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="//assets.ubuntu.com/sites/ubuntu/latest/u/css/styles.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="//assets.ubuntu.com/sites/ubuntu/latest/u/css/beta/global-responsive.css" />
+        <link rel="stylesheet" type="text/css" media="print" href="//assets.ubuntu.com/sites/ubuntu/latest/u/css/core-print.css" />
+
+        <!-- javascript -->
+        <script src="http://assets.ubuntu.com/sites/ubuntu/1167/u/js/plugins/modernizr.2.7.1.js"></script>
+        
+<style>
+dt {
+	font-weight: 400;
+	padding: 12px 0 1em 0px;
+}
+dd, dt {
+	line-height: 16px;
+	color: #333;
+}
+dd {
+	padding-left: 16px;
+	margin-bottom: 1em;
+}
+dd span {
+    padding-left: 10px;
+}
+</style>
+
+    </head>
+<body class="">
+<header class="banner global" role="banner">
+
+    <nav role="navigation" class="nav-primary nav-right">
+        <span id="main-navigation-link"><a href="#main-navigation">Jump to site nav</a></span>
+        <div class="logo">
+            <a class="logo-ubuntu" href="/">
+                <img width="106" height="25" src="//assets.ubuntu.com/sites/ubuntu/latest/u/img/logos/logo-ubuntu-orange.svg" alt="" />
+            </a>
+        </div>
+        <ul>
+            <li class="accessibility-aid"><a accesskey="s" href="#main-content">Jump to content</a></li>
+            <li><a class="first" href="/cloud">Cloud</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/cloud">Overview</a></li>
+                    <li><a href="/cloud/ubuntu-openstack">Ubuntu OpenStack</a></li>
+                    <li><a href="/cloud/public-cloud">Public cloud</a></li>
+                    <li><a href="/cloud/tools">Cloud tools</a></li>
+                    <li><a href="/cloud/management">Cloud management</a></li>
+                    <li><a href="/cloud/ecosystem">Ecosystem</a></li>
+                    <li><a href="/cloud/labs">Cloud labs</a></li>
+                </ul>
+            </li>
+            <li><a href="/server">Server</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/server">Overview</a></li>
+                    <li><a href="/server/management">Server management</a></li>
+                    <li><a href="/server/hyperscale">Hyperscale</a></li>
+                </ul>
+            </li>
+            <li><a  href="/desktop">Desktop</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/desktop">Overview</a></li>
+                    <li><a href="/desktop/features">Features</a></li>
+                    <li><a href="/desktop/business">For business</a></li>
+                    <li><a href="/desktop/developers">For developers</a></li>
+                    <li><a href="/desktop/take-the-tour">Take the tour</a></li>
+                    <li><a href="/desktop/management">Desktop management</a></li>
+                    <li><a href="/desktop/ubuntu-kylin">Ubuntu Kylin</a></li>
+                </ul>
+            </li>
+            <li><a href="/phone">Phone</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/phone">Overview</a></li>
+                    <li><a href="/phone/features" >Features</a></li>
+                    <li><a href="/phone/scopes" >Scopes</a></li>
+                    <li><a href="/phone/app-ecosystem">App ecosystem</a></li>
+                    <li><a href="/phone/operators-and-oems" >Operators and OEMs</a></li>
+                    <li><a href="/phone/carrier-advisory-group">Carrier Advisory Group</a></li>
+                    <li><a href="/phone/ubuntu-for-android">Ubuntu for Android</a></li>
+                </ul>
+            </li>
+            <li><a href="/tablet">Tablet</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/tablet">Design</a></li>
+                    <li><a href="/tablet/operators-and-oems">Operators and OEMs</a></li>
+                    <li><a href="/tablet/app-ecosystem">App ecosystem</a></li>
+                </ul>
+            </li>
+            <li><a href="/tv">TV</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/tv">Overview</a></li>
+                    <li><a href="/tv/experience">Experience</a></li>
+                    <li><a href="/tv/industry">Industry</a></li>
+                    <li><a href="/tv/contributors">Contributors</a></li>
+                    <li><a href="/tv/features-and-specs">Features and specs</a></li>
+                    <li><a href="/tv/commercial-info">Commercial info</a></li>
+                </ul>
+            </li>
+            <li><a href="/management">Management</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/management">Overview</a></li>
+                    <li><a href="/management/landscape-features">Landscape features</a></li>
+                    <li><a href="/management/working-with-landscape">Working with Landscape</a></li>
+                    <li><a href="/management/return-on-investment">Return on investment</a></li>
+                    <li><a href="/management/compliance">Compliance</a></li>
+                    <li><a href="/management/ubuntu-advantage">Ubuntu Advantage</a></li>
+                </ul>
+            </li>
+            <li><a href="/download">Download</a>
+                <ul class="second-level-nav">
+                    <li class="first"><a href="/download">Overview</a></li>
+                    <li><a href="/download/cloud">Cloud</a></li>
+                    <li><a href="/download/server">Server</a></li>
+                    <li><a href="/download/desktop">Desktop</a></li>
+                    <li><a href="/download/ubuntu-kylin">Ubuntu Kylin</a></li>
+                    <li><a href="/download/alternative-downloads">Alternative downloads</a></li>
+                </ul>
+            </li>
+        </ul>
+        <form action="/search" id="google-appliance-search-form" class="header-search">
+            <label for="edit-keys" class="accessibility-aid">Search</label>
+            <input type="search" maxlength="255" name="q" id="edit-keys" class="form-text" placeholder="Search" value="" />
+            <button type="submit"><img src="//assets.ubuntu.com/sites/ubuntu/latest/u/img/search-white.svg" alt="Search" height="28" /></button>
+        </form>
+    </nav>
+</header>
+
+<div class="wrapper">
+<div id="main-content" class="inner-wrapper">
+    <div class="row no-border">
+        <div class="twelve-col">
+            <h1>USN-2496-1: GNU binutils vulnerabilities</h1>
+        </div>
+        
+    
+<h2>Ubuntu Security Notice USN-2496-1</h2>
+<p><em>9th February, 2015</em></p>
+<h3>binutils vulnerabilities</h3>
+<p>A security issue affects these releases of Ubuntu and its 
+    derivatives:</p>
+<ul>
+
+    <li>Ubuntu 14.10</li>
+
+    <li>Ubuntu 14.04 LTS</li>
+
+    <li>Ubuntu 12.04 LTS</li>
+
+    <li>Ubuntu 10.04 LTS</li>
+
+</ul>
+
+
+<h3>Summary</h3>
+<p>Applications from GNU binutils could be made to crash, run programs,
+or delete arbitrary files as your login if they opened a specially
+crafted file.
+</p>
+
+
+
+<h3>Software description</h3>
+<ul>
+
+  
+    <li>binutils 
+    - GNU assembler, linker and binary utilities
+    
+    </li>
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+<h3>Details</h3>
+<p>Michal Zalewski discovered that the setup_group function in libbfd in<br />GNU binutils did not properly check group headers in ELF files. An<br />attacker could use this to craft input that could cause a denial<br />of service (application crash) or possibly execute arbitrary code.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8485">CVE-2014-8485</a>)</p>
+
+<p>Hanno Böck discovered that the _bfd_XXi_swap_aouthdr_in function<br />in libbfd in GNU binutils allowed out-of-bounds writes. An<br />attacker could use this to craft input that could cause a denial<br />of service (application crash) or possibly execute arbitrary code.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8501">CVE-2014-8501</a>)</p>
+
+<p>Hanno Böck discovered a heap-based buffer overflow in the<br />pe_print_edata function in libbfd in GNU binutils. An attacker<br />could use this to craft input that could cause a denial of service<br />(application crash) or possibly execute arbitrary code. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8502">CVE-2014-8502</a>)</p>
+
+<p>Alexander Cherepanov discovered multiple directory traversal<br />vulnerabilities in GNU binutils. An attacker could use this to craft<br />input that could delete arbitrary files. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8737">CVE-2014-8737</a>)</p>
+
+<p>Alexander Cherepanov discovered the _bfd_slurp_extended_name_table<br />function in libbfd in GNU binutils allowed invalid writes when handling<br />extended name tables in an archive. An attacker could use this to<br />craft input that could cause a denial of service (application crash)<br />or possibly execute arbitrary code. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8738">CVE-2014-8738</a>)</p>
+
+<p>Hanno Böck discovered a stack-based buffer overflow in the ihex_scan<br />function in libbfd in GNU binutils. An attacker could use this<br />to craft input that could cause a denial of service (application<br />crash). (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8503">CVE-2014-8503</a>)</p>
+
+<p>Michal Zalewski discovered a stack-based buffer overflow in the<br />srec_scan function in libbfd in GNU binutils. An attacker could<br />use this to to craft input that could cause a denial of service<br />(application crash); the GNU C library&#39;s Fortify Source printf<br />protection should prevent the possibility of executing arbitrary code.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8504">CVE-2014-8504</a>)</p>
+
+<p>Michal Zalewski discovered that the srec_scan function in libbfd<br />in GNU binutils allowed out-of-bounds reads. An attacker could<br />use this to craft input to cause a denial of service. This issue<br />only affected Ubuntu 14.04 LTS, Ubuntu 12.04 LTS, and Ubuntu 10.04<br />LTS. (<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8484">CVE-2014-8484</a>)</p>
+
+<p>Sang Kil Cha discovered multiple integer overflows in the<br />_objalloc_alloc function and objalloc_alloc macro in binutils. This<br />could allow an attacker to cause a denial of service (application<br />crash). This issue only affected Ubuntu 12.04 LTS and Ubuntu 10.04 LTS.<br />(<a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2012-3509">CVE-2012-3509</a>)</p>
+
+<p>Alexander Cherepanov and Hanno Böck discovered multiple additional<br />out-of-bounds reads and writes in GNU binutils. An attacker could use<br />these to craft input that could cause a denial of service (application<br />crash) or possibly execute arbitrary code. A few of these issues may<br />be limited in exposure to a denial of service (application abort)<br />by the GNU C library&#39;s Fortify Source printf protection.</p>
+
+<p>The strings(1) utility in GNU binutils used libbfd by default when<br />examining executable object files; unfortunately, libbfd was not<br />originally developed with the expectation of hostile input. As<br />a defensive measure, the behavior of strings has been changed to<br />default to &#39;strings --all&#39; behavior, which does not use libbfd; use<br />the new argument to strings, &#39;--data&#39;, to recreate the old behavior.<br /></p>
+
+<h3>Update instructions</h3>
+<p> The problem can be corrected by updating your system to the following
+package version:</p>
+<dl>
+
+<dt>Ubuntu 14.10:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/binutils">binutils-multiarch</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/binutils/2.24.90.20141014-0ubuntu3.1">2.24.90.20141014-0ubuntu3.1</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/binutils">binutils</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/binutils/2.24.90.20141014-0ubuntu3.1">2.24.90.20141014-0ubuntu3.1</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 14.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/binutils">binutils-multiarch</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/binutils/2.24-5ubuntu3.1">2.24-5ubuntu3.1</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/binutils">binutils</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/binutils/2.24-5ubuntu3.1">2.24-5ubuntu3.1</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 12.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/binutils">binutils-multiarch</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/binutils/2.22-6ubuntu1.2">2.22-6ubuntu1.2</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/binutils">binutils</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/binutils/2.22-6ubuntu1.2">2.22-6ubuntu1.2</a>
+    </span>
+  </dd>
+    
+  
+
+<dt>Ubuntu 10.04 LTS:</dt>
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/binutils">binutils-multiarch</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/binutils/2.20.1-3ubuntu7.2">2.20.1-3ubuntu7.2</a>
+    </span>
+  </dd>
+    
+  
+    
+  <dd>
+    <a href="https://launchpad.net/ubuntu/+source/binutils">binutils</a>
+    <span>
+        <a href="https://launchpad.net/ubuntu/+source/binutils/2.20.1-3ubuntu7.2">2.20.1-3ubuntu7.2</a>
+    </span>
+  </dd>
+    
+  
+
+</dl>
+<p>To update your system, please follow these instructions:
+<a href="https://wiki.ubuntu.com/Security/Upgrades">https://wiki.ubuntu.com/Security/Upgrades</a>.
+</p>
+<p>In general, a standard system update will make all the necessary changes.<br /></p>
+
+
+
+<h3>References</h3>
+<p>
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2012-3509">CVE-2012-3509</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8484">CVE-2014-8484</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8485">CVE-2014-8485</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8501">CVE-2014-8501</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8502">CVE-2014-8502</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8503">CVE-2014-8503</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8504">CVE-2014-8504</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8737">CVE-2014-8737</a>, 
+
+        <a href="http://people.ubuntu.com/~ubuntu-security/cve/CVE-2014-8738">CVE-2014-8738</a>
+        
+
+</p>
+
+
+
+
+
+    </div>
+</div>
+</div>
+
+<footer class="global clearfix">
+
+<div class="footer-c">
+    <p class="top-link"><a href="#">Back to top</a></p>
+</div>
+<nav id="main-navigation" role="navigation" class="clearfix">
+<div class="footer-a">
+    <div class="clearfix">
+        <ul>
+            <li class="secondary-cloud"><h2><a href="/cloud/">Cloud</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first active"><a href="/cloud">Overview</a></li>
+        <li><a href="/cloud/ubuntu-openstack">Ubuntu OpenStack</a></li>
+        <li><a href="/cloud/public-cloud">Public cloud</a></li>
+        <li><a href="/cloud/tools">Cloud tools</a></li>
+        <li><a href="/cloud/management">Cloud management</a></li>
+        <li><a href="/cloud/ecosystem">Ecosystem</a></li>
+        <li><a href="/cloud/labs">Cloud labs</a></li>
+    </ul>
+
+            </li>
+            <li class="secondary-server"><h2><a href="/server/">Server</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/server">Overview</a></li>
+        <li><a href="/server/management">Server management</a></li>
+        <li><a href="/server/hyperscale">Hyperscale</a></li>
+    </ul>
+
+            </li>
+            <li class="secondary-desktop"><h2><a href="/desktop/" class="active-trail">Desktop</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/desktop">Overview</a></li>
+        <li><a href="/desktop/features">Features</a></li>
+        <li><a href="/desktop/business">For business</a></li>
+        <li><a href="/desktop/developers">For developers</a></li>
+        <li><a href="/desktop/take-the-tour">Take the tour</a></li>
+        <li><a href="/desktop/management">Desktop management</a></li>
+        <li><a href="/desktop/ubuntu-kylin">Ubuntu Kylin</a></li>
+    </ul>
+            </li>
+            <li class="secondary-phone"><h2><a href="/phone/">Phone</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/phone">Overview</a></li>
+        <li><a href="/phone/features" >Features</a></li>
+        <li><a href="/phone/scopes" >Scopes</a></li>
+        <li><a href="/phone/app-ecosystem">App ecosystem</a></li>
+        <li><a href="/phone/operators-and-oems" >Operators and OEMs</a></li>
+        <li><a href="/phone/carrier-advisory-group">Carrier Advisory Group</a></li>
+        <li><a href="/phone/ubuntu-for-android">Ubuntu for Android</a></li>
+    </ul>
+
+            </li>
+            <li class="secondary-tablet"><h2><a href="/tablet/">Tablet</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/tablet">Design</a></li>
+        <li><a href="/tablet/operators-and-oems">Operators and OEMs</a></li>
+        <li><a href="/tablet/app-ecosystem">App ecosystem</a></li>
+    </ul>
+
+            </li>
+            <li class="secondary-tv"><h2><a href="/tv/">TV</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/tv">Overview</a></li>
+        <li><a href="/tv/experience">Experience</a></li>
+        <li><a href="/tv/industry">Industry</a></li>
+        <li><a href="/tv/contributors">Contributors</a></li>
+        <li><a href="/tv/features-and-specs">Features and specs</a></li>
+        <li><a href="/tv/commercial-info">Commercial info</a></li>
+    </ul>
+
+            </li>
+            <li class="secondary-management last-item"><h2><a href="/management/">Management</a></h2>
+                    <ul class="second-level-nav">
+        <li class="first"><a href="/management">Overview</a></li>
+        <li><a href="/management/landscape-features">Landscape features</a></li>
+        <li><a href="/management/working-with-landscape">Working with Landscape</a></li>
+        <li><a href="/management/return-on-investment">Return on investment</a></li>
+        <li><a href="/management/compliance">Compliance</a></li>
+        <li><a href="/management/ubuntu-advantage">Ubuntu Advantage</a></li>
+    </ul>
+            </li>
+        </ul>
+    </div>
+</div><!-- /.footer-a -->
+<div class="footer-b inline-lists">
+    <ul class="clearfix">
+        <li><h2><a href="/download/">Download</a></h2>
+                <ul class="second-level-nav">
+        <li class="first"><a href="/download">Overview</a></li>
+        <li><a href="/download/cloud">Cloud</a></li>
+        <li><a href="/download/server">Server</a></li>
+        <li><a href="/download/desktop">Desktop</a></li>
+        <li><a href="/download/ubuntu-kylin">Ubuntu Kylin</a></li>
+        <li><a href="/download/alternative-downloads">Alternative downloads</a></li>
+    </ul>
+        </li>
+        <li><h2><a href="/support/">Support</a></h2>
+                <ul class="second-level-nav">
+        <li class="first"><a href="/support">Overview</a></li>
+        <li><a href="http://www.ubuntu.com/usn/">Security notices</a></li>
+    </ul>
+        </li>
+        <li><h2><a href="/partners/">Partners</a></h2>
+                <ul class="second-level-nav">
+        <li class="first"><a href="/partners">Overview</a></li>
+        <li class=""><a href="/partners/find-a-partner">Find a partner</a></li>
+        <li class=""><a href="/partners/ubuntu-certified">Ubuntu Certified</a></li>
+        <li class=""><a href="/partners/partner-programmes">Partner programmes</a></li>
+        <li class=""><a href="/partners/partner-services">Partner services</a></li>
+        <li class=""><a href="/partners/backed-by-canonical">Backed by Canonical</a></li>
+        <li class=""><a href="/partners/contact-us">Contact Canonical</a></li>
+    </ul>
+        </li>
+        <li><h2><a href="/about/">About</a></h2>
+            <ul class="second-level-nav">
+                <li><a href="/about/about-ubuntu">About Ubuntu</a></li>
+                <li><a href="http://www.canonical.com/careers">Careers</a></li>
+                <li><a href="/about/canonical-and-ubuntu">Canonical and Ubuntu</a></li>
+                <li><a accesskey="7" href="/about/contact-us">Contact us</a></li>
+                <li><a accesskey="2" href="http://insights.ubuntu.com/feed/">Canonical news feed</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</nav>
+<div class="legal clearfix">
+ <p class="twelve-col">&copy; 2014 Canonical Ltd. Ubuntu and Canonical are registered trademarks of Canonical Ltd.</p>
+ <ul class="inline clear">
+     <li><a href="/legal">Legal information</a></li>
+     <li><a href="https://bugs.launchpad.net/ubuntu-website-content/+filebug">Report a bug</a></li>
+</ul>
+<span class="accessibility-aid"><a href="#">Got to the top of the page</a></span>
+</div><!-- /.legal -->
+</footer>
+
+        <script src="//assets.ubuntu.com/sites/ubuntu/latest/u/js/plugins/yui-combined.min.js"></script>
+
+        
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-1018242-4']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+        
+
+        <script>
+            if(!core){ var core = {}; }
+            core.globalPrepend = 'body';
+        </script>
+
+        <script src="//assets.ubuntu.com/sites/guidelines/js/responsive/core.js"></script>
+        <script src="//assets.ubuntu.com/sites/ubuntu/latest/u/js/global.js"></script>
+        <script src="http://assets.ubuntu.com/sites/ubuntu/latest/u/js/scratch.js"></script>
+        
+    </body>
+</html>

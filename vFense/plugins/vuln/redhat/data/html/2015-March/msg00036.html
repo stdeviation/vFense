@@ -1,0 +1,247 @@
+<!-- MHonArc v2.6.16 -->
+<!--X-Subject: [RHSA&#45;2015:0694&#45;01] Important: kernel&#45;rt security, bug fix,	and enhancement update -->
+<!--X-From-R13: ohtmvyynNerqung.pbz -->
+<!--X-Date: Tue, 17 Mar 2015 11:04:47 &#45;0400 -->
+<!--X-Message-Id: 201503171504.t2HF4j2M015026@int&#45;mx10.intmail.prod.int.phx2.redhat.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!--#include virtual="/header.html"-->
+<!--#include virtual="/search.html"-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>[RHSA-2015:0694-01] Important: kernel-rt security, bug fix,	and enhancem</TITLE>
+<LINK REV="made" HREF="mailto:bugzilla redhat com">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00036">Thread Index</A>]
+[<A HREF="date.html#00036">Date Index</A>]
+[<A HREF="author.html#00036">Author Index</A>]
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>[RHSA-2015:0694-01] Important: kernel-rt security, bug fix,	and enhancement update</h1>
+<hr>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>From</em>: bugzilla redhat com</li>
+<li><em>To</em>: rhsa-announce redhat com, enterprise-watch-list redhat com</li>
+<li><em>Subject</em>: [RHSA-2015:0694-01] Important: kernel-rt security, bug fix,	and enhancement update</li>
+<li><em>Date</em>: Tue, 17 Mar 2015 15:04:46 +0000</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+=====================================================================
+                   Red Hat Security Advisory
+
+Synopsis:          Important: kernel-rt security, bug fix, and enhancement update
+Advisory ID:       RHSA-2015:0694-01
+Product:           Red Hat Enterprise MRG for RHEL-6
+Advisory URL:      <a  rel="nofollow" href="https://rhn.redhat.com/errata/RHSA-2015-0694.html">https://rhn.redhat.com/errata/RHSA-2015-0694.html</a>
+Issue date:        2015-03-17
+CVE Names:         CVE-2014-7822 CVE-2014-8086 CVE-2014-8172 
+                   CVE-2014-8173 CVE-2015-0274 
+=====================================================================
+
+1. Summary:
+
+Updated kernel-rt packages that fix multiple security issues, several bugs,
+and add various enhancements are now available for Red Hat Enterprise MRG
+2.5.
+
+Red Hat Product Security has rated this update as having Important security
+impact. Common Vulnerability Scoring System (CVSS) base scores, which give
+detailed severity ratings, are available for each vulnerability from the
+CVE links in the References section.
+
+2. Relevant releases/architectures:
+
+MRG Realtime for RHEL 6 Server v.2 - noarch, x86_64
+
+3. Description:
+
+The kernel-rt packages contain the Linux kernel, the core of any Linux
+operating system.
+
+* A flaw was found in the way the Linux kernel's XFS file system handled
+replacing of remote attributes under certain conditions. A local user with
+access to XFS file system mount could potentially use this flaw to escalate
+their privileges on the system. (CVE-2015-0274, Important)
+
+* A flaw was found in the way the Linux kernel's splice() system call
+validated its parameters. On certain file systems, a local, unprivileged
+user could use this flaw to write past the maximum file size, and thus
+crash the system. (CVE-2014-7822, Moderate)
+
+* A race condition flaw was found in the Linux kernel's ext4 file system
+implementation that allowed a local, unprivileged user to crash the system
+by simultaneously writing to a file and toggling the O_DIRECT flag using
+fcntl(F_SETFL) on that file. (CVE-2014-8086, Moderate)
+
+* It was found that due to excessive files_lock locking, a soft lockup
+could be triggered in the Linux kernel when performing asynchronous I/O
+operations. A local, unprivileged user could use this flaw to crash the
+system. (CVE-2014-8172, Moderate)
+
+* A NULL pointer dereference flaw was found in the way the Linux kernel's
+madvise MADV_WILLNEED functionality handled page table locking. A local,
+unprivileged user could use this flaw to crash the system. (CVE-2014-8173,
+Moderate)
+
+Red Hat would like to thank Eric Windisch of the Docker project for
+reporting CVE-2015-0274, and Akira Fujita of NEC for reporting
+CVE-2014-7822.
+
+Bug fixes:
+
+* A patch removing the xt_connlimit revision zero ABI was not reverted in
+the kernel-rt package, which caused problems because the iptables package
+requires this revision. A patch to remove the xt_connlimit revision 0 was
+reverted from the kernel-rt sources to allow the iptables command to
+execute correctly. (BZ#1169755)
+
+* With an older Mellanox Connect-IB (mlx4) driver present in the MRG
+Realtime kernel, a race condition could occur that would cause a loss of
+connection. The mlx4 driver was updated, resolving the race condition and
+allowing proper connectivity. (BZ#1182246)
+
+* The MRG Realtime kernel did not contain the appropriate code to resume
+after a device failed, causing the volume status after a repair to not be
+properly updated. A 'refresh needed' was still listed in the 'lvs' output
+after executing the 'lvchange --refresh' command. A patch was added that
+adds the ability to correctly restore a transiently failed device upon
+resume. (BZ#1159803)
+
+* The sosreport executable would hang when reading
+/proc/net/rpc/use-gss-proxy because of faulty wait_queue logic in the proc
+handler. This wait_queue logic was removed from the proc handler, allowing
+the reads to correctly return the current state. (BZ#1169900)
+
+Enhancements:
+
+* The MRG Realtime kernel-rt sources have been modified to take advantage
+of the updated 3.10 kernel sources that are available with the Red Hat
+Enterprise Linux 7 releases. (BZ#1172844)
+
+* The MRG Realtime version of the e1000e driver has been updated to provide
+support for the Intel I218-LM network adapter. (BZ#1191767)
+
+* The MRG Realtime kernel was updated to provide support for the
+Mellanox Connect-IB (mlx5). (BZ#1171363)
+
+* The rt-firmware package has been updated to provide additional firmware
+files required by the new version of the Red Hat Enterprise MRG 2.5 kernel
+(BZ#1184251)
+
+All kernel-rt users are advised to upgrade to these updated packages, which
+contain backported patches to correct these issues and add these
+enhancements. The system must be rebooted for this update to take effect.
+
+4. Solution:
+
+Before applying this update, make sure all previously released errata
+relevant to your system have been applied.
+
+For details on how to apply this update, refer to:
+
+<a  rel="nofollow" href="https://access.redhat.com/articles/11258">https://access.redhat.com/articles/11258</a>
+
+5. Bugs fixed (<a  rel="nofollow" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>):
+
+1151353 - CVE-2014-8086 Kernel: fs: ext4 race condition
+1163792 - CVE-2014-7822 kernel: splice: lack of generic write checks
+1169755 - iptables: Protocol wrong type for socket (regression, bisected)
+1171363 - realtime kernel does not support Mellanox Connect-IB(mlx5)
+1172844 - RFE: rebase the 3.10 kernel-rt
+1195248 - CVE-2015-0274 kernel: xfs: replacing remote attributes memory corruption
+1198457 - CVE-2014-8173 kernel: NULL pointer dereference in madvise(MADV_WILLNEED) support
+1198503 - CVE-2014-8172 kernel: soft lockup on aio
+
+6. Package List:
+
+MRG Realtime for RHEL 6 Server v.2:
+
+Source:
+kernel-rt-3.10.0-229.rt56.144.el6rt.src.rpm
+
+noarch:
+kernel-rt-doc-3.10.0-229.rt56.144.el6rt.noarch.rpm
+kernel-rt-firmware-3.10.0-229.rt56.144.el6rt.noarch.rpm
+
+x86_64:
+kernel-rt-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-debug-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-debug-debuginfo-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-debug-devel-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-debuginfo-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-debuginfo-common-x86_64-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-devel-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-trace-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-trace-debuginfo-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-trace-devel-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-vanilla-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-vanilla-debuginfo-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+kernel-rt-vanilla-devel-3.10.0-229.rt56.144.el6rt.x86_64.rpm
+
+These packages are GPG signed by Red Hat for security.  Our key and
+details on how to verify the signature are available from
+<a  rel="nofollow" href="https://access.redhat.com/security/team/key/">https://access.redhat.com/security/team/key/</a>
+
+7. References:
+
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-7822">https://access.redhat.com/security/cve/CVE-2014-7822</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8086">https://access.redhat.com/security/cve/CVE-2014-8086</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8172">https://access.redhat.com/security/cve/CVE-2014-8172</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2014-8173">https://access.redhat.com/security/cve/CVE-2014-8173</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/cve/CVE-2015-0274">https://access.redhat.com/security/cve/CVE-2015-0274</a>
+<a  rel="nofollow" href="https://access.redhat.com/security/updates/classification/#important">https://access.redhat.com/security/updates/classification/#important</a>
+
+8. Contact:
+
+The Red Hat security contact is &lt;secalert redhat com&gt;. More contact
+details at <a  rel="nofollow" href="https://access.redhat.com/security/team/contact/">https://access.redhat.com/security/team/contact/</a>
+
+Copyright 2015 Red Hat, Inc.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iD8DBQFVCEKCXlSAg2UNWIIRAmDjAKCLtIvkHYt7lcpc3dfQnZp7WUNyAACdECiv
+0M0JCIXeEhhWwK3d50NH6zY=
+=myFv
+-----END PGP SIGNATURE-----
+
+
+</pre>
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+[<a href="msg00037.html">Date Prev</a>][<a href="msg00038.html">Date Next</a>] &nbsp; [<a href="msg00037.html">Thread Prev</a>][<a href="msg00038.html">Thread Next</a>] &nbsp; 
+[<A HREF="thread.html#00036">Thread Index</A>]
+[<A HREF="date.html#00036">Date Index</A>]
+[<A HREF="author.html#00036">Author Index</A>]
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+<!--#include virtual="/footer.html"-->
+</body>
+</html>
