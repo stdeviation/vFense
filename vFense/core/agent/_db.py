@@ -409,7 +409,7 @@ def fetch_agent(agent_id, keys_to_pluck=None, conn=None):
         }
     """
     if agent_id and keys_to_pluck:
-        data = (
+        data = list(
             r
             .table(AgentCollections.Agents)
             .get_all(agent_id)
@@ -422,7 +422,7 @@ def fetch_agent(agent_id, keys_to_pluck=None, conn=None):
             data = data[0]
 
     elif agent_id and not keys_to_pluck:
-        data = (
+        data = list(
             r
             .table(AgentCollections.Agents)
             .get_all(agent_id)
@@ -592,7 +592,7 @@ def delete_all_agents_from_view(view_name, agent_ids=None, conn=None):
                 .get(agent_id)
                 .delete()
             )
-            .run(conn, no_reply=True)
+            .run(conn, noreply=False)
         )
 
     else:
@@ -601,7 +601,7 @@ def delete_all_agents_from_view(view_name, agent_ids=None, conn=None):
             .table(AgentCollections.Agents)
             .get_all(view_name, index=AgentIndexes.Views)
             .delete()
-            .run(conn, no_reply=True)
+            .run(conn, noreply=False)
         )
 
     return data
@@ -642,7 +642,7 @@ def remove_all_agents_from_view(view_name, agent_ids=None, conn=None):
                     }
                 )
             )
-            .run(conn, no_reply=True)
+            .run(conn, noreply=False)
         )
 
     else:
@@ -659,7 +659,7 @@ def remove_all_agents_from_view(view_name, agent_ids=None, conn=None):
                 }
             )
             .delete()
-            .run(conn, no_reply=True)
+            .run(conn, noreply=False)
         )
 
     return data
@@ -786,7 +786,7 @@ def delete_hardware_for_agents(agent_ids, conn=None):
             .get_all(agent_id, index=HardwarePerAgentIndexes.AgentId)
             .delete()
         )
-        .run(conn, no_reply=True)
+        .run(conn, noreply=False)
     )
 
     return data

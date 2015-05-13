@@ -47,7 +47,7 @@ def fetch_tag(tag_id, keys_to_pluck=None, conn=None):
         }
     """
     if keys_to_pluck:
-        data = (
+        data = list(
             r
             .table(TagCollections.Tags)
             .get_all(tag_id)
@@ -58,7 +58,7 @@ def fetch_tag(tag_id, keys_to_pluck=None, conn=None):
         )
 
     else:
-        data = (
+        data = list(
             r
             .table(TagCollections.Tags)
             .get_all(tag_id)
@@ -414,7 +414,7 @@ def delete_tag_ids_from_view(view_name=None, conn=None):
             .table(TagCollections.Tags)
             .get_all(view_name, index=TagsIndexes.ViewName)
             .delete()
-            .run(conn, no_reply=True)
+            .run(conn, noreply=False)
         )
 
     else:
@@ -422,7 +422,7 @@ def delete_tag_ids_from_view(view_name=None, conn=None):
             r
             .table(TagCollections.Tags)
             .delete()
-            .run(conn, no_reply=True)
+            .run(conn, noreply=False)
         )
 
     return data
@@ -455,7 +455,7 @@ def delete_tag_ids_per_agent(tag_ids, conn=None):
             .get_all(tag_id, index=TagsPerAgentIndexes.TagId)
             .delete()
         )
-        .run(conn, no_reply=True)
+        .run(conn, noreply=False)
     )
 
     return data
@@ -488,7 +488,7 @@ def delete_agent_ids_from_all_tags(agent_ids, conn=None):
             .get_all(agent_id, index=TagsPerAgentIndexes.AgentId)
             .delete()
         )
-        .run(conn, no_reply=True)
+        .run(conn, noreply=False)
     )
 
     return data
@@ -523,7 +523,7 @@ def delete_agent_ids_from_tags_in_view(agent_ids, view_name, conn=None):
             .filter({TagsPerAgentKeys.ViewName: view_name})
             .delete()
         )
-        .run(conn, no_reply=True)
+        .run(conn, noreply=False)
     )
 
     return data
@@ -559,7 +559,7 @@ def delete_agent_from_tags_in_views(agent_id, views, conn=None):
             .filter({TagsPerAgentKeys.ViewName: view})
             .delete()
         )
-        .run(conn, no_reply=True)
+        .run(conn, noreply=False)
     )
 
     return data
