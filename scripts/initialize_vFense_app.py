@@ -6,7 +6,8 @@ import subprocess
 from time import sleep
 from _magic import *
 from vFense._constants import (
-    VFENSE_LOGGING_CONFIG, VFENSE_CONFIG
+    VFENSE_LOGGING_CONFIG, VFENSE_CONFIG, RETHINK_CONF,
+    RETHINK_SOURCE_CONF
 )
 from vFense.core.logger.logger import vFenseLogger
 
@@ -51,14 +52,6 @@ Config.read(VFENSE_CONFIG)
 
 parser = argparse.ArgumentParser(description='Initialize vFense Options')
 parser.add_argument(
-    '--dnsname', dest='dns_name', default=None,
-    help='Pass the DNS Name of the patching Server'
-)
-parser.add_argument(
-    '--ipaddress', dest='ip_address', default=pick_valid_ip_address(),
-    help='Pass the IP Address of the patching Server'
-)
-parser.add_argument(
     '--password', dest='admin_password', default=generate_pass(),
     help='Pass the password to use for the admin User. Default is a random generated password'
 )
@@ -73,25 +66,6 @@ parser.add_argument(
 parser.set_defaults(cve_data=True)
 
 args = parser.parse_args()
-
-if args.admin_password:
-    password_validated = check_password(args.admin_password)
-    if not password_validated[0]:
-        print (
-            'Password failed to meet the minimum requirements.\n' +
-            'Uppercase, Lowercase, Numeric, Special ' +
-            'and a minimum of 8 characters.\nYour password: %s is %s' %
-            (args.admin_password, password_validated[1])
-        )
-        sys.exit(1)
-
-
-if args.dns_name:
-    url = 'https://%s/packages/' % (args.dns_name)
-    nginx_server_name = args.dns_name
-else:
-    url = 'https://%s/packages/' % (args.ip_address)
-    nginx_server_name = args.ip_address
 
 def build_nginx_config():
     generate_generic_certs()
@@ -160,14 +134,14 @@ def start_local_db():
 #    os.umask(0)
 #    if not os.path.exists(VFENSE_TMP_PATH):
 #        os.mkdir(VFENSE_TMP_PATH, 0755)
-#    if not os.path.exists(RETHINK_CONF):
-#        subprocess.Popen(
-#            [
-#                'ln', '-s',
-#                RETHINK_SOURCE_CONF,
-#                RETHINK_CONF
-#            ],
-#        )
+    if not os.path.exists(RETHINK_CONF):
+        subprocess.Popen(
+            [
+                'ln', '-s',
+                RETHINK_SOURCE_CONF,
+                RETHINK_CONF
+            ],
+        )
 #    if not os.path.exists(RETHINK_VFENSE_PATH):
 #        os.makedirs(RETHINK_VFENSE_PATH)
     if not db_connect():
@@ -202,6 +176,30 @@ def generate_vuln_data():
 
 
 if __name__ == '__main__':
+    if args.admin_password:
+        password_validated = check_password(args.admin_password)
+        if not password_validated[0]:
+            print (
+                'Password failed to meet the minimum requirements.\n' +
+                'Uppercase, Lowercase, Numeric, Special ' +
+                'and a minimum of 8 characters.\nYour password: %s is %s' %
+                (args.admin_password, password_validated[1])
+            )
+            sys.exit(1)
+
+    if Config.get('vFense', 'hostname') == '':
+        url = 'https://%s/packages/' % (pick_valid_ip_address())
+        nginx_server_name = pick_valid_ip_address()
+        Config.set('vFense', 'hostname', pick_valid_ip_address())
+        Config.set('vFense', 'packages_url', url)
+    else:
+        url = 'https://%s/packages/' % (Config.get('vFense', 'hostname'))
+        nginx_server_name = Config.get('vFense', 'hostname')
+        Config.set('vFense', 'packages_url', url)
+
+    config_file = open(VFENSE_CONFIG, 'w')
+    Config.write(config_file)
+    config_file.close()
     db_initialized = False
     db_started = False
     init_data_completed = False
