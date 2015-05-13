@@ -49,7 +49,7 @@ server {
         proxy_set_body              off;
         proxy_redirect              off;
         proxy_pass_request_body     off;
-        proxy_pass                  https://rvweb;
+        proxy_pass                  https://vfweb;
     }
 
     location ^~ /api/v1/authenticated {
@@ -57,11 +57,11 @@ server {
         proxy_set_header            Content-Length "";
         proxy_set_header            Content-Type "";
         proxy_set_header            X-Original-URI $request_uri;
-        proxy_pass                  https://rvweb;
+        proxy_pass                  https://vfweb;
     }
 
     location ^~ /api/ {
-        proxy_pass              https://rvweb;
+        proxy_pass              https://vfweb;
         proxy_set_header        Host $host;
         proxy_set_header        X-Real-IP $remote_addr;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -87,7 +87,7 @@ server {
     }
 
     location  ^~ /ws/ {
-        proxy_pass              https://rvweb;
+        proxy_pass              https://vfweb;
         proxy_read_timeout      604800; # 7 days
         proxy_http_version      1.1;
         proxy_set_header        Upgrade $http_upgrade;
@@ -98,7 +98,7 @@ server {
     }
 
     location ^~ /rvl/ {
-        proxy_pass              https://rvlistener;
+        proxy_pass              https://vflistener;
         proxy_set_header        Host $host;
         proxy_set_header        X-Real-IP $remote_addr;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -121,7 +121,7 @@ server {
     }
 
     location  ^~ /# {
-        proxy_pass              https://rvweb;
+        proxy_pass              https://vfweb;
         proxy_set_header        Host $host;
         proxy_set_header        X-Real-IP $remote_addr;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -129,7 +129,7 @@ server {
     }
 
     location  / {
-        proxy_pass              https://rvweb;
+        proxy_pass              https://vfweb;
         proxy_set_header        Host $host;
         proxy_set_header        X-Real-IP $remote_addr;
         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -146,35 +146,41 @@ def nginx_config_builder(server_name='127.0.0.1'):
     ssl_key = Config.get('Listener', 'ssl_key')
     if not ssl_key:
         ssl_key = os.path.join(VFENSE_SSL_PATH, 'server.key')
+        Config.set('Listener', 'ssl_key', ssl_key)
 
     ssl_cert = Config.get('Listener', 'ssl_cert')
     if not ssl_cert:
         ssl_cert = os.path.join(VFENSE_SSL_PATH, 'server.crt')
+        Config.set('Listener', 'ssl_cert', ssl_cert)
 
-    rvlistener_ending_port = int(Config.get('Listener', 'ending_port'))
-    rvlistener_starting_port = int(Config.get('Listener', 'starting_port'))
+    config_file = open(VFENSE_CONFIG, 'w')
+    Config.write(config_file)
+    config_file.close()
 
-    rvweb_ending_port = int(Config.get('Api', 'ending_port'))
-    rvweb_starting_port = int(Config.get('Api', 'starting_port'))
+    vflistener_ending_port = int(Config.get('Listener', 'ending_port'))
+    vflistener_starting_port = int(Config.get('Listener', 'starting_port'))
 
-    rvlistener_count = rvlistener_ending_port - rvlistener_starting_port
-    rvlistener_port = rvlistener_starting_port
-    rvlistener_config = 'upstream rvlistener {\n'
+    vfweb_ending_port = int(Config.get('Api', 'ending_port'))
+    vfweb_starting_port = int(Config.get('Api', 'starting_port'))
 
-    for i in range(rvlistener_count):
-        rvlistener_config += '    server 127.0.0.1:%s;\n' % (rvlistener_port)
-        rvlistener_port += 1
+    vflistener_count = vflistener_ending_port - vflistener_starting_port
+    vflistener_port = vflistener_starting_port
+    vflistener_config = 'upstream vflistener {\n'
 
-    rvlistener_config += '}\n\n'
+    for i in range(vflistener_count):
+        vflistener_config += '    server 127.0.0.1:%s;\n' % (vflistener_port)
+        vflistener_port += 1
 
-    rvweb_count = rvweb_ending_port - rvweb_starting_port
-    rvweb_port = rvweb_starting_port
-    rvweb_config = 'upstream rvweb {\n'
-    for i in range(rvweb_count):
-        rvweb_config += '    server 127.0.0.1:%s;\n' % (rvweb_port)
-        rvweb_port += 1
+    vflistener_config += '}\n\n'
 
-    rvweb_config += '}\n\n'
+    vfweb_count = vfweb_ending_port - vfweb_starting_port
+    vfweb_port = vfweb_starting_port
+    vfweb_config = 'upstream vfweb {\n'
+    for i in range(vfweb_count):
+        vfweb_config += '    server 127.0.0.1:%s;\n' % (vfweb_port)
+        vfweb_port += 1
+
+    vfweb_config += '}\n\n'
     replace_config = (
         base_nginx_config %
         {
@@ -186,7 +192,7 @@ def nginx_config_builder(server_name='127.0.0.1'):
             'www_path': VFENSE_WWW_PATH,
         }
     )
-    new_config = rvlistener_config + rvweb_config + replace_config
+    new_config = vflistener_config + vfweb_config + replace_config
     CONFIG_FILE = open(NGINX_CONFIG_FILE, 'w', 0)
     CONFIG_FILE.write(new_config)
     CONFIG_FILE.close()
