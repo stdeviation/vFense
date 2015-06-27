@@ -30,8 +30,6 @@ from vFense.utils.security import generate_pass, check_password
 from vFense.utils.ssl_initialize import generate_generic_certs
 from vFense.utils.common import pick_valid_ip_address
 from vFense.db.client import db_connect, r, db_create_close
-
-
 from vFense.core.user import User
 from vFense.core.user.manager import UserManager
 from vFense.core.user._constants import DefaultUsers
