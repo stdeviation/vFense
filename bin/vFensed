@@ -280,12 +280,12 @@ def vfense_start():
             for service in listener_pids:
                 start_service(
                     service["pid_file"], service["msg"], service["service"],
-                    ['--ports={0}'.format(service["port"])]
+                    ['--port={0}'.format(service["port"])]
                 )
             for service in api_pids:
                 start_service(
                     service["pid_file"], service["msg"], service["service"],
-                    ['--ports={0}'.format(service["port"])]
+                    ['--port={0}'.format(service["port"])]
                 )
             for service in SERVICES:
                 pid = run(PROGRAM, service[0])
