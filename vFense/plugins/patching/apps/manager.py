@@ -37,11 +37,27 @@ logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
 
 class AppsManager(object):
+    """
+    Attributes:
+        apps_collection (str): The name of the apps collection in the db.
+        apps_per_agent_collection (str): The name of the apps collection in
+            the db.
+    """
     def __init__(self):
         self.apps_collection = AppCollections.UniqueApplications
         self.apps_per_agent_collection = AppCollections.AppsPerAgent
 
     def url_path(self, app_id, app_name, view):
+        """ Get the full url path to where the applications can be downloaded
+            from.
+
+        Args:
+            app_id (str): 64 hex digest of the application id of the
+                application you want to download.
+            app_name (str): The name of the application as it is stored into
+                the db.
+            view (str): The view this application belongs too.
+        """
         view = ViewManager(view)
         tmp_url = (
             os.path.join(
@@ -307,6 +323,16 @@ class AppsManager(object):
 
 @job('incoming_updates', connection=redis_pool(), timeout=3600)
 def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
+    """Iterate through the list of applications that were received from the
+    agent.
+    Args:
+        agent_id (str): The id of the agent.
+        apps (list): List of applications and its data. See the class Apps
+            to further inspect the keys that this list should have.
+    Kwargs:
+        delete_afterwards (bool): Remove applications that are associated
+            with this agent, if not part of this list of applications.
+    """
     manager = AppsManager()
     apps_data = []
     now = time()
