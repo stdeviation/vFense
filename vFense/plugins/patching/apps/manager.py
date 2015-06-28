@@ -360,4 +360,6 @@ def incoming_applications_from_agent(agent_id, apps, delete_afterwards=True):
             manager._set_vulnerability_info(app_data)
             manager.store_app_in_db(app_data, files_data)
 
-        manager.add_apps_to_agent(agent_id, apps_data, now, delete_afterwards)
+        results = manager.add_apps_to_agent(agent_id, apps_data, now,
+                                            delete_afterwards)
+        return results

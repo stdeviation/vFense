@@ -78,7 +78,7 @@ RQ_PID_FILES = []
 
 for queue in RQ_WORKER_QUEUES:
     queue_name = re.sub(r'_settings.py', '', queue[1])
-    pid_file = os.path.join(PID_DIR, 'rqw_pid_%s.pid' % (queue_name))
+    pid_file = os.path.join(PID_DIR, 'rqw_%s.pid' % (queue_name))
     PIDS.append((pid_file, queue))
     RQ_PID_FILES.append(pid_file)
 
@@ -86,7 +86,7 @@ for queue in RQ_WORKER_QUEUES:
 LISTENER_PORTS = range(9020, 9030)
 LISTENER = 'vFense_listener.py'
 for port in LISTENER_PORTS:
-    pid_file = os.path.join(PID_DIR, 'listener_pid_%s.pid' % (str(port)))
+    pid_file = os.path.join(PID_DIR, 'listener_%s.pid' % (str(port)))
     msg = 'Listener port %s' % (str(port))
     PIDS.append((pid_file, msg))
     LISTENERSERVICES.append((LISTENER, pid_file, msg, port))
@@ -96,7 +96,7 @@ for port in LISTENER_PORTS:
 API_PORTS = range(9060, 9061)
 API = 'vFense_web.py'
 for port in API_PORTS:
-    pid_file = os.path.join(PID_DIR, 'api_pid_%s.pid' % (str(port)))
+    pid_file = os.path.join(PID_DIR, 'api_%s.pid' % (str(port)))
     msg = 'api port %s' % (str(port))
     PIDS.append((pid_file, msg))
     APISERVICES.append((API, pid_file, msg, port))
