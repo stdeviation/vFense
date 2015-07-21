@@ -1,5 +1,8 @@
 from datetime import date
 
+class Archives():
+    pass
+
 class DateValues():
     CURRENT_YEAR = date.today().year
 

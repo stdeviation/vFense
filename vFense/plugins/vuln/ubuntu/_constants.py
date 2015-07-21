@@ -1,4 +1,8 @@
 import os
+import vFense.plugins.vuln._constants
+
+class Archives(vFense.plugins.vuln._constants.Archives):
+    ubuntu = 'https://lists.ubuntu.com/archives/ubuntu-security-announce'
 
 class UbuntuDataDir():
     PLUGIN_DIR = os.path.abspath(os.path.dirname(__file__))
