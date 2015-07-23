@@ -40,7 +40,7 @@ from vFense.core.permissions._constants import Permissions
 
 from vFense.plugins.vuln.cve.parser import load_up_all_xml_into_db
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
-from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing
+from vFense.plugins.vuln.ubuntu.list_parser import ubuntu_archive_processor
 from vFense.plugins.vuln.redhat.parser import begin_redhat_archive_processing
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
@@ -168,7 +168,7 @@ def generate_vuln_data():
     parse_bulletin_and_updatedb()
     print "Done Updating Microsoft Security Bulletin Ids..."
     print "Updating Ubuntu Security Bulletin Ids...( This can take a couple of minutes )"
-    begin_usn_home_page_processing(full_parse=True)
+    ubuntu_archive_processor(False)
     print "Done Updating Ubuntu Security Bulletin Ids..."
     print "Updating Redhat Security Bulletin Ids...( This can take a couple of minutes )"
     begin_redhat_archive_processing(latest=False)

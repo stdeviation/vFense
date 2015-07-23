@@ -6,7 +6,6 @@ from vFense.core.status_codes import GenericCodes
 from vFense.plugins.vuln._constants import VulnDefaults
 from vFense.plugins.vuln._db_model import VulnerabilityKeys
 
-
 class Vulnerability(Base):
     """Used to represent an instance of a vulnerability.
         This is the base class, that all other vulnerabilities, will

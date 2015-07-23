@@ -1,6 +1,4 @@
 from bs4 import BeautifulSoup
-import requests
-import os
 import re
 import logging
 import logging.config
@@ -14,16 +12,17 @@ from vFense.plugins.vuln.list_parser import ListParser
 from vFense.plugins.vuln.ubuntu._constants import (
     Archives, UbuntuDataDir
 )
-from vFense.plugins.patching.utils import build_app_id
 from vFense.plugins.vuln.ubuntu import Ubuntu, UbuntuVulnApp
-from vFense.plugins.vuln.redhat._db import insert_bulletin_data
+from vFense.plugins.vuln.ubuntu._db import insert_bulletin_data
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
 
 class UbuntuListParser(ListParser):
-    def __init__(self):
+    def __init__(self, **kwargs):
+        super(UbuntuListParser, self).__init__(**kwargs)
+        self.os_string = 'Ubuntu'
         self.base_url = Archives.ubuntu
         self.html_dir = UbuntuDataDir.HTML_DIR
 
@@ -35,7 +34,7 @@ class UbuntuListParser(ListParser):
         Basic Usage:
             >>> from vFense.plugins.vuln.ubuntu.list_parser import ListParser
             >>> parser = UbuntuListParser()
-            >>> threads = parser.get_threads()
+            >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
             >>> parser.usn(msg_links[0])
 
@@ -43,12 +42,17 @@ class UbuntuListParser(ListParser):
             String
             >>> USN-2626-1
         """
-        usn = (
-            re.search(
-                r'=+\n(.*)^=+\n', content,
-                re.MULTILINE|re.DOTALL
-            ).group(1).replace('\n\n','\n').split('\n')[0].split()[-1]
+        usn = None
+        match = (
+            re.search(r'={2,}\s?\n(.*)\n={2,}\n', content, re.MULTILINE|re.DOTALL)
         )
+
+        if match:
+            usn_match = (
+                re.search(r"USN-[0-9]+-[0-9]+", match.group(1), re.IGNORECASE)
+            )
+            if usn_match:
+                usn = usn_match.group()
 
         return usn
 
@@ -60,7 +64,7 @@ class UbuntuListParser(ListParser):
         Basic Usage:
             >>> from vFense.plugins.vuln.ubuntu.list_parser import ListParser
             >>> parser = UbuntuListParser()
-            >>> threads = parser.get_threads()
+            >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
             >>> parser.support_url(msg_links[0])
 
@@ -68,14 +72,17 @@ class UbuntuListParser(ListParser):
             String
             >>> u'http://www.ubuntu.com/usn/usn-2659-1'
         """
+        support_url = None
         soup = BeautifulSoup(content)
-        support_url = (
-            soup.find("a", href = re.compile(r'.*usn-[0-9]+-[0-9]+')).text
+        support_url_found = (
+            soup.find("a", href = re.compile(r'.*usn-[0-9]+-[0-9]+'))
         )
+        if support_url_found:
+            support_url = support_url_found.text
 
         return support_url
 
-    def date(self, content):
+    def date_posted(self, content):
         """Parse message and retrieve date in epoch time.
         Args:
             content (str): The content of the message we are parsing.
@@ -83,7 +90,7 @@ class UbuntuListParser(ListParser):
         Basic Usage:
             >>> from vFense.plugins.vuln.ubuntu.list_parser import UbuntuListParser
             >>> parser = UbuntuListParser()
-            >>> threads = parser.get_threads()
+            >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
             >>> parser.date(msg_links[0])
 
@@ -91,18 +98,23 @@ class UbuntuListParser(ListParser):
             Float
             >>> 1436241600.0
         """
-        date_posted = u''
-        unformatted_date = (
-            re.search(
-                r'=+\n(.*)^=+\n', content,
-                re.MULTILINE|re.DOTALL
-            ).group(1).replace('\n\n','\n').split('\n')[1]
+        date_posted = None
+        date_found = (
+            re.search(r'={10,}\n(.*)^={10,}\n', content, re.MULTILINE|re.DOTALL)
         )
-        month, day, year = unformatted_date.split()
-        day = int(day.replace(',',''))
-        month = month_to_num_month[month]
-        year = int(year)
-        date_posted = mktime(datetime(year, month, day).timetuple())
+        if date_found:
+            unformatted_date = (
+                re.findall(r'\w+ \d+, \d+', date_found.group(1))
+            )
+            month, day, year = unformatted_date[0].split()
+            day = int(day.replace(',',''))
+            month = month_to_num_month[month]
+            year = int(year)
+            date_posted = mktime(datetime(year, month, day).timetuple())
+
+        else:
+            if self.verbose:
+                print content
 
         return date_posted
 
@@ -116,7 +128,7 @@ class UbuntuListParser(ListParser):
         Basic Usage:
             >>> from vFense.plugins.vuln.ubuntu.list_parser import UbuntuListParser
             >>> parser = UbuntuListParser()
-            >>> threads = parser.get_threads()
+            >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
             >>> parser.details(msg_links[0])
 
@@ -124,15 +136,25 @@ class UbuntuListParser(ListParser):
             String
             >>>
         """
-        detail_text = (
-            re.search(
-                r'Details:\n\n(.*)\n\n.*Update instructions:', content,
-                re.MULTILINE|re.IGNORECASE|re.DOTALL)
+        new_pattern = (
+            re.compile(r"Details:\n+(.*)\n{2}Update instructions:",
+                re.MULTILINE|re.IGNORECASE|re.DOTALL
+            )
         )
-        if detail_text:
-            detail_text = decoder(detail_text.group(1))
+        old_pattern = (
+            re.compile(
+                r"Details follow:\n+(.*)\n{3}Update[A-Za-z0-9 .]+:\n",
+                re.MULTILINE|re.IGNORECASE|re.DOTALL
+            )
+        )
+        if new_pattern.search(content):
+            detail_text = new_pattern.search(content).group(1)
+        elif old_pattern.search(content):
+            detail_text = old_pattern.search(content).group(1)
+        else:
+            detail_text = None
 
-        return detail_text
+        return decoder(detail_text)
 
     def apps(self, content):
         """
@@ -144,7 +166,7 @@ class UbuntuListParser(ListParser):
         Basic Usage:
             >>> from vFense.plugins.vuln.ubuntu.list_parser import UbuntuListParser
             >>> parser = UbuntuListParser()
-            >>> threads = parser.get_threads()
+            >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
             >>> parser.apps(msg_links[0])
 
@@ -174,19 +196,30 @@ class UbuntuListParser(ListParser):
         """
         app_info = []
         os_strings = []
-        app_text = (
-            re.search(
-                r'(package versions:.*)References:', content,
+        match_group = None
+        updated_match = (
+            re.compile(
+                r'(package versions:.*)References:',
                 re.MULTILINE|re.IGNORECASE|re.DOTALL)
         )
-        if app_text:
-            for line in app_text.group(1).split('\n'):
+        old_match = (
+            re.compile(
+                r'(package versions:.*)Details follow:',
+                re.MULTILINE|re.IGNORECASE|re.DOTALL)
+        )
+        if updated_match.search(content):
+            match_group = updated_match.search(content).group(1)
+        elif old_match.search(content):
+            match_group = old_match.search(content).group(1)
+
+        if match_group:
+            for line in match_group.split('\n'):
                 os_match = re.search(r'(^Ubuntu.*):', line, re.IGNORECASE)
                 if os_match:
                     os_string = os_match.group(1)
                     os_strings.append(os_string)
 
-                elif len(line.split()) == 2 and not re.search(":", line):
+                elif len(line.split()) == 2 and not re.search(":$", line):
                     app = UbuntuVulnApp()
                     app.fill_in_defaults()
                     app.os_string = os_string
@@ -198,8 +231,8 @@ class UbuntuListParser(ListParser):
 
     def vuln_data(self, content):
         """
-        Parse data file to get the vulnerability update Summary, Decsriptions etc. and return
-        dictionary data with all the redhay update info.
+        Parse data file to get the vulnerability details and return
+        dictionary data with all the update info.
 
         Args:
             dfile : data file to parse the cve-ids for specific redhat vulnerabilty updates.
@@ -207,7 +240,7 @@ class UbuntuListParser(ListParser):
         Basic Usage:
             >>> from vFense.plugins.vuln.ubuntu.list_parser import UbuntuListParser
             >>> parser = UbuntuListParser()
-            >>> threads = parser.get_threads()
+            >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
             >>> vuln = parser.vuln_data(msg_links[0])
 
@@ -217,7 +250,7 @@ class UbuntuListParser(ListParser):
         """
         vuln = Ubuntu()
         vuln.fill_in_defaults()
-        vuln.date_posted = self.date(content)
+        vuln.date_posted = self.date_posted(content)
         vuln.vulnerability_id = self.vulnerability_id(content)
         vuln.cve_ids = self.cves(content)
         vuln.os_strings, vuln.apps = self.apps(content)
@@ -225,74 +258,55 @@ class UbuntuListParser(ListParser):
         vuln.details = self.details(content)
         return vuln
 
-    def insert_data_to_db(thread, latest=False):
+    def update(self, vulnerabilities):
         """
-        Insert the redhat vulnerability updates parsed from data files to the db. It first collects
-        data link parsed from threads and then parse each data link and update the list of updates to
-        db for the thread.
+        Insert the vulnerability updates parsed from data files to the db.
 
         ARGS:
-            thread : redhat update thread link for specific month
+            vulnerabilties (list): List of dicts that contain the preformatted
+                vulnerability data.
 
         Basic Usage:
             >>> from vFense.plugins.vuln.redhat.parser import *
-            >>> threads = get_threads()
+            >>> threads = threads()
             >>> thread =threads[0]
             >>> insert = insert_data_to_db(thread=thread)
 
         """
-        vulnerabilities = []
-        msg_links = get_msg_links_by_thread(thread)
-        update_completed = False
-        date = None
-        if msg_links:
-            date = thread.split('/')[-2]
-            make_html_folder(date)
-
-            for link in msg_links:
-                if latest:
-                    content = get_html_latest_content(link)
-                    if content:
-                        redhat = get_rh_data(content)
-                        if redhat.vulnerability_id:
-                            vulnerabilities.append(redhat.to_dict_db())
-                    else:
-                        update_completed = True
-                        break
-                else:
-                    content = get_html_content(link)
-                    if content:
-                        redhat = get_rh_data(content)
-                        if redhat.vulnerability_id:
-                            vulnerabilities.append(redhat.to_dict_db())
-
-            _, count, _, _  = insert_bulletin_data(bulletin_data=vulnerabilities)
-            return(count, date, update_completed)
+        _, count, _, _  = insert_bulletin_data(bulletin_data=vulnerabilities)
+        return count
 
 
-def begin_redhat_archive_processing(latest=False):
+def ubuntu_archive_processor(only_updates=True):
     """
     This will call the function to insert the data into db for all the threads
     and will insert the data one by one.
 
+    Kwargs:
+        only_updates (bool): Only process updates that have yet to be
+            downloaded to disk. Default=True
+
     Basic Usage:
-        >>> from vFense.plugins.vuln.redhat.parser import *
-        >>> update_all_redhat_data()
+        >>> from vFense.plugins.vuln.ubuntu.list_parser import ubuntu_archive_processor
+        >>> count = ubuntu_archive_processor(only_updates=False)
+
+    Returns:
 
     """
-    threads=get_threads()
-    if threads:
-        for thread in threads:
-            count, date, update_completed = insert_data_to_db(thread, latest)
-            if latest and update_completed:
-                msg = 'There aren\'t any vulnerabilities available'
-                logger.info(msg)
-                print msg
-                break
-            else:
-                msg = (
-                    'RedHat vulnerabilities inserted: {0} for Year/Month: {1}'
-                    .format(count, date)
-                )
-                logger.info(msg)
-                print msg
+    count = 0
+    parser = UbuntuListParser()
+    vulnerabilities = parser.archives(only_updates, db_ready=True)
+    if vulnerabilities:
+        count = parser.update(vulnerabilities)
+        if count == 0:
+            msg = 'There aren\'t any vulnerabilities available'
+            logger.info(msg)
+            print msg
+        else:
+            msg = (
+                'Ubuntu vulnerabilities updated: {0}'.format(count)
+            )
+            logger.info(msg)
+            logger.info('finished ubuntu usn update process')
+            print msg
+    return count

@@ -10,7 +10,7 @@ from vFense.core.scheduler.manager import (
 )
 from vFense.plugins.vuln.cve.parser import parse_cve_and_udpatedb
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
-from vFense.plugins.vuln.ubuntu.parser import begin_usn_home_page_processing
+from vFense.plugins.vuln.ubuntu.parser import ubuntu_archive_processor
 from vFense.plugins.vuln.redhat.parser import begin_redhat_archive_processing
 
 from vFense.core.agent.agent_uptime_verifier import all_agent_status
@@ -39,9 +39,9 @@ if __name__ == '__main__':
             'trigger': 'cron'
         },
         {
-            'name': 'begin_usn_home_page_processing',
-            'operation': 'begin_usn_home_page_processing',
-            'fn': begin_usn_home_page_processing,
+            'name': 'ubuntu_archive_processor',
+            'operation': 'ubuntu_archive_processor',
+            'fn': ubuntu_archive_processor,
             'hour': '0,6,12',
             'minute': 30,
             'trigger': 'cron'
