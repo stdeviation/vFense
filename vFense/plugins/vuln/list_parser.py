@@ -7,9 +7,7 @@ import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 from datetime import datetime
 
-
 from vFense.utils.common import decoder
-from vFense.plugins.patching.utils import build_app_id
 from vFense.plugins.vuln._constants import (
     Archives
 )
@@ -19,17 +17,42 @@ logger = logging.getLogger('cve')
 
 
 class ListParser(object):
-    def __init__(self, base_url, html_dir):
+    def __init__(self, base_url=None, html_dir=None):
         self.base_url = base_url
         self.html_dir = html_dir
+
+    def vulnerability_id(self):
+        pass
+
+    def date_posted(self):
+        pass
+
+    def support_url(self):
+        pass
+
+    def date(self):
+        pass
+
+    def details(self):
+        pass
+
+    def apps(self):
+        pass
+
+    def vuln_data(self):
+        pass
 
     def get_threads(self):
         """Parse the List and return the list of threads.
             example..
             URL: "https://www.redhat.com/archives/rhsa-announce/"
+
         Basic Usage:
-            >>> from vFense.plugins.vuln.redhat.parser import get_threads
-            >>> threads = get_threads()
+            >>> from vFense.plugins.vuln.list_parser import ListParser
+            >>> parser = ListParser('https://lists.ubuntu.com/archives/ubuntu-security-announce')
+            >>> threads = parser.get_threads()
+            >>> print threads[0]
+            >>> 'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
 
         Returns:
             List of urls
@@ -41,7 +64,7 @@ class ListParser(object):
 
         threads=[]
         req = requests.get(self.base_url, verify=False)
-        soup= BeautifulSoup(req.text)
+        soup = BeautifulSoup(req.text)
         threads = (
             map(
                 lambda x: os.path.join(self.base_url, x.get("href")),
@@ -54,14 +77,17 @@ class ListParser(object):
         return threads
 
     def get_msg_links_by_thread(self, thread):
-        """Parse the Redhat update thread link and return the list of data link or message link.
+        """Parse the thread link and return the list of message links.
         Args:
-            thread (str) : This should be valid Redhat thread url.
+            thread (str) : This should be valid thread url.
 
         Basic Usage:
-            >>> from vFense.plugins.vuln.redhat.parser import get_msg_links_by_thread
-            >>> thread = 'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
-            >>> msg_links = get_msg_links_by_thread(thread)
+            >>> from vFense.plugins.vuln.list_parser import ListParser
+            >>> parser = ListParser('https://lists.ubuntu.com/archives/ubuntu-security-announce')
+            >>> threads = parser.get_threads()
+            >>> print threads[0]
+            >>> 'https://www.redhat.com/archives/rhsa-announce/2014-April/thread.html'
+            >>> msg_links = parser.get_msg_links_by_thread(threads[0])
 
         Returns:
             List of urls
@@ -71,14 +97,16 @@ class ListParser(object):
         """
 
         dlinks = []
-        req=requests.get(thread, verify=False)
+        req = requests.get(thread, verify=False)
         if req.ok:
             date = thread.split('/')[-2]
             tsoup=BeautifulSoup(req.text)
             dlinks = (
                 map(
                     lambda x: os.path.join(self.base_url, date, x.get('href')),
-                    tsoup.find_all("a", attrs={"href": re.compile("[0-9]+.html")})
+                    tsoup.find_all(
+                        "a", attrs={"href": re.compile("[0-9]+.html")}
+                    )
                 )
             )
 
@@ -86,22 +114,28 @@ class ListParser(object):
 
     def get_html_content(self, hlink, force=False):
         """
-        Parse the content of Individual RedHat Updates or Message link and return the html contents
+        Parse the content of the Message link and return the html content.
         Args:
-            hlink (url) : Redhat Update or Message link
-            e.g:
-            >>> hlink
-            'https://www.redhat.com/archives/rhsa-announce/2014-April/msg00016.html'
+            hlink (url) : Message link
+                example.. https://www.redhat.com/archives/rhsa-announce/2014-April/msg00016.html
 
         Basic Usage :
-            >>> from vFense.plugins.vuln.redhat.get_all_redhat_updates import *
-            >>> content = parse_hdata(hlink)
+            >>> from vFense.plugins.vuln.list_parser import ListParser
+            >>> parser = ListParser('https://lists.ubuntu.com/archives/ubuntu-security-announce')
+            >>> threads = parser.get_threads()
+            >>> print threads[0]
+            >>> 'https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-June/thread.html'
+            >>> msg_links = parser.get_msg_links_by_thread(threads[0])
+            >>> parser.get_html_content(msg_links[0])
 
         Returns:
             html webpage content
 
         """
         content = None
+        date_folder = hlink.split('/')[-2]
+        self.make_html_folder(date_folder)
+
         msg_location = (
             os.path.join(
                 self.html_dir, '/'.join(hlink.split('/')[-2:])
@@ -128,59 +162,24 @@ class ListParser(object):
 
         return content
 
-    def get_html_latest_content(self, hlink):
-        """
-        Parse the content of Individual RedHat Updates or Message link and return the html contents
-        Args:
-            hlink (url) : Redhat Update or Message link
-            e.g:
-            >>> hlink
-            'https://www.redhat.com/archives/rhsa-announce/2014-April/msg00016.html'
-
-        Basic Usage :
-            >>> from vFense.plugins.vuln.redhat.get_all_redhat_updates import *
-            >>> content = parse_hdata(hlink)
-
-        Returns:
-            html webpage content
-
-        """
-        content = None
-        msg_location = (
-            os.path.join(
-                self.html_dir, '/'.join(hlink.split('/')[-2:])
-            )
-        )
-
-        if not os.path.exists(msg_location):
-            request = requests.get(hlink, verify=False)
-            if request.ok:
-                content = request.content
-                msg_file = open(msg_location, 'wb')
-                msg_file.write(content)
-                msg_file.close()
-
-        return content
-
     def make_html_folder(self, dir_name):
         """
-        Verify or Create (if not exist) folder to store the redhat updates (html files) and
-        return the PATH name.
+        Verify or create the folder to store the html files and return the
+        PATH name.
 
         Args:
-            dir_name = directory or folder name ('folder-name')
+            dir_name (str): The folder name.
+                example.. 2015-July
 
         Basic Usage:
 
-            >>> from vFense.plugins.vuln.redhat._constants import *
-            >>> from vFense.plugins.vuln.redhat.get_all_redhat_updates import *
-            >>> FPATH = make_html_folder(dname='redhat')
+            >>> from vFense.plugins.vuln.list_parser import ListParser
+            >>> parser = ListParser('https://lists.ubuntu.com/archives/ubuntu-security-announce')
+            >>> parser.make_html_folder('2015-July')
 
         Returns:
-
-            >>> FPATH
-            '/usr/local/lib/python2.7/dist-packages/vFense/plugins/vuln/redhat/data/html/redhat'
-            >>>
+            String
+            >>> '/opt/vFense/plugins/vuln/ubuntu/data/html/2015-July/'
         """
 
         fpath = os.path.join(self.html_dir, dir_name)
@@ -189,80 +188,32 @@ class ListParser(object):
 
         return fpath
 
-    def get_apps_info(self, content):
+    def cves(self, content):
         """
-        Parse the list of rpm packages from the data-file and return as list.
+        Parse cve_ids from the data file and return the list of cve_ids.
+
         Args:
             content (str): the html content this function will parse.
 
         Basic Usage:
-            >>> import os
-            >>> os.getcwd()
-            '/opt/TopPatch/tp/src/plugins/vuln/redhat'
-            >>> from vFense.plugins.vuln.redhat.parser import *
-            >>> dfile ='data/html/redhat/2010-March/msg00043.html'
-            >>> get_rpm_pkgs(dfile=dfile)
-
+            >>> from vFense.plugins.vuln.list_parser import ListParser
+            >>> parser = ListParser('https://lists.ubuntu.com/archives/ubuntu-security-announce')
+            >>> threads = parser.get_threads()
+            >>> print threads[0]
+            >>> 'https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-June/thread.html'
+            >>> msg_links = parser.get_msg_links_by_thread(threads[0])
+            >>> content = parser.get_html_content(msg_links[0])
+            >>> parser.cves(content)
 
         RETURNS:
-
-            List of rpm packages parsed from data file corresponding to redhat updates/
-            ['seamonkey-nss-devel-1.0.9-0.52.el3.s390.rpm', 'seamonkey-nss-1.0.9-0.52.el3.s390x.rpm', 'seamonkey-nspr-1.0.9-0.52.el3.s390x.rpm',...]
+            List of CVE-IDs for specific redhat vulnerability update.
+            [
+                'CVE-2010-0174', 'CVE-2010-0175',
+                'CVE-2010-0176', 'CVE-2010-0177'
+            ]
         """
-        rpm_pkgs = []
-        data = []
-        pkgs = content.split()
-        for pkg in pkgs:
-            if '.rpm' in pkg:
-                if not 'ftp://' in pkg:
-                    rpm_pkgs.append(pkg)
-
-        rpm_pkgs = list(set(rpm_pkgs))
-        for pkg in rpm_pkgs:
-            app = RedhatVulnApp()
-            if re.search(r'(^[A-Za-z0-9-_]+)?-', pkg):
-                app.name = re.search(r'(^[A-Za-z0-9-_]+)?-', pkg).group(1)
-                if app.name:
-                    pkg = re.sub(r'(^[A-Za-z0-9-]+)?-', '', pkg)
-                    app.version = '.'.join(pkg.split('.')[:-2])
-                    app.arch = pkg.split('.')[-2]
-                    app.app_id = build_app_id(app.name, app.version)
-                    data.append(app.to_dict())
-
-        return data
-
-def get_rh_cve_ids(content):
-    """
-    Parse cve_ids from the data file and return the list of cve_ids.
-
-    Args:
-        content (str): the html content this function will parse.
-
-    Basic Usage:
-
-        >>> import os
-        >>> os.getcwd()
-        '/opt/TopPatch/tp/src/plugins/vuln/redhat'
-        >>> from vFense.plugins.vuln.redhat.parser import *
-        >>> cve_ids=get_rh_cve_ids(dfile=dfile)
-
-
-    RETURNS:
-        List of CVE-IDs for specific redhat vulnerability update.
-        ['CVE-2010-0174', 'CVE-2010-0175', 'CVE-2010-0176', 'CVE-2010-0177']
-
-    """
-    cve_ids = []
-    cve_search = re.search(r"CVE\sNames:\s+(\w.*)", content, re.DOTALL)
-    if cve_search:
-        cve_data = cve_search.group().split(':')[1].strip()
-        for cve in cve_data.split():
-            if 'CVE-' in cve:
-                cve_ids.append(cve)
-
-    cve_id_list = list(set(cve_ids))
-
-    return cve_id_list
+        cve_ids = list(set(re.findall(r"(CVE-[0-9]+-[0-9]+)", content)))
+        return cve_ids
 
 def get_rh_data(content):
     """
