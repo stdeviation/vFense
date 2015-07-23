@@ -3,7 +3,7 @@ import logging
 import logging.config
 from vFense._constants import VFENSE_LOGGING_CONFIG
 
-from vFense.core.results import Results
+from vFense.search.base import RetrieveBase
 from vFense.plugins.vuln.cve._db_model import *
 from vFense.plugins.vuln.cve._constants import *
 from vFense.plugins.vuln.ubuntu.search.search import RetrieveUbuntuVulns
@@ -12,42 +12,20 @@ import vFense.plugins.vuln.windows.ms as ms
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('cve')
 
-class RetrieveByVulnerabilityId(object):
-    def __init__(
-        self, username, view_name, vuln_id,
-        uri=None, method=None, count=30, offset=0
-        ):
-
+class RetrieveByVulnerabilityId(RetrieveBase):
+    def __init__(self, vuln_id=None, **kwargs):
+        super(RetrieveByVulnerabilityId, self).__init__(**kwargs)
         self.vuln_id = vuln_id
-        self.username = username
-        self.view_name = view_name
-        self.uri = uri
-        self.method = method
-        self.count = count
-        self.offset = offset
         self.__os_director()
 
     def __os_director(self):
         if re.search('^MS', self.vuln_id, re.IGNORECASE):
-            self.get_vuln_by_id = ms.get_vuln_data_by_vuln_id
+            self.get_vuln = ms.get_vuln_data_by_vuln_id
 
         elif re.search('^USN-', self.vuln_id, re.IGNORECASE):
-            self.get_vuln_by_id = usn.get_vuln_data_by_vuln_id
+            self.get_vuln = RetrieveUbuntuVulns()
 
     def get_vuln(self):
-        data = self.get_vuln_by_id(self.vuln_id)
-        if data:
-            status = (
-                Results(
-                    self.username, self.uri, self.method
-                ).information_retrieved(data, 1)
-            )
+        results = self.get_vuln.by_id(self.vuln_id)
 
-        else:
-            status = (
-                Results(
-                    self.username, self.uri, self.method
-                ).invalid_id(self.vuln_id, 'vulnerability id')
-            )
-
-        return(status)
+        return results
