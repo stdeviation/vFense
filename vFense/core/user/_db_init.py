@@ -30,4 +30,5 @@ try:
     db.initialize(collections, secondary_indexes)
 
 except Exception as e:
+    print e
     logger.exception(e)

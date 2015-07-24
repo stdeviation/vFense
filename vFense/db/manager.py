@@ -19,7 +19,9 @@ class DbInit(object):
     def __init__(self):
         if not db_exist():
             create_db()
-        self.current_collections = retrieve_collections()
+
+    def current_collections(self):
+        return retrieve_collections()
 
     @db_create_close
     def initialize_indexes(self, secondary_indexes, conn=None):
@@ -30,9 +32,8 @@ class DbInit(object):
                 Example... [(agents, os_code, rql_secondary_index)]
         """
         for secondary_index in secondary_indexes:
-
             collection, index_name, index = secondary_index
-            if collection in self.current_collections:
+            if collection in self.current_collections():
                 indexes = retrieve_indexes(collection)
                 if index_name not in indexes:
                     index.run(conn)
@@ -44,7 +45,7 @@ class DbInit(object):
             primary_key (str): The name of the primary key.
         """
 
-        if collection not in self.current_collections:
+        if collection not in self.current_collections():
             create_collection(collection, primary_key)
 
     def initialize(self, collections, secondary_indexes):

@@ -43,8 +43,8 @@ from vFense.core.permissions._constants import Permissions
 
 from vFense.plugins.vuln.cve.parser import load_up_all_xml_into_db
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
-from vFense.plugins.vuln.ubuntu.parser import ubuntu_archive_processor
-from vFense.plugins.vuln.redhat.parser import begin_redhat_archive_processing
+from vFense.plugins.vuln.ubuntu.list_parser import ubuntu_archive_processor
+from vFense.plugins.vuln.redhat.list_parser import redhat_archive_processor
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
@@ -88,7 +88,7 @@ if args.admin_password:
         )
         sys.exit(1)
 
-if Config.get("vFense"):
+if Config.get("vFense", "hostname"):
     url = 'https://%s/packages/' % (args.dns_name)
     nginx_server_name = args.dns_name
 else:
@@ -98,11 +98,7 @@ else:
 def build_nginx_config():
     generate_generic_certs()
     ncc.nginx_config_builder(
-        nginx_server_name,
-        args.server_cert,
-        args.server_key,
-        rvlistener_count=int(args.listener_count),
-        rvweb_count=int(args.web_count)
+        nginx_server_name
     )
 
 
@@ -221,7 +217,7 @@ def add_local_user():
 def create_views(conn=None):
     view = View(
         view_name=DefaultViews.GLOBAL,
-        server_queue_ttl=args.queue_ttl,
+        server_queue_ttl=Config.get("vFense", "server_queue_ttl"),
         package_download_url_base=url
     )
     view_manager = ViewManager(view.view_name)
@@ -265,19 +261,20 @@ def create_users(admin_group_id, conn=None):
     print 'Admin password = %s' % (args.admin_password)
 
 
-@db_create_close
-def generate_initial_db_data(conn=None):
+def generate_initial_db_data():
     completed = False
-    if conn:
-        r.db_create('vFense').run(conn)
-        conn.close()
-        print 'creating indexes and secondary indexes'
-        import_modules_by_regex('_db_init.py')
-        print 'creating views, groups, and users'
-        create_views()
-        admin_group_id, agent_group_id = create_groups()
-        create_users(admin_group_id)
-        completed = True
+    print 'creating indexes and secondary indexes'
+    imported = import_modules_by_regex('_db_init.py')
+    print imported
+    if not imported:
+        print "failed on 1st try {0}".format(imported)
+        imported = import_modules_by_regex('_db_init.py')
+        print "worked on 4nd try {0}".format(imported)
+    print 'creating views, groups, and users'
+    create_views()
+    admin_group_id, agent_group_id = create_groups()
+    create_users(admin_group_id)
+    completed = True
 
     return completed
 
@@ -329,7 +326,7 @@ def generate_vuln_data():
     ubuntu_archive_processor(False)
     print "Done Updating Ubuntu Security Bulletin Ids..."
     print "Updating Redhat Security Bulletin Ids...( This can take a couple of minutes )"
-    begin_redhat_archive_processing(latest=False)
+    redhat_archive_processor(latest=False)
     print "Done Updating Redhat Security Bulletin Ids..."
 
 

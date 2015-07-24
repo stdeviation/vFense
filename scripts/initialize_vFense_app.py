@@ -104,7 +104,7 @@ def create_views(conn=None):
         package_download_url_base=Config.get('vFense', 'packages_url')
     )
     view_manager = ViewManager(view.view_name)
-    view_manager.create(view)
+    view_manager.create(view,
         current_view=DefaultViews.GLOBAL,
         default_view=DefaultViews.GLOBAL,
         enabled=True, is_global=True

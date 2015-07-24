@@ -157,8 +157,9 @@ class ListParser(object):
             else:
                 content = open(msg_location, 'rb').read()
 
-        elif (not os.path.exists(msg_location) and only_updates or
-              os.path.exists(msg_location) and force):
+        elif (not os.path.exists(msg_location) or
+              os.path.exists(msg_location) and force or
+              not os.path.exists(msg_location) and only_updates):
             request = requests.get(hlink, verify=False)
             if request.ok:
                 content = request.content
