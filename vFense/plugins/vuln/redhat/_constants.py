@@ -1,4 +1,8 @@
 import os
+import vFense.plugins.vuln._constants
+
+class Archives(vFense.plugins.vuln._constants.Archives):
+    redhat = 'https://www.redhat.com/archives/rhsa-announce'
 
 REDHAT = 'redhat'
 REDHAT_ARCHIVE = 'https://www.redhat.com/archives/rhsa-announce'
@@ -12,3 +16,4 @@ class RedhatVulnSubKeys():
     VERSION = 'version'
     ARCH = 'arch'
     APP_ID = 'app_id'
+    OS_STRING = 'os_string'

@@ -6,8 +6,7 @@ import subprocess
 from time import sleep
 from _magic import *
 from vFense._constants import (
-    VFENSE_LOGGING_CONFIG, VFENSE_CONFIG, RETHINK_CONF,
-    RETHINK_SOURCE_CONF
+    VFENSE_LOGGING_CONFIG, VFENSE_CONFIG
 )
 from vFense.core.logger.logger import vFenseLogger
 
@@ -41,7 +40,7 @@ from vFense.core.permissions._constants import Permissions
 from vFense.plugins.vuln.cve.parser import load_up_all_xml_into_db
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
 from vFense.plugins.vuln.ubuntu.list_parser import ubuntu_archive_processor
-from vFense.plugins.vuln.redhat.parser import begin_redhat_archive_processing
+from vFense.plugins.vuln.redhat.list_parser import redhat_archive_processing
 
 logging.config.fileConfig(VFENSE_LOGGING_CONFIG)
 logger = logging.getLogger('vfense_api')
@@ -51,6 +50,14 @@ Config.read(VFENSE_CONFIG)
 
 
 parser = argparse.ArgumentParser(description='Initialize vFense Options')
+parser.add_argument(
+    '--dnsname', dest='dns_name', default=None,
+    help='Pass the DNS Name of the patching Server'
+)
+parser.add_argument(
+    '--ipaddress', dest='ip_address', default=pick_valid_ip_address(),
+    help='Pass the IP Address of the patching Server'
+)
 parser.add_argument(
     '--password', dest='admin_password', default=generate_pass(),
     help='Pass the password to use for the admin User. Default is a random generated password'
@@ -67,6 +74,25 @@ parser.set_defaults(cve_data=True)
 
 args = parser.parse_args()
 
+if args.admin_password:
+    password_validated = check_password(args.admin_password)
+    if not password_validated[0]:
+        print (
+            'Password failed to meet the minimum requirements.\n' +
+            'Uppercase, Lowercase, Numeric, Special ' +
+            'and a minimum of 8 characters.\nYour password: %s is %s' %
+            (args.admin_password, password_validated[1])
+        )
+        sys.exit(1)
+
+
+if args.dns_name:
+    url = 'https://%s/packages/' % (args.dns_name)
+    nginx_server_name = args.dns_name
+else:
+    url = 'https://%s/packages/' % (args.ip_address)
+    nginx_server_name = args.ip_address
+
 def build_nginx_config():
     generate_generic_certs()
     ncc.nginx_config_builder(nginx_server_name)
@@ -79,32 +105,6 @@ def create_views(conn=None):
     )
     view_manager = ViewManager(view.view_name)
     view_manager.create(view)
-    print 'Global Token: {0}'.format(view_manager.get_token())
-    print 'Place this token in the agent.config file'
-
-def create_groups(conn=None):
-    group = Group(
-        DefaultGroups.GLOBAL_ADMIN, [Permissions.ADMINISTRATOR],
-        views=[DefaultViews.GLOBAL], is_global=True
-    )
-    group_manager = GroupManager()
-    group_results = group_manager.create(group)
-    admin_group_id = group_results.generated_ids[0]
-
-    agent_group = Group(
-        DefaultGroups.GLOBAL_READ_ONLY, [Permissions.READ],
-        views=[DefaultViews.GLOBAL], is_global=True
-    )
-    agent_group_manager = GroupManager()
-    agent_group_results = agent_group_manager.create(agent_group)
-    agent_group_id = agent_group_results.generated_ids[0]
-
-    return(admin_group_id, agent_group_id)
-
-def create_users(admin_group_id, conn=None):
-    admin_user = User(
-        user_name=DefaultUsers.GLOBAL_ADMIN,
-        password=args.admin_password, groups=DefaultGroups.GLOBAL_ADMIN,
         current_view=DefaultViews.GLOBAL,
         default_view=DefaultViews.GLOBAL,
         enabled=True, is_global=True
@@ -171,7 +171,7 @@ def generate_vuln_data():
     ubuntu_archive_processor(False)
     print "Done Updating Ubuntu Security Bulletin Ids..."
     print "Updating Redhat Security Bulletin Ids...( This can take a couple of minutes )"
-    begin_redhat_archive_processing(latest=False)
+    redhat_archive_processor(False)
     print "Done Updating Redhat Security Bulletin Ids..."
 
 
@@ -211,6 +211,8 @@ if __name__ == '__main__':
 
     if init_data_completed:
         db_initialized = True
+
+    if args.cve_data and db_initialized:
 
     if args.cve_data and db_initialized:
         generate_vuln_data()

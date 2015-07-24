@@ -10,8 +10,8 @@ from vFense.core.scheduler.manager import (
 )
 from vFense.plugins.vuln.cve.parser import parse_cve_and_udpatedb
 from vFense.plugins.vuln.windows.parser import parse_bulletin_and_updatedb
-from vFense.plugins.vuln.ubuntu.parser import ubuntu_archive_processor
-from vFense.plugins.vuln.redhat.parser import begin_redhat_archive_processing
+from vFense.plugins.vuln.ubuntu.list_parser import ubuntu_archive_processor
+from vFense.plugins.vuln.redhat.list_parser import redhat_archive_processor
 
 from vFense.core.agent.agent_uptime_verifier import all_agent_status
 from vFense.jobs.jobs import remove_expired_jobs_and_update_operations
@@ -47,9 +47,9 @@ if __name__ == '__main__':
             'trigger': 'cron'
         },
         {
-            'name': 'begin_redhat_archive_processing',
-            'operation': 'begin_redhat_archive_processing',
-            'fn': begin_redhat_archive_processing,
+            'name': 'redhat_archive_processor',
+            'operation': 'redhat_archive_processor',
+            'fn': redhat_archive_processor,
             'job_kwargs': {"latest": True},
             'hour': '0,6,12',
             'minute': 30,

@@ -6,7 +6,7 @@ from vFense._constants import VFENSE_LOGGING_CONFIG
 from datetime import datetime
 from time import mktime
 
-from vFense.utils.common import decoder, month_to_num_month
+from vFense.utils.common import decoder
 from vFense.plugins.patching.utils import build_app_id
 from vFense.plugins.vuln.list_parser import ListParser
 from vFense.plugins.vuln.redhat._constants import (
@@ -32,7 +32,7 @@ class RedhatListParser(ListParser):
             content (str): The content of the message we are parsing.
 
         Basic Usage:
-            >>> from vFense.plugins.vuln.ubuntu.list_parser import ListParser
+            >>> from vFense.plugins.vuln.redhat.list_parser import ListParser
             >>> parser = RedhatListParser()
             >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
@@ -61,7 +61,7 @@ class RedhatListParser(ListParser):
             content (str): The content of the message we are parsing.
 
         Basic Usage:
-            >>> from vFense.plugins.vuln.ubuntu.list_parser import ListParser
+            >>> from vFense.plugins.vuln.redhat.list_parser import ListParser
             >>> parser = RedhatListParser()
             >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
@@ -69,7 +69,7 @@ class RedhatListParser(ListParser):
 
         Returns:
             String
-            >>> u'http://www.ubuntu.com/usn/usn-2659-1'
+            >>> u'http://www.redhat.com/usn/usn-2659-1'
         """
         soup = BeautifulSoup(content)
         support_url = None
@@ -86,7 +86,7 @@ class RedhatListParser(ListParser):
             content (str): The content of the message we are parsing.
 
         Basic Usage:
-            >>> from vFense.plugins.vuln.ubuntu.list_parser import RedhatListParser
+            >>> from vFense.plugins.vuln.redhat.list_parser import RedhatListParser
             >>> parser = RedhatListParser()
             >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
@@ -121,7 +121,7 @@ class RedhatListParser(ListParser):
             content (str): the message content this function will parse.
 
         Basic Usage:
-            >>> from vFense.plugins.vuln.ubuntu.list_parser import RedhatListParser
+            >>> from vFense.plugins.vuln.redhat.list_parser import RedhatListParser
             >>> parser = RedhatListParser()
             >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
@@ -146,13 +146,13 @@ class RedhatListParser(ListParser):
 
     def apps(self, content):
         """
-        Parse the list of ubuntu packages from the message and return a list
+        Parse the list of redhat packages from the message and return a list
             of dicts.
         Args:
             content (str): the message content this function will parse.
 
         Basic Usage:
-            >>> from vFense.plugins.vuln.ubuntu.list_parser import RedhatListParser
+            >>> from vFense.plugins.vuln.redhat.list_parser import RedhatListParser
             >>> parser = RedhatListParser()
             >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
@@ -184,37 +184,25 @@ class RedhatListParser(ListParser):
         """
         app_info = []
         os_strings = []
-        match_group = None
-        updated_match = (
-            re.compile(
-                r'(package versions:.*)References:',
-                re.MULTILINE|re.IGNORECASE|re.DOTALL)
-        )
-        old_match = (
-            re.compile(
-                r'(package versions:.*)Details follow:',
-                re.MULTILINE|re.IGNORECASE|re.DOTALL)
-        )
-        if updated_match.search(content):
-            match_group = updated_match.search(content).group(1)
-        elif old_match.search(content):
-            match_group = old_match.search(content).group(1)
+        rpms = set(re.findall(r'([A-Za-z0-9:_.-]+rpm)\n', content))
+        print self.vulnerability_id(content)
+        for rpm in rpms:
+            app = RedhatVulnApp()
+            app.fill_in_defaults()
+            app.name = re.search(r'(^[A-Za-z0-9-_]+)?-', rpm).group(1)
+            if app.name:
+                pkg = re.sub(r'(^[A-Za-z0-9-]+)?-', '', rpm)
+                app.version = '.'.join(pkg.split('.')[:-2])
+                app.arch = pkg.split('.')[-2]
+                os_string = re.sub(r'a?el', '', pkg.split('.')[-3])
+                app.os_string = (
+                    'Red Hat Enterprise Linux {0}'.format(os_string)
+                )
+                os_strings.append(app.os_string)
+                app.app_id = build_app_id(app.name, app.version)
+                app_info.append(app.to_dict())
 
-        if match_group:
-            for line in match_group.split('\n'):
-                os_match = re.search(r'(^Redhat.*):', line, re.IGNORECASE)
-                if os_match:
-                    os_string = os_match.group(1)
-                    os_strings.append(os_string)
-
-                elif len(line.split()) == 2 and not re.search(":$", line):
-                    app = RedhatVulnApp()
-                    app.fill_in_defaults()
-                    app.os_string = os_string
-                    app.name, app.version = line.split()
-                    app.app_id = build_app_id(app.name, app.version)
-                    app_info.append(app.to_dict())
-
+        os_strings = list(set(os_strings))
         return(os_strings, app_info)
 
     def vuln_data(self, content):
@@ -226,7 +214,7 @@ class RedhatListParser(ListParser):
             dfile : data file to parse the cve-ids for specific redhat vulnerabilty updates.
 
         Basic Usage:
-            >>> from vFense.plugins.vuln.ubuntu.list_parser import RedhatListParser
+            >>> from vFense.plugins.vuln.redhat.list_parser import RedhatListParser
             >>> parser = RedhatListParser()
             >>> threads = parser.threads()
             >>> msg_links = parser.get_msg_links_by_thread(threads[0])
@@ -265,7 +253,7 @@ class RedhatListParser(ListParser):
         return count
 
 
-def ubuntu_archive_processor(only_updates=True):
+def redhat_archive_processor(only_updates=True):
     """
     This will call the function to insert the data into db for all the threads
     and will insert the data one by one.
@@ -275,8 +263,8 @@ def ubuntu_archive_processor(only_updates=True):
             downloaded to disk. Default=True
 
     Basic Usage:
-        >>> from vFense.plugins.vuln.ubuntu.list_parser import ubuntu_archive_processor
-        >>> count = ubuntu_archive_processor(only_updates=False)
+        >>> from vFense.plugins.vuln.redhat.list_parser import redhat_archive_processor
+        >>> count = redhat_archive_processor(only_updates=False)
 
     Returns:
 
@@ -295,6 +283,6 @@ def ubuntu_archive_processor(only_updates=True):
                 'Redhat vulnerabilities updated: {0}'.format(count)
             )
             logger.info(msg)
-            logger.info('finished ubuntu usn update process')
+            logger.info('finished Red Hat RHSA update process')
             print msg
     return count

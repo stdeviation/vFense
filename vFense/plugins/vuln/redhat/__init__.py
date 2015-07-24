@@ -12,19 +12,21 @@ class RedhatVulnApp(Base):
     """Used to represent an instance of an app."""
 
     def __init__(self, name=None, version=None, arch=None, app_id=None,
-                 **kwargs):
+                 os_string=None, **kwargs):
         """
         Kwargs:
             name (str): The name of the application.
             version (str): The version of the application.
             arch (str): The architecture this application was built for.
             app_id (str): The primary key of the application.
+            os_string (str): The Operations System Name.
         """
         super(RedhatVulnApp, self).__init__(**kwargs)
         self.name = name
         self.version = version
         self.arch = arch
         self.app_id = app_id
+        self.os_string = os_string
 
     def fill_in_defaults(self):
         """Replace all the fields that have None as their value with
@@ -54,4 +56,5 @@ class RedhatVulnApp(Base):
             RedhatVulnSubKeys.VERSION: self.version,
             RedhatVulnSubKeys.ARCH: self.arch,
             RedhatVulnSubKeys.APP_ID: self.app_id,
+            RedhatVulnSubKeys.OS_STRING: self.os_string,
         }
