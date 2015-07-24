@@ -264,12 +264,7 @@ def create_users(admin_group_id, conn=None):
 def generate_initial_db_data():
     completed = False
     print 'creating indexes and secondary indexes'
-    imported = import_modules_by_regex('_db_init.py')
-    print imported
-    if not imported:
-        print "failed on 1st try {0}".format(imported)
-        imported = import_modules_by_regex('_db_init.py')
-        print "worked on 4nd try {0}".format(imported)
+    import_modules_by_regex('_db_init.py')
     print 'creating views, groups, and users'
     create_views()
     admin_group_id, agent_group_id = create_groups()
