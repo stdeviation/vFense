@@ -321,7 +321,7 @@ def generate_vuln_data():
     ubuntu_archive_processor(False)
     print "Done Updating Ubuntu Security Bulletin Ids..."
     print "Updating Redhat Security Bulletin Ids...( This can take a couple of minutes )"
-    redhat_archive_processor(latest=False)
+    redhat_archive_processor(False)
     print "Done Updating Redhat Security Bulletin Ids..."
 
 
