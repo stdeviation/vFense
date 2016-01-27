@@ -6,10 +6,10 @@ from vFense.plugins.vuln._constants import DateValues
 class CVEDataDir():
     PLUGIN_DIR = os.path.abspath(os.path.dirname(__file__))
     XML_DIR = os.path.join(PLUGIN_DIR, 'data/xml')
-    NVD_MODIFIED_FILE = os.path.join(XML_DIR, 'nvdcve-modified.xml')
+    NVD_MODIFIED_FILE = os.path.join(XML_DIR, 'nvdcve-Modified.xml.gz')
     NVD_CURRENT_FILE = (
         os.path.join(
-            XML_DIR, 'nvdcve-%s.xml' %
+            XML_DIR, 'nvdcve-%s.xml.gz' %
             (str(DateValues.CURRENT_YEAR))
         )
     )
@@ -48,7 +48,7 @@ class CVEStrings():
     CVE_SEVERITY = 'severity'
     NVD_DOWNLOAD_URL = 'http://nvd.nist.gov/download/'
     NVDCVE_BASE = 'nvdcve-'
-    NVDCVE_MODIFIED = 'nvdcve-modified.xml'
+    NVDCVE_MODIFIED = 'nvdcve-modified.xml.gz'
     NVD_MODIFIED_URL = NVD_DOWNLOAD_URL + NVDCVE_MODIFIED
 
 
