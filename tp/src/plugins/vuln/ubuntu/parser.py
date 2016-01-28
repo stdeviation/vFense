@@ -350,13 +350,11 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
     """
     if next_page:
         url = UbuntuUSNStrings.MAIN_USN_URL + '/' + next_page
-        #print begin_usn_home_page_processing.func_name, url
         try:
             main_page = requests.get(url, timeout=1)
         except Exception as e:
             return(begin_usn_home_page_processing(next_page, True))
     else:
-        #print begin_usn_home_page_processing.func_name, MAIN_USN_URL
         try:
             main_page = requests.get(UbuntuUSNStrings.MAIN_USN_URL)
         except Exception as e:
@@ -368,11 +366,6 @@ def begin_usn_home_page_processing(next_page=None, full_parse=False):
             main_page.close()
             next_page = (
                 soup.find(
-                    'div',
-                    {
-                        'class': 'pagination'
-                    }
-                ).find(
                     'a',
                     {
                         'href': re.compile(UbuntuUSNStrings.NEXT_PAGE)
