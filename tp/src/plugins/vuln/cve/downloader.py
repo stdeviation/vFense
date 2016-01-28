@@ -76,10 +76,17 @@ def start_nvd_xml_download():
     modified_uncompressed = os.path.join(
         CVEDataDir.XML_DIR, CVEStrings.NVDCVE_MODIFIED[:-3]
     )
+    recent_uncompressed = os.path.join(
+        CVEDataDir.XML_DIR, CVEStrings.NVDCVE_RECENT[:-3]
+    )
     files_to_download = [
         (
             CVEStrings.NVD_MODIFIED_URL, CVEDataDir.NVD_MODIFIED_FILE,
             modified_uncompressed, iter_year
+        ),
+        (
+            CVEStrings.NVD_RECENT_URL, CVEDataDir.NVD_RECENT_FILE,
+            recent_uncompressed, iter_year
         )
     ]
     while iter_year <= DateValues.CURRENT_YEAR:
