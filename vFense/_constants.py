@@ -1,6 +1,6 @@
 import os
 
-VFENSE_BASE_SRC_PATH = os.path.dirname(os.path.realpath(__file__))
+VFENSE_BASE_SRC_PATH = '/opt/vFense/vFense'
 VFENSE_BASE_PATH = (
     os.path.realpath(
         os.path.join(
